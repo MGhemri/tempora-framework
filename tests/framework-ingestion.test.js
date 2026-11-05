@@ -101,3 +101,56 @@ test('Two profiles import the same event identifier independently',()=>{
  assert.deepEqual(secondBatch.candidates[0].event.event_type,['fictional port call']);
  assert.throws(()=>prepare(first,bytes([]),secondMapping),code('MAPPING_PROFILE_MISMATCH'));
 });
+
+test('A mixed canonical batch stages six dependent record kinds as one explicit transaction',()=>{
+ const fixture=nativeCorpus(),base=createWorkingCorpus(fixture.profile,fixture.taxonomies);
+ const [event]=fixture.events,[source]=fixture.sources,[claim]=fixture.claims;
+ const shared={schema_version:event.schema_version,namespace:event.namespace,editorial_status:'proposed',
+  provenance:{evidence:[],transformations:[]},extensions:{}};
+ const ref=({kind,namespace,id})=>({kind,namespace,id});
+ const unknown=event.end_date;
+ const place={...shared,kind:'entity',id:'PORT_1',entity_type:'place',label:{en:'Fictional port'},names:[],
+  valid_from:unknown,valid_to:unknown,spatial_refs:[],review_refs:[]};
+ const spatial={...shared,kind:'spatial',id:'SITE_1',subject:ref(event),place:ref(place),label:null,
+  geometry:{type:'Point',coordinates:[1,2]},crs:'EPSG:4326',geometry_role:'representative_point',
+  precision_meters:null,geocoding_method:null,reference_version:null};
+ const relation={...shared,kind:'relation',id:'RELATION_1',subject:ref(event),object:ref(place),predicate:'visited',
+  valid_from:unknown,valid_to:unknown,review_refs:[]};
+ event.spatial_refs.push(ref(spatial));
+ const records=[relation,claim,spatial,event,place,source];
+ const invalidSource={...source,id:'INVALID_SOURCE',url:'javascript:alert(1)'};
+ const brokenEvent={...event,id:'BROKEN_1',spatial_refs:[],provenance:{...event.provenance,
+  evidence:[{source:ref(invalidSource),locator:null,quotation:null}]}};
+ const m={...mapping(base),record_kind:'mixed',fields:{record:'/record'}};
+ const wrap=record=>({record,unmapped:'Texte original — العربية'});
+ const input=bytes([...records,invalidSource,brokenEvent].map(wrap));
+ const batch=prepare(base,input,m);
+ counts(batch,{total:8,create:6,quarantined:2});
+ assert.ok(batch.report.rows[7].diagnostics.some(d=>d.code==='CANONICAL_REFERENCE_MISSING'));
+ assert.deepEqual(Buffer.from(batch.original_input_base64,'base64'),input);
+ assert.throws(()=>acceptImport({corpus:base,bundle:batch,review:review(event.id)}),code('REVIEW_DEPENDENCY'));
+ assert.equal(base.events.length,0);
+ const output=acceptImport({corpus:base,bundle:batch,review:review(...records.map(record=>record.id))});
+ assert.equal(validateCorpus(output.corpus).valid,true);
+ assert.equal(output.corpus.events[0].editorial_status,'proposed');
+ assert.equal(output.corpus.events[0].extensions.ingestion.original.unmapped,'Texte original — العربية');
+ assert.equal(output.corpus.events[0].provenance.transformations.at(-1).input_sha256,batch.report.source.sha256);
+ assert.equal(output.journal.scientific_approval,false);
+ counts(prepare(output.corpus,input,m),{total:8,unchanged:6,quarantined:2});
+});
+
+test('Canonical CSV and GeoJSON mappings preserve the payload and reject forged editorial state',()=>{
+ const fixture=nativeCorpus(),base=createWorkingCorpus(fixture.profile,fixture.taxonomies);
+ const source=fixture.sources[0];
+ const csv={...mapping(base,'csv'),record_kind:'source',fields:{record:'/payload'},delimiter:';'};
+ const cell=JSON.stringify(source).replace(/"/g,'""');
+ counts(prepare(base,Buffer.from('payload;unused\r\n"'+cell+'";original\r\n'),csv),{total:1,create:1});
+ const geo={...mapping(base,'geojson'),record_kind:'source',fields:{record:'/properties/payload'}};
+ const input=record=>bytes({type:'FeatureCollection',features:[{type:'Feature',properties:{payload:record},geometry:null}]});
+ counts(prepare(base,input(source),geo),{total:1,create:1});
+ const forged=prepare(base,input({...source,editorial_status:'published'}),geo);
+ assert.equal(forged.report.rows[0].diagnostics[0].code,'ROW_EDITORIAL_STATUS');
+ assert.throws(()=>prepare(base,bytes([]),{...mapping(base),fields:{record:'/payload'}}),code('MAPPING_INVALID'));
+ const narrow={...mapping(base),record_kind:'entity',fields:{record:'/payload'}};
+ assert.equal(prepare(base,bytes([{payload:source}]),narrow).report.rows[0].diagnostics[0].code,'ROW_CANONICAL_KIND');
+});

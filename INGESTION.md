@@ -83,3 +83,24 @@ Les fichiers existants ne sont jamais écrasés. Réimporter les mêmes octets a
 Entrées UTF-8 jusqu’à 16 Mio et 100 000 lignes ; artefacts locaux jusqu’à 128 Mio. Ces bornes protègent le traitement, elles ne sont pas des résultats de benchmark. Une proposition correspond à une notice d’événement et à une localisation mappée, qui peut contenir une géométrie à plusieurs points. Les autres objets canoniques restent disponibles dans la base, mais ne sont pas créés par les mappings d’événements de cette version.
 
 Le pipeline s’arrête à l’acceptation locale. Il ne publie pas d’archives, ne modifie pas la base ALNOP et n’expose pas les brouillons par l’API. La revue scientifique et les décisions de publication restent distinctes du contrôle technique.
+
+## Importer plusieurs types de notices
+
+Le mapping historique à champs séparés reste disponible pour les événements. Pour importer des notices déjà structurées au format canonique v3, déclarer `record_kind` et un pointeur `fields.record`. Le type peut être `event`, `source`, `entity`, `claim`, `spatial`, `relation` ou `mixed`. Le profil et sa version sont requis comme pour tout mapping.
+
+```json
+{
+  "mapping_schema_version": "1.0.0",
+  "id": "fictional-mixed-import",
+  "version": "1.0.0",
+  "profile_id": "synthetic-history",
+  "profile_version": "1.0.0",
+  "format": "json",
+  "record_kind": "mixed",
+  "fields": {"record": "/record"}
+}
+```
+
+Chaque ligne JSON contient alors une propriété `record`. En CSV, la colonne ciblée contient un objet JSON strict. En GeoJSON, un pointeur comme `/properties/record` lit la notice canonique de la Feature. La géométrie de la Feature est contrôlée. La géométrie de la notice provient de la charge canonique explicite, sans fusion automatique. Les champs supplémentaires de la ligne et les octets du fichier original restent dans le dossier de travail privé.
+
+Les notices doivent porter le statut `proposed` et appartenir à l’espace de noms du profil. L’ordre des lignes est indépendant de l’ordre des dépendances. Le lot met en quarantaine les références absentes ou invalides. Pour accepter une sélection, inclure aussi ses dépendances lorsqu’elles ne figurent pas déjà dans le corpus. En cas d’échec, le corpus de départ reste intact. Le journal enregistre la sélection et les empreintes du lot, de la base et du résultat.

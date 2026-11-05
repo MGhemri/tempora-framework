@@ -13,6 +13,8 @@ function checkMapping(input,profile){
  if(!validate(input))fail('MAPPING_INVALID','Mapping does not match schema 1.0.0',structuredClone(validate.errors));
  const mapping=structuredClone(input),{fields,format}=mapping;
  if(mapping.profile_id!==profile.id||mapping.profile_version!==profile.version)fail('MAPPING_PROFILE_MISMATCH','Mapping belongs to a different profile or profile version');
+ if(Boolean(mapping.record_kind)!==Object.hasOwn(fields,'record'))fail('MAPPING_INVALID','Canonical payload fields require an explicit record kind');
+ if(mapping.record_kind&&mapping.default_geometry_role)fail('MAPPING_INVALID','Canonical payloads must declare their own geometry role');
  if((format!=='json'&&Object.hasOwn(mapping,'records_pointer'))||(format!=='csv'&&Object.hasOwn(mapping,'delimiter')))fail('MAPPING_INVALID','Format-specific mapping option is misplaced');
  if(Object.hasOwn(fields,'longitude')!==Object.hasOwn(fields,'latitude')||(fields.geometry&&fields.longitude))fail('MAPPING_INVALID','Declare one geometry field or both coordinate fields');
  if(fields.evidence&&fields.source_ids)fail('MAPPING_INVALID','Declare evidence or source_ids, not both');

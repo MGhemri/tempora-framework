@@ -62,65 +62,92 @@
       ]
     },
     "fields": {
-      "type": "object",
-      "additionalProperties": false,
-      "required": [
-        "id",
-        "title"
-      ],
-      "properties": {
-        "id": {
-          "$ref": "#/$defs/pointer"
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "title"
+          ],
+          "properties": {
+            "id": {
+              "$ref": "#/$defs/pointer"
+            },
+            "start_date": {
+              "$ref": "#/$defs/pointer"
+            },
+            "end_date": {
+              "$ref": "#/$defs/pointer"
+            },
+            "event_type": {
+              "$ref": "#/$defs/pointer"
+            },
+            "source_ids": {
+              "$ref": "#/$defs/pointer"
+            },
+            "evidence": {
+              "$ref": "#/$defs/pointer"
+            },
+            "geometry": {
+              "$ref": "#/$defs/pointer"
+            },
+            "geometry_role": {
+              "$ref": "#/$defs/pointer"
+            },
+            "longitude": {
+              "$ref": "#/$defs/pointer"
+            },
+            "latitude": {
+              "$ref": "#/$defs/pointer"
+            },
+            "precision_meters": {
+              "$ref": "#/$defs/pointer"
+            },
+            "geocoding_method": {
+              "$ref": "#/$defs/pointer"
+            },
+            "reference_version": {
+              "$ref": "#/$defs/pointer"
+            },
+            "territory_ids": {
+              "$ref": "#/$defs/pointer"
+            },
+            "title": {
+              "$ref": "#/$defs/localized"
+            },
+            "description": {
+              "$ref": "#/$defs/localized"
+            },
+            "location_label": {
+              "$ref": "#/$defs/localized"
+            }
+          }
         },
-        "start_date": {
-          "$ref": "#/$defs/pointer"
-        },
-        "end_date": {
-          "$ref": "#/$defs/pointer"
-        },
-        "event_type": {
-          "$ref": "#/$defs/pointer"
-        },
-        "source_ids": {
-          "$ref": "#/$defs/pointer"
-        },
-        "evidence": {
-          "$ref": "#/$defs/pointer"
-        },
-        "geometry": {
-          "$ref": "#/$defs/pointer"
-        },
-        "geometry_role": {
-          "$ref": "#/$defs/pointer"
-        },
-        "longitude": {
-          "$ref": "#/$defs/pointer"
-        },
-        "latitude": {
-          "$ref": "#/$defs/pointer"
-        },
-        "precision_meters": {
-          "$ref": "#/$defs/pointer"
-        },
-        "geocoding_method": {
-          "$ref": "#/$defs/pointer"
-        },
-        "reference_version": {
-          "$ref": "#/$defs/pointer"
-        },
-        "territory_ids": {
-          "$ref": "#/$defs/pointer"
-        },
-        "title": {
-          "$ref": "#/$defs/localized"
-        },
-        "description": {
-          "$ref": "#/$defs/localized"
-        },
-        "location_label": {
-          "$ref": "#/$defs/localized"
+        {
+          "type": "object",
+          "required": [
+            "record"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "record": {
+              "$ref": "#/$defs/pointer"
+            }
+          }
         }
-      }
+      ]
+    },
+    "record_kind": {
+      "enum": [
+        "event",
+        "source",
+        "entity",
+        "claim",
+        "spatial",
+        "relation",
+        "mixed"
+      ]
     }
   },
   "$defs": {

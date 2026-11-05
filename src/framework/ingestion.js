@@ -4,6 +4,7 @@ const {createValidator}=require('./validation');
 const {parseInput,select,MAX_BYTES,object}=require('./ingestion-formats');
 const {checkMapping,mapRecord,idPattern}=require('./ingestion-mapping');
 const {IngestionError,fail}=require('./ingestion-error');
+const {previewRecords,appendRecord}=require('./ingestion-records');
 const VERSION='1.0.0';
 const clone=structuredClone;
 function stamp(value,optional=false){
@@ -28,8 +29,16 @@ function prepareImport({bytes,mapping:manifest,corpus,sourceName,observedAt=null
  if(typeof sourceName!=='string'||!sourceName.trim()||sourceName.length>512||/[\x00-\x1f]/.test(sourceName))fail('INPUT_SOURCE_NAME','Supply an explicit source name without control characters');
  const {profile,taxonomies}=corpus,mapping=checkMapping(manifest,profile),{input,rows}=parseInput(bytes,mapping);
  const profile_sha256=digest(profile),mapping_sha256=digest(mapping),base_sha256=digest(corpus),batch_id=digest({version:VERSION,input_sha256:input.sha256,profile_sha256,mapping_sha256,taxonomies_sha256:digest(taxonomies)});
+ const {entries,candidates}=mapping.record_kind?previewRecords(rows,mapping,corpus,input.sha256,VERSION):previewEvents(rows,mapping,corpus,input.sha256);
+ const summary={total:entries.length,create:0,unchanged:0,conflict:0,quarantined:0};for(const entry of entries)summary[entry.status]++;
+ const report={scope:'technical_preview',version:VERSION,batch_id,base_sha256,observed_at:observedAt,source:{name:sourceName,format:mapping.format,encoding:input.encoding,sha256:input.sha256},
+  profile:{id:profile.id,version:profile.version,namespace:profile.namespace,sha256:profile_sha256},mapping:{id:mapping.id,version:mapping.version,sha256:mapping_sha256},summary,rows:entries};
+ return {kind:'tempora-ingestion-bundle',bundle_version:VERSION,report,mapping,original_input_base64:input.content_base64,candidates};
+}
+function previewEvents(rows,mapping,corpus,inputSha){
+ const {profile,taxonomies}=corpus;
  const occupied=new Map(Object.keys(collections).flatMap(k=>corpus[k].map(r=>[r.id,r]))),spatialById=new Map(corpus.spatial_assertions.map(s=>[s.id,s]));
- const context={profile,inputSha:input.sha256,sourceIds:new Set(corpus.sources.map(s=>s.id)),territoryIds:new Set(corpus.entities.filter(e=>e.entity_type==='territory').map(e=>e.id)),rules:createValidator(profile,{taxonomies}),version:VERSION};
+ const context={profile,inputSha,sourceIds:new Set(corpus.sources.map(s=>s.id)),territoryIds:new Set(corpus.entities.filter(e=>e.entity_type==='territory').map(e=>e.id)),rules:createValidator(profile,{taxonomies}),version:VERSION};
  const grouped=new Map(),invalidIds=new Set(),entries=[],owners=new Map();
  const claimId=(id,owner)=>{if(!owners.has(id))owners.set(id,new Map());owners.get(id).set(JSON.stringify(owner),owner.eventId);};
  for(const row of rows){
@@ -67,11 +76,9 @@ function prepareImport({bytes,mapping:manifest,corpus,sourceName,observedAt=null
   first.entry.status='create';candidates.push({index:first.entry.index,record_sha256:first.fingerprint,event:first.candidate.event,spatial:first.candidate.spatial});
   for(const {entry}of group.slice(1)){entry.status='unchanged';entry.diagnostics.push(issue('BATCH_EXACT_DUPLICATE','Equivalent mapped record already appears in this batch'));}
  }
- const summary={total:entries.length,create:0,unchanged:0,conflict:0,quarantined:0};for(const entry of entries)summary[entry.status]++;
- const report={scope:'technical_preview',version:VERSION,batch_id,base_sha256,observed_at:observedAt,source:{name:sourceName,format:mapping.format,encoding:input.encoding,sha256:input.sha256},
-  profile:{id:profile.id,version:profile.version,namespace:profile.namespace,sha256:profile_sha256},mapping:{id:mapping.id,version:mapping.version,sha256:mapping_sha256},summary,rows:entries};
- return {kind:'tempora-ingestion-bundle',bundle_version:VERSION,report,mapping,original_input_base64:input.content_base64,candidates};
+ return {entries,candidates};
 }
+const candidateId=c=>(c.record??c.event).id;
 function acceptImport({corpus,bundle,review}){
  validateBase(corpus);
  if(!object(bundle)||bundle.kind!=='tempora-ingestion-bundle'||bundle.bundle_version!==VERSION||!object(bundle.report)||!object(bundle.report.source))fail('BUNDLE_INVALID','Unsupported or malformed ingestion bundle');
@@ -83,12 +90,18 @@ function acceptImport({corpus,bundle,review}){
  if(!object(review)||!Array.isArray(review.ids)||!review.ids.length||review.ids.some(id=>typeof id!=='string'||!idPattern.test(id))||new Set(review.ids).size!==review.ids.length)fail('REVIEW_SELECTION','Explicit unique identifiers are required for local acceptance');
  for(const [value,label,max]of [[review.reviewer,'reviewer',120],[review.reason,'reason',2000]])if(typeof value!=='string'||!value.trim()||value.length>max)fail('REVIEW_REQUIRED',`A valid ${label} is required for local acceptance`);
  stamp(review.reviewed_at);if(expected.report.observed_at&&Date.parse(review.reviewed_at)<Date.parse(expected.report.observed_at))fail('REVIEW_TIMESTAMP','Acceptance cannot precede the preview');
- const selected=new Set(review.ids),records=expected.candidates.filter(c=>selected.has(c.event.id));
+ const selected=new Set(review.ids),records=expected.candidates.filter(c=>selected.has(candidateId(c)));
  if(records.length!==selected.size)fail('REVIEW_SELECTION','Only records proposed for creation can be accepted');
- const next=clone(corpus);for(const r of records){next.events.push(clone(r.event));next.spatial_assertions.push(...clone(r.spatial));}
- validateBase(next);
+ const next=clone(corpus);
+ for(const r of records){
+  if(r.record)appendRecord(next,clone(r.record));
+  else{next.events.push(clone(r.event));next.spatial_assertions.push(...clone(r.spatial));}
+ }
+ if(expected.mapping.record_kind){
+  try{assertCorpus(next);}catch(error){fail('REVIEW_DEPENDENCY','Selection must include its unresolved record dependencies',error.details??[]);}
+ }else validateBase(next);
  return {kind:'tempora-working-corpus',snapshot_version:VERSION,corpus:next,journal:{decision:'accepted_for_local_staging',batch_id:expected.report.batch_id,base_sha256:expected.report.base_sha256,output_sha256:digest(next),
-  reviewer:review.reviewer,reason:review.reason,reviewed_at:review.reviewed_at,selected_ids:records.map(r=>r.event.id),editorial_status:'proposed',scientific_approval:false}};
+  reviewer:review.reviewer,reason:review.reason,reviewed_at:review.reviewed_at,selected_ids:records.map(candidateId),editorial_status:'proposed',scientific_approval:false}};
 }
 const escape=value=>String(value??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/[\r\n|]/g,' ').replace(/[\\`*_[\]]/g,'\\$&');
 function renderMarkdown(report){
