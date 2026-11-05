@@ -1,11 +1,11 @@
 const {assertCorpus, digest, identity}=require('./canonical');
 const {temporalRelation}=require('./temporal');
-const {lexical,distance}=require('./similarity');
+const {grams,lexical,distance}=require('./similarity');
 const {compareClaims}=require('./claim-comparison');
 
 const algorithms={
-  duplicates:'documented-event-similarity@1.0.0',
-  entities:'documented-name-similarity@1.0.0',
+  duplicates:'documented-event-similarity@1.1.0',
+  entities:'documented-name-similarity@1.1.0',
   claims:'typed-claim-context@1.0.0',
   coverage:'observed-documentary-coverage@1.0.0'
 };
@@ -24,7 +24,7 @@ function parameters(options){
     if(!Number.isFinite(result[key])||result[key]<=0||result[key]>1)throw Error('Similarity thresholds must be in (0,1]');
   }
   if(!Number.isFinite(result.nearby_km)||result.nearby_km<0)throw Error('Invalid proximity threshold');
-  if(!Number.isSafeInteger(result.max_pairs)||result.max_pairs<1)throw Error('Invalid pair budget');
+  if(!Number.isSafeInteger(result.max_pairs)||result.max_pairs<1||result.max_pairs>1000000)throw Error('Invalid pair budget');
   return result;
 }
 
@@ -113,6 +113,42 @@ function pairs(groups,calculate){
   const results=[];
   for(const group of groups)for(let i=0;i<group.length;i++)for(let j=i+1;j<group.length;j++){
     const result=calculate(group[i],group[j]);
+    if(result)results.push(result);
+  }
+  return results;
+}
+
+function blockedPairs(groups,budget){
+  const selected=[];
+  let count=0,work=0;
+  const workLimit=Math.max(100000,budget*64);
+  for(const group of groups){
+    const index=new Map(), candidates=[];
+    for(const [right,item] of group.entries()){
+      const keys=new Set(item.names.flatMap(name=>[...grams(name.value)]));
+      const lefts=new Set();
+      for(const key of keys){
+        let posting=index.get(key);
+        if(!posting){posting=[];index.set(key,posting);}
+        for(const left of posting){
+          if(++work>workLimit)throw Error('Analysis blocking work exceeded its budget');
+          if(!lefts.has(left)&&++count>budget)throw Error('Analysis candidate pairs exceed the configured budget');
+          lefts.add(left);
+        }
+        posting.push(right);
+      }
+      for(const left of lefts)candidates.push([left,right]);
+    }
+    candidates.sort(([a,b],[c,d])=>a-c||b-d);
+    selected.push({group,candidates});
+  }
+  return {selected,count};
+}
+
+function compareBlocked({selected},calculate){
+  const results=[];
+  for(const {group,candidates} of selected)for(const [left,right] of candidates){
+    const result=calculate(group[left],group[right]);
     if(result)results.push(result);
   }
   return results;
@@ -228,18 +264,23 @@ function analyze(corpus,options={}){
   const claims=ordered(corpus.claims).filter(claim=>claim.assertion_status!=='withdrawn'&&visibleSubjects.has(identity(claim.subject)));
   const entityGroups=groupBy(entities,item=>item.entity.entity_type);
   const claimGroups=groupBy(claims,item=>JSON.stringify([identity(item.subject),item.predicate]));
-  const compared=pairCount(events.length)+[...entityGroups,...claimGroups].reduce((n,g)=>n+pairCount(g.length),0);
-  if(compared>config.max_pairs)throw Error(`Analysis needs ${compared} pairs, above the configured budget of ${config.max_pairs}`);
+  const claimPairs=claimGroups.reduce((total,group)=>total+pairCount(group.length),0);
+  if(claimPairs>config.max_pairs)throw Error('Analysis claim pairs exceed the configured budget');
+  const eventPairs=blockedPairs([events],config.max_pairs-claimPairs);
+  const entityPairs=blockedPairs(entityGroups,config.max_pairs-claimPairs-eventPairs.count);
+  const compared=claimPairs+eventPairs.count+entityPairs.count;
   return structuredClone({version:'1.0.0',algorithms:{...algorithms},parameters:config,
     profile:{id:corpus.profile.id,version:corpus.profile.version,namespace:corpus.profile.namespace,sha256:digest(corpus.profile)},
     corpus_sha256:digest(corpus),pair_count:compared,
+    blocking:{method:'shared-normalized-trigram',event_pairs:eventPairs.count,entity_pairs:entityPairs.count,
+      claim_pairs:claimPairs,excluded_pairs:pairCount(events.length)+entityGroups.reduce((n,g)=>n+pairCount(g.length),0)-eventPairs.count-entityPairs.count},
     protocol:'within_one_profile_manual_review_candidates',
     limitations:['lexical_similarity_is_not_identity','declared_radii_are_not_verified_error_bounds','observed_counts_are_not_historical_frequencies'],
     population:{duplicates:events.map(r=>r.event.id),entities:entities.map(r=>r.entity.id),claims:claims.map(r=>r.id)},
     start_sequence:events.map(({event})=>({id:event.id,start_date:event.start_date})).sort((a,b)=>
       compare(a.start_date.earliest??'~',b.start_date.earliest??'~')||compare(a.id,b.id)),
-    duplicates:pairs([events],(a,b)=>duplicatePair(a,b,config)),
-    entities:pairs(entityGroups,(a,b)=>entityPair(a,b,config.entity_threshold)),
+    duplicates:compareBlocked(eventPairs,(a,b)=>duplicatePair(a,b,config)),
+    entities:compareBlocked(entityPairs,(a,b)=>entityPair(a,b,config.entity_threshold)),
     claims:pairs(claimGroups,(a,b)=>claimPair(a,b,corpus.profile.locales)),
     coverage:coverage(events,claims,corpus,config.scope)});
 }

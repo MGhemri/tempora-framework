@@ -88,3 +88,15 @@ test('Fixed fictional labels record false matches and misses without implying hi
   assert.equal(result.results.claims.tn,3);
   assert.throws(()=>evaluate(analyze(referenceCorpus(),config),{version:'1.0.0',scope:'historical'}),/synthetic/);
 });
+
+test('Analysis blocks zero-similarity pairs and fails explicitly when dense buckets exceed the budget',()=>{
+ const {nativeCorpus}=require('./helpers/tempora');
+ const corpus=nativeCorpus(), template=corpus.events[0];
+ corpus.claims=[];
+ corpus.events=['東京','大阪','서울','القاهرة'].map((title,index)=>({...template,id:'BLOCK_'+index,title:{en:title}}));
+ const report=analyze(corpus,{scope:'working',max_pairs:1});
+ assert.equal(report.pair_count,0);
+ assert.equal(report.blocking.excluded_pairs,6);
+ corpus.events.forEach(event=>{event.title={en:'Fictional assembly'};});
+ assert.throws(()=>analyze(corpus,{scope:'working',max_pairs:1}),/candidate pairs.*budget/);
+});

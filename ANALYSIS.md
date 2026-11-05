@@ -54,3 +54,16 @@ npm run --silent quality:tempora:reference
 Ce jeu indépendant est fictif et utilise un profil anglais et espagnol. Les labels sont fixés par les scénarios. Le rapport indique les vrais et faux positifs et négatifs, la précision, le rappel et le score F1 par tâche et sous-groupe. Les mesures de contradiction portent sur la détection de valeurs potentiellement incompatibles. Les contradictions déjà enregistrées sont exclues de cette évaluation.
 
 Pour un autre jeu fictif, utiliser `--annotations fichier.json` avec la version `1.0.0`, la portée `synthetic`, l’empreinte `corpus_sha256`, le `protocol` et des `cases` déclarant `task`, deux `ids`, le booléen `expected`, le sous-groupe `group` et la justification `rationale`. Les tâches disponibles sont `duplicates`, `entities` et `claims`. Les mesures publiées par cette commande concernent uniquement les scénarios annotés.
+
+## Budget de calcul et mesure synthétique
+
+L’analyse indexe les trigrammes normalisés des titres et variantes. Deux notices sans trigramme commun ont un score lexical nul et ne sont pas comparées. Les groupes d’entités restent séparés par type. Les assertions comparables sont groupées par sujet et prédicat. Le rapport distingue les paires évaluées de celles écartées par l’index. Les labels de référence continuent de comptabiliser les faux négatifs, notamment lorsque deux descriptions n’ont pas de forme lexicale commune.
+
+Le budget de paires s’applique aux candidats. Les groupes très denses peuvent dépasser ce budget et produire une erreur explicite. Les fenêtres temporelles et les lieux restent des éléments de comparaison et ne servent pas à écarter d’office des notices incertaines.
+
+```sh
+npm run benchmark:tempora
+npm run benchmark:tempora -- --size 1000
+```
+
+Le benchmark utilise des groupes lexicaux synthétiques de 1 000, 10 000 et 100 000 notices. Il mesure le temps et le pic mémoire du processus et rapporte l’empreinte de chaque corpus. Les groupes de ce scénario sont peu denses. Ces mesures ne représentent pas les performances sur des données historiques ni sur un corpus dominé par des titres identiques.

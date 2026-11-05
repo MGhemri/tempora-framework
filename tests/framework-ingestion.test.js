@@ -154,3 +154,14 @@ test('Canonical CSV and GeoJSON mappings preserve the payload and reject forged 
  const narrow={...mapping(base),record_kind:'entity',fields:{record:'/payload'}};
  assert.equal(prepare(base,bytes([{payload:source}]),narrow).report.rows[0].diagnostics[0].code,'ROW_CANONICAL_KIND');
 });
+
+test('Input limits and malformed CSV headers fail before a preview can be staged',()=>{
+ const corpus=nativeCorpus();
+ const {MAX_BYTES}=require('../src/framework/ingestion-formats');
+ assert.throws(()=>prepare(corpus,Buffer.alloc(MAX_BYTES+1)),code('INPUT_SIZE'));
+ const nested='['.repeat(140)+'0'+']'.repeat(140);
+ assert.throws(()=>prepare(corpus,Buffer.from(nested)),code('INPUT_JSON_DEPTH'));
+ const csv=mapping(corpus,'csv',{delimiter:';'});
+ assert.throws(()=>prepare(corpus,Buffer.from('id;name;name\nA;B;C'),csv),code('INPUT_CSV_HEADER'));
+ assert.throws(()=>prepare(corpus,Buffer.from('id;name\nA;"B"x'),csv),code('INPUT_CSV_SYNTAX'));
+});

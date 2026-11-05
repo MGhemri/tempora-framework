@@ -5,4 +5,4 @@ function lexical(a,b){if(!normalize(a)||!normalize(b))return 0;const x=grams(a),
 function distance(a,b){const rad=x=>x*Math.PI/180;const [x,y]=a,[u,v]=b;
   const h=Math.sin(rad(v-y)/2)**2+Math.cos(rad(y))*Math.cos(rad(v))*Math.sin(rad(u-x)/2)**2;
   return 6371*2*Math.asin(Math.min(1,Math.sqrt(h)));}
-module.exports={normalize,lexical,distance};
+module.exports={normalize,grams,lexical,distance};
