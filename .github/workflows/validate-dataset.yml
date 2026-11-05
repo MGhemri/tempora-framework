@@ -87,3 +87,5 @@ jobs:
           cache: npm
       - run: npm ci
       - run: npm run test:e2e:synthetic
+        env:
+          TEMPORA_AUDIT_RUNTIME: "1"

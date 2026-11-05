@@ -54,4 +54,4 @@ Le contrôle d’intégrité des archives est disponible ici avec `npm run check
 
 Pour une évolution du noyau, indiquer le comportement attendu et les profils concernés. Les propositions documentaires ALNOP suivent le parcours de contribution du profil. [Guide de contribution](CONTRIBUTING.md)
 
-Le code est distribué sous licence MIT. Les droits et références des données et documents sont décrits séparément dans la politique de publication. [Licence](LICENSE) · [Politique des données](RELEASE_POLICY.md)
+Le code est distribué sous licence MIT. Les droits et références des données et documents sont décrits séparément dans la politique de publication. [Licence](LICENSE) · [Politique des données](RELEASE_POLICY.md) · [Sécurité](SECURITY.md)

@@ -18,6 +18,7 @@ test('The private tarball installs and executes a synthetic project outside the 
   fs.mkdirSync(consumer);
   fs.writeFileSync(path.join(consumer,'package.json'),JSON.stringify({name:'synthetic-consumer',version:'1.0.0',private:true}));
   npm(['install','--ignore-scripts','--no-audit','--no-fund',file],consumer,offline);
+  if(process.env.TEMPORA_AUDIT_RUNTIME==='1') npm(['audit','--omit=dev','--audit-level=low'],consumer);
   const installed=path.join(consumer,'node_modules/tempora-framework');
   const manifest=JSON.parse(fs.readFileSync(path.join(installed,'package.json'),'utf8'));
   assert.deepEqual(Object.keys(manifest.dependencies).sort(),['ajv','ajv-formats']);
@@ -71,7 +72,17 @@ test('The private tarball installs and executes a synthetic project outside the 
   const env={...process.env};
   delete env.NODE_PATH;
   delete env.NODE_TEST_CONTEXT;
-  for(const args of [[script],[path.join(installed,'src/cli/tempora.js'),'--version'],
+  const typed=path.join(consumer,'typed.cts');
+  fs.writeFileSync(typed,`
+    import {profiles, ingestion, canonical, api, type Corpus, type Validation} from 'tempora-framework';
+    const profile = profiles.load('profile.json');
+    const corpus: Corpus = ingestion.createCorpus(profile, {event_types: []});
+    const result: Validation = canonical.validateCorpus(corpus);
+    const handler = api.createHandler(api.createCatalog());
+    void [result, handler];
+  `);
+  const tsc=require.resolve('typescript/bin/tsc');
+  for(const args of [[tsc,'--noEmit','--strict','--module','node16',typed],[script],[path.join(installed,'src/cli/tempora.js'),'--version'],
     [path.join(installed,'src/cli/tempora.js'),'profile','validate','profile.json']]){
     const result=spawnSync(process.execPath,['--no-global-search-paths',...args],{cwd:consumer,env,encoding:'utf8',timeout:20000});
     assert.ifError(result.error);

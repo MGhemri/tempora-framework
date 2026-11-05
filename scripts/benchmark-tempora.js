@@ -3,6 +3,7 @@ const {parseArgs}=require('node:util');
 const {analyze}=require('../src/framework/analysis');
 const {createWorkingCorpus}=require('../src/framework/ingestion');
 const {temporal}=require('../src/framework/temporal');
+const {grams}=require('../src/framework/similarity');
 const profile=require('../tests/fixtures/profiles/synthetic-history/profile.json');
 
 function benchmark(size) {
@@ -16,9 +17,19 @@ function benchmark(size) {
     const title=String.fromCodePoint(0x4e00+group,0x4e00+(group+(i%5)*5003)%20992);
     corpus.events.push({...template,id:'BENCH_'+String(i).padStart(6,'0'),title:{en:title}});
   }
-  const start=performance.now();
+  const labels=[[0,1],[2,3],[4,5]];
+  const titles=['Fictional assembly','Fictional assembly','Réunion fictive','Réunion fictive','Historic council','مجلس تاريخي'];
+  for(const [index,title] of titles.entries())corpus.events[index].title={en:title};
+  const recalled=labels.filter(([left,right])=>{
+    const index=grams(titles[left]);
+    return [...grams(titles[right])].some(key=>index.has(key));
+  }).length;
+  const start=performance.now(),cpuStart=process.cpuUsage();
   const report=analyze(corpus,{scope:'working',max_pairs:500000});
-  return {size,elapsed_ms:Math.round(performance.now()-start),max_rss_kib:process.resourceUsage().maxRSS,
+  const cpu=process.cpuUsage(cpuStart),elapsed=performance.now()-start;
+  return {size,elapsed_ms:Math.round(elapsed),cpu_ms:Math.round((cpu.user+cpu.system)/1000),
+    events_per_second:Math.round(size*1000/elapsed),max_rss_kib:process.resourceUsage().maxRSS,
+    blocking_reference:{positive:labels.length,recalled,recall:recalled/labels.length},
     input_sha256:report.corpus_sha256,compared:report.pair_count,excluded:report.blocking.excluded_pairs,
     candidates:report.duplicates.length};
 }

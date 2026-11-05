@@ -61,6 +61,7 @@
     "chart.js": "^4.6.1",
     "leaflet": "^1.9.4",
     "leaflet.markercluster": "^1.5.3",
-    "markdown-it": "^15.0.3"
+    "markdown-it": "^15.0.3",
+    "typescript": "5.9.3"
   }
 }
