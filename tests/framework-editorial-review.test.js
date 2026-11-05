@@ -4,7 +4,7 @@ const {nativeCorpus} = require('./helpers/tempora');
 const {readCorpus, root} = require('../src/canonical');
 const {toTempora} = require('../src/profiles/alnop-migration');
 const {load} = require('../src/profiles/alnop');
-const {reviewPolicy, contentDigest, recordDecision, validatePublicationEligibility} = require('../src/framework/editorial-review');
+const {reviewPolicy, contentDigest, recordDecision, verifyReviewJournal, validatePublicationEligibility} = require('../src/framework/editorial-review');
 
 const date = '2026-11-05T12:00:00Z';
 const ref = ({kind, id, namespace}) => ({kind, id, namespace});
@@ -90,4 +90,39 @@ test('A technically valid 264th event cannot pass the publication gate on its pu
   assert.equal(corpus.events.length, 264);
   assert.ok(validate(additional).errors.some(error => error.subject.id === additional.id && error.code === 'PUBLICATION_REVIEW_REQUIRED'));
   assert.equal(validate(corpus.events[0]).eligible, false);
+});
+
+
+test('An independent journal head rejects a valid prefix and a rewritten chain', () => {
+  const {corpus, policy, append, validate} = setup();
+  const [source] = corpus.sources;
+  const submitted = append(source, 'submitted', 'proposed', 'under_review');
+  const journal = append(source, 'approved', 'under_review', 'published');
+  const expectedHead = journal.at(-1).entry_sha256;
+  const verify = (entries, head = expectedHead) => verifyReviewJournal({corpus, policy, journal: entries, expectedHead: head});
+  assert.equal(verify(journal).entries, 2);
+  assert.equal(validate(source, {expectedHead}).eligible, true);
+  assert.throws(() => verify(submitted), code('REVIEW_ANCHOR_MISMATCH'));
+  assert.throws(() => validate(source, {journal: submitted, expectedHead}), code('REVIEW_ANCHOR_MISMATCH'));
+  const altered = structuredClone(journal);
+  altered[1].reason = 'Rewritten with valid internal hashes';
+  const {entry_sha256, ...body} = altered[1];
+  altered[1].entry_sha256 = require('../src/framework/canonical').digest(body);
+  assert.equal(verify(altered, altered[1].entry_sha256).entries, 2);
+  assert.throws(() => verify(altered), code('REVIEW_ANCHOR_MISMATCH'));
+});
+
+test('Missing locators, changed policy and contested assertions block eligibility', () => {
+  const fixture = nativeCorpus();
+  const claim = fixture.claims[0];
+  claim.assertion_status = 'contested';
+  const {append, approve, validate, policy} = setup(fixture);
+  const event = fixture.events[0];
+  event.provenance.evidence[0].locator = null;
+  append(event, 'submitted', 'proposed', 'under_review');
+  assert.throws(() => append(event, 'approved', 'under_review', 'published'), code('REVIEW_EVIDENCE'));
+  approve(fixture.sources[0]);
+  approve(claim);
+  assert.ok(validate(claim).errors.some(error => error.code === 'PUBLICATION_CLAIM_POLICY'));
+  assert.throws(() => validate(claim, {policy: {...policy, contested: 'allow'}}), code('REVIEW_JOURNAL'));
 });

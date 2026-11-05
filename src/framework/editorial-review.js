@@ -129,6 +129,20 @@ function replay(index, journal, policy) {
   return {states, head, lastTime};
 }
 
+function assertJournalHead(head, expectedHead) {
+  if (!isHash(expectedHead) || head !== expectedHead) {
+    fail('REVIEW_ANCHOR_MISMATCH', 'Journal head does not match the independently supplied SHA-256');
+  }
+}
+
+function verifyReviewJournal({corpus, policy, journal, expectedHead}) {
+  assertCorpus(corpus);
+  assertPolicy(corpus.profile, policy);
+  const {head} = replay(indexCorpus(corpus), journal, policy);
+  assertJournalHead(head, expectedHead);
+  return {journal_head: head, policy_sha256: digest(policy), entries: journal.length};
+}
+
 function assertPolicy(profile, policy) {
   const expected = reviewPolicy(profile, policy);
   if (digest(expected) !== digest(policy)) fail('REVIEW_POLICY', 'Policy must match the exact profile and version');
@@ -181,12 +195,13 @@ function dependencies(record) {
   ];
 }
 
-function validatePublicationEligibility({corpus, policy, journal = [], subjects, asOf}) {
+function validatePublicationEligibility({corpus, policy, journal = [], subjects, asOf, expectedHead}) {
   assertCorpus(corpus);
   assertPolicy(corpus.profile, policy);
   const time = timestamp(asOf);
   const index = indexCorpus(corpus);
   const {states, head, lastTime} = replay(index, journal, policy);
+  if (expectedHead !== undefined) assertJournalHead(head, expectedHead);
   if (lastTime > time) fail('REVIEW_TIME', 'Journal contains a decision after the eligibility date');
   if (!Array.isArray(subjects) || !subjects.length) fail('PUBLICATION_SELECTION', 'Select publication subjects explicitly');
 
@@ -232,4 +247,4 @@ function validatePublicationEligibility({corpus, policy, journal = [], subjects,
     corpus_sha256: digest(corpus), policy_sha256: digest(policy), journal_head: head, as_of: asOf};
 }
 
-module.exports = {reviewPolicy, contentDigest, recordDecision, validatePublicationEligibility};
+module.exports = {reviewPolicy, contentDigest, recordDecision, verifyReviewJournal, validatePublicationEligibility};
