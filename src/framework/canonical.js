@@ -24,13 +24,21 @@ function jsonValue(value,seen=new Set(),depth=0){
 function canonicalStringify(value){jsonValue(value);const order=v=>Array.isArray(v)?v.map(order):v&&typeof v==='object'?Object.fromEntries(Object.keys(v).sort().map(k=>[k,order(v[k])])):v;return JSON.stringify(order(value));}
 const digest=value=>crypto.createHash('sha256').update(canonicalStringify(value)).digest('hex');
 const identity=r=>JSON.stringify([r.kind,r.namespace,r.id]);
+function sourceUrlValid(url){
+ if(url===null)return true;
+ try{return ['https:','http:'].includes(new URL(url).protocol);}catch{return false;}
+}
+const geometryRoleValid=record=>(record.geometry===null)===(record.geometry_role==='unknown');
 function validateObject(type,value){
+ if(typeof type!=='string'||!Object.hasOwn(validators,type))throw new CanonicalError('CANONICAL_SCHEMA_UNKNOWN','Unknown schema');
  try{jsonValue(value);}catch(e){return {valid:false,errors:[{code:e.code,message:e.message}]};}
- const check=validators[type];if(!check)throw new CanonicalError('CANONICAL_SCHEMA_UNKNOWN','Unknown schema');
+ const check=validators[type];
  const errors=[];if(!check(value))errors.push(...structuredClone(check.errors).map(e=>({code:'CANONICAL_SCHEMA_INVALID',path:e.instancePath,message:e.message})));
  if(!errors.length&&type!=='corpus'&&type!=='temporal-expression'){for(const key of ['start_date','end_date','valid_from','valid_to'])if(value?.[key])for(const message of temporalErrors(value[key]))errors.push({code:'CANONICAL_TIME_INVALID',path:key,message});}
  if(!errors.length&&type==='temporal-expression')for(const message of temporalErrors(value))errors.push({code:'CANONICAL_TIME_INVALID',message});
  if(!errors.length&&(type==='spatial-assertion'||type==='geometry'))for(const message of geometryErrors(type==='geometry'?value:value.geometry))errors.push({code:'CANONICAL_GEOMETRY_INVALID',message});
+ if(!errors.length&&type==='spatial-assertion'&&!geometryRoleValid(value))errors.push({code:'CANONICAL_GEOMETRY_ROLE',path:'/geometry_role',message:'Geometry and declared role disagree'});
+ if(!errors.length&&type==='source'&&!sourceUrlValid(value.url))errors.push({code:'CANONICAL_SOURCE_URL_INVALID',path:'/url',message:'Unsupported source URL'});
  return {valid:errors.length===0,errors};
 }
 function validateCorpus(corpus){
@@ -69,10 +77,10 @@ function validateCorpus(corpus){
   for(const ref of r.subjects||[])checkRef(ref,r);
   for(const ref of r.contradicts||[]){const target=checkRef(ref,r,['claim']);if(target&&(identity(target)===identity(r)||identity(target.subject)!==identity(r.subject)||target.predicate!==r.predicate||target.assertion_status!=='contested'||r.assertion_status!=='contested'))add('CANONICAL_CONTRADICTION_INVALID',r,'Contradiction requires distinct contested assertions on the same subject and predicate');}
   if(r.kind==='claim'&&r.value&&typeof r.value==='object'&&r.value.type==='interval'&&(!Number.isFinite(r.value.lower)||!Number.isFinite(r.value.upper)||r.value.lower>r.value.upper))add('CANONICAL_VALUE_INVALID',r,'Inverted or invalid numeric interval');
-  if(r.kind==='source'&&r.url!==null){try{if(!['https:','http:'].includes(new URL(r.url).protocol))throw Error();}catch{add('CANONICAL_SOURCE_URL_INVALID',r,'Unsupported source URL');}}
+  if(r.kind==='source'&&!sourceUrlValid(r.url))add('CANONICAL_SOURCE_URL_INVALID',r,'Unsupported source URL');
   if(r.kind==='spatial'){
    for(const message of geometryErrors(r.geometry))add('CANONICAL_GEOMETRY_INVALID',r,message);
-   if((r.geometry===null)!==(r.geometry_role==='unknown'))add('CANONICAL_GEOMETRY_ROLE',r,'Geometry and declared role disagree');
+   if(!geometryRoleValid(r))add('CANONICAL_GEOMETRY_ROLE',r,'Geometry and declared role disagree');
   }
   if(r.editorial_status==='published'&&r.kind==='event'&&!r.review_refs.length)warnings.push({code:'NO_RECORDED_REVIEW',id:r.id,message:'Existing publication does not imply scientific approval'});
  }

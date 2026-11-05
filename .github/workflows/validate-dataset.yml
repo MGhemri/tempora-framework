@@ -74,3 +74,16 @@ jobs:
 
       - name: Run dataset validation suite
         run: python validate_dataset.py
+
+
+  core-contracts-windows:
+    name: TEMPORA core contracts on Windows
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run test:core

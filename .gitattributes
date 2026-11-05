@@ -31,3 +31,5 @@ schemas/tempora*.schema.json text eol=lf
 schemas/tempora/** text eol=lf
 docs/schemas/** text eol=lf
 docs/profiles/** text eol=lf
+
+tests/fixtures/canonical-v3.utf8 -text

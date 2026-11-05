@@ -24,6 +24,16 @@ Les contrôles couvrent la structure, les références typées, l’unicité des
 
 Un ID d’événement reste indépendant de son titre. Les références contiennent `kind`, `namespace` et `id`. Un corpus représente un profil ; les références vers un autre espace de noms sont refusées à cette étape. Les propriétés supplémentaires de domaine vont dans `extensions`, sous une clé d’espace de noms.
 
+## Métadonnées de profil
+
+Le manifeste 1.0.0 peut déclarer des références de mappings par identifiant et version dans `mappings`. Chaque identifiant doit être unique dans le profil. Le champ facultatif `provenance` décrit la référence et l’origine du manifeste. Ces métadonnées restent déclaratives. Le chargement d’un mapping s’effectue séparément, par une entrée explicite.
+
+## Sérialisation et empreintes
+
+`canonicalStringify` produit du JSON compact sans marqueur d’encodage ni saut de ligne final. Les clés sont triées suivant les unités UTF-16 de JavaScript. Lors de l’émission JSON, les clés qui sont des indices de tableau ECMAScript apparaissent d’abord dans l’ordre numérique. Les valeurs des tableaux gardent leur ordre, y compris les collections du corpus. Le tri métier des collections se fait avant la sérialisation, lorsque le contrat de l’artefact le prévoit.
+
+Le texte conserve ses caractères sans normalisation Unicode. Les nombres suivent la sérialisation JSON de JavaScript, avec `-0` représenté par `0` et rejet des nombres non finis. `digest` calcule SHA-256 sur les octets UTF-8 de cette représentation et renvoie 64 caractères hexadécimaux minuscules. L’empreinte d’un fichier distribué porte sur ses octets exacts, y compris les éventuels séparateurs de lignes. Le vecteur binaire de référence est vérifié sur Linux et Windows.
+
 ## Informations et provenance
 
 Les titres, descriptions et libellés sont des objets indexés par langue. Une langue absente n’est pas traduite automatiquement. Une valeur inconnue est `null` ; zéro reste une valeur distincte.

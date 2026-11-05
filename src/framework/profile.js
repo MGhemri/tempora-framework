@@ -9,17 +9,32 @@ function safe(value,depth=0){
  if(['undefined','function','symbol','bigint'].includes(typeof value)||(typeof value==='number'&&!Number.isFinite(value)))fail('PROFILE_VALUE_INVALID','Profile values must be JSON-compatible');
  if(value&&typeof value==='object'){
   if(!Array.isArray(value)&&![Object.prototype,null].includes(Object.getPrototypeOf(value)))fail('PROFILE_VALUE_INVALID','Profile objects must be plain JSON objects');
-  for(const key of Object.keys(value)){if(reserved.has(key))fail('PROFILE_UNSAFE_KEY','Reserved configuration key');safe(value[key],depth+1);}
+  const keys=Reflect.ownKeys(value);
+  if(Array.isArray(value)&&(keys.length!==value.length+1||keys.slice(0,-1).some((key,index)=>key!==String(index))))fail('PROFILE_VALUE_INVALID','Profile arrays must be dense and undecorated');
+  for(const key of keys){
+   if(Array.isArray(value)&&key==='length')continue;
+   if(reserved.has(key))fail('PROFILE_UNSAFE_KEY','Reserved configuration key');
+   const descriptor=Object.getOwnPropertyDescriptor(value,key);
+   if(typeof key!=='string'||!descriptor.enumerable||!Object.hasOwn(descriptor,'value'))fail('PROFILE_VALUE_INVALID','Profile data cannot contain symbols, accessors or hidden fields');
+   safe(descriptor.value,depth+1);
+  }
  }
 }
 function freeze(value){if(value&&typeof value==='object'){for(const child of Object.values(value))freeze(child);Object.freeze(value);}return value;}
 function merge(parent,child){const result=structuredClone(parent);for(const [key,value]of Object.entries(child)){result[key]=value&&typeof value==='object'&&!Array.isArray(value)&&result[key]&&typeof result[key]==='object'&&!Array.isArray(result[key])?merge(result[key],value):structuredClone(value);}return result;}
 function versionCompare(a,b){const x=a.split('.').map(Number),y=b.split('.').map(Number);for(let i=0;i<3;i++)if(x[i]!==y[i])return x[i]<y[i]?-1:1;return 0;}
 function validDay(value){return typeof value==='string'&&/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(value)&&!value.startsWith('0000-')&&Number.isFinite(Date.parse(value+'T00:00:00Z'))&&new Date(value+'T00:00:00Z').toISOString().slice(0,10)===value;}
-function resolveProfile(manifest,{parent={},parameters={},severities={}}={}){
+function resolveProfile(manifest,options={}){
+ if(!options||typeof options!=='object'||Array.isArray(options))fail('PROFILE_VALUE_INVALID','Profile options must be an object');
+ const readOption=key=>{
+  const descriptor=Object.getOwnPropertyDescriptor(options,key);
+  if(descriptor&&!Object.hasOwn(descriptor,'value'))fail('PROFILE_VALUE_INVALID','Profile options cannot contain accessors');
+  return descriptor?.value===undefined?{}:descriptor.value;
+ };
+ const parent=readOption('parent'),parameters=readOption('parameters'),severities=readOption('severities');
  for(const value of [manifest,parent,parameters,severities])if(!value||typeof value!=='object'||Array.isArray(value))fail('PROFILE_SCHEMA_INVALID','Profile configuration must be an object');
  if(Object.hasOwn(manifest,'extends')&&!Object.keys(parent).length)fail('PROFILE_PARENT_UNRESOLVED','Parent must be resolved explicitly');
- safe(manifest);safe(parent);safe(parameters);safe(severities);
+ for(const value of [manifest,parent,parameters,severities])safe(value);
  const result=merge(parent,manifest);delete result.extends;
  if(!validateSchema(result))fail('PROFILE_SCHEMA_INVALID','Invalid profile manifest',structuredClone(validateSchema.errors));
  const [lower,upper]=result.framework.split(' ').map(v=>v.replace(/^[><=]+/,''));
@@ -32,6 +47,11 @@ function resolveProfile(manifest,{parent={},parameters={},severities={}}={}){
  const ids=new Set();for(const rule of result.rules){if(ids.has(rule.id))fail('PROFILE_RULE_DUPLICATE','Duplicate rule identifier');ids.add(rule.id);if(rule.field.split('.').some(p=>reserved.has(p)))fail('PROFILE_UNSAFE_FIELD','Reserved field path');if(rule.type==='vocabulary'&&!result.taxonomies.includes(rule.taxonomy))fail('PROFILE_TAXONOMY_MISSING','Rule references an undeclared taxonomy');}
  for(const [id,severity]of Object.entries(severities)){if(!ids.has(id)||!['error','warning','info'].includes(severity))fail('PROFILE_OVERRIDE_INVALID','Invalid severity override');result.rules.find(r=>r.id===id).severity=severity;}
  const aliases=new Map();for(const alias of result.aliases||[]){if(!result.taxonomies.includes(alias.taxonomy)||!result.locales.includes(alias.language)||!alias.value.trim()||!alias.canonical.trim())fail('PROFILE_ALIAS_INVALID','Alias must reference a declared taxonomy and language');const key=JSON.stringify([alias.taxonomy,alias.value]);if(aliases.has(key)&&aliases.get(key)!==alias.canonical)fail('PROFILE_ALIAS_AMBIGUOUS','Alias has conflicting targets');aliases.set(key,alias.canonical);}
+ const mappingIds=new Set();
+ for(const mapping of result.mappings||[]){
+  if(mappingIds.has(mapping.id))fail('PROFILE_MAPPING_DUPLICATE','Duplicate profile mapping identifier');
+  mappingIds.add(mapping.id);
+ }
  result.parameters=merge(result.parameters||{},parameters);return freeze(result);
 }
 module.exports={ProfileError,RUNTIME_VERSION,resolveProfile,validDay,freeze};

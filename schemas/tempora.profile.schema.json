@@ -19,6 +19,14 @@
     "spatial":{"type":"object","additionalProperties":false,"required":["crs"],"properties":{"crs":{"type":"string","minLength":1}}},
     "taxonomies":{"type":"array","uniqueItems":true,"items":{"type":"string","pattern":"^[a-z][a-z0-9_]{0,63}$"}},
     "aliases":{"type":"array","items":{"type":"object","additionalProperties":false,"required":["taxonomy","language","value","canonical"],"properties":{"taxonomy":{"type":"string"},"language":{"type":"string"},"value":{"type":"string","minLength":1},"canonical":{"type":"string","minLength":1}}}},
+    "mappings":{"type":"array","maxItems":128,"items":{"type":"object","additionalProperties":false,"required":["id","version"],"properties":{
+      "id":{"type":"string","pattern":"^[a-z][a-z0-9-]{0,79}$"},
+      "version":{"type":"string","pattern":"^[0-9]{1,6}\\.[0-9]{1,6}\\.[0-9]{1,6}$"}
+    }}},
+    "provenance":{"type":"object","additionalProperties":false,"minProperties":1,"properties":{
+      "reference":{"type":"string","minLength":1,"maxLength":2048},
+      "description":{"type":"string","minLength":1,"maxLength":4096}
+    }},
     "parameters":{"type":"object"},
     "rules":{"type":"array","maxItems":128,"items":{"type":"object","additionalProperties":false,"required":["id","type","field","severity"],"properties":{
       "id":{"type":"string","pattern":"^[a-z][a-z0-9_-]{0,63}$"},
