@@ -35,7 +35,6 @@
     "quality:conflicts": "node scripts/report-conflicts.js",
     "quality:benchmark": "node scripts/evaluate-duplicates.js",
     "build": "npm run check:publication-files && npm run validate:profiles && npm run build:canonical && npm run build:documentation && npm run build:openapi && npm run build:releases && npm run build:coverage && npm run build:assistance && npm run build:entity-search",
-    "build:vercel": "npm run validate:canonical && npm run build && npm run test:api && npm run check:canonical && npm run check:documentation && npm run check:releases && npm run check:coverage && npm run check:assistance && npm run check:entity-search",
     "pretest:browser": "npm run build:documentation",
     "migrate:tempora": "node scripts/migrate-tempora.js",
     "ingest:tempora": "node scripts/ingest-tempora.js",

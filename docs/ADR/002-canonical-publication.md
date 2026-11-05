@@ -20,7 +20,7 @@ Les anciens objets restent identiques. Les fiches nouvelles ou révisées dispos
 
 ## Déploiement
 
-Vercel exécute les validations et tests Node avant la publication ; GitHub Pages vérifie aussi les exports, les tests et le validateur Python avant l’envoi des fichiers. Un échec interrompt le déploiement. Les rapports JSON et Markdown de validation sont conservés comme artefacts CI. Les versions publiées précédemment restent disponibles pour revenir à un déploiement antérieur en cas d’incident.
+TEMPORA publie sa documentation et ses fichiers statiques sur GitHub Pages. Les contrôles du dépôt vérifient les exports et les données du profil de compatibilité ALNOP. L’application et les API historiques ALNOP sont exploitées depuis le dépôt historique.
 
 ## Limites
 

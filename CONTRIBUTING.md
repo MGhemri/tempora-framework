@@ -47,11 +47,9 @@ La liste défilante affiche un compteur et permet une recherche par nom FR/AR, i
 
 Le formulaire charge les fiches du corpus : il ne permet pas de saisir un nouvel ID dans le sélecteur. Les modèles GitHub demandent de copier les IDs existants ; la revue vérifie leur existence. Aucune proposition ne crée automatiquement de fiche ou d'identifiant.
 
-## Exploitation de la messagerie (mainteneur)
+## Messagerie de l’application historique ALNOP
 
-Configurer `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` et `CONTACT_DEST` dans les variables serveur Vercel. `CONTRIBUTION_DEST` est facultatif et remplace le destinataire pour les propositions. Aucun secret ne doit être commité. Les variables ajoutées nécessitent un nouveau déploiement.
-
-`POST /api/contributions` valide les champs et les identifiants, n'accepte aucun destinataire fourni par le visiteur et n'écrit pas dans le corpus. Les limites anti-abus et la déduplication sont en mémoire par instance ; elles ne constituent pas une protection distribuée ni une garantie d'envoi exactement une fois. Une même tentative conserve sa référence et son Message-ID. La réception dans la boîte finale n'est pas vérifiée par le site.
+Le service de messagerie de l’atlas est exploité par le projet historique. Voir le [guide du profil ALNOP](ALNOP.md).
 
 ## Préparer et publier une contribution acceptée (mainteneur)
 

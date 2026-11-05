@@ -32,9 +32,8 @@
 </ul>
 <p>La liste défilante affiche un compteur et permet une recherche par nom FR/AR, identifiant, année ou lieu. Effacer la recherche réaffiche toutes les fiches ; l’intitulé complet de la sélection reste visible.</p>
 <p>Le formulaire charge les fiches du corpus : il ne permet pas de saisir un nouvel ID dans le sélecteur. Les modèles GitHub demandent de copier les IDs existants ; la revue vérifie leur existence. Aucune proposition ne crée automatiquement de fiche ou d'identifiant.</p>
-<h2 id="exploitation-de-la-messagerie-mainteneur">Exploitation de la messagerie (mainteneur)</h2>
-<p>Configurer <code>SMTP_HOST</code>, <code>SMTP_PORT</code>, <code>SMTP_USER</code>, <code>SMTP_PASS</code> et <code>CONTACT_DEST</code> dans les variables serveur Vercel. <code>CONTRIBUTION_DEST</code> est facultatif et remplace le destinataire pour les propositions. Aucun secret ne doit être commité. Les variables ajoutées nécessitent un nouveau déploiement.</p>
-<p><code>POST /api/contributions</code> valide les champs et les identifiants, n'accepte aucun destinataire fourni par le visiteur et n'écrit pas dans le corpus. Les limites anti-abus et la déduplication sont en mémoire par instance ; elles ne constituent pas une protection distribuée ni une garantie d'envoi exactement une fois. Une même tentative conserve sa référence et son Message-ID. La réception dans la boîte finale n'est pas vérifiée par le site.</p>
+<h2 id="messagerie-de-lapplication-historique-alnop">Messagerie de l’application historique ALNOP</h2>
+<p>Le service de messagerie de l’atlas est exploité par le projet historique. Voir le <a href="alnop.html">guide du profil ALNOP</a>.</p>
 <h2 id="préparer-et-publier-une-contribution-acceptée-mainteneur">Préparer et publier une contribution acceptée (mainteneur)</h2>
 <ol>
 <li>Enregistrer la pièce jointe JSON reçue dans un emplacement de travail privé. Pour une nouvelle opération : <code>node scripts/prepare-contribution.js --input chemin/proposition.json --id IDENTIFIANT_ATTRIBUE_PAR_LE_MAINTENEUR</code>. L’outil produit un brouillon dans work/prepared ; aucun ID n’est choisi par le visiteur.</li>
