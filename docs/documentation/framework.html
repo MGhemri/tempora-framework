@@ -143,4 +143,18 @@ npm run publication:tempora -- verify --directory chemin/vers/version.files
 <p>Le contrat OpenAPI 3.1 est disponible à <code>/api/v3/openapi.json</code> et l’état du service à <code>/health</code>. Le préfixe <code>/api/v3</code> identifie le contrat générique. Sous <code>/profiles/{profileId}</code>, l’API fournit les versions, événements, sources, entités, assertions, relations, géométries et statistiques documentaires. Les archives activées se consultent avec <code>release=&lt;id&gt;</code>. Une version simplement préparée ne figure pas dans le catalogue.</p>
 <p>Les listes acceptent <code>limit</code> et <code>cursor</code>. Les événements peuvent être filtrés par dates, type, langue, présence d’une source ou référence géographique. La recherche <code>q</code> compare le texte des titres et descriptions sans distinction de casse. <code>spatial?format=geojson</code> renvoie une collection GeoJSON dans le champ <code>data</code> avec la précision déclarée. Les erreurs fournissent <code>code</code>, <code>message</code> et <code>field</code> lorsqu’un paramètre est identifié. Un curseur reste lié à la version et aux filtres de sa requête.</p>
 <p>Les versions explicites sont immuables et les réponses ont un ETag. L’option <code>--cors-origin</code> restreint les requêtes navigateur à une origine choisie. L’adaptateur local exerce des limites de taille. Un éventuel hôte en ligne devra définir ses propres limites de débit.</p>
+<h2 id="installer-le-sdk-et-la-cli-hors-du-dépôt">Installer le SDK et la CLI hors du dépôt</h2>
+<p>Le manifeste de distribution est séparé du dépôt de développement. Le paquet CommonJS est marqué privé et sa version de travail <code>3.0.0-dev.0</code> est indépendante du numéro de schéma. La commande de paquetage copie une liste explicite de fichiers génériques. Le tarball utilise Ajv et ajv-formats comme dépendances d’exécution.</p>
+<pre><code class="language-sh">npm run pack:tempora -- --out work --write
+npm install /chemin/vers/tempora-framework-3.0.0-dev.0.tgz
+npx tempora --help
+npx tempora profile validate profil.json
+</code></pre>
+<p>Omettre <code>--write</code> pour lister les fichiers sans produire de tarball. La CLI renvoie des résultats JSON pour les commandes de traitement et un code de sortie 1 en cas d’erreur. Les écritures exigent un répertoire explicite avec <code>--output-root</code>. Les anciennes commandes npm restent disponibles pendant la transition.</p>
+<pre><code class="language-js">const {profiles, canonical, ingestion, analysis, review, publication, api} = require('tempora-framework');
+const profile = profiles.load('profil.json');
+const corpus = ingestion.createCorpus(profile, {event_types: [], territorial_units: []});
+console.log(canonical.validateCorpus(corpus));
+</code></pre>
+<p>Le SDK expose les types TypeScript et les schémas via <code>tempora-framework/schemas/profile</code>, <code>tempora-framework/schemas/mapping</code> et <code>tempora-framework/schemas/v3/corpus</code>. Les erreurs du SDK peuvent inclure un <code>code</code> et des détails structurés. La CI installe le tarball dans un répertoire distinct et vérifie le parcours synthétique de l’import à la lecture HTTP.</p>
 </main></body></html>

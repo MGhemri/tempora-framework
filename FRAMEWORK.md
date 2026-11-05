@@ -173,3 +173,25 @@ Le contrat OpenAPI 3.1 est disponible à `/api/v3/openapi.json` et l’état du 
 Les listes acceptent `limit` et `cursor`. Les événements peuvent être filtrés par dates, type, langue, présence d’une source ou référence géographique. La recherche `q` compare le texte des titres et descriptions sans distinction de casse. `spatial?format=geojson` renvoie une collection GeoJSON dans le champ `data` avec la précision déclarée. Les erreurs fournissent `code`, `message` et `field` lorsqu’un paramètre est identifié. Un curseur reste lié à la version et aux filtres de sa requête.
 
 Les versions explicites sont immuables et les réponses ont un ETag. L’option `--cors-origin` restreint les requêtes navigateur à une origine choisie. L’adaptateur local exerce des limites de taille. Un éventuel hôte en ligne devra définir ses propres limites de débit.
+
+## Installer le SDK et la CLI hors du dépôt
+
+Le manifeste de distribution est séparé du dépôt de développement. Le paquet CommonJS est marqué privé et sa version de travail `3.0.0-dev.0` est indépendante du numéro de schéma. La commande de paquetage copie une liste explicite de fichiers génériques. Le tarball utilise Ajv et ajv-formats comme dépendances d’exécution.
+
+```sh
+npm run pack:tempora -- --out work --write
+npm install /chemin/vers/tempora-framework-3.0.0-dev.0.tgz
+npx tempora --help
+npx tempora profile validate profil.json
+```
+
+Omettre `--write` pour lister les fichiers sans produire de tarball. La CLI renvoie des résultats JSON pour les commandes de traitement et un code de sortie 1 en cas d’erreur. Les écritures exigent un répertoire explicite avec `--output-root`. Les anciennes commandes npm restent disponibles pendant la transition.
+
+```js
+const {profiles, canonical, ingestion, analysis, review, publication, api} = require('tempora-framework');
+const profile = profiles.load('profil.json');
+const corpus = ingestion.createCorpus(profile, {event_types: [], territorial_units: []});
+console.log(canonical.validateCorpus(corpus));
+```
+
+Le SDK expose les types TypeScript et les schémas via `tempora-framework/schemas/profile`, `tempora-framework/schemas/mapping` et `tempora-framework/schemas/v3/corpus`. Les erreurs du SDK peuvent inclure un `code` et des détails structurés. La CI installe le tarball dans un répertoire distinct et vérifie le parcours synthétique de l’import à la lecture HTTP.

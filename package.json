@@ -43,7 +43,9 @@
     "quality:tempora:reference": "node scripts/evaluate-tempora.js",
     "check:tempora:baseline": "node scripts/check-tempora-baseline.js",
     "publication:tempora": "node scripts/publish-tempora.js",
-    "serve:tempora": "node scripts/serve-tempora.js"
+    "serve:tempora": "node scripts/serve-tempora.js",
+    "test:package": "node --test tests/architecture/framework-package.test.js",
+    "pack:tempora": "node scripts/pack-tempora.js"
   },
   "dependencies": {
     "nodemailer": "^10.3.1"

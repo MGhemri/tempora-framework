@@ -1,0 +1,20 @@
+{
+  "name": "tempora-framework",
+  "version": "3.0.0-dev.0",
+  "private": true,
+  "description": "Independent toolkit for historical corpora",
+  "license": "MIT",
+  "type": "commonjs",
+  "engines": {"node": ">=20"},
+  "bin": {"tempora": "src/cli/tempora.js"},
+  "main": "./src/sdk/index.js",
+  "types": "./src/sdk/index.d.ts",
+  "exports": {
+    ".": {"types": "./src/sdk/index.d.ts", "default": "./src/sdk/index.js"},
+    "./schemas/profile": "./schemas/tempora.profile.schema.json",
+    "./schemas/mapping": "./schemas/tempora.ingestion-mapping.schema.json",
+    "./schemas/v3/*": "./schemas/tempora/v3/*.schema.json"
+  },
+  "files": ["src/framework", "src/sdk", "src/cli", "schemas", "scripts"],
+  "dependencies": {"ajv": "8.20.0", "ajv-formats": "3.0.1"}
+}
