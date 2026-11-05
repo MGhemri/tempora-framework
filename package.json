@@ -5,6 +5,7 @@
   "description": "TEMPORA Framework pour structurer, valider et analyser des corpus historiques par profil",
   "scripts": {
     "test": "npm run test:api && npm run test:data",
+    "test:framework": "node --test tests/architecture/framework-isolation.test.js",
     "test:api": "node --test tests/*.test.js",
     "test:blind": "node tests/blind-test.js",
     "test:data": "node tests/run-validation.js",

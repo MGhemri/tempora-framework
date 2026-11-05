@@ -1,7 +1,7 @@
 const {assertCorpus, digest, identity}=require('./canonical');
 const {temporalRelation}=require('./temporal');
-const {lexical,distance}=require('../shared/similarity');
-const {compareClaims}=require('../shared/assistance');
+const {lexical,distance}=require('./similarity');
+const {compareClaims}=require('./claim-comparison');
 
 const algorithms={
   duplicates:'documented-event-similarity@1.0.0',

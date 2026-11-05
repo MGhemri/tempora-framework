@@ -1,6 +1,6 @@
 // Similarities are review hints. They never change records, IDs or editorial status.
 const defaults=Object.freeze({lexical_threshold:0.5,shared_place_threshold:0.25,nearby_km:10});
-const {normalize,lexical,distance}=require('./shared/similarity');
+const {normalize,lexical,distance}=require('./framework/similarity');
 function overlap(a,b){return a?.earliest&&b?.earliest?!(a.latest<b.earliest||b.latest<a.earliest):null;}
 function pair(a,b,options=defaults){
   options={...defaults,...options};

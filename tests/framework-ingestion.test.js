@@ -3,8 +3,6 @@ const fs=require('node:fs'),path=require('node:path');
 const {prepareImport,acceptImport,createWorkingCorpus,renderMarkdown}=require('../src/framework/ingestion');
 const {digest,validateCorpus}=require('../src/framework/canonical');
 const {nativeCorpus}=require('./helpers/tempora');
-const {toTempora}=require('../src/profiles/alnop-migration');
-const old=require('../src/canonical'),alnop=require('../src/profiles/alnop');
 const time='2026-11-05T00:00:00Z',reviewed='2026-11-05T01:00:00Z';
 const review=(...ids)=>({ids,reviewer:'TEST only',reason:'Fictional local staging test',reviewed_at:reviewed});
 const code=expected=>e=>e.code===expected;
@@ -64,18 +62,8 @@ test('Mapping contract rejects unsafe selectors, ambiguous options and wrong pro
  for(const [change,expected]of [[x=>x.profile_version='9.0.0','MAPPING_PROFILE_MISMATCH'],[x=>x.fields.id='/__proto__/id','MAPPING_POINTER'],[x=>x.fields.title={fr:'/name'},'MAPPING_LANGUAGE'],[x=>x.fields.longitude='/lon','MAPPING_INVALID'],[x=>x.delimiter=';','MAPPING_INVALID'],[x=>x.fields.id='/bad~2','MAPPING_INVALID']]){const broken=mapping(c);change(broken);assert.throws(()=>prepare(c,bytes([row('A')]),broken),code(expected));}
  const dangerous=prepare(c,Buffer.from('[{"id":"BAD","name":"A","__proto__":{}},{"id":"GOOD","name":"A"}]'));counts(dangerous,{total:2,create:1,quarantined:1});
 });
-test('Real ALNOP input is previewed against the migrated corpus without replacing any of its 263 notices',()=>{
- const c=toTempora(old.readCorpus(),alnop.load(old.root)),before=digest(c),m=require('../profiles/alnop/imports/json.json');
- const b=prepare(c,fs.readFileSync(path.join(old.root,'operations_fln_1954_1962.json')),m);assert.equal(b.report.summary.total,263);assert.equal(b.report.summary.create,0);assert.equal(b.report.summary.quarantined,0);assert.equal(digest(c),before);
+test('An empty synthetic corpus accepts its first independent event proposal',()=>{
  const independent=nativeCorpus(),empty=createWorkingCorpus(independent.profile,independent.taxonomies);assert.equal(empty.events.length,0);assert.equal(prepare(empty,bytes([row('UNRELATED')])).report.summary.create,1);
- assert.throws(()=>prepare(independent,bytes([row('A')]),m),code('MAPPING_PROFILE_MISMATCH'));
-});
-test('ALNOP prepared CSV and GeoJSON preserve an explicit French/Arabic proposal and check vocabulary and date window',()=>{
- const c=toTempora(old.readCorpus(),alnop.load(old.root)),type=c.taxonomies.event_types[0],csv=require('../profiles/alnop/imports/csv.json'),geo=require('../profiles/alnop/imports/geojson.json');
- const line=['INGESTION_TEST_A','Notice fictive','اختبار','1956',type,'2','34','representative_point'].map(s=>'"'+s.replace(/"/g,'""')+'"').join(',');
- const b=prepare(c,Buffer.from('id,nom_operation,nom_operation_ar,date_debut,type_action,longitude,latitude,geometry_role\n'+line+'\n'),csv);counts(b,{total:1,create:1});assert.equal(b.candidates[0].event.title.ar,'اختبار');assert.equal(b.candidates[0].event.start_date.precision,'year');
- const collection={type:'FeatureCollection',features:[{type:'Feature',properties:{id:'INGESTION_TEST_B',nom_operation:'Test only',type_action:'unknown type',date_debut:'1950'},geometry:null}]};
- const invalid=prepare(c,bytes(collection),geo);counts(invalid,{total:1,quarantined:1});assert.ok(invalid.report.rows[0].diagnostics.some(d=>d.code==='DATE_OUTSIDE_PROFILE'));assert.ok(invalid.report.rows[0].diagnostics.some(d=>d.code==='VOCABULARY_UNKNOWN'));
 });
 test('CLI defaults to no writes, saves one immutable package, requires explicit selection and validates the resulting working snapshot',t=>{
  const {run}=require('../scripts/ingest-tempora'),os=require('node:os');const folder=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-ingestion-test-'));
