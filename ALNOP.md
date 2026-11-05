@@ -30,3 +30,9 @@ Les exports historiques JSON et GeoJSON, les identifiants permanents et les rout
 ### Citation académique recommandée
 
 Citer la version du corpus réellement utilisée et ses conditions de réutilisation selon la [politique des versions et de citation](./RELEASE_POLICY.md). Contact : contact@connect-gm.com.
+
+## Compatibilité locale avec TEMPORA
+
+`npm run test:compat:alnop` exécute séparément la migration aller-retour, les imports historiques et les comparaisons de référence. L’empreinte complète est épinglée au commit ALNOP `2428a693393a4a635d5eeac3e3c8542498b8b9d6`. Le test réduit `node --test tests/alnop-minimal-compatibility.test.js` utilise une seule notice avec ses sources et des métadonnées ajustées à la taille du sous-ensemble. Il n’accède ni au corpus complet ni au réseau. Les droits du corpus d’origine s’appliquent à cet extrait.
+
+Le paquet TEMPORA et son parcours synthétique ne contiennent aucune donnée ni aucun service ALNOP. Les copies historiques de ce dépôt restent disponibles pendant la transition et leur retrait sera décidé séparément après vérification de tous les usages.

@@ -20,4 +20,7 @@
 <p>Les exports historiques JSON et GeoJSON, les identifiants permanents et les routes existantes restent disponibles. Les <a href="api.html">API v1</a> et <a href="api-v2.html">v2</a> interrogent le corpus ALNOP ; elles ne sont pas des API génériques multi-profils TEMPORA.</p>
 <h3 id="citation-académique-recommandée">Citation académique recommandée</h3>
 <p>Citer la version du corpus réellement utilisée et ses conditions de réutilisation selon la <a href="releases.html">politique des versions et de citation</a>. Contact : contact@connect-gm.com.</p>
+<h2 id="compatibilité-locale-avec-tempora">Compatibilité locale avec TEMPORA</h2>
+<p><code>npm run test:compat:alnop</code> exécute séparément la migration aller-retour, les imports historiques et les comparaisons de référence. L’empreinte complète est épinglée au commit ALNOP <code>2428a693393a4a635d5eeac3e3c8542498b8b9d6</code>. Le test réduit <code>node --test tests/alnop-minimal-compatibility.test.js</code> utilise une seule notice avec ses sources et des métadonnées ajustées à la taille du sous-ensemble. Il n’accède ni au corpus complet ni au réseau. Les droits du corpus d’origine s’appliquent à cet extrait.</p>
+<p>Le paquet TEMPORA et son parcours synthétique ne contiennent aucune donnée ni aucun service ALNOP. Les copies historiques de ce dépôt restent disponibles pendant la transition et leur retrait sera décidé séparément après vérification de tous les usages.</p>
 </main></body></html>
