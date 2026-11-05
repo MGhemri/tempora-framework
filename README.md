@@ -14,7 +14,7 @@ npm run quality:tempora:reference
 npm test
 ```
 
-La commande `npm run test:framework` vérifie les frontières du noyau et exécute les tests d’ingestion et d’analyse dans une copie contenant uniquement les modules génériques, leurs schémas et les données synthétiques. La compatibilité ALNOP est vérifiée séparément avec `npm run check:tempora:baseline`.
+La commande `npm run test:core` vérifie les frontières entre modules et exécute l’ingestion et l’analyse dans une copie isolée contenant deux profils synthétiques. Elle utilise uniquement les dépendances verrouillées du noyau dans cette copie. La compatibilité ALNOP se vérifie séparément avec `npm run check:tempora:baseline`.
 
 ## Fonctionnalités disponibles
 

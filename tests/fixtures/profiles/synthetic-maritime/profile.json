@@ -1,0 +1,21 @@
+{
+  "profile_schema_version":"1.0.0",
+  "version":"1.0.0",
+  "id":"synthetic-maritime",
+  "display_name":"Synthetic maritime history — test fixtures only",
+  "namespace":"SYNTHETIC_MARITIME",
+  "framework":">=3.0.0 <4.0.0",
+  "default_locale":"en",
+  "locales":["en","fr"],
+  "time":{"calendar":"gregorian","coverage":{"earliest":"1900-01-01","latest":"1999-12-31"}},
+  "spatial":{"crs":"EPSG:4326"},
+  "taxonomies":["event_types"],
+  "aliases":[{"taxonomy":"event_types","language":"fr","value":"escale fictive","canonical":"fictional port call"}],
+  "parameters":{"coverage":{"from_year":1900,"to_year":1999}},
+  "rules":[
+    {"id":"event-id","type":"required","field":"id","severity":"error"},
+    {"id":"date-window","type":"date_range","field":"start_date","severity":"error"},
+    {"id":"event-type","type":"vocabulary","field":"event_type","taxonomy":"event_types","severity":"warning"}
+  ],
+  "exports":["json","csv"]
+}

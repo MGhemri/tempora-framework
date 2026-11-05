@@ -84,3 +84,20 @@ test('A collision between an explicit identifier and another record’s derived 
  const first=row('PARENT',{geometry:{type:'Point',coordinates:[1,2]}}),id=prepare(c,bytes([first]),m).candidates[0].spatial[0].id;
  const b=prepare(c,bytes([first,row(id),row('FREE')]),m);counts(b,{total:3,create:1,conflict:2});assert.equal(b.candidates[0].event.id,'FREE');assert.ok(b.report.rows[0].diagnostics.some(d=>d.code==='BATCH_DERIVED_ID_CONFLICT'));
 });
+
+test('Two profiles import the same event identifier independently',()=>{
+ const {loadProfile}=require('../src/framework/profile-loader');
+ const first=nativeCorpus();
+ const secondProfile=loadProfile(path.join(__dirname,'fixtures/profiles/synthetic-maritime/profile.json'));
+ const second=createWorkingCorpus(secondProfile,{event_types:['fictional port call'],territorial_units:[]});
+ const firstBatch=prepare(first,bytes([row('SHARED_1')]));
+ const secondMapping=mapping(second);
+ secondMapping.fields.title={fr:'/name'};
+ const secondBatch=prepare(second,bytes([row('SHARED_1',{date:'1935',type:'escale fictive',name:'Escale fictive'})]),secondMapping);
+ counts(firstBatch,{total:1,create:1});
+ counts(secondBatch,{total:1,create:1});
+ assert.equal(firstBatch.candidates[0].event.id,secondBatch.candidates[0].event.id);
+ assert.notEqual(firstBatch.candidates[0].event.namespace,secondBatch.candidates[0].event.namespace);
+ assert.deepEqual(secondBatch.candidates[0].event.event_type,['fictional port call']);
+ assert.throws(()=>prepare(first,bytes([]),secondMapping),code('MAPPING_PROFILE_MISMATCH'));
+});
