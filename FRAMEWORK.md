@@ -179,6 +179,7 @@ Les versions explicites sont immuables et les réponses ont un ETag. L’option 
 Le manifeste de distribution est séparé du dépôt de développement. Le paquet CommonJS est marqué privé et sa version de travail `3.0.0-dev.0` est indépendante du numéro de schéma. La commande de paquetage copie une liste explicite de fichiers génériques. Le tarball utilise Ajv et ajv-formats comme dépendances d’exécution.
 
 ```sh
+mkdir -p work
 npm run pack:tempora -- --out work --write
 npm install /chemin/vers/tempora-framework-3.0.0-dev.0.tgz
 npx tempora --help

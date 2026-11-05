@@ -24,6 +24,7 @@ test('Publication builds identical bytes and exports only the reviewed public pr
   const {request} = fixture(), before = structuredClone(request);
   const bundle = buildPublicationArtifacts(request);
   assert.deepEqual(buildPublicationArtifacts(request),bundle);
+  assert.equal(bundle.manifest.snapshot_sha256,'09cd7ec647e6491b5ea01b3ce7728aa5006cb0c72782d236ec49724ef5f32bb1');
   assert.deepEqual(request,before);
   const snapshot = verifyPublicationArtifacts(bundle);
   assert.equal(require('../src/framework/canonical').validateCorpus(JSON.parse(bundle.files['corpus.json'])).valid,true);

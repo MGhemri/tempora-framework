@@ -10,11 +10,10 @@ La CI utilise Node.js 20 et Python 3.11. Le parcours de référence exécute une
 git clone https://github.com/MGhemri/tempora-framework.git
 cd tempora-framework
 npm ci
-npm run quality:tempora:reference
-npm test
+npm run test:e2e:synthetic
 ```
 
-La commande `npm run test:core` vérifie les frontières entre modules et exécute l’ingestion et l’analyse dans une copie isolée contenant deux profils synthétiques. Elle utilise uniquement les dépendances verrouillées du noyau dans cette copie. La compatibilité ALNOP se vérifie séparément avec `npm run check:tempora:baseline`.
+Le parcours synthétique vérifie le noyau, puis installe le tarball dans un projet indépendant. Il couvre l’import, la revue, la publication et la lecture par l’API. La compatibilité historique se vérifie séparément avec `npm run test:compat:alnop`.
 
 ## Fonctionnalités disponibles
 
@@ -26,7 +25,7 @@ La commande `npm run test:core` vérifie les frontières entre modules et exécu
 | Examiner les données | Rapprochements à revoir, assertions divergentes et couverture documentaire | [Analyses](ANALYSIS.md) |
 | Préparer une décision éditoriale | Journal privé, empreinte du contenu et contrôle d’éligibilité | [Éligibilité d’une proposition](FRAMEWORK.md#vérifier-léligibilité-dune-proposition-v3) |
 
-La préparation et l’activation locale de snapshots v3 sont disponibles. L’API générique lit les versions activées via un serveur local. La finalisation se poursuit avec le SDK et la qualification à grande échelle. Ce dépôt distribue le code source, les schémas, les tests et les guides du framework en développement.
+La préparation et l’activation locale de snapshots v3 sont disponibles. L’API générique lit les versions activées via un serveur local. Le SDK et la CLI sont disponibles sous forme de [tarball de développement](FRAMEWORK.md#installer-le-sdk-et-la-cli-hors-du-dépôt). [Journal des versions du framework](TEMPORA_CHANGELOG.md)
 
 Pour vérifier les exports, activer une version locale ou revenir à la précédente, consulter le [guide de publication locale](FRAMEWORK.md#préparer-et-activer-un-snapshot-local).
 

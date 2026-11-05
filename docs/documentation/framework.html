@@ -145,7 +145,8 @@ npm run publication:tempora -- verify --directory chemin/vers/version.files
 <p>Les versions explicites sont immuables et les réponses ont un ETag. L’option <code>--cors-origin</code> restreint les requêtes navigateur à une origine choisie. L’adaptateur local exerce des limites de taille. Un éventuel hôte en ligne devra définir ses propres limites de débit.</p>
 <h2 id="installer-le-sdk-et-la-cli-hors-du-dépôt">Installer le SDK et la CLI hors du dépôt</h2>
 <p>Le manifeste de distribution est séparé du dépôt de développement. Le paquet CommonJS est marqué privé et sa version de travail <code>3.0.0-dev.0</code> est indépendante du numéro de schéma. La commande de paquetage copie une liste explicite de fichiers génériques. Le tarball utilise Ajv et ajv-formats comme dépendances d’exécution.</p>
-<pre><code class="language-sh">npm run pack:tempora -- --out work --write
+<pre><code class="language-sh">mkdir -p work
+npm run pack:tempora -- --out work --write
 npm install /chemin/vers/tempora-framework-3.0.0-dev.0.tgz
 npx tempora --help
 npx tempora profile validate profil.json
