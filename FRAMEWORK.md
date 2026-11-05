@@ -159,3 +159,17 @@ npm run publication:tempora -- verify --directory chemin/vers/version.files
 ```
 
 L’export local crée un dossier immuable avec un `manifest.json`. La commande de vérification contrôle les noms, les octets et la cohérence des fichiers avec la projection publique.
+
+## Consulter des versions publiées par l’API locale
+
+L’adaptateur Node écoute uniquement sur l’interface locale. Sélectionner explicitement le dossier de publication et chacun des profils activés.
+
+```sh
+npm run serve:tempora -- --store work/tempora-v3/publication --profile synthetic-history --port 8787
+```
+
+Le contrat OpenAPI 3.1 est disponible à `/api/v3/openapi.json` et l’état du service à `/health`. Le préfixe `/api/v3` identifie le contrat générique. Sous `/profiles/{profileId}`, l’API fournit les versions, événements, sources, entités, assertions, relations, géométries et statistiques documentaires. Les archives activées se consultent avec `release=<id>`. Une version simplement préparée ne figure pas dans le catalogue.
+
+Les listes acceptent `limit` et `cursor`. Les événements peuvent être filtrés par dates, type, langue, présence d’une source ou référence géographique. La recherche `q` compare le texte des titres et descriptions sans distinction de casse. `spatial?format=geojson` renvoie une collection GeoJSON dans le champ `data` avec la précision déclarée. Les erreurs fournissent `code`, `message` et `field` lorsqu’un paramètre est identifié. Un curseur reste lié à la version et aux filtres de sa requête.
+
+Les versions explicites sont immuables et les réponses ont un ETag. L’option `--cors-origin` restreint les requêtes navigateur à une origine choisie. L’adaptateur local exerce des limites de taille. Un éventuel hôte en ligne devra définir ses propres limites de débit.

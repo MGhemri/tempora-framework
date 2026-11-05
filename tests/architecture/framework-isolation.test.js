@@ -56,7 +56,8 @@ test('Synthetic ingestion and analysis run in an isolated copy with only generic
     'src/framework', 'schemas/tempora/v3', 'schemas/tempora.profile.schema.json',
     'schemas/tempora.ingestion-mapping.schema.json', 'scripts/ingest-tempora.js',
     'scripts/evaluate-tempora.js', 'scripts/publish-tempora.js', 'tests/framework-ingestion.test.js',
-    'tests/framework-publication.test.js', 'tests/helpers/publication-request.js',
+    'tests/framework-publication.test.js', 'tests/framework-published-api.test.js',
+    'tests/helpers/publication-request.js', 'tests/vendor/openapi-3.1-schema.json',
     'tests/framework-analysis.test.js', 'tests/framework-contracts.test.js', 'tests/helpers/tempora.js',
     'tests/helpers/analysis-reference.js', 'tests/fixtures/profiles/synthetic-history',
     'tests/fixtures/analysis-reference.json', 'tests/fixtures/canonical-v3.utf8', 'tests/fixtures/profiles/synthetic-maritime'
@@ -84,7 +85,7 @@ test('Synthetic ingestion and analysis run in an isolated copy with only generic
   const result = spawnSync(process.execPath, [
     '--no-global-search-paths', '--test',
     'tests/framework-ingestion.test.js', 'tests/framework-analysis.test.js', 'tests/framework-contracts.test.js',
-    'tests/framework-publication.test.js'
+    'tests/framework-publication.test.js', 'tests/framework-published-api.test.js'
   ], {
     cwd: dir,
     env,
