@@ -55,7 +55,8 @@ test('Synthetic ingestion and analysis run in an isolated copy with only generic
   const files = [
     'src/framework', 'schemas/tempora/v3', 'schemas/tempora.profile.schema.json',
     'schemas/tempora.ingestion-mapping.schema.json', 'scripts/ingest-tempora.js',
-    'scripts/evaluate-tempora.js', 'tests/framework-ingestion.test.js',
+    'scripts/evaluate-tempora.js', 'scripts/publish-tempora.js', 'tests/framework-ingestion.test.js',
+    'tests/framework-publication.test.js', 'tests/helpers/publication-request.js',
     'tests/framework-analysis.test.js', 'tests/framework-contracts.test.js', 'tests/helpers/tempora.js',
     'tests/helpers/analysis-reference.js', 'tests/fixtures/profiles/synthetic-history',
     'tests/fixtures/analysis-reference.json', 'tests/fixtures/canonical-v3.utf8', 'tests/fixtures/profiles/synthetic-maritime'
@@ -82,7 +83,8 @@ test('Synthetic ingestion and analysis run in an isolated copy with only generic
   delete env.NODE_TEST_CONTEXT;
   const result = spawnSync(process.execPath, [
     '--no-global-search-paths', '--test',
-    'tests/framework-ingestion.test.js', 'tests/framework-analysis.test.js', 'tests/framework-contracts.test.js'
+    'tests/framework-ingestion.test.js', 'tests/framework-analysis.test.js', 'tests/framework-contracts.test.js',
+    'tests/framework-publication.test.js'
   ], {
     cwd: dir,
     env,

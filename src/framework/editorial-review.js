@@ -207,6 +207,7 @@ function validatePublicationEligibility({corpus, policy, journal = [], subjects,
 
   const rules = createValidator(corpus.profile, {taxonomies: corpus.taxonomies});
   const errors = [];
+  const approvalReviewers = new Set();
   const selected = new Map();
   const pending = [...subjects];
   while (pending.length) {
@@ -227,7 +228,9 @@ function validatePublicationEligibility({corpus, policy, journal = [], subjects,
       const fresh = entry => time - timestamp(entry.reviewed_at) <= policy.review_max_age_days * day;
       const valid = entry => entry.content_sha256 === sha && fresh(entry) && documentaryEvidence(record, entry);
       if (!valid(state.latest)) errors.push({subject, code: 'PUBLICATION_REVIEW_STALE'});
-      if ([...state.approvals.values()].filter(valid).length < policy.minimum_approvals) {
+      const approvals = [...state.approvals.values()].filter(valid);
+      for (const approval of approvals) approvalReviewers.add(approval.reviewer);
+      if (approvals.length < policy.minimum_approvals) {
         errors.push({subject, code: 'PUBLICATION_QUORUM'});
       }
     }
@@ -244,7 +247,22 @@ function validatePublicationEligibility({corpus, policy, journal = [], subjects,
     pending.push(...dependencies(record));
   }
   return {eligible: errors.length === 0, errors, subjects: structuredClone([...selected.values()]),
+    approval_reviewers: [...approvalReviewers].sort(),
     corpus_sha256: digest(corpus), policy_sha256: digest(policy), journal_head: head, as_of: asOf};
 }
 
-module.exports = {reviewPolicy, contentDigest, recordDecision, verifyReviewJournal, validatePublicationEligibility};
+function validateWithdrawal({corpus, policy, journal = [], subject, asOf}) {
+  assertCorpus(corpus);
+  assertPolicy(corpus.profile, policy);
+  const time = timestamp(asOf);
+  const index = indexCorpus(corpus);
+  const {states, lastTime} = replay(index, journal, policy);
+  const key = subjectKey(subject);
+  const latest = states.get(key)?.latest;
+  if (lastTime > time || latest?.decision !== 'withdrawn' || latest.content_sha256 !== contentDigest(index.get(key))) {
+    fail('PUBLICATION_WITHDRAWAL_REQUIRED', 'An exact recorded withdrawal is required for a removed record');
+  }
+  return structuredClone(latest);
+}
+
+module.exports = {reviewPolicy, contentDigest, recordDecision, verifyReviewJournal, validatePublicationEligibility, validateWithdrawal};

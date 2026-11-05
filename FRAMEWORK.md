@@ -126,3 +126,36 @@ Le module `src/framework/editorial-review.js` sépare la validation technique du
 L’approbation porte sur le contenu exact et sur des preuves liées au sujet. Elle consigne la décision sur les droits de redistribution et la sensibilité. Un changement de contenu ou l’expiration des décisions exige une nouvelle revue. La liste des relecteurs contrôle les identifiants déclarés. L’identité réelle et l’autorisation d’utiliser la politique relèvent du mainteneur. Le journal est un document de travail privé. Pour une vérification ancrée, conserver l’empreinte terminale SHA-256 dans un registre contrôlé indépendamment du journal. Transmettre cette empreinte à `verifyReviewJournal({corpus, policy, journal, expectedHead})` ou au contrôle d’éligibilité via `expectedHead`. Une chaîne réécrite ou tronquée peut rester cohérente en interne. La comparaison avec l’empreinte indépendante détecte cet écart. Le choix du registre et l’authentification des relecteurs relèvent de l’hôte.
 
 Pour contrôler une évolution du code contre l’état de référence ALNOP, lancer `npm run check:tempora:baseline`. Le résultat JSON compare les collections, les exports, les archives et un ensemble de réponses des API v1 et v2. Une évolution autorisée du corpus nécessite une nouvelle référence validée.
+
+
+## Préparer et activer un snapshot local
+
+Le module de publication produit une projection publique des objets sélectionnés et de leurs dépendances éligibles. Une demande privée contient `corpus`, `policy`, `journal`, `subjects`, la date UTC `asOf` et `release` avec `id`, `source_commit`, `citation_author` et `rights_notice`. Pour succéder à une version active, joindre son bundle vérifié dans `previous`.
+
+```sh
+npm run publication:tempora -- prepare --request demande.json --journal-head EMPREINTE_JOURNAL
+npm run publication:tempora -- prepare --request demande.json --journal-head EMPREINTE_JOURNAL --write
+npm run publication:tempora -- verify --bundle chemin-du-bundle.json
+```
+
+La première commande simule la préparation. La seconde ajoute le bundle immuable sous `work/tempora-v3/publication/<profil>/<version>.bundle.json`. Il contient un manifeste, un snapshot JSON, un GeoJSON et un résumé CSV. Les exports conservent les bornes temporelles et distinguent les rôles géographiques. Les extensions privées, citations textuelles et décisions de revue restent dans l’espace de travail. Une notice retirée laisse un identifiant de retrait. La préparation exige au moins un objet éligible.
+
+L’opérateur de promotion vérifie le SHA-256 du manifeste et consigne son motif à une date UTC explicite. Son identifiant appartient à la politique de revue et diffère de celui des personnes qui ont approuvé la sélection ou enregistré les retraits du lot.
+
+```sh
+npm run publication:tempora -- promote --request demande.json --journal-head EMPREINTE_JOURNAL --sha256 EMPREINTE --reviewer OPERATEUR --at DATE_UTC --reason MOTIF --write
+npm run publication:tempora -- rollback --request demande.json --sha256 EMPREINTE_ACTIVE --target VERSION_PRECEDENTE --reviewer OPERATEUR --at DATE_UTC --reason MOTIF --write
+```
+
+La promotion vérifie de nouveau l’éligibilité, les octets du bundle et l’identité de la version active précédente. Un verrou local sérialise les changements de pointeur. Le remplacement atomique de ce pointeur rend le bundle actif. Le retour arrière sélectionne la version précédente déjà activée et conserve les bundles sur disque. Si un arrêt brutal laisse le verrou en place, vérifier que le processus est arrêté avant de retirer le verrou. Le test de panne porte sur un échec avant le remplacement du pointeur.
+
+Cette procédure s’exécute sur un stockage local privé. La vérification des empreintes contrôle l’intégrité du bundle. Le mainteneur contrôle la provenance de la demande et de la politique de revue. Les API ALNOP utilisent leur circuit de compatibilité historique.
+
+Le SHA-256 terminal est fourni par `--journal-head` depuis le registre de confiance indépendant. Le bundle comprend le corpus canonique public, la projection de lecture, les exports, les droits déclarés, la citation, le rapport expurgé et les sommes SHA-256. La liste SHA-256 couvre les artefacts de contenu. Le manifeste couvre aussi cette liste et porte sa propre empreinte de métadonnées.
+
+```sh
+npm run publication:tempora -- export --bundle version.bundle.json --write
+npm run publication:tempora -- verify --directory chemin/vers/version.files
+```
+
+L’export local crée un dossier immuable avec un `manifest.json`. La commande de vérification contrôle les noms, les octets et la cohérence des fichiers avec la projection publique.

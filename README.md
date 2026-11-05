@@ -26,7 +26,9 @@ La commande `npm run test:core` vérifie les frontières entre modules et exécu
 | Examiner les données | Rapprochements à revoir, assertions divergentes et couverture documentaire | [Analyses](ANALYSIS.md) |
 | Préparer une décision éditoriale | Journal privé, empreinte du contenu et contrôle d’éligibilité | [Éligibilité d’une proposition](FRAMEWORK.md#vérifier-léligibilité-dune-proposition-v3) |
 
-La finalisation v3 se poursuit sur les snapshots publiables, l’API générique, le SDK et la qualification à grande échelle. Ce dépôt distribue le code source, les schémas, les tests et les guides du framework en développement.
+La préparation et l’activation locale de snapshots v3 sont disponibles. La finalisation se poursuit avec l’API générique, le SDK et la qualification à grande échelle. Ce dépôt distribue le code source, les schémas, les tests et les guides du framework en développement.
+
+Pour vérifier les exports, activer une version locale ou revenir à la précédente, consulter le [guide de publication locale](FRAMEWORK.md#préparer-et-activer-un-snapshot-local).
 
 ## Organisation
 

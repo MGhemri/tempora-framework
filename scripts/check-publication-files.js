@@ -3,6 +3,7 @@ function forbidden(name){
  const normalized=name.replace(/\\/g,'/');
  return /(?:^|\/)CDC(?:_[^/]*)?\.(?:md|pdf|docx)$/i.test(normalized)||
  /^docs\/work\//i.test(normalized)||
+ /\.bundle\.json$/i.test(normalized)||
  /(?:^|\/)(?:PHASE_\d+_(?:AUDIT|PROGRESS)|v3-(?:baseline|audit))\.(?:md|html)$/i.test(normalized)||
  /(?:^|\/)(?:audit|correction)[-_](?:report|rapport|bilan)[^/]*\.(?:md|html|json|pdf)$/i.test(normalized)||
  /(?:^|\/)(?:v\d+-)?(?:baseline|audit)(?:[-_][^/]*)?\.(?:md|html|pdf)$/i.test(normalized)||
