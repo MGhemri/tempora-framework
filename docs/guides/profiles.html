@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="fr" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Profils · TEMPORA</title><link rel="stylesheet" href="../assets/site.css"></head><body>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+<header class="topbar"><div class="topinner"><a class="brand" href="../index.html"><span class="brandmark" aria-hidden="true">T</span><span>TEMPORA<span class="brandtail">/ FRAMEWORK</span></span></a>
+<nav class="toplinks" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../guides/getting-started.html">Documentation</a><a href="https://github.com/MGhemri/tempora-framework">GitHub</a></nav>
+<button class="mobilemenu" id="menu" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button></div></header>
+<div class="app"><nav class="sidebar" id="sidebar" aria-label="Guides TEMPORA"><div class="sidecaption">DOCUMENTATION / V3</div>
+<a class="sidelink" href="../guides/getting-started.html">Démarrage</a>
+<a class="sidelink" href="../guides/architecture.html">Architecture</a>
+<a class="sidelink active" href="../guides/profiles.html" aria-current="page">Profils</a>
+<a class="sidelink" href="../guides/canonical.html">Modèle canonique</a>
+<a class="sidelink" href="../guides/ingestion.html">Ingestion</a>
+<a class="sidelink" href="../guides/analysis.html">Analyses</a>
+<a class="sidelink" href="../guides/review.html">Revue</a>
+<a class="sidelink" href="../guides/publication.html">Publication</a>
+<a class="sidelink" href="../guides/api.html">API REST v3</a>
+<a class="sidelink" href="../guides/sdk-cli.html">SDK et CLI</a>
+<a class="sidelink" href="../guides/science.html">Méthodologie</a>
+<a class="sidelink" href="../guides/alnop.html">Compatibilité ALNOP</a>
+<a class="sidelink" href="../guides/security.html">Sécurité</a>
+<div class="sidenote">TEMPORA 3.0.0-dev.0<br>Préversion locale · MIT</div></nav>
+<main class="main" id="contenu"><h1>Profils</h1><div class="article"><h2 id="valider-un-profil">Valider un profil</h2>
+<div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-sh">npm run validate:profiles
+npm run validate:profiles -- --profile profiles/alnop/profile.json
+</code></pre>
+<p>La première commande découvre les configurations publiées sous <code>profiles/</code>, vérifie leurs identifiants et valide les opérations ALNOP avec les vocabulaires actuels. La seconde vérifie un manifeste explicite, sans importer de corpus. Les formats et contraintes figurent dans <code>schemas/tempora.profile.schema.json</code>, version <code>1.0.0</code>.</p>
+<p>Le profil ALNOP reprend la fenêtre annuelle de validation historique existante : 1954 à 1962 inclus. Il ne restreint pas artificiellement le dernier jour au 5 juillet. Cette fenêtre est une règle technique du profil, pas une preuve de date ni une mesure d'exhaustivité historique. Les vocabulaires restent lus depuis les données canoniques ; ils ne sont pas recopiés dans le profil.</p>
+<h2 id="charger-une-configuration">Charger une configuration</h2>
+<div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-js">const {loadProfile} = require('./src/framework/profile-loader');
+const profile = loadProfile('/chemin/projet/profiles/alnop/profile.json', {
+  rootDirectory: '/chemin/projet'
+});
+</code></pre>
+<p>Le chargeur accepte uniquement un fichier JSON UTF-8 explicite, de taille inférieure ou égale à 128 Kio, situé dans la racine autorisée après résolution des liens. Aucun accès réseau n'est effectué. La découverte ne parcourt que les sous-répertoires immédiats du dossier fourni, chacun contenant <code>profile.json</code>.</p>
+<p>Un profil peut hériter d'un parent par <code>extends</code>, chemin relatif vers un fichier situé dans la même racine autorisée. Les cycles et les chaînes trop longues sont refusés. Chaque parent doit lui-même être valide. Les objets sont fusionnés récursivement ; les tableaux sont remplacés intégralement. Une redéfinition de langues doit donc aussi adapter les alias dont les langues ne sont plus déclarées.</p>
+<p>Le schéma valide la configuration résolue après héritage. Un manifeste enfant peut ne fournir que <code>extends</code> et les champs qu'il remplace. Les identifiants et espaces de noms doivent rester uniques dans un registre découvert.</p>
+<p>La priorité est : parent, manifeste enfant, puis surcharges explicites. Les surcharges d'exécution concernent uniquement <code>parameters</code> et <code>severities</code> :</p>
+<div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-js">const adjusted = loadProfile('/racine/profiles/example/profile.json', {
+  rootDirectory: '/racine',
+  parameters: {limits: {sample: 20}},
+  severities: {'event-type': 'warning'}
+});
+</code></pre>
+<p>Les surcharges de sévérité doivent désigner une règle existante. Les paramètres sont exposés à l'appelant ; ils ne reconfigurent pas automatiquement l'atlas ou les algorithmes ALNOP. Les résultats sont des objets gelés et indépendants, sans cache global partagé entre profils.</p>
+<h2 id="compatibilité-et-limites">Compatibilité et limites</h2>
+<p>Le contrat de chargement utilise la version de compatibilité <code>3.0.0</code>. La propriété <code>framework</code> accepte une plage bornée de la forme <code>&gt;=3.0.0 &lt;4.0.0</code> ; les expressions SemVer plus complexes ne sont pas prises en charge. Une version de schéma inconnue ou une plage incompatible provoque une erreur explicite. Cette version de contrat ne signifie pas que toutes les capacités d'une plateforme v3 sont disponibles.</p>
+<p>Ce composant prend actuellement en charge le calendrier grégorien, les jours ISO de <code>0001</code> à <code>9999</code>, les bornes ouvertes ou inconnues dans les intervalles et le référentiel <code>EPSG:4326</code>. Un calendrier ou un CRS non pris en charge est refusé ; aucune conversion silencieuse n'est réalisée. Le contrôle du CRS du profil ne remplace pas une validation géométrique.</p>
+<h2 id="validation-configurable">Validation configurable</h2>
+<div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-js">const {createValidator} = require('./src/framework/validation');
+const validator = createValidator(profile, {
+  taxonomies: {
+    event_types: ['type déclaré'],
+    territorial_units: ['territoire déclaré']
+  }
+});
+const result = validator.validate({
+  id: 'EXAMPLE_1',
+  start_date: {earliest: null, latest: null},
+  event_type: ['type déclaré'],
+  territory_ids: []
+});
+</code></pre>
+<p>Les valeurs des taxonomies sont fournies par l'appelant. Le noyau ne lit pas de données métier et n'importe pas le profil ALNOP. Trois types de règles sont disponibles :</p>
+<table>
+<thead>
+<tr>
+<th>Type</th>
+<th>Contrôle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>required</code></td>
+<td>Valeur présente et non vide</td>
+</tr>
+<tr>
+<td><code>date_range</code></td>
+<td>Jours valides, bornes ordonnées et respect de la fenêtre du profil</td>
+</tr>
+<tr>
+<td><code>vocabulary</code></td>
+<td>Valeur ou liste de valeurs appartenant à une taxonomie fournie</td>
+</tr>
+</tbody>
+</table>
+<p>Les sévérités sont <code>error</code>, <code>warning</code> et <code>info</code>. Seuls les diagnostics <code>error</code> rendent <code>valid</code> faux. Chaque diagnostic conserve un code, le champ concerné et l'identifiant de règle. Un champ facultatif absent n'est pas rendu obligatoire par une autre règle ; utiliser <code>required</code> lorsque nécessaire. Les chemins de champs sont des propriétés explicites séparées par des points, sans exécution de code ni parcours des prototypes.</p>
+<p>Les alias de vocabulaire doivent être déclarés avec langue, valeur et cible canonique. Leur correspondance est exacte ; les graphies originales ne sont pas modifiées. Une cible absente ou un alias ambigu est refusé. Ce mécanisme n'établit aucune identité de personne ou de lieu et ne traduit aucun texte.</p>
+<p>Ces contrôles complètent les schémas et règles canoniques existants. Un résultat valide ne certifie ni la provenance documentaire ni la vérité d'un fait historique.</p>
+<h2 id="interface-dadaptateur">Interface d'adaptateur</h2>
+<p><code>defineAdapter</code> vérifie une interface composée de <code>id</code>, <code>formats</code>, <code>parse</code> et <code>serialize</code>. Il conserve les fonctions fournies et fige les métadonnées. Il n'implémente pas à lui seul une ingestion CSV/GeoJSON, une quarantaine ou une publication. Les adaptateurs doivent déclarer leurs limites et être testés séparément.</p>
+<h2 id="erreurs-et-compatibilité-alnop">Erreurs et compatibilité ALNOP</h2>
+<p>Les erreurs de configuration utilisent <code>ProfileError</code> avec <code>code</code>, <code>message</code> et <code>details</code>. Les codes distinguent notamment schéma invalide, incompatibilité de version, calendrier non pris en charge, chemin interdit, héritage cyclique et taxonomie absente.</p>
+<p>Un chemin absent ou des options d'appel invalides sont également refusés par des erreurs typées (<code>PROFILE_ARGUMENT_INVALID</code>, <code>PROFILE_ROOT_INVALID</code>) avant tout accès au fichier.</p>
+<p>L'adaptateur <code>src/profiles/alnop.js</code> projette les champs utiles pour ces règles sans modifier les objets d'origine. Le validateur Python historique lit désormais sa fenêtre annuelle depuis le même profil. Les chemins d'exports et les routes API v1/v2 restent identiques. Aucun nouvel endpoint TEMPORA n'est annoncé par ce guide.</p>
+</div>
+<footer><a href="https://github.com/MGhemri/tempora-framework">Code source TEMPORA</a><a href="mailto:contact@connect-gm.com">Contact</a></footer></main>
+</div><script src="../assets/site.js" defer></script></body></html>

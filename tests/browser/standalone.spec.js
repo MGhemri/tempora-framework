@@ -28,7 +28,7 @@ async function noRepositoryLinks(page){
 }
 for(const width of [360,390,1280])test(`Vercel ${width}px: atlas navigation and local documentation`,async({page})=>{
   await page.setViewportSize({width,height:844});
-  await page.goto('/index.html');
+  await page.goto('/alnop-compat.html');
   await expect(page.locator('.op-card')).toHaveCount(corpusCount);
   await noRepositoryLinks(page);
   expect(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth)).toBeTruthy();
@@ -128,7 +128,7 @@ test('A reviewed synthetic addition reaches the atlas, statistics and FR/AR deta
   const {corpus,operation}=withProposal();approve(operation);
   operation.description.fr='<img src=x onerror="window.testInjected=true"> Texte synthétique.';
   await page.route('https://alnop.vercel.app/data/operations_fln_1954_1962.json',route=>route.fulfill({json:publishedLegacy(corpus)}));
-  await page.setViewportSize({width:390,height:844});await page.goto('/index.html');
+  await page.setViewportSize({width:390,height:844});await page.goto('/alnop-compat.html');
   await expect(page.locator('.op-card')).toHaveCount(corpusCount+1);
   await page.locator('#stats-btn').click();await expect(page.locator('#kpi-total-ops')).toHaveText(String(corpusCount+1));
   await expect(page.locator('#kpi-geocoded')).toHaveText(`${corpusCount} / ${corpusCount+1}`);
@@ -152,7 +152,7 @@ test('A reviewed record with a documented point creates a new map marker',async(
   const {corpus,operation}=withProposal();approve(operation);
   operation.locations=[{label:'Lieu synthétique',geometry:{type:'Point',coordinates:[3,36]},geometry_role:'approximate_site',review_status:'reviewed'}];
   await page.route('https://alnop.vercel.app/data/operations_fln_1954_1962.json',route=>route.fulfill({json:publishedLegacy(corpus)}));
-  await page.goto('/index.html');await expect(page.locator('.op-card')).toHaveCount(corpusCount+1);
+  await page.goto('/alnop-compat.html');await expect(page.locator('.op-card')).toHaveCount(corpusCount+1);
   expect(await page.evaluate(()=>markerMap.has('TEST_SYNTHETIC_001'))).toBe(true);
 });
 
@@ -166,7 +166,7 @@ for(const width of [390,1280])test(`Reviewed contradictory assertions remain dis
   corpus.claims[0].evidence[0].quotation=attack;
   corpus.claims[0].review_history[0].reference='https://github.com/example/test/pull/1';
   await page.route('https://alnop.vercel.app/data/operations_fln_1954_1962.json',route=>route.fulfill({json:publishedLegacy(corpus)}));
-  await page.setViewportSize({width,height:844});await page.goto('/index.html');
+  await page.setViewportSize({width,height:844});await page.goto('/alnop-compat.html');
   await expect(page.locator('.op-card')).toHaveCount(corpusCount);
   if(width<769)await page.locator('#tab-list-btn').click();
   await page.locator('.op-card').first().click();
@@ -197,7 +197,7 @@ for(const width of [390,1280])test(`Reviewed contradictory assertions remain dis
 test('Proposed assertions stay invisible and provenance documentation is available locally',async({page})=>{
   const {withClaims}=require('../helpers/claims');const {publishedLegacy}=require('../../src/publication');
   await page.route('https://alnop.vercel.app/data/operations_fln_1954_1962.json',route=>route.fulfill({json:publishedLegacy(withClaims())}));
-  await page.goto('/index.html');await expect(page.locator('.op-card')).toHaveCount(corpusCount);
+  await page.goto('/alnop-compat.html');await expect(page.locator('.op-card')).toHaveCount(corpusCount);
   await page.locator('#tab-list-btn').click();await page.locator('.op-card').first().click();
   await expect(page.locator('.scientific-claims')).toHaveCount(0);
   await page.goto('/documentation/dictionary.html');
@@ -421,7 +421,7 @@ for(const width of [390,1280])test(`TEMPORA portal and host-specific documentati
  await expect(page.getByRole('heading',{name:'Documentation ALNOP',exact:true})).toBeVisible();
  await expect(page.getByRole('heading',{name:'Documentation TEMPORA',exact:true})).toBeHidden();
  await noRepositoryLinks(page);
- await page.goto('/index.html');await expect(page.locator('.brand-title')).toContainText('ALNOP');await expect(page.locator('.brand-subtitle')).toContainText('TEMPORA');
+ await page.goto('/alnop-compat.html');await expect(page.locator('.brand-title')).toContainText('ALNOP');await expect(page.locator('.brand-subtitle')).toContainText('TEMPORA');
  await page.route('https://mghemri.github.io/aln-historical-operations-dataset/**',async route=>{
   const url=new URL(route.request().url());let relative=url.pathname.replace('/aln-historical-operations-dataset/','');
   if(!relative||relative==='index.html')relative='tempora.html';

@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="fr" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Publication · TEMPORA</title><link rel="stylesheet" href="../assets/site.css"></head><body>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+<header class="topbar"><div class="topinner"><a class="brand" href="../index.html"><span class="brandmark" aria-hidden="true">T</span><span>TEMPORA<span class="brandtail">/ FRAMEWORK</span></span></a>
+<nav class="toplinks" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../guides/getting-started.html">Documentation</a><a href="https://github.com/MGhemri/tempora-framework">GitHub</a></nav>
+<button class="mobilemenu" id="menu" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button></div></header>
+<div class="app"><nav class="sidebar" id="sidebar" aria-label="Guides TEMPORA"><div class="sidecaption">DOCUMENTATION / V3</div>
+<a class="sidelink" href="../guides/getting-started.html">Démarrage</a>
+<a class="sidelink" href="../guides/architecture.html">Architecture</a>
+<a class="sidelink" href="../guides/profiles.html">Profils</a>
+<a class="sidelink" href="../guides/canonical.html">Modèle canonique</a>
+<a class="sidelink" href="../guides/ingestion.html">Ingestion</a>
+<a class="sidelink" href="../guides/analysis.html">Analyses</a>
+<a class="sidelink" href="../guides/review.html">Revue</a>
+<a class="sidelink active" href="../guides/publication.html" aria-current="page">Publication</a>
+<a class="sidelink" href="../guides/api.html">API REST v3</a>
+<a class="sidelink" href="../guides/sdk-cli.html">SDK et CLI</a>
+<a class="sidelink" href="../guides/science.html">Méthodologie</a>
+<a class="sidelink" href="../guides/alnop.html">Compatibilité ALNOP</a>
+<a class="sidelink" href="../guides/security.html">Sécurité</a>
+<div class="sidenote">TEMPORA 3.0.0-dev.0<br>Préversion locale · MIT</div></nav>
+<main class="main" id="contenu"><h1>Publication</h1><div class="article"><h2 id="préparer-et-activer-un-snapshot-local">Préparer et activer un snapshot local</h2>
+<p>Le module de publication produit une projection publique des objets sélectionnés et de leurs dépendances éligibles. Une demande privée contient <code>corpus</code>, <code>policy</code>, <code>journal</code>, <code>subjects</code>, la date UTC <code>asOf</code> et <code>release</code> avec <code>id</code>, <code>source_commit</code>, <code>citation_author</code> et <code>rights_notice</code>. Pour succéder à une version active, joindre son bundle vérifié dans <code>previous</code>.</p>
+<div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-sh">npm run publication:tempora -- prepare --request demande.json --journal-head EMPREINTE_JOURNAL
+npm run publication:tempora -- prepare --request demande.json --journal-head EMPREINTE_JOURNAL --write
+npm run publication:tempora -- verify --bundle chemin-du-bundle.json
+</code></pre>
+<p>La première commande simule la préparation. La seconde ajoute le bundle immuable sous <code>work/tempora-v3/publication/&lt;profil&gt;/&lt;version&gt;.bundle.json</code>. Il contient un manifeste, un snapshot JSON, un GeoJSON et un résumé CSV. Les exports conservent les bornes temporelles et distinguent les rôles géographiques. Les extensions privées, citations textuelles et décisions de revue restent dans l’espace de travail. Une notice retirée laisse un identifiant de retrait. La préparation exige au moins un objet éligible.</p>
+<p>L’opérateur de promotion vérifie le SHA-256 du manifeste et consigne son motif à une date UTC explicite. Son identifiant appartient à la politique de revue et diffère de celui des personnes qui ont approuvé la sélection ou enregistré les retraits du lot.</p>
+<div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-sh">npm run publication:tempora -- promote --request demande.json --journal-head EMPREINTE_JOURNAL --sha256 EMPREINTE --reviewer OPERATEUR --at DATE_UTC --reason MOTIF --write
+npm run publication:tempora -- rollback --request demande.json --sha256 EMPREINTE_ACTIVE --target VERSION_PRECEDENTE --reviewer OPERATEUR --at DATE_UTC --reason MOTIF --write
+</code></pre>
+<p>La promotion vérifie de nouveau l’éligibilité, les octets du bundle et l’identité de la version active précédente. Un verrou local sérialise les changements de pointeur. Le remplacement atomique de ce pointeur rend le bundle actif. Le retour arrière sélectionne la version précédente déjà activée et conserve les bundles sur disque. Si un arrêt brutal laisse le verrou en place, vérifier que le processus est arrêté avant de retirer le verrou. Le test de panne porte sur un échec avant le remplacement du pointeur.</p>
+<p>Cette procédure s’exécute sur un stockage local privé. La vérification des empreintes contrôle l’intégrité du bundle. Le mainteneur contrôle la provenance de la demande et de la politique de revue. Les API ALNOP utilisent leur circuit de compatibilité historique.</p>
+<p>Le SHA-256 terminal est fourni par <code>--journal-head</code> depuis le registre de confiance indépendant. Le bundle comprend le corpus canonique public, la projection de lecture, les exports, les droits déclarés, la citation, le rapport expurgé et les sommes SHA-256. La liste SHA-256 couvre les artefacts de contenu. Le manifeste couvre aussi cette liste et porte sa propre empreinte de métadonnées.</p>
+<div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-sh">npm run publication:tempora -- export --bundle version.bundle.json --write
+npm run publication:tempora -- verify --directory chemin/vers/version.files
+</code></pre>
+<p>L’export local crée un dossier immuable avec un <code>manifest.json</code>. La commande de vérification contrôle les noms, les octets et la cohérence des fichiers avec la projection publique.</p>
+</div>
+<footer><a href="https://github.com/MGhemri/tempora-framework">Code source TEMPORA</a><a href="mailto:contact@connect-gm.com">Contact</a></footer></main>
+</div><script src="../assets/site.js" defer></script></body></html>

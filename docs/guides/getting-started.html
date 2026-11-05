@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="fr" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Démarrage · TEMPORA</title><link rel="stylesheet" href="../assets/site.css"></head><body>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+<header class="topbar"><div class="topinner"><a class="brand" href="../index.html"><span class="brandmark" aria-hidden="true">T</span><span>TEMPORA<span class="brandtail">/ FRAMEWORK</span></span></a>
+<nav class="toplinks" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../guides/getting-started.html">Documentation</a><a href="https://github.com/MGhemri/tempora-framework">GitHub</a></nav>
+<button class="mobilemenu" id="menu" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button></div></header>
+<div class="app"><nav class="sidebar" id="sidebar" aria-label="Guides TEMPORA"><div class="sidecaption">DOCUMENTATION / V3</div>
+<a class="sidelink active" href="../guides/getting-started.html" aria-current="page">Démarrage</a>
+<a class="sidelink" href="../guides/architecture.html">Architecture</a>
+<a class="sidelink" href="../guides/profiles.html">Profils</a>
+<a class="sidelink" href="../guides/canonical.html">Modèle canonique</a>
+<a class="sidelink" href="../guides/ingestion.html">Ingestion</a>
+<a class="sidelink" href="../guides/analysis.html">Analyses</a>
+<a class="sidelink" href="../guides/review.html">Revue</a>
+<a class="sidelink" href="../guides/publication.html">Publication</a>
+<a class="sidelink" href="../guides/api.html">API REST v3</a>
+<a class="sidelink" href="../guides/sdk-cli.html">SDK et CLI</a>
+<a class="sidelink" href="../guides/science.html">Méthodologie</a>
+<a class="sidelink" href="../guides/alnop.html">Compatibilité ALNOP</a>
+<a class="sidelink" href="../guides/security.html">Sécurité</a>
+<div class="sidenote">TEMPORA 3.0.0-dev.0<br>Préversion locale · MIT</div></nav>
+<main class="main" id="contenu"><h1>Démarrage</h1><div class="article"><p>Node.js 20 ou supérieur et npm suffisent pour le parcours synthétique.</p>
+<div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-sh">git clone https://github.com/MGhemri/tempora-framework.git
+cd tempora-framework
+npm ci
+npm run test:e2e:synthetic
+</code></pre>
+<p>Le parcours teste le noyau sur deux profils fictifs et installe le paquet dans un projet indépendant. Il couvre l’import, la revue, la publication et la consultation par l’API locale.</p>
+<p>Le tarball de développement s’installe localement. Consultez le <a href="sdk-cli.html">guide SDK et CLI</a> pour le construire et le <a href="ingestion.html">guide d’ingestion</a> pour préparer vos premiers imports.</p>
+</div>
+<footer><a href="https://github.com/MGhemri/tempora-framework">Code source TEMPORA</a><a href="mailto:contact@connect-gm.com">Contact</a></footer></main>
+</div><script src="../assets/site.js" defer></script></body></html>

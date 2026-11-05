@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="fr" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>SDK et CLI · TEMPORA</title><link rel="stylesheet" href="../assets/site.css"></head><body>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+<header class="topbar"><div class="topinner"><a class="brand" href="../index.html"><span class="brandmark" aria-hidden="true">T</span><span>TEMPORA<span class="brandtail">/ FRAMEWORK</span></span></a>
+<nav class="toplinks" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../guides/getting-started.html">Documentation</a><a href="https://github.com/MGhemri/tempora-framework">GitHub</a></nav>
+<button class="mobilemenu" id="menu" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button></div></header>
+<div class="app"><nav class="sidebar" id="sidebar" aria-label="Guides TEMPORA"><div class="sidecaption">DOCUMENTATION / V3</div>
+<a class="sidelink" href="../guides/getting-started.html">Démarrage</a>
+<a class="sidelink" href="../guides/architecture.html">Architecture</a>
+<a class="sidelink" href="../guides/profiles.html">Profils</a>
+<a class="sidelink" href="../guides/canonical.html">Modèle canonique</a>
+<a class="sidelink" href="../guides/ingestion.html">Ingestion</a>
+<a class="sidelink" href="../guides/analysis.html">Analyses</a>
+<a class="sidelink" href="../guides/review.html">Revue</a>
+<a class="sidelink" href="../guides/publication.html">Publication</a>
+<a class="sidelink" href="../guides/api.html">API REST v3</a>
+<a class="sidelink active" href="../guides/sdk-cli.html" aria-current="page">SDK et CLI</a>
+<a class="sidelink" href="../guides/science.html">Méthodologie</a>
+<a class="sidelink" href="../guides/alnop.html">Compatibilité ALNOP</a>
+<a class="sidelink" href="../guides/security.html">Sécurité</a>
+<div class="sidenote">TEMPORA 3.0.0-dev.0<br>Préversion locale · MIT</div></nav>
+<main class="main" id="contenu"><h1>SDK et CLI</h1><div class="article"><h2 id="installer-le-sdk-et-la-cli-hors-du-dépôt">Installer le SDK et la CLI hors du dépôt</h2>
+<p>Le manifeste de distribution est séparé du dépôt de développement. Le paquet CommonJS est marqué privé et sa version de travail <code>3.0.0-dev.0</code> est indépendante du numéro de schéma. La commande de paquetage copie une liste explicite de fichiers génériques. Le tarball utilise Ajv et ajv-formats comme dépendances d’exécution.</p>
+<div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-sh">mkdir -p work
+npm run pack:tempora -- --out work --write
+npm install /chemin/vers/tempora-framework-3.0.0-dev.0.tgz
+npx tempora --help
+npx tempora profile validate profil.json
+</code></pre>
+<p>Omettre <code>--write</code> pour lister les fichiers sans produire de tarball. La CLI renvoie des résultats JSON pour les commandes de traitement et un code de sortie 1 en cas d’erreur. Les écritures exigent un répertoire explicite avec <code>--output-root</code>. Les anciennes commandes npm restent disponibles pendant la transition.</p>
+<div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-js">const {profiles, canonical, ingestion, analysis, review, publication, api} = require('tempora-framework');
+const profile = profiles.load('profil.json');
+const corpus = ingestion.createCorpus(profile, {event_types: [], territorial_units: []});
+console.log(canonical.validateCorpus(corpus));
+</code></pre>
+<p>Le SDK expose les types TypeScript et les schémas via <code>tempora-framework/schemas/profile</code>, <code>tempora-framework/schemas/mapping</code> et <code>tempora-framework/schemas/v3/corpus</code>. Les erreurs du SDK peuvent inclure un <code>code</code> et des détails structurés. La CI installe le tarball dans un répertoire distinct et vérifie le parcours synthétique de l’import à la lecture HTTP.</p>
+</div>
+<footer><a href="https://github.com/MGhemri/tempora-framework">Code source TEMPORA</a><a href="mailto:contact@connect-gm.com">Contact</a></footer></main>
+</div><script src="../assets/site.js" defer></script></body></html>

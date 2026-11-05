@@ -33,3 +33,9 @@ docs/schemas/** text eol=lf
 docs/profiles/** text eol=lf
 
 tests/fixtures/canonical-v3.utf8 -text
+
+docs/index.html text eol=lf
+docs/assets/** text eol=lf
+docs/guides/** text eol=lf
+docs/openapi/** text eol=lf
+docs/site-src/** text eol=lf

@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="fr" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>API REST v3 · TEMPORA</title><link rel="stylesheet" href="../assets/site.css"></head><body>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+<header class="topbar"><div class="topinner"><a class="brand" href="../index.html"><span class="brandmark" aria-hidden="true">T</span><span>TEMPORA<span class="brandtail">/ FRAMEWORK</span></span></a>
+<nav class="toplinks" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../guides/getting-started.html">Documentation</a><a href="https://github.com/MGhemri/tempora-framework">GitHub</a></nav>
+<button class="mobilemenu" id="menu" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button></div></header>
+<div class="app"><nav class="sidebar" id="sidebar" aria-label="Guides TEMPORA"><div class="sidecaption">DOCUMENTATION / V3</div>
+<a class="sidelink" href="../guides/getting-started.html">Démarrage</a>
+<a class="sidelink" href="../guides/architecture.html">Architecture</a>
+<a class="sidelink" href="../guides/profiles.html">Profils</a>
+<a class="sidelink" href="../guides/canonical.html">Modèle canonique</a>
+<a class="sidelink" href="../guides/ingestion.html">Ingestion</a>
+<a class="sidelink" href="../guides/analysis.html">Analyses</a>
+<a class="sidelink" href="../guides/review.html">Revue</a>
+<a class="sidelink" href="../guides/publication.html">Publication</a>
+<a class="sidelink active" href="../guides/api.html" aria-current="page">API REST v3</a>
+<a class="sidelink" href="../guides/sdk-cli.html">SDK et CLI</a>
+<a class="sidelink" href="../guides/science.html">Méthodologie</a>
+<a class="sidelink" href="../guides/alnop.html">Compatibilité ALNOP</a>
+<a class="sidelink" href="../guides/security.html">Sécurité</a>
+<div class="sidenote">TEMPORA 3.0.0-dev.0<br>Préversion locale · MIT</div></nav>
+<main class="main" id="contenu"><h1>API REST v3</h1><div class="article"><h2 id="consulter-des-versions-publiées-par-lapi-locale">Consulter des versions publiées par l’API locale</h2>
+<p>L’adaptateur Node écoute uniquement sur l’interface locale. Sélectionner explicitement le dossier de publication et chacun des profils activés.</p>
+<div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-sh">npm run serve:tempora -- --store work/tempora-v3/publication --profile synthetic-history --port 8787
+</code></pre>
+<p>Le contrat OpenAPI 3.1 est disponible à <code>/api/v3/openapi.json</code> et l’état du service à <code>/health</code>. Le préfixe <code>/api/v3</code> identifie le contrat générique. Sous <code>/profiles/{profileId}</code>, l’API fournit les versions, événements, sources, entités, assertions, relations, géométries et statistiques documentaires. Les archives activées se consultent avec <code>release=&lt;id&gt;</code>. Une version simplement préparée ne figure pas dans le catalogue.</p>
+<p>Les listes acceptent <code>limit</code> et <code>cursor</code>. Les événements peuvent être filtrés par dates, type, langue, présence d’une source ou référence géographique. La recherche <code>q</code> compare le texte des titres et descriptions sans distinction de casse. <code>spatial?format=geojson</code> renvoie une collection GeoJSON dans le champ <code>data</code> avec la précision déclarée. Les erreurs fournissent <code>code</code>, <code>message</code> et <code>field</code> lorsqu’un paramètre est identifié. Un curseur reste lié à la version et aux filtres de sa requête.</p>
+<p>Les versions explicites sont immuables et les réponses ont un ETag. L’option <code>--cors-origin</code> restreint les requêtes navigateur à une origine choisie. L’adaptateur local exerce des limites de taille. Un éventuel hôte en ligne devra définir ses propres limites de débit.</p>
+<p><a href="../openapi/v3.json">Consulter le contrat OpenAPI</a></p>
+</div>
+<footer><a href="https://github.com/MGhemri/tempora-framework">Code source TEMPORA</a><a href="mailto:contact@connect-gm.com">Contact</a></footer></main>
+</div><script src="../assets/site.js" defer></script></body></html>

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="fr" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Modèle canonique · TEMPORA</title><link rel="stylesheet" href="../assets/site.css"></head><body>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+<header class="topbar"><div class="topinner"><a class="brand" href="../index.html"><span class="brandmark" aria-hidden="true">T</span><span>TEMPORA<span class="brandtail">/ FRAMEWORK</span></span></a>
+<nav class="toplinks" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../guides/getting-started.html">Documentation</a><a href="https://github.com/MGhemri/tempora-framework">GitHub</a></nav>
+<button class="mobilemenu" id="menu" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button></div></header>
+<div class="app"><nav class="sidebar" id="sidebar" aria-label="Guides TEMPORA"><div class="sidecaption">DOCUMENTATION / V3</div>
+<a class="sidelink" href="../guides/getting-started.html">Démarrage</a>
+<a class="sidelink" href="../guides/architecture.html">Architecture</a>
+<a class="sidelink" href="../guides/profiles.html">Profils</a>
+<a class="sidelink active" href="../guides/canonical.html" aria-current="page">Modèle canonique</a>
+<a class="sidelink" href="../guides/ingestion.html">Ingestion</a>
+<a class="sidelink" href="../guides/analysis.html">Analyses</a>
+<a class="sidelink" href="../guides/review.html">Revue</a>
+<a class="sidelink" href="../guides/publication.html">Publication</a>
+<a class="sidelink" href="../guides/api.html">API REST v3</a>
+<a class="sidelink" href="../guides/sdk-cli.html">SDK et CLI</a>
+<a class="sidelink" href="../guides/science.html">Méthodologie</a>
+<a class="sidelink" href="../guides/alnop.html">Compatibilité ALNOP</a>
+<a class="sidelink" href="../guides/security.html">Sécurité</a>
+<div class="sidenote">TEMPORA 3.0.0-dev.0<br>Préversion locale · MIT</div></nav>
+<main class="main" id="contenu"><h1>Modèle canonique</h1><div class="article"><p>Le modèle canonique TEMPORA <code>3.0.0</code> distingue les événements, sources, assertions, entités, expressions temporelles, assertions spatiales, relations, revues, évaluations et versions de corpus. Les schémas sont versionnés indépendamment du manifeste de profil <code>1.0.0</code>.</p>
+<p>Cette représentation est disponible pour validation et migration locale. Les données ALNOP en production restent au format canonique v2 ; leurs API, exports et archives ne sont pas remplacés. Cette étape ne constitue pas une release complète de la plateforme TEMPORA v3.</p>
+<h2 id="schémas-et-validation">Schémas et validation</h2>
+<ul>
+<li><a href="../schemas/tempora/v3/corpus.schema.json">Schéma du corpus</a></li>
+<li><a href="../schemas/tempora/v3/model.schema.json">Définitions communes et objets</a></li>
+<li><a href="../schemas/tempora/v3/event.schema.json">Événement</a>, <a href="../schemas/tempora/v3/source.schema.json">source</a>, <a href="../schemas/tempora/v3/claim.schema.json">assertion</a>, <a href="../schemas/tempora/v3/entity.schema.json">entité</a></li>
+<li><a href="../schemas/tempora/v3/temporal-expression.schema.json">Temps</a>, <a href="../schemas/tempora/v3/spatial-assertion.schema.json">espace</a>, <a href="../schemas/tempora/v3/relation.schema.json">relation</a></li>
+<li><a href="../schemas/tempora/v3/review.schema.json">Revue</a>, <a href="../schemas/tempora/v3/assessment.schema.json">évaluation</a>, <a href="../schemas/tempora/v3/corpus-release.schema.json">version de corpus</a></li>
+</ul>
+<p>Les identifiants <code>$id</code> sont des URN de schéma, pas des adresses réseau. Pour un validateur JSON Schema externe, enregistrer le schéma de profil, <code>model.schema.json</code>, puis le schéma d’objet souhaité. Le validateur fourni effectue cet enregistrement localement, sans accès réseau.</p>
+<div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-js">const {validateCorpus} = require('./src/framework/canonical');
+const result = validateCorpus(corpus);
+// result.valid, result.errors, result.warnings, result.scope
+</code></pre>
+<p>Les contrôles couvrent la structure, les références typées, l’unicité des ID dans un espace de noms, l’appartenance au profil, ses vocabulaires et règles, les bornes temporelles et les géométries. Les sévérités du profil restent respectées. Un corpus natif peut employer d’autres langues, périodes et types d’événements ; le noyau ne lit aucune donnée ALNOP.</p>
+<p>Un ID d’événement reste indépendant de son titre. Les références contiennent <code>kind</code>, <code>namespace</code> et <code>id</code>. Un corpus représente un profil ; les références vers un autre espace de noms sont refusées à cette étape. Les propriétés supplémentaires de domaine vont dans <code>extensions</code>, sous une clé d’espace de noms.</p>
+<h2 id="métadonnées-de-profil">Métadonnées de profil</h2>
+<p>Le manifeste 1.0.0 peut déclarer des références de mappings par identifiant et version dans <code>mappings</code>. Chaque identifiant doit être unique dans le profil. Le champ facultatif <code>provenance</code> décrit la référence et l’origine du manifeste. Ces métadonnées restent déclaratives. Le chargement d’un mapping s’effectue séparément, par une entrée explicite.</p>
+<h2 id="sérialisation-et-empreintes">Sérialisation et empreintes</h2>
+<p><code>canonicalStringify</code> produit du JSON compact sans marqueur d’encodage ni saut de ligne final. Les clés sont triées suivant les unités UTF-16 de JavaScript. Lors de l’émission JSON, les clés qui sont des indices de tableau ECMAScript apparaissent d’abord dans l’ordre numérique. Les valeurs des tableaux gardent leur ordre, y compris les collections du corpus. Le tri métier des collections se fait avant la sérialisation, lorsque le contrat de l’artefact le prévoit.</p>
+<p>Le texte conserve ses caractères sans normalisation Unicode. Les nombres suivent la sérialisation JSON de JavaScript, avec <code>-0</code> représenté par <code>0</code> et rejet des nombres non finis. <code>digest</code> calcule SHA-256 sur les octets UTF-8 de cette représentation et renvoie 64 caractères hexadécimaux minuscules. L’empreinte d’un fichier distribué porte sur ses octets exacts, y compris les éventuels séparateurs de lignes. Le vecteur binaire de référence est vérifié sur Linux et Windows.</p>
+<h2 id="informations-et-provenance">Informations et provenance</h2>
+<p>Les titres, descriptions et libellés sont des objets indexés par langue. Une langue absente n’est pas traduite automatiquement. Une valeur inconnue est <code>null</code> ; zéro reste une valeur distincte.</p>
+<p>Chaque enregistrement distingue son statut éditorial, sa provenance et ses extensions. Les assertions gardent séparément sujet, prédicat, valeur, unité, contexte, sources précises et contradictions explicites. Les noms d’entités peuvent conserver langue, rôle et validité historique. Les relations sont typées et disposent de leur propre provenance.</p>
+<p>La validation est <strong>technique</strong>. Elle ne certifie pas un fait historique et n’autorise pas la publication. Le statut <code>unspecified</code> signifie qu’aucun statut équivalent n’a été déclaré pour cet objet. Une publication héritée sans revue enregistrée reste signalée ; aucune approbation rétrospective n’est inventée. Les règles éditoriales ALNOP restent appliquées par les outils existants avant la migration. Le pipeline générique de revue et de publication sera livré séparément.</p>
+<h2 id="temps-historique">Temps historique</h2>
+<p><code>TemporalExpression</code> conserve <code>original</code>, <code>calendar</code>, <code>kind</code>, <code>earliest</code>, <code>latest</code>, <code>precision</code> et <code>certainty</code>.</p>
+<ul>
+<li><code>exact</code>, <code>month</code> et <code>year</code> distinguent jour, mois et année. Les bornes d’un mois ou d’une année décrivent son étendue, sans prétendre connaître un jour exact.</li>
+<li><code>interval</code> représente des bornes inclusives, éventuellement ouvertes d’un côté.</li>
+<li><code>before</code> porte seulement une borne supérieure exclusive ; <code>after</code> seulement une borne inférieure exclusive. Leur précision est <code>range</code>.</li>
+<li><code>unknown</code> conserve deux bornes nulles et la précision <code>unknown</code>.</li>
+</ul>
+<p><code>temporalRelation</code> renvoie <code>before</code>, <code>after</code>, <code>contemporary</code>, <code>overlap</code> ou <code>indeterminate</code>. <code>contemporary</code> désigne ici le même jour exact. <code>overlap</code> signifie que les intervalles documentaires se recouvrent ; il ne prouve pas la simultanéité des événements.</p>
+<p>Seul le calendrier grégorien, de <code>0001</code> à <code>9999</code>, est implémenté. Les dates antérieures et les autres calendriers nécessiteront une évolution explicite du contrat et des conversions documentées ; ils sont actuellement refusés.</p>
+<h2 id="espace-historique">Espace historique</h2>
+<p>Les géométries acceptées sont <code>Point</code>, <code>MultiPoint</code>, <code>LineString</code>, <code>Polygon</code>, <code>MultiPolygon</code> et <code>null</code>, en <code>EPSG:4326</code>, avec des positions à deux coordonnées dans l’ordre longitude/latitude. Les rôles distinguent notamment site exact, point représentatif, aire approximative, zone d’opération et territoire administratif. Une géométrie nulle conserve le rôle <code>unknown</code>.</p>
+<p>Précision en mètres, méthode de géocodage et version de référentiel sont explicites et peuvent rester inconnues. Aucune valeur métrique n’est déduite du nombre de décimales. Les événements peuvent avoir plusieurs assertions spatiales et plusieurs territoires ; ceux-ci peuvent porter des périodes de validité.</p>
+<p>Les contrôles topologiques portent sur la fermeture, l’aire non nulle, les auto-intersections, les trous et les recouvrements de composantes. Ils travaillent sur des segments plans en coordonnées WGS84. Les polygones traversant l’antiméridien sont refusés explicitement. Ce composant n’est pas un moteur SIG géodésique ; il ne corrige ni ne reprojette une géométrie. Les limites numériques des calculs en virgule flottante restent à considérer pour les géométries proches de la dégénérescence.</p>
+<h2 id="migration-alnop-v2-vers-tempora-v3">Migration ALNOP v2 vers TEMPORA v3</h2>
+<div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-sh"># Vérification sans écrire de fichier
+npm run migrate:tempora
+
+# Copie locale, jamais dans les fichiers publiés
+npm run migrate:tempora -- --write
+
+# Vérifier le retour vers les objets ALNOP d’origine
+npm run migrate:tempora -- --reverse work/tempora-v3/corpus-v3.json
+
+# Écrire ce retour dans work/tempora-v3/restored-alnop.json
+npm run migrate:tempora -- --reverse work/tempora-v3/corpus-v3.json --write
+</code></pre>
+<p>Les écritures refusent d’écraser un fichier existant. Le répertoire <code>work/</code> est exclu de Git et du site. Une copie de migration peut contenir des propositions non publiées : elle ne doit pas être exposée comme un export public. La commande ne modifie ni <code>data/</code>, ni les exports historiques, ni les API, ni les archives de versions.</p>
+<table>
+<thead>
+<tr>
+<th>ALNOP v2</th>
+<th>TEMPORA v3</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Opérations et identifiants</td>
+<td>Événements avec les mêmes ID</td>
+</tr>
+<tr>
+<td>Sources et identifiants</td>
+<td>Sources séparées avec les mêmes ID</td>
+</tr>
+<tr>
+<td>Assertions et preuves</td>
+<td>Assertions, unités, contextes et références précises</td>
+</tr>
+<tr>
+<td>Personnes, organisations, lieux et territoires</td>
+<td>Entités typées, noms et validités</td>
+</tr>
+<tr>
+<td>Localisations, participants et rattachements</td>
+<td>Assertions spatiales et relations explicites</td>
+</tr>
+<tr>
+<td>Historiques de revue</td>
+<td>Objets de revue avec décisions et références conservées</td>
+</tr>
+<tr>
+<td>Évaluations de doublons</td>
+<td>Évaluations séparées, sans fusion automatique</td>
+</tr>
+<tr>
+<td>Manifestes de versions existantes</td>
+<td>Descriptions des versions historiques, avec leurs empreintes d’origine</td>
+</tr>
+</tbody>
+</table>
+<p>L’adaptateur conserve l’objet original de chaque enregistrement dans <code>extensions.alnop.original</code>. Les métadonnées, l’ordre des collections et les autres champs du corpus sont préservés dans l’enveloppe de migration. Cela permet la restitution des champs ALNOP qui n’ont pas encore de correspondance générique, sans les supprimer ni leur inventer une interprétation.</p>
+<p>Chaque transformation conserve méthode, version, chemin source et empreinte du corpus d’entrée. Les ID des nouveaux objets dérivés sont déterministes ; les ID historiques restent inchangés. Une empreinte de contenu contrôle l’intégrité, sans constituer une signature ni une preuve d’authenticité documentaire.</p>
+<p>Le retour est garanti pour une copie de migration intacte. Si la représentation TEMPORA a été modifiée, le retour refuse de perdre silencieusement les changements. Une migration inverse de données éditées exigera un mapping explicite et une revue. Les décisions de revue conservées portent sur leur contenu ALNOP original ; elles ne valent pas nouvelle approbation de la représentation v3.</p>
+<p>Les manifestes d’archives conservent leur version de corpus historique et leurs empreintes. Aucune archive v3 n’est créée et aucune archive existante n’est réécrite. Un CSV aplati ne permet pas cette garantie de restitution ; utiliser le JSON canonique pour les données riches.</p>
+<h2 id="périmètre-suivant">Périmètre suivant</h2>
+<p>Le <a href="ingestion.html">pipeline local d’ingestion</a> peut préparer des propositions JSON, CSV et GeoJSON dans une copie de travail v3. La publication générique, l’API multi-profils, le SDK et les benchmarks de charge restent des étapes distinctes.</p>
+</div>
+<footer><a href="https://github.com/MGhemri/tempora-framework">Code source TEMPORA</a><a href="mailto:contact@connect-gm.com">Contact</a></footer></main>
+</div><script src="../assets/site.js" defer></script></body></html>

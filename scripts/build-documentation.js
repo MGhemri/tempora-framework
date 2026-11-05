@@ -56,7 +56,7 @@ for(const [file,content] of Object.entries(generated)){
 }
 console.log(check?'Documentation matches.':'Documentation generated.');
 
-if(!check)fs.copyFileSync(path.join(root,'docs/index.html'),path.join(root,'docs/atlas.html'));
+if(!check)fs.copyFileSync(path.join(root,'docs/alnop-compat.html'),path.join(root,'docs/atlas.html'));
 
 const schemaDirectory=path.join(root,'schemas/tempora/v3');
 const schemaFiles=fs.readdirSync(schemaDirectory).filter(name=>name.endsWith('.json')).map(name=>['tempora/v3/'+name,path.join(schemaDirectory,name)]);

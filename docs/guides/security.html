@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="fr" data-theme="dark"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sécurité · TEMPORA</title><link rel="stylesheet" href="../assets/site.css"></head><body>
+<a class="skip-link" href="#contenu">Aller au contenu</a>
+<header class="topbar"><div class="topinner"><a class="brand" href="../index.html"><span class="brandmark" aria-hidden="true">T</span><span>TEMPORA<span class="brandtail">/ FRAMEWORK</span></span></a>
+<nav class="toplinks" aria-label="Navigation principale"><a href="../index.html">Accueil</a><a href="../guides/getting-started.html">Documentation</a><a href="https://github.com/MGhemri/tempora-framework">GitHub</a></nav>
+<button class="mobilemenu" id="menu" type="button" aria-controls="sidebar" aria-expanded="false">Menu</button></div></header>
+<div class="app"><nav class="sidebar" id="sidebar" aria-label="Guides TEMPORA"><div class="sidecaption">DOCUMENTATION / V3</div>
+<a class="sidelink" href="../guides/getting-started.html">Démarrage</a>
+<a class="sidelink" href="../guides/architecture.html">Architecture</a>
+<a class="sidelink" href="../guides/profiles.html">Profils</a>
+<a class="sidelink" href="../guides/canonical.html">Modèle canonique</a>
+<a class="sidelink" href="../guides/ingestion.html">Ingestion</a>
+<a class="sidelink" href="../guides/analysis.html">Analyses</a>
+<a class="sidelink" href="../guides/review.html">Revue</a>
+<a class="sidelink" href="../guides/publication.html">Publication</a>
+<a class="sidelink" href="../guides/api.html">API REST v3</a>
+<a class="sidelink" href="../guides/sdk-cli.html">SDK et CLI</a>
+<a class="sidelink" href="../guides/science.html">Méthodologie</a>
+<a class="sidelink" href="../guides/alnop.html">Compatibilité ALNOP</a>
+<a class="sidelink active" href="../guides/security.html" aria-current="page">Sécurité</a>
+<div class="sidenote">TEMPORA 3.0.0-dev.0<br>Préversion locale · MIT</div></nav>
+<main class="main" id="contenu"><h1>Sécurité</h1><div class="article"><h2 id="entrées-et-limites">Entrées et limites</h2>
+<p>Les fichiers JSON, CSV et GeoJSON sont des entrées non fiables. L’ingestion borne leur taille, leur profondeur et leur nombre de lignes. Le JSON ambigu ou aux nombres non représentables échoue. Les pointeurs des mappings sont déclaratifs. Les références de profil restent dans une racine explicite, avec contrôle des liens symboliques. Le noyau utilise ses schémas locaux et ne suit pas les URL citées par les sources.</p>
+<p>Une géométrie peut être invalide ou trop coûteuse à traiter. Les schémas bornent les positions prises en charge et les contrôles refusent notamment les anneaux invalides. Le budget d’analyse limite les comparaisons. Les opérations dépassant leurs limites doivent échouer avant la publication.</p>
+<h2 id="données-privées-et-publication">Données privées et publication</h2>
+<p>Les entrées originales, décisions éditoriales et identifiants des relecteurs restent dans l’espace de travail. Le constructeur public retient les notices sélectionnées et leurs dépendances approuvées. Des tests introduisent des marqueurs fictifs dans les champs privés et contrôlent leur absence dans les artefacts et réponses HTTP. Les champs destinés à être publics exigent une revue humaine des droits, de la sensibilité et des citations. Les exports CSV neutralisent les préfixes de formule. Un consommateur HTML doit échapper les chaînes qu’il affiche.</p>
+<p>La vérification recalcule les sommes et contrôle la cohérence entre les fichiers. L’empreinte terminale de revue provient d’un registre indépendant. L’authentification, le contrôle d’accès au registre et la conservation des secrets relèvent de l’hôte.</p>
+<h2 id="exposition-du-service">Exposition du service</h2>
+<p>L’adaptateur Node écoute sur la boucle locale. Il ne sert que les versions activées, applique des limites de requête et de réponse et filtre les détails d’erreur. Un hôte distant doit définir ses propres limites de débit, permissions et règles CORS. Le dossier des versions activées et ses pointeurs doivent être accessibles en écriture aux seuls opérateurs autorisés.</p>
+<p>Le paquet d’exécution est testé par installation depuis le tarball. La CI audite ses dépendances d’exécution. Les politiques propres aux corpus et les droits de redistribution restent distincts de la licence MIT du logiciel.</p>
+</div>
+<footer><a href="https://github.com/MGhemri/tempora-framework">Code source TEMPORA</a><a href="mailto:contact@connect-gm.com">Contact</a></footer></main>
+</div><script src="../assets/site.js" defer></script></body></html>

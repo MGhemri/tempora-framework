@@ -2,6 +2,8 @@
 
 **TEMPORA aide à préparer, valider et analyser des corpus historiques.** Un profil déclare les langues, la période, les vocabulaires et les règles documentaires d’un corpus. Le noyau réutilise les mêmes contrats entre profils.
 
+[Site et guides TEMPORA](https://mghemri.github.io/tempora-framework/)
+
 ## Démarrage
 
 La CI utilise Node.js 20 et Python 3.11. Le parcours de référence exécute une analyse sur un profil fictif indépendant, en anglais et en espagnol.
@@ -49,6 +51,16 @@ npm run check:tempora:baseline
 ```
 
 Le contrôle d’intégrité des archives est disponible ici avec `npm run check:releases`. La reconstruction depuis les commits historiques s’exécute dans le dépôt ALNOP avec `npm run check:releases -- --sources`. [Versions et citation ALNOP](RELEASE_POLICY.md)
+
+## Générer le site documentaire
+
+```sh
+npm run build:site
+npm run check:site
+npm run build:site -- --output work/pages
+```
+
+Les guides sont générés à partir des documents Markdown de référence. Le déploiement Pages utilise l’export isolé du site TEMPORA. Les fichiers historiques restent dans les tests de compatibilité du dépôt.
 
 ## Contribuer
 
