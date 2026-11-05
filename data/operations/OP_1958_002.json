@@ -1,0 +1,96 @@
+{
+  "id": "OP_1958_002",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combat du Fedj Zezoua (Bataille des Frontières)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-02-12",
+    "latest": "1958-02-12",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-02-16",
+    "latest": "1958-02-16",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Col du Fedj Zezoua, forêt des Beni-Mezline, à l'est de Guelma",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.58,
+          36.46
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya II / Base de l'Est",
+  "source_ids": [
+    "SRC_3be6636488e167de9dd599c7",
+    "SRC_d26d3b2dba5c74487a5b221c",
+    "SRC_12947b039d4ae1c54be2eb8f"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_002",
+    "nom_operation": "Combat du Fedj Zezoua (Bataille des Frontières)",
+    "date_debut": "1958-02-12",
+    "date_fin": "1958-02-16",
+    "wilaya_concernee": "Wilaya II / Base de l'Est",
+    "localisation": {
+      "region_ou_ville": "Col du Fedj Zezoua, forêt des Beni-Mezline, à l'est de Guelma",
+      "coordonnees_approximatives": {
+        "latitude": 36.46,
+        "longitude": 7.58
+      }
+    },
+    "commandement_aln": [
+      "Lakhdar Bentobal",
+      "Ali Kafi",
+      "Officiers des faileks de la Base de l'Est"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Dans le cadre des offensives de franchissement de la Ligne Morice, plusieurs katibas de l'ALN lourdement armées (mitrailleuses MG42, mortiers) prennent position sur les crêtes rocheuses du Fedj Zezoua, près de Guelma, et engagent de violents combats contre le 1er Régiment étranger de parachutistes (1er REP) du lieutenant-colonel Jeanpierre et le 9e RCP.",
+    "bilan_et_pertes": {
+      "aln": "Au moins 47 combattants tués lors de la journée du 12 février et plusieurs dizaines supplémentaires jusqu'au 16 février sous les frappes aériennes",
+      "forces_francaises": "14 parachutistes du 1er REP tués et plusieurs dizaines de blessés sur la séquence du 12 au 16 février 1958",
+      "civils": "Non documenté"
+    },
+    "impact_strategique": "Illustre l'intensité quasi conventionnelle des combats de la Bataille des Frontières au début de l'année 1958, où les unités de l'ALN disputent le terrain aux meilleurs régiments parachutistes français.",
+    "sources": [
+      {
+        "titre": "Combat du Fedj Zezoua — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Combat_du_Fedj_Zezoua",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Le 1er REP et la bataille des frontières — Fédération des Sociétés d'Anciens de la Légion Étrangère (FSALE)",
+        "url": "https://www.legionetrangere.fr/la-fsale/actualites-de-la-fsale/1689-jean-balazuc-p-p-p-p-1er-rep-la-bataille-des-frontieres-en-1959.html",
+        "type_source": "Archive"
+      },
+      {
+        "titre": "Grande bataille de Souk Ahras (mdn.dz)",
+        "url": "https://www.mdn.dz/site_cfdat/sommaire/actualites/fr/27102025.php",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

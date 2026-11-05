@@ -1,0 +1,84 @@
+{
+  "id": "OP_1957_009",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats et embuscade du Djebel Bouzegza",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-08-04",
+    "latest": "1957-08-04",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-08-12",
+    "latest": "1957-08-12",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif du Djebel Bouzegza, entre Lakhdaria et Boudouaou (Est de la Mitidja, Wilaya de Boumerdès / Bouira)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.4567,
+          36.6094
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya IV (Algérois)",
+  "source_ids": [
+    "SRC_7c8d1b148148a55451fe0467"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_009",
+    "nom_operation": "Combats et embuscade du Djebel Bouzegza",
+    "date_debut": "1957-08-04",
+    "date_fin": "1957-08-12",
+    "wilaya_concernee": "Wilaya IV (Algérois)",
+    "localisation": {
+      "region_ou_ville": "Massif du Djebel Bouzegza, entre Lakhdaria et Boudouaou (Est de la Mitidja, Wilaya de Boumerdès / Bouira)",
+      "coordonnees_approximatives": {
+        "latitude": 36.6094,
+        "longitude": 3.4567
+      }
+    },
+    "commandement_aln": [
+      "Ouamrane Amar",
+      "Si M'Hamed Bougara",
+      "Rabah Zerari dit Commandant Azzedine"
+    ],
+    "type_action": "Embuscade",
+    "description": "Le 4 août 1957, le commando Ali Khodja reconstitué et quatre katibas de la Wilaya IV (environ 600 hommes) attirent dans une embuscade meurtrière deux compagnies du 2e régiment d'infanterie coloniale (2e RIC) au cœur du massif escarpé du Bouzegza, aux portes de la Mitidja. L'ALN résiste ensuite aux assauts massifs des régiments parachutistes de la 10e DP (Massu) avant de s'exfiltrer de nuit le 12 août.",
+    "bilan_et_pertes": {
+      "aln": "Une cinquantaine à une centaine de combattants tués sur l'ensemble des huit jours de bataille",
+      "forces_francaises": "Lourdes pertes lors de l'embuscade du 4 août (au moins 21 morts, 19 blessés et 4 disparus/prisonniers au 2e RIC), suivies de pertes supplémentaires lors des assauts des 8 et 12 août",
+      "civils": "Non documenté"
+    },
+    "impact_strategique": "Victoire tactique retentissante de l'ALN lors de la journée du 4 août à quelques dizaines de kilomètres seulement d'Alger, prouvant que malgré la perte de la Casbah d'Alger, les maquis de la Wilaya IV conservent une capacité offensive intacte.",
+    "sources": [
+      {
+        "titre": "Bataille de Bouzegza — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Bataille_de_Bouzegza",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

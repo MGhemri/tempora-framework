@@ -1,0 +1,84 @@
+{
+  "id": "OP_1956_051",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Sabotage des réseaux électriques haute tension de Maraval et Petit Lac alimentant Mers-el-Kébir",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-11-20",
+    "latest": "1956-11-20",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-11-20",
+    "latest": "1956-11-20",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Maraval et Petit Lac (Oran sud)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.6288,
+          35.6742
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Organisation urbaine d'Oran - Maraval et Petit Lac)",
+  "source_ids": [
+    "SRC_240d500e0461d77aa0f457d0",
+    "SRC_80d0407a58f562f2199274fb"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_051",
+    "nom_operation": "Sabotage des réseaux électriques haute tension de Maraval et Petit Lac alimentant Mers-el-Kébir",
+    "date_debut": "1956-11-20",
+    "date_fin": "1956-11-20",
+    "wilaya_concernee": "Wilaya V (Organisation urbaine d'Oran - Maraval et Petit Lac)",
+    "localisation": {
+      "region_ou_ville": "Maraval et Petit Lac (Oran sud)",
+      "coordonnees_approximatives": {
+        "latitude": 35.6742,
+        "longitude": -0.6288
+      }
+    },
+    "commandement_aln": [
+      "Cellule de sabotage de la Zone 6 (Wilaya V)"
+    ],
+    "type_action": "Sabotage d'infrastructure énergétique",
+    "description": "Plastiquage coordonné de trois pylônes haute tension et d'un transformateur principal situés entre les secteurs de Maraval et du Petit Lac. L'opération prive d'électricité plusieurs installations militaires oranaises et perturbe les transmissions avec la base navale stratégique de Mers-el-Kébir.",
+    "bilan_et_pertes": "Destruction complète d'un transformateur de répartition et effondrement de deux pylônes ; coupure générale de courant pendant 18 heures sur tout le sud d'Oran ; repli sans perte du commando.",
+    "impact_strategique": "Prouve la vulnérabilité du réseau électrique alimentant les bases militaires stratégiques françaises de la côte oranaise.",
+    "sources": [
+      {
+        "titre": "معركة سكة الحديد بالقطاع الوهراني والتدابير العسكرية الفرنسية للحماية (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/123690",
+        "type_source": "Revue scientifique"
+      },
+      {
+        "titre": "Mohamed Téguia, « L'Algérie en guerre : Les sabotages d'infrastructures en Wilaya V », OPU Alger / Revue El Djeich",
+        "url": "https://journals.openedition.org/insaniyat/30472",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "id": "OP_1956_022",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats et embuscades de la forêt de Mizrana et sabotage des axes côtiers de Tigzirt - Dellys",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-06-11",
+    "latest": "1956-06-11",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-06-13",
+    "latest": "1956-06-13",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif forestier de Mizrana, Makouda et route côtière entre Dellys et Tigzirt (Wilayas de Tizi Ouzou et Boumerdès)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.08,
+          36.845
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya III (Kabylie maritime - Secteurs de Tigzirt, Mizrana et Dellys)",
+  "source_ids": [
+    "SRC_21a2f95788dfda9f178a2850",
+    "SRC_a903232a120aa7a51b0a21b2",
+    "SRC_0a9011abe4f5f9a640ffc619",
+    "SRC_76f65b05c3feaf2d6d6b554d"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_022",
+    "nom_operation": "Combats et embuscades de la forêt de Mizrana et sabotage des axes côtiers de Tigzirt - Dellys",
+    "date_debut": "1956-06-11",
+    "date_fin": "1956-06-13",
+    "wilaya_concernee": "Wilaya III (Kabylie maritime - Secteurs de Tigzirt, Mizrana et Dellys)",
+    "localisation": {
+      "region_ou_ville": "Massif forestier de Mizrana, Makouda et route côtière entre Dellys et Tigzirt (Wilayas de Tizi Ouzou et Boumerdès)",
+      "coordonnees_approximatives": {
+        "latitude": 36.845,
+        "longitude": 4.08
+      }
+    },
+    "commandement_aln": [
+      "Mohand Ameziane Yazourene dit Saïd Vrirouche",
+      "Mohamed Touami dit Mouh Bouberak",
+      "Mohammedi Saïd"
+    ],
+    "type_action": "Embuscade",
+    "description": "Les commandos de la Kabylie maritime opérant depuis le massif forestier dense de Mizrana et du Djebel Bouberak coupent à l'explosif la route côtière et les lignes télégraphiques entre Dellys et Tigzirt, puis tendent une embuscade meurtrière contre une colonne d'infanterie de marine et de chasseurs venue dégager l'axe littoral.",
+    "bilan_et_pertes": {
+      "aln": "8 moudjahidine tués au cours des combats en forêt de Mizrana ; saisie d'armement collectif",
+      "forces_francaises": "Plus d'une vingtaine de militaires français tués ou blessés et plusieurs half-tracks et camions détruits",
+      "civils": "Bombardements navals et aériens sur le massif de Mizrana"
+    },
+    "impact_strategique": "Assure à la Wilaya III le contrôle des maquis côtiers de Mizrana et de Bouberak, où se déroulera quelques mois plus tard le célèbre retournement de l'opération « Oiseau bleu » (Force K).",
+    "sources": [
+      {
+        "titre": "Mohand Ameziane Yazourene, un stratège de la guerre de libération dans la Wilaya III historique — Algérie Presse Service (APS)",
+        "url": "https://www.aps.dz/fr/algerie/societe/mk013dwo-mohand-ameziane-yazourene-un-stratege-de-la-guerre-de-liberation-dans-la-wilaya-iii-historique",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Opération Oiseau bleu et les maquis de Kabylie maritime — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Op%C3%A9ration_Oiseau_bleu",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Embuscades et batailles des contreforts du Djurdjura (elmoudjahid.dz)",
+        "url": "https://www.elmoudjahid.dz/fr/actualite/22-juillet-1959-debut-de-l-operation-jumelles-le-deluge-de-feu-en-kabylie-n-a-pas-aneanti-l-aln-202689",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Embuscades et batailles des contreforts du Djurdjura (fr.wikipedia.org)",
+        "url": "https://fr.wikipedia.org/wiki/Amirouche_A%C3%AFt_Hamouda",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

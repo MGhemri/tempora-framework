@@ -1,0 +1,88 @@
+{
+  "id": "OP_1961_015",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats d'autodéfense et contre-attaques des commandos FLN à Oran (Ville Nouvelle, Médioni et Lamur)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1961-08-29",
+    "latest": "1961-08-29",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1961-09-15",
+    "latest": "1961-09-15",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Oran : quartiers de Ville Nouvelle (Médina Jdida / Tahtaha), Médioni (Haï El Menzeh), Lamur (El Hamri) et Saint-Antoine",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.6417,
+          35.6911
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Organisation urbaine du FLN à Oran)",
+  "source_ids": [
+    "SRC_277461499b0d35574f0157b5",
+    "SRC_2bbe5b84c6a3835cb3203e81"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1961_015",
+    "nom_operation": "Combats d'autodéfense et contre-attaques des commandos FLN à Oran (Ville Nouvelle, Médioni et Lamur)",
+    "date_debut": "1961-08-29",
+    "date_fin": "1961-09-15",
+    "wilaya_concernee": "Wilaya V (Organisation urbaine du FLN à Oran)",
+    "localisation": {
+      "region_ou_ville": "Oran : quartiers de Ville Nouvelle (Médina Jdida / Tahtaha), Médioni (Haï El Menzeh), Lamur (El Hamri) et Saint-Antoine",
+      "coordonnees_approximatives": {
+        "latitude": 35.6911,
+        "longitude": -0.6417
+      }
+    },
+    "commandement_aln": [
+      "Chefs des cellules armées urbaines du FLN d'Oran (Wilaya V)"
+    ],
+    "type_action": "Guérilla urbaine",
+    "description": "À la fin de l'été 1961, en riposte aux premières « ratonnades » et expéditions armées des commandos de l'OAS d'Oran (dirigés par le général Jouhaud et Charles Micheletti) contre les quartiers algériens de Ville Nouvelle (Médina Jdida), Médioni et Lamur, les groupes de choc du FLN oranais organisent la défense armée des lisières inter-quartiers et lancent des raids de représailles au pistolet-mitrailleur et à la grenade dans les artères limitrophes.",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs fidayin tués lors d'échanges de tirs avec les commandos OAS et les CRS",
+      "forces_francaises": "Plusieurs dizaines de membres des groupes armés européens et d'agents de sécurité tués ou blessés à Oran",
+      "civils": "Dizaines de victimes civiles algériennes et européennes ; érection par l'armée française de réseaux de barbelés séparant Ville Nouvelle des quartiers européens d'Oran"
+    },
+    "impact_strategique": "Transforme Ville Nouvelle (Médina Jdida), Médioni et le Petit Lac en bastions retranchés du FLN au cœur d'une agglomération oranaise majoritairement européenne.",
+    "sources": [
+      {
+        "titre": "Quelques jalons préliminaires à propos de la Zone Autonome d'Oran (ZAO) — Revue Insaniyat (CRASC)",
+        "url": "https://www.insaniyat.crasc.dz/en/article/quelques-jalons-preliminaires-a-propos-de-la-zone-autonome-doran-avril-septembre-1962",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "L'organisation urbaine du FLN à Oran (1961-1962) — Revue académique CERIST (ASJP)",
+        "url": "https://asjp.cerist.dz/en/downArticle/396/5/2/32080",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

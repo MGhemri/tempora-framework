@@ -1,0 +1,90 @@
+{
+  "id": "OP_1960_010",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Attaques au canon sans recul et destructions de radars sur la Ligne Challe (Secteur de Bouhadjar - Lamy)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1960-02-20",
+    "latest": "1960-02-20",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1960-02-22",
+    "latest": "1960-02-22",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Bouhadjar (ex-Lamy), Aïn Kerma et Ouled Driss, sur le double barrage Challe-Morice (Wilayas d'El Tarf et Souk Ahras)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.1056,
+          36.5028
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Armée des Frontières (EMG - Front Est / Secteur de Bouhadjar)",
+  "source_ids": [
+    "SRC_a2ef38f01ae03e8d33b0ea25",
+    "SRC_1d10fe7a9e2b461528ecc200"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1960_010",
+    "nom_operation": "Attaques au canon sans recul et destructions de radars sur la Ligne Challe (Secteur de Bouhadjar - Lamy)",
+    "date_debut": "1960-02-20",
+    "date_fin": "1960-02-22",
+    "wilaya_concernee": "Armée des Frontières (EMG - Front Est / Secteur de Bouhadjar)",
+    "localisation": {
+      "region_ou_ville": "Bouhadjar (ex-Lamy), Aïn Kerma et Ouled Driss, sur le double barrage Challe-Morice (Wilayas d'El Tarf et Souk Ahras)",
+      "coordonnees_approximatives": {
+        "latitude": 36.5028,
+        "longitude": 8.1056
+      }
+    },
+    "commandement_aln": [
+      "Houari Boumédiène (Chef de l'EMG)",
+      "Ali Mendjeli",
+      "Chadli Bendjedid"
+    ],
+    "type_action": "Sabotage",
+    "description": "En février 1960, dès la mise en place de l'État-Major Général (EMG) unifié de l'ALN, des commandos d'artillerie légère et de sapeurs mènent une série de raids nocturnes coordonnés contre les postes radars d'artillerie et les transformateurs haute tension de la Ligne Challe dans le secteur de Bouhadjar (ex-Lamy) et d'Aïn Kerma, détruisant plusieurs équipements électroniques de détection français au canon sans recul de 75 mm.",
+    "bilan_et_pertes": {
+      "aln": "5 moudjahidine tués lors des tirs de barrage d'artillerie",
+      "forces_francaises": "Destruction de deux postes radars de détection au sol et de postes de transformation électrique, une quinzaine de soldats français tués ou blessés",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "Démontre la modernisation technique des bataillons frontaliers de l'EMG, capables de neutraliser à distance les dispositifs électroniques de détection de la Ligne Challe.",
+    "sources": [
+      {
+        "titre": "Ligne Morice et dispositif de détection radar du barrage Est — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Ligne_Morice",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Dictionnaire de la guerre d'Algérie (L'Armée des frontières et l'EMG) — Cairn.info",
+        "url": "https://shs.cairn.info/dictionnaire-de-la-guerre-d-algerie--9782382923061-page-380?lang=fr",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

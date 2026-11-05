@@ -1,0 +1,89 @@
+{
+  "id": "OP_1956_045",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille de Bourzam dans le massif de Collo",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-05-12",
+    "latest": "1956-05-12",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Bourzam / Aïn Kechra (Skikda)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.415,
+          36.782
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya II (Zone 2 - Massif de Collo / Aïn Kechra)",
+  "source_ids": [
+    "SRC_c278bece95fe6b7eaae90d22",
+    "SRC_e1d762e816add7af3410552a"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_045",
+    "nom_operation": "Bataille de Bourzam dans le massif de Collo",
+    "date_debut": "1956-05-12",
+    "date_fin": null,
+    "wilaya_concernee": "Wilaya II (Zone 2 - Massif de Collo / Aïn Kechra)",
+    "localisation": {
+      "region_ou_ville": "Bourzam / Aïn Kechra (Skikda)",
+      "coordonnees_approximatives": {
+        "latitude": 36.782,
+        "longitude": 6.415
+      }
+    },
+    "commandement_aln": [
+      "Zighoud Youcef",
+      "Ali Kafi"
+    ],
+    "type_action": "Embuscade / Guérilla de montagne",
+    "description": "Embuscade et bataille rangée emblématique livrée dans le relief de Bourzam par les katibas de la Wilaya II contre une colonne motorisée coloniale.",
+    "bilan_et_pertes": {
+      "aln": "Pertes modérées",
+      "forces_francaises": "Dizaines de soldats coloniaux mis hors de combat et armement lourd saisi",
+      "civils": "0"
+    },
+    "impact_strategique": "Démonstration éclatante de la maîtrise tactique de la guérilla de montagne par l'état-major du Nord-Constantinois avant le Congrès de la Soummam.",
+    "sources": [
+      {
+        "titre": "Batailles de Bourzam et d'Oued Zeggar en Wilaya II (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/125124",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Histoire de la Wilaya II (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/254922",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

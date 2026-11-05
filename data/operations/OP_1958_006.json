@@ -1,0 +1,91 @@
+{
+  "id": "OP_1958_006",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Attentat ciblé contre le ministre Jacques Soustelle à Paris (Place de l'Étoile)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-09-15",
+    "latest": "1958-09-15",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Place de l'Étoile / Avenue de Friedland, Paris (8e arrondissement)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.295,
+          48.8738
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Fédération de France du FLN (« 7e Wilaya » - Organisation Spéciale)",
+  "source_ids": [
+    "SRC_171984260bfc4b0d042a3763",
+    "SRC_e41b47f67927a257d0aa5c8b"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_006",
+    "nom_operation": "Attentat ciblé contre le ministre Jacques Soustelle à Paris (Place de l'Étoile)",
+    "date_debut": "1958-09-15",
+    "date_fin": null,
+    "wilaya_concernee": "Fédération de France du FLN (« 7e Wilaya » - Organisation Spéciale)",
+    "localisation": {
+      "region_ou_ville": "Place de l'Étoile / Avenue de Friedland, Paris (8e arrondissement)",
+      "coordonnees_approximatives": {
+        "latitude": 48.8738,
+        "longitude": 2.295
+      }
+    },
+    "commandement_aln": [
+      "Omar Boudaoud",
+      "Rabah Bouaziz",
+      "Mouloud Ouraghi dit Le Chef",
+      "Chérif Bencherif"
+    ],
+    "type_action": "Attentat ciblé",
+    "description": "Dans le cadre de l'offensive du « second front » ouverte en métropole le 25 août 1958, un commando de choc de l'Organisation Spéciale (OS) de la Fédération de France du FLN mitraille en plein cœur de Paris, à l'angle de la place de l'Étoile et de l'avenue de Friedland, la voiture officielle de Jacques Soustelle, ministre de l'Information du général de Gaulle et ancien gouverneur général de l'Algérie.",
+    "bilan_et_pertes": {
+      "aln": "2 membres du commando arrêtés après une course-poursuite dans Paris",
+      "forces_francaises": "Gardes du corps et chauffeur choqués",
+      "civils": "Jacques Soustelle légèrement blessé au front ; 1 passant tué et 3 blessés par des balles perdues"
+    },
+    "impact_strategique": "Action d'éclat au sommet de l'appareil d'État français à Paris, confirmant l'audace opérationnelle de l'OS de la Fédération de France quelques jours avant la proclamation du GPRA (19 septembre 1958).",
+    "sources": [
+      {
+        "titre": "Jacques Soustelle — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Jacques_Soustelle",
+        "type_source": "Article"
+      },
+      {
+        "titre": "L'Organisation spéciale de la Fédération de France du FLN — Cairn.info",
+        "url": "https://shs.cairn.info/l-organisation-speciale-de-la-federation-de-france--9789961638798-page-242?lang=fr",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "id": "OP_1956_008",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Attentat ciblé contre Amédée Froger à Alger",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-12-28",
+    "latest": "1956-12-28",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "106 rue Michelet (actuelle rue Didouche Mourad), centre d'Alger",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.0531,
+          36.7669
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone autonome d'Alger (ZAA)",
+  "source_ids": [
+    "SRC_99c2868a1ee3731c5da72e5e",
+    "SRC_969b192ad38a7c4786a59511"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_008",
+    "nom_operation": "Attentat ciblé contre Amédée Froger à Alger",
+    "date_debut": "1956-12-28",
+    "date_fin": null,
+    "wilaya_concernee": "Zone autonome d'Alger (ZAA)",
+    "localisation": {
+      "region_ou_ville": "106 rue Michelet (actuelle rue Didouche Mourad), centre d'Alger",
+      "coordonnees_approximatives": {
+        "latitude": 36.7669,
+        "longitude": 3.0531
+      }
+    },
+    "commandement_aln": [
+      "Yacef Saâdi",
+      "Ali Ammar dit Ali la Pointe",
+      "Larbi Ben M'hidi"
+    ],
+    "type_action": "Attentat ciblé",
+    "description": "Sur ordre de la direction de la Zone autonome d'Alger, Ali la Pointe abat de trois balles de revolver Amédée Froger, maire de Boufarik, président de la Fédération des maires d'Algérie et figure de proue des partisans de l'Algérie française, au moment où celui-ci monte dans sa voiture devant son domicile de la rue Michelet.",
+    "bilan_et_pertes": {
+      "aln": "Exfiltration réussie du tireur vers la Casbah",
+      "forces_francaises": "Aucune perte militaire",
+      "civils": "1 mort ciblé (Amédée Froger) ; le lendemain 29 décembre, lors de ses obsèques au cimetière de Saint-Eugène, des émeutes et « ratonnades » européennes font 4 morts et 50 blessés parmi les passants algériens"
+    },
+    "impact_strategique": "Acte déclencheur immédiat de l'entrée de la 10e Division parachutiste dans Alger : face à l'impuissance de la police civile après cet assassinat et les émeutes qui s'ensuivent, Robert Lacoste confie le 7 janvier 1957 les pleins pouvoirs de police au général Massu.",
+    "sources": [
+      {
+        "titre": "Yacef Saâdi et la Zone autonome d'Alger — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Yacef_Sa%C3%A2di",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Alger 1956-1957 : de l'attentat contre Amédée Froger à la Bataille d'Alger — Presses universitaires de la Sorbonne (OpenEdition)",
+        "url": "https://books.openedition.org/psorbonne/55638?lang=en",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "id": "OP_1957_024",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille d'Izemourene à Mekla (Ath Fraoussen / Grande Kabylie)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-03-22",
+    "latest": "1957-03-22",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-03-23",
+    "latest": "1957-03-23",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Village d'Izemourene (tribu des Ath Fraoussen), commune de Mekla, à l'est de Tizi Ouzou (Wilaya de Tizi Ouzou)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.2667,
+          36.6833
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya III (Zone 1 - Mekla / Larbaâ Nath Irathen)",
+  "source_ids": [
+    "SRC_93d260370ac1415bc591c7d7",
+    "SRC_1b5535866d4e1672f780a425"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_024",
+    "nom_operation": "Bataille d'Izemourene à Mekla (Ath Fraoussen / Grande Kabylie)",
+    "date_debut": "1957-03-22",
+    "date_fin": "1957-03-23",
+    "wilaya_concernee": "Wilaya III (Zone 1 - Mekla / Larbaâ Nath Irathen)",
+    "localisation": {
+      "region_ou_ville": "Village d'Izemourene (tribu des Ath Fraoussen), commune de Mekla, à l'est de Tizi Ouzou (Wilaya de Tizi Ouzou)",
+      "coordonnees_approximatives": {
+        "latitude": 36.6833,
+        "longitude": 4.2667
+      }
+    },
+    "commandement_aln": [
+      "Mohammedi Saïd (Colonel de la Wilaya III)",
+      "Krim Belkacem",
+      "Amar Ouamrane",
+      "Abderrahmane Mira"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Immédiatement après une réunion secrète au sommet tenue du 19 au 21 mars 1957 dans la région de Mekla (réunissant Krim Belkacem, Amar Ouamrane, Mohammedi Saïd et Abderrahmane Mira), l'armée française engage plus de 20 000 soldats, des blindés et l'aviation pour encercler le secteur d'Izemourene les 22 et 23 mars 1957. Les katibas de protection de la Wilaya III livrent une bataille d'arrière-garde héroïque pendant quarante-huit heures, permettant l'exfiltration de tous les dirigeants.",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs dizaines de moudjahidine et moussebiline tombés au champ d'honneur ; exfiltration réussie des colonels de l'ALN",
+      "forces_francaises": "Pertes sévères infligées aux colonnes d'assaut françaises dans les vergers et ravins d'Izemourene",
+      "civils": "Bombardements aériens et destructions massives dans les villages des Ath Fraoussen (Mekla)"
+    },
+    "impact_strategique": "Symbole de la résilience des maquis de Grande Kabylie au printemps 1957, mettant en échec la tentative française de décapiter le commandement conjoint des Wilayas III et IV.",
+    "sources": [
+      {
+        "titre": "La bataille d'Izemourene, symbole de résilience des moudjahidine de l'ALN — Algérie Presse Service (APS)",
+        "url": "https://www.aps.dz/fr/algerie/societe/mn0ixwh2-la-bataille-d-izemourene-symbole-de-resilience-des-moudjahidine-de-l-aln",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Wilaya III historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_III_historique",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

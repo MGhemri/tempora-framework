@@ -1,0 +1,88 @@
+{
+  "id": "OP_1960_008",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Harcèlements au mortier et sabotages du barrage électrifié Ouest dans le secteur de Marsa Ben M'Hidi - Bab El Assa",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1960-07-12",
+    "latest": "1960-07-12",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1960-07-14",
+    "latest": "1960-07-14",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Tronçon nord du barrage électrifié Ouest, entre Marsa Ben M'Hidi (Port-Say), Bab El Assa et Maghnia (Wilaya de Tlemcen)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.1167,
+          35.0333
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Armée des Frontières (Front Ouest / EMG) et Wilaya V",
+  "source_ids": [
+    "SRC_3c9cbd47652f5bf84f3a6262",
+    "SRC_7cef42c891c38cb588868ffb"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1960_008",
+    "nom_operation": "Harcèlements au mortier et sabotages du barrage électrifié Ouest dans le secteur de Marsa Ben M'Hidi - Bab El Assa",
+    "date_debut": "1960-07-12",
+    "date_fin": "1960-07-14",
+    "wilaya_concernee": "Armée des Frontières (Front Ouest / EMG) et Wilaya V",
+    "localisation": {
+      "region_ou_ville": "Tronçon nord du barrage électrifié Ouest, entre Marsa Ben M'Hidi (Port-Say), Bab El Assa et Maghnia (Wilaya de Tlemcen)",
+      "coordonnees_approximatives": {
+        "latitude": 35.0333,
+        "longitude": -2.1167
+      }
+    },
+    "commandement_aln": [
+      "Officiers des bataillons frontaliers de l'ALN du Front Ouest (Oujda / Ahfir)"
+    ],
+    "type_action": "Sabotage",
+    "description": "En juillet 1960, les unités frontalières de l'ALN stationnées sur le front marocain (secteur d'Ahfir - Oujda) soumettent les postes de la DBFM et de l'infanterie française gardant le barrage électrifié entre Port-Say et Bab El Assa à des tirs nourris de mortiers et de canons sans recul, tout en détruisant à l'explosif plusieurs centaines de mètres de clôture électrifiée à haute tension.",
+    "bilan_et_pertes": {
+      "aln": "Quelques blessés lors des duels d'artillerie nocturnes",
+      "forces_francaises": "Dégâts importants aux installations électriques et radars du barrage et plusieurs marins et soldats blessés",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "Maintient une guerre de position coûteuse sur la frontière marocaine, immobilisant la DBFM et plusieurs divisions françaises loin des maquis de l'intérieur.",
+    "sources": [
+      {
+        "titre": "Demi-brigade de fusiliers marins (Opérations sur le barrage frontalier marocain) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Demi-brigade_de_fusiliers_marins",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Le barrage frontière ouest pendant la guerre d'Algérie — Cairn.info",
+        "url": "https://shs.cairn.info/revue-guerres-mondiales-et-conflits-contemporains-2018-1-page-91?lang=fr",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

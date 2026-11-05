@@ -1,0 +1,102 @@
+{
+  "id": "OP_1958_026",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Batailles de Bougaâdoun et de Beni Slimane (Est du Titteri / Médéa)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-03-01",
+    "latest": "1958-03-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-03-05",
+    "latest": "1958-03-05",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Djebel Bougaâdoun, Beni Slimane, Bouskène et Tablat (Est de la Wilaya de Médéa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.3167,
+          36.2333
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya IV (Zone 1 / Zone 2 - Beni Slimane, Tablat et Est de Médéa)",
+  "source_ids": [
+    "SRC_f0f067cff76b7c8dbaeb4a0d",
+    "SRC_6dc024ba80fc62d6264665f1",
+    "SRC_08fbb6c3746da2cf256e36a3",
+    "SRC_c039c1259fc017f6a406293a"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_026",
+    "nom_operation": "Batailles de Bougaâdoun et de Beni Slimane (Est du Titteri / Médéa)",
+    "date_debut": "1958-03-01",
+    "date_fin": "1958-03-05",
+    "wilaya_concernee": "Wilaya IV (Zone 1 / Zone 2 - Beni Slimane, Tablat et Est de Médéa)",
+    "localisation": {
+      "region_ou_ville": "Djebel Bougaâdoun, Beni Slimane, Bouskène et Tablat (Est de la Wilaya de Médéa)",
+      "coordonnees_approximatives": {
+        "latitude": 36.2333,
+        "longitude": 3.3167
+      }
+    },
+    "commandement_aln": [
+      "Commandant Si Lakhdar (Rabah Mokrani)",
+      "Commandant Azzedine (Rabah Zerari)",
+      "Lakhdar Bourégaâ"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Au début du mois de mars 1958, le Commando Ali Khodja et les katibas de la Wilaya IV livrent dans le massif de Bougaâdoun (secteur de Beni Slimane et Tablat) une bataille d'une extrême intensité contre plusieurs régiments parachutistes et d'infanterie français. Lors de ces combats acharnés au corps à corps, le commandant Si Lakhdar (Rabah Mokrani), l'un des plus brillants chefs de guerre de la Wilaya IV, tombe au champ d'honneur le 5 mars 1958.",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs dizaines de moudjahidine tombés au champ d'honneur dont le commandant Si Lakhdar (Rabah Mokrani) ; le commandant Azzedine lui succède",
+      "forces_francaises": "Lourdes pertes parmi les troupes d'assaut parachutistes et d'infanterie françaises",
+      "civils": "Bombardements aériens intenses sur les douars de Beni Slimane et de Tablat"
+    },
+    "impact_strategique": "Malgré la perte du commandant Si Lakhdar, le Commando Ali Khodja et les katibas du Titteri maintiennent intacte leur capacité offensive entre Palestro, Tablat et Médéa.",
+    "sources": [
+      {
+        "titre": "Lakhdar Bourégaâ — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Lakhdar_Bouregaa",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Wilaya IV historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_IV_historique",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Combats de l’Ouarsenis oriental et résistance au Plan Challe (asjp.cerist.dz)",
+        "url": "https://asjp.cerist.dz/en/article/224957",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Combats de l’Ouarsenis oriental et résistance au Plan Challe (asjp.cerist.dz)",
+        "url": "https://asjp.cerist.dz/en/article/144558",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

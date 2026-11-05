@@ -1,0 +1,21 @@
+[
+  {"path":"/api/v2/operations?limit=2","status":200,"kind":"collection"},
+  {"path":"/api/v2/operations/OP_1954_001","status":200,"kind":"record"},
+  {"path":"/api/v2/operations/OP_1954_001/evidence","status":200,"kind":"evidence"},
+  {"path":"/api/v2/operations?from=1956&to=1956&format=geojson&limit=2","status":200,"kind":"geojson"},
+  {"path":"/api/v2/sources?limit=2","status":200,"kind":"collection"},
+  {"path":"/api/v2/territorial-units?limit=20","status":200,"kind":"collection"},
+  {"path":"/api/v2/places","status":200,"kind":"collection"},
+  {"path":"/api/v2/persons","status":200,"kind":"collection"},
+  {"path":"/api/v2/organizations","status":200,"kind":"collection"},
+  {"path":"/api/v2/claims","status":200,"kind":"collection"},
+  {"path":"/api/v2/stats","status":200,"kind":"stats"},
+  {"path":"/api/v2/coverage?from=1900&to=1900","status":200,"kind":"coverage"},
+  {"path":"/api/v2/releases","status":200,"kind":"releases"},
+  {"path":"/api/v2/releases/current","status":200,"kind":"snapshot"},
+  {"path":"/api/v2/exports","status":200,"kind":"exports"},
+  {"path":"/api/v2/openapi.json","status":200,"kind":"openapi"},
+  {"path":"/api/v2/operations/DOES_NOT_EXIST","status":404,"kind":"error"},
+  {"path":"/api/v2/operations?limit=0","status":400,"kind":"error"},
+  {"path":"/api/v2/operations?q=zzzz_no_match_zzzz","status":200,"kind":"empty"}
+]

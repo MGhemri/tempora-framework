@@ -1,0 +1,91 @@
+{
+  "id": "OP_1956_049",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Sabotages ferroviaires et attaques des dépôts logistiques de la gare d'Oran et de La Sénia",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-06-18",
+    "latest": "1956-06-18",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-06-19",
+    "latest": "1956-06-19",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Gare d'Oran-Ville (Plateau Karguentah) et La Sénia",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.6385,
+          35.6967
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Organisation urbaine d'Oran - La Sénia / Gare d'Oran)",
+  "source_ids": [
+    "SRC_45e7ea7cb91ed7230b6b72b6",
+    "SRC_8ff771d1984f20ef2b990535",
+    "SRC_6373213cc286fd683c3e802c"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_049",
+    "nom_operation": "Sabotages ferroviaires et attaques des dépôts logistiques de la gare d'Oran et de La Sénia",
+    "date_debut": "1956-06-18",
+    "date_fin": "1956-06-19",
+    "wilaya_concernee": "Wilaya V (Organisation urbaine d'Oran - La Sénia / Gare d'Oran)",
+    "localisation": {
+      "region_ou_ville": "Gare d'Oran-Ville (Plateau Karguentah) et La Sénia",
+      "coordonnees_approximatives": {
+        "latitude": 35.6967,
+        "longitude": -0.6385
+      }
+    },
+    "commandement_aln": [
+      "Comité de coordination du FLN Oran",
+      "Réseau urbain de la Zone 6 (Wilaya V)"
+    ],
+    "type_action": "Sabotage logistique et harcèlement",
+    "description": "Dans la nuit du 18 au 19 juin 1956, plusieurs groupes de choc de l'organisation urbaine du FLN procèdent au dynamitage ciblé d'aiguillages clés, de wagons de fret militaire et de dépôts de matériel roulant en gare d'Oran (quartier de Karguentah) et sur l'embranchement stratégique de La Sénia reliant Oran à Sidi Bel Abbès. L'action vise à désorganiser l'acheminement des renforts de la Légion étrangère vers les massifs de l'Ouest.",
+    "bilan_et_pertes": "Trafic ferroviaire militaire totalement interrompu pendant 48 heures, 4 wagons de transport détruits, 2 sentinelles neutralisées ; aucun blessé parmi les fidayin repliés vers Médina Jdida.",
+    "impact_strategique": "Démontre la capacité de pénétration des réseaux urbains du FLN au cœur des infrastructures de transport coloniales de la deuxième ville d'Algérie.",
+    "sources": [
+      {
+        "titre": "معركة سكة الحديد بالقطاع الوهراني والتدابير العسكرية الفرنسية للحماية (1955-1959) — Revue d'histoire maghrébine (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/123690",
+        "type_source": "Revue scientifique"
+      },
+      {
+        "titre": "Téléchargement intégral : معركة سكة الحديد بالقطاع الوهراني (ASJP / CERIST)",
+        "url": "https://asjp.cerist.dz/en/downArticle/558/12/2/123690",
+        "type_source": "Revue scientifique"
+      },
+      {
+        "titre": "Saddek Benkada, « Quelques jalons préliminaires à propos de la Zone Autonome d'Oran », Insaniyat / CRASC (OpenEdition)",
+        "url": "https://journals.openedition.org/insaniyat/30472",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

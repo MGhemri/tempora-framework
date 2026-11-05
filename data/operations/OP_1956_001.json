@@ -1,0 +1,92 @@
+{
+  "id": "OP_1956_001",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Retournement de l'Opération Oiseau bleu (« Force K »)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-04-01",
+    "latest": "1956-04-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-10-01",
+    "latest": "1956-10-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Kabylie maritime : Azeffoun, Iflissen, Tigzirt, massif du Tamgout (Wilaya de Tizi Ouzou)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.4192,
+          36.895
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone III / Wilaya III (Kabylie)",
+  "source_ids": [
+    "SRC_c88077131497465e11dda304",
+    "SRC_1b5535866d4e1672f780a425"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_001",
+    "nom_operation": "Retournement de l'Opération Oiseau bleu (« Force K »)",
+    "date_debut": "1956-04-01",
+    "date_fin": "1956-10-01",
+    "wilaya_concernee": "Zone III / Wilaya III (Kabylie)",
+    "localisation": {
+      "region_ou_ville": "Kabylie maritime : Azeffoun, Iflissen, Tigzirt, massif du Tamgout (Wilaya de Tizi Ouzou)",
+      "coordonnees_approximatives": {
+        "latitude": 36.895,
+        "longitude": 4.4192
+      }
+    },
+    "commandement_aln": [
+      "Krim Belkacem",
+      "Mohammedi Saïd",
+      "Mohand-Saïd Iazourène dit Vrirouche",
+      "Ahmed Zaïdat",
+      "Omar Toumi"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Opération de contre-espionnage et d'action offensive orchestrée par Krim Belkacem : alors que les services spéciaux français (DST/SDECE) croient créer un contre-maquis anti-FLN en Kabylie (« Force K »), la Wilaya III infiltre intégralement le réseau, réceptionne pendant six mois des centaines d'armes de guerre modernes et des fonds français, puis retourne ces armes contre les postes militaires français à l'automne 1956.",
+    "bilan_et_pertes": {
+      "aln": "Ralliement de plus de 300 hommes armés à l'ALN et saisie d'environ 1 000 armes de guerre modernes et de 120 millions de francs ; une centaine de morts lors de l'opération de représailles française (Opération Djenad) en octobre 1956",
+      "forces_francaises": "Fiasco majeur du renseignement français ; plusieurs dizaines de militaires tués avec les armes fournies par la France",
+      "civils": "Plusieurs dizaines de villageois d'Iflissen et d'Agouni Ouzidhoudh tués lors des ratissages punitifs du général Olié"
+    },
+    "impact_strategique": "Victoire psychologique et logistique éclatante pour la Wilaya III qui équipe ses nouvelles katibas avec un armement lourd français, annoncée triomphalement par Krim Belkacem lors du Congrès de la Soummam (août 1956).",
+    "sources": [
+      {
+        "titre": "Opération Oiseau bleu — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Op%C3%A9ration_Oiseau_bleu",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Wilaya III historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_III_historique",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

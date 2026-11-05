@@ -1,0 +1,88 @@
+{
+  "id": "OP_1958_050",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille du Djebel Marmoura et mort du commandant du 1er REP",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-05-28",
+    "latest": "1958-05-28",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Djebel Marmoura / Bouhamdane (Hammam Debagh, Guelma)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.285,
+          36.518
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya II (Secteur de Guelma / Bouhamdane)",
+  "source_ids": [
+    "SRC_6c7a9bd77f99647ec011e0a1",
+    "SRC_eeb6da341c6400dbdc8dbba2"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_050",
+    "nom_operation": "Bataille du Djebel Marmoura et mort du commandant du 1er REP",
+    "date_debut": "1958-05-28",
+    "date_fin": null,
+    "wilaya_concernee": "Wilaya II (Secteur de Guelma / Bouhamdane)",
+    "localisation": {
+      "region_ou_ville": "Djebel Marmoura / Bouhamdane (Hammam Debagh, Guelma)",
+      "coordonnees_approximatives": {
+        "latitude": 36.518,
+        "longitude": 7.285
+      }
+    },
+    "commandement_aln": [
+      "Bataillons ALN de la Wilaya II"
+    ],
+    "type_action": "Combat de rencontre / Tir antiaérien",
+    "description": "Affrontement décisif dans les monts de Bouhamdane où les moudjahidine abattent au fusil-mitrailleur l'hélicoptère de commandement du lieutenant-colonel Pierre Jeanpierre, chef emblématique du 1er REP de la Légion étrangère, qui est tué sur le coup.",
+    "bilan_et_pertes": {
+      "aln": "Pertes notables lors des bombardements ultérieurs",
+      "forces_francaises": "Mort du lieutenant-colonel Jeanpierre et de son équipage, nombreux légionnaires tués",
+      "civils": "0"
+    },
+    "impact_strategique": "Victoire militaire et psychologique retentissante de l'ALN, décapitant le commandement opérationnel du régiment d'élite parachutiste français.",
+    "sources": [
+      {
+        "titre": "La bataille du Djebel Marmoura et la mort du colonel Jeanpierre (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/180830",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Combats de la Wilaya II (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/144244",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

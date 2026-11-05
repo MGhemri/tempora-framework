@@ -1,0 +1,103 @@
+{
+  "id": "OP_1958_032",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Offensives conjointes de l'ALN et élimination du maquis dissident de Bellounis au Djebel El Guetar (Bou Saâda - Djelfa)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-07-01",
+    "latest": "1958-07-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-07-14",
+    "latest": "1958-07-14",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Bir El Ahmar / Djebel El Guetar, entre Bou Saâda, Sidi Ameur et Djelfa (Confins des Wilayas de M'Sila et Djelfa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.8833,
+          35.05
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya VI (Secteur de Bou Saâda - Djelfa) en coordination avec les Wilayas III et IV",
+  "source_ids": [
+    "SRC_78b65b27c8c251b83358e7c9",
+    "SRC_e8603cc7e9b4ded807ac35ee",
+    "SRC_181bf6e6305b647d670f1dd2",
+    "SRC_0582cc1656ba4938e2cad2d9"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_032",
+    "nom_operation": "Offensives conjointes de l'ALN et élimination du maquis dissident de Bellounis au Djebel El Guetar (Bou Saâda - Djelfa)",
+    "date_debut": "1958-07-01",
+    "date_fin": "1958-07-14",
+    "wilaya_concernee": "Wilaya VI (Secteur de Bou Saâda - Djelfa) en coordination avec les Wilayas III et IV",
+    "localisation": {
+      "region_ou_ville": "Bir El Ahmar / Djebel El Guetar, entre Bou Saâda, Sidi Ameur et Djelfa (Confins des Wilayas de M'Sila et Djelfa)",
+      "coordonnees_approximatives": {
+        "latitude": 35.05,
+        "longitude": 3.8833
+      }
+    },
+    "commandement_aln": [
+      "Si El Haouès (Colonel de la Wilaya VI)",
+      "Omar Driss (Commandant adjoint de la Wilaya VI)",
+      "Colonel Amirouche (Wilaya III)",
+      "Si M'Hamed Bougara (Wilaya IV)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Pendant plus d'un an, les katibas de la Wilaya VI (appuyées par les Wilayas III et IV) ont mené un harcèlement implacable contre la « l'Armée nationale du peuple algérien » (ANPA) de l'ancien chef messaliste Mohamed Bellounis, installé autour de Dar Chioukh et Djelfa avec le soutien en armes de l'armée française (« Opération Ollivier »). Acculé par la pression des katibas de Si El Haouès et d'Omar Driss et par les défections massives de ses hommes ralliant l'ALN, le mouvement de Bellounis se désagrège totalement en juillet 1958 (Bellounis étant tué le 14 juillet 1958 à Bir El Ahmar).",
+    "bilan_et_pertes": {
+      "aln": "Ralliement de nombreuses sections armées à la Wilaya VI et saisie d'un important stock d'armes françaises ; libération totale du couloir Djelfa - Bou Saâda",
+      "forces_francaises": "Échec stratégique retentissant de l'« Opération Ollivier » ; l'armée française est contrainte d'intervenir elle-même contre les derniers éléments de Bellounis le 14 juillet 1958",
+      "civils": "Fin de la terreur exercée par les troupes bellounistes sur les populations des Ouled Naïl et du Hodna"
+    },
+    "impact_strategique": "Lève le principal obstacle intérieur qui entravait les liaisons entre le Nord (Wilayas III et IV) et le Sud saharien (Wilaya VI) et consacre l'autorité exclusive du FLN/ALN sur l'ensemble des Hauts Plateaux.",
+    "sources": [
+      {
+        "titre": "Si El Haouès et la lutte contre le mouvement de Bellounis en Wilaya VI — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Si_El_Haou%C3%A8s",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Les wilayas du Sud et la question saharienne (L'Année du Maghreb) — OpenEdition Journals",
+        "url": "https://journals.openedition.org/anneemaghreb/335?lang=ar",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Échec et liquidation de la dissidence de Bellounis (fr.wikipedia.org)",
+        "url": "https://fr.wikipedia.org/wiki/Mohammed_Bellounis",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Échec et liquidation de la dissidence de Bellounis (elmoudjahid.dz)",
+        "url": "https://www.elmoudjahid.dz/fr/actualite/premier-commandant-de-la-vie-wilaya-historique-ali-mellah-du-djurdjura-au-sahara-249960",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "id": "OP_1956_032",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscade de Bab El Assa et accrochages contre la DBFM sur la frontière marocaine",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-06-14",
+    "latest": "1956-06-14",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-06-15",
+    "latest": "1956-06-15",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Bab El Assa et col du Guerbouz, entre Marsa Ben M'Hidi (Port-Say), Maghnia et Ghazaouet (Nemours) (Wilaya de Tlemcen)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -2.0333,
+          34.9667
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 1 - Bab El Assa / Marsa Ben M'Hidi / Nemours)",
+  "source_ids": [
+    "SRC_3b5b923374e7798f9298585b",
+    "SRC_e8775522d700ff117d493c1a"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_032",
+    "nom_operation": "Embuscade de Bab El Assa et accrochages contre la DBFM sur la frontière marocaine",
+    "date_debut": "1956-06-14",
+    "date_fin": "1956-06-15",
+    "wilaya_concernee": "Wilaya V (Zone 1 - Bab El Assa / Marsa Ben M'Hidi / Nemours)",
+    "localisation": {
+      "region_ou_ville": "Bab El Assa et col du Guerbouz, entre Marsa Ben M'Hidi (Port-Say), Maghnia et Ghazaouet (Nemours) (Wilaya de Tlemcen)",
+      "coordonnees_approximatives": {
+        "latitude": 34.9667,
+        "longitude": -2.0333
+      }
+    },
+    "commandement_aln": [
+      "Abdelhafid Boussouf",
+      "Si Rachid (Mustapha Ali)",
+      "Commandants de katibas du secteur frontalier de Bab El Assa"
+    ],
+    "type_action": "Embuscade",
+    "description": "Dans le secteur frontalier accidenté de Bab El Assa et du col du Guerbouz (face à la plaine marocaine des Triffa), une katiba de la Zone 1 de la Wilaya V tend une embuscade meurtrière contre une patrouille motorisée de la Demi-Brigade de Fusiliers Marins (DBFM) du commandant Ponchardier, suivie d'un engagement de plusieurs heures avant le repli nocturne vers le massif des Trara.",
+    "bilan_et_pertes": {
+      "aln": "6 moudjahidine tués au combat ; récupération de fusils MAS-36, d'un fusil-mitrailleur et de munitions",
+      "forces_francaises": "Une douzaine de fusiliers marins tués ou blessés et deux half-tracks/camions endommagés",
+      "civils": "Évacuation forcée des douars frontaliers entre Bab El Assa et Port-Say"
+    },
+    "impact_strategique": "Inaugure la guerre d'usure acharnée qui oppose de 1956 à 1962 les katibas des Trara à la Demi-Brigade de Fusiliers Marins (DBFM) le long de la frontière nord-ouest.",
+    "sources": [
+      {
+        "titre": "Demi-brigade de fusiliers marins (DBFM) en Oranie (Nemours, Bab El Assa, Trara) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Demi-brigade_de_fusiliers_marins",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Le barrage frontière ouest pendant la guerre d'Algérie (Guerres mondiales et conflits contemporains) — Cairn.info",
+        "url": "https://shs.cairn.info/revue-guerres-mondiales-et-conflits-contemporains-2018-1-page-91?lang=fr",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

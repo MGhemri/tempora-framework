@@ -1,0 +1,108 @@
+{
+  "id": "OP_1955_001",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Offensives du Nord-Constantinois du 20 août 1955",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1955-08-20",
+    "latest": "1955-08-20",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1955-08-23",
+    "latest": "1955-08-23",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Nord-Constantinois : Philippeville (Skikda), El Halia, Collo, Constantine, Guelma, Aïn Abid",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.9092,
+          36.8764
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone II (future Wilaya II - Nord-Constantinois)",
+  "source_ids": [
+    "SRC_91d218bf4d410d1a6bb1f744",
+    "SRC_02ad4ba146df7f8f0c058882",
+    "SRC_cb0d3d7cb60d9d792ca235b8",
+    "SRC_ed2190e0733ca84e4b210cac",
+    "SRC_d1a68774211a7f7985829e2d"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1955_001",
+    "nom_operation": "Offensives du Nord-Constantinois du 20 août 1955",
+    "date_debut": "1955-08-20",
+    "date_fin": "1955-08-23",
+    "wilaya_concernee": "Zone II (future Wilaya II - Nord-Constantinois)",
+    "localisation": {
+      "region_ou_ville": "Nord-Constantinois : Philippeville (Skikda), El Halia, Collo, Constantine, Guelma, Aïn Abid",
+      "coordonnees_approximatives": {
+        "latitude": 36.8764,
+        "longitude": 6.9092
+      }
+    },
+    "commandement_aln": [
+      "Zighoud Youcef",
+      "Lakhdar Bentobal",
+      "Ali Kafi"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Soulèvement insurrectionnel et offensives coordonnées lancés en plein jour à midi par les unités de l'ALN encadrant des milliers de paysans algériens contre une trentaine de villes, villages, postes de police, gendarmeries et centres miniers (notamment à El Halia et Philippeville).",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs centaines de combattants et d'insurgés tués lors des assauts initiaux face à l'armée française",
+      "forces_francaises": "Environ 30 à 50 militaires, gendarmes et policiers tués",
+      "civils": "123 Européens tués (dont 71 adultes et enfants à El Halia) et une cinquantaine d'Algériens dits loyalistes tués par les insurgés ; entre 1 273 (bilan officiel français) et 10 000 Algériens tués dans la répression militaire et milicienne qui s'ensuivit"
+    },
+    "impact_strategique": "Tournant décisif de la guerre : l'opération brise l'encerclement de la Zone I (Aurès), démontre le caractère populaire et généralisé de l'insurrection, creuse un fossé irréversible entre les communautés et accélère l'inscription de la question algérienne à l'ordre du jour de l'ONU.",
+    "sources": [
+      {
+        "titre": "Massacres d'août 1955 dans le Constantinois — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Massacres_d%27ao%C3%BBt_1955_dans_le_Constantinois",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Guerre de libération : l'offensive du 20 août 1955 — Cairn.info",
+        "url": "https://shs.cairn.info/guerre-de-liberation--9789961634547-page-97?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Offensive du Nord-Constantinois (radioalgerie.dz)",
+        "url": "https://radioalgerie.dz/news/fr/node/198036",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Soulèvement populaire et représailles à El Halia (elmoudjahid.dz)",
+        "url": "https://www.elmoudjahid.dz/fr/l-evenement/l-offensive-du-20-aout-1955-impact-decisif-des-represailles-a-grande-echelle-187171",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Attaques du 20 août et embuscades de l'ALN (aps.dz)",
+        "url": "https://www.aps.dz/fr/algerie/societe/msyu4f59-un-tournant-decisif-de-la-glorieuse-revolution",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

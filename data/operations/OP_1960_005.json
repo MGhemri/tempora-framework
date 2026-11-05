@@ -1,0 +1,95 @@
+{
+  "id": "OP_1960_005",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscades de Bordj Khris et combats du Djebel Dirah (Sud de Bouira - Sour El Ghozlane)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1960-06-14",
+    "latest": "1960-06-14",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1960-06-16",
+    "latest": "1960-06-16",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif du Djebel Dirah, Bordj Khris et Sour El Ghozlane (ex-Aumale), au sud de Bouira (Wilaya de Bouira)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.85,
+          36.0833
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya III (Zone 4 Sud - Bouira / Sour El Ghozlane / Bordj Khris)",
+  "source_ids": [
+    "SRC_05beb9257e01fdb1fffeda14",
+    "SRC_f98352402a9fa47fb456a62f",
+    "SRC_28fd1bbf40884dbc7cf0c6eb"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1960_005",
+    "nom_operation": "Embuscades de Bordj Khris et combats du Djebel Dirah (Sud de Bouira - Sour El Ghozlane)",
+    "date_debut": "1960-06-14",
+    "date_fin": "1960-06-16",
+    "wilaya_concernee": "Wilaya III (Zone 4 Sud - Bouira / Sour El Ghozlane / Bordj Khris)",
+    "localisation": {
+      "region_ou_ville": "Massif du Djebel Dirah, Bordj Khris et Sour El Ghozlane (ex-Aumale), au sud de Bouira (Wilaya de Bouira)",
+      "coordonnees_approximatives": {
+        "latitude": 36.0833,
+        "longitude": 3.85
+      }
+    },
+    "commandement_aln": [
+      "Mohand Oulhadj (Colonel de la Wilaya III)",
+      "Officiers de la Zone 4 de la Wilaya III (Secteur de Bouira - Aumale)"
+    ],
+    "type_action": "Embuscade",
+    "description": "Au lendemain de l'arrêt officiel de l'Opération Jumelles en Kabylie, les groupes mobiles de la Wilaya III opérant dans le secteur sud de Bouira (Djebel Dirah, Sour El Ghozlane et Bordj Khris) reprennent l'offensive en tendant plusieurs embuscades contre les patrouilles et convois français à la lisière des Hauts Plateaux et du Hodna.",
+    "bilan_et_pertes": {
+      "aln": "9 moudjahidine tués au cours des accrochages au Djebel Dirah ; saisie d'armement léger",
+      "forces_francaises": "Une quinzaine de soldats français tués ou blessés et destruction de deux véhicules militaires",
+      "civils": "Aucune victime civile directe"
+    },
+    "impact_strategique": "Démontre dès l'été 1960 que les katibas de la Wilaya III commandées par Mohand Oulhadj ont conservé leur capacité de frappe offensive du littoral kabyle jusqu'aux steppes du sud de Bouira.",
+    "sources": [
+      {
+        "titre": "Mohand Oulhadj et la résistance de la Wilaya III (1959-1962) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Mohand_Oulhadj",
+        "type_source": "Article"
+      },
+      {
+        "titre": "La question kabyle dans le nationalisme algérien — Cairn.info",
+        "url": "https://shs.cairn.info/question-kabyle-nationalisme-algerien--9782365122757-page-421?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Combat du Djebel Béchar (dknews-dz.com)",
+        "url": "https://www.dknews-dz.com/article/103057-bechar-commemoration-du-59e-anniversaire-de-la-mort-du-colonel-lotfi-et-ses-compagnons.html",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

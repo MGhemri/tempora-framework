@@ -1,0 +1,113 @@
+{
+  "id": "OP_1956_004",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats et embuscade du Djebel Zekri (Opération Djebel Zekri)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-08-29",
+    "latest": "1956-08-29",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-08-30",
+    "latest": "1956-08-30",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif du Djebel Zekri, à 20 km de Nedroma (Wilaya de Tlemcen)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.78,
+          35.06
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Oranie - Secteur de Nedroma / Tlemcen)",
+  "source_ids": [
+    "SRC_b385ce4badf973cd6488575c",
+    "SRC_6e2f90e8e0a307de6e1ae4dc",
+    "SRC_23ca38e3b540c03a362b0d40",
+    "SRC_455ece05826705a90b093a52",
+    "SRC_dbfa9f8fe166c102b5e97ea3",
+    "SRC_72f9efb7c8c0e6eee8f89001"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_004",
+    "nom_operation": "Combats et embuscade du Djebel Zekri (Opération Djebel Zekri)",
+    "date_debut": "1956-08-29",
+    "date_fin": "1956-08-30",
+    "wilaya_concernee": "Wilaya V (Oranie - Secteur de Nedroma / Tlemcen)",
+    "localisation": {
+      "region_ou_ville": "Massif du Djebel Zekri, à 20 km de Nedroma (Wilaya de Tlemcen)",
+      "coordonnees_approximatives": {
+        "latitude": 35.06,
+        "longitude": -1.78
+      }
+    },
+    "commandement_aln": [
+      "Abdelhafid Boussouf",
+      "Si Rachid (Mustapha Menouar)"
+    ],
+    "type_action": "Embuscade",
+    "description": "Accrochage majeur opposant une centaine de combattants de l'ALN fortement retranchés et équipés d'armes automatiques dans le massif du Djebel Zekri aux unités de la Demi-brigade de fusiliers marins (DBFM) du capitaine de frégate Marc de Joybert. Les moudjahidine tiennent tête aux assauts terrestres et aériens avant de décrocher à la nuit tombée.",
+    "bilan_et_pertes": {
+      "aln": "20 moudjahidine tués (dont 3 officiers) selon les estimations historiques algériennes ; 61 tués selon le communiqué militaire français",
+      "forces_francaises": "Plusieurs fusiliers marins tués (dont l'enseigne de vaisseau Jacques Alibert) et un avion d'observation Morane-Saulnier MS.500 touché par les tirs de l'ALN",
+      "civils": "Non documenté"
+    },
+    "impact_strategique": "Confirme la structuration rapide des katibas de la Wilaya V à la frontière marocaine, désormais capables de soutenir des combats d'infanterie prolongés contre des troupes d'élite.",
+    "sources": [
+      {
+        "titre": "Opération Djebel Zekri — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Op%C3%A9ration_Djebel_Zekri",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Fiche mémorielle de l'enseigne de vaisseau Jacques Alibert — Mémorial AEN",
+        "url": "http://memorial-aen.fr/detail.php?&id=1801",
+        "type_source": "Archive"
+      },
+      {
+        "titre": "Attentats du Milk Bar, de la Cafétéria et d’Air France à Alger-Centre (journals.codesria.org)",
+        "url": "https://journals.codesria.org/index.php/arb/article/download/5039/5350/7736",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Attentats du Milk Bar, de la Cafétéria et d’Air France à Alger-Centre (h-france.net)",
+        "url": "https://h-france.net/fffh/reviews/re-viewing-the-battle-of-algiers-with-zohra-drif",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Attentats du Milk Bar, de la Cafétéria et d’Air France à Alger-Centre (reuters.screenocean.com)",
+        "url": "https://reuters.screenocean.com/record/573518",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Attentats du Milk Bar, de la Cafétéria et d’Air France à Alger-Centre (universalis.fr)",
+        "url": "https://www.universalis.fr/encyclopedie/guerre-d-algerie/5-dans-l-engrenage-de-la-terreur-la-bataille-d-alger/",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

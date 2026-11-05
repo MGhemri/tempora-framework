@@ -1,0 +1,90 @@
+{
+  "id": "OP_1962_006",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Défense armée de la Casbah et de Climat de France par la ZAA face aux tirs de mortiers de l'OAS (Bab El Oued - Place du Gouvernement)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1962-03-20",
+    "latest": "1962-03-20",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1962-03-26",
+    "latest": "1962-03-26",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Alger : basse Casbah (Place du Gouvernement / Place des Martyrs), Climat de France (Oued Koriche) et lisière de Bab El Oued",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.0606,
+          36.7853
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone autonome d'Alger (ZAA)",
+  "source_ids": [
+    "SRC_26e2a5a89c1f73ff32487179",
+    "SRC_ffe7416b7d8980028c9a3083"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1962_006",
+    "nom_operation": "Défense armée de la Casbah et de Climat de France par la ZAA face aux tirs de mortiers de l'OAS (Bab El Oued - Place du Gouvernement)",
+    "date_debut": "1962-03-20",
+    "date_fin": "1962-03-26",
+    "wilaya_concernee": "Zone autonome d'Alger (ZAA)",
+    "localisation": {
+      "region_ou_ville": "Alger : basse Casbah (Place du Gouvernement / Place des Martyrs), Climat de France (Oued Koriche) et lisière de Bab El Oued",
+      "coordonnees_approximatives": {
+        "latitude": 36.7853,
+        "longitude": 3.0606
+      }
+    },
+    "commandement_aln": [
+      "Commandant Azzedine (Chef de la ZAA reconstituée en 1962)",
+      "Omar Oussedik",
+      "Cadres des groupes armés de la Casbah et de Climat de France"
+    ],
+    "type_action": "Guérilla urbaine",
+    "description": "Au lendemain immédiat du cessez-le-feu du 19 mars 1962, les commandos de l'OAS retranchés à Bab El Oued tirent des obus de mortier sur la foule algérienne rassemblée Place du Gouvernement (basse Casbah, faisant 24 morts et 59 blessés le 20 mars) et tentent de provoquer une descente massive des habitants de la Casbah et de Climat de France pour forcer l'armée française à tirer sur les Algériens. Les groupes armés de la ZAA (dirigés par le commandant Azzedine) contiennent la foule avec une discipline de fer tout en engageant le feu contre les tireurs embusqués de l'OAS aux lisières de Bab El Oued, ce qui conduit au blocus et à l'insurrection de Bab El Oued contre l'armée française (23-26 mars 1962).",
+    "bilan_et_pertes": {
+      "aln": "Quelques fidayin blessés aux avant-postes de la Casbah et de Climat de France ; réussite totale de la consigne de sang-froid du GPRA",
+      "forces_francaises": "Affrontement direct entre les commandos de l'OAS et l'armée française à Bab El Oued (15 soldats français tués, 20 membres de l'OAS tués)",
+      "civils": "24 civils algériens tués Place du Gouvernement le 20 mars 1962 par les mortiers de l'OAS, puis fusillade de la rue d'Isly le 26 mars"
+    },
+    "impact_strategique": "Victoire politique et tactique décisive de la ZAA et du GPRA : en refusant de tomber dans le piège de la provocation de l'OAS, le FLN provoque l'affrontement armé direct entre l'OAS et l'armée française à Bab El Oued.",
+    "sources": [
+      {
+        "titre": "Il y a 60 ans, l'OAS en Algérie (Le piège de Bab El Oued et la discipline du FLN en mars 1962) — La Revue d'Histoire Militaire",
+        "url": "https://larevuedhistoiremilitaire.fr/2021/03/22/il-y-a-60-ans-loas-en-algerie/",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Bataille de Bab El Oued (mars 1962) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Bataille_de_Bab_El_Oued",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

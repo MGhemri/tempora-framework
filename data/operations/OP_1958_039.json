@@ -1,0 +1,82 @@
+{
+  "id": "OP_1958_039",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille de Djorf Torab à Télagh",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-05-26",
+    "latest": "1958-05-26",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Djorf Torab / Télagh (Sidi Bel Abbès)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.531,
+          34.742
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 5 - Commune de Télagh)",
+  "source_ids": [
+    "SRC_890a5057f3dcdf9fff6d5b9f"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_039",
+    "nom_operation": "Bataille de Djorf Torab à Télagh",
+    "date_debut": "1958-05-26",
+    "date_fin": null,
+    "wilaya_concernee": "Wilaya V (Zone 5 - Commune de Télagh)",
+    "localisation": {
+      "region_ou_ville": "Djorf Torab / Télagh (Sidi Bel Abbès)",
+      "coordonnees_approximatives": {
+        "latitude": 34.742,
+        "longitude": -0.531
+      }
+    },
+    "commandement_aln": [
+      "Katiba ALN de Télagh"
+    ],
+    "type_action": "Combat de rencontre",
+    "description": "Combat engagé entre une unité de l'ALN retranchée à Djorf Torab et des unités aéroportées françaises appuyées par l'aviation, documenté par Abdelhak Kerkeb.",
+    "bilan_et_pertes": {
+      "aln": "Pertes modérées",
+      "forces_francaises": "Pertes substantielles chez les parachutistes coloniaux",
+      "civils": "0"
+    },
+    "impact_strategique": "Preuve de la capacité de résistance frontale des unités de l'ALN face aux réserves générales de l'armée française.",
+    "sources": [
+      {
+        "titre": "Étude historique sur la Zone 5 de la Wilaya V (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/127641",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

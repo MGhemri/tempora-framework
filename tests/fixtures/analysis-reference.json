@@ -1,0 +1,13 @@
+[
+  {"task":"duplicates","ids":["EVENT_A","EVENT_B"],"expected":true,"group":"same-language","rationale":"Two transcriptions of the same invented assembly."},
+  {"task":"duplicates","ids":["EVENT_A","EVENT_C"],"expected":true,"group":"cross-language","rationale":"The scenario assigns both descriptions to the same assembly, with no shared alias."},
+  {"task":"duplicates","ids":["EVENT_A","EVENT_D"],"expected":false,"group":"recurring-name","rationale":"Two fictional assemblies separated by fifty years."},
+  {"task":"duplicates","ids":["EVENT_A","EVENT_E"],"expected":false,"group":"same-language","rationale":"The ledger and assembly describe separate items."},
+  {"task":"entities","ids":["PERSON_A","PERSON_B"],"expected":true,"group":"sourced-variant","rationale":"The invented source gives both names to one person."},
+  {"task":"entities","ids":["PERSON_B","PERSON_C"],"expected":false,"group":"homonym","rationale":"The scenario stipulates two different people with the same name."},
+  {"task":"entities","ids":["PERSON_B","PERSON_D"],"expected":false,"group":"distinct-name","rationale":"Separate people and different names."},
+  {"task":"claims","ids":["COUNT_A","COUNT_B"],"expected":true,"group":"same-unit","rationale":"Different exact counts for the same group and context."},
+  {"task":"claims","ids":["COUNT_A","COUNT_C"],"expected":false,"group":"same-unit","rationale":"The exact count falls within the stated interval."},
+  {"task":"claims","ids":["COUNT_A","COUNT_D"],"expected":false,"group":"different-units","rationale":"Households and persons are different units."},
+  {"task":"claims","ids":["COUNT_A","COUNT_E"],"expected":false,"group":"unknown","rationale":"An unknown count provides no competing value."}
+]

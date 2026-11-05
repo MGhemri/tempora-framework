@@ -1,0 +1,82 @@
+{
+  "id": "OP_1958_041",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille de Sidi Douma au nord de Tafessour",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-11-18",
+    "latest": "1958-11-18",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Sidi Douma / Tafessour (Sidi Bel Abbès)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.218,
+          34.675
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 5 - Commune de Tafessour)",
+  "source_ids": [
+    "SRC_890a5057f3dcdf9fff6d5b9f"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_041",
+    "nom_operation": "Bataille de Sidi Douma au nord de Tafessour",
+    "date_debut": "1958-11-18",
+    "date_fin": null,
+    "wilaya_concernee": "Wilaya V (Zone 5 - Commune de Tafessour)",
+    "localisation": {
+      "region_ou_ville": "Sidi Douma / Tafessour (Sidi Bel Abbès)",
+      "coordonnees_approximatives": {
+        "latitude": 34.675,
+        "longitude": -0.218
+      }
+    },
+    "commandement_aln": [
+      "Détachement ALN de Tafessour"
+    ],
+    "type_action": "Combat de rencontre",
+    "description": "Affrontement au nord de Tafessour opposant les combattants de l'ALN à une opération de bouclage de l'armée française, documenté par Abdelhak Kerkeb.",
+    "bilan_et_pertes": {
+      "aln": "Une dizaine de combattants tués",
+      "forces_francaises": "Lourdes pertes au sein des blindés et de l'infanterie coloniale",
+      "civils": "0"
+    },
+    "impact_strategique": "Maintien du verrou de Tafessour sur la route des caravanes d'armement vers le nord de la Wilaya V.",
+    "sources": [
+      {
+        "titre": "Étude historique sur la Zone 5 de la Wilaya V (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/127641",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

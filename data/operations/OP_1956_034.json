@@ -1,0 +1,83 @@
+{
+  "id": "OP_1956_034",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille de Sidi Zeggaï et d'El Kachkacha dans les monts du Dahra",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-09-13",
+    "latest": "1956-09-13",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-09-16",
+    "latest": "1956-09-16",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Sidi Ali / El Kachkacha (Mostaganem)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.42222,
+          36.09732
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 4 - Dahra de Mostaganem)",
+  "source_ids": [
+    "SRC_1f11852865332bf715fe77e0"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_034",
+    "nom_operation": "Bataille de Sidi Zeggaï et d'El Kachkacha dans les monts du Dahra",
+    "date_debut": "1956-09-13",
+    "date_fin": "1956-09-16",
+    "wilaya_concernee": "Wilaya V (Zone 4 - Dahra de Mostaganem)",
+    "localisation": {
+      "region_ou_ville": "Sidi Ali / El Kachkacha (Mostaganem)",
+      "coordonnees_approximatives": {
+        "latitude": 36.09732,
+        "longitude": 0.42222
+      }
+    },
+    "commandement_aln": [
+      "Si Mohamed Djebli",
+      "Si Othmane"
+    ],
+    "type_action": "Guérilla de montagne / Combat de rencontre",
+    "description": "Combat héroïque de quatre jours livré par le bataillon de l'ALN commandé par Si Mohamed Djebli dans les reliefs escarpés du Dahra face à d'importantes colonnes coloniales appuyées par l'aviation.",
+    "bilan_et_pertes": {
+      "aln": "Pertes modérées parmi les moudjahidine retranchés",
+      "forces_francaises": "Lourdes pertes infligées aux colonnes terrestres coloniales",
+      "civils": "Représailles sur les douars environnants"
+    },
+    "impact_strategique": "Consolidation de l'implantation militaire de l'ALN dans le Dahra oranais et échec des premières offensives de pacification dans le secteur de Mostaganem.",
+    "sources": [
+      {
+        "titre": "Bataille de Sidi Zeggaï, une épopée héroïque dans les monts de la Dahra (L'Expression)",
+        "url": "https://www.lexpression.dz/index.php/info-en-continu/bataille-de-sidi-zeggai-une-epopee-heroique-dans-les-monts-de-la-dahra-de-mostaganem-328030",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

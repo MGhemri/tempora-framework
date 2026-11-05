@@ -1,0 +1,82 @@
+{
+  "id": "OP_1954_009",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combat de Ghar Boudjlida et capture d'Ahmed Zabana",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1954-11-08",
+    "latest": "1954-11-08",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "El Gaâda / Ghar Boudjlida (Mascara)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.309,
+          35.4218
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone V - Oranie / Mascara)",
+  "source_ids": [
+    "SRC_1d30ca77d73364bd0f0ebdbe"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1954_009",
+    "nom_operation": "Combat de Ghar Boudjlida et capture d'Ahmed Zabana",
+    "date_debut": "1954-11-08",
+    "date_fin": null,
+    "wilaya_concernee": "Wilaya V (Zone V - Oranie / Mascara)",
+    "localisation": {
+      "region_ou_ville": "El Gaâda / Ghar Boudjlida (Mascara)",
+      "coordonnees_approximatives": {
+        "latitude": 35.4218,
+        "longitude": -0.309
+      }
+    },
+    "commandement_aln": [
+      "Ahmed Zabana"
+    ],
+    "type_action": "Combat de rencontre",
+    "description": "Accrochage héroïque opposant le groupe armé d'Ahmed Zabana aux troupes coloniales dans la grotte de Ghar Boudjlida une semaine après le déclenchement de la Révolution. Blessé, Zabana est capturé avant de devenir le premier martyr guillotiné à Barberousse en 1956.",
+    "bilan_et_pertes": {
+      "aln": "Ahmed Zabana blessé et capturé, plusieurs djounouds tombés au champ d'honneur",
+      "forces_francaises": "Pertes lors de l'assaut contre la grotte",
+      "civils": "0"
+    },
+    "impact_strategique": "Symbole inaugural de sacrifice et de détermination de l'ALN en Oranie ; l'exécution de Zabana provoquera en 1956 la riposte armée urbaine de la Zone autonome d'Alger.",
+    "sources": [
+      {
+        "titre": "La bataille de Ghar Boudjlida, une épopée retraçant les exploits du martyr Ahmed Zabana (APS)",
+        "url": "https://www.aps.dz/fr/algerie/actualite-nationale/mhou2jwl-la-bataille-de-ghar-boudjlida-une-epopee-retracant-les-exploits-du-martyr-ahmed-zabana",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

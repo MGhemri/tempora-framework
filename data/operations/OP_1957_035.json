@@ -1,0 +1,90 @@
+{
+  "id": "OP_1957_035",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats du Djebel Kerdada et d'Aïn Rich dans le secteur de Bou Saâda",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-09-10",
+    "latest": "1957-09-10",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-09-12",
+    "latest": "1957-09-12",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massifs du Djebel Kerdada, Ferrero et Aïn Rich, au sud de Bou Saâda (Wilaya de M'Sila)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.1833,
+          35.1667
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya VI (Zone 1 / Zone 3 - Bou Saâda / Aïn Rich / M'Sila)",
+  "source_ids": [
+    "SRC_e019608462fc98fe8bca25e2",
+    "SRC_67f1651d0fb086abfc108c84"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_035",
+    "nom_operation": "Combats du Djebel Kerdada et d'Aïn Rich dans le secteur de Bou Saâda",
+    "date_debut": "1957-09-10",
+    "date_fin": "1957-09-12",
+    "wilaya_concernee": "Wilaya VI (Zone 1 / Zone 3 - Bou Saâda / Aïn Rich / M'Sila)",
+    "localisation": {
+      "region_ou_ville": "Massifs du Djebel Kerdada, Ferrero et Aïn Rich, au sud de Bou Saâda (Wilaya de M'Sila)",
+      "coordonnees_approximatives": {
+        "latitude": 35.1667,
+        "longitude": 4.1833
+      }
+    },
+    "commandement_aln": [
+      "Si El Haouès (Colonel de la Wilaya VI)",
+      "Omar Driss (Commandant adjoint de la Wilaya VI)",
+      "Mohamed Chaâbani"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Nommé à la tête de la Wilaya VI pour redresser la situation militaire dans le Sud, le colonel Si El Haouès, secondé par le commandant Omar Driss, réorganise les katibas autour de Bou Saâda, Aïn Rich et du Djebel Bouk'hil. En septembre 1957, ses unités mènent une série d'embuscades et de combats au Djebel Kerdada et à Aïn Rich contre les garnisons françaises et les groupes bellounistes.",
+    "bilan_et_pertes": {
+      "aln": "Une quinzaine de moudjahidine tués ; reprise en main politique et militaire du secteur de Bou Saâda",
+      "forces_francaises": "Plusieurs dizaines de soldats français et supplétifs mis hors de combat et saisie d'un convoi de ravitaillement",
+      "civils": "Ralliement des populations des oasis et ksour du bassin du Hodna et de Bou Saâda"
+    },
+    "impact_strategique": "Marque la renaissance opérationnelle de la Wilaya VI sous l'autorité de Si El Haouès et d'Omar Driss à l'automne 1957.",
+    "sources": [
+      {
+        "titre": "Si El Haouès et la réorganisation de la Wilaya VI — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Si_El_Haou%C3%A8s",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Les wilayas dans la guerre de libération (Revue Insaniyat / CRASC)",
+        "url": "https://insaniyat.crasc.dz/en/article/les-wilayas-dans-la-crise-du-fln-de-lete-1962",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

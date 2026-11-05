@@ -1,0 +1,82 @@
+{
+  "id": "OP_1958_037",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille d'Oued El Haï dans le secteur de Tessala",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-06-25",
+    "latest": "1958-06-25",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Oued El Haï / Tessala (Sidi Bel Abbès)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.745,
+          35.298
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 5 - Secteur de Tessala)",
+  "source_ids": [
+    "SRC_890a5057f3dcdf9fff6d5b9f"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_037",
+    "nom_operation": "Bataille d'Oued El Haï dans le secteur de Tessala",
+    "date_debut": "1958-06-25",
+    "date_fin": null,
+    "wilaya_concernee": "Wilaya V (Zone 5 - Secteur de Tessala)",
+    "localisation": {
+      "region_ou_ville": "Oued El Haï / Tessala (Sidi Bel Abbès)",
+      "coordonnees_approximatives": {
+        "latitude": 35.298,
+        "longitude": -0.745
+      }
+    },
+    "commandement_aln": [
+      "Katibas ALN de la Zone 5"
+    ],
+    "type_action": "Combat de rencontre / Embuscade",
+    "description": "Combat intense engagé dans le secteur d'Oued El Haï opposant une unité de l'ALN aux troupes d'intervention coloniales appuyées par l'aviation.",
+    "bilan_et_pertes": {
+      "aln": "Une dizaine de moudjahidine tombés au champ d'honneur",
+      "forces_francaises": "Pertes substantielles chez les troupes aéroportées",
+      "civils": "0"
+    },
+    "impact_strategique": "Maintien de la pression militaire de l'ALN sur les voies d'accès à Sidi Bel Abbès ; consigné dans l'étude historique d'Abdelhak Kerkeb.",
+    "sources": [
+      {
+        "titre": "Étude historique sur la Zone 5 de la Wilaya V (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/127641",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

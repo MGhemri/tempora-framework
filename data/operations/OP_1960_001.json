@@ -1,0 +1,90 @@
+{
+  "id": "OP_1960_001",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Batailles du Djebel Béchar et du Djebel Mzi (Front Sud-Oranais)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1960-03-27",
+    "latest": "1960-03-27",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1960-05-08",
+    "latest": "1960-05-08",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Djebel Béchar (Béchar) et massif du Djebel Mzi près d'Aïn Sefra (Wilaya de Naâma)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5833,
+          32.75
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 8 - Aïn Sefra et Béchar)",
+  "source_ids": [
+    "SRC_1253bc240050989a4798d0f5",
+    "SRC_9e609aca81d2da721bda6af4"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1960_001",
+    "nom_operation": "Batailles du Djebel Béchar et du Djebel Mzi (Front Sud-Oranais)",
+    "date_debut": "1960-03-27",
+    "date_fin": "1960-05-08",
+    "wilaya_concernee": "Wilaya V (Zone 8 - Aïn Sefra et Béchar)",
+    "localisation": {
+      "region_ou_ville": "Djebel Béchar (Béchar) et massif du Djebel Mzi près d'Aïn Sefra (Wilaya de Naâma)",
+      "coordonnees_approximatives": {
+        "latitude": 32.75,
+        "longitude": -0.5833
+      }
+    },
+    "commandement_aln": [
+      "Benali Boudghène dit Colonel Lotfi",
+      "Farradj (Commandant adjoint)",
+      "Chefs de la Zone 8 de la Wilaya V"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Opérations des katibas du Sud-Oranais (Zone 8 de la Wilaya V) le long du barrage frontalier ouest : le 27 mars 1960, le colonel Lotfi et son état-major livrent un combat acharné au Djebel Béchar contre le 35e RI et l'aviation française ; du 6 au 8 mai 1960, les unités de l'ALN retranchées dans les grottes et pitons du Djebel Mzi (près d'Aïn Sefra) affrontent pendant trois jours les régiments de la Légion étrangère appuyés par l'artillerie et le napalm.",
+    "bilan_et_pertes": {
+      "aln": "Mort au combat du colonel Lotfi et du commandant Farradj le 27 mars 1960 au Djebel Béchar ; plusieurs dizaines de moudjahidine tués au Djebel Mzi (6-8 mai 1960)",
+      "forces_francaises": "Pertes sensibles au sein des unités d'assaut de la Légion étrangère et du 35e RI du fait des positions fortifiées et des champs de mines de l'ALN",
+      "civils": "Non documenté (zones désertiques et montagneuses)"
+    },
+    "impact_strategique": "Consacre l'héroïsme des maquis du Sud-Oranais face à la ligne électrifiée de l'Ouest (Ligne Pedron / Challe) et maintient une pression militaire constante aux portes du Sahara.",
+    "sources": [
+      {
+        "titre": "Les combats du secteur d'Aïn Sefra et du Djebel Beni Smir / Mzi — Fédération des Sociétés d'Anciens de la Légion Étrangère (FSALE)",
+        "url": "https://www.legionetrangere.fr/la-fsale/actualites-de-la-fsale/808-histoire-decembre-1959-bataille-du-djebel-beni-smir.html",
+        "type_source": "Archive"
+      },
+      {
+        "titre": "Chronologie de la guerre d'Algérie — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Chronologie_de_la_guerre_d%27Alg%C3%A9rie",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

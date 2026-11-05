@@ -1,0 +1,8 @@
+[
+  {"label":"positive","a":"Embuscade du défilé","b":"Embuscade du defile","same_date":true},
+  {"label":"positive","a":"كَمِين الوَادِي","b":"كمين الوادي","same_date":true},
+  {"label":"positive","a":"Combat au col du village","b":"Combat au col du village nord","same_date":true},
+  {"label":"negative","a":"Embuscade du col","b":"Réunion politique","same_date":true,"same_site":true},
+  {"label":"negative","a":"Action de la vallée","b":"Action de la vallée","same_date":false},
+  {"label":"positive","a":"Exemple français sans correspondance lexicale","b":"مثال عربي مترجم للمراجعة","same_date":true}
+]

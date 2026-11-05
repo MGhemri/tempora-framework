@@ -1,0 +1,82 @@
+{
+  "id": "OP_1957_046",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille du Djebel Sikh (Siège des grottes d'Ouled Maâla)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-11-14",
+    "latest": "1957-11-14",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-11-22",
+    "latest": "1957-11-22",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Djebel Sikh / Ouled Maâla (Mostaganem)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.59162,
+          36.04563
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 4 - Dahra de Mostaganem)",
+  "source_ids": [
+    "SRC_997abd0673f506a5c8938bd6"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_046",
+    "nom_operation": "Bataille du Djebel Sikh (Siège des grottes d'Ouled Maâla)",
+    "date_debut": "1957-11-14",
+    "date_fin": "1957-11-22",
+    "wilaya_concernee": "Wilaya V (Zone 4 - Dahra de Mostaganem)",
+    "localisation": {
+      "region_ou_ville": "Djebel Sikh / Ouled Maâla (Mostaganem)",
+      "coordonnees_approximatives": {
+        "latitude": 36.04563,
+        "longitude": 0.59162
+      }
+    },
+    "commandement_aln": [
+      "Commandement ALN du Dahra oranais"
+    ],
+    "type_action": "Siège et combat de grottes",
+    "description": "Siège héroïque de huit jours mené par l'armée française contre le réseau de grottes du Djebel Sikh servant de base de transit, de dépôt d'armes et d'infirmerie près de Sidi Messaoud.",
+    "bilan_et_pertes": {
+      "aln": "Résistance acharnée jusqu'à épuisement des munitions, nombreux martyrs asphyxiés ou tués",
+      "forces_francaises": "Pertes importantes lors des assauts contre les cavités rocheuses",
+      "civils": "Victimes civiles dans les mechtas environnantes"
+    },
+    "impact_strategique": "Symbole de la guerre des grottes dans le Dahra et de la détermination des maquisards face aux méthodes d'enfumage colonial.",
+    "sources": [
+      {
+        "titre": "La bataille de Djebel Sikh, une étape importante dans l'histoire de la région du Dahra (L'Écho d'Algérie)",
+        "url": "https://lechodalgerie.dz/mostaganem-la-bataille-de-djebel-sikh-une-etape-importante-dans-lhistoire-de-la-region-du-dahra/",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

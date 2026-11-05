@@ -1,0 +1,88 @@
+{
+  "id": "OP_1959_014",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Pilonnage au mortier et assaut de commando contre le poste fortifié d'El Meridj (Ligne Morice - Tébessa)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1959-02-18",
+    "latest": "1959-02-18",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1959-02-19",
+    "latest": "1959-02-19",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "El Meridj, entre Ouenza, Morsott et la frontière tunisienne de Haïdra / Kalâat Senan (Wilaya de Tébessa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.2667,
+          35.8
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Base de l'Est / Wilaya I (Secteur frontalier d'El Meridj - Ouenza - Tébessa)",
+  "source_ids": [
+    "SRC_e1e90576287602274770c34a",
+    "SRC_a1f080929a3d721218dfca7a"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1959_014",
+    "nom_operation": "Pilonnage au mortier et assaut de commando contre le poste fortifié d'El Meridj (Ligne Morice - Tébessa)",
+    "date_debut": "1959-02-18",
+    "date_fin": "1959-02-19",
+    "wilaya_concernee": "Base de l'Est / Wilaya I (Secteur frontalier d'El Meridj - Ouenza - Tébessa)",
+    "localisation": {
+      "region_ou_ville": "El Meridj, entre Ouenza, Morsott et la frontière tunisienne de Haïdra / Kalâat Senan (Wilaya de Tébessa)",
+      "coordonnees_approximatives": {
+        "latitude": 35.8,
+        "longitude": 8.2667
+      }
+    },
+    "commandement_aln": [
+      "Commandants des bataillons frontaliers de l'Est (Secteur Tébessa - Le Kef)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Dans le secteur minier et frontalier d'El Meridj (au nord de Tébessa), un bataillon de l'ALN basé en Tunisie pilonne de nuit au mortier de 81 mm et au canon sans recul le poste militaire français et la station radar surveillant la Ligne Morice, pendant que des équipes de sapeurs-démineurs de l'ALN ouvrent une brèche à la bangalore dans le réseau électrifié à 5 000 volts.",
+    "bilan_et_pertes": {
+      "aln": "8 moudjahidine tués par les mines bondissantes et l'artillerie de barrage ; passage réussi d'un détachement de ravitaillement vers les Nemencha",
+      "forces_francaises": "Destruction partielle des défenses extérieures du poste d'El Meridj et une quinzaine de soldats français tués ou blessés",
+      "civils": "Aucune victime civile (zone interdite du barrage Est)"
+    },
+    "impact_strategique": "Conduit le général Maurice Challe à décider au printemps 1959 la construction d'un second barrage en avant de la Ligne Morice, au plus près du tracé frontalier (la « Ligne Challe »).",
+    "sources": [
+      {
+        "titre": "El Meridj (Poste frontalier de la région de Tébessa) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/El_Meridj",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Ligne Morice et Ligne Challe — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Ligne_Morice",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

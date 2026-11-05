@@ -1,0 +1,88 @@
+{
+  "id": "OP_1961_016",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Guerre de l'ombre et attaques des commandos spéciaux du FLN contre les chefs de l'OAS et des Commandos Delta à Alger (Belcourt - Hussein Dey)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1961-11-01",
+    "latest": "1961-11-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1961-12-31",
+    "latest": "1961-12-31",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Alger : Belcourt (Mohamed Belouizdad), Ruisseau, Hussein Dey, Maison-Carrée (El Harrach) et Bab El Oued",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.0731,
+          36.7456
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone autonome d'Alger (ZAA) et Wilaya IV",
+  "source_ids": [
+    "SRC_426d74192b9ec0c4192753a0",
+    "SRC_06379bbd1c35cecb2f019d72"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1961_016",
+    "nom_operation": "Guerre de l'ombre et attaques des commandos spéciaux du FLN contre les chefs de l'OAS et des Commandos Delta à Alger (Belcourt - Hussein Dey)",
+    "date_debut": "1961-11-01",
+    "date_fin": "1961-12-31",
+    "wilaya_concernee": "Zone autonome d'Alger (ZAA) et Wilaya IV",
+    "localisation": {
+      "region_ou_ville": "Alger : Belcourt (Mohamed Belouizdad), Ruisseau, Hussein Dey, Maison-Carrée (El Harrach) et Bab El Oued",
+      "coordonnees_approximatives": {
+        "latitude": 36.7456,
+        "longitude": 3.0731
+      }
+    },
+    "commandement_aln": [
+      "Commandos spéciaux de la Zone autonome d'Alger (ZAA)"
+    ],
+    "type_action": "Attentat ciblé",
+    "description": "En novembre et décembre 1961, au plus fort de l'offensive terroriste des Commandos Delta de Roger Degueldre à Alger, les groupes de choc de la ZAA (notamment à Belcourt, au Ruisseau et à El Harrach) mènent une guerre de renseignement et d'embuscades urbaines, abattant plusieurs chefs de secteurs et tueurs des commandos de l'OAS et coopérant indirectement à la localisation des repaires OAS attaqués par les « barbouzes » gouvernementales (MPC).",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs membres des commandos de la ZAA tombés lors de fusillades urbaines à Belcourt et Hussein Dey",
+      "forces_francaises": "Élimination de plusieurs chefs de groupes Delta et agents de liaison de l'OAS à Alger",
+      "civils": "Centaines de victimes civiles algériennes assassinées quotidiennement par les commandos Delta dans les rues d'Alger"
+    },
+    "impact_strategique": "Empêche l'OAS de provoquer l'effondrement des structures clandestines du FLN à Alger et maintient la cohésion des quartiers algériens de la capitale.",
+    "sources": [
+      {
+        "titre": "Il y a 60 ans, l'OAS en Algérie (Les Commandos Delta et la riposte du FLN à Alger) — La Revue d'Histoire Militaire",
+        "url": "https://larevuedhistoiremilitaire.fr/2021/03/22/il-y-a-60-ans-loas-en-algerie/",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Chronologie de la guerre d'Algérie (Automne-Hiver 1961) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Chronologie_de_la_guerre_d%27Alg%C3%A9rie",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

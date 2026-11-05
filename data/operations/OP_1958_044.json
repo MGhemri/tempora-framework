@@ -1,0 +1,82 @@
+{
+  "id": "OP_1958_044",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille du Djebel Bou Atrous",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-01-02",
+    "latest": "1958-01-02",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-01-07",
+    "latest": "1958-01-07",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Djebel Bou Atrous / Saïda",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.20463,
+          35.0372
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 6 - Saïda)",
+  "source_ids": [
+    "SRC_5312786efc1a1a9bbf77a255"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_044",
+    "nom_operation": "Bataille du Djebel Bou Atrous",
+    "date_debut": "1958-01-02",
+    "date_fin": "1958-01-07",
+    "wilaya_concernee": "Wilaya V (Zone 6 - Saïda)",
+    "localisation": {
+      "region_ou_ville": "Djebel Bou Atrous / Saïda",
+      "coordonnees_approximatives": {
+        "latitude": 35.0372,
+        "longitude": 0.20463
+      }
+    },
+    "commandement_aln": [
+      "Katibas de la Zone 6 de la Wilaya V"
+    ],
+    "type_action": "Combat de rencontre / Guérilla de montagne",
+    "description": "Violent affrontement hivernal dans le massif du Djebel Bou Atrous opposant les maquisards de Saïda aux régiments coloniaux de secteur.",
+    "bilan_et_pertes": {
+      "aln": "Pertes au cours des assauts répétés",
+      "forces_francaises": "Pertes sensibles parmi les troupes d'infanterie françaises",
+      "civils": "0"
+    },
+    "impact_strategique": "Échec d'une tentative coloniale d'anéantissement des katibas de Saïda au début de l'année 1958 ; documenté par Faffa Bekkouche.",
+    "sources": [
+      {
+        "titre": "Étude historique sur la Zone 6 (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/254394",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

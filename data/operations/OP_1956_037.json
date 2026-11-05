@@ -1,0 +1,82 @@
+{
+  "id": "OP_1956_037",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscade de l'axe Télagh–Slissen",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-06-01",
+    "latest": "1956-06-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-06-30",
+    "latest": "1956-06-30",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Axe routier Télagh–Moulay Slissen (Sidi Bel Abbès)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.76062,
+          34.8222
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 5 - Sud de Sidi Bel Abbès)",
+  "source_ids": [
+    "SRC_b0ae4e4f222d84da91226b62"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_037",
+    "nom_operation": "Embuscade de l'axe Télagh–Slissen",
+    "date_debut": "1956-06-01",
+    "date_fin": "1956-06-30",
+    "wilaya_concernee": "Wilaya V (Zone 5 - Sud de Sidi Bel Abbès)",
+    "localisation": {
+      "region_ou_ville": "Axe routier Télagh–Moulay Slissen (Sidi Bel Abbès)",
+      "coordonnees_approximatives": {
+        "latitude": 34.8222,
+        "longitude": -0.76062
+      }
+    },
+    "commandement_aln": [
+      "Commandos ALN de la Zone 5"
+    ],
+    "type_action": "Embuscade",
+    "description": "Embuscade tendue sur la route stratégique reliant Télagh à Moulay Slissen contre un convoi de ravitaillement et de surveillance militaire de l'armée coloniale.",
+    "bilan_et_pertes": {
+      "aln": "1 blessé léger",
+      "forces_francaises": "Véhicules détruits et plusieurs soldats mis hors de combat",
+      "civils": "0"
+    },
+    "impact_strategique": "Entrave durable des liaisons militaires françaises dans le sud de Sidi Bel Abbès ; documenté par Rédouane Ainad Tabet.",
+    "sources": [
+      {
+        "titre": "Sidi Bel-Abbès : des mythes fondateurs de la colonisation à la libération (Insaniyat / CRASC)",
+        "url": "https://insaniyat.crasc.dz/fr/article/sidi-bel-abbes-des-mythes-fondateurs-de-la-colonisation-a-la-liberation",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "id": "OP_1958_054",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Opération de sabotage logistique maritime au quai de la Marine du Port d'Oran",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-05-08",
+    "latest": "1958-05-08",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-05-08",
+    "latest": "1958-05-08",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Vieux Port d'Oran (Quai de la Marine / Quai Millerand)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.6475,
+          35.7088
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Organisation urbaine d'Oran - Port d'Oran)",
+  "source_ids": [
+    "SRC_a7f88a46f717077fb99a6886",
+    "SRC_1f7619e2078703e81990b39b"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_054",
+    "nom_operation": "Opération de sabotage logistique maritime au quai de la Marine du Port d'Oran",
+    "date_debut": "1958-05-08",
+    "date_fin": "1958-05-08",
+    "wilaya_concernee": "Wilaya V (Organisation urbaine d'Oran - Port d'Oran)",
+    "localisation": {
+      "region_ou_ville": "Vieux Port d'Oran (Quai de la Marine / Quai Millerand)",
+      "coordonnees_approximatives": {
+        "latitude": 35.7088,
+        "longitude": -0.6475
+      }
+    },
+    "commandement_aln": [
+      "Réseau syndical clandestin UGTA / FLN des dockers d'Oran"
+    ],
+    "type_action": "Sabotage logistique et industriel",
+    "description": "Mise à feu de charges incendiaires dans les cales d'un cargo ravitailleur et destruction des grues de déchargement au quai de la Marine. Les dockers affiliés au FLN paralysent pendant plusieurs jours les opérations d'embarquement de troupes et de matériel lourd de la Marine nationale.",
+    "bilan_et_pertes": "2 grues portuaires hors service, avaries importantes dans un entrepôt de transit de munitions ; aucun mort, plusieurs arrestations préventives parmi les dockers.",
+    "impact_strategique": "Démontre le contrôle clandestin du FLN sur le prolétariat ouvrier et portuaire oranais malgré la surveillance étroite de la police portuaire.",
+    "sources": [
+      {
+        "titre": "Histoire maritime et sabotages portuaires en Wilaya V — Revue d'histoire maghrébine (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/123690",
+        "type_source": "Revue scientifique"
+      },
+      {
+        "titre": "Saddek Benkada, « Le front maritime et logistique d'Oran (1956–1962) », Insaniyat / CRASC",
+        "url": "https://journals.openedition.org/insaniyat/30472",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

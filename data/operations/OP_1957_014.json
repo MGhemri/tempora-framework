@@ -1,0 +1,96 @@
+{
+  "id": "OP_1957_014",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille du Djebel El Menaouer dans le massif des Beni Chougrane",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-09-05",
+    "latest": "1957-09-05",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-09-06",
+    "latest": "1957-09-06",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Djebel El Menaouer (commune d'El Menaouer, daïra d'El Bordj), Monts des Beni Chougrane (Wilaya de Mascara)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.3208,
+          35.5186
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 5 - Mascara / Beni Chougrane)",
+  "source_ids": [
+    "SRC_31f7f6f7a966c045f99d9d22",
+    "SRC_dfa71a027a85bd767a092ace",
+    "SRC_947880af8b3c2af813419c6d"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_014",
+    "nom_operation": "Bataille du Djebel El Menaouer dans le massif des Beni Chougrane",
+    "date_debut": "1957-09-05",
+    "date_fin": "1957-09-06",
+    "wilaya_concernee": "Wilaya V (Zone 5 - Mascara / Beni Chougrane)",
+    "localisation": {
+      "region_ou_ville": "Djebel El Menaouer (commune d'El Menaouer, daïra d'El Bordj), Monts des Beni Chougrane (Wilaya de Mascara)",
+      "coordonnees_approximatives": {
+        "latitude": 35.5186,
+        "longitude": 0.3208
+      }
+    },
+    "commandement_aln": [
+      "Commandant Si Redouane",
+      "Si Mahmoud",
+      "Chefs des katibas de la Zone 5 (Wilaya V)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "L'une des plus grandes batailles livrées en Wilaya V : deux katibas de l'ALN dirigées par le commandant Si Redouane et Si Mahmoud affrontent au Djebel El Menaouer un déploiement massif de troupes coloniales françaises appuyées par des blindés, l'artillerie lourde, des chasseurs-bombardiers et des hélicoptères. Au cours d'un combat acharné du matin jusqu'à la nuit, les tireurs de l'ALN abattent un avion/hélicoptère français et brisent l'encerclement nocturne.",
+    "bilan_et_pertes": {
+      "aln": "69 moudjahidine tombés au champ d'honneur et une vingtaine de blessés",
+      "forces_francaises": "Lourdes pertes dans les rangs des troupes d'assaut françaises et 1 aéronef militaire abattu",
+      "civils": "Bombardement des mechtas environnantes d'El Menaouer"
+    },
+    "impact_strategique": "Haut fait d'armes de la Wilaya V dans les monts des Beni Chougrane qui démontre la combativité et la maîtrise du tir antiaérien par les katibas de l'Oranie.",
+    "sources": [
+      {
+        "titre": "5 septembre 1957 à Mascara, la bataille de Djebel Menaouer : un haut fait d'armes — El Moudjahid",
+        "url": "https://www.elmoudjahid.dz/fr/societe/5-septembre-1957-a-mascara-la-bataille-de-djebel-menaouer-un-haut-fait-d-armes-204798",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Les opérations militaires en Wilaya V historique — Revue académique CERIST (ASJP)",
+        "url": "https://asjp.cerist.dz/en/downArticle/686/10/1/290720",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Bataille du Djebel El Menaouer (dknews-dz.com)",
+        "url": "https://www.dknews-dz.com/article/160526-mascara-commemoration-du-65e-anniversaire-de-la-bataille-de-djebel-el-menaouer.html",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "id": "OP_1962_005",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Opérations de représailles ciblées de la Wilaya II à Constantine après l'assassinat de dirigeants et fonctionnaires par l'OAS",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1962-01-15",
+    "latest": "1962-01-15",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1962-03-10",
+    "latest": "1962-03-10",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Constantine : quartiers du Coudiat, Saint-Jean, Bellevue et Sidi Mabrouk (Wilaya de Constantine)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.6083,
+          36.3622
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya II (Secteur urbain de Constantine)",
+  "source_ids": [
+    "SRC_4cf4115e95c79ff1d23ce603",
+    "SRC_12b28625bd4aebad12c12f4e"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1962_005",
+    "nom_operation": "Opérations de représailles ciblées de la Wilaya II à Constantine après l'assassinat de dirigeants et fonctionnaires par l'OAS",
+    "date_debut": "1962-01-15",
+    "date_fin": "1962-03-10",
+    "wilaya_concernee": "Wilaya II (Secteur urbain de Constantine)",
+    "localisation": {
+      "region_ou_ville": "Constantine : quartiers du Coudiat, Saint-Jean, Bellevue et Sidi Mabrouk (Wilaya de Constantine)",
+      "coordonnees_approximatives": {
+        "latitude": 36.3622,
+        "longitude": 6.6083
+      }
+    },
+    "commandement_aln": [
+      "Salah Boubnider dit Sawt El Arab (Colonel de la Wilaya II)",
+      "Commandos de fidayin du secteur de Constantine"
+    ],
+    "type_action": "Attentat ciblé",
+    "description": "Au début de l'année 1962 à Constantine, les commandos urbains de la Wilaya II exécutent une série d'opérations ponctuelles et ciblées contre les cellules de l'OAS de l'Est algérien, neutralisant plusieurs dépôts d'armes et d'explosifs clandestins de l'OAS dans les quartiers de Saint-Jean et de Bellevue et assurant la sécurité des cadres algériens préparant la transition administrative.",
+    "bilan_et_pertes": {
+      "aln": "Quelques fidayin blessés ou arrêtés avant le cessez-le-feu",
+      "forces_francaises": "Démantèlement quasi complet de la branche armée de l'OAS à Constantine",
+      "civils": "Maintien du calme relatif de la population algérienne de Constantine conformément aux consignes du GPRA"
+    },
+    "impact_strategique": "Réduit l'OAS à l'impuissance dans tout le Nord-Constantinois avant même le cessez-le-feu du 19 mars 1962.",
+    "sources": [
+      {
+        "titre": "La Wilaya II historique — Cairn.info",
+        "url": "https://shs.cairn.info/la-wilaya-ii-historique--9789947394052-page-103?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Il y a 60 ans, l'OAS en Algérie — La Revue d'Histoire Militaire",
+        "url": "https://larevuedhistoiremilitaire.fr/2021/03/22/il-y-a-60-ans-loas-en-algerie/",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "id": "OP_1958_023",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille du massif du Guergour et des gorges de Hammam Guergour (Bougaâ - Sétif)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-03-14",
+    "latest": "1958-03-14",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-03-16",
+    "latest": "1958-03-16",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif du Djebel Anini et gorges de Hammam Guergour (Bougaâ / Harbil, Nord-Ouest de la Wilaya de Sétif)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.0667,
+          36.3167
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya III (Zone 3 - Massif du Guergour / Bougaâ / Confins Sétif)",
+  "source_ids": [
+    "SRC_be200544e093fde9225e2abd",
+    "SRC_d57f8ccc8d2a2468e9f0c4af"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_023",
+    "nom_operation": "Bataille du massif du Guergour et des gorges de Hammam Guergour (Bougaâ - Sétif)",
+    "date_debut": "1958-03-14",
+    "date_fin": "1958-03-16",
+    "wilaya_concernee": "Wilaya III (Zone 3 - Massif du Guergour / Bougaâ / Confins Sétif)",
+    "localisation": {
+      "region_ou_ville": "Massif du Djebel Anini et gorges de Hammam Guergour (Bougaâ / Harbil, Nord-Ouest de la Wilaya de Sétif)",
+      "coordonnees_approximatives": {
+        "latitude": 36.3167,
+        "longitude": 5.0667
+      }
+    },
+    "commandement_aln": [
+      "Colonel Amirouche Aït Hamouda",
+      "Abderrahmane Mira",
+      "Commandants de la Zone 3 (Guergour - Sétif)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Dans le massif escarpé du Guergour et du Djebel Anini (au nord-ouest de Sétif), qui abrite d'importants hôpitaux souterrains et dépôts logistiques de la Wilaya III, les katibas de la Zone 3 affrontent pendant trois jours une offensive combinée de la 19e division d'infanterie française et des troupes aéroportées, menant de violentes contre-attaques nocturnes dans les gorges de l'Oued Bou Sellam.",
+    "bilan_et_pertes": {
+      "aln": "Une quarantaine de moudjahidine tombés au champ d'honneur",
+      "forces_francaises": "Pertes élevées parmi les bataillons d'assaut français et 1 hélicoptère abattu dans les gorges du Guergour",
+      "civils": "Bombardements de mechtas et regroupements forcés autour de Bougaâ (ex-Lafayette) et Hammam Guergour"
+    },
+    "impact_strategique": "Conserve à la Wilaya III le contrôle du bastion du Guergour, charnière orientale vitale surplombant les plaines de Sétif et de Bordj Bou Arreridj.",
+    "sources": [
+      {
+        "titre": "La question kabyle dans le nationalisme algérien (Le bastion du Guergour en Wilaya III) — Cairn.info",
+        "url": "https://shs.cairn.info/question-kabyle-nationalisme-algerien--9782365122757-page-271?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Répertoire numérique de la série 1H (Zone Ouest Constantinois / Sétif - Guergour) — Service Historique de la Défense (SHD)",
+        "url": "https://www.servicehistorique.sga.defense.gouv.fr/sites/default/files/notices_files/SHDGR_REP_1H_1091_A_4881_T2_1.pdf",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

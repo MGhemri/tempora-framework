@@ -1,0 +1,82 @@
+{
+  "id": "OP_1960_017",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Résistance de l'ALN à l'Opération Ariège dans l'Aurès",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1960-10-06",
+    "latest": "1960-10-06",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1960-11-20",
+    "latest": "1960-11-20",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif de l'Aurès et hautes plaines d'Aïn Beïda (Oum El Bouaghi)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.315,
+          35.685
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya I (Aurès - Oum El Bouaghi / Aïn Beïda)",
+  "source_ids": [
+    "SRC_aa183dc0199b4953d606a683"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1960_017",
+    "nom_operation": "Résistance de l'ALN à l'Opération Ariège dans l'Aurès",
+    "date_debut": "1960-10-06",
+    "date_fin": "1960-11-20",
+    "wilaya_concernee": "Wilaya I (Aurès - Oum El Bouaghi / Aïn Beïda)",
+    "localisation": {
+      "region_ou_ville": "Massif de l'Aurès et hautes plaines d'Aïn Beïda (Oum El Bouaghi)",
+      "coordonnees_approximatives": {
+        "latitude": 35.685,
+        "longitude": 7.315
+      }
+    },
+    "commandement_aln": [
+      "Ali Souaï / Commandement intérimaire Wilaya I"
+    ],
+    "type_action": "Guérilla d'usure face à grande offensive coloniale",
+    "description": "Vaste offensive du Plan Challe dans les massifs aurassiens ; les commandos de l'ALN fractionnent leurs effectifs et infligent des pertes continuelles aux troupes coloniales par harcèlement nocturne.",
+    "bilan_et_pertes": {
+      "aln": "Pertes sévères dues au déploiement massif de l'aviation",
+      "forces_francaises": "Pertes sensibles lors des embuscades de diversion",
+      "civils": "0"
+    },
+    "impact_strategique": "Échec de l'armée française à déraciner définitivement l'ALN de son berceau historique aurassien.",
+    "sources": [
+      {
+        "titre": "L'Opération Ariège et la résistance de la Wilaya I (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/257176",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

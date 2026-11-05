@@ -1,0 +1,90 @@
+{
+  "id": "OP_1956_020",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats et embuscade de Sidi Mezghiche (Secteur de Collo - El Harrouch)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-09-23",
+    "latest": "1956-09-23",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-09-23",
+    "latest": "1956-09-23",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Douar Oum El Toub / Sidi Mezghiche, entre El Harrouch, Tamalous et Collo (Wilaya de Skikda)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.7167,
+          36.6833
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya II (Secteur de Sidi Mezghiche / Massif de Collo - Skikda)",
+  "source_ids": [
+    "SRC_d2492fcc8f464204cefdb66f",
+    "SRC_a1e0bd33dc929c6e1cf1b349"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_020",
+    "nom_operation": "Combats et embuscade de Sidi Mezghiche (Secteur de Collo - El Harrouch)",
+    "date_debut": "1956-09-23",
+    "date_fin": "1956-09-23",
+    "wilaya_concernee": "Wilaya II (Secteur de Sidi Mezghiche / Massif de Collo - Skikda)",
+    "localisation": {
+      "region_ou_ville": "Douar Oum El Toub / Sidi Mezghiche, entre El Harrouch, Tamalous et Collo (Wilaya de Skikda)",
+      "coordonnees_approximatives": {
+        "latitude": 36.6833,
+        "longitude": 6.7167
+      }
+    },
+    "commandement_aln": [
+      "Zighoud Youcef (Colonel de la Wilaya II)",
+      "Lakhdar Bentobbal",
+      "Ali Kafi"
+    ],
+    "type_action": "Embuscade",
+    "description": "De retour du Congrès de la Soummam (août 1956) où il a été promu colonel de la Wilaya II, Zighoud Youcef réunit ses cadres pour diffuser les résolutions du congrès et réorganiser les katibas du Nord-Constantinois. Le 23 septembre 1956, lors d'une mission d'inspection dans la région de Sidi Mezghiche (Oum El Toub), son escorte livre un violent accrochage au cours duquel le colonel Zighoud Youcef tombe au champ d'honneur.",
+    "bilan_et_pertes": {
+      "aln": "Mort au combat du colonel Zighoud Youcef (à l'âge de 35 ans) et de plusieurs moudjahidine de son escorte ; Lakhdar Bentobbal lui succède à la tête de la Wilaya II",
+      "forces_francaises": "Pertes sensibles infligées aux unités françaises et supplétives engagées dans le secteur de Sidi Mezghiche",
+      "civils": "Opérations de ratissage dans la vallée de Sidi Mezghiche et d'Oum El Toub"
+    },
+    "impact_strategique": "Malgré la disparition du grand stratège du 20 août 1955, l'architecture politico-militaire mise en place par Zighoud Youcef permet à Lakhdar Bentobbal, Ali Kafi et Salah Boubnider d'intensifier les opérations des bataillons de la Wilaya II dès l'automne 1956.",
+    "sources": [
+      {
+        "titre": "Youcef Zighoud — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Youcef_Zighoud",
+        "type_source": "Article"
+      },
+      {
+        "titre": "La Wilaya II historique : de Zighoud Youcef à Lakhdar Bentobbal — Cairn.info",
+        "url": "https://shs.cairn.info/la-wilaya-ii-historique--9789947394052-page-103?lang=fr",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

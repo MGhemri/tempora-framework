@@ -1,0 +1,102 @@
+{
+  "id": "OP_1955_004",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscade de l'Oued Hallaïl et attaque du poste de Guentis (Nemencha)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1955-02-11",
+    "latest": "1955-02-11",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1955-02-12",
+    "latest": "1955-02-12",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Oued Hallaïl et Stah Guentis, aux confins des monts des Nemencha (Wilayas de Tébessa et Khenchela)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.3667,
+          35.15
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya I (Monts des Nemencha - Tébessa / Khenchela)",
+  "source_ids": [
+    "SRC_fe7c4b79cb411f78c5403c8f",
+    "SRC_c0f3409fd3461f354a1c5fb8",
+    "SRC_0fcc4b8c981758d3a7fcae33",
+    "SRC_81f74830bb0ed3f7876bc16b"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1955_004",
+    "nom_operation": "Embuscade de l'Oued Hallaïl et attaque du poste de Guentis (Nemencha)",
+    "date_debut": "1955-02-11",
+    "date_fin": "1955-02-12",
+    "wilaya_concernee": "Wilaya I (Monts des Nemencha - Tébessa / Khenchela)",
+    "localisation": {
+      "region_ou_ville": "Oued Hallaïl et Stah Guentis, aux confins des monts des Nemencha (Wilayas de Tébessa et Khenchela)",
+      "coordonnees_approximatives": {
+        "latitude": 35.15,
+        "longitude": 7.3667
+      }
+    },
+    "commandement_aln": [
+      "Lazhar Cheriet",
+      "Abbas Laghrour",
+      "Bachir Chihani"
+    ],
+    "type_action": "Embuscade",
+    "description": "En réponse au déclenchement de l'opération française « Véronique » dans l'Aurès (janvier-février 1955), les moudjahidine des Nemencha commandés par Lazhar Cheriet et Abbas Laghrour ouvrent un second foyer offensif à l'est en harcelant le poste militaire de Guentis et en tendant une embuscade dans le lit encaissé de l'Oued Hallaïl contre les colonnes de secours.",
+    "bilan_et_pertes": {
+      "aln": "Pertes légères ; récupération d'un lot d'armes de guerre et de munitions",
+      "forces_francaises": "Plusieurs véhicules détruits et une quinzaine de soldats français tués ou blessés",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "Contraint l'état-major français (général Parlange) à diviser ses forces entre le massif central de l'Aurès et l'immense plateau désertique et montagneux des Nemencha vers Tébessa.",
+    "sources": [
+      {
+        "titre": "Nemencha (Histoire et guerre d'Algérie) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Nemencha",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Bachir Chihani et le commandement de l'Aurès-Nemencha — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Bachir_Chihani",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Acheminement maritime d'armes (yacht Dina) et maquis côtiers (fr.wikipedia.org)",
+        "url": "https://fr.wikipedia.org/wiki/Abdelhafid_Boussouf",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Acheminement maritime d'armes (yacht Dina) et maquis côtiers (ambalg.ma)",
+        "url": "https://www.ambalg.ma/histoire-dalgerie/",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

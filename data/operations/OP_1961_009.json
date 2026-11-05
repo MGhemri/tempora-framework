@@ -1,0 +1,89 @@
+{
+  "id": "OP_1961_009",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Tirs antiaériens et embuscades frontalières de l'ALN dans le secteur de Lacroix - Aïn El Assel (El Tarf)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1961-02-08",
+    "latest": "1961-02-08",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1961-02-10",
+    "latest": "1961-02-10",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Aïn El Assel (ex-Lacroix), El Aioun et Roum El Souk, dans le secteur frontalier d'El Tarf (Wilaya d'El Tarf)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.3667,
+          36.7833
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Armée des Frontières (EMG - Front Est / Secteur d'El Tarf)",
+  "source_ids": [
+    "SRC_5ae0f8fd9b78e71c175ccd73",
+    "SRC_630c7df7b758d080eff00bd4"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1961_009",
+    "nom_operation": "Tirs antiaériens et embuscades frontalières de l'ALN dans le secteur de Lacroix - Aïn El Assel (El Tarf)",
+    "date_debut": "1961-02-08",
+    "date_fin": "1961-02-10",
+    "wilaya_concernee": "Armée des Frontières (EMG - Front Est / Secteur d'El Tarf)",
+    "localisation": {
+      "region_ou_ville": "Aïn El Assel (ex-Lacroix), El Aioun et Roum El Souk, dans le secteur frontalier d'El Tarf (Wilaya d'El Tarf)",
+      "coordonnees_approximatives": {
+        "latitude": 36.7833,
+        "longitude": 8.3667
+      }
+    },
+    "commandement_aln": [
+      "Chadli Bendjedid",
+      "Commandants des batteries antiaériennes et des bataillons de la Zone Nord-Est (EMG)"
+    ],
+    "type_action": "Embuscade",
+    "description": "En février 1961, les unités de l'EMG dans le secteur boisé de Roum El Souk et d'Aïn El Assel (ex-Lacroix, près d'El Tarf) attirent une patrouille blindée et héliportée française dans une embuscade d'artillerie le long de la Ligne Challe et mettent en œuvre leurs batteries de mitrailleuses lourdes antiaériennes de 12,7 mm et 14,5 mm contre les avions d'observation et hélicoptères français.",
+    "bilan_et_pertes": {
+      "aln": "6 moudjahidine tués par les bombardements d'artillerie",
+      "forces_francaises": "1 avion d'observation / hélicoptère abattu, deux blindés légers touchés au canon sans recul et une douzaine de soldats français tués ou blessés",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "La densité de la défense antiaérienne (DCA) de l'Armée des frontières interdit désormais aux aéronefs français le survol à basse altitude de la bande frontalière.",
+    "sources": [
+      {
+        "titre": "La guerre de libération et la Base de l'Est — Cairn.info",
+        "url": "https://shs.cairn.info/guerre-de-liberation--9789961634547-page-127?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Ligne Morice — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Ligne_Morice",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

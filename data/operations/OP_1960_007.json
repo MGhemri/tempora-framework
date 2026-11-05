@@ -1,0 +1,90 @@
+{
+  "id": "OP_1960_007",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscades des monts du Titteri et de l'Atlas blidéen (Secteur de Médéa - Chréa - Bouinan)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1960-03-19",
+    "latest": "1960-03-19",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1960-03-21",
+    "latest": "1960-03-21",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif des Beni Salah / Chréa et monts de Médéa (Wilayas de Blida et Médéa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.8167,
+          36.3833
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya IV (Zones 1 et 2 - Médéa / Atlas blidéen)",
+  "source_ids": [
+    "SRC_f0f067cff76b7c8dbaeb4a0d",
+    "SRC_6dc024ba80fc62d6264665f1"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1960_007",
+    "nom_operation": "Embuscades des monts du Titteri et de l'Atlas blidéen (Secteur de Médéa - Chréa - Bouinan)",
+    "date_debut": "1960-03-19",
+    "date_fin": "1960-03-21",
+    "wilaya_concernee": "Wilaya IV (Zones 1 et 2 - Médéa / Atlas blidéen)",
+    "localisation": {
+      "region_ou_ville": "Massif des Beni Salah / Chréa et monts de Médéa (Wilayas de Blida et Médéa)",
+      "coordonnees_approximatives": {
+        "latitude": 36.3833,
+        "longitude": 2.8167
+      }
+    },
+    "commandement_aln": [
+      "Djilali Bounaâma dit Si Mohamed",
+      "Youcef Khatib dit Si Hassan",
+      "Lakhdar Bourégaâ"
+    ],
+    "type_action": "Embuscade",
+    "description": "Réorganisés en sections légères très mobiles après l'Opération Courroie (Plan Challe), les groupes de choc de la Wilaya IV commandés par Djilali Bounaâma, Youcef Khatib (Si Hassan) et Lakhdar Bourégaâ multiplient au printemps 1960 les embuscades éclair et le minage des pistes militaires dans le massif des Beni Salah (Chréa) et les monts de Médéa.",
+    "bilan_et_pertes": {
+      "aln": "7 moudjahidine tués au cours des accrochages ; maintien intégral du réseau de commandement de la Wilaya IV",
+      "forces_francaises": "Une vingtaine de soldats français tués ou blessés par mines et tirs d'embuscade",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "Prouve l'échec du Plan Challe à pacifier durablement l'Algérois et permet à la Wilaya IV de préparer l'encadrement des grandes manifestations urbaines de décembre 1960.",
+    "sources": [
+      {
+        "titre": "Lakhdar Bourégaâ — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Lakhdar_Bouregaa",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Wilaya IV historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_IV_historique",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "id": "OP_1959_013",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscades côtières d'Oulhaça et de Souahlia contre les patrouilles de la DBFM (Beni Saf - Ghazaouet)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1959-08-19",
+    "latest": "1959-08-19",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1959-08-20",
+    "latest": "1959-08-20",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif d'Oulhaça (Sidi Brahim / Souk El Khemis) et Souahlia, entre Beni Saf et Ghazaouet (Wilayas d'Aïn Témouchent et Tlemcen)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.5167,
+          35.2333
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 1 - Oulhaça / Beni Saf / Souahlia / Ghazaouet)",
+  "source_ids": [
+    "SRC_cf569a05ca25c589d6cb438f",
+    "SRC_dfa71a027a85bd767a092ace"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1959_013",
+    "nom_operation": "Embuscades côtières d'Oulhaça et de Souahlia contre les patrouilles de la DBFM (Beni Saf - Ghazaouet)",
+    "date_debut": "1959-08-19",
+    "date_fin": "1959-08-20",
+    "wilaya_concernee": "Wilaya V (Zone 1 - Oulhaça / Beni Saf / Souahlia / Ghazaouet)",
+    "localisation": {
+      "region_ou_ville": "Massif d'Oulhaça (Sidi Brahim / Souk El Khemis) et Souahlia, entre Beni Saf et Ghazaouet (Wilayas d'Aïn Témouchent et Tlemcen)",
+      "coordonnees_approximatives": {
+        "latitude": 35.2333,
+        "longitude": -1.5167
+      }
+    },
+    "commandement_aln": [
+      "Chefs des sections de choc de la Zone 1 (Monts des Trara et d'Oulhaça)"
+    ],
+    "type_action": "Embuscade",
+    "description": "En août 1959, les groupes mobiles de la Wilaya V opérant dans le massif côtier d'Oulhaça et de Souahlia minent les pistes militaires et tendent une embuscade à courte distance contre une patrouille de la Demi-Brigade de Fusiliers Marins (DBFM) entre Beni Saf et Ghazaouet.",
+    "bilan_et_pertes": {
+      "aln": "4 moudjahidine tués lors de la contre-attaque héliportée ; repli réussi dans les grottes côtières d'Oulhaça",
+      "forces_francaises": "Une dizaine de fusiliers marins tués ou blessés et un camion militaire détruit par mine",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "Prouve qu'après plus de trois ans de quadrillage intensif par la DBFM, les maquis des Trara et d'Oulhaça conservent leur capacité d'action offensive.",
+    "sources": [
+      {
+        "titre": "Demi-brigade de fusiliers marins (DBFM) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Demi-brigade_de_fusiliers_marins",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Les opérations militaires en Wilaya V historique — Revue académique CERIST (ASJP)",
+        "url": "https://asjp.cerist.dz/en/downArticle/686/10/1/290720",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

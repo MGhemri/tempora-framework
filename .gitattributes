@@ -1,0 +1,33 @@
+data/** text eol=lf
+generated/** text eol=lf
+generated/*.csv -text
+migrations/** text eol=lf
+migrations/legacy-initial.json -text
+docs/documentation/** text eol=lf
+docs/data/canonical/** text eol=lf
+docs/data/canonical/*.csv -text
+openapi/** text eol=lf
+docs/data/api-v2/** text eol=lf
+data/releases/*.zip -text
+docs/data/releases/** text eol=lf
+docs/data/releases/**/*.zip -text
+CITATION.cff text eol=lf
+CHANGELOG.md text eol=lf
+docs/coverage-model.js text eol=lf
+docs/coverage-query.js text eol=lf
+docs/data/coverage/** text eol=lf
+docs/data/coverage/*.csv -text
+
+docs/assistance-model.js text eol=lf
+docs/data/assistance/** text eol=lf
+
+docs/entity-search-model.js text eol=lf
+docs/data/entity-search/** text eol=lf
+
+profiles/** text eol=lf
+tests/fixtures/profiles/** text eol=lf
+
+schemas/tempora*.schema.json text eol=lf
+schemas/tempora/** text eol=lf
+docs/schemas/** text eol=lf
+docs/profiles/** text eol=lf

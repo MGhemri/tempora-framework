@@ -1,0 +1,90 @@
+{
+  "id": "OP_1956_016",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille du Djebel Argou dans les Monts des Nemencha (Chéria / Tébessa)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-07-18",
+    "latest": "1956-07-18",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-07-19",
+    "latest": "1956-07-19",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif du Djebel Argou, entre Chéria, El Ogla et Tébessa (Wilaya de Tébessa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.6833,
+          35.2167
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya I (Zone des Nemencha - Tébessa / Chéria)",
+  "source_ids": [
+    "SRC_4f2a2c4c1bb71d7e5b9bf702",
+    "SRC_7f0b0e789379dc179514fe7c"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_016",
+    "nom_operation": "Bataille du Djebel Argou dans les Monts des Nemencha (Chéria / Tébessa)",
+    "date_debut": "1956-07-18",
+    "date_fin": "1956-07-19",
+    "wilaya_concernee": "Wilaya I (Zone des Nemencha - Tébessa / Chéria)",
+    "localisation": {
+      "region_ou_ville": "Massif du Djebel Argou, entre Chéria, El Ogla et Tébessa (Wilaya de Tébessa)",
+      "coordonnees_approximatives": {
+        "latitude": 35.2167,
+        "longitude": 7.6833
+      }
+    },
+    "commandement_aln": [
+      "Lazhar Cheriet",
+      "Chérif Mahmoud (dit Si Mahmoud)",
+      "Officiers de la Zone de Tébessa"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Les katibas des Nemencha commandées par Lazhar Cheriet livrent une bataille rangée de deux jours sur les crêtes rocheuses du Djebel Argou face aux régiments parachutistes et à la Légion étrangère appuyés par des blindés et l'aviation venue de la base de Tébessa.",
+    "bilan_et_pertes": {
+      "aln": "Une quarantaine de moudjahidine tombés au champ d'honneur après un combat au corps à corps",
+      "forces_francaises": "Plusieurs dizaines de soldats français tués ou blessés et 1 hélicoptère endommagé par les tirs de fusils-mitrailleurs",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "Maintient ouvert le couloir stratégique des Nemencha reliant l'intérieur de la Wilaya I aux bases logistiques de la frontière tunisienne avant l'édification complète de la Ligne Morice.",
+    "sources": [
+      {
+        "titre": "Nemencha (Combats de la Wilaya I) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Nemencha",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Mourir à Sakiet : les combats frontaliers de la région de Tébessa — Cairn.info",
+        "url": "https://shs.cairn.info/mourir-a-sakiet--9782130835714-page-229?lang=fr",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

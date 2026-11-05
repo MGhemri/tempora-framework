@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Politique éditoriale · TEMPORA</title><script>const base=document.createElement('base');base.href=location.pathname.split('/documentation')[0].replace(/\/api\/docs$/,'')+'/documentation/';document.head.append(base);</script><link rel="stylesheet" href="documentation.css"><script src="../site-context.js?v=4.3"></script></head><body><main><nav><a data-atlas-link href="../index.html">Atlas ALNOP · الأطلس</a><a href="../contribute.html">Contribuer · ساهم</a><a href="index.html">Documentation · الوثائق</a></nav><p class="documentation-context"><span data-framework-presentation>TEMPORA — Framework pour les corpus historiques</span><span data-profile-presentation hidden>ALNOP — Profil du framework TEMPORA</span></p><h1 id="politique-éditoriale">Politique éditoriale</h1>
+<p>Une contribution est une proposition, pas une preuve de vérité. Distinguer source, fait rapporté, interprétation et décision éditoriale. Les contradictions doivent coexister avec leurs références ; aucune fusion ou correction historique automatique.</p>
+<p>Les assertions disposent maintenant d’un modèle et d’une validation dédiés. Voir <a href="provenance.html">Assertions, sources et contradictions</a> pour enregistrer deux versions divergentes sans remplacer le contenu de la fiche. Cette revue distincte ne vaut pas arbitrage sur la visibilité d’une fiche entière <code>disputed</code>.</p>
+<table>
+<thead>
+<tr>
+<th>État</th>
+<th>Transitions possibles</th>
+<th>Responsable</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>proposed</td>
+<td>under_review, needs_information, rejected</td>
+<td>Mainteneur</td>
+</tr>
+<tr>
+<td>needs_information</td>
+<td>proposed, under_review, rejected</td>
+<td>Auteur et mainteneur</td>
+</tr>
+<tr>
+<td>under_review</td>
+<td>published, needs_information, rejected</td>
+<td>Mainteneur habilité, décision documentée</td>
+</tr>
+<tr>
+<td>published</td>
+<td>under_review, disputed, withdrawn</td>
+<td>Mainteneur, justification et références</td>
+</tr>
+<tr>
+<td>disputed</td>
+<td>under_review, published, withdrawn</td>
+<td>Mainteneur après réexamen</td>
+</tr>
+<tr>
+<td>rejected</td>
+<td>under_review</td>
+<td>Mainteneur après élément nouveau</td>
+</tr>
+<tr>
+<td>withdrawn</td>
+<td>under_review</td>
+<td>Mainteneur après réexamen</td>
+</tr>
+</tbody>
+</table>
+<p>Ces états décrivent le suivi éditorial. <code>needs_information</code> et <code>rejected</code> concernent les propositions ; ils ne sont pas des états de fiches publiées. Les états ne sont pas encore un mécanisme automatique de permissions. Les protections de branche et le nombre obligatoire de reviewers sont à configurer par le responsable ; les fichiers de politique seuls ne les imposent pas.</p>
+<p>Toute décision doit citer l'Issue/PR et le commit, préciser la raison, les sources et les personnes intervenant selon leur rôle public. Une demande de réexamen peut être ouverte dans une nouvelle Issue référant la décision antérieure. Les suppressions doivent conserver une trace non sensible ; ne pas recycler les identifiants.</p>
+<p>Les décisions sur la visibilité des fiches contestées, les droits, le nombre de validateurs et les traductions restent dans docs/DECISIONS_PENDING.md. Aucune modification de licence n'est implicite dans une contribution.</p>
+<p>Les changements de données publiques sont désormais comparés à la base Git et doivent ajouter une approbation liée au contenu par <code>content_sha256</code>. Les imports initiaux ne reçoivent aucune approbation inventée. Voir <a href="entities.html">le guide des référentiels et de revue</a> pour les commandes et les limites administratives de ce contrôle.</p>
+</main></body></html>

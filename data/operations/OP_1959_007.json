@@ -1,0 +1,102 @@
+{
+  "id": "OP_1959_007",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille de Grarem Gouga et combats de la vallée de l'Oued Endja (Mila)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1959-04-21",
+    "latest": "1959-04-21",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1959-04-23",
+    "latest": "1959-04-23",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massifs de Grarem Gouga, Hamala et vallée de l'Oued Endja, entre Mila et El Milia (Wilaya de Mila)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.3333,
+          36.5167
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya II (Zone de Mila - Grarem Gouga - Oued Endja)",
+  "source_ids": [
+    "SRC_312c3177e659162508e0b802",
+    "SRC_4cf4115e95c79ff1d23ce603",
+    "SRC_b7f9c565a4130272c1a9a05f",
+    "SRC_a8ea14af9e7ca09d3a3756a3"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1959_007",
+    "nom_operation": "Bataille de Grarem Gouga et combats de la vallée de l'Oued Endja (Mila)",
+    "date_debut": "1959-04-21",
+    "date_fin": "1959-04-23",
+    "wilaya_concernee": "Wilaya II (Zone de Mila - Grarem Gouga - Oued Endja)",
+    "localisation": {
+      "region_ou_ville": "Massifs de Grarem Gouga, Hamala et vallée de l'Oued Endja, entre Mila et El Milia (Wilaya de Mila)",
+      "coordonnees_approximatives": {
+        "latitude": 36.5167,
+        "longitude": 6.3333
+      }
+    },
+    "commandement_aln": [
+      "Salah Boubnider dit Sawt El Arab (Colonel de la Wilaya II)",
+      "Abdelmadjid Kahlerras",
+      "Officiers de la Région de Mila"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Sous le commandement du colonel Salah Boubnider (dit Sawt El Arab), qui a pris la tête de la Wilaya II en 1959, les katibas du secteur de Grarem Gouga et de l'Oued Endja livrent trois jours de combats intenses contre les colonnes mobiles françaises appuyées par l'aviation, protégeant le poste de commandement (PC) mobile de la Wilaya II.",
+    "bilan_et_pertes": {
+      "aln": "Une trentaine de moudjahidine tombés au champ d'honneur ; sauvegarde intégrale du PC de la Wilaya II",
+      "forces_francaises": "Plusieurs dizaines de soldats français tués ou blessés lors des embuscades dans les gorges de l'Oued Endja",
+      "civils": "Bombardements et regroupements forcés des populations rurales de Grarem et Hamala"
+    },
+    "impact_strategique": "Assure le maintien du commandement opérationnel de Sawt El Arab au cœur du Nord-Constantinois avant le déclenchement de l'Opération Pierres Précieuses (Plan Challe).",
+    "sources": [
+      {
+        "titre": "Virée dans les refuges de la Wilaya II historique : ces sanctuaires oubliés (Grarem / Mila / El Milia) — El Moudjahid",
+        "url": "https://www.elmoudjahid.dz/fr/actualite/viree-dans-les-refuges-de-la-wilaya-ii-historique-ces-sanctuaires-oublies-242668",
+        "type_source": "Article"
+      },
+      {
+        "titre": "La Wilaya II historique — Cairn.info",
+        "url": "https://shs.cairn.info/la-wilaya-ii-historique--9789947394052-page-103?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Résistance face à l'Opération Jumelles (elmoudjahid.dz)",
+        "url": "https://www.elmoudjahid.dz/fr/actualite/22-juillet-1959-debut-de-l-operation-jumelles-le-deluge-de-feu-en-kabylie-n-a-pas-aneanti-l-aln-202689",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Résistance face à l'Opération Jumelles (fr.wikipedia.org)",
+        "url": "https://fr.wikipedia.org/wiki/Op%C3%A9ration_Jumelles",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

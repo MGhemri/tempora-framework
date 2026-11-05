@@ -1,0 +1,82 @@
+{
+  "id": "OP_1957_043",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille du Djebel Moksi à Oued Sefioun",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-01-02",
+    "latest": "1957-01-02",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Djebel Moksi / Oued Sefioun (Sidi Bel Abbès)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.368,
+          35.135
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 5 - Oued Sefioun)",
+  "source_ids": [
+    "SRC_890a5057f3dcdf9fff6d5b9f"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_043",
+    "nom_operation": "Bataille du Djebel Moksi à Oued Sefioun",
+    "date_debut": "1957-01-02",
+    "date_fin": null,
+    "wilaya_concernee": "Wilaya V (Zone 5 - Oued Sefioun)",
+    "localisation": {
+      "region_ou_ville": "Djebel Moksi / Oued Sefioun (Sidi Bel Abbès)",
+      "coordonnees_approximatives": {
+        "latitude": 35.135,
+        "longitude": -0.368
+      }
+    },
+    "commandement_aln": [
+      "Katiba de la Zone 5"
+    ],
+    "type_action": "Combat de rencontre / Guérilla de montagne",
+    "description": "Combat d'ouverture de l'année 1957 livré dans les reliefs du Djebel Moksi contre des détachements de chasseurs et parachutistes coloniaux.",
+    "bilan_et_pertes": {
+      "aln": "Estimées à 8 chouhada",
+      "forces_francaises": "Une quinzaine de soldats mis hors de combat",
+      "civils": "0"
+    },
+    "impact_strategique": "Échec d'une manœuvre d'encerclement hivernal française dans le couloir d'Oued Sefioun.",
+    "sources": [
+      {
+        "titre": "Étude historique sur la Zone 5 de la Wilaya V (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/127641",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

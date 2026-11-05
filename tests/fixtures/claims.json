@@ -1,0 +1,30 @@
+[
+  {
+    "id": "CLM_TEST_A",
+    "subject": "OP_1954_001",
+    "predicate": "effectif_fictif_de_validation",
+    "value": 12,
+    "unit": "unité de test",
+    "status": "contested",
+    "editorial_status": "proposed",
+    "evidence": [{"source_id": "SRC_aaaaaaaaaaaaaaaaaaaaaaaa", "locator": "p. 12 (exemple fictif)", "quotation": "Extrait synthétique A."}],
+    "contradicts": ["CLM_TEST_B"],
+    "review_history": [],
+    "created_at": "2026-11-05T00:00:00Z",
+    "updated_at": "2026-11-05T01:00:00Z"
+  },
+  {
+    "id": "CLM_TEST_B",
+    "subject": "OP_1954_001",
+    "predicate": "effectif_fictif_de_validation",
+    "value": 21,
+    "unit": "unité de test",
+    "status": "contested",
+    "editorial_status": "proposed",
+    "evidence": [{"source_id": "SRC_bbbbbbbbbbbbbbbbbbbbbbbb", "locator": "chap. 2, § 3 (exemple fictif)"}],
+    "contradicts": [],
+    "review_history": [],
+    "created_at": "2026-11-05T00:00:00Z",
+    "updated_at": "2026-11-05T01:00:00Z"
+  }
+]

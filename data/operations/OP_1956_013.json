@@ -1,0 +1,96 @@
+{
+  "id": "OP_1956_013",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Offensive coordonnée contre les fermes coloniales fortifiées de Sidi Bel Abbès et Mascara",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-11-01",
+    "latest": "1956-11-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-11-03",
+    "latest": "1956-11-03",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Plaines de la Mekerra (Sidi Bel Abbès), Mercier-Lacombe (Sfissef), Palikao (Tighennif) et plaine de Ghriss (Mascara)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.63,
+          35.1975
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zones 3 et 5 - Sidi Bel Abbès et Mascara)",
+  "source_ids": [
+    "SRC_782f3ca4e66b46b004b7d184",
+    "SRC_0978a557c992c3b3d0db09e3",
+    "SRC_37c07a7a5fa20c557ade7513"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_013",
+    "nom_operation": "Offensive coordonnée contre les fermes coloniales fortifiées de Sidi Bel Abbès et Mascara",
+    "date_debut": "1956-11-01",
+    "date_fin": "1956-11-03",
+    "wilaya_concernee": "Wilaya V (Zones 3 et 5 - Sidi Bel Abbès et Mascara)",
+    "localisation": {
+      "region_ou_ville": "Plaines de la Mekerra (Sidi Bel Abbès), Mercier-Lacombe (Sfissef), Palikao (Tighennif) et plaine de Ghriss (Mascara)",
+      "coordonnees_approximatives": {
+        "latitude": 35.1975,
+        "longitude": -0.63
+      }
+    },
+    "commandement_aln": [
+      "Abdelhafid Boussouf (Colonel de la Wilaya V)",
+      "Houari Boumédiène (Adjoint militaire Wilaya V)",
+      "Chefs des Zones 3 et 5"
+    ],
+    "type_action": "Sabotage",
+    "description": "À l'occasion du deuxième anniversaire du déclenchement de la Révolution, les katibas et groupes de moussebiline de la Wilaya V lancent une vague coordonnée d'attaques nocturnes et de sabotages contre plusieurs dizaines de grandes exploitations viticoles et céréalières coloniales érigées en points d'appui d'autodéfense dans le bassin de Sidi Bel Abbès (berceau de la Légion étrangère) et la plaine de Mascara : incendie de hangars agricoles, destruction de matériel mécanique, abattage de poteaux téléphoniques et harcèlement de postes militaires.",
+    "bilan_et_pertes": {
+      "aln": "Pertes légères grâce au repli rapide vers les massifs du Tessala et des Beni Chougrane",
+      "forces_francaises": "Plusieurs gardes territoriaux et militaires blessés ; mobilisation d'urgence des unités de la Légion étrangère pour quadriller les plaines",
+      "civils": "Importants dégâts matériels et économiques sur les grands domaines coloniaux d'Oranie"
+    },
+    "impact_strategique": "Frappe au cœur l'économie agraire coloniale de l'Oranie et contraint le commandement français à immobiliser des milliers de soldats dans la garde statique des fermes isolées au détriment des opérations offensives en montagne.",
+    "sources": [
+      {
+        "titre": "Inventaire des archives de la Guerre d'Algérie (Département d'Oran) — Archives nationales d'outre-mer (ANOM)",
+        "url": "https://recherche-anom.culture.gouv.fr/ark:/61561/zf476wvrwx",
+        "type_source": "Archive"
+      },
+      {
+        "titre": "Répertoire numérique de la série 1H (Corps d'armée d'Oran) — Service Historique de la Défense (SHD)",
+        "url": "https://www.servicehistorique.sga.defense.gouv.fr/sites/default/files/notices_files/SHDGR_REP_1H_1091_A_4881_T1.pdf",
+        "type_source": "Archive"
+      },
+      {
+        "titre": "Offensive contre les fermes coloniales (museeto.dz)",
+        "url": "https://www.museeto.dz/dz/index.php/mhtat/m24",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

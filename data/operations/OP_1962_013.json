@@ -1,0 +1,84 @@
+{
+  "id": "OP_1962_013",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Fortification des barricades et défense de la ligne de démarcation du Boulevard Khedim Mustapha et Rue de Tlemcen",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1962-03-22",
+    "latest": "1962-03-22",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1962-03-31",
+    "latest": "1962-03-31",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Boulevard Khedim Mustapha (ex-bd de Mascara) et Rue de Tlemcen (Oran)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.648,
+          35.6912
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone Autonome d'Oran (ZAO)",
+  "source_ids": [
+    "SRC_bed34917684167dd073352e3",
+    "SRC_f865625dc434df82568c7350"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1962_013",
+    "nom_operation": "Fortification des barricades et défense de la ligne de démarcation du Boulevard Khedim Mustapha et Rue de Tlemcen",
+    "date_debut": "1962-03-22",
+    "date_fin": "1962-03-31",
+    "wilaya_concernee": "Zone Autonome d'Oran (ZAO)",
+    "localisation": {
+      "region_ou_ville": "Boulevard Khedim Mustapha (ex-bd de Mascara) et Rue de Tlemcen (Oran)",
+      "coordonnees_approximatives": {
+        "latitude": 35.6912,
+        "longitude": -0.648
+      }
+    },
+    "commandement_aln": [
+      "Cadres opérationnels de l'ALN urbaine (futurs officiers de la ZAO)"
+    ],
+    "type_action": "Dispositif défensif statique et tirs d'interdiction",
+    "description": "Au lendemain du cessez-le-feu du 19 mars 1962 rejeté par l'OAS, les résistants algériens érigent une ligne de défense infranchissable le long du Boulevard Khedim Mustapha et de la Rue de Tlemcen. Des tranchées antichars, des blocs de béton et des chicanes en ferraille sont dressés sous la protection de tireurs postés dans les étages pour empêcher toute nouvelle incursion de voitures piégées dans les quartiers musulmans.",
+    "bilan_et_pertes": "Interception de deux véhicules piégés de l'OAS neutralisés à distance par tirs de fusil ; 2 combattants algériens blessés par des tirs de snipers OAS embusqués dans les immeubles du boulevard Clemenceau.",
+    "impact_strategique": "Verrouille hermétiquement les accès est et nord de Médina Jdida, établissant une frontière étanche entre le secteur algérien et les quartiers tenus par les ultras.",
+    "sources": [
+      {
+        "titre": "Saddek Benkada, « Quelques jalons préliminaires à propos de la Zone Autonome d'Oran (avril-septembre 1962) », Insaniyat / CRASC (OpenEdition)",
+        "url": "https://journals.openedition.org/insaniyat/30472",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Revue ASJP — خطوط التماس وحواجز الدفاع الذاتي في الأحياء الشعبية بوهران ضد إرهاب منظمة الجيش السري (OAS)",
+        "url": "https://asjp.cerist.dz/en/article/123690",
+        "type_source": "Revue scientifique"
+      }
+    ]
+  }
+}

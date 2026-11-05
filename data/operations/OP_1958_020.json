@@ -1,0 +1,96 @@
+{
+  "id": "OP_1958_020",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats de franchissement du Djebel Alahom et d'El Tarf (Base de l'Est / Ligne Morice)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-02-18",
+    "latest": "1958-02-18",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-02-21",
+    "latest": "1958-02-21",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif du Djebel Alahom, Bouhadjar, Aïn Kerma et secteur d'El Tarf / La Calle (Wilaya d'El Tarf / Annaba)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.1833,
+          36.5833
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Base de l'Est et Wilaya II (Secteur frontalier Nord - El Tarf / Bouhadjar / Bône)",
+  "source_ids": [
+    "SRC_0b129e97f5dfe47f392fe06f",
+    "SRC_bd13f0a868eefe619edf9502",
+    "SRC_630c7df7b758d080eff00bd4"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_020",
+    "nom_operation": "Combats de franchissement du Djebel Alahom et d'El Tarf (Base de l'Est / Ligne Morice)",
+    "date_debut": "1958-02-18",
+    "date_fin": "1958-02-21",
+    "wilaya_concernee": "Base de l'Est et Wilaya II (Secteur frontalier Nord - El Tarf / Bouhadjar / Bône)",
+    "localisation": {
+      "region_ou_ville": "Massif du Djebel Alahom, Bouhadjar, Aïn Kerma et secteur d'El Tarf / La Calle (Wilaya d'El Tarf / Annaba)",
+      "coordonnees_approximatives": {
+        "latitude": 36.5833,
+        "longitude": 8.1833
+      }
+    },
+    "commandement_aln": [
+      "Amara Laskri dit Colonel Bouglez (Commandant de la Base de l'Est)",
+      "Chadli Bendjedid",
+      "Abdelhamid Brahimi"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Dans le cadre de la Bataille des Frontières au printemps 1958, les bataillons de la Base de l'Est commandés par Amara Laskri (dit Bouglez) percent à l'explosif et au coupe-barbelés le tronçon nord de la Ligne Morice dans le secteur boisé d'El Tarf et de Bouhadjar, puis livrent pendant trois jours de violents combats au Djebel Alahom contre les régiments parachutistes et blindés français.",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs dizaines de moudjahidine tués au cours du franchissement et des bombardements aériens au B-26 ; passage réussi d'une partie des convois d'armes vers la Wilaya II",
+      "forces_francaises": "Lourdes pertes au sein des unités parachutistes et de la « herse » blindée surveillant le barrage",
+      "civils": "Évacuation totale des douars frontaliers de la région d'El Tarf et de Bouhadjar"
+    },
+    "impact_strategique": "Fixe une part considérable des troupes d'élite françaises sur le tronçon nord du barrage électrifié entre Bône (Annaba) et Souk Ahras.",
+    "sources": [
+      {
+        "titre": "La guerre de libération et les combats de la Base de l'Est (Djebel Alahom / Ligne Morice) — Cairn.info",
+        "url": "https://shs.cairn.info/guerre-de-liberation--9789961634547-page-127?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Bataille des frontières (guerre d'Algérie) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Bataille_des_fronti%C3%A8res_(guerre_d%27Alg%C3%A9rie)",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Ligne Morice — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Ligne_Morice",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

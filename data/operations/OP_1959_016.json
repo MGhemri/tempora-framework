@@ -1,0 +1,90 @@
+{
+  "id": "OP_1959_016",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Offensives de diversion et duels d'artillerie sur la Ligne Challe (Secteur de La Calle / El Kala - Aïn Zana)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1959-09-24",
+    "latest": "1959-09-24",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1959-09-27",
+    "latest": "1959-09-27",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Secteur forestier d'El Kala (ex-La Calle), Oum Teboul et col d'Aïn Zana, à l'extrémité nord des Lignes Challe et Morice (Wilaya d'El Tarf / Souk Ahras)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.3833,
+          36.7833
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Armée des Frontières (Zone opérationnelle Nord-Est) et Wilaya II",
+  "source_ids": [
+    "SRC_21c89bee881c05f0a4d46618",
+    "SRC_5ae0f8fd9b78e71c175ccd73"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1959_016",
+    "nom_operation": "Offensives de diversion et duels d'artillerie sur la Ligne Challe (Secteur de La Calle / El Kala - Aïn Zana)",
+    "date_debut": "1959-09-24",
+    "date_fin": "1959-09-27",
+    "wilaya_concernee": "Armée des Frontières (Zone opérationnelle Nord-Est) et Wilaya II",
+    "localisation": {
+      "region_ou_ville": "Secteur forestier d'El Kala (ex-La Calle), Oum Teboul et col d'Aïn Zana, à l'extrémité nord des Lignes Challe et Morice (Wilaya d'El Tarf / Souk Ahras)",
+      "coordonnees_approximatives": {
+        "latitude": 36.7833,
+        "longitude": 8.3833
+      }
+    },
+    "commandement_aln": [
+      "Amara Laskri dit Bouglez",
+      "Chadli Bendjedid",
+      "Commandants des bataillons du secteur de Ghardimaou - Aïn Draham"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Pour soulager les Wilayas II et III soumises au Plan Challe à l'intérieur de l'Algérie, les bataillons de l'ALN positionnés dans les forêts de Kroumirie (Aïn Draham / Ghardimaou) lancent fin septembre 1959 une série d'attaques nocturnes au canon sans recul de 75 mm, au mortier lourd et à la mitrailleuse contre les ouvrages avancés de la nouvelle Ligne Challe entre La Calle (El Kala), Oum Teboul et Aïn Zana.",
+    "bilan_et_pertes": {
+      "aln": "Une douzaine de moudjahidine tués ou blessés par les tirs de contre-batterie d'artillerie de 105 et 155 mm français",
+      "forces_francaises": "Destruction de plusieurs miradors blindés et radars de surveillance terrestre, une vingtaine de soldats français tués ou blessés",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "Contraint le général Challe à rappeler en urgence des régiments parachutistes de réserve générale vers la frontière tunisienne, allégeant d'autant l'étau sur les maquis de Kabylie et du Nord-Constantinois.",
+    "sources": [
+      {
+        "titre": "Bataille des frontières et renforcement du barrage Est (Ligne Challe) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Bataille_des_fronti%C3%A8res_(guerre_d%27Alg%C3%A9rie)",
+        "type_source": "Article"
+      },
+      {
+        "titre": "La guerre de libération et la Base de l'Est — Cairn.info",
+        "url": "https://shs.cairn.info/guerre-de-liberation--9789961634547-page-127?lang=fr",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

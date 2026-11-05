@@ -1,0 +1,89 @@
+{
+  "id": "OP_1956_033",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats du Djebel Tadjera et embuscades de Honaine dans les Monts des Trara (Secteur de Beni Saf - Ghazaouet)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-10-19",
+    "latest": "1956-10-19",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-10-21",
+    "latest": "1956-10-21",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif côtier du Djebel Tadjera et port de Honaine, entre Ghazaouet (Nemours), Nedroma et Beni Saf (Wilaya de Tlemcen)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.6553,
+          35.1764
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 1 - Massif des Trara / Honaine / Beni Saf / Ghazaouet)",
+  "source_ids": [
+    "SRC_cf569a05ca25c589d6cb438f",
+    "SRC_dfa71a027a85bd767a092ace"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_033",
+    "nom_operation": "Combats du Djebel Tadjera et embuscades de Honaine dans les Monts des Trara (Secteur de Beni Saf - Ghazaouet)",
+    "date_debut": "1956-10-19",
+    "date_fin": "1956-10-21",
+    "wilaya_concernee": "Wilaya V (Zone 1 - Massif des Trara / Honaine / Beni Saf / Ghazaouet)",
+    "localisation": {
+      "region_ou_ville": "Massif côtier du Djebel Tadjera et port de Honaine, entre Ghazaouet (Nemours), Nedroma et Beni Saf (Wilaya de Tlemcen)",
+      "coordonnees_approximatives": {
+        "latitude": 35.1764,
+        "longitude": -1.6553
+      }
+    },
+    "commandement_aln": [
+      "Abdelhafid Boussouf",
+      "Chefs des katibas du massif des Trara (Zone 1 - Wilaya V)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Retranchées sur les pentes abruptes du Djebel Tadjera surplombant la rade de Honaine et le littoral entre Ghazaouet et Beni Saf, deux katibas de la Wilaya V affrontent pendant trois jours les compagnies de la DBFM appuyées par les tirs d'artillerie des escorteurs de la Marine nationale croisant au large et par l'aviation aéronavale.",
+    "bilan_et_pertes": {
+      "aln": "Une vingtaine de moudjahidine tombés au champ d'honneur ; maintien des refuges souterrains des Trara",
+      "forces_francaises": "Pertes sensibles dans les rangs des fusiliers marins et du commando Yatagan lors de l'escalade des ravins de Honaine",
+      "civils": "Destruction de mechtas côtières et blocus maritime des criques des Trara"
+    },
+    "impact_strategique": "Démontre la résistance du bastion maritime et montagneux des Trara malgré l'action combinée des forces terrestres et navales françaises.",
+    "sources": [
+      {
+        "titre": "Demi-brigade de fusiliers marins (DBFM) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Demi-brigade_de_fusiliers_marins",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Les opérations militaires en Wilaya V historique — Revue académique CERIST (ASJP)",
+        "url": "https://asjp.cerist.dz/en/downArticle/686/10/1/290720",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

@@ -1,0 +1,102 @@
+{
+  "id": "OP_1957_020",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscades de la corniche jijelienne et combats du massif de Texenna (Secteur de Jijel)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-03-04",
+    "latest": "1957-03-04",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-03-06",
+    "latest": "1957-03-06",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif forestier de Texenna, Djimla et route de la corniche de Jijel (Wilaya de Jijel)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.79,
+          36.66
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya II (Zone 1 - Jijel, Texenna et Taher)",
+  "source_ids": [
+    "SRC_a4bb360c1a1e401bcad81fb1",
+    "SRC_a5177fcf07aa321959ace54f",
+    "SRC_cb4ca55bbccc1e262b155355",
+    "SRC_54da4139c6c8ccbbf4944d18"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_020",
+    "nom_operation": "Embuscades de la corniche jijelienne et combats du massif de Texenna (Secteur de Jijel)",
+    "date_debut": "1957-03-04",
+    "date_fin": "1957-03-06",
+    "wilaya_concernee": "Wilaya II (Zone 1 - Jijel, Texenna et Taher)",
+    "localisation": {
+      "region_ou_ville": "Massif forestier de Texenna, Djimla et route de la corniche de Jijel (Wilaya de Jijel)",
+      "coordonnees_approximatives": {
+        "latitude": 36.66,
+        "longitude": 5.79
+      }
+    },
+    "commandement_aln": [
+      "Ali Kafi",
+      "Salah Boubnider dit Sawt El Arab",
+      "Chefs de katibas du secteur de Jijel - Texenna"
+    ],
+    "type_action": "Embuscade",
+    "description": "Dans les forêts escarpées de Texenna et sur les routes en corniche entourant Jijel (Djidjelli), les katibas de la Wilaya II tendent une double embuscade contre des convois militaires français ravitaillant les postes de montagne entre Jijel, Texenna et Mila, suivie de quarante-huit heures de combats dans les chênaies de Djimla.",
+    "bilan_et_pertes": {
+      "aln": "Une quinzaine de moudjahidine tués ; saisie d'armes automatiques, de munitions et d'un poste émetteur-récepteur",
+      "forces_francaises": "Plusieurs camions incendiés et une trentaine de soldats français mis hors de combat",
+      "civils": "Évacuation forcée des mechtas du massif de Texenna"
+    },
+    "impact_strategique": "Isole le port de Jijel de son arrière-pays montagneux et consolide la jonction opérationnelle entre la Wilaya II (Jijel/Texenna) et la Wilaya III (Babors/Kherrata).",
+    "sources": [
+      {
+        "titre": "Répertoire numérique de la série 1H (Secteur de Djidjelli / Jijel) — Service Historique de la Défense (SHD)",
+        "url": "https://www.servicehistorique.sga.defense.gouv.fr/sites/default/files/notices_files/SHDGR_REP_1H_1091_A_4881_T2_1.pdf",
+        "type_source": "Archive"
+      },
+      {
+        "titre": "Virée dans les refuges de la Wilaya II historique — El Moudjahid",
+        "url": "https://www.elmoudjahid.dz/fr/actualite/viree-dans-les-refuges-de-la-wilaya-ii-historique-ces-sanctuaires-oublies-242668",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Embuscades de Ras El Akba et actions d'août 1955 (elmoudjahid.dz)",
+        "url": "https://www.elmoudjahid.dz/fr/actualite/forum-de-la-memoire-d-el-moudjahid-zighoud-youcef-l-homme-symbole-15378",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Embuscades de Ras El Akba et actions d'août 1955 (fr.wikipedia.org)",
+        "url": "https://fr.wikipedia.org/wiki/Youcef_Zighoud",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

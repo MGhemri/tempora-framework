@@ -1,0 +1,90 @@
+{
+  "id": "OP_1955_015",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Grandes batailles des Nemencha (Djebel Amrane et Djebel Krouma)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1955-06-01",
+    "latest": "1955-06-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-12-31",
+    "latest": "1957-12-31",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Djebel Amrane / Djebel Krouma / Chéria (Tébessa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.752,
+          35.271
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya I (Monts des Nemencha - Chéria / Tébessa)",
+  "source_ids": [
+    "SRC_330e6a6fd9ee9d702ecf7f1f",
+    "SRC_b123f82db4dafd7fdcb11d9f"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1955_015",
+    "nom_operation": "Grandes batailles des Nemencha (Djebel Amrane et Djebel Krouma)",
+    "date_debut": "1955-06-01",
+    "date_fin": "1957-12-31",
+    "wilaya_concernee": "Wilaya I (Monts des Nemencha - Chéria / Tébessa)",
+    "localisation": {
+      "region_ou_ville": "Djebel Amrane / Djebel Krouma / Chéria (Tébessa)",
+      "coordonnees_approximatives": {
+        "latitude": 35.271,
+        "longitude": 7.752
+      }
+    },
+    "commandement_aln": [
+      "Abbas Laghrour",
+      "Bachir Chihani",
+      "Lazhar Cheriet"
+    ],
+    "type_action": "Combat de rencontre / Guérilla de montagne",
+    "description": "Série de batailles rangées et d'accrochages acharnés livrés par les katibas d'Abbas Laghrour et de Bachir Chihani contre la Légion étrangère et les parachutistes dans les crêtes déchiquetées des Nemencha.",
+    "bilan_et_pertes": {
+      "aln": "Pertes notables lors des affrontements au sommet",
+      "forces_francaises": "Dizaines de légionnaires et parachutistes tués, hélicoptères abattus",
+      "civils": "0"
+    },
+    "impact_strategique": "Maintien de la souveraineté militaire de l'ALN sur le plateau de Chéria, verrouillant le transit vers la frontière tunisienne.",
+    "sources": [
+      {
+        "titre": "Abbas Laghrour (Wikipédia)",
+        "url": "https://fr.wikipedia.org/wiki/Abbas_Laghrour",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Bachir Chihani (Wikipédia)",
+        "url": "https://fr.wikipedia.org/wiki/Bachir_Chihani",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

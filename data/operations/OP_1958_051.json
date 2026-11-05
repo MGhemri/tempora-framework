@@ -1,0 +1,82 @@
+{
+  "id": "OP_1958_051",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Assaut et destruction du poste militaire d'El Haourane",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-02-01",
+    "latest": "1958-02-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-02-28",
+    "latest": "1958-02-28",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Poste d'El Haourane / Mansoura (Bordj Bou Arréridj)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.462,
+          36.082
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya III (Zone 3 - Monts des Bibans / Mansoura)",
+  "source_ids": [
+    "SRC_3ddd4ed232b67505a1cb2e21"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_051",
+    "nom_operation": "Assaut et destruction du poste militaire d'El Haourane",
+    "date_debut": "1958-02-01",
+    "date_fin": "1958-02-28",
+    "wilaya_concernee": "Wilaya III (Zone 3 - Monts des Bibans / Mansoura)",
+    "localisation": {
+      "region_ou_ville": "Poste d'El Haourane / Mansoura (Bordj Bou Arréridj)",
+      "coordonnees_approximatives": {
+        "latitude": 36.082,
+        "longitude": 4.462
+      }
+    },
+    "commandement_aln": [
+      "Commandos de choc de la Wilaya III"
+    ],
+    "type_action": "Offensive coordonnée / Assaut de poste fortifié",
+    "description": "Attaque nocturne foudroyante menée par les commandos de la Wilaya III contre le poste militaire fortifié d'El Haourane, détruisant les casemates et récupérant un lot important d'armes automatiques.",
+    "bilan_et_pertes": {
+      "aln": "Faibles pertes grâce à l'effet de surprise",
+      "forces_francaises": "Garnison du poste anéantie ou mise en fuite, armement récupéré",
+      "civils": "0"
+    },
+    "impact_strategique": "Démantèlement d'un point d'appui colonial clé verrouillant le passage entre la Soummam et les Bibans.",
+    "sources": [
+      {
+        "titre": "L'assaut du poste d'El Haourane (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/263113",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

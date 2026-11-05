@@ -1,0 +1,12 @@
+{
+  "id": "W1",
+  "names": {
+    "fr": "Wilaya I (Aurès)",
+    "ar": "الولاية الأولى (الأوراس - النمامشة)"
+  },
+  "type": "editorial_category",
+  "valid_from": null,
+  "valid_to": null,
+  "source_ids": [],
+  "review_status": "needs_review"
+}

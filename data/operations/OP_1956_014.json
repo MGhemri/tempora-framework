@@ -1,0 +1,89 @@
+{
+  "id": "OP_1956_014",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille du Djebel Asfour (Khneg Lekhal) à Chechar",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-02-14",
+    "latest": "1956-02-14",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-02-15",
+    "latest": "1956-02-15",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Djebel Asfour et défilé de Khneg Lekhal, au sud de Chechar et Babar (Wilaya de Khenchela)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.0333,
+          34.9667
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya I (Aurès-Nemencha - Secteur de Chechar / Khenchela)",
+  "source_ids": [
+    "SRC_5a73c053822fee1cde8b9ef8",
+    "SRC_4be8ceb7f6a2d8d0c284faab"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_014",
+    "nom_operation": "Bataille du Djebel Asfour (Khneg Lekhal) à Chechar",
+    "date_debut": "1956-02-14",
+    "date_fin": "1956-02-15",
+    "wilaya_concernee": "Wilaya I (Aurès-Nemencha - Secteur de Chechar / Khenchela)",
+    "localisation": {
+      "region_ou_ville": "Djebel Asfour et défilé de Khneg Lekhal, au sud de Chechar et Babar (Wilaya de Khenchela)",
+      "coordonnees_approximatives": {
+        "latitude": 34.9667,
+        "longitude": 7.0333
+      }
+    },
+    "commandement_aln": [
+      "Abbas Laghrour",
+      "Chefs de katibas du secteur de Chechar-Babar"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Les katibas d'Abbas Laghrour tendent un piège tactique aux forces françaises au défilé de Khneg Lekhal (Djebel Asfour), au sud de Chechar. Après avoir laissé s'engager l'avant-garde motorisée et parachutiste française dans le canyon, les moudjahidine ouvrent un feu croisé dévastateur depuis les crêtes avant de soutenir vingt-quatre heures de combat contre les renforts aériens et terrestres.",
+    "bilan_et_pertes": {
+      "aln": "Une trentaine de moudjahidine tués au combat ; saisie d'un important lot d'armes automatiques",
+      "forces_francaises": "Pertes très lourdes dans les rangs français (plusieurs dizaines de soldats tués et blessés, véhicules détruits)",
+      "civils": "Aucune victime civile directe"
+    },
+    "impact_strategique": "L'une des victoires tactiques les plus marquantes d'Abbas Laghrour au début de l'année 1956 dans le sud de Khenchela, assurant le contrôle des pistes caravanières vers le Sahara et la Tunisie.",
+    "sources": [
+      {
+        "titre": "Abbas Laghrour et les grandes batailles des Nemencha — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Abbas_Laghrour",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Nemencha — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Nemencha",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

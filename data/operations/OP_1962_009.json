@@ -1,0 +1,89 @@
+{
+  "id": "OP_1962_009",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Contre-offensive de la ZAA (Belcourt, Clos-Salembier, Maison-Carrée) en riposte aux carnages de l'OAS à Alger (Mai 1962)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1962-05-02",
+    "latest": "1962-05-02",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1962-05-15",
+    "latest": "1962-05-15",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Alger : Port d'Alger, Belcourt, Clos-Salembier, Ruisseau, Kouba et Maison-Carrée (El Harrach)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.062,
+          36.7525
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone autonome d'Alger (ZAA)",
+  "source_ids": [
+    "SRC_acd55a635353a4cd65053675",
+    "SRC_0124a23d814938e0016ce4e8"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1962_009",
+    "nom_operation": "Contre-offensive de la ZAA (Belcourt, Clos-Salembier, Maison-Carrée) en riposte aux carnages de l'OAS à Alger (Mai 1962)",
+    "date_debut": "1962-05-02",
+    "date_fin": "1962-05-15",
+    "wilaya_concernee": "Zone autonome d'Alger (ZAA)",
+    "localisation": {
+      "region_ou_ville": "Alger : Port d'Alger, Belcourt, Clos-Salembier, Ruisseau, Kouba et Maison-Carrée (El Harrach)",
+      "coordonnees_approximatives": {
+        "latitude": 36.7525,
+        "longitude": 3.062
+      }
+    },
+    "commandement_aln": [
+      "Commandant Azzedine (Chef de la ZAA)",
+      "Commandos de secteur de la Zone autonome d'Alger"
+    ],
+    "type_action": "Guérilla urbaine",
+    "description": "Après l'attentat à la voiture piégée de l'OAS contre les dockers algériens au port d'Alger le 2 mai 1962 (plus de 60 morts et 150 blessés) et la vague d'assassinats visant à rompre le cessez-le-feu, les commandos de la ZAA lancent le 14 mai 1962 une série de frappes armées coordonnées en une seule journée contre dix-sept bastions, cafés et points de ralliement des commandos de l'OAS à travers l'agglomération algéroise.",
+    "bilan_et_pertes": {
+      "aln": "Quelques pertes parmi les commandos motorisés de la ZAA",
+      "forces_francaises": "Une vingtaine de membres et sympathisants des réseaux OAS tués et plus d'une trentaine de blessés lors des raids du 14 mai 1962",
+      "civils": "Plus de 60 dockers algériens tués au port d'Alger le 2 mai 1962 par l'OAS"
+    },
+    "impact_strategique": "Avertissement foudroyant de la ZAA qui démontre que l'ALN a les moyens de frapper simultanément tous les quartiers européens d'Alger si l'OAS ne cesse pas ses massacres, précipitant l'ouverture de contacts par l'aile de Jacques Susini fin mai 1962.",
+    "sources": [
+      {
+        "titre": "Il y a 60 ans, l'OAS en Algérie (La sanglante escalade de mai 1962 à Alger) — La Revue d'Histoire Militaire",
+        "url": "https://larevuedhistoiremilitaire.fr/2021/03/22/il-y-a-60-ans-loas-en-algerie/",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Chronologie de la guerre d'Algérie (Mai 1962) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Chronologie_de_la_guerre_d%27Alg%C3%A9rie",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

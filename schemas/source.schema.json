@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "source_id",
+    "title",
+    "review_status"
+  ],
+  "properties": {
+    "source_id": {
+      "type": "string",
+      "pattern": "^SRC_[a-f0-9]{24}$"
+    },
+    "title": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "legacy": {
+      "type": "object"
+    },
+    "review_status": {
+      "enum": [
+        "needs_review",
+        "reviewed"
+      ]
+    },
+    "author": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "publication_date": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "document_type": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "url": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "locator": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "rights": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_classification": {"enum":["primary","secondary","unknown","not_recorded"]},
+    "review_history": {"$ref":"https://alnop.vercel.app/schemas/operation.schema.json#/properties/review_history"},
+    "notes": {
+      "type": [
+        "string",
+        "null"
+      ]
+    }
+  }
+}

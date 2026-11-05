@@ -1,0 +1,89 @@
+{
+  "id": "OP_1961_010",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Offensive nocturne de brèche et combats de Mechroha - Laverdure sur la Ligne Morice (Souk Ahras)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1961-06-18",
+    "latest": "1961-06-18",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1961-06-20",
+    "latest": "1961-06-20",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif forestier de Mechroha (ex-Laverdure) et Ouillen, entre Souk Ahras et Guelma (Wilaya de Souk Ahras)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.8369,
+          36.3578
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Armée des Frontières (EMG) et Wilaya II (Secteur de Mechroha / Souk Ahras)",
+  "source_ids": [
+    "SRC_d0f35b35392cde7ba5224976",
+    "SRC_4cf4115e95c79ff1d23ce603"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1961_010",
+    "nom_operation": "Offensive nocturne de brèche et combats de Mechroha - Laverdure sur la Ligne Morice (Souk Ahras)",
+    "date_debut": "1961-06-18",
+    "date_fin": "1961-06-20",
+    "wilaya_concernee": "Armée des Frontières (EMG) et Wilaya II (Secteur de Mechroha / Souk Ahras)",
+    "localisation": {
+      "region_ou_ville": "Massif forestier de Mechroha (ex-Laverdure) et Ouillen, entre Souk Ahras et Guelma (Wilaya de Souk Ahras)",
+      "coordonnees_approximatives": {
+        "latitude": 36.3578,
+        "longitude": 7.8369
+      }
+    },
+    "commandement_aln": [
+      "Salah Boubnider dit Sawt El Arab (Wilaya II)",
+      "Commandants des bataillons frontaliers de Souk Ahras (EMG)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Après la suspension par la France des premiers pourparlers d'Évian en juin 1961, l'EMG et la Wilaya II coordonnent une opération de franchissement dans le massif forestier de Mechroha (ex-Laverdure, au nord-ouest de Souk Ahras) : tandis que les batteries de l'EMG pilonnent la Ligne Challe, un commando de liaison franchit la Ligne Morice et livre un combat acharné dans les forêts de chênes-lièges de Mechroha.",
+    "bilan_et_pertes": {
+      "aln": "Une quinzaine de moudjahidine tués au combat ; jonction réussie du détachement de liaison avec les katibas de la Wilaya II",
+      "forces_francaises": "Pertes sensibles au sein des unités parachutistes et d'infanterie françaises gardant le secteur de Laverdure",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "Démontre la coordination entre les maquis de l'intérieur (Wilaya II) et l'Armée des frontières en plein été 1961.",
+    "sources": [
+      {
+        "titre": "Bataille des frontières (Secteur de Souk Ahras et Laverdure / Mechroha) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Bataille_des_fronti%C3%A8res_(guerre_d%27Alg%C3%A9rie)",
+        "type_source": "Article"
+      },
+      {
+        "titre": "La Wilaya II historique — Cairn.info",
+        "url": "https://shs.cairn.info/la-wilaya-ii-historique--9789947394052-page-103?lang=fr",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

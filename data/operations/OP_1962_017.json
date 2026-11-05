@@ -1,0 +1,84 @@
+{
+  "id": "OP_1962_017",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Riposte et contre-batterie aux tirs de mortier de l'OAS sur Médina Jdida (8-10 mai 1962)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1962-05-08",
+    "latest": "1962-05-08",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1962-05-10",
+    "latest": "1962-05-10",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Marché de Médina Jdida et lisière du Boulevard Clemenceau (Oran)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.6495,
+          35.6928
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone Autonome d'Oran (ZAO)",
+  "source_ids": [
+    "SRC_6b8da244725f4d3e6c061c58",
+    "SRC_a09121bc729d9b45b6f75161"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1962_017",
+    "nom_operation": "Riposte et contre-batterie aux tirs de mortier de l'OAS sur Médina Jdida (8-10 mai 1962)",
+    "date_debut": "1962-05-08",
+    "date_fin": "1962-05-10",
+    "wilaya_concernee": "Zone Autonome d'Oran (ZAO)",
+    "localisation": {
+      "region_ou_ville": "Marché de Médina Jdida et lisière du Boulevard Clemenceau (Oran)",
+      "coordonnees_approximatives": {
+        "latitude": 35.6928,
+        "longitude": -0.6495
+      }
+    },
+    "commandement_aln": [
+      "Commandos de choc de la ZAO (Secteur 1)"
+    ],
+    "type_action": "Contre-batterie urbaine et neutralisation de tireurs d'élite",
+    "description": "Les 8 et 9 mai 1962, des commandos de l'OAS tirent des salves de mortiers artisanaux de 60 mm depuis les terrasses d'immeubles du centre européen (boulevard Clemenceau et place d'Armes) en direction du marché très fréquenté de Médina Jdida, semant la mort parmi les commerçants et civils. Le capitaine Bakhti ordonne une riposte immédiate de contre-sniping et l'infiltration d'un groupe de choc de la ZAO dans les immeubles d'angle pour localiser et détruire le tube de mortier.",
+    "bilan_et_pertes": "Le commando de la ZAO neutralise le poste de tir au mortier ennemi, éliminant 2 servants de l'OAS et récupérant l'armement ; les tirs initiaux de l'OAS avaient fait 12 morts et une trentaine de blessés parmi les civils algériens.",
+    "impact_strategique": "Met un terme aux tirs réguliers d'artillerie légère de l'OAS contre le cœur de Médina Jdida et prouve la force de frappe réactive de la ZAO.",
+    "sources": [
+      {
+        "titre": "Saddek Benkada, « Les attaques au mortier de l'OAS sur Médina Jdida et la riposte de la ZAO », Insaniyat / CRASC n° 100",
+        "url": "https://journals.openedition.org/insaniyat/30472",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Les crimes de l'OAS en Oranie : La guerre des mortiers artisanaux contre les populations civiles (Mai 1962) — El Moudjahid",
+        "url": "https://www.elmoudjahid.dz/fr/histoire",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

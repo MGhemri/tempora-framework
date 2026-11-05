@@ -1,0 +1,90 @@
+{
+  "id": "OP_1954_008",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Attaques des casernes de Blida, Boufarik et incendie des dépôts de chêne-liège de la Mitidja",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1954-11-01",
+    "latest": "1954-11-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1954-11-02",
+    "latest": "1954-11-02",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Blida, Boufarik, Soumaâ et contreforts de l'Atlas blidéen (Wilaya de Blida)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.8277,
+          36.47
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone IV / Wilaya IV (Mitidja et Atlas blidéen - Blida / Boufarik)",
+  "source_ids": [
+    "SRC_6dc024ba80fc62d6264665f1",
+    "SRC_c02b25f54dc75e28e0675336"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1954_008",
+    "nom_operation": "Attaques des casernes de Blida, Boufarik et incendie des dépôts de chêne-liège de la Mitidja",
+    "date_debut": "1954-11-01",
+    "date_fin": "1954-11-02",
+    "wilaya_concernee": "Zone IV / Wilaya IV (Mitidja et Atlas blidéen - Blida / Boufarik)",
+    "localisation": {
+      "region_ou_ville": "Blida, Boufarik, Soumaâ et contreforts de l'Atlas blidéen (Wilaya de Blida)",
+      "coordonnees_approximatives": {
+        "latitude": 36.47,
+        "longitude": 2.8277
+      }
+    },
+    "commandement_aln": [
+      "Rabah Bitat (Chef de la Zone IV)",
+      "Amar Ouamrane",
+      "Souidani Boudjemaâ"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Dans la nuit du 1er novembre 1954, les commandos de la Zone IV organisés par Rabah Bitat, Amar Ouamrane et Souidani Boudjemaâ attaquent simultanément la caserne Bizot de Blida, le camp militaire de Boufarik et incendient la coopérative agrumicole et les entrepôts de liège de Boufarik avant de gagner les maquis de Chréa et de l'Atlas blidéen.",
+    "bilan_et_pertes": {
+      "aln": "Repli sans perte des groupes vers l'Atlas blidéen (Chréa, Bouinan, Soumaâ)",
+      "forces_francaises": "Sentinelles neutralisées et importants dégâts matériels aux installations économiques et militaires de Boufarik et Blida",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "Ouvre le front de l'Algérois dès la nuit du 1er novembre 1954 au cœur même de la riche plaine coloniale de la Mitidja et aux portes de la capitale.",
+    "sources": [
+      {
+        "titre": "Wilaya IV historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_IV_historique",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Wilaya IV : Les maquis de la dignité — El Moudjahid",
+        "url": "https://www.elmoudjahid.dz/fr/actualite/wilaya-iv-les-maquis-de-la-dignite-242798",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

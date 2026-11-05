@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Dictionnaire des données · TEMPORA</title><script>const base=document.createElement('base');base.href=location.pathname.split('/documentation')[0].replace(/\/api\/docs$/,'')+'/documentation/';document.head.append(base);</script><link rel="stylesheet" href="documentation.css"><script src="../site-context.js?v=4.3"></script></head><body><main><nav><a data-atlas-link href="../index.html">Atlas ALNOP · الأطلس</a><a href="../contribute.html">Contribuer · ساهم</a><a href="index.html">Documentation · الوثائق</a></nav><p class="documentation-context"><span data-framework-presentation>TEMPORA — Framework pour les corpus historiques</span><span data-profile-presentation hidden>ALNOP — Profil du framework TEMPORA</span></p><h1 id="dictionnaire-des-données-alnop">Dictionnaire des données ALNOP</h1>
+<h2 id="source-de-vérité">Source de vérité</h2>
+<p><code>data/operations/</code> contient une fiche par fichier, <code>data/sources/</code> les notices bibliographiques, <code>data/territorial-units/</code> les unités ou catégories et <code>data/vocabularies.json</code> le vocabulaire contrôlé. <code>data/dataset.json</code> conserve les métadonnées et l’ordre du corpus initial. Modifier le canon, puis générer les fichiers publics ; ne pas modifier les copies à la main.</p>
+<table>
+<thead>
+<tr>
+<th>Champ</th>
+<th>Signification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>Identifiant permanent attribué par le mainteneur ; fichier du même nom</td>
+</tr>
+<tr>
+<td>schema_version</td>
+<td>Profil de schéma, actuellement 2.0.0</td>
+</tr>
+<tr>
+<td>title.fr / title.ar</td>
+<td>Titre fourni ; traduction absente représentée par null, y compris le français dans un brouillon reçu en arabe</td>
+</tr>
+<tr>
+<td>start_date / end_date</td>
+<td>Bornes earliest/latest, précision et certitude distinctes</td>
+</tr>
+<tr>
+<td>locations</td>
+<td>Plusieurs lieux possibles ; Point WGS84 [longitude, latitude] ou géométrie null</td>
+</tr>
+<tr>
+<td>geometry_role</td>
+<td>exact_site, approximate_site, representative_point ou unknown ; aucun rayon inventé</td>
+</tr>
+<tr>
+<td>territorial_assignments</td>
+<td>Références multiples, rôle et source_ids ; aucune attribution certaine calculée par regex</td>
+</tr>
+<tr>
+<td>source_ids</td>
+<td>Sources référencées, sans référence orpheline</td>
+</tr>
+<tr>
+<td>description</td>
+<td>Texte FR et éventuel texte AR ; aucune traduction automatique</td>
+</tr>
+<tr>
+<td>event_type</td>
+<td>Valeurs du vocabulaire contrôlé ; liste vide permise dans un brouillon seulement</td>
+</tr>
+<tr>
+<td>commanders / outcomes / strategic_impact</td>
+<td>Informations fournies par les sources ; facultatives, sans nombres inférés</td>
+</tr>
+<tr>
+<td>editorial_status</td>
+<td>proposed, under_review, published, disputed ou withdrawn ; seul published entre dans les exports publics</td>
+</tr>
+<tr>
+<td>review_history</td>
+<td>Décision, reviewer, référence, justification et date UTC</td>
+</tr>
+<tr>
+<td>provenance</td>
+<td>Commit de préparation/import, base de publication et présence d’une revue enregistrée</td>
+</tr>
+<tr>
+<td>quality_flags / editorial_notes</td>
+<td>Réserves documentaires ; aucun score de vérité</td>
+</tr>
+<tr>
+<td>created_at / updated_at</td>
+<td>Dates éditoriales pour les nouvelles fiches, distinctes des dates historiques</td>
+</tr>
+<tr>
+<td>legacy</td>
+<td>Objet initial immuable, conservé comme preuve de migration pour les 263 fiches</td>
+</tr>
+</tbody>
+</table>
+<h2 id="incertitudes">Incertitudes</h2>
+<p>Une année seule est conservée avec précision year et bornes annuelles ; elle ressort sous la forme <code>1956</code> dans v1. Une date inconnue reste null. Un intervalle ne devient pas une date exacte dans v1 : sa valeur y reste null, ses bornes étant disponibles dans canonical_metadata et les exports enrichis. Les statistiques distinguent les dates non déterminées.</p>
+<p>Une localisation inconnue ne crée aucun point. Plusieurs sites restent distincts dans le canon et peuvent former un MultiPoint dans le GeoJSON enrichi ; la projection v1 ne choisit pas arbitrairement un site unique. Une géométrie représentative ne devient pas une localisation tactique exacte.</p>
+<h2 id="territoires">Territoires</h2>
+<p>Les dix catégories héritées ont le type editorial_category et des validités inconnues. Elles ne constituent pas dix unités historiques équivalentes à toute date. Le champ legacy_territorial_label sert à préserver le libellé de compatibilité, pas à confirmer une attribution scientifique. Les opérations nouvelles ou révisées utilisent des références et preuves explicites. Sans territoire principal validé, les statistiques de classement primaire utilisent un groupe multiterritorial/non attribué ; les appartenances multiples restent visibles dans la fiche.</p>
+<h2 id="révision-dune-fiche-initiale">Révision d’une fiche initiale</h2>
+<p>L’objet legacy et les métadonnées initiales restent inchangés. Une révision utilise publication_basis=human_review, des champs canoniques documentés et une nouvelle entrée de revue. Les valeurs non révisées de commandement, bilan ou impact sont conservées par l’adaptateur. Retirer une des 263 fiches exige un futur mécanisme de tombstone ; la suppression directe est actuellement bloquée.</p>
+<h2 id="formats-publics">Formats publics</h2>
+<p>Les quatre chemins JSON/GeoJSON historiques sont générés depuis le canon. <code>/data/canonical/</code> expose JSON enrichi, JSON compatible, sources, GeoJSON, CSV UTF-8, rapports et manifeste SHA-256. Les brouillons et leurs sources non publiées sont exclus de ces exports. Un brouillon seul ne modifie pas l’empreinte du corpus publié.</p>
+<p>Le manifeste décrit un snapshot validé, pas une release scientifique numérotée ni un DOI. Les versions de corpus, les assertions détaillées, les référentiels de personnes/organisations/lieux et les géométries surfaciques complètes restent à développer dans les étapes suivantes. Les licences existantes ne sont pas modifiées.</p>
+<p>Un brouillon en arabe conserve son texte sous ar et laisse fr à null. La projection publique v1 nécessite un titre et une description français vérifiés ; aucune traduction n’est générée automatiquement.</p>
+<h2 id="assertions-et-contradictions">Assertions et contradictions</h2>
+<p>Les assertions sont des objets distincts, référencés par leur <code>subject</code> (identifiant d’opération). Elles possèdent une valeur, un statut documentaire, des passages sources, des liens de contradiction et un historique de revue. Leur état éditorial est distinct du statut de l’assertion. Le détail des champs et de la publication figure dans <a href="provenance.html">la politique de provenance</a>.</p>
+<p>L’export <code>data/canonical/claims.json</code> contient uniquement les assertions publiées sur des fiches publiées. Les sources correspondantes sont incluses dans <code>sources.json</code>, et les <code>claim_ids</code> dans les propriétés GeoJSON. Les réponses v1 des fiches concernées ajoutent <code>scientific_claims</code> sans remplacer les champs historiques.</p>
+</main></body></html>

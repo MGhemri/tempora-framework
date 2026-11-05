@@ -1,0 +1,92 @@
+{
+  "id": "OP_1956_005",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Attentats du Milk-Bar et de la Cafétéria à Alger",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-09-30",
+    "latest": "1956-09-30",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Rue Michelet (actuelle rue Didouche Mourad) et place Bugeaud, Alger",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.0586,
+          36.7725
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone autonome d'Alger (ZAA)",
+  "source_ids": [
+    "SRC_7b7c9a9a8ccdb709439f1948",
+    "SRC_faab5d65104a65592e5842be"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_005",
+    "nom_operation": "Attentats du Milk-Bar et de la Cafétéria à Alger",
+    "date_debut": "1956-09-30",
+    "date_fin": null,
+    "wilaya_concernee": "Zone autonome d'Alger (ZAA)",
+    "localisation": {
+      "region_ou_ville": "Rue Michelet (actuelle rue Didouche Mourad) et place Bugeaud, Alger",
+      "coordonnees_approximatives": {
+        "latitude": 36.7725,
+        "longitude": 3.0586
+      }
+    },
+    "commandement_aln": [
+      "Yacef Saâdi",
+      "Larbi Ben M'hidi",
+      "Zohra Drif",
+      "Samia Lakhdari",
+      "Djamila Bouhired"
+    ],
+    "type_action": "Attentat ciblé",
+    "description": "En représailles à l'attentat contre-terroriste de la rue de Thèbes dans la Casbah (août 1956), le « réseau bombes » de la Zone autonome d'Alger dépose simultanément trois engins explosifs dans des lieux très fréquentés des quartiers européens d'Alger : le Milk-Bar (place Bugeaud), la Cafétéria (rue Michelet) et le terminal d'Air France au Maurétania (où la bombe n'explose pas).",
+    "bilan_et_pertes": {
+      "aln": "Aucune perte immédiate lors de l'opération",
+      "forces_francaises": "Aucune perte militaire",
+      "civils": "3 morts et plus de 50 blessés (dont de nombreux enfants et adolescents grièvement mutilés)"
+    },
+    "impact_strategique": "Marque le véritable déclenchement de la « Bataille d'Alger » et le basculement vers la guérilla et le terrorisme urbains au cœur de la capitale, démontrant la capacité de la ZAA à frapper les centres névralgiques européens.",
+    "sources": [
+      {
+        "titre": "Zohra Drif et les attentats du 30 septembre 1956 — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Zohra_Drif",
+        "type_source": "Article"
+      },
+      {
+        "titre": "La guerre d'Algérie : La bataille d'Alger — FranceArchives (Portail national des archives)",
+        "url": "https://francearchives.gouv.fr/fr/pages_histoire/39692",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "id": "OP_1955_009",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscades de la vallée de la Soummam et combats de Tazmalt - Akbou",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1955-10-14",
+    "latest": "1955-10-14",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1955-10-16",
+    "latest": "1955-10-16",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Vallée de la Soummam, entre Tazmalt, Akbou, Ighzer Amokrane et Sidi Aïch (Wilaya de Béjaïa / Bouira)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.5472,
+          36.4575
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya III (Zone 2 - Vallée de la Soummam / Akbou / Tazmalt)",
+  "source_ids": [
+    "SRC_40333baf3875e69d86b8c583",
+    "SRC_0de79b5398484860dff91388"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1955_009",
+    "nom_operation": "Embuscades de la vallée de la Soummam et combats de Tazmalt - Akbou",
+    "date_debut": "1955-10-14",
+    "date_fin": "1955-10-16",
+    "wilaya_concernee": "Wilaya III (Zone 2 - Vallée de la Soummam / Akbou / Tazmalt)",
+    "localisation": {
+      "region_ou_ville": "Vallée de la Soummam, entre Tazmalt, Akbou, Ighzer Amokrane et Sidi Aïch (Wilaya de Béjaïa / Bouira)",
+      "coordonnees_approximatives": {
+        "latitude": 36.4575,
+        "longitude": 4.5472
+      }
+    },
+    "commandement_aln": [
+      "Amirouche Aït Hamouda",
+      "Abderrahmane Mira",
+      "Krim Belkacem"
+    ],
+    "type_action": "Embuscade",
+    "description": "À l'automne 1955, Amirouche Aït Hamouda et Abderrahmane Mira structurent militairement la vallée de la Soummam et lancent une série d'embuscades coordonnées contre les convois routiers et ferroviaires français entre Tazmalt, Akbou et Sidi Aïch, ainsi que des attaques nocturnes contre les fermes coloniales et les postes de gendarmerie de la vallée.",
+    "bilan_et_pertes": {
+      "aln": "Pertes légères ; récupération d'un important stock d'armes de guerre et d'uniformes",
+      "forces_francaises": "Une vingtaine de soldats et gendarmes tués ou blessés, destruction de véhicules militaires et coupure de la voie ferrée Béjaïa-Beni Mansour",
+      "civils": "Aucune victime civile directe"
+    },
+    "impact_strategique": "Transforme la vallée de la Soummam et ses deux versants montagneux (Djurdjura/Akfadou au nord, Bibans/Guergour au sud) en sanctuaire stratégique qui permettra d'y réunir en toute sécurité le Congrès de la Soummam à Ifri en août 1956.",
+    "sources": [
+      {
+        "titre": "Abderrahmane Mira (« Le Tigre de la Soummam ») — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Abderrahmane_Mira",
+        "type_source": "Article"
+      },
+      {
+        "titre": "La structuration de l'ALN en Petite Kabylie et dans la Soummam — Revue académique CERIST (ASJP)",
+        "url": "https://asjp.cerist.dz/en/downArticle/178/5/17/27827",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

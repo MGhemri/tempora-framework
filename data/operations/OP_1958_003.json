@@ -1,0 +1,98 @@
+{
+  "id": "OP_1958_003",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Offensives de franchissement de la Ligne Morice et Bataille de Souk Ahras",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-04-26",
+    "latest": "1958-04-26",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-05-02",
+    "latest": "1958-05-02",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Frontière algéro-tunisienne : Souk Ahras, Djebel Beni Salah, Oued Chouk, Zaârouria",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.9511,
+          36.2864
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Base de l'Est et Wilaya II / Wilaya I",
+  "source_ids": [
+    "SRC_d367b120c0c786db6fb013e2",
+    "SRC_bd13f0a868eefe619edf9502",
+    "SRC_5f01746bb4b123e0c383e775"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_003",
+    "nom_operation": "Offensives de franchissement de la Ligne Morice et Bataille de Souk Ahras",
+    "date_debut": "1958-04-26",
+    "date_fin": "1958-05-02",
+    "wilaya_concernee": "Base de l'Est et Wilaya II / Wilaya I",
+    "localisation": {
+      "region_ou_ville": "Frontière algéro-tunisienne : Souk Ahras, Djebel Beni Salah, Oued Chouk, Zaârouria",
+      "coordonnees_approximatives": {
+        "latitude": 36.2864,
+        "longitude": 7.9511
+      }
+    },
+    "commandement_aln": [
+      "Amara Bouglez",
+      "Mohamed Chérif Mahmoud",
+      "Mohamed Lakhdar Sirine",
+      "Lakhdar Bentobal",
+      "Krim Belkacem"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Point culminant de la Bataille des Frontières (janvier-mai 1958) : le 4e bataillon de l'ALN (dirigé par Mohamed Lakhdar Sirine) et plusieurs katibas venues de Tunisie percent le barrage électrifié de la Ligne Morice pour acheminer un important convoi d'armes vers les Wilayas II et III. Interceptés dans le massif du Djebel Beni Salah près de Souk Ahras, ils livrent sept jours de combats acharnés au corps à corps contre les régiments parachutistes (9e RCP, 1er REP) et blindés du général Vanuxem.",
+    "bilan_et_pertes": {
+      "aln": "594 à 639 tués à la seule bataille de Souk Ahras ; environ 3 000 à 4 000 combattants mis hors de combat sur l'ensemble de la Bataille des Frontières (janvier-mai 1958)",
+      "forces_francaises": "38 morts et 35 blessés à la seule bataille de Souk Ahras (notamment la 2e compagnie du 9e RCP décimée) ; 279 morts et plus de 700 blessés français sur l'ensemble de la Bataille des Frontières",
+      "civils": "Déplacements massifs de populations frontalières vers des camps de regroupement ou vers la Tunisie"
+    },
+    "impact_strategique": "Plus grande bataille rangée de la guerre d'Algérie. Le verrouillage de la Ligne Morice asphyxie logistiquement les maquis de l'intérieur, mais le maintien d'une puissante « armée des frontières » de l'ALN en Tunisie et au Maroc pèse lourdement sur le plan diplomatique et politique.",
+    "sources": [
+      {
+        "titre": "Bataille de Souk Ahras — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Bataille_de_Souk_Ahras",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Bataille des frontières (guerre d'Algérie) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Bataille_des_fronti%C3%A8res_(guerre_d%27Alg%C3%A9rie)",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Les barrages frontaliers pendant la guerre d'Algérie — Presses universitaires de la Sorbonne (OpenEdition Books)",
+        "url": "https://books.openedition.org/psorbonne/113316?lang=en",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

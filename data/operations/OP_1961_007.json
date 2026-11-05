@@ -1,0 +1,88 @@
+{
+  "id": "OP_1961_007",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Attaques coordonnées d'artillerie et de commandos contre le barrage Ouest (Secteur de Forthassa - Aïn Sefra)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1961-05-14",
+    "latest": "1961-05-14",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1961-05-16",
+    "latest": "1961-05-16",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Forthassa Gharbia (Sfisifa), Ich et secteur d'Aïn Sefra sur le barrage frontalier Ouest (Wilaya de Naâma)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.8833,
+          32.7333
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Armée des Frontières (EMG - Front Ouest) et Wilaya V (Zone 8)",
+  "source_ids": [
+    "SRC_7cef42c891c38cb588868ffb",
+    "SRC_1dd63815631593c6ce9d3844"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1961_007",
+    "nom_operation": "Attaques coordonnées d'artillerie et de commandos contre le barrage Ouest (Secteur de Forthassa - Aïn Sefra)",
+    "date_debut": "1961-05-14",
+    "date_fin": "1961-05-16",
+    "wilaya_concernee": "Armée des Frontières (EMG - Front Ouest) et Wilaya V (Zone 8)",
+    "localisation": {
+      "region_ou_ville": "Forthassa Gharbia (Sfisifa), Ich et secteur d'Aïn Sefra sur le barrage frontalier Ouest (Wilaya de Naâma)",
+      "coordonnees_approximatives": {
+        "latitude": 32.7333,
+        "longitude": -0.8833
+      }
+    },
+    "commandement_aln": [
+      "Officiers de l'État-Major Général (Front Ouest) et de la Wilaya V"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Au printemps 1961, pendant l'ouverture des pourparlers d'Évian, les bataillons de l'ALN déployés sur la frontière sud-marocaine lancent des attaques nocturnes coordonnées au mortier de 81 et 120 mm et au canon sans recul contre les postes fortifiés français de Forthassa et du secteur d'Aïn Sefra, ouvrant des brèches à l'explosif dans le barrage électrifié.",
+    "bilan_et_pertes": {
+      "aln": "Quelques blessés lors des échanges de tirs de contre-batterie",
+      "forces_francaises": "Postes d'observation et radars endommagés, une douzaine de légionnaires et artilleurs blessés ou tués",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "Appuie militairement la délégation du GPRA à Évian en démontrant la puissance de feu croissante de l'Armée des frontières à l'Ouest comme à l'Est.",
+    "sources": [
+      {
+        "titre": "Le barrage frontière ouest pendant la guerre d'Algérie — Cairn.info",
+        "url": "https://shs.cairn.info/revue-guerres-mondiales-et-conflits-contemporains-2018-1-page-91?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Les combats du secteur d'Aïn Sefra — FSALE",
+        "url": "https://www.legionetrangere.fr/la-fsale/actualites-de-la-fsale/808-histoire-decembre-1959-bataille-du-djebel-beni-smir.html",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

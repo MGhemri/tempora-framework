@@ -1,0 +1,90 @@
+{
+  "id": "OP_1957_023",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats de Taher et attaque du poste militaire de Chahna (Massif de Jijel)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-10-18",
+    "latest": "1957-10-18",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-10-19",
+    "latest": "1957-10-19",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Taher, Chahna et Oudjana, dans l'arrière-pays montagneux de Jijel (Wilaya de Jijel)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.8983,
+          36.7719
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya II (Zone 1 - Taher, Chahna et El Ancer)",
+  "source_ids": [
+    "SRC_a5177fcf07aa321959ace54f",
+    "SRC_813ce0660f073bc9c34a2ce8"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_023",
+    "nom_operation": "Combats de Taher et attaque du poste militaire de Chahna (Massif de Jijel)",
+    "date_debut": "1957-10-18",
+    "date_fin": "1957-10-19",
+    "wilaya_concernee": "Wilaya II (Zone 1 - Taher, Chahna et El Ancer)",
+    "localisation": {
+      "region_ou_ville": "Taher, Chahna et Oudjana, dans l'arrière-pays montagneux de Jijel (Wilaya de Jijel)",
+      "coordonnees_approximatives": {
+        "latitude": 36.7719,
+        "longitude": 5.8983
+      }
+    },
+    "commandement_aln": [
+      "Ali Kafi (Colonel de la Wilaya II)",
+      "Salah Boubnider dit Sawt El Arab",
+      "Commandants de la Zone 1 (Jijel - El Milia)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Les katibas de la Zone 1 de la Wilaya II lancent une attaque nocturne au mortier et au fusil-mitrailleur contre les postes militaires français de Chahna et de la périphérie de Taher, suivie le lendemain d'une embuscade meurtrière contre la colonne de secours progressant dans les ravins boisés d'Oudjana.",
+    "bilan_et_pertes": {
+      "aln": "14 moudjahidine tués au combat et plusieurs blessés",
+      "forces_francaises": "Lourdes pertes parmi la colonne de secours et dégâts importants aux fortifications du poste de Chahna",
+      "civils": "Regroupements forcés des populations des douars de Chahna et Taher"
+    },
+    "impact_strategique": "Maintient l'emprise totale de l'ALN sur les crêtes surplombant la plaine côtière de Taher et le bassin de l'Oued El Kebir.",
+    "sources": [
+      {
+        "titre": "Virée dans les refuges de la Wilaya II historique — El Moudjahid",
+        "url": "https://www.elmoudjahid.dz/fr/actualite/viree-dans-les-refuges-de-la-wilaya-ii-historique-ces-sanctuaires-oublies-242668",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Répertoire numérique de la série 1H (Tome 2 - Wilaya II) — Service Historique de la Défense (SHD)",
+        "url": "https://www.servicehistorique.sga.defense.gouv.fr/sites/default/files/notices_files/SHDGR_REP_1H_1091_A_4881_T2_1.pdf",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

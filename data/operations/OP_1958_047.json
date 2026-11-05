@@ -1,0 +1,82 @@
+{
+  "id": "OP_1958_047",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille d'El Loukda (El Oukda) dans le secteur des Amayer",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-03-12",
+    "latest": "1958-03-12",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "El Loukda / Secteur des Amayer (Saïda)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.225,
+          34.815
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 6 - Saïda)",
+  "source_ids": [
+    "SRC_5312786efc1a1a9bbf77a255"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_047",
+    "nom_operation": "Bataille d'El Loukda (El Oukda) dans le secteur des Amayer",
+    "date_debut": "1958-03-12",
+    "date_fin": null,
+    "wilaya_concernee": "Wilaya V (Zone 6 - Saïda)",
+    "localisation": {
+      "region_ou_ville": "El Loukda / Secteur des Amayer (Saïda)",
+      "coordonnees_approximatives": {
+        "latitude": 34.815,
+        "longitude": 0.225
+      }
+    },
+    "commandement_aln": [
+      "Katiba de la Zone 6"
+    ],
+    "type_action": "Combat de rencontre",
+    "description": "Engagement armé dans le secteur des Amayer opposant une unité de l'ALN à une colonne de blindés et de troupes aéroportées coloniales.",
+    "bilan_et_pertes": {
+      "aln": "Pertes parmi les rangs de l'ALN",
+      "forces_francaises": "Lourdes pertes chez les assaillants français",
+      "civils": "0"
+    },
+    "impact_strategique": "Défense victorieuse des zones de campement de l'ALN dans les reliefs de Saïda.",
+    "sources": [
+      {
+        "titre": "Étude historique sur la Zone 6 (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/254394",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

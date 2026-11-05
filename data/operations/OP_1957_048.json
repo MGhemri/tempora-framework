@@ -1,0 +1,89 @@
+{
+  "id": "OP_1957_048",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Soulèvement des compagnies méharistes et ralliement à l'ALN à Metlili",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-01-01",
+    "latest": "1957-01-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1960-12-31",
+    "latest": "1960-12-31",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Metlili des Chaâmba (Ghardaïa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.633,
+          32.273
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya VI (Sahara central - Metlili / Sud du M'Zab)",
+  "source_ids": [
+    "SRC_b54363c115fcf5e237451176",
+    "SRC_066a6ad211132bac14ef8fbd"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_048",
+    "nom_operation": "Soulèvement des compagnies méharistes et ralliement à l'ALN à Metlili",
+    "date_debut": "1957-01-01",
+    "date_fin": "1960-12-31",
+    "wilaya_concernee": "Wilaya VI (Sahara central - Metlili / Sud du M'Zab)",
+    "localisation": {
+      "region_ou_ville": "Metlili des Chaâmba (Ghardaïa)",
+      "coordonnees_approximatives": {
+        "latitude": 32.273,
+        "longitude": 3.633
+      }
+    },
+    "commandement_aln": [
+      "Officiers méharistes ralliés",
+      "Commandement de la Wilaya VI"
+    ],
+    "type_action": "Mutinerie militaire / Ralliement armé",
+    "description": "Soulèvement de pelotons méharistes algériens qui éliminent leurs officiers coloniaux et rejoignent les maquis de l'ALN avec leurs armes de guerre, munitions et montures de bât.",
+    "bilan_et_pertes": {
+      "aln": "Ralliement de dizaines de combattants aguerris du désert",
+      "forces_francaises": "Officiers français éliminés et perte du contrôle des pistes sahariennes",
+      "civils": "0"
+    },
+    "impact_strategique": "Coup psychologique sévère pour l'armée coloniale et transfert d'une expertise inégalée du combat dunaire aux katibas de la Wilaya VI.",
+    "sources": [
+      {
+        "titre": "Premier commandant de la VIe Wilaya historique : Ali Mellah (El Moudjahid)",
+        "url": "https://www.elmoudjahid.dz/fr/actualite/premier-commandant-de-la-vie-wilaya-historique-ali-mellah-du-djurdjura-au-sahara-249960",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Les wilayas dans la crise du FLN (Insaniyat / CRASC)",
+        "url": "https://insaniyat.crasc.dz/en/article/les-wilayas-dans-la-crise-du-fln-de-lete-1962",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

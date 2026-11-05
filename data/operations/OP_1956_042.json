@@ -1,0 +1,84 @@
+{
+  "id": "OP_1956_042",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Batailles et résistance du bastion des Beni Toufout dans le massif de Collo",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-01-01",
+    "latest": "1956-01-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1959-12-31",
+    "latest": "1959-12-31",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif forestier des Beni Toufout / Collo (Skikda)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.462,
+          36.945
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya II (Nord-Constantinois - Presqu'île de Collo)",
+  "source_ids": [
+    "SRC_c7e16c7201ba19c5dfd8834d"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_042",
+    "nom_operation": "Batailles et résistance du bastion des Beni Toufout dans le massif de Collo",
+    "date_debut": "1956-01-01",
+    "date_fin": "1959-12-31",
+    "wilaya_concernee": "Wilaya II (Nord-Constantinois - Presqu'île de Collo)",
+    "localisation": {
+      "region_ou_ville": "Massif forestier des Beni Toufout / Collo (Skikda)",
+      "coordonnees_approximatives": {
+        "latitude": 36.945,
+        "longitude": 6.462
+      }
+    },
+    "commandement_aln": [
+      "Zighoud Youcef",
+      "Lakhdar Bentobbal",
+      "Ali Kafi"
+    ],
+    "type_action": "Guérilla de montagne / Défense de bastion",
+    "description": "Défense inexpugnable de la forteresse forestière des Beni Toufout, servant de PC secret et de refuge logistique à l'état-major de la Wilaya II, résistant aux débarquements et ratissages aéroportés.",
+    "bilan_et_pertes": {
+      "aln": "Pertes limitées grâce au relief et à la couverture végétale dense",
+      "forces_francaises": "Pertes régulières chez les fusiliers marins et l'infanterie de marine",
+      "civils": "Déportations de populations villageoises vers des camps de regroupement"
+    },
+    "impact_strategique": "Maintien d'un sanctuaire inviolable de commandement au cœur du Nord-Constantinois tout au long de la guerre.",
+    "sources": [
+      {
+        "titre": "Un tournant décisif de la glorieuse révolution (APS)",
+        "url": "https://www.aps.dz/fr/algerie/societe/msyu4f59-un-tournant-decisif-de-la-glorieuse-revolution",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "id": "OP_1957_039",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats d'Ain Kebira et de Dar Yaghmoracen contre la DBFM (Secteur de Nedroma - Ghazaouet)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-10-08",
+    "latest": "1957-10-08",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-10-09",
+    "latest": "1957-10-09",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Ain Kebira et Dar Yaghmoracen, entre Nedroma et Ghazaouet (Nemours), Monts des Trara (Wilaya de Tlemcen)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.8,
+          35.05
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 1 - Nedroma / Dar Yaghmoracen / Ghazaouet)",
+  "source_ids": [
+    "SRC_19acc89a8fbcfa58614d6953",
+    "SRC_dc8750afd5431f17b068a27b"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_039",
+    "nom_operation": "Combats d'Ain Kebira et de Dar Yaghmoracen contre la DBFM (Secteur de Nedroma - Ghazaouet)",
+    "date_debut": "1957-10-08",
+    "date_fin": "1957-10-09",
+    "wilaya_concernee": "Wilaya V (Zone 1 - Nedroma / Dar Yaghmoracen / Ghazaouet)",
+    "localisation": {
+      "region_ou_ville": "Ain Kebira et Dar Yaghmoracen, entre Nedroma et Ghazaouet (Nemours), Monts des Trara (Wilaya de Tlemcen)",
+      "coordonnees_approximatives": {
+        "latitude": 35.05,
+        "longitude": -1.8
+      }
+    },
+    "commandement_aln": [
+      "Commandants de la Zone 1 de la Wilaya V (Secteur de Nedroma - Trara)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Dans les ravins boisés d'Ain Kebira et sur les crêtes de Dar Yaghmoracen (entre Nedroma et le port de Ghazaouet), une katiba de la Wilaya V attire les compagnies d'intervention de la DBFM dans un combat rapproché de deux jours, utilisant des casemates enterrées pour résister aux bombardements de l'aviation et de l'artillerie de marine.",
+    "bilan_et_pertes": {
+      "aln": "18 moudjahidine tombés au champ d'honneur",
+      "forces_francaises": "Plus d'une vingtaine de fusiliers marins et supplétifs mis hors de combat",
+      "civils": "Regroupements forcés des habitants des douars de Nedroma et Dar Yaghmoracen"
+    },
+    "impact_strategique": "Maintient la pression sur le quartier général de la DBFM à Nemours (Ghazaouet) et sécurise les caches logistiques du Djebel Fellaoucène.",
+    "sources": [
+      {
+        "titre": "Demi-brigade de fusiliers marins — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Demi-brigade_de_fusiliers_marins",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Répertoire numérique de la série 1H (Corps d'armée d'Oran / Secteur de Nemours) — Service Historique de la Défense (SHD)",
+        "url": "https://www.servicehistorique.sga.defense.gouv.fr/sites/default/files/notices_files/SHDGR_REP_1H_1091_A_4881_T2_1.pdf",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "id": "OP_1956_003",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscade de Palestro (Djerrah)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-05-18",
+    "latest": "1956-05-18",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Gorges de Palestro, près du village de Djerrah (actuelle Lakhdaria, Wilaya de Bouira)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.5892,
+          36.5644
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone IV (future Wilaya IV - Algérois)",
+  "source_ids": [
+    "SRC_5ebb90499071eb9b219dcf9b",
+    "SRC_9859d1d17edf21eb543046af"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_003",
+    "nom_operation": "Embuscade de Palestro (Djerrah)",
+    "date_debut": "1956-05-18",
+    "date_fin": null,
+    "wilaya_concernee": "Zone IV (future Wilaya IV - Algérois)",
+    "localisation": {
+      "region_ou_ville": "Gorges de Palestro, près du village de Djerrah (actuelle Lakhdaria, Wilaya de Bouira)",
+      "coordonnees_approximatives": {
+        "latitude": 36.5644,
+        "longitude": 3.5892
+      }
+    },
+    "commandement_aln": [
+      "Mustapha Khodja dit Ali Khodja",
+      "Amar Ouamrane"
+    ],
+    "type_action": "Embuscade",
+    "description": "Une section de 21 rappelés du 9e régiment d'infanterie coloniale (9e RIC), commandée par le sous-lieutenant Hervé Artur, tombe dans une embuscade minutieusement préparée par une quarantaine d'hommes de la katiba d'Ali Khodja près du douar de Djerrah. Le combat dure une vingtaine de minutes et aboutit à l'anéantissement de la patrouille française et à la saisie de tout son armement.",
+    "bilan_et_pertes": {
+      "aln": "1 mort (tué accidentellement par tir ami selon les travaux de Raphaëlle Branche) et quelques blessés",
+      "forces_francaises": "20 morts (16 tués lors de l'accrochage et 4 prisonniers exécutés ultérieurement lors du ratissage français), 1 survivant libéré (Pierre Dumas)",
+      "civils": "Une cinquantaine de villageois algériens de Djerrah tués lors des opérations de représailles françaises les jours suivants (19-23 mai 1956)"
+    },
+    "impact_strategique": "Choc psychologique majeur en France métropolitaine, car les victimes sont de jeunes appelés et rappelés du contingent récemment arrivés. L'événement symbolise la vulnérabilité des patrouilles françaises face aux unités mobiles de l'ALN.",
+    "sources": [
+      {
+        "titre": "Embuscade de Palestro — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Embuscade_de_Palestro",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Raphaëlle Branche, L'embuscade de Palestro : Algérie 1956 — OpenEdition Journals",
+        "url": "https://journals.openedition.org/lectures/7599?lang=es",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

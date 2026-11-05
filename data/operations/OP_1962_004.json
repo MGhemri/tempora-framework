@@ -1,0 +1,88 @@
+{
+  "id": "OP_1962_004",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Contre-offensives armées des commandos FLN d'Oran aux abords du Petit Lac, de Médioni et de Boulanger",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1962-01-10",
+    "latest": "1962-01-10",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1962-02-28",
+    "latest": "1962-02-28",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Oran : quartiers du Petit Lac, Médioni, Boulanger (Sidi El Chahmi / El Makkari) et Place des Victoires",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.63,
+          35.675
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone urbaine d'Oran)",
+  "source_ids": [
+    "SRC_195df0c2d3b5866bab6dd50e",
+    "SRC_d71166400ec25a02d59ed874"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1962_004",
+    "nom_operation": "Contre-offensives armées des commandos FLN d'Oran aux abords du Petit Lac, de Médioni et de Boulanger",
+    "date_debut": "1962-01-10",
+    "date_fin": "1962-02-28",
+    "wilaya_concernee": "Wilaya V (Zone urbaine d'Oran)",
+    "localisation": {
+      "region_ou_ville": "Oran : quartiers du Petit Lac, Médioni, Boulanger (Sidi El Chahmi / El Makkari) et Place des Victoires",
+      "coordonnees_approximatives": {
+        "latitude": 35.675,
+        "longitude": -0.63
+      }
+    },
+    "commandement_aln": [
+      "Commandants des secteurs urbains du FLN d'Oran (Futurs cadres de la ZAO)"
+    ],
+    "type_action": "Guérilla urbaine",
+    "description": "En janvier et février 1962, alors que l'OAS d'Oran multiplie les attentats à la voiture piégée et les tirs de mortiers artisanaux contre Ville Nouvelle (dont le sanglant attentat de la rue de Tlemcen à Médina Jdida le 28 février 1962), les groupes armés du FLN retranchés à Médioni, au Petit Lac et à Ville Nouvelle mènent des raids de contre-offensive à la mitraillette et à la grenade contre les barrages et patrouilles de l'OAS dans les quartiers de Boulanger, Eckmühl et Saint-Eugène.",
+    "bilan_et_pertes": {
+      "aln": "Une vingtaine de fidayin oranais tués lors des fusillades de barricades en janvier-février 1962",
+      "forces_francaises": "Plusieurs dizaines de membres des commandos des « Collines rouges » de l'OAS d'Oran abattus ou blessés",
+      "civils": "Des centaines de civils algériens tués lors des attentats à la voiture piégée de l'OAS à Médina Jdida (notamment le 28 février 1962, jour de Ramadhan)"
+    },
+    "impact_strategique": "Malgré l'ampleur des massacres commis par l'OAS à Oran début 1962, la résistance armée des fidayin de Ville Nouvelle, Médioni et du Petit Lac met en échec le plan de l'OAS visant à vider Oran de sa population algérienne pour créer un « réduit français ».",
+    "sources": [
+      {
+        "titre": "La Zone Autonome d'Oran (ZAO) et la guerre urbaine à Oran en 1962 — Revue Insaniyat (OpenEdition Journals)",
+        "url": "https://journals.openedition.org/insaniyat/29234?lang=en",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "L'action du FLN à Oran face à l'OAS — Revue académique CERIST (ASJP)",
+        "url": "https://asjp.cerist.dz/en/downArticle/396/5/2/32080",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

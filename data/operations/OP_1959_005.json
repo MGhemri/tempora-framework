@@ -1,0 +1,89 @@
+{
+  "id": "OP_1959_005",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille du Djebel Beni Smir sur le barrage frontalier Ouest (Secteur d'Aïn Sefra)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1959-12-02",
+    "latest": "1959-12-02",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1959-12-10",
+    "latest": "1959-12-10",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif du Djebel Beni Smir, au sud d'Aïn Sefra et à proximité de Figuig (Wilaya de Naâma / Béchar)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.95,
+          32.35
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 8 - Aïn Sefra / Frontière algéro-marocaine)",
+  "source_ids": [
+    "SRC_ddddf2cf2dced2e04919d6ed",
+    "SRC_22229baa605783366ee0f362"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1959_005",
+    "nom_operation": "Bataille du Djebel Beni Smir sur le barrage frontalier Ouest (Secteur d'Aïn Sefra)",
+    "date_debut": "1959-12-02",
+    "date_fin": "1959-12-10",
+    "wilaya_concernee": "Wilaya V (Zone 8 - Aïn Sefra / Frontière algéro-marocaine)",
+    "localisation": {
+      "region_ou_ville": "Massif du Djebel Beni Smir, au sud d'Aïn Sefra et à proximité de Figuig (Wilaya de Naâma / Béchar)",
+      "coordonnees_approximatives": {
+        "latitude": 32.35,
+        "longitude": -0.95
+      }
+    },
+    "commandement_aln": [
+      "Benali Boudghène dit Colonel Lotfi",
+      "Commandants de katibas de l'ALN de la frontière Ouest"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Après avoir franchi en force le réseau électrifié du barrage ouest à hauteur d'Aïn Sefra, un commando lourdement armé de l'ALN s'implante dans les grottes et falaises quasi inaccessibles du Djebel Beni Smir (plus de 2 000 m d'altitude). Pendant huit jours, dans le froid glacial de décembre 1959, les moudjahidine repoussent les assauts répétés du 2e Régiment étranger d'infanterie (2e REI) et des hélicoptères armés de canons.",
+    "bilan_et_pertes": {
+      "aln": "Une quarantaine de moudjahidine tués au combat après épuisement des munitions dans les grottes du Beni Smir",
+      "forces_francaises": "Pertes sévères au sein des compagnies d'assaut du 2e REI (plusieurs légionnaires et sous-officiers tués et de nombreux blessés)",
+      "civils": "Aucune victime civile (massif montagneux frontalier)"
+    },
+    "impact_strategique": "Illustre l'acharnement des batailles de franchissement sur le barrage ouest à la fin de 1959 et la détermination du colonel Lotfi à ravitailler les maquis de l'intérieur coûte que coûte.",
+    "sources": [
+      {
+        "titre": "Histoire : Décembre 1959, la bataille du Djebel Beni Smir — Fédération des Sociétés d'Anciens de la Légion Étrangère (FSALE)",
+        "url": "https://www.legionetrangere.fr/la-fsale/actualites-de-la-fsale/808-histoire-decembre-1959-bataille-du-djebel-beni-smir.html",
+        "type_source": "Archive"
+      },
+      {
+        "titre": "Colonel Lotfi — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Colonel_Lotfi",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

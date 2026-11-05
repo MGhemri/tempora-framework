@@ -1,0 +1,90 @@
+{
+  "id": "OP_1958_005",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Opérations de sabotage de la Tour Eiffel et attaques de casernes en région parisienne",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-08-25",
+    "latest": "1958-08-25",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-09-21",
+    "latest": "1958-09-21",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Paris (Champ-de-Mars / Tour Eiffel, cartoucherie de Vincennes, commissariats de la Seine)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.2945,
+          48.8584
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Fédération de France du FLN (« 7e Wilaya » - Organisation Spéciale)",
+  "source_ids": [
+    "SRC_b75f2a02cbf8ac6d6fd11fd4",
+    "SRC_28de438310b745da1afdb016"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_005",
+    "nom_operation": "Opérations de sabotage de la Tour Eiffel et attaques de casernes en région parisienne",
+    "date_debut": "1958-08-25",
+    "date_fin": "1958-09-21",
+    "wilaya_concernee": "Fédération de France du FLN (« 7e Wilaya » - Organisation Spéciale)",
+    "localisation": {
+      "region_ou_ville": "Paris (Champ-de-Mars / Tour Eiffel, cartoucherie de Vincennes, commissariats de la Seine)",
+      "coordonnees_approximatives": {
+        "latitude": 48.8584,
+        "longitude": 2.2945
+      }
+    },
+    "commandement_aln": [
+      "Omar Boudaoud",
+      "Kaddour Ladlani",
+      "Commandos OS de la région parisienne"
+    ],
+    "type_action": "Sabotage",
+    "description": "Volet parisien de l'offensive métropolitaine d'août-septembre 1958 : dès la nuit du 24 au 25 août 1958, les commandos de l'OS attaquent la cartoucherie de Vincennes et plusieurs postes de police parisiens, abattant trois gardiens de la paix. Le 21 septembre 1958, un commando dépose une puissante charge explosive à retardement dans la salle des machines de l'ascenseur de la Tour Eiffel pour saboter l'émetteur radio-télévision au sommet du monument.",
+    "bilan_et_pertes": {
+      "aln": "Charge de la Tour Eiffel découverte et désamorcée in extremis ; arrestation de plusieurs membres des réseaux de soutien",
+      "forces_francaises": "3 policiers tués à Paris et Vincennes lors de la nuit du 25 août 1958 et plusieurs blessés",
+      "civils": "Aucune victime civile à la Tour Eiffel"
+    },
+    "impact_strategique": "Provoque la mise en état d'alerte maximale de la Préfecture de police de Paris (dirigée par Maurice Papon), la garde militaire des monuments parisiens et des rafles massives au Vélodrome d'Hiver.",
+    "sources": [
+      {
+        "titre": "Fédération de France du FLN — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/F%C3%A9d%C3%A9ration_de_France_du_FLN",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Les commandos du FLN à Paris en août-septembre 1958 — Cairn.info",
+        "url": "https://shs.cairn.info/paris-la-rouge--9782262050306-page-220?lang=fr",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

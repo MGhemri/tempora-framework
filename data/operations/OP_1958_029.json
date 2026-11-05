@@ -1,0 +1,102 @@
+{
+  "id": "OP_1958_029",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats de Sidi Makhlouf et du Djebel Lazrag dans le secteur de Laghouat - Messaad",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-06-22",
+    "latest": "1958-06-22",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-06-24",
+    "latest": "1958-06-24",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif du Djebel Lazrag, El Doum et Sidi Makhlouf, au nord-est de Laghouat et vers Messaad (Wilayas de Laghouat et Djelfa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.0167,
+          34.1333
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya VI (Zone 2 - Laghouat / Sidi Makhlouf / Messaad)",
+  "source_ids": [
+    "SRC_2eec80d501a360f32f3f7408",
+    "SRC_2b53388b0344e0d4a0716eee",
+    "SRC_5cab1982f7a4ee82677aad12",
+    "SRC_995700a27a0509aba765f9ca"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_029",
+    "nom_operation": "Combats de Sidi Makhlouf et du Djebel Lazrag dans le secteur de Laghouat - Messaad",
+    "date_debut": "1958-06-22",
+    "date_fin": "1958-06-24",
+    "wilaya_concernee": "Wilaya VI (Zone 2 - Laghouat / Sidi Makhlouf / Messaad)",
+    "localisation": {
+      "region_ou_ville": "Massif du Djebel Lazrag, El Doum et Sidi Makhlouf, au nord-est de Laghouat et vers Messaad (Wilayas de Laghouat et Djelfa)",
+      "coordonnees_approximatives": {
+        "latitude": 34.1333,
+        "longitude": 3.0167
+      }
+    },
+    "commandement_aln": [
+      "Si El Haouès",
+      "Omar Driss",
+      "Kouider Labiod et chefs de katibas du secteur de Laghouat - Messaad"
+    ],
+    "type_action": "Embuscade",
+    "description": "Sur l'axe stratégique reliant Djelfa à l'oasis de Laghouat (porte du M'zab et du Grand Sud central) ainsi que dans les reliefs rocheux entre Sidi Makhlouf et Messaad, les katibas de la Wilaya VI tendent une série d'embuscades aux convois militaires français et affrontent les unités de la Légion et des tirailleurs dans les gorges du Djebel Lazrag.",
+    "bilan_et_pertes": {
+      "aln": "Une quinzaine de moudjahidine tombés au champ d'honneur ; récupération d'armes et de munitions",
+      "forces_francaises": "Destruction de plusieurs camions d'escorte sur la RN 1 et plus d'une vingtaine de soldats français tués ou blessés",
+      "civils": "Regroupements forcés des populations semi-nomades autour de Sidi Makhlouf, Aïn El Ibel et Laghouat"
+    },
+    "impact_strategique": "Menace directement la Route Nationale 1 (axe Alger - Djelfa - Laghouat - Ghardaïa), artère principale de pénétration française vers le Sahara central.",
+    "sources": [
+      {
+        "titre": "Les opérations militaires en Wilaya VI (Djelfa, Messaad, Laghouat) — Revue académique CERIST (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/280826",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Si El Haouès — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Si_El_Haou%C3%A8s",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Combats du Djebel Dira et du bataillon Zoubiria (journals.openedition.org)",
+        "url": "https://journals.openedition.org/insaniyat/13172?lang=en",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Combats du Djebel Dira et du bataillon Zoubiria (dknews-dz.com)",
+        "url": "https://www.dknews-dz.com/article/92792-des-recherches-pour-elucider-les-circonstances-exactes-de-la-mort-du-colonel-si-mhamed-bougara.html",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

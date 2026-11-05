@@ -1,0 +1,90 @@
+{
+  "id": "OP_1957_025",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscades de la forêt de Yakouren et combats d'Azeffoun (Port-Gueydon)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-07-14",
+    "latest": "1957-07-14",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-07-16",
+    "latest": "1957-07-16",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Forêt domaniale de Yakouren, Azazga et route côtière d'Azeffoun (ex-Port-Gueydon, Wilaya de Tizi Ouzou)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.4333,
+          36.7333
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya III (Massif de Yakouren et secteur côtier d'Azeffoun)",
+  "source_ids": [
+    "SRC_21a2f95788dfda9f178a2850",
+    "SRC_45096aa65b4b4c519ef93a5d"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_025",
+    "nom_operation": "Embuscades de la forêt de Yakouren et combats d'Azeffoun (Port-Gueydon)",
+    "date_debut": "1957-07-14",
+    "date_fin": "1957-07-16",
+    "wilaya_concernee": "Wilaya III (Massif de Yakouren et secteur côtier d'Azeffoun)",
+    "localisation": {
+      "region_ou_ville": "Forêt domaniale de Yakouren, Azazga et route côtière d'Azeffoun (ex-Port-Gueydon, Wilaya de Tizi Ouzou)",
+      "coordonnees_approximatives": {
+        "latitude": 36.7333,
+        "longitude": 4.4333
+      }
+    },
+    "commandement_aln": [
+      "Colonel Amirouche Aït Hamouda",
+      "Mohand Oulhadj",
+      "Mohand Ameziane Yazourene dit Vrirouche"
+    ],
+    "type_action": "Embuscade",
+    "description": "Au cœur de l'immense massif forestier de chênes-lièges et de chênes zéens de Yakouren (entre Azazga, l'Akfadou et le port d'Azeffoun), deux katibas de la Wilaya III tendent une embuscade coordonnée le 14 juillet 1957 contre un convoi militaire français sur la RN 12, détruisant les véhicules de tête à la mine et au bazooka avant de soutenir quarante-huit heures d'accrochages jusqu'aux hauteurs d'Azeffoun.",
+    "bilan_et_pertes": {
+      "aln": "Une douzaine de moudjahidine tués ; saisie d'un lot important de fusils-mitrailleurs et de munitions",
+      "forces_francaises": "Plus d'une vingtaine de soldats français tués et une trentaine de blessés ; plusieurs camions calcinés au col de Yakouren",
+      "civils": "Interdiction de circulation forestière et création de zones interdites autour de Yakouren et d'Azeffoun"
+    },
+    "impact_strategique": "Renforce le contrôle du colonel Amirouche sur le triangle stratégique Azazga - Yakouren - Azeffoun, porte d'entrée du massif de l'Akfadou.",
+    "sources": [
+      {
+        "titre": "Mohand Ameziane Yazourene, un stratège de la guerre de libération dans la Wilaya III historique — Algérie Presse Service (APS)",
+        "url": "https://www.aps.dz/fr/algerie/societe/mk013dwo-mohand-ameziane-yazourene-un-stratege-de-la-guerre-de-liberation-dans-la-wilaya-iii-historique",
+        "type_source": "Article"
+      },
+      {
+        "titre": "La question kabyle dans le nationalisme algérien (La Wilaya III sous Amirouche) — Cairn.info",
+        "url": "https://shs.cairn.info/question-kabyle-nationalisme-algerien--9782365122757-page-421?lang=fr",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

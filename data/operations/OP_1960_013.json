@@ -1,0 +1,89 @@
+{
+  "id": "OP_1960_013",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Duels d'artillerie lourde et attaques de postes à Bir El Ater et Négrine (Tronçon Sud de la Ligne Morice)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1960-11-18",
+    "latest": "1960-11-18",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1960-11-20",
+    "latest": "1960-11-20",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Bir El Ater, Oum Ali et oasis de Négrine, au sud de Tébessa face à la région de Gafsa / Tozeur (Sud de la Wilaya de Tébessa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.0603,
+          34.7486
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Armée des Frontières (Zone Sud-Est) et Wilaya I (Sud des Nemencha - Bir El Ater / Négrine)",
+  "source_ids": [
+    "SRC_c729e77c4c53ed9824aa836d",
+    "SRC_4be8ceb7f6a2d8d0c284faab"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1960_013",
+    "nom_operation": "Duels d'artillerie lourde et attaques de postes à Bir El Ater et Négrine (Tronçon Sud de la Ligne Morice)",
+    "date_debut": "1960-11-18",
+    "date_fin": "1960-11-20",
+    "wilaya_concernee": "Armée des Frontières (Zone Sud-Est) et Wilaya I (Sud des Nemencha - Bir El Ater / Négrine)",
+    "localisation": {
+      "region_ou_ville": "Bir El Ater, Oum Ali et oasis de Négrine, au sud de Tébessa face à la région de Gafsa / Tozeur (Sud de la Wilaya de Tébessa)",
+      "coordonnees_approximatives": {
+        "latitude": 34.7486,
+        "longitude": 8.0603
+      }
+    },
+    "commandement_aln": [
+      "Tahar Zbiri (Colonel de la Wilaya I)",
+      "Commandants des bataillons du secteur Sud-Est (Redeyef / Moularès)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "À l'extrémité méridionale de la Ligne Morice et de la Ligne Challe (entre Bir El Ater, Oum Ali et Négrine, aux portes du Chott El Djérid), les bataillons de l'ALN pilonnent au mortier lourd et au canon sans recul les fortins français d'Oum Ali et de Bir El Ater pour couvrir le passage de caravanes motorisées et chamelières d'armes vers le sud des monts des Nemencha et la Wilaya VI.",
+    "bilan_et_pertes": {
+      "aln": "Une dizaine de moudjahidine tués lors des frappes aériennes françaises dans le désert de Négrine ; passage réussi d'un convoi logistique vers les Nemencha",
+      "forces_francaises": "Fortin d'Oum Ali lourdement endommagé et une quinzaine de soldats français tués ou blessés",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "Exploite l'étirement extrême du barrage français vers le Sahara oriental (Bir El Ater - Négrine) pour maintenir l'approvisionnement de la Wilaya I et de la Wilaya VI.",
+    "sources": [
+      {
+        "titre": "Ligne Morice (Extension sud vers Bir El Ater et Négrine) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Ligne_Morice",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Nemencha — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Nemencha",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

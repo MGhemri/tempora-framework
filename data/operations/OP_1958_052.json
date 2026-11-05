@@ -1,0 +1,89 @@
+{
+  "id": "OP_1958_052",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Première bataille du Djebel Mongorno (Katiba El Zoubiria)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-03-01",
+    "latest": "1958-03-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-03-31",
+    "latest": "1958-03-31",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Djebel Mongorno / Zoubiria (Médéa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.685,
+          36.118
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya IV (Zone 2 - Médéa / Zoubiria)",
+  "source_ids": [
+    "SRC_5018846c72d284932ec983e4",
+    "SRC_d8be37a8d90f53b29cd7bb28"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_052",
+    "nom_operation": "Première bataille du Djebel Mongorno (Katiba El Zoubiria)",
+    "date_debut": "1958-03-01",
+    "date_fin": "1958-03-31",
+    "wilaya_concernee": "Wilaya IV (Zone 2 - Médéa / Zoubiria)",
+    "localisation": {
+      "region_ou_ville": "Djebel Mongorno / Zoubiria (Médéa)",
+      "coordonnees_approximatives": {
+        "latitude": 36.118,
+        "longitude": 2.685
+      }
+    },
+    "commandement_aln": [
+      "Katiba El Zoubiria",
+      "Si M'Hammed Bougara"
+    ],
+    "type_action": "Combat de rencontre / Guérilla de montagne",
+    "description": "Violente bataille dans les reliefs du Titteri où la célèbre katiba El Zoubiria repousse un assaut coordonné d'unités blindées et de troupes aéroportées coloniales.",
+    "bilan_et_pertes": {
+      "aln": "Pertes contenues parmi les djounouds retranchés",
+      "forces_francaises": "Lourdes pertes enregistrées par l'armée coloniale sous les feux croisés",
+      "civils": "0"
+    },
+    "impact_strategique": "Consolidation du prestige militaire de la katiba El Zoubiria, fer de lance de la Wilaya IV dans le Titteri.",
+    "sources": [
+      {
+        "titre": "Combats de la Wilaya IV (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/144558",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Histoire de la katiba Zoubiria (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/145315",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

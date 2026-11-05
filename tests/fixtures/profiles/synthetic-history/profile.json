@@ -1,0 +1,21 @@
+{
+  "profile_schema_version":"1.0.0",
+  "version":"1.0.0",
+  "id":"synthetic-history",
+  "display_name":"Synthetic history — test fixtures only",
+  "namespace":"SYNTHETIC_HISTORY",
+  "framework":">=3.0.0 <4.0.0",
+  "default_locale":"en",
+  "locales":["en","es"],
+  "time":{"calendar":"gregorian","coverage":{"earliest":"1600-01-01","latest":"1899-12-31"}},
+  "spatial":{"crs":"EPSG:4326"},
+  "taxonomies":["event_types"],
+  "aliases":[{"taxonomy":"event_types","language":"es","value":"reunión ficticia","canonical":"fictional assembly"}],
+  "parameters":{"coverage":{"from_year":1600,"to_year":1899}},
+  "rules":[
+    {"id":"event-id","type":"required","field":"id","severity":"error"},
+    {"id":"date-window","type":"date_range","field":"start_date","severity":"error"},
+    {"id":"event-type","type":"vocabulary","field":"event_type","taxonomy":"event_types","severity":"warning"}
+  ],
+  "exports":["json","csv"]
+}

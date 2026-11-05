@@ -1,0 +1,90 @@
+{
+  "id": "OP_1958_025",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats du Djebel Bouberak et attaques de postes dans le secteur de Dellys - Baghlia",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-07-28",
+    "latest": "1958-07-28",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-07-29",
+    "latest": "1958-07-29",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Djebel Bouberak, Baghlia et basse vallée de l'Oued Sébaou, près de Dellys (Wilaya de Boumerdès)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.85,
+          36.89
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya III (Zone 4 - Bas-Sébaou / Dellys / Baghlia)",
+  "source_ids": [
+    "SRC_36e9edf7fc097539becd0237",
+    "SRC_f98352402a9fa47fb456a62f"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_025",
+    "nom_operation": "Combats du Djebel Bouberak et attaques de postes dans le secteur de Dellys - Baghlia",
+    "date_debut": "1958-07-28",
+    "date_fin": "1958-07-29",
+    "wilaya_concernee": "Wilaya III (Zone 4 - Bas-Sébaou / Dellys / Baghlia)",
+    "localisation": {
+      "region_ou_ville": "Djebel Bouberak, Baghlia et basse vallée de l'Oued Sébaou, près de Dellys (Wilaya de Boumerdès)",
+      "coordonnees_approximatives": {
+        "latitude": 36.89,
+        "longitude": 3.85
+      }
+    },
+    "commandement_aln": [
+      "Mohand Oulhadj (Commandant de la Zone 4)",
+      "Mohamed Touami dit Mouh Bouberak",
+      "Commandos du secteur de Dellys - Baghlia"
+    ],
+    "type_action": "Embuscade",
+    "description": "Dans le secteur côtier et forestier du Bas-Sébaou (entre Dellys, Baghlia et Bordj Menaïel), les commandos de l'ALN tendent une embuscade meurtrière contre une colonne motorisée du 22e RI sur les pentes du Djebel Bouberak et harcèlent simultanément les postes militaires surveillant les ponts de l'Oued Sébaou.",
+    "bilan_et_pertes": {
+      "aln": "Une dizaine de moudjahidine tués au cours de l'accrochage avec les renforts héliportés",
+      "forces_francaises": "Une vingtaine de soldats français tués ou blessés et destruction de plusieurs véhicules de patrouille",
+      "civils": "Couvre-feu et ratissage des fermes et douars de Baghlia et de Dellys"
+    },
+    "impact_strategique": "Maintient une forte pression militaire à l'extrémité nord-ouest de la Wilaya III, à moins de 80 kilomètres d'Alger.",
+    "sources": [
+      {
+        "titre": "Wilaya III historique (Zone 4 : Bas-Sébaou, Dellys, Baghlia) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_III_historique",
+        "type_source": "Article"
+      },
+      {
+        "titre": "La question kabyle dans le nationalisme algérien — Cairn.info",
+        "url": "https://shs.cairn.info/question-kabyle-nationalisme-algerien--9782365122757-page-421?lang=fr",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "id": "OP_1958_024",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscades des Portes de Fer (Bibans) et sabotage de la voie ferrée Alger - Constantine (El M'hir - Mansoura)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-05-09",
+    "latest": "1958-05-09",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-05-11",
+    "latest": "1958-05-11",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Défilé des Portes de Fer (Bab El Hadid / Bibans), entre Beni Mansour, Mansoura et El M'hir (Wilayas de Bouira et Bordj Bou Arreridj)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.46,
+          36.195
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya III (Zone 3 - Défilé des Bibans / Mansoura / Beni Mansour)",
+  "source_ids": [
+    "SRC_1b5535866d4e1672f780a425",
+    "SRC_153223dc20efaa2d398a3486"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_024",
+    "nom_operation": "Embuscades des Portes de Fer (Bibans) et sabotage de la voie ferrée Alger - Constantine (El M'hir - Mansoura)",
+    "date_debut": "1958-05-09",
+    "date_fin": "1958-05-11",
+    "wilaya_concernee": "Wilaya III (Zone 3 - Défilé des Bibans / Mansoura / Beni Mansour)",
+    "localisation": {
+      "region_ou_ville": "Défilé des Portes de Fer (Bab El Hadid / Bibans), entre Beni Mansour, Mansoura et El M'hir (Wilayas de Bouira et Bordj Bou Arreridj)",
+      "coordonnees_approximatives": {
+        "latitude": 36.195,
+        "longitude": 4.46
+      }
+    },
+    "commandement_aln": [
+      "Colonel Amirouche Aït Hamouda",
+      "Officiers de la Zone 3 (Bibans)"
+    ],
+    "type_action": "Sabotage",
+    "description": "Les artificiers et une katiba de la Wilaya III font sauter à l'explosif la voie ferrée stratégique Alger-Constantine et la Route Nationale 5 au cœur du défilé rocheux des Portes de Fer (chaîne des Bibans), provoquant le déraillement d'un convoi militaire et ferroviaire aussitôt pris sous le feu nourri des armes automatiques postées sur les crêtes.",
+    "bilan_et_pertes": {
+      "aln": "Quelques blessés lors du décrochage vers les crêtes de M'Chedallah et des Bibans",
+      "forces_francaises": "Déraillement d'une rame militaire, coupure de l'axe Alger-Constantine pendant quarante-huit heures et une vingtaine de soldats français tués ou blessés",
+      "civils": "Interruption du trafic ferroviaire et routier entre l'Algérois et le Constantinois"
+    },
+    "impact_strategique": "Frappe le goulet d'étranglement logistique le plus sensible d'Algérie du Nord (les Portes de Fer), démontrant la capacité de la Wilaya III à couper à volonté les communications terrestres entre Alger et Constantine.",
+    "sources": [
+      {
+        "titre": "Wilaya III historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_III_historique",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Répertoire numérique de la série 1H (Corps d'armée d'Alger et de Constantine) — Service Historique de la Défense (SHD)",
+        "url": "https://www.servicehistorique.sga.defense.gouv.fr/sites/default/files/notices_files/SHDGR_REP_1H_1091_A_4881_T1.pdf",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

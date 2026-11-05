@@ -1,0 +1,96 @@
+{
+  "id": "OP_1962_001",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats d'El Milia et contre-offensives urbaines des commandos FLN face à l'OAS",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1962-01-01",
+    "latest": "1962-01-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1962-03-19",
+    "latest": "1962-03-19",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif d'El Milia (Wilaya de Jijel) et agglomérations d'Alger et d'Oran",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.2656,
+          36.7542
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya II (Secteur d'El Milia), Wilaya IV, Zone autonome d'Alger (ZAA) et Zone Autonome d'Oran (ZAO)",
+  "source_ids": [
+    "SRC_d393031bdbc2495cb12842ac",
+    "SRC_9e609aca81d2da721bda6af4",
+    "SRC_35e66b0af831fa3e237f8deb"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1962_001",
+    "nom_operation": "Combats d'El Milia et contre-offensives urbaines des commandos FLN face à l'OAS",
+    "date_debut": "1962-01-01",
+    "date_fin": "1962-03-19",
+    "wilaya_concernee": "Wilaya II (Secteur d'El Milia), Wilaya IV, Zone autonome d'Alger (ZAA) et Zone Autonome d'Oran (ZAO)",
+    "localisation": {
+      "region_ou_ville": "Massif d'El Milia (Wilaya de Jijel) et agglomérations d'Alger et d'Oran",
+      "coordonnees_approximatives": {
+        "latitude": 36.7542,
+        "longitude": 6.2656
+      }
+    },
+    "commandement_aln": [
+      "Salah Boubnider dit Sawt El Arab (Wilaya II)",
+      "Youcef Khatib dit Si Hassan (Wilaya IV)",
+      "Commandos urbains de la ZAA et d'Oran"
+    ],
+    "type_action": "Guérilla urbaine",
+    "description": "Derniers grands engagements militaires de l'ALN à la veille du cessez-le-feu du 19 mars 1962 (Accords d'Évian) : dans le Nord-Constantinois (El Milia, 12-16 février 1962), les katibas de la Wilaya II affrontent d'importantes forces françaises tandis que dans les villes d'Alger et d'Oran, les groupes armés du FLN mènent des actions de représailles ciblées et d'autodéfense des quartiers algériens face à la campagne d'attentats de l'OAS.",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs centaines de combattants et fidayin tués ou blessés au cours des derniers mois précédant le cessez-le-feu",
+      "forces_francaises": "Derniers accrochages meurtriers dans les maquis (El Milia, Ouarsenis, Aurès) avant l'entrée en vigueur du cessez-le-feu le 19 mars 1962 à midi",
+      "civils": "Milliers de victimes civiles algériennes et européennes dans la spirale des attentats de l'OAS et des contre-attaques urbaines au début de l'année 1962"
+    },
+    "impact_strategique": "Le maintien de la pression armée dans les wilayas et la discipline des réseaux urbains du FLN permettent au GPRA de conclure les Accords d'Évian le 18 mars 1962 en position de représentant exclusif de la souveraineté algérienne, ouvrant la voie à l'indépendance proclamée en juillet 1962.",
+    "sources": [
+      {
+        "titre": "Guerre d'Algérie — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Guerre_d%27Alg%C3%A9rie",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Chronologie de la guerre d'Algérie — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Chronologie_de_la_guerre_d%27Alg%C3%A9rie",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Combattre en Algérie — Ministère des Armées (Chemins de mémoire)",
+        "url": "https://www.defense.gouv.fr/chemins-memoire/histoire-memoires/ressources-historiques/guerre-dalgerie/combattre-algerie-combattre-metropole-3",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

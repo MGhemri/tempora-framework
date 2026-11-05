@@ -1,0 +1,102 @@
+{
+  "id": "OP_1955_010",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscades des gorges d'El Kantara et coupure de la voie ferrée Constantine - Biskra - Touggourt",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1955-04-16",
+    "latest": "1955-04-16",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1955-04-17",
+    "latest": "1955-04-17",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Défilé des gorges d'El Kantara et axe ferroviaire et routier Batna - Biskra (Wilaya de Biskra)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.7014,
+          35.2222
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone I / Future Wilaya VI (Porte du Sahara - El Kantara / Biskra)",
+  "source_ids": [
+    "SRC_865a2c19fe87c15c308bd53a",
+    "SRC_cd93202e3b7a42cad2769c1f",
+    "SRC_d4cccf309fc7d358cf91ba51",
+    "SRC_0f048a35b8678382e77f1aaa"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1955_010",
+    "nom_operation": "Embuscades des gorges d'El Kantara et coupure de la voie ferrée Constantine - Biskra - Touggourt",
+    "date_debut": "1955-04-16",
+    "date_fin": "1955-04-17",
+    "wilaya_concernee": "Zone I / Future Wilaya VI (Porte du Sahara - El Kantara / Biskra)",
+    "localisation": {
+      "region_ou_ville": "Défilé des gorges d'El Kantara et axe ferroviaire et routier Batna - Biskra (Wilaya de Biskra)",
+      "coordonnees_approximatives": {
+        "latitude": 35.2222,
+        "longitude": 5.7014
+      }
+    },
+    "commandement_aln": [
+      "Ahmed Ben Abderrazak Hamouda dit Si El Haouès",
+      "Omar Driss (Mohamed Idriss)",
+      "Mohamed Chaâbani"
+    ],
+    "type_action": "Embuscade",
+    "description": "Au défilé rocheux stratégique des gorges d'El Kantara (« la bouche du désert », unique passage ferroviaire et routier reliant les Hauts Plateaux constantinois aux oasis des Ziban et du Bas-Sahara), les groupes de l'ALN organisés par Si El Haouès et Omar Driss sabotent la voie ferrée et tendent une embuscade contre une patrouille militaire française chargée de la surveillance du pont et des tunnels.",
+    "bilan_et_pertes": {
+      "aln": "Aucune perte ; récupération d'armes de guerre et repli vers le Djebel Metlili",
+      "forces_francaises": "Coupure de la voie ferrée Biskra-Constantine et une dizaine de soldats français tués ou blessés",
+      "civils": "Interruption du trafic ferroviaire vers Biskra et Touggourt"
+    },
+    "impact_strategique": "Établit dès 1955 un verrou opérationnel aux portes du Sahara (El Kantara et Biskra) qui servira de tremplin à la constitution de la Wilaya VI.",
+    "sources": [
+      {
+        "titre": "Si El Haouès et l'extension de la lutte armée vers le Sud et Biskra — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Si_El_Haou%C3%A8s",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Répertoire numérique de la série 1H (Secteur de Biskra et Territoires du Sud) — Service Historique de la Défense (SHD)",
+        "url": "https://www.servicehistorique.sga.defense.gouv.fr/sites/default/files/notices_files/SHDGR_REP_1H_1091_A_4881_T2_1.pdf",
+        "type_source": "Archive"
+      },
+      {
+        "titre": "Embuscades des gorges de Kherrata et liaison Kabylie–Constantinois (asjp.cerist.dz)",
+        "url": "https://asjp.cerist.dz/en/article/234015",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Embuscades des gorges de Kherrata et liaison Kabylie–Constantinois (asjp.cerist.dz)",
+        "url": "https://asjp.cerist.dz/en/article/96298",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

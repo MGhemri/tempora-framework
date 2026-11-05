@@ -1,0 +1,102 @@
+{
+  "id": "OP_1955_003",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Offensive coordonnée de l'ALN en Oranie (Octobre 1955)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1955-10-01",
+    "latest": "1955-10-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1955-10-05",
+    "latest": "1955-10-05",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Région de Tlemcen, Maghnia, Nedroma, Sebdou et frontière algéro-marocaine",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.315,
+          34.8783
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone V (future Wilaya V - Oranie)",
+  "source_ids": [
+    "SRC_9e609aca81d2da721bda6af4",
+    "SRC_d393031bdbc2495cb12842ac",
+    "SRC_fb7c098727b149b5b0160f99",
+    "SRC_59c3a11bdea31db212608e2b"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1955_003",
+    "nom_operation": "Offensive coordonnée de l'ALN en Oranie (Octobre 1955)",
+    "date_debut": "1955-10-01",
+    "date_fin": "1955-10-05",
+    "wilaya_concernee": "Zone V (future Wilaya V - Oranie)",
+    "localisation": {
+      "region_ou_ville": "Région de Tlemcen, Maghnia, Nedroma, Sebdou et frontière algéro-marocaine",
+      "coordonnees_approximatives": {
+        "latitude": 34.8783,
+        "longitude": -1.315
+      }
+    },
+    "commandement_aln": [
+      "Larbi Ben M'hidi",
+      "Abdelhafid Boussouf",
+      "Benali Boudghène dit Lotfi"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "En coordination avec l'Armée de libération marocaine (ALM) dans le Rif et le Moyen Atlas, la Zone V de l'ALN lance une offensive généralisée dans l'Ouest algérien (sabotages de lignes électriques et téléphoniques, attaques de postes militaires et de fermes fortifiées autour de Tlemcen et Maghnia), mettant fin au calme relatif qui régnait en Oranie depuis novembre 1954.",
+    "bilan_et_pertes": {
+      "aln": "Une vingtaine de combattants tués lors des accrochages de repli",
+      "forces_francaises": "Plusieurs dizaines de soldats et gardes champêtres tués ou blessés, importants dégâts matériels",
+      "civils": "Plusieurs colons tués lors des attaques de fermes isolées"
+    },
+    "impact_strategique": "Ouverture définitive du front de l'Ouest (Oranie) et jonction opérationnelle avec les bases arrière au Maroc, obligeant l'état-major français à étendre son dispositif militaire de la frontière tunisienne jusqu'à la frontière marocaine.",
+    "sources": [
+      {
+        "titre": "Chronologie de la guerre d'Algérie — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Chronologie_de_la_guerre_d%27Alg%C3%A9rie",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Guerre d'Algérie — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Guerre_d%27Alg%C3%A9rie",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Bataille du douar Souadek et martyre de Didouche Mourad (elwatan.dz)",
+        "url": "https://elwatan.dz/18-janvier-1955-la-bataille-de-douar-souadek-la-resistance-heroique-de-didouche-mourad-et-de-ses-hommes/",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Bataille du douar Souadek et martyre de Didouche Mourad (fr.wikipedia.org)",
+        "url": "https://fr.wikipedia.org/wiki/Didouche_Mourad",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

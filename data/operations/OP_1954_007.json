@@ -1,0 +1,91 @@
+{
+  "id": "OP_1954_007",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Attaques d'Azazga, Tigzirt, Bordj Menaïel et Draâ El Mizan au déclenchement en Kabylie",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1954-11-01",
+    "latest": "1954-11-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1954-11-02",
+    "latest": "1954-11-02",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Azazga, Tigzirt, Draâ El Mizan et Bordj Menaïel (Wilayas de Tizi Ouzou et Boumerdès)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.3722,
+          36.7447
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone III / Wilaya III (Grande Kabylie - Tizi Ouzou, Azazga, Tigzirt, Draâ El Mizan)",
+  "source_ids": [
+    "SRC_80219b5d3ce17e534b4aff98",
+    "SRC_1b5535866d4e1672f780a425"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1954_007",
+    "nom_operation": "Attaques d'Azazga, Tigzirt, Bordj Menaïel et Draâ El Mizan au déclenchement en Kabylie",
+    "date_debut": "1954-11-01",
+    "date_fin": "1954-11-02",
+    "wilaya_concernee": "Zone III / Wilaya III (Grande Kabylie - Tizi Ouzou, Azazga, Tigzirt, Draâ El Mizan)",
+    "localisation": {
+      "region_ou_ville": "Azazga, Tigzirt, Draâ El Mizan et Bordj Menaïel (Wilayas de Tizi Ouzou et Boumerdès)",
+      "coordonnees_approximatives": {
+        "latitude": 36.7447,
+        "longitude": 4.3722
+      }
+    },
+    "commandement_aln": [
+      "Krim Belkacem (Chef de la Zone III)",
+      "Amar Ouamrane",
+      "Mohand Ameziane Yazourene dit Saïd Vrirouche",
+      "Ali Mellah (Si Chérif)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Dans la nuit du 1er novembre 1954, les groupes de maquisards kabyles organisés depuis 1947 par Krim Belkacem et Amar Ouamrane passent simultanément à l'offensive dans toute la Zone III : attaque de la brigade de gendarmerie et sabotage des dépôts de liège à Azazga (dirigés par Saïd Vrirouche), attaques des casernes et postes de Tigzirt, Draâ El Mizan et Bordj Menaïel, et coupure généralisée des lignes téléphoniques et électriques.",
+    "bilan_et_pertes": {
+      "aln": "1 moudjahid tué à Draâ El Mizan ; repli intact de l'ensemble des groupes vers les forêts de Mizrana, de Yakouren et du Djurdjura",
+      "forces_francaises": "Importants dégâts matériels (incendie des entrepôts de liège d'Azazga et de Bordj Menaïel), plusieurs gendarmes et gardes blessés",
+      "civils": "1 mort et pertes économiques majeures pour le colonat forestier de Kabylie"
+    },
+    "impact_strategique": "Fait immédiatement de la Kabylie (Zone III), aux côtés de l'Aurès (Zone I), le bastion le plus solide et le plus expérimenté de l'insurrection dès novembre 1954.",
+    "sources": [
+      {
+        "titre": "Mohand Ameziane Yazourene (dit Vrirouche), un stratège de la guerre de libération dans la Wilaya III historique — Algérie Presse Service (APS)",
+        "url": "https://www.aps.dz/fr/algerie/societe/mk013dwo-mohand-ameziane-yazourene-un-stratege-de-la-guerre-de-liberation-dans-la-wilaya-iii-historique",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Wilaya III historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_III_historique",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

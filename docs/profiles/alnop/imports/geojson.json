@@ -1,0 +1,29 @@
+{
+  "mapping_schema_version": "1.0.0",
+  "version": "1.0.0",
+  "profile_id": "alnop",
+  "profile_version": "1.0.0",
+  "id": "alnop-geojson-events",
+  "format": "geojson",
+  "fields": {
+    "id": "/properties/id",
+    "title": {
+      "fr": "/properties/nom_operation",
+      "ar": "/properties/nom_operation_ar"
+    },
+    "description": {
+      "fr": "/properties/description",
+      "ar": "/properties/description_ar"
+    },
+    "start_date": "/properties/date_debut",
+    "end_date": "/properties/date_fin",
+    "event_type": "/properties/type_action",
+    "geometry": "/geometry",
+    "geometry_role": "/properties/geometry_role",
+    "location_label": {
+      "fr": "/properties/region_ou_ville"
+    },
+    "source_ids": "/properties/source_ids"
+  },
+  "default_geometry_role": "representative_point"
+}

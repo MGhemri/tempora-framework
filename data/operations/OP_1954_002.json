@@ -1,0 +1,91 @@
+{
+  "id": "OP_1954_002",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Guérilla des Aurès et résistance à l'Opération Eckhmül",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1954-12-01",
+    "latest": "1954-12-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1955-01-31",
+    "latest": "1955-01-31",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif des Aurès et Monts des Nemencha (Arris, Foum Toub, Oued Abdi, Djebel Ahmar Khaddou)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.3422,
+          35.2581
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone I (future Wilaya I - Aurès-Nemencha)",
+  "source_ids": [
+    "SRC_6e2ebda18a25f0dbaa676394",
+    "SRC_d393031bdbc2495cb12842ac"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1954_002",
+    "nom_operation": "Guérilla des Aurès et résistance à l'Opération Eckhmül",
+    "date_debut": "1954-12-01",
+    "date_fin": "1955-01-31",
+    "wilaya_concernee": "Zone I (future Wilaya I - Aurès-Nemencha)",
+    "localisation": {
+      "region_ou_ville": "Massif des Aurès et Monts des Nemencha (Arris, Foum Toub, Oued Abdi, Djebel Ahmar Khaddou)",
+      "coordonnees_approximatives": {
+        "latitude": 35.2581,
+        "longitude": 6.3422
+      }
+    },
+    "commandement_aln": [
+      "Mostefa Ben Boulaïd",
+      "Bachir Chihani",
+      "Abbas Laghrour",
+      "Adjel Adjoul"
+    ],
+    "type_action": "Embuscade",
+    "description": "Face aux premières grandes opérations de ratissage de l'armée française dans les Aurès (opérations Eckhmül, Aloès, Véronique et Violette), les groupes de l'ALN de la Zone I adoptent une tactique de harcèlement mobile, tendant des embuscades le long des pistes de montagne et rompant systématiquement l'encerclement dans les gorges rocheuses.",
+    "bilan_et_pertes": {
+      "aln": "Quelques dizaines de maquisards tués ou capturés durant l'hiver 1954-1955 (arrestation de Mostefa Ben Boulaïd en février 1955 à la frontière tunisienne)",
+      "forces_francaises": "Pertes régulières de patrouilles et de convois par embuscades ; échec de l'encerclement des foyers insurgés",
+      "civils": "Premiers regroupements forcés et bombardements de mechtas dans la vallée de l'Oued Abdi"
+    },
+    "impact_strategique": "L'échec des opérations Eckhmül et Véronique démontre l'impossibilité pour l'armée française d'étouffer rapidement l'insurrection dans son sanctuaire des Aurès et conduit à l'instauration de l'état d'urgence en avril 1955.",
+    "sources": [
+      {
+        "titre": "Opération Eckhmül — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Op%C3%A9ration_Eckhm%C3%BCl",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Guerre d'Algérie — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Guerre_d%27Alg%C3%A9rie",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

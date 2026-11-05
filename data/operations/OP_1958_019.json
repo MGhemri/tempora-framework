@@ -1,0 +1,100 @@
+{
+  "id": "OP_1958_019",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Sabotages d'installations pétrolières et ferroviaires à Bordeaux et au bec d'Ambès (Gironde)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-08-25",
+    "latest": "1958-08-25",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-09-20",
+    "latest": "1958-09-20",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Bordeaux, Bassens et zone pétrochimique du bec d'Ambès (Gironde, Nouvelle-Aquitaine)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.5289,
+          45.0111
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Fédération de France du FLN (« 7e Wilaya » - Organisation Spéciale / Aquitaine)",
+  "source_ids": [
+    "SRC_b38dc8dd2d28aae6984c43d4",
+    "SRC_77e91f24bac9644187d20029",
+    "SRC_8a2fd1ade2f7ecfb00f30d2a",
+    "SRC_7c29e835bad1fae75a3bb918"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_019",
+    "nom_operation": "Sabotages d'installations pétrolières et ferroviaires à Bordeaux et au bec d'Ambès (Gironde)",
+    "date_debut": "1958-08-25",
+    "date_fin": "1958-09-20",
+    "wilaya_concernee": "Fédération de France du FLN (« 7e Wilaya » - Organisation Spéciale / Aquitaine)",
+    "localisation": {
+      "region_ou_ville": "Bordeaux, Bassens et zone pétrochimique du bec d'Ambès (Gironde, Nouvelle-Aquitaine)",
+      "coordonnees_approximatives": {
+        "latitude": 45.0111,
+        "longitude": -0.5289
+      }
+    },
+    "commandement_aln": [
+      "Commandos de l'OS de la Fédération de France (Secteur Sud-Ouest / Bordeaux)"
+    ],
+    "type_action": "Sabotage",
+    "description": "Les commandos de l'OS du secteur aquitain mènent des actions de sabotage à l'explosif visant les dépôts pétroliers de l'estuaire de la Gironde (bec d'Ambès et Bassens) ainsi que les voies ferrées de la ligne Paris-Bordeaux-Hendaye et des postes de police de l'agglomération bordelaise.",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs artificiers et militants arrêtés par la DST de Bordeaux en septembre 1958",
+      "forces_francaises": "Dégâts matériels sur les installations ferroviaires et portuaires ; déploiement de gardes mobiles sur l'estuaire de la Gironde",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "Étend le second front métropolitain jusqu'à la façade atlantique, forçant les autorités françaises à disperser leurs forces de sécurité sur l'ensemble du territoire national.",
+    "sources": [
+      {
+        "titre": "L'Organisation Spéciale de la Fédération de France du FLN — Cairn.info",
+        "url": "https://shs.cairn.info/l-organisation-speciale-de-la-federation-de-france--9789961638798-page-233?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Combattre en Algérie, combattre en métropole — Ministère des Armées (Chemins de mémoire)",
+        "url": "https://www.defense.gouv.fr/chemins-memoire/histoire-memoires/ressources-historiques/guerre-dalgerie/combattre-algerie-combattre-metropole-2",
+        "type_source": "Archive"
+      },
+      {
+        "titre": "Combats des monts de Tiaret et des forêts de Frenda (insaniyat.crasc.dz)",
+        "url": "https://insaniyat.crasc.dz/en/article/les-wilayas-dans-la-crise-du-fln-de-lete-1962",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Combats des monts de Tiaret et des forêts de Frenda (fr.wikipedia.org)",
+        "url": "https://fr.wikipedia.org/wiki/Plan_Challe",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

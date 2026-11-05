@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TEMPORA — Analyses documentaires · TEMPORA</title><script>const base=document.createElement('base');base.href=location.pathname.split('/documentation')[0].replace(/\/api\/docs$/,'')+'/documentation/';document.head.append(base);</script><link rel="stylesheet" href="documentation.css"><script src="../site-context.js?v=4.3"></script></head><body><main><nav><a data-atlas-link href="../index.html">Atlas ALNOP · الأطلس</a><a href="../contribute.html">Contribuer · ساهم</a><a href="index.html">Documentation · الوثائق</a></nav><p class="documentation-context"><span data-framework-presentation>TEMPORA — Framework pour les corpus historiques</span><span data-profile-presentation hidden>ALNOP — Profil du framework TEMPORA</span></p><h1 id="tempora--analyses-documentaires">TEMPORA — Analyses documentaires</h1>
+<p>Les analyses locales v3 produisent des pistes de revue à partir d’un corpus et de son profil. Chaque rapport identifie le corpus par son empreinte SHA-256 et indique les versions des méthodes, les paramètres et le périmètre de calcul.</p>
+<h2 id="produire-un-rapport">Produire un rapport</h2>
+<p>Pour analyser la copie v3 du corpus ALNOP créée par la migration locale, indiquer son chemin. La commande écrit le rapport JSON sur la sortie standard.</p>
+<pre><code class="language-sh">npm run --silent quality:tempora -- --base work/tempora-v3/corpus-v3.json
+</code></pre>
+<p>Le périmètre par défaut est <code>published</code>. Utiliser <code>--scope working</code> pour une copie de travail qui inclut les propositions et les notices en revue. Conserver ces rapports dans un espace privé. L’option <code>--parameters fichier.json</code> permet de fixer <code>title_threshold</code>, <code>shared_place_threshold</code>, <code>entity_threshold</code>, <code>nearby_km</code> et <code>max_pairs</code>. Le plafond du nombre de paires déclenche une erreur explicite si le calcul le dépasse.</p>
+<h2 id="interpréter-les-résultats">Interpréter les résultats</h2>
+<table>
+<thead>
+<tr>
+<th>Analyse</th>
+<th>Éléments fournis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Doublons possibles</td>
+<td>Similarité des titres dans les langues disponibles, relation entre dates, lieux, types et sources en commun</td>
+</tr>
+<tr>
+<td>Entités à examiner</td>
+<td>Noms et variantes du même type d’entité, preuves des graphies et périodes de validité</td>
+</tr>
+<tr>
+<td>Assertions divergentes</td>
+<td>Sujet et prédicat communs, valeurs, unités, contexte, références et motif de comparaison</td>
+</tr>
+<tr>
+<td>Couverture</td>
+<td>Comptages et identifiants par période de départ, territoire, type, langue et disponibilité des preuves</td>
+</tr>
+</tbody>
+</table>
+<p>Un rapprochement de titre ou de nom propose une revue humaine. Les noms récurrents et les homonymes peuvent produire des rapprochements erronés. Le rapprochement lexical peut manquer une description dans une autre langue quand les titres et variantes n’ont pas de forme commune.</p>
+<p>Pour les assertions, une différence numérique porte sur des valeurs comparables seulement quand le contexte et l’unité sont établis. Les intervalles qui se recouvrent, les unités distinctes, le zéro et les valeurs inconnues restent séparés. Les textes sont comparés dans les langues communes déclarées. Les divergences textuelles et les contradictions déjà signalées ont leurs propres motifs.</p>
+<h2 id="comparer-deux-événements">Comparer deux événements</h2>
+<pre><code class="language-sh">npm run --silent quality:tempora -- --base corpus.json --event EVENEMENT_A --event EVENEMENT_B
+</code></pre>
+<p>Le rapport distingue la relation des dates de départ et celle des périodes complètes. Des bornes insuffisantes donnent un résultat indéterminé. Le rapport complet fournit aussi une séquence triée sur la première borne de départ connue.</p>
+<p>Pour la proximité, la distance entre deux centres utilise les points dont le rôle de site et la précision sont déclarés. La fourchette combine les rayons de précision fournis. Elle reste indicative et dépend de ces déclarations. Les points représentatifs sont exclus de ce calcul.</p>
+<h2 id="comparer-deux-états-du-corpus">Comparer deux états du corpus</h2>
+<pre><code class="language-sh">npm run --silent quality:tempora -- --base actuel.json --compare precedent.json
+</code></pre>
+<p>La comparaison exige le même profil, le même périmètre et la même méthode de couverture. Elle donne les empreintes, dénominateurs et écarts par groupe. Un événement avec plusieurs territoires, types ou langues contribue à plusieurs groupes. Les parts se lisent par rapport au total des événements du périmètre. Les années déclarées et sans notice ont un compte de zéro. Les périodes ouvertes ou inconnues sont regroupées à part.</p>
+<p>Les comptages mesurent la densité documentaire du corpus. Leur interprétation dépend notamment de la sélection des sources, de leur conservation, de leur numérisation et des contributions. Un groupe vide indique l’absence de notice observée dans le périmètre analysé.</p>
+<h2 id="évaluer-les-pistes-de-revue">Évaluer les pistes de revue</h2>
+<pre><code class="language-sh">npm run --silent quality:tempora:reference
+</code></pre>
+<p>Ce jeu indépendant est fictif et utilise un profil anglais et espagnol. Les labels sont fixés par les scénarios. Le rapport indique les vrais et faux positifs et négatifs, la précision, le rappel et le score F1 par tâche et sous-groupe. Les mesures de contradiction portent sur la détection de valeurs potentiellement incompatibles. Les contradictions déjà enregistrées sont exclues de cette évaluation.</p>
+<p>Pour un autre jeu fictif, utiliser <code>--annotations fichier.json</code> avec la version <code>1.0.0</code>, la portée <code>synthetic</code>, l’empreinte <code>corpus_sha256</code>, le <code>protocol</code> et des <code>cases</code> déclarant <code>task</code>, deux <code>ids</code>, le booléen <code>expected</code>, le sous-groupe <code>group</code> et la justification <code>rationale</code>. Les tâches disponibles sont <code>duplicates</code>, <code>entities</code> et <code>claims</code>. Les mesures publiées par cette commande concernent uniquement les scénarios annotés.</p>
+</main></body></html>

@@ -1,0 +1,82 @@
+{
+  "id": "OP_1958_043",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille du Djebel Ksel à El Bayadh",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-04-17",
+    "latest": "1958-04-17",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-04-18",
+    "latest": "1958-04-18",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Djebel Ksel / El Bayadh",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.15081,
+          33.72114
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 7 / Front Sud-Oranais - El Bayadh)",
+  "source_ids": [
+    "SRC_c90f3723334d6308b7316848"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_043",
+    "nom_operation": "Bataille du Djebel Ksel à El Bayadh",
+    "date_debut": "1958-04-17",
+    "date_fin": "1958-04-18",
+    "wilaya_concernee": "Wilaya V (Zone 7 / Front Sud-Oranais - El Bayadh)",
+    "localisation": {
+      "region_ou_ville": "Djebel Ksel / El Bayadh",
+      "coordonnees_approximatives": {
+        "latitude": 33.72114,
+        "longitude": 1.15081
+      }
+    },
+    "commandement_aln": [
+      "Commandement ALN Zone 7 / Djebel Amour"
+    ],
+    "type_action": "Guérilla de montagne / Combat de rencontre",
+    "description": "Bataille majeure livrée pendant deux jours dans le massif du Ksel contre d'importantes forces coloniales appuyées par des bombardements aériens.",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs dizaines de moudjahidine tombés au champ d'honneur",
+      "forces_francaises": "Lourdes pertes en hommes et matériel pour l'armée coloniale",
+      "civils": "0"
+    },
+    "impact_strategique": "Affirmation de la présence de l'ALN sur les crêtes de l'Atlas saharien et échec des tentatives d'éradication des maquis d'El Bayadh.",
+    "sources": [
+      {
+        "titre": "La wilaya d'El Bayadh commémore l'une des épopées héroïques face au colonialisme français (APS)",
+        "url": "https://www.aps.dz/fr/algerie/societe/mo4g3cyp-la-wilaya-d-el-bayadh-commemore-l-une-des-epopees-heroiques-face-au-colonialisme-francais",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "id": "OP_1958_038",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille de Guediret (Gdirat) dans le secteur de Youb",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-03-19",
+    "latest": "1958-03-19",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Djebel Guediret / Youb (Saïda / Sidi Bel Abbès)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.235,
+          34.958
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 5 / Zone 6 - Secteur Daoud-Berthelot / Youb)",
+  "source_ids": [
+    "SRC_890a5057f3dcdf9fff6d5b9f"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_038",
+    "nom_operation": "Bataille de Guediret (Gdirat) dans le secteur de Youb",
+    "date_debut": "1958-03-19",
+    "date_fin": null,
+    "wilaya_concernee": "Wilaya V (Zone 5 / Zone 6 - Secteur Daoud-Berthelot / Youb)",
+    "localisation": {
+      "region_ou_ville": "Djebel Guediret / Youb (Saïda / Sidi Bel Abbès)",
+      "coordonnees_approximatives": {
+        "latitude": 34.958,
+        "longitude": -0.235
+      }
+    },
+    "commandement_aln": [
+      "Commandement conjoint Zones 5 et 6"
+    ],
+    "type_action": "Combat de rencontre / Guérilla de montagne",
+    "description": "Affrontement armé sur les crêtes du Djebel Guediret dans le secteur Daoud–Berthelot (Youb), documenté par Abdelhak Kerkeb.",
+    "bilan_et_pertes": {
+      "aln": "Une douzaine de martyrs",
+      "forces_francaises": "Lourdes pertes infligées aux colonnes de ratissage françaises",
+      "civils": "0"
+    },
+    "impact_strategique": "Contrôle des zones de passage stratégiques entre Saïda et Sidi Bel Abbès face aux offensives coloniales printanières.",
+    "sources": [
+      {
+        "titre": "Étude historique sur la Zone 5 de la Wilaya V (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/127641",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

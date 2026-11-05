@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Contribuer au corpus ALNOP
+    url: https://github.com/MGhemri/aln-historical-operations-dataset/issues/new/choose
+    about: Proposer une notice, une source ou une correction pour le profil historique ALNOP.

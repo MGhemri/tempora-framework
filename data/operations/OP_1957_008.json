@@ -1,0 +1,96 @@
+{
+  "id": "OP_1957_008",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Attentats des lampadaires et du Casino de la Corniche (Bataille d'Alger)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-06-03",
+    "latest": "1957-06-03",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-06-09",
+    "latest": "1957-06-09",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Arrêts de bus du centre d'Alger et Casino de la Corniche (Pointe-Pescade / Saint-Eugène, Alger)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.0336,
+          36.8092
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone autonome d'Alger (ZAA)",
+  "source_ids": [
+    "SRC_4231d2cb5c63295af6c2fd7c",
+    "SRC_e2b57dbc76901ae5412db75d",
+    "SRC_430fb83914595ff648684164"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_008",
+    "nom_operation": "Attentats des lampadaires et du Casino de la Corniche (Bataille d'Alger)",
+    "date_debut": "1957-06-03",
+    "date_fin": "1957-06-09",
+    "wilaya_concernee": "Zone autonome d'Alger (ZAA)",
+    "localisation": {
+      "region_ou_ville": "Arrêts de bus du centre d'Alger et Casino de la Corniche (Pointe-Pescade / Saint-Eugène, Alger)",
+      "coordonnees_approximatives": {
+        "latitude": 36.8092,
+        "longitude": 3.0336
+      }
+    },
+    "commandement_aln": [
+      "Yacef Saâdi",
+      "Ali Ammar dit Ali la Pointe",
+      "Mahmoud Bouhamidi"
+    ],
+    "type_action": "Guérilla urbaine",
+    "description": "Dernière grande offensive terroriste de la ZAA pendant la Bataille d'Alger : le 3 juin 1957, trois bombes dissimulées dans les socles de lampadaires près d'arrêts d'autobus explosent à l'heure de pointe ; le 9 juin 1957, une bombe placée sous l'estrade de l'orchestre dévaste le dancing du Casino de la Corniche.",
+    "bilan_et_pertes": {
+      "aln": "Traque finale des réseaux de la ZAA menant à l'arrestation de Yacef Saâdi (24 septembre 1957) et à la mort d'Ali la Pointe, Hassiba Ben Bouali, Mahmoud Bouhamidi et Petit Omar (8 octobre 1957)",
+      "forces_francaises": "Aucune perte militaire lors des deux explosions",
+      "civils": "8 morts et 90 blessés le 3 juin (lampadaires) ; 8 à 9 morts et plus de 80 blessés le 9 juin (Casino de la Corniche), suivis d'émeutes anti-algériennes meurtrières le 11 juin lors des obsèques"
+    },
+    "impact_strategique": "Point culminant de la spirale des attentats urbains à Alger avant le retour des régiments parachutistes de Massu dans la Casbah qui achèvent le démantèlement de la ZAA à l'automne 1957.",
+    "sources": [
+      {
+        "titre": "Bataille d'Alger — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Bataille_d%27Alger",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Algérie : des « événements » à la guerre — Cairn.info",
+        "url": "https://shs.cairn.info/algerie-des-evenements-a-la-guerre--9782846703949-page-63?lang=fr&tab=feuilleteur",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Attentats pendant la guerre d'Algérie — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Attentats_pendant_la_guerre_d%27Alg%C3%A9rie",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

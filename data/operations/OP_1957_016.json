@@ -1,0 +1,88 @@
+{
+  "id": "OP_1957_016",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille de Ketfa Saouda (Tamza / Massif de l'Aurès)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-01-25",
+    "latest": "1957-01-25",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-01-25",
+    "latest": "1957-01-25",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Mont de Ketfa Saouda (ou El Ketfa), commune de Tamza, près d'El Hamma et Khenchela (Wilaya de Khenchela)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.95,
+          35.3917
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya I (Aurès-Nemencha - Secteur de Tamza / Khenchela)",
+  "source_ids": [
+    "SRC_b15539b5a97ff2bb2458e25e",
+    "SRC_906cdde683fd914e4fa89d5e"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_016",
+    "nom_operation": "Bataille de Ketfa Saouda (Tamza / Massif de l'Aurès)",
+    "date_debut": "1957-01-25",
+    "date_fin": "1957-01-25",
+    "wilaya_concernee": "Wilaya I (Aurès-Nemencha - Secteur de Tamza / Khenchela)",
+    "localisation": {
+      "region_ou_ville": "Mont de Ketfa Saouda (ou El Ketfa), commune de Tamza, près d'El Hamma et Khenchela (Wilaya de Khenchela)",
+      "coordonnees_approximatives": {
+        "latitude": 35.3917,
+        "longitude": 6.95
+      }
+    },
+    "commandement_aln": [
+      "Commandants des katibas du secteur de Khenchela - Tamza (Wilaya I)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Le 25 janvier 1957, un groupement de 240 moudjahidine de la Wilaya I positionné sur le relief stratégique de Ketfa Saouda (commune de Tamza, à l'ouest de Khenchela) affronte dès l'aube un encerclement massif de l'armée française appuyée par des blindés, de l'artillerie et l'aviation. Le combat fait rage toute la journée dans la neige et le froid des Aurès jusqu'à la percée nocturne des survivants.",
+    "bilan_et_pertes": {
+      "aln": "57 moudjahidine tombés au champ d'honneur",
+      "forces_francaises": "Lourdes pertes estimées à plusieurs dizaines de soldats français tués et blessés lors des assauts frontaux",
+      "civils": "Ratissage et destruction de mechtas dans la vallée de Tamza"
+    },
+    "impact_strategique": "Considérée comme l'une des batailles les plus importantes et les plus meurtrières de l'hiver 1957 en Wilaya I historique, illustrant la férocité des combats dans le massif du Chélia et de Tamza.",
+    "sources": [
+      {
+        "titre": "Khenchela : La bataille de Ketfa Saouda, une des plus importantes de la Wilaya I historique — El Watan",
+        "url": "https://elwatan.dz/khenchela-la-bataille-de-ketfa-saouda-une-des-plus-importantes-de-la-wilaya-i-historique/",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Wilaya I historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_I_historique",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

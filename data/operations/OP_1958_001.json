@@ -1,0 +1,155 @@
+{
+  "id": "OP_1958_001",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Attaque antiaérienne de l'ALN et incident frontalier de Sakiet Sidi Youssef",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-01-11",
+    "latest": "1958-01-11",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-02-08",
+    "latest": "1958-02-08",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Secteur frontalier d'El Meridj (Wilaya de Tébessa) et Sakiet Sidi Youssef (Tunisie)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.355,
+          36.2219
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Base de l'Est (Frontière algéro-tunisienne)",
+  "source_ids": [
+    "SRC_9e609aca81d2da721bda6af4",
+    "SRC_bd13f0a868eefe619edf9502",
+    "SRC_0d0e7a86ae75c84323886098",
+    "SRC_c370d107b4e86adbe4652cbf",
+    "SRC_6cff215b7040b46b68ccc044",
+    "SRC_c896db3ce9e485c980900542",
+    "SRC_0312a35380e1b176460f4867",
+    "SRC_0d3edff39b9f9cbf071db1a3",
+    "SRC_e68ad99b69ef8dbe915f6fc7",
+    "SRC_8433ac019c8d2d48abc121f0",
+    "SRC_18930cfa0588e19652617f28",
+    "SRC_e8fa51a23465e2e9772f977b",
+    "SRC_8e99d4b0d9ed5c3bff8dee87"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_001",
+    "nom_operation": "Attaque antiaérienne de l'ALN et incident frontalier de Sakiet Sidi Youssef",
+    "date_debut": "1958-01-11",
+    "date_fin": "1958-02-08",
+    "wilaya_concernee": "Base de l'Est (Frontière algéro-tunisienne)",
+    "localisation": {
+      "region_ou_ville": "Secteur frontalier d'El Meridj (Wilaya de Tébessa) et Sakiet Sidi Youssef (Tunisie)",
+      "coordonnees_approximatives": {
+        "latitude": 36.2219,
+        "longitude": 8.355
+      }
+    },
+    "commandement_aln": [
+      "Amara Bouglez",
+      "Mohamed Chérif Mahmoud"
+    ],
+    "type_action": "Embuscade",
+    "description": "Le 11 janvier 1958, une unité de l'ALN venue de Sakiet Sidi Youssef tend une embuscade près de la frontière algéro-tunisienne contre une patrouille du 23e RI (15 soldats français tués et 5 faits prisonniers), puis ouvre le feu à la mitrailleuse lourde les 7 et 8 février contre des avions français survolant la frontière. En représailles, l'aviation française bombarde le village tunisien de Sakiet Sidi Youssef le 8 février 1958.",
+    "bilan_et_pertes": {
+      "aln": "Quelques combattants blessés ; destruction d'installations de la base arrière",
+      "forces_francaises": "15 soldats tués et 5 prisonniers lors de l'embuscade du 11 janvier ; 2 avions français endommagés par la DCA de l'ALN",
+      "civils": "72 morts (dont 12 enfants d'une école) et 148 blessés civils tunisiens et réfugiés algériens lors du bombardement français du 8 février"
+    },
+    "impact_strategique": "Crise diplomatique internationale majeure : la Tunisie porte plainte devant le Conseil de sécurité de l'ONU, l'affaire impose la « mission de bons offices » anglo-américaine qui provoque la chute du gouvernement Félix Gaillard en avril 1958 et précipite la crise du 13 mai 1958.",
+    "sources": [
+      {
+        "titre": "Chronologie de la guerre d'Algérie — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Chronologie_de_la_guerre_d%27Alg%C3%A9rie",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Bataille des frontières (guerre d'Algérie) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Bataille_des_fronti%C3%A8res_(guerre_d%27Alg%C3%A9rie)",
+        "type_source": "Article"
+      },
+      {
+        "titre": "« Bataille des frontières » et franchissement de la ligne Morice (aps.dz)",
+        "url": "https://www.aps.dz/fr/algerie/societe/muct7l2t-tebessa-commemore-le-71e-anniversaire-de-la-grande-bataille-d-el-djorf",
+        "type_source": "Article"
+      },
+      {
+        "titre": "« Bataille des frontières » et franchissement de la ligne Morice (fr.wikipedia.org)",
+        "url": "https://fr.wikipedia.org/wiki/Ligne_Morice",
+        "type_source": "Article"
+      },
+      {
+        "titre": "« Bataille des frontières » et franchissement de la ligne Morice (defense.gouv.fr)",
+        "url": "https://www.defense.gouv.fr/chemins-memoire/histoire-memoires/ressources-historiques/guerre-dalgerie/combattre-algerie-combattre-metropole-3",
+        "type_source": "Article"
+      },
+      {
+        "titre": "« Bataille des frontières » et franchissement de la ligne Morice (en.wikipedia.org)",
+        "url": "https://en.wikipedia.org/wiki/Battle_of_the_borders_(Algerian_War)",
+        "type_source": "Article"
+      },
+      {
+        "titre": "« Bataille des frontières » et franchissement de la ligne Morice (letemps.ch)",
+        "url": "https://www.letemps.ch/opinions/etait-une-ligne-morice-algerie-un-mur-contre-lineluctable",
+        "type_source": "Article"
+      },
+      {
+        "titre": "« Bataille des frontières » et franchissement de la ligne Morice (theatrum-belli.com)",
+        "url": "https://theatrum-belli.com/1er-juin-1956-creation-de-la-25-division-parachutiste/?pdf=378235",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Édification du barrage électrifié Est (Ligne Morice) (algerie360.com)",
+        "url": "https://www.algerie360.com/barrage-electrifie-a-la-frontiere-algero-tunisienneles-maquisards-face-a-la-theorie-du-champ-clos/",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Édification du barrage électrifié Est (Ligne Morice) (echoroukonline.com)",
+        "url": "https://www.echoroukonline.com/15-000-mines-datant-de-la-colonisation-ont-ete-decouvertes-en-octobre",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Édification du barrage électrifié Est (Ligne Morice) (apminebanconvention.org)",
+        "url": "https://old.apminebanconvention.org/fileadmin/APMBC/MSP/16MSP/Algeria-completion-declaration-FR.pdf",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Édification du barrage électrifié Est (Ligne Morice) (jadaliyya.com)",
+        "url": "https://www.jadaliyya.com/Details/41391/Photographing-Confinement",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Édification du barrage électrifié Est (Ligne Morice) (cdn.netboard.me)",
+        "url": "https://cdn.netboard.me/206365/files/8fec082e0efe835d6b4e364f49a4f867.pdf",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

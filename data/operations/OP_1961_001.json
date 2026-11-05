@@ -1,0 +1,97 @@
+{
+  "id": "OP_1961_001",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Campagne d'attaques armées contre les commissariats et la FPA à Paris et Lyon",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1961-01-01",
+    "latest": "1961-01-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1961-10-16",
+    "latest": "1961-10-16",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Agglomération parisienne (13e, 18e, 19e arrondissements, Nanterre, Saint-Denis, Montrouge) et agglomération lyonnaise",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.3592,
+          48.8842
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Fédération de France du FLN (« 7e Wilaya » - Groupes de choc OS)",
+  "source_ids": [
+    "SRC_fc8600613b20f3cea8ffada7",
+    "SRC_8abae4449fe59455ec68d99f",
+    "SRC_d506f526e86025ccb2cdd648"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1961_001",
+    "nom_operation": "Campagne d'attaques armées contre les commissariats et la FPA à Paris et Lyon",
+    "date_debut": "1961-01-01",
+    "date_fin": "1961-10-16",
+    "wilaya_concernee": "Fédération de France du FLN (« 7e Wilaya » - Groupes de choc OS)",
+    "localisation": {
+      "region_ou_ville": "Agglomération parisienne (13e, 18e, 19e arrondissements, Nanterre, Saint-Denis, Montrouge) et agglomération lyonnaise",
+      "coordonnees_approximatives": {
+        "latitude": 48.8842,
+        "longitude": 2.3592
+      }
+    },
+    "commandement_aln": [
+      "Omar Boudaoud",
+      "Ali Haroun",
+      "Rabah Bouaziz",
+      "Abdelkrim Souici"
+    ],
+    "type_action": "Guérilla urbaine",
+    "description": "En riposte à l'implantation à Paris de la Force de police auxiliaire (FPA, supplétifs harkis encadrés par le capitaine Raymond Montaner dans les caves de la Goutte-d'Or et du 13e arrondissement) et à l'intensification des répressions policières, les groupes de choc de l'OS de la Fédération de France lancent en 1961 (avec un pic en juin et entre fin août et début octobre 1961) une campagne coordonnée d'attaques à la mitraillette et au pistolet contre les commissariats de police, les cars de police-secours et les patrouilles en région parisienne et à Lyon.",
+    "bilan_et_pertes": {
+      "aln": "Dizaines de militants des groupes de choc tués ou exécutés sommairement, et des centaines d'arrestations par la police judiciaire et le SCAA",
+      "forces_francaises": "Au moins 22 à 28 policiers et membres de la FPA tués et plus d'une soixantaine blessés en région parisienne entre janvier et octobre 1961 (47 policiers tués à Paris sur l'ensemble de la guerre)",
+      "civils": "Escalade répressive culminant avec le couvre-feu du 5 octobre 1961 et le massacre du 17 octobre 1961 à Paris (plus d'une centaine de manifestants algériens tués)"
+    },
+    "impact_strategique": "Porte la guerre urbaine au cœur de la capitale française pendant les négociations entre le gouvernement français et le GPRA ; la férocité de la riposte du préfet Maurice Papon le 17 octobre 1961 achève de discréditer la politique répressive aux yeux d'une partie de l'opinion publique.",
+    "sources": [
+      {
+        "titre": "Massacre du 17 octobre 1961 et contexte des attentats de l'été-automne 1961 — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Massacre_du_17_octobre_1961",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Fonds des juridictions militaires et dossiers d'attentats du FLN en métropole — FranceArchives",
+        "url": "https://francearchives.gouv.fr/fr/facomponent/211f6b2f72cb3624375b780f8627ed54eefae289",
+        "type_source": "Archive"
+      },
+      {
+        "titre": "Combattre en Algérie, combattre en métropole (2) — Ministère des Armées (Chemins de mémoire)",
+        "url": "https://www.defense.gouv.fr/chemins-memoire/histoire-memoires/ressources-historiques/guerre-dalgerie/combattre-algerie-combattre-metropole-2",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

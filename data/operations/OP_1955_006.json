@@ -1,0 +1,90 @@
+{
+  "id": "OP_1955_006",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille d'Oum Lekmakem dans les Monts des Nemencha",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1955-07-30",
+    "latest": "1955-07-30",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1955-07-31",
+    "latest": "1955-07-31",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Djebel Oum Lekmakem, au sud de Chéria et d'El Ma Labiodh, Monts des Nemencha (Wilaya de Tébessa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.75,
+          35.1167
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya I (Monts des Nemencha - Secteur de Chéria / Tébessa)",
+  "source_ids": [
+    "SRC_19a4b7c537c6c243882fed98",
+    "SRC_b3e51d71f909f0b262908f71"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1955_006",
+    "nom_operation": "Bataille d'Oum Lekmakem dans les Monts des Nemencha",
+    "date_debut": "1955-07-30",
+    "date_fin": "1955-07-31",
+    "wilaya_concernee": "Wilaya I (Monts des Nemencha - Secteur de Chéria / Tébessa)",
+    "localisation": {
+      "region_ou_ville": "Djebel Oum Lekmakem, au sud de Chéria et d'El Ma Labiodh, Monts des Nemencha (Wilaya de Tébessa)",
+      "coordonnees_approximatives": {
+        "latitude": 35.1167,
+        "longitude": 7.75
+      }
+    },
+    "commandement_aln": [
+      "Bachir Chihani (Commandant par intérim de la Zone I)",
+      "Abbas Laghrour",
+      "Lazhar Cheriet"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Le 30 juillet 1955 (jour de l'Aïd El-Adha), environ 300 moudjahidine réunis dans le massif d'Oum Lekmakem sous le commandement de Bachir Chihani et d'Abbas Laghrour affrontent une vaste opération d'encerclement menée par la Légion étrangère, les parachutistes et les blindés français appuyés par l'aviation. Utilisant leur parfaite connaissance des ravins rocheux des Nemencha, les combattants de l'ALN repoussent tous les assauts jusqu'à la tombée de la nuit.",
+    "bilan_et_pertes": {
+      "aln": "Environ 20 à 25 moudjahidine tombés au champ d'honneur",
+      "forces_francaises": "Lourdes pertes parmi les unités d'assaut françaises (plusieurs dizaines de tués et blessés) et 1 avion d'observation endommagé",
+      "civils": "Aucune victime civile (zone montagneuse aride)"
+    },
+    "impact_strategique": "Prélude direct à la célèbre bataille d'El Djorf (septembre 1955), la bataille d'Oum Lekmakem démontre la capacité de la Zone I à manœuvrer à l'échelle de plusieurs compagnies réunies dans les Nemencha.",
+    "sources": [
+      {
+        "titre": "Bachir Chihani et les batailles des Nemencha (1955) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Bachir_Chihani",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Abbas Laghrour — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Abbas_Laghrour",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

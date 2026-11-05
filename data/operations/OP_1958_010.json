@@ -1,0 +1,88 @@
+{
+  "id": "OP_1958_010",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Sabotage du train blindé et attaque de convoi dans le secteur de Saïda - Bouktoub",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-10-11",
+    "latest": "1958-10-11",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-10-12",
+    "latest": "1958-10-12",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Axe ferroviaire Saïda - Bouktoub - Mécheria et monts de Saïda (Wilaya de Saïda / El Bayadh)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.15,
+          34.83
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 6 - Saïda)",
+  "source_ids": [
+    "SRC_dfa71a027a85bd767a092ace",
+    "SRC_71e6e2e6c60f38e95c20fbfd"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_010",
+    "nom_operation": "Sabotage du train blindé et attaque de convoi dans le secteur de Saïda - Bouktoub",
+    "date_debut": "1958-10-11",
+    "date_fin": "1958-10-12",
+    "wilaya_concernee": "Wilaya V (Zone 6 - Saïda)",
+    "localisation": {
+      "region_ou_ville": "Axe ferroviaire Saïda - Bouktoub - Mécheria et monts de Saïda (Wilaya de Saïda / El Bayadh)",
+      "coordonnees_approximatives": {
+        "latitude": 34.83,
+        "longitude": 0.15
+      }
+    },
+    "commandement_aln": [
+      "Chefs de la Zone de Saïda (Wilaya V)"
+    ],
+    "type_action": "Sabotage",
+    "description": "Les artificiers et une katiba de la Wilaya V minent la voie ferrée stratégique reliant Oran et Saïda aux bases militaires de Mécheria et Colomb-Béchar. L'explosion fait dérailler une rame protégée par un wagon blindé près de Bouktoub, immédiatement prise sous le feu des armes automatiques de l'ALN avant l'intervention des troupes du 8e régiment d'infanterie motorisée et de la Légion.",
+    "bilan_et_pertes": {
+      "aln": "Quelques blessés lors du décrochage nocturne vers les forêts de Saïda",
+      "forces_francaises": "Déraillement de la locomotive et de plusieurs wagons, une quinzaine de soldats d'escorte tués ou blessés",
+      "civils": "Interruption du trafic ferroviaire vers le Sud-Oranais pendant plusieurs jours"
+    },
+    "impact_strategique": "Perturbe gravement le ravitaillement logistique français à destination des garnisons du Sahara et du centre d'essais de Colomb-Béchar.",
+    "sources": [
+      {
+        "titre": "Les opérations militaires en Wilaya V historique — Revue académique CERIST (ASJP)",
+        "url": "https://asjp.cerist.dz/en/downArticle/686/10/1/290720",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Inventaire des archives de la Guerre d'Algérie (Département de Saïda / Oran) — ANOM",
+        "url": "https://recherche-anom.culture.gouv.fr/ark:/61561/zf476wvrwx",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

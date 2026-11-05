@@ -1,0 +1,96 @@
+{
+  "id": "OP_1957_037",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille du Djebel Gaïga et du Djebel Doum (Secteur de Messaad - Aïn El Ibel)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-07-16",
+    "latest": "1957-07-16",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-07-17",
+    "latest": "1957-07-17",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massifs du Djebel Gaïga et du Djebel Doum, entre Messaad, Aïn El Ibel et Zaccar (Wilaya de Djelfa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.3667,
+          34.2167
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya VI (Zone 2 - Monts des Ouled Naïl / Messaad / Aïn El Ibel)",
+  "source_ids": [
+    "SRC_1a6bcf340064e1c0178965cd",
+    "SRC_2b53388b0344e0d4a0716eee",
+    "SRC_25e63c2653ade22da7903d81"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_037",
+    "nom_operation": "Bataille du Djebel Gaïga et du Djebel Doum (Secteur de Messaad - Aïn El Ibel)",
+    "date_debut": "1957-07-16",
+    "date_fin": "1957-07-17",
+    "wilaya_concernee": "Wilaya VI (Zone 2 - Monts des Ouled Naïl / Messaad / Aïn El Ibel)",
+    "localisation": {
+      "region_ou_ville": "Massifs du Djebel Gaïga et du Djebel Doum, entre Messaad, Aïn El Ibel et Zaccar (Wilaya de Djelfa)",
+      "coordonnees_approximatives": {
+        "latitude": 34.2167,
+        "longitude": 3.3667
+      }
+    },
+    "commandement_aln": [
+      "Si El Haouès",
+      "Omar Driss",
+      "Mohamed Chaâbani"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Les katibas de la Wilaya VI dirigées par Si El Haouès, Omar Driss et Mohamed Chaâbani affrontent pendant deux jours dans les massifs du Djebel Gaïga et du Djebel Doum (près de Messaad et d'Aïn El Ibel) d'importantes colonnes motorisées et aéroportées françaises, utilisant les grottes et ravins des monts des Ouled Naïl pour briser les vagues d'assaut.",
+    "bilan_et_pertes": {
+      "aln": "Une vingtaine de moudjahidine tombés au champ d'honneur",
+      "forces_francaises": "Lourdes pertes parmi les unités d'assaut françaises et destruction de plusieurs camions et half-tracks",
+      "civils": "Aucune victime civile directe"
+    },
+    "impact_strategique": "Consolide le triangle fortifié Djelfa - Messaad - Djebel Bouk'hil comme réduit central de la Wilaya VI.",
+    "sources": [
+      {
+        "titre": "Les batailles de la Wilaya VI historique — Revue académique CERIST (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/280826",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Si El Haouès — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Si_El_Haou%C3%A8s",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Combats et opération de Timimoun (gloriousalgeria.dz)",
+        "url": "https://gloriousalgeria.dz/Fr/Post/show/125/La-Phase-d-Organisation-et-de-Propagation-1956-1958",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

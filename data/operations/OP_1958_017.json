@@ -1,0 +1,89 @@
+{
+  "id": "OP_1958_017",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Sabotages ferroviaires et électriques dans le bassin minier et sidérurgique du Nord (Douai - Valenciennes)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-08-26",
+    "latest": "1958-08-26",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-09-18",
+    "latest": "1958-09-18",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Bassin minier et sidérurgique de Douai, Valenciennes, Denain et Maubeuge (Département du Nord)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.5183,
+          50.3572
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Fédération de France du FLN (« 7e Wilaya » - Wilaya du Nord)",
+  "source_ids": [
+    "SRC_64158d24b501d641539e6017",
+    "SRC_5d483ec9e496c04a12cbec1b"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_017",
+    "nom_operation": "Sabotages ferroviaires et électriques dans le bassin minier et sidérurgique du Nord (Douai - Valenciennes)",
+    "date_debut": "1958-08-26",
+    "date_fin": "1958-09-18",
+    "wilaya_concernee": "Fédération de France du FLN (« 7e Wilaya » - Wilaya du Nord)",
+    "localisation": {
+      "region_ou_ville": "Bassin minier et sidérurgique de Douai, Valenciennes, Denain et Maubeuge (Département du Nord)",
+      "coordonnees_approximatives": {
+        "latitude": 50.3572,
+        "longitude": 3.5183
+      }
+    },
+    "commandement_aln": [
+      "Direction de la Wilaya du Nord de la Fédération de France du FLN",
+      "Groupes de sabotage de l'OS (Secteurs de Douai et Valenciennes)"
+    ],
+    "type_action": "Sabotage",
+    "description": "S'appuyant sur la forte communauté d'ouvriers et de mineurs algériens du Nord et sur la proximité immédiate des bases arrière de Belgique, les commandos de l'OS de la Wilaya du Nord multiplient fin août et en septembre 1958 les sabotages à l'explosif contre des pylônes à haute tension, des postes de transformation électrique, des voies ferrées de marchandises et des commissariats dans le bassin de Douai, Denain et Valenciennes.",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs réseaux démantelés par la DST à l'automne 1958 ; repli d'une partie des cadres vers la Belgique",
+      "forces_francaises": "Dégâts matériels sur le réseau SNCF et EDF du Nord et blessés parmi les patrouilles de police et de gendarmerie",
+      "civils": "Perturbations du trafic ferroviaire industriel dans le bassin du Nord"
+    },
+    "impact_strategique": "Démontre l'importance stratégique de la Wilaya du Nord de la Fédération de France, qui combine action armée contre le tissu industriel lourd et logistique transfrontalière avec la Belgique.",
+    "sources": [
+      {
+        "titre": "Les Algériens dans le Nord pendant la guerre d'indépendance — Presses Universitaires du Septentrion (OpenEdition Books)",
+        "url": "https://books.openedition.org/septentrion/47798?lang=en",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "La guerre d'Algérie dans le Nord : réseaux et actions du FLN — IRHiS (OpenEdition Books)",
+        "url": "https://books.openedition.org/irhis/2322?lang=en",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

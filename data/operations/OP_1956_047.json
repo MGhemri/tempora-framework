@@ -1,0 +1,82 @@
+{
+  "id": "OP_1956_047",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Batailles d'El Kechakcha et d'Ouled El Hadj Brahim à Sidi Khetab",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-01-01",
+    "latest": "1956-01-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-12-31",
+    "latest": "1957-12-31",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Sidi Khetab / Ouled El Hadj Brahim (Relizane)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.495,
+          35.915
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 4 - Bas-Chélif / Relizane)",
+  "source_ids": [
+    "SRC_0f7b5b8e4ff689e733cb39bc"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_047",
+    "nom_operation": "Batailles d'El Kechakcha et d'Ouled El Hadj Brahim à Sidi Khetab",
+    "date_debut": "1956-01-01",
+    "date_fin": "1957-12-31",
+    "wilaya_concernee": "Wilaya V (Zone 4 - Bas-Chélif / Relizane)",
+    "localisation": {
+      "region_ou_ville": "Sidi Khetab / Ouled El Hadj Brahim (Relizane)",
+      "coordonnees_approximatives": {
+        "latitude": 35.915,
+        "longitude": 0.495
+      }
+    },
+    "commandement_aln": [
+      "Commandement ALN Zone 4"
+    ],
+    "type_action": "Guérilla de plaine / Combat de rencontre",
+    "description": "Affrontements héroïques livrés par les moudjahidine du secteur de Sidi Khetab contre des colonnes motorisées et blindées de l'armée française.",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs chouhada",
+      "forces_francaises": "Pertes au sein des détachements de surveillance coloniaux",
+      "civils": "0"
+    },
+    "impact_strategique": "Ancrage des réseaux armés de la Wilaya V dans le bassin agricole du Bas-Chélif.",
+    "sources": [
+      {
+        "titre": "Témoignages sur la Révolution dans le secteur de Relizane (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/286057",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

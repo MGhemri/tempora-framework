@@ -1,0 +1,90 @@
+{
+  "id": "OP_1961_004",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Harcèlements d'artillerie et percées de commandos sur la Ligne Morice (Secteur de Ghardimaou - Souk Ahras - Guelma)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1961-04-12",
+    "latest": "1961-04-12",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1961-04-16",
+    "latest": "1961-04-16",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Secteur frontalier de Souk Ahras, Ouled Driss, Lamy (Bouhadjar) et axe vers Guelma (Wilayas de Souk Ahras, El Tarf et Guelma)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.0167,
+          36.3833
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Armée des Frontières (EMG / Base de l'Est) et Wilaya II",
+  "source_ids": [
+    "SRC_6c47eb744dfa30ac00c2651f",
+    "SRC_5ae0f8fd9b78e71c175ccd73"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1961_004",
+    "nom_operation": "Harcèlements d'artillerie et percées de commandos sur la Ligne Morice (Secteur de Ghardimaou - Souk Ahras - Guelma)",
+    "date_debut": "1961-04-12",
+    "date_fin": "1961-04-16",
+    "wilaya_concernee": "Armée des Frontières (EMG / Base de l'Est) et Wilaya II",
+    "localisation": {
+      "region_ou_ville": "Secteur frontalier de Souk Ahras, Ouled Driss, Lamy (Bouhadjar) et axe vers Guelma (Wilayas de Souk Ahras, El Tarf et Guelma)",
+      "coordonnees_approximatives": {
+        "latitude": 36.3833,
+        "longitude": 8.0167
+      }
+    },
+    "commandement_aln": [
+      "Houari Boumédiène (Chef de l'État-Major Général - EMG)",
+      "Ali Mendjeli",
+      "Chadli Bendjedid (Commandant de zone frontalière Est)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Au printemps 1961, les bataillons lourds de l'ALN stationnés à la frontière tunisienne (ex-Base de l'Est intégrée sous l'État-Major Général) exécutent des tirs coordonnés de mortiers lourds, de canons sans recul et de mitrailleuses contre les postes radars et les fortins de la Ligne Morice/Challe entre Bouhadjar et Souk Ahras, couvrant l'infiltration de commandos de liaison vers la Wilaya II (Guelma / Nord-Constantinois).",
+    "bilan_et_pertes": {
+      "aln": "Quelques pertes lors du franchissement des champs de mines ; repli ordonné des batteries d'appui",
+      "forces_francaises": "Destruction de tronçons du réseau électrifié et pertes parmi les garnisons des postes frontaliers",
+      "civils": "Aucune victime civile (zone frontalière interdite)"
+    },
+    "impact_strategique": "Oblige l'armée française à maintenir plus de 80 000 hommes immobilisés le long de la frontière tunisienne jusqu'à la fin de la guerre pour contenir la menace d'une offensive générale de l'Armée des frontières.",
+    "sources": [
+      {
+        "titre": "Ligne Morice et opérations sur la frontière algéro-tunisienne — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Ligne_Morice",
+        "type_source": "Article"
+      },
+      {
+        "titre": "La guerre de libération et la Base de l'Est — Cairn.info",
+        "url": "https://shs.cairn.info/guerre-de-liberation--9789961634547-page-127?lang=fr",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

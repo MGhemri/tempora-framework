@@ -1,0 +1,126 @@
+{
+  "id": "OP_1957_007",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Attentat ciblé contre Ali Chekkal au stade olympique de Colombes",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-05-26",
+    "latest": "1957-05-26",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Stade olympique Yves-du-Manoir, Colombes (Hauts-de-Seine, région parisienne)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.2478,
+          48.9292
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Fédération de France du FLN (« 7e Wilaya »)",
+  "source_ids": [
+    "SRC_e783bed83dba004b941117a0",
+    "SRC_0534be8397c0ee6807e13152",
+    "SRC_306aede342a3c9b0a41f305c",
+    "SRC_cbda1c72f1423cb4a4abb36c",
+    "SRC_de25e6d051a578427fc9f10e",
+    "SRC_83a45503a7958411eabf418d",
+    "SRC_04577d3ff454187e49ef80fe",
+    "SRC_ec6d97d1a2ead681288dc2cd"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_007",
+    "nom_operation": "Attentat ciblé contre Ali Chekkal au stade olympique de Colombes",
+    "date_debut": "1957-05-26",
+    "date_fin": null,
+    "wilaya_concernee": "Fédération de France du FLN (« 7e Wilaya »)",
+    "localisation": {
+      "region_ou_ville": "Stade olympique Yves-du-Manoir, Colombes (Hauts-de-Seine, région parisienne)",
+      "coordonnees_approximatives": {
+        "latitude": 48.9292,
+        "longitude": 2.2478
+      }
+    },
+    "commandement_aln": [
+      "Omar Boudaoud",
+      "Mohamed Lebjaoui",
+      "Mohamed Ben Sadok"
+    ],
+    "type_action": "Attentat ciblé",
+    "description": "À l'issue de la finale de la Coupe de France de football au stade de Colombes, en présence du président de la République française René Coty dans la tribune présidentielle, le militant du FLN Mohamed Ben Sadok s'approche d'Ali Chekkal (ancien vice-président de l'Assemblée algérienne et membre de la délégation française à l'ONU, condamné à mort par le FLN) et l'abat à bout portant.",
+    "bilan_et_pertes": {
+      "aln": "Arrestation immédiate de Mohamed Ben Sadok (condamné aux travaux forcés à perpétuité en décembre 1957)",
+      "forces_francaises": "Aucune perte",
+      "civils": "1 mort ciblé (Ali Chekkal)"
+    },
+    "impact_strategique": "Retentissement médiatique et politique considérable en France et à l'étranger : frappant à quelques mètres du chef de l'État français, le FLN prouve qu'il peut atteindre ses cibles politiques les plus protégées jusqu'au cœur de Paris.",
+    "sources": [
+      {
+        "titre": "Le procès de Mohamed Ben Sadok — Bibliothèque nationale de France (BnF)",
+        "url": "https://expositions.bnf.fr/sartre/grand/224.htm",
+        "type_source": "Archive"
+      },
+      {
+        "titre": "L'attentat du stade de Colombes (26 mai 1957) — OpenEdition Journals",
+        "url": "https://journals.openedition.org/genesis/1376",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Attentat du Casino de la Corniche (pressreader.com)",
+        "url": "https://www.pressreader.com/uk/history-of-war/20171102/282565903401480",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Attentat du Casino de la Corniche (tnp-villeurbanne.com)",
+        "url": "https://www.tnp-villeurbanne.com/app/uploads/2022/09/6.-les-scenes-historiques-et-contemporaines.pdf",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Attentat du Casino de la Corniche (herodote.net)",
+        "url": "https://www.herodote.net/histoire01071.php",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Attentat du Casino de la Corniche (hal.parisnanterre.fr)",
+        "url": "https://hal.parisnanterre.fr/hal-04282961v1/document",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Attentat du Casino de la Corniche (dzexams.pro)",
+        "url": "https://dzexams.pro/ar/bac/fr_le_2019.pdf",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Attentat du Casino de la Corniche (registry.newsreels.net)",
+        "url": "https://registry.newsreels.net/stories/83743",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

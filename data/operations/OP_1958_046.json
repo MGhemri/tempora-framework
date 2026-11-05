@@ -1,0 +1,82 @@
+{
+  "id": "OP_1958_046",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combat d'Oued El Kifah (Secteur de Tefrit)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-03-10",
+    "latest": "1958-03-10",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Oued El Kifah / Tefrit (Saïda)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.078,
+          34.745
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 6 - Saïda)",
+  "source_ids": [
+    "SRC_5312786efc1a1a9bbf77a255"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_046",
+    "nom_operation": "Combat d'Oued El Kifah (Secteur de Tefrit)",
+    "date_debut": "1958-03-10",
+    "date_fin": null,
+    "wilaya_concernee": "Wilaya V (Zone 6 - Saïda)",
+    "localisation": {
+      "region_ou_ville": "Oued El Kifah / Tefrit (Saïda)",
+      "coordonnees_approximatives": {
+        "latitude": 34.745,
+        "longitude": 0.078
+      }
+    },
+    "commandement_aln": [
+      "Détachement ALN de Tefrit"
+    ],
+    "type_action": "Embuscade / Combat de rencontre",
+    "description": "Accrochage violent dans les gorges d'Oued El Kifah où les moudjahidine interceptent une patrouille française de reconnaissance.",
+    "bilan_et_pertes": {
+      "aln": "Pertes minimes",
+      "forces_francaises": "Véhicules endommagés et militaires coloniaux mis hors de combat",
+      "civils": "0"
+    },
+    "impact_strategique": "Interdiction aux forces françaises d'accéder librement aux zones refuges de Tefrit.",
+    "sources": [
+      {
+        "titre": "Étude historique sur la Zone 6 (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/254394",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

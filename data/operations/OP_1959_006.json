@@ -1,0 +1,113 @@
+{
+  "id": "OP_1959_006",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Campagne d'attaques armées des groupes de choc du FLN dans le bassin sidérurgique de Metz et Thionville",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1959-04-10",
+    "latest": "1959-04-10",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1959-11-30",
+    "latest": "1959-11-30",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Metz, Thionville, Hayange, Hagondange et vallée de la Fensch / Orne (Moselle, Lorraine)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.1757,
+          49.1193
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Fédération de France du FLN (« 7e Wilaya » - Wilaya de l'Est / Moselle)",
+  "source_ids": [
+    "SRC_d3d22428019bf52356dbeb64",
+    "SRC_074bf2dbafa6caf828907e7a",
+    "SRC_df39145eb2d5716cb83a08c1",
+    "SRC_51031ba6c869d2f9730854fe",
+    "SRC_4389c3896cad1837ddf7f87c",
+    "SRC_75b5d11488a4a5a498c47b41"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1959_006",
+    "nom_operation": "Campagne d'attaques armées des groupes de choc du FLN dans le bassin sidérurgique de Metz et Thionville",
+    "date_debut": "1959-04-10",
+    "date_fin": "1959-11-30",
+    "wilaya_concernee": "Fédération de France du FLN (« 7e Wilaya » - Wilaya de l'Est / Moselle)",
+    "localisation": {
+      "region_ou_ville": "Metz, Thionville, Hayange, Hagondange et vallée de la Fensch / Orne (Moselle, Lorraine)",
+      "coordonnees_approximatives": {
+        "latitude": 49.1193,
+        "longitude": 6.1757
+      }
+    },
+    "commandement_aln": [
+      "Direction de la Wilaya de l'Est de la Fédération de France du FLN",
+      "Groupes de choc de l'OS de Moselle"
+    ],
+    "type_action": "Attentat ciblé",
+    "description": "Dans le bassin sidérurgique et minier lorrain (Metz, Thionville, vallée de la Fensch), où travaille une très importante main-d'œuvre algérienne et à proximité immédiate des bases arrière du FLN en Allemagne fédérale (Sarre) et au Luxembourg, les groupes de choc de l'OS mènent tout au long de l'année 1959 des attaques armées ciblées contre des commissariats, des militaires en permission, des gendarmes et des réseaux de renseignement français.",
+    "bilan_et_pertes": {
+      "aln": "Nombreuses arrestations et condamnations prononcées par le Tribunal permanent des forces armées (TPFA) de Metz",
+      "forces_francaises": "Plusieurs policiers, gendarmes et militaires tués ou blessés lors de fusillades à Metz, Thionville et Hayange",
+      "civils": "Affrontements meurtriers pour le contrôle politique des foyers ouvriers de Lorraine"
+    },
+    "impact_strategique": "Assure au FLN l'hégémonie politique et financière sur le bassin industriel lorrain et sécurise la frontière franco-allemande (Sarre), axe essentiel d'entrée des armes et des cadres de la Fédération de France.",
+    "sources": [
+      {
+        "titre": "La guerre d'Algérie dans l'Est de la France (Lorraine / Moselle) — Revue Le Portique (OpenEdition Journals)",
+        "url": "https://journals.openedition.org/leportique/4467?lang=en",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Fonds des juridictions militaires (TPFA de Metz) — FranceArchives",
+        "url": "https://francearchives.gouv.fr/fr/facomponent/211f6b2f72cb3624375b780f8627ed54eefae289",
+        "type_source": "Archive"
+      },
+      {
+        "titre": "Opération « Étincelles » dans les monts du Hodna (Plan Challe) (editions-harmattan.fr)",
+        "url": "https://www.editions-harmattan.fr/media/104794/download/Site%20du%20C.D.H.A.-1.pdf",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Opération « Étincelles » dans les monts du Hodna (Plan Challe) (bibliotheque.ummto.dz)",
+        "url": "https://bibliotheque.ummto.dz/fr/opac/download_document/824269",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Opération « Étincelles » dans les monts du Hodna (Plan Challe) (symboles-et-traditions.fr)",
+        "url": "https://symboles-et-traditions.fr/wp-content/uploads/2024/06/BAT-intervention-FM.pdf",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Opération « Étincelles » dans les monts du Hodna (Plan Challe) (en.wikipedia.org)",
+        "url": "https://en.wikipedia.org/wiki/Challe_Plan",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "id": "OP_1957_049",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Batailles des caravanes d'armement d'Aïn El Ksob et d'Estiha",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-01-01",
+    "latest": "1957-01-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1959-12-31",
+    "latest": "1959-12-31",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Aïn El Ksob / Estiha / Sidi Maârouf (Jijel)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.261,
+          36.645
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya II / Wilaya III (Confins de Jijel et Mila - Sidi Maârouf)",
+  "source_ids": [
+    "SRC_8a8063d91fb4fc52d27624ac"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_049",
+    "nom_operation": "Batailles des caravanes d'armement d'Aïn El Ksob et d'Estiha",
+    "date_debut": "1957-01-01",
+    "date_fin": "1959-12-31",
+    "wilaya_concernee": "Wilaya II / Wilaya III (Confins de Jijel et Mila - Sidi Maârouf)",
+    "localisation": {
+      "region_ou_ville": "Aïn El Ksob / Estiha / Sidi Maârouf (Jijel)",
+      "coordonnees_approximatives": {
+        "latitude": 36.645,
+        "longitude": 6.261
+      }
+    },
+    "commandement_aln": [
+      "Compagnies de transport d'armes Wilaya III et Wilaya II"
+    ],
+    "type_action": "Bataille d'escorte et de rupture d'encerclement",
+    "description": "Combats héroïques livrés conjointement par les compagnies de transport d'armes de la Wilaya III et les unités locales de la Wilaya II pour briser les embuscades françaises et acheminer l'armement vers le Djurdjura.",
+    "bilan_et_pertes": {
+      "aln": "Pertes chez les djounouds d'escorte",
+      "forces_francaises": "Pertes importantes infligées aux embuscades coloniales",
+      "civils": "0"
+    },
+    "impact_strategique": "Ravitaillement continu en fusils-mitrailleurs et munitions des maquis de Kabylie depuis la frontière tunisienne.",
+    "sources": [
+      {
+        "titre": "Les batailles des caravanes d'armes en Wilaya II et III (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/201345",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

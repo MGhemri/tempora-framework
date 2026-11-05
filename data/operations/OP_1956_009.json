@@ -1,0 +1,90 @@
+{
+  "id": "OP_1956_009",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Attaque et saisie du dépôt d'explosifs des mines de Beni Saf (Monts des Trara)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-04-14",
+    "latest": "1956-04-14",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-04-15",
+    "latest": "1956-04-15",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Mines de fer de Camerata / Mokta El Hadid à Beni Saf et massif des Trara (Wilaya d'Aïn Témouchent / Tlemcen)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.3836,
+          35.3014
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 1 - Tlemcen / Monts des Trara)",
+  "source_ids": [
+    "SRC_f42d5b4802c0062259834a4c",
+    "SRC_dfa71a027a85bd767a092ace"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_009",
+    "nom_operation": "Attaque et saisie du dépôt d'explosifs des mines de Beni Saf (Monts des Trara)",
+    "date_debut": "1956-04-14",
+    "date_fin": "1956-04-15",
+    "wilaya_concernee": "Wilaya V (Zone 1 - Tlemcen / Monts des Trara)",
+    "localisation": {
+      "region_ou_ville": "Mines de fer de Camerata / Mokta El Hadid à Beni Saf et massif des Trara (Wilaya d'Aïn Témouchent / Tlemcen)",
+      "coordonnees_approximatives": {
+        "latitude": 35.3014,
+        "longitude": -1.3836
+      }
+    },
+    "commandement_aln": [
+      "Larbi Ben M'hidi",
+      "Abdelhafid Boussouf (Chef de la Zone de Tlemcen)",
+      "Benaouda Benzerdjeb"
+    ],
+    "type_action": "Sabotage",
+    "description": "Un commando de l'ALN de la Zone 1 de la Wilaya V neutralise la garde du dépôt souterrain de la compagnie minière de Beni Saf, s'empare d'un stock important de dynamite, de détonateurs et de cordons Bickford destinés à l'exploitation du minerai de fer, et sabote les installations d'extraction avant de se replier vers les maquis des monts des Trara.",
+    "bilan_et_pertes": {
+      "aln": "Aucune perte lors du coup de main ; saisie de plusieurs centaines de kilos d'explosifs industriels",
+      "forces_francaises": "Gardiens désarmés et neutralisés ; paralysie temporaire du site minier",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "Permet aux ateliers d'armement de la Wilaya V dans les monts des Trara et de Tlemcen de fabriquer des mines artisanales et des charges de démolition utilisées tout au long de l'année 1956 contre les convois et voies ferrées d'Oranie.",
+    "sources": [
+      {
+        "titre": "Répertoire numérique de la série 1H (Guerre d'Algérie - Wilaya V / Oranie) — Service Historique de la Défense (SHD)",
+        "url": "https://www.servicehistorique.sga.defense.gouv.fr/sites/default/files/notices_files/SHDGR_REP_1H_1091_A_4881_T2_1.pdf",
+        "type_source": "Archive"
+      },
+      {
+        "titre": "Les opérations militaires en Wilaya V historique — Revue académique CERIST (ASJP)",
+        "url": "https://asjp.cerist.dz/en/downArticle/686/10/1/290720",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

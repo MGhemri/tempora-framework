@@ -1,0 +1,89 @@
+{
+  "id": "OP_1961_013",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Contre-offensive des commandos urbains du FLN à Alger lors du putsch des généraux et des premiers attentats de l'OAS",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1961-04-22",
+    "latest": "1961-04-22",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1961-05-31",
+    "latest": "1961-05-31",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Alger : Casbah, Belcourt, Clos-Salembier (El Madania), Climat de France (Oued Koriche) et El Harrach",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.0586,
+          36.775
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone autonome d'Alger (ZAA reconstituée) et Wilaya IV",
+  "source_ids": [
+    "SRC_33bb73be5ed304c093a67a61",
+    "SRC_d393031bdbc2495cb12842ac"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1961_013",
+    "nom_operation": "Contre-offensive des commandos urbains du FLN à Alger lors du putsch des généraux et des premiers attentats de l'OAS",
+    "date_debut": "1961-04-22",
+    "date_fin": "1961-05-31",
+    "wilaya_concernee": "Zone autonome d'Alger (ZAA reconstituée) et Wilaya IV",
+    "localisation": {
+      "region_ou_ville": "Alger : Casbah, Belcourt, Clos-Salembier (El Madania), Climat de France (Oued Koriche) et El Harrach",
+      "coordonnees_approximatives": {
+        "latitude": 36.775,
+        "longitude": 3.0586
+      }
+    },
+    "commandement_aln": [
+      "Commandement clandestin de la Zone autonome d'Alger (ZAA)",
+      "Youcef Khatib dit Si Hassan (Wilaya IV)"
+    ],
+    "type_action": "Guérilla urbaine",
+    "description": "Dès l'échec du putsch des généraux (21-25 avril 1961) et le lancement de la première vague de plasticages de l'OAS à Alger en mai 1961, les groupes armés reconstitués de la Zone autonome d'Alger (ZAA) mettent en place des cordons d'autodéfense armée autour de la Casbah, de Belcourt et de Climat de France, et exécutent des attaques ciblées contre les premiers réseaux logistiques et agents de renseignement de l'OAS.",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs fidayin arrêtés ou tués lors d'accrochages avec les patrouilles militaires et les commandos OAS",
+      "forces_francaises": "Neutralisation de plusieurs indicateurs et membres des réseaux activistes ultras à Alger",
+      "civils": "Protection des quartiers populaires algérois contre les premières incursions des commandos de l'OAS"
+    },
+    "impact_strategique": "Sanctuarise dès le printemps 1961 la Casbah, Belcourt, Clos-Salembier et Climat de France sous l'autorité exclusive de l'organisation urbaine du FLN.",
+    "sources": [
+      {
+        "titre": "Il y a 60 ans, l'OAS en Algérie et la guerre urbaine à Alger et Oran — La Revue d'Histoire Militaire",
+        "url": "https://larevuedhistoiremilitaire.fr/2021/03/22/il-y-a-60-ans-loas-en-algerie/",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Guerre d'Algérie — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Guerre_d%27Alg%C3%A9rie",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

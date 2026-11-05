@@ -1,0 +1,89 @@
+{
+  "id": "OP_1959_012",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats de franchissement du barrage Ouest à El Aricha - Bougarne (Frontière marocaine)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1959-04-08",
+    "latest": "1959-04-08",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1959-04-10",
+    "latest": "1959-04-10",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Secteur frontalier d'El Aricha et Djebel Bougarne (face à Aïn Beni Mathar / Berguent au Maroc, Sud de la Wilaya de Tlemcen)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.3,
+          34.2167
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Secteur frontalier steppique - El Aricha / Bougarne / Berguent)",
+  "source_ids": [
+    "SRC_e8775522d700ff117d493c1a",
+    "SRC_d554914f5248e52f1ef45ee4"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1959_012",
+    "nom_operation": "Combats de franchissement du barrage Ouest à El Aricha - Bougarne (Frontière marocaine)",
+    "date_debut": "1959-04-08",
+    "date_fin": "1959-04-10",
+    "wilaya_concernee": "Wilaya V (Secteur frontalier steppique - El Aricha / Bougarne / Berguent)",
+    "localisation": {
+      "region_ou_ville": "Secteur frontalier d'El Aricha et Djebel Bougarne (face à Aïn Beni Mathar / Berguent au Maroc, Sud de la Wilaya de Tlemcen)",
+      "coordonnees_approximatives": {
+        "latitude": 34.2167,
+        "longitude": -1.3
+      }
+    },
+    "commandement_aln": [
+      "Colonel Lotfi",
+      "Commandants des bataillons frontaliers de l'Ouest (Oujda - Berguent)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Sur les Hauts Plateaux steppiques d'El Aricha (face à la base arrière de l'ALN à Berguent / Aïn Beni Mathar au Maroc), un détachement de choc de la Wilaya V fait sauter le réseau électrifié à haute tension et engage un combat nocturne et diurne de quarante-huit heures contre les escadrons blindés et héliportés français surveillant la ligne.",
+    "bilan_et_pertes": {
+      "aln": "Une vingtaine de moudjahidine tombés au champ d'honneur ; infiltration réussie d'un groupe de liaison et de cadres vers la Zone de Saïda",
+      "forces_francaises": "Destruction d'un tronçon du barrage électrifié et pertes sensibles au sein des escadrons blindés de reconnaissance",
+      "civils": "Aucune victime civile (steppe frontalière interdite)"
+    },
+    "impact_strategique": "Oblige le commandement français à maintenir en alerte permanente des régiments blindés et d'artillerie sur des centaines de kilomètres de steppe aride entre Sebdou et Forthassa.",
+    "sources": [
+      {
+        "titre": "Le barrage frontière ouest pendant la guerre d'Algérie (Guerres mondiales et conflits contemporains) — Cairn.info",
+        "url": "https://shs.cairn.info/revue-guerres-mondiales-et-conflits-contemporains-2018-1-page-91?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Répertoire numérique de la série 1H (Barrage Ouest et Corps d'armée d'Oran) — SHD",
+        "url": "https://www.servicehistorique.sga.defense.gouv.fr/sites/default/files/notices_files/SHDGR_REP_1H_1091_A_4881_T1.pdf",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

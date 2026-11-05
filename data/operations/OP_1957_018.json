@@ -1,0 +1,90 @@
+{
+  "id": "OP_1957_018",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscades et combats du massif du Belezma (Secteur de Batna - Merouana)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-09-14",
+    "latest": "1957-09-14",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-09-16",
+    "latest": "1957-09-16",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif forestier des monts du Belezma (Djebel Touggour et col de Telmet), à l'ouest de Batna et près de Merouana (Wilaya de Batna)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.0667,
+          35.5833
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya I (Zone du Belezma - Batna / Merouana / Seriana)",
+  "source_ids": [
+    "SRC_906cdde683fd914e4fa89d5e",
+    "SRC_93f49256b290fa71ce760f9b"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_018",
+    "nom_operation": "Embuscades et combats du massif du Belezma (Secteur de Batna - Merouana)",
+    "date_debut": "1957-09-14",
+    "date_fin": "1957-09-16",
+    "wilaya_concernee": "Wilaya I (Zone du Belezma - Batna / Merouana / Seriana)",
+    "localisation": {
+      "region_ou_ville": "Massif forestier des monts du Belezma (Djebel Touggour et col de Telmet), à l'ouest de Batna et près de Merouana (Wilaya de Batna)",
+      "coordonnees_approximatives": {
+        "latitude": 35.5833,
+        "longitude": 6.0667
+      }
+    },
+    "commandement_aln": [
+      "Mohamed Lamouri",
+      "Hadj Lakhdar",
+      "Mustapha Raguig (Chefs de secteurs du Belezma)"
+    ],
+    "type_action": "Embuscade",
+    "description": "Les katibas de la Wilaya I implantées dans les cèdres des monts du Belezma mènent une série d'embuscades contre les convois militaires français sur les axes Batna-Merouana et Batna-Sétif, suivies de violents accrochages au col de Telmet et sur les pentes du Djebel Touggour face aux troupes de la 21e division d'infanterie.",
+    "bilan_et_pertes": {
+      "aln": "Une vingtaine de moudjahidine tués ; maintien des liaisons entre la Wilaya I, la Wilaya II et la Wilaya III",
+      "forces_francaises": "Destruction de plusieurs véhicules militaires et pertes sensibles dans les unités de garnison de Batna",
+      "civils": "Regroupements forcés des populations rurales du Belezma autour de Merouana et Seriana"
+    },
+    "impact_strategique": "Le massif du Belezma joue un rôle stratégique vital de carrefour de liaison entre l'Aurès (Wilaya I), le Nord-Constantinois (Wilaya II) et les Bibans/Hodna (Wilaya III).",
+    "sources": [
+      {
+        "titre": "Wilaya I historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_I_historique",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Répertoire numérique de la série 1H (Zone Sud-Constantinois / Batna) — Service Historique de la Défense (SHD)",
+        "url": "https://www.servicehistorique.sga.defense.gouv.fr/sites/default/files/notices_files/SHDGR_REP_1H_1091_A_4881_T2_1.pdf",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

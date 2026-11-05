@@ -1,0 +1,88 @@
+{
+  "id": "OP_1957_034",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille du Djebel Taguersane à Benhar / Ben Yagoub (Monts des Ouled Naïl - Djelfa)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-04-18",
+    "latest": "1957-04-18",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-04-19",
+    "latest": "1957-04-19",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Djebel Taguersane (secteur de Ben Yagoub / Charef / Djelfa), Monts des Ouled Naïl (Wilaya de Djelfa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.95,
+          34.5833
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya VI (Zone 2 - Monts des Ouled Naïl / Djelfa / Ben Yagoub)",
+  "source_ids": [
+    "SRC_e18910c62d81daa572c5a9bf",
+    "SRC_a9e4b6613f12970cab56eafa"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_034",
+    "nom_operation": "Bataille du Djebel Taguersane à Benhar / Ben Yagoub (Monts des Ouled Naïl - Djelfa)",
+    "date_debut": "1957-04-18",
+    "date_fin": "1957-04-19",
+    "wilaya_concernee": "Wilaya VI (Zone 2 - Monts des Ouled Naïl / Djelfa / Ben Yagoub)",
+    "localisation": {
+      "region_ou_ville": "Djebel Taguersane (secteur de Ben Yagoub / Charef / Djelfa), Monts des Ouled Naïl (Wilaya de Djelfa)",
+      "coordonnees_approximatives": {
+        "latitude": 34.5833,
+        "longitude": 2.95
+      }
+    },
+    "commandement_aln": [
+      "Commandants des katibas de la Zone de Djelfa (Wilaya VI)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "En avril 1957, plusieurs katibas de l'ALN retranchées dans le massif montagneux du Djebel Taguersane (région de Ben Yagoub, à l'ouest de Djelfa) affrontent une vaste opération d'encerclement menée par les troupes françaises appuyées par des blindés et l'aviation. Les moudjahidine soutiennent vingt-quatre heures de combats intenses avant de briser l'étau ennemi à la faveur de la nuit.",
+    "bilan_et_pertes": {
+      "aln": "Une vingtaine de moudjahidine tombés au champ d'honneur",
+      "forces_francaises": "Pertes élevées parmi les colonnes d'assaut françaises et 1 avion d'observation endommagé par les tirs de fusils-mitrailleurs",
+      "civils": "Aucune victime civile directe"
+    },
+    "impact_strategique": "Démontre la capacité de résistance des katibas des monts des Ouled Naïl malgré la crise interne ayant suivi l'assassinat du colonel Ali Mellah fin mars 1957.",
+    "sources": [
+      {
+        "titre": "Les batailles de la Wilaya VI dans la région de Djelfa et des Ouled Naïl — Revue académique CERIST (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/280826",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Wilaya (guerre d'Algérie) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_(guerre_d%27Alg%C3%A9rie)",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

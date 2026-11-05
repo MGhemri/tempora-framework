@@ -1,0 +1,89 @@
+{
+  "id": "OP_1961_006",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Actions de fidayin, sabotages et soulèvements populaires dans le M'zab et les oasis sahariennes (Ghardaïa - Ouargla - Touggourt)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1961-02-20",
+    "latest": "1961-02-20",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1962-02-27",
+    "latest": "1962-02-27",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Ghardaïa (Ksar Melika, Berriane, Guerrara), Ouargla, Touggourt et abords de Hassi Messaoud (Wilayas de Ghardaïa, Ouargla et Touggourt)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.6735,
+          32.4909
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya VI (Sahara central et oriental - Ghardaïa, Ouargla, Touggourt, Hassi Messaoud)",
+  "source_ids": [
+    "SRC_a50c9d8f1e66c48efc7889f8",
+    "SRC_521f8f3589687ea27b8cfdd1"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1961_006",
+    "nom_operation": "Actions de fidayin, sabotages et soulèvements populaires dans le M'zab et les oasis sahariennes (Ghardaïa - Ouargla - Touggourt)",
+    "date_debut": "1961-02-20",
+    "date_fin": "1962-02-27",
+    "wilaya_concernee": "Wilaya VI (Sahara central et oriental - Ghardaïa, Ouargla, Touggourt, Hassi Messaoud)",
+    "localisation": {
+      "region_ou_ville": "Ghardaïa (Ksar Melika, Berriane, Guerrara), Ouargla, Touggourt et abords de Hassi Messaoud (Wilayas de Ghardaïa, Ouargla et Touggourt)",
+      "coordonnees_approximatives": {
+        "latitude": 32.4909,
+        "longitude": 3.6735
+      }
+    },
+    "commandement_aln": [
+      "Mohamed Chaâbani (Colonel de la Wilaya VI)",
+      "Cellules de fidayin et de l'OPA saharienne (Ghardaïa, Ouargla, Touggourt)"
+    ],
+    "type_action": "Guérilla urbaine",
+    "description": "Alors que le gouvernement français tente lors des premiers pourparlers de 1961 de dissocier la souveraineté du Sahara (OCRS) de celle du nord de l'Algérie, le colonel Chaâbani et les réseaux clandestins de la Wilaya VI à Ghardaïa (vallée du M'zab), Ouargla, Touggourt et Hassi Messaoud combinent attentats ciblés contre l'administration de l'OCRS, sabotages de lignes de communication pétrolières et organisation des grandes manifestations indépendantistes sahariennes (notamment le soulèvement d'Ouargla du 27 février 1962 lors de la visite de responsables français).",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs fidayin et cadres de l'OPA saharienne arrêtés ou tués ; contrôle politique total des populations des oasis par le FLN",
+      "forces_francaises": "Blessés parmi les forces de maintien de l'ordre sahariennes et mise en échec total du projet politique de l'OCRS",
+      "civils": "Plusieurs manifestants algériens tués et des dizaines de blessés lors de la répression des manifestations d'Ouargla, Ghardaïa et Touggourt (1961-1962)"
+    },
+    "impact_strategique": "Balaye définitivement la thèse française d'un Sahara acquis à l'OCRS ou séparé du reste de l'Algérie, contraignant Paris à reconnaître la pleine souveraineté algérienne sur l'intégralité du Sahara lors des Accords d'Évian de mars 1962.",
+    "sources": [
+      {
+        "titre": "La question saharienne et la guerre d'indépendance algérienne (L'Année du Maghreb) — OpenEdition Journals",
+        "url": "https://journals.openedition.org/anneemaghreb/3647?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Le Sahara dans la guerre d'Algérie — Dictionnaire de la guerre d'Algérie (Cairn.info)",
+        "url": "https://shs.cairn.info/dictionnaire-de-la-guerre-d-algerie--9782382923061-page-902?lang=fr",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

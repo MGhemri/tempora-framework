@@ -1,0 +1,85 @@
+{
+  "id": "OP_1962_020",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Déploiement sécuritaire de la ZAO pour le référendum d'autodétermination (28 juin - 1er juillet 1962)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1962-06-28",
+    "latest": "1962-06-28",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1962-07-01",
+    "latest": "1962-07-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Bureaux de vote de Médina Jdida, Médioni, Lamur et Les Planteurs (Oran)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.6505,
+          35.6935
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone Autonome d'Oran (ZAO)",
+  "source_ids": [
+    "SRC_e3ab578034cfbc8a58c3dcc9",
+    "SRC_41ee6853178804473968d09c"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1962_020",
+    "nom_operation": "Déploiement sécuritaire de la ZAO pour le référendum d'autodétermination (28 juin - 1er juillet 1962)",
+    "date_debut": "1962-06-28",
+    "date_fin": "1962-07-01",
+    "wilaya_concernee": "Zone Autonome d'Oran (ZAO)",
+    "localisation": {
+      "region_ou_ville": "Bureaux de vote de Médina Jdida, Médioni, Lamur et Les Planteurs (Oran)",
+      "coordonnees_approximatives": {
+        "latitude": 35.6935,
+        "longitude": -0.6505
+      }
+    },
+    "commandement_aln": [
+      "Capitaine Bakhti (Commandant de la ZAO)",
+      "Chefs des cinq secteurs opérationnels"
+    ],
+    "type_action": "Maintien de l'ordre, surveillance électorale et protection civile",
+    "description": "Pour assurer le déroulement paisible du vote historique d'autodétermination du 1er juillet 1962 sous la menace permanente de provocations terroristes de l'OAS, la ZAO met en place un dispositif de sécurité sans précédent. Des cordons d'hommes armés filtrent l'accès aux dizaines de bureaux de vote ouverts dans les écoles populaires, escortent les urnes et patrouillent 24h/24 le long des axes de transit.",
+    "bilan_et_pertes": "Participation électorale massive (plus de 99% de votes 'Oui') sans aucun incident sécuritaire majeur dans l'ensemble des zones contrôlées par la ZAO.",
+    "impact_strategique": "Consacre aux yeux des observateurs internationaux et des autorités françaises l'autorité souveraine, disciplinée et incontestée de l'ALN/FLN sur l'agglomération d'Oran.",
+    "sources": [
+      {
+        "titre": "Saddek Benkada, « Le référendum d'autodétermination du 1er juillet 1962 à Oran et la sécurisation du scrutin par la ZAO », Insaniyat / CRASC",
+        "url": "https://journals.openedition.org/insaniyat/30472",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Le déroulement du scrutin d'autodétermination à Oran sous encadrement FLN — Algérie Presse Service (APS)",
+        "url": "https://www.aps.dz/fr/algerie/societe",
+        "type_source": "Dépêche institutionnelle"
+      }
+    ]
+  }
+}

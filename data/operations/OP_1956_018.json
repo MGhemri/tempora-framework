@@ -1,0 +1,90 @@
+{
+  "id": "OP_1956_018",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Sabotages ferroviaires et embuscades du col des Oliviers (Axe Constantine - Philippeville)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-03-19",
+    "latest": "1956-03-19",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-03-21",
+    "latest": "1956-03-21",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Col des Oliviers (Aïn Bouziane), El Harrouch et Saint-Charles (Ramdane Djamel), sur l'axe ferroviaire Constantine - Philippeville (Wilaya de Skikda)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.7667,
+          36.5917
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya II (Secteur d'El Harrouch - Condé-Smendou - Skikda)",
+  "source_ids": [
+    "SRC_f621f6fa18b05d1622cea00e",
+    "SRC_1c49f4f4c8371f973afb5ac8"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_018",
+    "nom_operation": "Sabotages ferroviaires et embuscades du col des Oliviers (Axe Constantine - Philippeville)",
+    "date_debut": "1956-03-19",
+    "date_fin": "1956-03-21",
+    "wilaya_concernee": "Wilaya II (Secteur d'El Harrouch - Condé-Smendou - Skikda)",
+    "localisation": {
+      "region_ou_ville": "Col des Oliviers (Aïn Bouziane), El Harrouch et Saint-Charles (Ramdane Djamel), sur l'axe ferroviaire Constantine - Philippeville (Wilaya de Skikda)",
+      "coordonnees_approximatives": {
+        "latitude": 36.5917,
+        "longitude": 6.7667
+      }
+    },
+    "commandement_aln": [
+      "Zighoud Youcef",
+      "Lakhdar Bentobbal",
+      "Ali Kafi"
+    ],
+    "type_action": "Sabotage",
+    "description": "Les équipes de sabotage et les katibas de la Zone II minent à plusieurs reprises la voie ferrée et la route nationale reliant Constantine au port de Philippeville (Skikda) dans les lacets montagneux du col des Oliviers et d'El Harrouch, provoquant le déraillement de trains de marchandises et tendant des embuscades aux draisines blindées et convois d'escorte français.",
+    "bilan_et_pertes": {
+      "aln": "Quelques blessés lors des décrochages vers le massif des Beni Ouelbane",
+      "forces_francaises": "Déraillement de locomotives et de wagons, coupure de la ligne télégraphique et une quinzaine de soldats d'escorte tués ou blessés",
+      "civils": "Suspension des circulations ferroviaires nocturnes entre Constantine et la mer"
+    },
+    "impact_strategique": "Menace l'artère vitale d'approvisionnement du Constantinois depuis le port de Philippeville, obligeant l'armée française à mobiliser en permanence des trains blindés et des postes de garde tout au long de la voie.",
+    "sources": [
+      {
+        "titre": "La Wilaya II historique : organisation et actions militaires — Cairn.info",
+        "url": "https://shs.cairn.info/la-wilaya-ii-historique--9789947394052-page-35?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Wilaya II historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_II_historique",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

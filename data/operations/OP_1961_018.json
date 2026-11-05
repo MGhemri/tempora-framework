@@ -1,0 +1,88 @@
+{
+  "id": "OP_1961_018",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Siège du PC de Blida et martyre du colonel Djilali Bounaâma (Si Mohamed)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1961-08-08",
+    "latest": "1961-08-08",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Blida (Centre-ville)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.877,
+          36.425
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya IV (Algérois - Secteur urbain de Blida)",
+  "source_ids": [
+    "SRC_7c7e89acac8a25ddc1bcca5b",
+    "SRC_f3d1ab6ff0e2238bfbd3994f"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1961_018",
+    "nom_operation": "Siège du PC de Blida et martyre du colonel Djilali Bounaâma (Si Mohamed)",
+    "date_debut": "1961-08-08",
+    "date_fin": null,
+    "wilaya_concernee": "Wilaya IV (Algérois - Secteur urbain de Blida)",
+    "localisation": {
+      "region_ou_ville": "Blida (Centre-ville)",
+      "coordonnees_approximatives": {
+        "latitude": 36.425,
+        "longitude": 2.877
+      }
+    },
+    "commandement_aln": [
+      "Djilali Bounaâma (Si Mohamed)"
+    ],
+    "type_action": "Combat urbain / Résistance jusqu'à la mort",
+    "description": "Le chef de la Wilaya IV, le colonel Djilali Bounaâma, encerclé par les parachutistes et les blindés coloniaux dans son PC clandestin de Blida, refuse de se rendre et meurt les armes à la main après plusieurs heures de combat.",
+    "bilan_et_pertes": {
+      "aln": "Le colonel Si Mohamed et ses officiers d'état-major tombés en martyrs",
+      "forces_francaises": "Plusieurs soldats coloniaux blessés ou tués lors de l'assaut du bâtiment",
+      "civils": "0"
+    },
+    "impact_strategique": "Perte tragique d'un grand chef de la Wilaya IV ; Si Hassan (Youcef Khatib) lui succédera et mènera la wilaya jusqu'au cessez-le-feu de 1962.",
+    "sources": [
+      {
+        "titre": "Djilali Bounaâma dit Si Mohamed (Dictionnaire biographique Le Maitron)",
+        "url": "https://maitron.fr/bounaama-djilali-dit-si-mohamed-dictionnaire-algerie/",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Djilali Bounaâma (Wikipédia)",
+        "url": "https://fr.wikipedia.org/wiki/Djilali_Bouna%C3%A2ma",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "id": "OP_1959_008",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats du Col de Chellata et d'Aït M'lika (Chute au combat d'Abderrahmane Mira)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1959-11-06",
+    "latest": "1959-11-06",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1959-11-06",
+    "latest": "1959-11-06",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Col de Chellata (village d'Aït M'lika / Taghzout), sur les hauteurs d'Akbou et d'Ighram (Confins des Wilayas de Béjaïa et Tizi Ouzou)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.4667,
+          36.5333
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya III (Zone 2 - Col de Chellata / Akbou / Massif de l'Akfadou)",
+  "source_ids": [
+    "SRC_fe8e44229825f6b2bedeb7f0",
+    "SRC_2d769387719449a5313a3b77",
+    "SRC_5393b6ad41d1d233bd497a60",
+    "SRC_a8c786f3415e9acbe0723211"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1959_008",
+    "nom_operation": "Combats du Col de Chellata et d'Aït M'lika (Chute au combat d'Abderrahmane Mira)",
+    "date_debut": "1959-11-06",
+    "date_fin": "1959-11-06",
+    "wilaya_concernee": "Wilaya III (Zone 2 - Col de Chellata / Akbou / Massif de l'Akfadou)",
+    "localisation": {
+      "region_ou_ville": "Col de Chellata (village d'Aït M'lika / Taghzout), sur les hauteurs d'Akbou et d'Ighram (Confins des Wilayas de Béjaïa et Tizi Ouzou)",
+      "coordonnees_approximatives": {
+        "latitude": 36.5333,
+        "longitude": 4.4667
+      }
+    },
+    "commandement_aln": [
+      "Abderrahmane Mira (Commandant de la Wilaya III par intérim)",
+      "Mohand Oulhadj"
+    ],
+    "type_action": "Embuscade",
+    "description": "Rentré de Tunisie au printemps 1959 après la mort du colonel Amirouche pour réorganiser les katibas de la Wilaya III et conduire la résistance contre l'armée française dans la vallée de la Soummam et l'Akfadou, le commandant Abderrahmane Mira (« le Tigre de la Soummam ») et sa garde rapprochée tombent dans une embuscade tendue par les chasseurs alpins et les parachutistes français près du col de Chellata (village d'Aït M'lika) le 6 novembre 1959 et livrent un combat acharné jusqu'au dernier coup de feu.",
+    "bilan_et_pertes": {
+      "aln": "Mort les armes à la main du commandant Abderrahmane Mira (à l'âge de 37 ans) et de plusieurs moudjahidine de son escorte ; le colonel Mohand Oulhadj assure la continuité du commandement de la Wilaya III jusqu'en 1962",
+      "forces_francaises": "Plusieurs militaires français tués ou blessés lors de l'accrochage rapproché au col de Chellata",
+      "civils": "Exposition du corps d'Abderrahmane Mira par l'armée française à Taghzout pour tenter de démoraliser la population kabyle"
+    },
+    "impact_strategique": "Si l'armée française met en scène la mort du « Tigre de la Soummam » comme un succès majeur au col de Chellata, l'intransigeance et le sacrifice d'Abderrahmane Mira galvanisent les maquisards de la Soummam qui poursuivent les embuscades sous les ordres de Mohand Oulhadj.",
+    "sources": [
+      {
+        "titre": "Abderrahmane Mira — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Abderrahmane_Mira",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Dictionnaire de la guerre d'Algérie — Cairn.info",
+        "url": "https://shs.cairn.info/dictionnaire-de-la-guerre-d-algerie--9782382923061-page-380?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Résistance face à l'Opération Couronne (Plan Challe) (fr.wikipedia.org)",
+        "url": "https://fr.wikipedia.org/wiki/Op%C3%A9ration_Couronne",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Résistance face à l'Opération Couronne (Plan Challe) (jeune-independant.net)",
+        "url": "https://www.jeune-independant.net/medea-commemoration-du-63e-anniversaire-de-la-mort-du-colonel-mhamed-bougara/",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

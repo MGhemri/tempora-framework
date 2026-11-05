@@ -1,0 +1,90 @@
+{
+  "id": "OP_1955_008",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats du massif du Djurdjura et résistance à l'Opération Aloès (Ouacifs - Iboudraren)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1955-02-05",
+    "latest": "1955-02-05",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1955-02-12",
+    "latest": "1955-02-12",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif du Djurdjura, Ouacifs, Iboudraren, Aït Ouabane et col de Tirourda (Wilaya de Tizi Ouzou)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.245,
+          36.495
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya III (Zone III - Haute Kabylie / Massif du Djurdjura)",
+  "source_ids": [
+    "SRC_2bbf39350a145cee95d7b832",
+    "SRC_1b5535866d4e1672f780a425"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1955_008",
+    "nom_operation": "Combats du massif du Djurdjura et résistance à l'Opération Aloès (Ouacifs - Iboudraren)",
+    "date_debut": "1955-02-05",
+    "date_fin": "1955-02-12",
+    "wilaya_concernee": "Wilaya III (Zone III - Haute Kabylie / Massif du Djurdjura)",
+    "localisation": {
+      "region_ou_ville": "Massif du Djurdjura, Ouacifs, Iboudraren, Aït Ouabane et col de Tirourda (Wilaya de Tizi Ouzou)",
+      "coordonnees_approximatives": {
+        "latitude": 36.495,
+        "longitude": 4.245
+      }
+    },
+    "commandement_aln": [
+      "Krim Belkacem",
+      "Mohammedi Saïd (dit Si Nacer)",
+      "Mohand Oulhadj"
+    ],
+    "type_action": "Embuscade",
+    "description": "En février 1955, l'armée française lance l'Opération « Aloès » avec plus de 5 000 hommes (parachutistes, chasseurs alpins et blindés) pour encercler les groupes de Krim Belkacem et Mohammedi Saïd dans le massif enneigé du Djurdjura. Utilisant leur connaissance intime des villages haut perchés (Ouacifs, Iboudraren) et des sentiers de montagne, les maquisards harcèlent les colonnes françaises par des tirs d'embuscade avant de filtrer à travers les lignes.",
+    "bilan_et_pertes": {
+      "aln": "Quelques éclaireurs tués ou capturés ; échec total de l'encerclement des chefs de la Zone III",
+      "forces_francaises": "Plusieurs soldats tués ou blessés lors d'accrochages dans la neige du Djurdjura et épuisement des colonnes lourdes",
+      "civils": "Perquisitions et arrestations dans les villages d'Ouacifs et de Michelet (Aïn El Hammam)"
+    },
+    "impact_strategique": "L'échec retentissant de l'Opération Aloès démontre l'inadaptation des grandes colonnes mécanisées françaises face à la mobilité des maquisards de Krim Belkacem en Haute Kabylie.",
+    "sources": [
+      {
+        "titre": "La question kabyle dans le nationalisme algérien (Les débuts du maquis en Zone III) — Cairn.info",
+        "url": "https://shs.cairn.info/question-kabyle-nationalisme-algerien--9782365122757-page-271?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Wilaya III historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_III_historique",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

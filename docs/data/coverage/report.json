@@ -1,0 +1,1303 @@
+{
+  "data": {
+    "calculation_version": "coverage-v1",
+    "scope": "ALNOP documentary corpus only; not historical war coverage",
+    "corpus_is_incomplete": true,
+    "pending_contributions": null,
+    "summary": {
+      "total_operations": 263,
+      "unique_sources": 491,
+      "without_sources": 0,
+      "without_identified_primary_source": 263,
+      "uncertain_start_dates": 263,
+      "uncertain_locations": 263,
+      "without_structured_territory": 263,
+      "operations_with_contested_claims": 0,
+      "without_recorded_review": 263
+    },
+    "groups": {
+      "year": [
+        {
+          "key": "year:1954",
+          "label": {
+            "fr": "1954",
+            "ar": "1954"
+          },
+          "total_operations": 11,
+          "unique_sources": 27,
+          "without_sources": 0,
+          "without_identified_primary_source": 11,
+          "uncertain_start_dates": 11,
+          "uncertain_locations": 11,
+          "without_structured_territory": 11,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 11,
+          "note": null
+        },
+        {
+          "key": "year:1955",
+          "label": {
+            "fr": "1955",
+            "ar": "1955"
+          },
+          "total_operations": 17,
+          "unique_sources": 39,
+          "without_sources": 0,
+          "without_identified_primary_source": 17,
+          "uncertain_start_dates": 17,
+          "uncertain_locations": 17,
+          "without_structured_territory": 17,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 17,
+          "note": null
+        },
+        {
+          "key": "year:1956",
+          "label": {
+            "fr": "1956",
+            "ar": "1956"
+          },
+          "total_operations": 51,
+          "unique_sources": 109,
+          "without_sources": 0,
+          "without_identified_primary_source": 51,
+          "uncertain_start_dates": 51,
+          "uncertain_locations": 51,
+          "without_structured_territory": 51,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 51,
+          "note": null
+        },
+        {
+          "key": "year:1957",
+          "label": {
+            "fr": "1957",
+            "ar": "1957"
+          },
+          "total_operations": 53,
+          "unique_sources": 123,
+          "without_sources": 0,
+          "without_identified_primary_source": 53,
+          "uncertain_start_dates": 53,
+          "uncertain_locations": 53,
+          "without_structured_territory": 53,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 53,
+          "note": null
+        },
+        {
+          "key": "year:1958",
+          "label": {
+            "fr": "1958",
+            "ar": "1958"
+          },
+          "total_operations": 54,
+          "unique_sources": 106,
+          "without_sources": 0,
+          "without_identified_primary_source": 54,
+          "uncertain_start_dates": 54,
+          "uncertain_locations": 54,
+          "without_structured_territory": 54,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 54,
+          "note": null
+        },
+        {
+          "key": "year:1959",
+          "label": {
+            "fr": "1959",
+            "ar": "1959"
+          },
+          "total_operations": 20,
+          "unique_sources": 61,
+          "without_sources": 0,
+          "without_identified_primary_source": 20,
+          "uncertain_start_dates": 20,
+          "uncertain_locations": 20,
+          "without_structured_territory": 20,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 20,
+          "note": null
+        },
+        {
+          "key": "year:1960",
+          "label": {
+            "fr": "1960",
+            "ar": "1960"
+          },
+          "total_operations": 18,
+          "unique_sources": 32,
+          "without_sources": 0,
+          "without_identified_primary_source": 18,
+          "uncertain_start_dates": 18,
+          "uncertain_locations": 18,
+          "without_structured_territory": 18,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 18,
+          "note": null
+        },
+        {
+          "key": "year:1961",
+          "label": {
+            "fr": "1961",
+            "ar": "1961"
+          },
+          "total_operations": 18,
+          "unique_sources": 33,
+          "without_sources": 0,
+          "without_identified_primary_source": 18,
+          "uncertain_start_dates": 18,
+          "uncertain_locations": 18,
+          "without_structured_territory": 18,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 18,
+          "note": null
+        },
+        {
+          "key": "year:1962",
+          "label": {
+            "fr": "1962",
+            "ar": "1962"
+          },
+          "total_operations": 21,
+          "unique_sources": 45,
+          "without_sources": 0,
+          "without_identified_primary_source": 21,
+          "uncertain_start_dates": 21,
+          "uncertain_locations": 21,
+          "without_structured_territory": 21,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 21,
+          "note": null
+        },
+        {
+          "key": "unknown",
+          "label": {
+            "fr": null,
+            "ar": null
+          },
+          "total_operations": 0,
+          "unique_sources": 0,
+          "without_sources": 0,
+          "without_identified_primary_source": 0,
+          "uncertain_start_dates": 0,
+          "uncertain_locations": 0,
+          "without_structured_territory": 0,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 0,
+          "note": "no_current_record"
+        }
+      ],
+      "territory": [
+        {
+          "key": "territory:EMG",
+          "label": {
+            "fr": "Base de l'Est & EMG",
+            "ar": "قاعدة الشرق وهيئة الأركان (EMG)"
+          },
+          "total_operations": 0,
+          "unique_sources": 0,
+          "without_sources": 0,
+          "without_identified_primary_source": 0,
+          "uncertain_start_dates": 0,
+          "uncertain_locations": 0,
+          "without_structured_territory": 0,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 0,
+          "note": "no_current_record"
+        },
+        {
+          "key": "territory:W1",
+          "label": {
+            "fr": "Wilaya I (Aurès)",
+            "ar": "الولاية الأولى (الأوراس - النمامشة)"
+          },
+          "total_operations": 0,
+          "unique_sources": 0,
+          "without_sources": 0,
+          "without_identified_primary_source": 0,
+          "uncertain_start_dates": 0,
+          "uncertain_locations": 0,
+          "without_structured_territory": 0,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 0,
+          "note": "no_current_record"
+        },
+        {
+          "key": "territory:W2",
+          "label": {
+            "fr": "Wilaya II (Nord-Constantinois)",
+            "ar": "الولاية الثانية (الشمال القسنطيني)"
+          },
+          "total_operations": 0,
+          "unique_sources": 0,
+          "without_sources": 0,
+          "without_identified_primary_source": 0,
+          "uncertain_start_dates": 0,
+          "uncertain_locations": 0,
+          "without_structured_territory": 0,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 0,
+          "note": "no_current_record"
+        },
+        {
+          "key": "territory:W3",
+          "label": {
+            "fr": "Wilaya III (Kabylie)",
+            "ar": "الولاية الثالثة (القبائل)"
+          },
+          "total_operations": 0,
+          "unique_sources": 0,
+          "without_sources": 0,
+          "without_identified_primary_source": 0,
+          "uncertain_start_dates": 0,
+          "uncertain_locations": 0,
+          "without_structured_territory": 0,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 0,
+          "note": "no_current_record"
+        },
+        {
+          "key": "territory:W4",
+          "label": {
+            "fr": "Wilaya IV (Algérois)",
+            "ar": "الولاية الرابعة (الجزائر والوسط)"
+          },
+          "total_operations": 0,
+          "unique_sources": 0,
+          "without_sources": 0,
+          "without_identified_primary_source": 0,
+          "uncertain_start_dates": 0,
+          "uncertain_locations": 0,
+          "without_structured_territory": 0,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 0,
+          "note": "no_current_record"
+        },
+        {
+          "key": "territory:W5",
+          "label": {
+            "fr": "Wilaya V (Oranie)",
+            "ar": "الولاية الخامسة (الغرب الوهراني)"
+          },
+          "total_operations": 0,
+          "unique_sources": 0,
+          "without_sources": 0,
+          "without_identified_primary_source": 0,
+          "uncertain_start_dates": 0,
+          "uncertain_locations": 0,
+          "without_structured_territory": 0,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 0,
+          "note": "no_current_record"
+        },
+        {
+          "key": "territory:W6",
+          "label": {
+            "fr": "Wilaya VI (Sahara)",
+            "ar": "الولاية السادسة (الصحراء)"
+          },
+          "total_operations": 0,
+          "unique_sources": 0,
+          "without_sources": 0,
+          "without_identified_primary_source": 0,
+          "uncertain_start_dates": 0,
+          "uncertain_locations": 0,
+          "without_structured_territory": 0,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 0,
+          "note": "no_current_record"
+        },
+        {
+          "key": "territory:W7",
+          "label": {
+            "fr": "7e Wilaya (Fédération de France)",
+            "ar": "الولاية السابعة (فيدرالية جبهة التحرير بفرنسا)"
+          },
+          "total_operations": 0,
+          "unique_sources": 0,
+          "without_sources": 0,
+          "without_identified_primary_source": 0,
+          "uncertain_start_dates": 0,
+          "uncertain_locations": 0,
+          "without_structured_territory": 0,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 0,
+          "note": "no_current_record"
+        },
+        {
+          "key": "territory:ZAA",
+          "label": {
+            "fr": "Zone Autonome d'Alger",
+            "ar": "المنطقة المستقلة للعاصمة (ZAA)"
+          },
+          "total_operations": 0,
+          "unique_sources": 0,
+          "without_sources": 0,
+          "without_identified_primary_source": 0,
+          "uncertain_start_dates": 0,
+          "uncertain_locations": 0,
+          "without_structured_territory": 0,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 0,
+          "note": "no_current_record"
+        },
+        {
+          "key": "territory:ZAO",
+          "label": {
+            "fr": "Zone Autonome d'Oran (ZAO)",
+            "ar": "المنطقة المستقلة لوهران (ZAO)"
+          },
+          "total_operations": 0,
+          "unique_sources": 0,
+          "without_sources": 0,
+          "without_identified_primary_source": 0,
+          "uncertain_start_dates": 0,
+          "uncertain_locations": 0,
+          "without_structured_territory": 0,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 0,
+          "note": "no_current_record"
+        },
+        {
+          "key": "unassigned",
+          "label": {
+            "fr": null,
+            "ar": null
+          },
+          "total_operations": 263,
+          "unique_sources": 491,
+          "without_sources": 0,
+          "without_identified_primary_source": 263,
+          "uncertain_start_dates": 263,
+          "uncertain_locations": 263,
+          "without_structured_territory": 263,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 263,
+          "note": null
+        }
+      ],
+      "type": [
+        {
+          "key": "not_recorded",
+          "label": {
+            "fr": null,
+            "ar": null
+          },
+          "total_operations": 0,
+          "unique_sources": 0,
+          "without_sources": 0,
+          "without_identified_primary_source": 0,
+          "uncertain_start_dates": 0,
+          "uncertain_locations": 0,
+          "without_structured_territory": 0,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 0,
+          "note": "no_current_record"
+        },
+        {
+          "key": "type:Attentat ciblé",
+          "label": {
+            "fr": "Attentat ciblé",
+            "ar": null
+          },
+          "total_operations": 10,
+          "unique_sources": 32,
+          "without_sources": 0,
+          "without_identified_primary_source": 10,
+          "uncertain_start_dates": 10,
+          "uncertain_locations": 10,
+          "without_structured_territory": 10,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 10,
+          "note": null
+        },
+        {
+          "key": "type:Bataille d'escorte et de rupture d'encerclement",
+          "label": {
+            "fr": "Bataille d'escorte et de rupture d'encerclement",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 1,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Combat de rencontre",
+          "label": {
+            "fr": "Combat de rencontre",
+            "ar": null
+          },
+          "total_operations": 10,
+          "unique_sources": 8,
+          "without_sources": 0,
+          "without_identified_primary_source": 10,
+          "uncertain_start_dates": 10,
+          "uncertain_locations": 10,
+          "without_structured_territory": 10,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 10,
+          "note": null
+        },
+        {
+          "key": "type:Combat de rencontre / Embuscade",
+          "label": {
+            "fr": "Combat de rencontre / Embuscade",
+            "ar": null
+          },
+          "total_operations": 4,
+          "unique_sources": 2,
+          "without_sources": 0,
+          "without_identified_primary_source": 4,
+          "uncertain_start_dates": 4,
+          "uncertain_locations": 4,
+          "without_structured_territory": 4,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 4,
+          "note": null
+        },
+        {
+          "key": "type:Combat de rencontre / Guérilla de montagne",
+          "label": {
+            "fr": "Combat de rencontre / Guérilla de montagne",
+            "ar": null
+          },
+          "total_operations": 11,
+          "unique_sources": 12,
+          "without_sources": 0,
+          "without_identified_primary_source": 11,
+          "uncertain_start_dates": 11,
+          "uncertain_locations": 11,
+          "without_structured_territory": 11,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 11,
+          "note": null
+        },
+        {
+          "key": "type:Combat de rencontre / Piège colonial",
+          "label": {
+            "fr": "Combat de rencontre / Piège colonial",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 2,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Combat de rencontre / Résistance héroïque",
+          "label": {
+            "fr": "Combat de rencontre / Résistance héroïque",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 2,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Combat de rencontre / Tir antiaérien",
+          "label": {
+            "fr": "Combat de rencontre / Tir antiaérien",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 2,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Combat défensif et embuscade de rupture",
+          "label": {
+            "fr": "Combat défensif et embuscade de rupture",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 2,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Combat fratricide / Opération de représailles",
+          "label": {
+            "fr": "Combat fratricide / Opération de représailles",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 2,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Combat saharien / Protection de caravanes",
+          "label": {
+            "fr": "Combat saharien / Protection de caravanes",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 1,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Combat urbain / Résistance jusqu'à la mort",
+          "label": {
+            "fr": "Combat urbain / Résistance jusqu'à la mort",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 2,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Combat urbain défensif et contre-sniping",
+          "label": {
+            "fr": "Combat urbain défensif et contre-sniping",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 2,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Combats de rue et défense de quartiers populaires",
+          "label": {
+            "fr": "Combats de rue et défense de quartiers populaires",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 2,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Contre-batterie urbaine et neutralisation de tireurs d'élite",
+          "label": {
+            "fr": "Contre-batterie urbaine et neutralisation de tireurs d'élite",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 2,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Coup de main et sabotage pyrotechnique",
+          "label": {
+            "fr": "Coup de main et sabotage pyrotechnique",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 2,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Dispositif défensif statique et tirs d'interdiction",
+          "label": {
+            "fr": "Dispositif défensif statique et tirs d'interdiction",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 2,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Défense de bastion / Guérilla de montagne",
+          "label": {
+            "fr": "Défense de bastion / Guérilla de montagne",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 1,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Embuscade",
+          "label": {
+            "fr": "Embuscade",
+            "ar": null
+          },
+          "total_operations": 57,
+          "unique_sources": 145,
+          "without_sources": 0,
+          "without_identified_primary_source": 57,
+          "uncertain_start_dates": 57,
+          "uncertain_locations": 57,
+          "without_structured_territory": 57,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 57,
+          "note": null
+        },
+        {
+          "key": "type:Embuscade / Combat de rencontre",
+          "label": {
+            "fr": "Embuscade / Combat de rencontre",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 1,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Embuscade / Guérilla de montagne",
+          "label": {
+            "fr": "Embuscade / Guérilla de montagne",
+            "ar": null
+          },
+          "total_operations": 2,
+          "unique_sources": 3,
+          "without_sources": 0,
+          "without_identified_primary_source": 2,
+          "uncertain_start_dates": 2,
+          "uncertain_locations": 2,
+          "without_structured_territory": 2,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 2,
+          "note": null
+        },
+        {
+          "key": "type:Embuscade et combat de rupture",
+          "label": {
+            "fr": "Embuscade et combat de rupture",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 2,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Embuscade transfrontalière / Combat combiné",
+          "label": {
+            "fr": "Embuscade transfrontalière / Combat combiné",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 3,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Guérilla d'usure face à grande offensive coloniale",
+          "label": {
+            "fr": "Guérilla d'usure face à grande offensive coloniale",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 1,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Guérilla de montagne / Combat de rencontre",
+          "label": {
+            "fr": "Guérilla de montagne / Combat de rencontre",
+            "ar": null
+          },
+          "total_operations": 5,
+          "unique_sources": 5,
+          "without_sources": 0,
+          "without_identified_primary_source": 5,
+          "uncertain_start_dates": 5,
+          "uncertain_locations": 5,
+          "without_structured_territory": 5,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 5,
+          "note": null
+        },
+        {
+          "key": "type:Guérilla de montagne / Défense de bastion",
+          "label": {
+            "fr": "Guérilla de montagne / Défense de bastion",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 1,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Guérilla de montagne / Embuscade",
+          "label": {
+            "fr": "Guérilla de montagne / Embuscade",
+            "ar": null
+          },
+          "total_operations": 2,
+          "unique_sources": 2,
+          "without_sources": 0,
+          "without_identified_primary_source": 2,
+          "uncertain_start_dates": 2,
+          "uncertain_locations": 2,
+          "without_structured_territory": 2,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 2,
+          "note": null
+        },
+        {
+          "key": "type:Guérilla de plaine / Combat de rencontre",
+          "label": {
+            "fr": "Guérilla de plaine / Combat de rencontre",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 1,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Guérilla de rupture face à grande offensive",
+          "label": {
+            "fr": "Guérilla de rupture face à grande offensive",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 2,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Guérilla urbaine",
+          "label": {
+            "fr": "Guérilla urbaine",
+            "ar": null
+          },
+          "total_operations": 20,
+          "unique_sources": 48,
+          "without_sources": 0,
+          "without_identified_primary_source": 20,
+          "uncertain_start_dates": 20,
+          "uncertain_locations": 20,
+          "without_structured_territory": 20,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 20,
+          "note": null
+        },
+        {
+          "key": "type:Guérilla urbaine / Sabotage",
+          "label": {
+            "fr": "Guérilla urbaine / Sabotage",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 1,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Guérilla urbaine et attentats ciblés",
+          "label": {
+            "fr": "Guérilla urbaine et attentats ciblés",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 3,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Guérilla urbaine et rurale combinée",
+          "label": {
+            "fr": "Guérilla urbaine et rurale combinée",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 1,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Insurrection populaire et protection armée de cortèges",
+          "label": {
+            "fr": "Insurrection populaire et protection armée de cortèges",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 3,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Logistique sanitaire de guerre et secours sous blocus",
+          "label": {
+            "fr": "Logistique sanitaire de guerre et secours sous blocus",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 3,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Maintien de l'ordre, surveillance électorale et protection civile",
+          "label": {
+            "fr": "Maintien de l'ordre, surveillance électorale et protection civile",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 2,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Mutinerie militaire / Ralliement armé",
+          "label": {
+            "fr": "Mutinerie militaire / Ralliement armé",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 2,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Offensive coordonnée",
+          "label": {
+            "fr": "Offensive coordonnée",
+            "ar": null
+          },
+          "total_operations": 70,
+          "unique_sources": 153,
+          "without_sources": 0,
+          "without_identified_primary_source": 70,
+          "uncertain_start_dates": 70,
+          "uncertain_locations": 70,
+          "without_structured_territory": 70,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 70,
+          "note": null
+        },
+        {
+          "key": "type:Offensive coordonnée / Assaut de poste fortifié",
+          "label": {
+            "fr": "Offensive coordonnée / Assaut de poste fortifié",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 1,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Offensive coordonnée / Assauts de diversion",
+          "label": {
+            "fr": "Offensive coordonnée / Assauts de diversion",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 2,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Offensive coordonnée / Combat de rencontre",
+          "label": {
+            "fr": "Offensive coordonnée / Combat de rencontre",
+            "ar": null
+          },
+          "total_operations": 3,
+          "unique_sources": 5,
+          "without_sources": 0,
+          "without_identified_primary_source": 3,
+          "uncertain_start_dates": 3,
+          "uncertain_locations": 3,
+          "without_structured_territory": 3,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 3,
+          "note": null
+        },
+        {
+          "key": "type:Offensive coordonnée / Embuscade",
+          "label": {
+            "fr": "Offensive coordonnée / Embuscade",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 1,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Opération de désarmement, sécurisation et purge de tireurs isolés",
+          "label": {
+            "fr": "Opération de désarmement, sécurisation et purge de tireurs isolés",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 2,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Opération logistique maritime / Arraisonnement",
+          "label": {
+            "fr": "Opération logistique maritime / Arraisonnement",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 2,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Protection d'infrastructure stratégique et sécurisation industrielle",
+          "label": {
+            "fr": "Protection d'infrastructure stratégique et sécurisation industrielle",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 3,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Riposte armée contre attentat terroriste de l'OAS",
+          "label": {
+            "fr": "Riposte armée contre attentat terroriste de l'OAS",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 3,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Sabotage",
+          "label": {
+            "fr": "Sabotage",
+            "ar": null
+          },
+          "total_operations": 29,
+          "unique_sources": 66,
+          "without_sources": 0,
+          "without_identified_primary_source": 29,
+          "uncertain_start_dates": 29,
+          "uncertain_locations": 29,
+          "without_structured_territory": 29,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 29,
+          "note": null
+        },
+        {
+          "key": "type:Sabotage d'infrastructure énergétique",
+          "label": {
+            "fr": "Sabotage d'infrastructure énergétique",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 2,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Sabotage logistique et harcèlement",
+          "label": {
+            "fr": "Sabotage logistique et harcèlement",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 3,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Sabotage logistique et industriel",
+          "label": {
+            "fr": "Sabotage logistique et industriel",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 2,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Siège et combat de grottes",
+          "label": {
+            "fr": "Siège et combat de grottes",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 1,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        },
+        {
+          "key": "type:Structuration militaire territoriale et déploiement de commandos",
+          "label": {
+            "fr": "Structuration militaire territoriale et déploiement de commandos",
+            "ar": null
+          },
+          "total_operations": 1,
+          "unique_sources": 3,
+          "without_sources": 0,
+          "without_identified_primary_source": 1,
+          "uncertain_start_dates": 1,
+          "uncertain_locations": 1,
+          "without_structured_territory": 1,
+          "operations_with_contested_claims": 0,
+          "without_recorded_review": 1,
+          "note": null
+        }
+      ]
+    },
+    "methodology": {
+      "year_domain": "inclusive_calendar_years",
+      "year_basis": "Recorded start year, not expansion across every year of an event.",
+      "group_totals_are_additive": {
+        "year": true,
+        "territory": false,
+        "type": false
+      },
+      "primary_source_rule": "Explicit primary classification with recorded, content-bound review; legacy source labels are never inferred.",
+      "pending_contributions_status": "not_measured"
+    }
+  },
+  "meta": {
+    "snapshot_sha256": "7e3c263f3e8af0d9a91f0fce0744f1aa46fc2e8ee2121174836bb6adff497dcd",
+    "dataset_release": "data-2026.11.1",
+    "calculation_version": "coverage-v1",
+    "model_sha256": "cd62abb9951e3cc19a164a1462e64466b2a7e677c4dacc3f24c713d651f3b2ef",
+    "query_sha256": "fd0132ecdbbc5b5808dbe4b81b65c7f2303acde7f0a5efb6ac2449ec1b5e7370"
+  }
+}

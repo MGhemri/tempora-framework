@@ -1,0 +1,90 @@
+{
+  "id": "OP_1958_031",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscades du Commando Ali Khodja et de la Compagnie Zorro dans le secteur de Tablat - Meftah - Larbaâ",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-06-10",
+    "latest": "1958-06-10",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-06-12",
+    "latest": "1958-06-12",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Col des Deux-Bassins, Djebel Zerouela, entre Larbaâ, Meftah (ex-Rivet) et Tablat (Wilayas de Blida et Médéa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.2167,
+          36.5167
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya IV (Zone 1 - Atlas blidéen oriental / Tablat / Larbaâ / Meftah)",
+  "source_ids": [
+    "SRC_40c7acbd620eddfb7fccce90",
+    "SRC_963935941b814d2ee192508d"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_031",
+    "nom_operation": "Embuscades du Commando Ali Khodja et de la Compagnie Zorro dans le secteur de Tablat - Meftah - Larbaâ",
+    "date_debut": "1958-06-10",
+    "date_fin": "1958-06-12",
+    "wilaya_concernee": "Wilaya IV (Zone 1 - Atlas blidéen oriental / Tablat / Larbaâ / Meftah)",
+    "localisation": {
+      "region_ou_ville": "Col des Deux-Bassins, Djebel Zerouela, entre Larbaâ, Meftah (ex-Rivet) et Tablat (Wilayas de Blida et Médéa)",
+      "coordonnees_approximatives": {
+        "latitude": 36.5167,
+        "longitude": 3.2167
+      }
+    },
+    "commandement_aln": [
+      "Commandant Azzedine (Rabah Zerari)",
+      "Si M'Hamed Bougara",
+      "M'hamed Zamoum dit Si Salah"
+    ],
+    "type_action": "Embuscade",
+    "description": "En juin 1958, le Commando zonal Ali Khodja et les compagnies d'élite de la Zone 1 de la Wilaya IV sous l'impulsion du commandant Azzedine tendent une série d'embuscades meurtrières contre les colonnes militaires françaises dans les massifs surplombant Larbaâ, Meftah et la route de Tablat, suivies de violents combats contre les régiments parachutistes.",
+    "bilan_et_pertes": {
+      "aln": "Une quinzaine de moudjahidine tués ; saisie d'armes automatiques et d'équipements radio",
+      "forces_francaises": "Plus d'une vingtaine de soldats français tués ou blessés et destruction de plusieurs véhicules de transport de troupes",
+      "civils": "Aucune victime civile directe"
+    },
+    "impact_strategique": "Maintient une pression militaire directe sur le flanc sud-est de la plaine de la Mitidja et d'Alger au moment du retour au pouvoir du général de Gaulle en mai-juin 1958.",
+    "sources": [
+      {
+        "titre": "Bataille de Bouzegza et opérations du commandant Azzedine en Zone 1 de la Wilaya IV — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Bataille_de_Bouzegza",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Les mémoires et combats en Wilaya IV (Guerres mondiales et conflits contemporains) — Cairn.info",
+        "url": "https://shs.cairn.info/article/GMCC_201_0163/pdf?lang=fr&download=1&ID_ARTICLE=GMCC_201_0163",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

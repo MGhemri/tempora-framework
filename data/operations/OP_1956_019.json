@@ -1,0 +1,90 @@
+{
+  "id": "OP_1956_019",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille de Lefkaline à Sidi Khelifa (Secteur de Mila - Redjas)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-05-31",
+    "latest": "1956-05-31",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-05-31",
+    "latest": "1956-05-31",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Douar Lefkaline, commune de Sidi Khelifa, près de Mila (Wilaya de Mila)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.2167,
+          36.4167
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya II (Zone de Mila - Grarem - Ferdjioua)",
+  "source_ids": [
+    "SRC_cd7243ea1bf7e6abc3aa0627",
+    "SRC_3ef94d80189aa742334b3f22"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_019",
+    "nom_operation": "Bataille de Lefkaline à Sidi Khelifa (Secteur de Mila - Redjas)",
+    "date_debut": "1956-05-31",
+    "date_fin": "1956-05-31",
+    "wilaya_concernee": "Wilaya II (Zone de Mila - Grarem - Ferdjioua)",
+    "localisation": {
+      "region_ou_ville": "Douar Lefkaline, commune de Sidi Khelifa, près de Mila (Wilaya de Mila)",
+      "coordonnees_approximatives": {
+        "latitude": 36.4167,
+        "longitude": 6.2167
+      }
+    },
+    "commandement_aln": [
+      "Ali Zeghdoud dit Si Ali Laouati",
+      "Salah Boubnider dit Sawt El Arab",
+      "Cadres du secteur de Mila (Wilaya II)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Le 31 mai 1956 à l'aube, une unité de l'ALN dirigée par Ali Zeghdoud (dit Si Ali Laouati) stationnée au douar Lefkaline (Sidi Khelifa, région de Mila) fait face à un encerclement massif des troupes françaises appuyées par l'artillerie et l'aviation. Les moudjahidine et les moussebiline engagent le combat à courte portée toute la journée et parviennent à abattre un hélicoptère militaire français.",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs dizaines de moudjahidine et moussebiline tombés au champ d'honneur (dont le chef Ali Zeghdoud)",
+      "forces_francaises": "Lourdes pertes parmi les colonnes d'assaut françaises et 1 hélicoptère abattu par les tirs de l'ALN",
+      "civils": "Destruction du douar Lefkaline et représailles contre les habitants de Sidi Khelifa"
+    },
+    "impact_strategique": "Haut fait d'armes dans le bassin de Mila qui sécurise l'axe de liaison intérieur de la Wilaya II entre les maquis du Nord (El Milia / Jijel) et les plaines de Constantine et Sétif.",
+    "sources": [
+      {
+        "titre": "Virée dans les refuges de la Wilaya II historique : ces sanctuaires oubliés — El Moudjahid",
+        "url": "https://www.elmoudjahid.dz/fr/actualite/viree-dans-les-refuges-de-la-wilaya-ii-historique-ces-sanctuaires-oublies-242668",
+        "type_source": "Article"
+      },
+      {
+        "titre": "La Wilaya II historique — Cairn.info",
+        "url": "https://shs.cairn.info/la-wilaya-ii-historique--9789947394052-page-35?lang=fr",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

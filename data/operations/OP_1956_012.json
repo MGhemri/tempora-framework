@@ -1,0 +1,89 @@
+{
+  "id": "OP_1956_012",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscade d'El M'kadid et combats de la forêt de Skouna (Sebdou)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-08-22",
+    "latest": "1956-08-22",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-08-23",
+    "latest": "1956-08-23",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "El M'kadid et massif forestier de Sebdou / Beni Bahdel (Wilaya de Tlemcen)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.3333,
+          34.6333
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 1 / Zone 2 - Monts de Tlemcen et Sebdou)",
+  "source_ids": [
+    "SRC_4a7d55a4b3db6255770e925a",
+    "SRC_875e373d14f7eb5875da5cda"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_012",
+    "nom_operation": "Embuscade d'El M'kadid et combats de la forêt de Skouna (Sebdou)",
+    "date_debut": "1956-08-22",
+    "date_fin": "1956-08-23",
+    "wilaya_concernee": "Wilaya V (Zone 1 / Zone 2 - Monts de Tlemcen et Sebdou)",
+    "localisation": {
+      "region_ou_ville": "El M'kadid et massif forestier de Sebdou / Beni Bahdel (Wilaya de Tlemcen)",
+      "coordonnees_approximatives": {
+        "latitude": 34.6333,
+        "longitude": -1.3333
+      }
+    },
+    "commandement_aln": [
+      "Benali Boudghène dit Colonel Lotfi (alors chef du secteur de Tlemcen-Sebdou)",
+      "Commandant Farradj"
+    ],
+    "type_action": "Embuscade",
+    "description": "Une katiba de l'ALN opérant dans le secteur forestier de Sebdou tend une embuscade meurtrière à un convoi motorisé français au défilé d'El M'kadid, détruisant plusieurs camions et véhicules d'escorte avant de soutenir un engagement prolongé dans les bois de chênes-lièges contre les renforts héliportés venus de Tlemcen.",
+    "bilan_et_pertes": {
+      "aln": "Une dizaine de combattants tués ; récupération d'armes automatiques et de postes radio",
+      "forces_francaises": "Lourdes pertes parmi l'escorte du convoi et destruction de plusieurs véhicules militaires",
+      "civils": "Aucune victime civile directe"
+    },
+    "impact_strategique": "Sécurise le couloir de transit sud des monts de Tlemcen permettant l'acheminement des armes depuis le Maroc vers l'intérieur de l'Oranie (Sidi Bel Abbès, Saïda et Mascara).",
+    "sources": [
+      {
+        "titre": "Colonel Lotfi (Benali Boudghène) et le commandement en Wilaya V — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Colonel_Lotfi",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Journaux des Marches et Opérations (JMO) du secteur de Tlemcen-Sebdou — Archives Les Tirailleurs / SHD",
+        "url": "https://www.les-tirailleurs.fr/documents/5357e955-c86d-4555-87d5-cc16d3a86c1e/afficher",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

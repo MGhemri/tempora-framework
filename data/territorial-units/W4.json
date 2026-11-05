@@ -1,0 +1,12 @@
+{
+  "id": "W4",
+  "names": {
+    "fr": "Wilaya IV (Algérois)",
+    "ar": "الولاية الرابعة (الجزائر والوسط)"
+  },
+  "type": "editorial_category",
+  "valid_from": null,
+  "valid_to": null,
+  "source_ids": [],
+  "review_status": "needs_review"
+}

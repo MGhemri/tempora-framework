@@ -1,0 +1,89 @@
+{
+  "id": "OP_1957_022",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscade d'Oued Zenati et combats du plateau de Tamlouka (Secteur de Guelma)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-07-08",
+    "latest": "1957-07-08",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-07-09",
+    "latest": "1957-07-09",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Axe Oued Zenati - Tamlouka (ex-Montcalm) et massif de la Mahouna (Wilaya de Guelma)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.15,
+          36.315
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya II / Zone limitrophe de Guelma (Oued Zenati - Tamlouka)",
+  "source_ids": [
+    "SRC_fa3ef0a9fa9dc17397aac317",
+    "SRC_936bbe11fb99998ff919598a"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_022",
+    "nom_operation": "Embuscade d'Oued Zenati et combats du plateau de Tamlouka (Secteur de Guelma)",
+    "date_debut": "1957-07-08",
+    "date_fin": "1957-07-09",
+    "wilaya_concernee": "Wilaya II / Zone limitrophe de Guelma (Oued Zenati - Tamlouka)",
+    "localisation": {
+      "region_ou_ville": "Axe Oued Zenati - Tamlouka (ex-Montcalm) et massif de la Mahouna (Wilaya de Guelma)",
+      "coordonnees_approximatives": {
+        "latitude": 36.315,
+        "longitude": 7.15
+      }
+    },
+    "commandement_aln": [
+      "Ali Kafi",
+      "Officiers de l'ALN du secteur d'Oued Zenati - Guelma"
+    ],
+    "type_action": "Embuscade",
+    "description": "Une katiba de l'ALN tend une embuscade à un convoi militaire et de gendarmerie sur l'axe routier reliant Oued Zenati au plateau céréalier de Tamlouka (ex-Montcalm), avant de se replier vers les pentes boisées du Djebel Mahouna où se déroulent de violents accrochages avec les renforts français venus de Guelma et de Constantine.",
+    "bilan_et_pertes": {
+      "aln": "Une douzaine de moudjahidine tués ; capture d'un lot de fusils et de munitions",
+      "forces_francaises": "Destruction de plusieurs véhicules d'escorte et une vingtaine de soldats français tués ou blessés",
+      "civils": "Renforcement du quadrillage militaire des fermes coloniales de la plaine de Tamlouka"
+    },
+    "impact_strategique": "Sécurise le couloir de transit des caravanes d'armes reliant la frontière tunisienne (Base de l'Est) au cœur de la Wilaya II via le sud de Guelma et Oued Zenati.",
+    "sources": [
+      {
+        "titre": "Tamlouka (Histoire et guerre d'Algérie) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Tamlouka",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Guelma, la wilaya aux 5 000 martyrs — El Moudjahid",
+        "url": "https://www.elmoudjahid.dz/fr/l-evenement/guelma-la-wilaya-au-5-000-martyrs-195645",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "id": "OP_1954_006",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Attaque de la mine de Nador (Hammam N'Baïls) et opérations de Guelma - Souk Ahras",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1954-11-07",
+    "latest": "1954-11-07",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1954-11-08",
+    "latest": "1954-11-08",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Mine de zinc et de plomb du Nador, commune de Hammam N'Baïls, entre Guelma et Souk Ahras (Wilaya de Guelma)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.6667,
+          36.3167
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone II / Confins Base de l'Est (Secteur de Guelma - Hammam N'Baïls - Souk Ahras)",
+  "source_ids": [
+    "SRC_3f5dbb3da7a1256c273b5783",
+    "SRC_936bbe11fb99998ff919598a"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1954_006",
+    "nom_operation": "Attaque de la mine de Nador (Hammam N'Baïls) et opérations de Guelma - Souk Ahras",
+    "date_debut": "1954-11-07",
+    "date_fin": "1954-11-08",
+    "wilaya_concernee": "Zone II / Confins Base de l'Est (Secteur de Guelma - Hammam N'Baïls - Souk Ahras)",
+    "localisation": {
+      "region_ou_ville": "Mine de zinc et de plomb du Nador, commune de Hammam N'Baïls, entre Guelma et Souk Ahras (Wilaya de Guelma)",
+      "coordonnees_approximatives": {
+        "latitude": 36.3167,
+        "longitude": 7.6667
+      }
+    },
+    "commandement_aln": [
+      "Badji Mokhtar",
+      "Benaouda Amar",
+      "Didouche Mourad (Chef de la Zone II)"
+    ],
+    "type_action": "Sabotage",
+    "description": "Le 7 novembre 1954, un commando de l'ALN relevant du secteur de Guelma-Souk Ahras (organisé par Badji Mokhtar en liaison avec la Zone II) investit le complexe minier du Nador à Hammam N'Baïls. Les moudjahidine neutralisent les gardiens, s'emparent d'un stock massif de dynamite, de détonateurs et d'armes de chasse et de guerre, ainsi que de la caisse de l'entreprise pour financer le maquis naissant.",
+    "bilan_et_pertes": {
+      "aln": "Aucune perte lors de l'assaut ; saisie de centaines de kilos d'explosifs miniers et de fonds",
+      "forces_francaises": "Neutralisation du poste de garde et paralysie de l'exploitation minière du Nador",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "Consolide dès la première semaine de novembre 1954 l'implantation armée et logistique de l'ALN dans le triangle Guelma - Oued Zenati - Souk Ahras.",
+    "sources": [
+      {
+        "titre": "Trois offensives retentissantes annonçaient le déclenchement de la Révolution entre Guelma et Souk Ahras — Algérie Presse Service (APS)",
+        "url": "https://www.aps.dz/fr/algerie/actualite-nationale/mhf2azba-trois-offensives-retentissantes-annoncaient-le-declenchement-de-la-revolution-entre-guelma-et-souk-ahras",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Guelma, la wilaya aux 5 000 martyrs — El Moudjahid",
+        "url": "https://www.elmoudjahid.dz/fr/l-evenement/guelma-la-wilaya-au-5-000-martyrs-195645",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

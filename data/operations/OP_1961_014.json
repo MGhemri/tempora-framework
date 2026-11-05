@@ -1,0 +1,89 @@
+{
+  "id": "OP_1961_014",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Opérations des fidayin de Constantine et défense de la Souika et de Bellevue face aux réseaux OAS",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1961-06-10",
+    "latest": "1961-06-10",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1961-08-25",
+    "latest": "1961-08-25",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Constantine : quartiers de la Souika (Médina), Sidi Mabrouk, Bellevue, Coudiat et centre-ville (ex-Rue de France) (Wilaya de Constantine)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.6147,
+          36.365
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya II (Nord-Constantinois - Secteur urbain de Constantine)",
+  "source_ids": [
+    "SRC_856bbbc953c517256aff92ee",
+    "SRC_12b28625bd4aebad12c12f4e"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1961_014",
+    "nom_operation": "Opérations des fidayin de Constantine et défense de la Souika et de Bellevue face aux réseaux OAS",
+    "date_debut": "1961-06-10",
+    "date_fin": "1961-08-25",
+    "wilaya_concernee": "Wilaya II (Nord-Constantinois - Secteur urbain de Constantine)",
+    "localisation": {
+      "region_ou_ville": "Constantine : quartiers de la Souika (Médina), Sidi Mabrouk, Bellevue, Coudiat et centre-ville (ex-Rue de France) (Wilaya de Constantine)",
+      "coordonnees_approximatives": {
+        "latitude": 36.365,
+        "longitude": 6.6147
+      }
+    },
+    "commandement_aln": [
+      "Salah Boubnider dit Sawt El Arab (Colonel de la Wilaya II)",
+      "Chefs des réseaux urbains de fidayin de Constantine"
+    ],
+    "type_action": "Attentat ciblé",
+    "description": "Durant l'été 1961 à Constantine, les groupes de fidayin de la Wilaya II mènent une campagne d'attentats ciblés à la grenade et au pistolet-mitrailleur contre les responsables locaux de l'OAS, les commissariats et les patrouilles mixtes dans les quartiers de Bellevue, de Sidi Mabrouk et de la rue de France, tout en barricadant les accès de la médina (Souika).",
+    "bilan_et_pertes": {
+      "aln": "Une douzaine de fidayin tués ou arrêtés lors des bouclages du rocher de Constantine",
+      "forces_francaises": "Plusieurs cadres activistes de l'OAS et membres des forces de sécurité abattus ou blessés à Constantine",
+      "civils": "Forte tension intercommunautaire et couvre-feu à Constantine"
+    },
+    "impact_strategique": "Empêche l'OAS de prendre le contrôle de Constantine (contrairement à Oran et à Bab El Oued), la capitale de l'Est restant solidement dominée par les réseaux de la Wilaya II.",
+    "sources": [
+      {
+        "titre": "La Wilaya II historique : l'action urbaine à Constantine — Cairn.info",
+        "url": "https://shs.cairn.info/la-wilaya-ii-historique--9789947394052-page-103?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Il y a 60 ans, l'OAS en Algérie — La Revue d'Histoire Militaire",
+        "url": "https://larevuedhistoiremilitaire.fr/2021/03/22/il-y-a-60-ans-loas-en-algerie/",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

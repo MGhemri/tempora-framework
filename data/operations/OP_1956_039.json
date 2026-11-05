@@ -1,0 +1,88 @@
+{
+  "id": "OP_1956_039",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combat et martyre de Mostefa Ben Boulaïd au Djebel Nara",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-03-22",
+    "latest": "1956-03-22",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Nara / Djebel Nara (Menaâ, Batna)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.012,
+          35.314
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya I (Aurès - Secteur de Menaâ / Oued Abdi)",
+  "source_ids": [
+    "SRC_c12bfde93155ea696bae6b25",
+    "SRC_0aea261bfe06ab0f56c6d382"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_039",
+    "nom_operation": "Combat et martyre de Mostefa Ben Boulaïd au Djebel Nara",
+    "date_debut": "1956-03-22",
+    "date_fin": null,
+    "wilaya_concernee": "Wilaya I (Aurès - Secteur de Menaâ / Oued Abdi)",
+    "localisation": {
+      "region_ou_ville": "Nara / Djebel Nara (Menaâ, Batna)",
+      "coordonnees_approximatives": {
+        "latitude": 35.314,
+        "longitude": 6.012
+      }
+    },
+    "commandement_aln": [
+      "Mostefa Ben Boulaïd"
+    ],
+    "type_action": "Combat de rencontre / Piège colonial",
+    "description": "Le chef historique et 'père de la Révolution' Mostefa Ben Boulaïd tombe en martyr avec plusieurs officiers de l'ALN lors de l'explosion d'un poste émetteur-récepteur piégé largué par les services secrets de l'armée coloniale au Djebel Nara.",
+    "bilan_et_pertes": {
+      "aln": "Mostefa Ben Boulaïd et plusieurs cadres de la Wilaya I tombés en martyrs",
+      "forces_francaises": "0 (opération d'intoxication et de piège)",
+      "civils": "0"
+    },
+    "impact_strategique": "Perte immense pour le commandement de la Wilaya I et de la Révolution ; l'événement déclenchera des réorganisations majeures dans les Aurès et accélérera la tenue du Congrès de la Soummam.",
+    "sources": [
+      {
+        "titre": "Mostefa Ben Boulaïd, une source d'inspiration (Horizons)",
+        "url": "https://www.horizons.dz/2025/03/mostefa-ben-boulaid-une-source-dinspiration/",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Mostefa Ben Boulaïd (Wikipédia)",
+        "url": "https://fr.wikipedia.org/wiki/Mostefa_Ben_Boula%C3%AFd",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

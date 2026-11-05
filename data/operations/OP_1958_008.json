@@ -1,0 +1,90 @@
+{
+  "id": "OP_1958_008",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille du Djebel Mekther (Monts des Ksour / Aïn Sefra)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-04-19",
+    "latest": "1958-04-19",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-04-21",
+    "latest": "1958-04-21",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif du Djebel Mekther (2 000 m d'altitude), au sud d'Aïn Sefra (Wilaya de Naâma)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.55,
+          32.6667
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 8 - Aïn Sefra / Front Sud-Oranais)",
+  "source_ids": [
+    "SRC_1709cb62d54cf6476a15e4da",
+    "SRC_4fbc3af0d38d011785a8fc40"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_008",
+    "nom_operation": "Bataille du Djebel Mekther (Monts des Ksour / Aïn Sefra)",
+    "date_debut": "1958-04-19",
+    "date_fin": "1958-04-21",
+    "wilaya_concernee": "Wilaya V (Zone 8 - Aïn Sefra / Front Sud-Oranais)",
+    "localisation": {
+      "region_ou_ville": "Massif du Djebel Mekther (2 000 m d'altitude), au sud d'Aïn Sefra (Wilaya de Naâma)",
+      "coordonnees_approximatives": {
+        "latitude": 32.6667,
+        "longitude": -0.55
+      }
+    },
+    "commandement_aln": [
+      "Benali Boudghène dit Colonel Lotfi",
+      "Commandant Moussa (Mohamed Benahmed)",
+      "Officiers de la Zone 8"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Après le franchissement de la ligne frontalière et le harcèlement de postes militaires dans la région d'Aïn Sefra, deux katibas de la Wilaya V prennent position dans les escarpements rocheux du Djebel Mekther. Elles y soutiennent pendant trois jours l'assaut combiné des compagnies du 2e Régiment étranger d'infanterie (2e REI), de l'artillerie et de l'aviation française, infligeant de lourdes pertes aux assaillants.",
+    "bilan_et_pertes": {
+      "aln": "Une trentaine de combattants de l'ALN tués sous les bombardements aériens et d'artillerie",
+      "forces_francaises": "Plusieurs dizaines de légionnaires tués ou blessés lors de l'assaut des pitons rocheux",
+      "civils": "Aucune victime civile (haute montagne steppique)"
+    },
+    "impact_strategique": "Démontre la maîtrise de la guerre de haute montagne désertique par les katibas du Sud-Oranais et l'incapacité du barrage ouest à empêcher totalement les infiltrations de la Wilaya V.",
+    "sources": [
+      {
+        "titre": "La lutte armée dans le Sud-Oranais et l'Atlas saharien — Revue académique CERIST (ASJP)",
+        "url": "https://asjp.cerist.dz/en/downArticle/20/16/5/254394",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Les combats de la Légion étrangère dans le secteur d'Aïn Sefra — FSALE",
+        "url": "https://www.legionetrangere.fr/la-fsale/actualites-de-la-fsale/808-histoire-decembre-1959-bataille-du-djebel-beni-smir.html",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

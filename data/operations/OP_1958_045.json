@@ -1,0 +1,82 @@
+{
+  "id": "OP_1958_045",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille d'Ellaba (El Labba)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-02-07",
+    "latest": "1958-02-07",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Secteur d'Ellaba / Saïda",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.285,
+          34.895
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 6 - Région de Saïda)",
+  "source_ids": [
+    "SRC_5312786efc1a1a9bbf77a255"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_045",
+    "nom_operation": "Bataille d'Ellaba (El Labba)",
+    "date_debut": "1958-02-07",
+    "date_fin": null,
+    "wilaya_concernee": "Wilaya V (Zone 6 - Région de Saïda)",
+    "localisation": {
+      "region_ou_ville": "Secteur d'Ellaba / Saïda",
+      "coordonnees_approximatives": {
+        "latitude": 34.895,
+        "longitude": 0.285
+      }
+    },
+    "commandement_aln": [
+      "Katiba ALN de Saïda"
+    ],
+    "type_action": "Combat de rencontre",
+    "description": "Bataille rangée livrée dans la région de Saïda contre une colonne française engagée dans un ratissage de zone.",
+    "bilan_et_pertes": {
+      "aln": "Quelques combattants tombés au champ d'honneur",
+      "forces_francaises": "Plusieurs soldats français tués ou blessés",
+      "civils": "0"
+    },
+    "impact_strategique": "Maintien de la pression militaire de l'ALN dans l'Ouarsenis-Sud et le secteur de Saïda.",
+    "sources": [
+      {
+        "titre": "Étude historique sur la Zone 6 (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/254394",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

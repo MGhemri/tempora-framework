@@ -1,0 +1,89 @@
+{
+  "id": "OP_1958_009",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscades et combats du Djebel Amour dans le secteur de Géryville (El Bayadh)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-06-14",
+    "latest": "1958-06-14",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-06-16",
+    "latest": "1958-06-16",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif du Djebel Amour, entre El Bayadh (ex-Géryville), Brézina et Aflou (Wilaya d'El Bayadh / Laghouat)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.0167,
+          33.6833
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 7 / Front Sud-Oranais - El Bayadh / Djebel Amour)",
+  "source_ids": [
+    "SRC_a452d395969fc48852ed0eed",
+    "SRC_8b090a85140af7066e7b0479"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_009",
+    "nom_operation": "Embuscades et combats du Djebel Amour dans le secteur de Géryville (El Bayadh)",
+    "date_debut": "1958-06-14",
+    "date_fin": "1958-06-16",
+    "wilaya_concernee": "Wilaya V (Zone 7 / Front Sud-Oranais - El Bayadh / Djebel Amour)",
+    "localisation": {
+      "region_ou_ville": "Massif du Djebel Amour, entre El Bayadh (ex-Géryville), Brézina et Aflou (Wilaya d'El Bayadh / Laghouat)",
+      "coordonnees_approximatives": {
+        "latitude": 33.6833,
+        "longitude": 1.0167
+      }
+    },
+    "commandement_aln": [
+      "Mohamed Benahmed dit Commandant Moussa",
+      "Chefs des katibas du Djebel Amour (Wilaya V)"
+    ],
+    "type_action": "Embuscade",
+    "description": "Les katibas dirigées par le commandant Moussa (Mohamed Benahmed) dans le massif du Djebel Amour tendent une série d'embuscades coordonnées contre des colonnes militaires françaises opérant entre Géryville (El Bayadh) et Aflou, suivies de violents accrochages dans les gorges rocheuses du massif.",
+    "bilan_et_pertes": {
+      "aln": "Une vingtaine de moudjahidine tués au cours des trois jours d'engagement ; capture d'armes et d'équipements",
+      "forces_francaises": "Pertes sensibles parmi les troupes coloniales et destruction de plusieurs camions et half-tracks",
+      "civils": "Regroupements forcés des populations semi-nomades du Djebel Amour"
+    },
+    "impact_strategique": "Assure la jonction stratégique dans l'Atlas saharien entre la Wilaya V (Oranie) et la Wilaya VI (Sud / Sahara).",
+    "sources": [
+      {
+        "titre": "La lutte armée dans le Sud-Oranais et le Djebel Amour — Revue académique CERIST (ASJP)",
+        "url": "https://asjp.cerist.dz/en/downArticle/20/16/5/254394",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Répertoire numérique de la série 1H (Opérations dans l'Atlas saharien) — Service Historique de la Défense (SHD)",
+        "url": "https://www.servicehistorique.sga.defense.gouv.fr/sites/default/files/notices_files/SHDGR_REP_1H_1091_A_4881_T2_1.pdf",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Assertions et contradictions · TEMPORA</title><script>const base=document.createElement('base');base.href=location.pathname.split('/documentation')[0].replace(/\/api\/docs$/,'')+'/documentation/';document.head.append(base);</script><link rel="stylesheet" href="documentation.css"><script src="../site-context.js?v=4.3"></script></head><body><main><nav><a data-atlas-link href="../index.html">Atlas ALNOP · الأطلس</a><a href="../contribute.html">Contribuer · ساهم</a><a href="index.html">Documentation · الوثائق</a></nav><p class="documentation-context"><span data-framework-presentation>TEMPORA — Framework pour les corpus historiques</span><span data-profile-presentation hidden>ALNOP — Profil du framework TEMPORA</span></p><h1 id="assertions-sources-et-contradictions">Assertions, sources et contradictions</h1>
+<h2 id="fonctionnement">Fonctionnement</h2>
+<p>Une assertion relie une fiche (<code>subject</code>, identifiant d’opération), une propriété (<code>predicate</code>) et une valeur (<code>value</code>) à des passages précis de sources (<code>evidence</code>). Elle complète la fiche sans remplacer son titre, ses dates ou son bilan. Un statut décrit cette assertion, jamais la valeur globale d’un document ou de son auteur.</p>
+<p>Les assertions sont stockées individuellement dans <code>data/claims/&lt;id&gt;.json</code>. Les identifiants permanents commencent par <code>CLM_</code>. Le schéma <code>schemas/claim.schema.json</code> est validé avec les autres données. Les exemples non historiques restent dans les tests et leur publication est refusée.</p>
+<table>
+<thead>
+<tr>
+<th>Champ</th>
+<th>Sens</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>subject</code></td>
+<td>Identifiant permanent de la fiche concernée</td>
+</tr>
+<tr>
+<td><code>predicate</code></td>
+<td>Propriété précise, nommée par le mainteneur ; même nom pour comparer deux assertions</td>
+</tr>
+<tr>
+<td><code>value</code></td>
+<td>Nombre, booléen, valeur inconnue <code>null</code>, ou texte <code>{fr, ar}</code> ; aucune traduction automatique</td>
+</tr>
+<tr>
+<td><code>unit</code></td>
+<td>Unité facultative, explicitée par la source</td>
+</tr>
+<tr>
+<td><code>evidence[]</code></td>
+<td><code>source_id</code>, passage <code>locator</code> obligatoire, court extrait <code>quotation</code> facultatif</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td><code>supported</code>, <code>contested</code>, <code>unverified</code>, <code>withdrawn</code></td>
+</tr>
+<tr>
+<td><code>editorial_status</code></td>
+<td><code>proposed</code>, <code>under_review</code>, <code>published</code>, <code>withdrawn</code></td>
+</tr>
+<tr>
+<td><code>contradicts[]</code></td>
+<td>Identifiants d’assertions divergentes, relation décidée par revue humaine</td>
+</tr>
+<tr>
+<td><code>review_history[]</code></td>
+<td>Décisions, raison, référence de revue, personne et date</td>
+</tr>
+<tr>
+<td><code>created_at</code>, <code>updated_at</code></td>
+<td>Dates éditoriales UTC, distinctes des dates historiques</td>
+</tr>
+</tbody>
+</table>
+<p>Les textes peuvent être uniquement arabes ou uniquement français ; l’autre langue reste <code>null</code>. L’interface utilise la langue disponible sans présenter une traduction inventée. Un nombre n’est ni additionné ni moyenné avec une autre assertion. <code>null</code> désigne une valeur inconnue, pas zéro.</p>
+<h2 id="revue-et-publication">Revue et publication</h2>
+<ol>
+<li>Le mainteneur crée une assertion <code>proposed</code>, vérifie la source bibliographique et relève une page, un chapitre, un paragraphe ou un autre passage identifiable.</li>
+<li>La proposition passe en revue. Le mainteneur documente le choix du prédicat, le statut et les éventuels liens de contradiction.</li>
+<li>La publication exige une fiche déjà publiée, au moins une référence précise et une dernière décision <code>approved</code> explicitant la raison et la référence de revue. La date de revue doit être comprise entre la création et la mise à jour de l’assertion.</li>
+<li><code>npm run validate:canonical</code>, <code>npm run build</code>, <code>npm test</code> et <code>npm run test:browser</code> vérifient les références, la génération et l’affichage avant publication.</li>
+</ol>
+<p>Une trace de revue dans JSON ne vérifie pas l’identité du reviewer : les permissions du dépôt et les protections de branche restent nécessaires. Le nombre obligatoire de reviewers n’est pas fixé par cette livraison. Une référence de revue vers le dépôt reste conservée dans les données téléchargeables ; l’interface Vercel n’en fait pas un lien vers GitHub.</p>
+<p>Une assertion <code>unverified</code> peut être publiée avec avertissement uniquement si une revue approuve explicitement cette présentation et qu’un passage source est fourni. Une affirmation sans référence reste un brouillon. <code>supported</code> signifie « étayée par les passages cités », pas « vérité définitive ».</p>
+<h2 id="contradictions">Contradictions</h2>
+<p>Deux assertions divergentes gardent leurs valeurs et leurs sources. Le lien <code>contradicts</code> est explicite, jamais calculé à partir d’un désaccord numérique ou d’une similarité de texte. Les deux extrémités doivent concerner la même fiche et le même prédicat et porter le statut <code>contested</code>. Un lien à sens unique est affiché depuis les deux assertions.</p>
+<p>Une contradiction publiée ne peut pointer vers un brouillon. Les deux assertions doivent être revues et publiées ensemble pour que le lecteur puisse consulter les deux versions. Le choix de publier ce dossier appartient au mainteneur. Il ne bascule pas automatiquement la fiche entière vers l’état <code>disputed</code>, dont la politique de visibilité reste à décider.</p>
+<p>Les assertions et leurs preuves apparaissent dans la fiche FR/AR, dans <code>data/canonical/claims.json</code> et sous le champ additionnel <code>scientific_claims</code> des fiches compatibles v1 qui en possèdent. Sans assertion publiée, la réponse v1 initiale reste identique. Les sources utilisées exclusivement par des brouillons sont exclues des exports.</p>
+<p>Le manifeste SHA-256 couvre aussi <code>claims.json</code> et les sources correspondantes. Le nombre de fiches du corpus reste distinct du nombre d’assertions.</p>
+<h2 id="limites-actuelles">Limites actuelles</h2>
+<p>La revue est un travail du mainteneur dans les fichiers versionnés ; il n’existe pas encore d’écran d’administration ou d’API v2. Aucun fait historique n’est extrait automatiquement des 263 fiches initiales. Les champs de bilan hérités restent conservés ; les assertions constituent un complément, pas une conversion scientifique automatique de ces champs.</p>
+<p>Un retrait éditorial exclut l’assertion de la publication courante ; son fichier et sa décision restent dans l’historique du dépôt. Les fichiers publics ne constituent pas encore une archive de versions scientifiques. Ne pas effacer un dossier de contradiction pour masquer un désaccord : un retrait ou une correction exige une décision documentée.</p>
+</main></body></html>

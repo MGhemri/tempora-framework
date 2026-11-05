@@ -1,0 +1,140 @@
+{
+  "id": "OP_1957_002",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Grève générale insurrectionnelle de huit jours",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-01-28",
+    "latest": "1957-01-28",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-02-04",
+    "latest": "1957-02-04",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Alger (épicentre dans la Casbah) et principales villes d'Algérie",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.0603,
+          36.7847
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone autonome d'Alger (ZAA) et ensemble des Wilayas (I à VI)",
+  "source_ids": [
+    "SRC_201bf3738ee5741d6d9d0ae6",
+    "SRC_c072bb0bfeee45ed59558208",
+    "SRC_32bbeb3a860263f3d74b12b7",
+    "SRC_a31184dfdf8b58d050c00599",
+    "SRC_a30d1e36b7b139d8c8e5a199",
+    "SRC_0c21d3daefff575e8d475fe6",
+    "SRC_001ad7bfaf7e5a6a39d60b35",
+    "SRC_5c3cef11b8759e513bef6515",
+    "SRC_cd94f62b6c0b7f44c472c04d",
+    "SRC_08bbced9261777a04a98c3f1"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_002",
+    "nom_operation": "Grève générale insurrectionnelle de huit jours",
+    "date_debut": "1957-01-28",
+    "date_fin": "1957-02-04",
+    "wilaya_concernee": "Zone autonome d'Alger (ZAA) et ensemble des Wilayas (I à VI)",
+    "localisation": {
+      "region_ou_ville": "Alger (épicentre dans la Casbah) et principales villes d'Algérie",
+      "coordonnees_approximatives": {
+        "latitude": 36.7847,
+        "longitude": 3.0603
+      }
+    },
+    "commandement_aln": [
+      "Abane Ramdane",
+      "Larbi Ben M'hidi",
+      "Benyoucef Benkhedda",
+      "Yacef Saâdi",
+      "Krim Belkacem"
+    ],
+    "type_action": "Guérilla urbaine",
+    "description": "Opération politico-militaire décidée par le Comité de coordination et d'exécution (CCE) du FLN à l'ouverture de la session de l'ONU sur l'Algérie : paralysie totale des villes algériennes par une grève générale de huit jours appuyée par les groupes armés urbains (fidayin) et les commandos de l'ALN en périphérie. Le général Massu engage l'ensemble de la 10e DP pour briser la grève par la force (ouverture des commerces au chalumeau et aux blindés, réquisitions et rafles massives).",
+    "bilan_et_pertes": {
+      "aln": "Des centaines de cadres et d'agents de liaison de l'OPA (Organisation politico-administrative) identifiés et arrêtés par les parachutistes",
+      "forces_francaises": "Mobilisation massive de la 10e DP et quadrillage militaire intégral d'Alger",
+      "civils": "Répression sévère, milliers d'internements et pillages de commerces ouverts de force"
+    },
+    "impact_strategique": "Succès diplomatique retentissant démontrant à l'ONU la représentativité quasi unanime du FLN auprès de la population algérienne, mais revers tactique sur le terrain car la grève expose au grand jour les réseaux clandestins de la ZAA face aux parachutistes de Massu.",
+    "sources": [
+      {
+        "titre": "Grève de huit jours — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Gr%C3%A8ve_de_huit_jours",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Une grève générale anticoloniale algérienne : la grève des 8 jours en 1957 — Histoire coloniale et postcoloniale",
+        "url": "https://histoirecoloniale.net/une-greve-generale-anticoloniale-algerienne-la-greve-des-8-jours-en-1957/",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Attentats de l’Otomatic, de la Cafétéria et de la brasserie du Coq Hardi (areq.net)",
+        "url": "https://areq.net/lang/fr/1957.html",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Attentats de l’Otomatic, de la Cafétéria et de la brasserie du Coq Hardi (en.wikipedia.org)",
+        "url": "https://en.wikipedia.org/wiki/Djamila_Bouazza",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Attentats de l’Otomatic, de la Cafétéria et de la brasserie du Coq Hardi (en.wikipedia.org)",
+        "url": "https://en.wikipedia.org/wiki/Djamila_Bouhired",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Attentats de l’Otomatic, de la Cafétéria et de la brasserie du Coq Hardi (algerie360.com)",
+        "url": "https://www.algerie360.com/la-femme-algerienne-et-la-lutte-de-liberation-un-long-combat-pour-briser-loppression-coloniale-2/",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Attentats de l’Otomatic, de la Cafétéria et de la brasserie du Coq Hardi (africanmanager.com)",
+        "url": "https://africanmanager.com/13_algerie-deces-de-djamila-bouazza-lun-des-symboles-de-la-guerre-de-liberation-video/",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Attentats de l’Otomatic, de la Cafétéria et de la brasserie du Coq Hardi (radioalgerie.dz)",
+        "url": "https://news.radioalgerie.dz/en/node/82023",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Attentats de l’Otomatic, de la Cafétéria et de la brasserie du Coq Hardi (jadaliyya.com)",
+        "url": "https://www.jadaliyya.com/Details/27072/Djamila-Bouhired-A-Profile-From-the-Archives",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Attentats de l’Otomatic, de la Cafétéria et de la brasserie du Coq Hardi (majalla.com)",
+        "url": "https://en.majalla.com/node/82741",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "id": "OP_1958_030",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Opération d'infiltration et démantèlement du contre-maquis « Kobus » dans l'Ouarsenis (Aïn Defla - Oued Fodda)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-04-15",
+    "latest": "1958-04-15",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-04-28",
+    "latest": "1958-04-28",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif des Braz / Djebel Doui, entre Aïn Defla (ex-Duperré), El Abadia et Oued Fodda (Wilayas d'Aïn Defla et Chlef)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.8167,
+          36.2167
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya IV (Zone 3 - Ouarsenis / Vallée du Chélif / Aïn Defla)",
+  "source_ids": [
+    "SRC_6dc024ba80fc62d6264665f1",
+    "SRC_214c943a4df7824161e94e21"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_030",
+    "nom_operation": "Opération d'infiltration et démantèlement du contre-maquis « Kobus » dans l'Ouarsenis (Aïn Defla - Oued Fodda)",
+    "date_debut": "1958-04-15",
+    "date_fin": "1958-04-28",
+    "wilaya_concernee": "Wilaya IV (Zone 3 - Ouarsenis / Vallée du Chélif / Aïn Defla)",
+    "localisation": {
+      "region_ou_ville": "Massif des Braz / Djebel Doui, entre Aïn Defla (ex-Duperré), El Abadia et Oued Fodda (Wilayas d'Aïn Defla et Chlef)",
+      "coordonnees_approximatives": {
+        "latitude": 36.2167,
+        "longitude": 1.8167
+      }
+    },
+    "commandement_aln": [
+      "Si M'Hamed Bougara (Colonel de la Wilaya IV)",
+      "Djilali Bounaâma dit Si Mohamed",
+      "Omar Oussedik"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Face au contre-maquis « Force K » dirigé par Belhadj Djilali dit « Kobus » (armé et financé par les services spéciaux français et la DST entre la vallée du Chélif et l'Ouarsenis pour barrer la route à l'ALN), l'état-major de la Wilaya IV combine encerclement militaire par ses katibas et travail de retournement interne. En avril 1958, Kobus est abattu par ses propres lieutenants qui rallient avec armes, munitions et postes radio les rangs de la Wilaya IV.",
+    "bilan_et_pertes": {
+      "aln": "Ralliement de plus de 400 à 500 hommes armés à l'ALN et récupération de centaines de fusils de guerre, fusils-mitrailleurs et mortiers fournis par l'armée française",
+      "forces_francaises": "Effondrement total du dispositif de contre-maquis français dans la vallée du Chélif et l'Ouarsenis ; violents combats contre les troupes françaises tentant d'intercepter les ralliés",
+      "civils": "Fin des exactions du groupe Kobus dans les douars d'Aïn Defla et d'Oued Fodda"
+    },
+    "impact_strategique": "Après le retournement de l'Opération « Oiseau bleu » en Wilaya III (1956), la liquidation du maquis Kobus en avril 1958 constitue le second grand triomphe du contre-espionnage et de l'action psychologique de l'ALN face aux services spéciaux français.",
+    "sources": [
+      {
+        "titre": "Wilaya IV historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_IV_historique",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Dictionnaire de la guerre d'Algérie (Affaire Kobus / Belhadj Djilali en Wilaya IV) — Cairn.info",
+        "url": "https://shs.cairn.info/dictionnaire-de-la-guerre-d-algerie--9782382923061-page-380?lang=fr",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

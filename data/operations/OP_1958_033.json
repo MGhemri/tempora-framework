@@ -1,0 +1,102 @@
+{
+  "id": "OP_1958_033",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Sabotage de l'oléoduc et attaque du poste militaire d'Oumache (Couloir de Biskra - Ziban)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-11-04",
+    "latest": "1958-11-04",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-11-05",
+    "latest": "1958-11-05",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Oumache et Chegga, au sud de Biskra sur l'axe ferroviaire et l'oléoduc Touggourt - Biskra (Wilaya de Biskra)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.6833,
+          34.6933
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya VI (Zone 3 - Biskra / Oumache / Oued Rhir)",
+  "source_ids": [
+    "SRC_21899d81e84e88dc58c79a92",
+    "SRC_521f8f3589687ea27b8cfdd1",
+    "SRC_dabd0bf3668aa7967028d13b",
+    "SRC_c251a3da280f42cf9d3ca8b0"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_033",
+    "nom_operation": "Sabotage de l'oléoduc et attaque du poste militaire d'Oumache (Couloir de Biskra - Ziban)",
+    "date_debut": "1958-11-04",
+    "date_fin": "1958-11-05",
+    "wilaya_concernee": "Wilaya VI (Zone 3 - Biskra / Oumache / Oued Rhir)",
+    "localisation": {
+      "region_ou_ville": "Oumache et Chegga, au sud de Biskra sur l'axe ferroviaire et l'oléoduc Touggourt - Biskra (Wilaya de Biskra)",
+      "coordonnees_approximatives": {
+        "latitude": 34.6933,
+        "longitude": 5.6833
+      }
+    },
+    "commandement_aln": [
+      "Mohamed Chaâbani",
+      "Si El Haouès",
+      "Commandos de la Zone 3 (Biskra)"
+    ],
+    "type_action": "Sabotage",
+    "description": "Un commando de la Wilaya VI dirigé par les officiers de la Zone de Biskra fait sauter à l'explosif la conduite d'hydrocarbures et la voie ferrée au sud d'Oumache (couloir de Biskra), provoquant un immense incendie de pétrole brut, et attaque simultanément au mortier et au fusil-mitrailleur le poste militaire français chargé de la garde du tronçon.",
+    "bilan_et_pertes": {
+      "aln": "Repli sans perte majeure dans les palmeraies d'Oumache et de M'lili",
+      "forces_francaises": "Incendie de l'oléoduc, dégâts sur la voie ferrée et une dizaine de soldats français blessés ou tués",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "Confirme la vulnérabilité de l'évacuation du pétrole saharien à travers le goulet de Biskra et des Ziban.",
+    "sources": [
+      {
+        "titre": "Hassi Messaoud et les sabotages de l'ALN contre l'acheminement pétrolier — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Hassi_Messaoud",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Le Sahara dans la guerre d'Algérie — Dictionnaire de la guerre d'Algérie (Cairn.info)",
+        "url": "https://shs.cairn.info/dictionnaire-de-la-guerre-d-algerie--9782382923061-page-902?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Batailles du Djebel Lazreg et des monts des Ouled Naïl (fr.wikipedia.org)",
+        "url": "https://fr.wikipedia.org/wiki/Si_El_Haou%C3%A8s",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Batailles du Djebel Lazreg et des monts des Ouled Naïl (aps.dz)",
+        "url": "https://www.aps.dz/fr/algerie/societe/mnanrw2x-commemoration-de-la-mort-en-martyrs-des-colonels-amirouche-et-si-el-houes",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

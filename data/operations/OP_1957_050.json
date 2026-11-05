@@ -1,0 +1,89 @@
+{
+  "id": "OP_1957_050",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille de Sidi Semiane dans les monts du Dahra",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-05-20",
+    "latest": "1957-05-20",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Sidi Semiane / Monts du Dahra (Tipaza)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.148,
+          36.521
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya IV (Zone 3 - Massif du Dahra / Cherchell - Ténès)",
+  "source_ids": [
+    "SRC_15f766bd8f78afb9fc0fb9c0",
+    "SRC_a93f554f7e808bc47d0e707f"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_050",
+    "nom_operation": "Bataille de Sidi Semiane dans les monts du Dahra",
+    "date_debut": "1957-05-20",
+    "date_fin": null,
+    "wilaya_concernee": "Wilaya IV (Zone 3 - Massif du Dahra / Cherchell - Ténès)",
+    "localisation": {
+      "region_ou_ville": "Sidi Semiane / Monts du Dahra (Tipaza)",
+      "coordonnees_approximatives": {
+        "latitude": 36.521,
+        "longitude": 2.148
+      }
+    },
+    "commandement_aln": [
+      "Si Slimane",
+      "Si Mahfoud"
+    ],
+    "type_action": "Combat de rencontre / Résistance héroïque",
+    "description": "Combat acharné de plus de quatre heures dans le massif boisé du Dahra opposant une section de l'ALN (35 moudjahidine) à un bataillon complet de 850 soldats français appuyés par l'aviation, coûtant la vie à Si Slimane et Si Mahfoud.",
+    "bilan_et_pertes": {
+      "aln": "18 moudjahidine tombés au champ d'honneur dont Si Slimane et Si Mahfoud",
+      "forces_francaises": "Plus de 40 soldats coloniaux tués et des dizaines de blessés selon les témoignages",
+      "civils": "0"
+    },
+    "impact_strategique": "Bataille devenue légendaire dans la mémoire du Dahra pour la bravoure d'une poignée de combattants face à des effectifs vingt fois supérieurs.",
+    "sources": [
+      {
+        "titre": "Battle of Sidi Semiane (Wikipedia)",
+        "url": "https://en.wikipedia.org/wiki/Battle_of_Sidi_Semiane",
+        "type_source": "Article"
+      },
+      {
+        "titre": "On était 35 moudjahidine contre 850 soldats français (L'Expression)",
+        "url": "https://www.lexpressiondz.com/nationale/on-etait-35-moudjahidine-contre-850-soldats-francais-19500",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "id": "OP_1958_016",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Attaques armées coordonnées contre les commissariats et postes de police de Lyon",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-09-01",
+    "latest": "1958-09-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-09-25",
+    "latest": "1958-09-25",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Lyon (quartiers de La Guillotière, Part-Dieu, Vaise, Gerland) et Villeurbanne (Rhône)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.8422,
+          45.754
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Fédération de France du FLN (« 7e Wilaya » - Wilaya de Lyon / Rhône-Alpes)",
+  "source_ids": [
+    "SRC_0516330473cd6f84be4e5fe6",
+    "SRC_9a25b6703c256e1502907420"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_016",
+    "nom_operation": "Attaques armées coordonnées contre les commissariats et postes de police de Lyon",
+    "date_debut": "1958-09-01",
+    "date_fin": "1958-09-25",
+    "wilaya_concernee": "Fédération de France du FLN (« 7e Wilaya » - Wilaya de Lyon / Rhône-Alpes)",
+    "localisation": {
+      "region_ou_ville": "Lyon (quartiers de La Guillotière, Part-Dieu, Vaise, Gerland) et Villeurbanne (Rhône)",
+      "coordonnees_approximatives": {
+        "latitude": 45.754,
+        "longitude": 4.8422
+      }
+    },
+    "commandement_aln": [
+      "Direction de la Wilaya de l'Est / Rhône-Alpes de la Fédération de France du FLN",
+      "Groupes de choc de l'OS de l'agglomération lyonnaise"
+    ],
+    "type_action": "Guérilla urbaine",
+    "description": "En septembre 1958, les groupes de choc de l'OS de la Fédération de France à Lyon — deuxième pôle financier et militaire du FLN en métropole après Paris — lancent une série d'attaques armées au pistolet-mitrailleur et au pistolet contre les commissariats d'arrondissement (notamment La Guillotière et Vaise), les casernes et les patrouilles de police lyonnaises.",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs militants des groupes de choc tués ou capturés et traduits devant le Tribunal permanent des forces armées (TPFA) de Lyon (prison Montluc)",
+      "forces_francaises": "Plusieurs policiers et militaires tués ou grièvement blessés à Lyon (dont le sous-brigadier de police Sudon abattu en service)",
+      "civils": "Couvre-feu de fait et rafles massives d'ouvriers algériens dans les garnis de La Guillotière et de Villeurbanne"
+    },
+    "impact_strategique": "Fait de l'agglomération lyonnaise un théâtre majeur de la guérilla urbaine en métropole ; la prison de Montluc à Lyon devient l'un des principaux lieux de détention et d'exécution des combattants du FLN en France (11 guillotinés).",
+    "sources": [
+      {
+        "titre": "La Fédération de France du FLN dans la région lyonnaise — ENS Éditions (OpenEdition Books)",
+        "url": "https://books.openedition.org/enseditions/7290?lang=en",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Fonds des juridictions militaires (TPFA de Lyon) — FranceArchives",
+        "url": "https://francearchives.gouv.fr/fr/facomponent/211f6b2f72cb3624375b780f8627ed54eefae289",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

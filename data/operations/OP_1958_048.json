@@ -1,0 +1,82 @@
+{
+  "id": "OP_1958_048",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille du Djebel El Akhdar à Ouled Brahim",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-12-19",
+    "latest": "1958-12-19",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Djebel El Akhdar / Ouled Brahim (Saïda)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.46667,
+          34.98333
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 6 - Saïda)",
+  "source_ids": [
+    "SRC_464fd6f96ac637af84301947"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_048",
+    "nom_operation": "Bataille du Djebel El Akhdar à Ouled Brahim",
+    "date_debut": "1958-12-19",
+    "date_fin": null,
+    "wilaya_concernee": "Wilaya V (Zone 6 - Saïda)",
+    "localisation": {
+      "region_ou_ville": "Djebel El Akhdar / Ouled Brahim (Saïda)",
+      "coordonnees_approximatives": {
+        "latitude": 34.98333,
+        "longitude": 0.46667
+      }
+    },
+    "commandement_aln": [
+      "Katiba ALN d'Ouled Brahim"
+    ],
+    "type_action": "Combat de rencontre / Guérilla de montagne",
+    "description": "Combat stratégique livré sur les hauteurs du Djebel El Akhdar pour protéger un corridor vital d'acheminement d'armes, de médicaments et d'évacuation des blessés.",
+    "bilan_et_pertes": {
+      "aln": "Une quinzaine de chouhada",
+      "forces_francaises": "Pertes considérables chez les parachutistes coloniaux",
+      "civils": "0"
+    },
+    "impact_strategique": "Sauvegarde des convois sanitaires et logistiques de l'ALN reliant les Hauts Plateaux à l'Ouarsenis.",
+    "sources": [
+      {
+        "titre": "Il y a 64 ans a eu lieu la bataille du Djebel El Akhdar (Jazaïr Hope)",
+        "url": "https://jazairhope.org/fr/saida-il-y-a-64-ans-a-eu-lieu-la-bataille-du-djebel-el-akhdar/",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

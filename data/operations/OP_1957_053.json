@@ -1,0 +1,84 @@
+{
+  "id": "OP_1957_053",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Accrochage des contreforts du Djebel Murdjadjo et des Planteurs",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-07-12",
+    "latest": "1957-07-12",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-07-12",
+    "latest": "1957-07-12",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Contreforts du Djebel Murdjadjo / Ravin de Ras El Aïn et Les Planteurs",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.6625,
+          35.7042
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone urbaine d'Oran - Murdjadjo et Planteurs)",
+  "source_ids": [
+    "SRC_f9b1aacd3dd6237025671ffc",
+    "SRC_300ac72436db1c7b293281a9"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_053",
+    "nom_operation": "Accrochage des contreforts du Djebel Murdjadjo et des Planteurs",
+    "date_debut": "1957-07-12",
+    "date_fin": "1957-07-12",
+    "wilaya_concernee": "Wilaya V (Zone urbaine d'Oran - Murdjadjo et Planteurs)",
+    "localisation": {
+      "region_ou_ville": "Contreforts du Djebel Murdjadjo / Ravin de Ras El Aïn et Les Planteurs",
+      "coordonnees_approximatives": {
+        "latitude": 35.7042,
+        "longitude": -0.6625
+      }
+    },
+    "commandement_aln": [
+      "Groupe de liaison ALN maquis-ville (Zone 6 / Wilaya V)"
+    ],
+    "type_action": "Embuscade et combat de rupture",
+    "description": "Une patrouille de la Légion repère un groupe de l'ALN assurant la liaison d'armes et de courrier entre les maquis des monts de Santa Cruz (Murdjadjo) et le quartier refuge des Planteurs. Profitant du terrain accidenté et des ravins de Ras El Aïn, les combattants de l'ALN tendent une embuscade d'arrêt pour contenir l'encerclement avant de se disperser dans l'habitat dense des Planteurs.",
+    "bilan_et_pertes": "3 légionnaires tués et 4 blessés ; 2 djounoud tombés au champ d'honneur, le reste du détachement réussit son exfiltration.",
+    "impact_strategique": "Révèle le rôle du couloir Murdjadjo-Planteurs comme artère d'infiltration vitale pour les transmissions de la Wilaya V vers Oran intra-muros.",
+    "sources": [
+      {
+        "titre": "Revue ASJP — المعارك والاشتباكات المسلحة بالقطاع الوهراني (1956-1958)",
+        "url": "https://asjp.cerist.dz/en/article/123690",
+        "type_source": "Revue scientifique"
+      },
+      {
+        "titre": "Saddek Benkada, « La guérilla périurbaine d'Oran et les accrochages du Murdjadjo », Insaniyat / CRASC",
+        "url": "https://journals.openedition.org/insaniyat/30472",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

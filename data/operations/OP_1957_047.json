@@ -1,0 +1,88 @@
+{
+  "id": "OP_1957_047",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Affrontement armé et tragédie de Melouza (Mechta Kasba)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-05-28",
+    "latest": "1957-05-28",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Mechta Kasba / Melouza (Beni Ilmane, flanc sud du Djebel M'zid, Wilaya de M'Sila)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.468,
+          35.986
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya III (Zone 3 - Monts des Bibans / Confins du Hodna)",
+  "source_ids": [
+    "SRC_1fb28f160093f0084195f53b",
+    "SRC_4c78e8c6117154df8f3337f7"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_047",
+    "nom_operation": "Affrontement armé et tragédie de Melouza (Mechta Kasba)",
+    "date_debut": "1957-05-28",
+    "date_fin": null,
+    "wilaya_concernee": "Wilaya III (Zone 3 - Monts des Bibans / Confins du Hodna)",
+    "localisation": {
+      "region_ou_ville": "Mechta Kasba / Melouza (Beni Ilmane, flanc sud du Djebel M'zid, Wilaya de M'Sila)",
+      "coordonnees_approximatives": {
+        "latitude": 35.986,
+        "longitude": 4.468
+      }
+    },
+    "commandement_aln": [
+      "Commandement zonal Wilaya III"
+    ],
+    "type_action": "Combat fratricide / Opération de représailles",
+    "description": "Dans le contexte de l'affrontement sanglant contre les maquis rivaux messalistes du MNA soutenus et armés par l'armée française, une unité de l'ALN investit le hameau de Mechta Kasba et exécute les partisans armés du MNA.",
+    "bilan_et_pertes": {
+      "aln": "0",
+      "forces_francaises": "0 (instrumentalisation propagandiste immédiate par les autorités coloniales)",
+      "civils": "Plus de 300 villageois et militants messalistes tués"
+    },
+    "impact_strategique": "Épisode tragique de la guerre intestine FLN-MNA ; instrumentalisé par la propagande coloniale française à l'ONU mais marquant l'éradication militaire définitive du MNA en Kabylie.",
+    "sources": [
+      {
+        "titre": "Les violences algéro-algériennes : le drame de Melouza (Encyclopædia Universalis)",
+        "url": "https://www.universalis.fr/encyclopedie/guerre-d-algerie/4-les-violences-algero-algeriennes/",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Massacre de Melouza (Wikipédia)",
+        "url": "https://fr.wikipedia.org/wiki/Massacre_de_Melouza",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

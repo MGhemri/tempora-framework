@@ -1,0 +1,91 @@
+{
+  "id": "OP_1962_003",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Derniers duels d'artillerie et harcèlements sur la Ligne Morice-Challe à la veille du cessez-le-feu (Tébessa - Souk Ahras - El Tarf)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1962-03-01",
+    "latest": "1962-03-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1962-03-18",
+    "latest": "1962-03-18",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Ensemble du front Est sur les Lignes Challe et Morice : d'El Kala / El Tarf à Souk Ahras, El Meridj et Tébessa",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.9511,
+          36.2864
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Armée des Frontières (EMG - Front Est)",
+  "source_ids": [
+    "SRC_630c7df7b758d080eff00bd4",
+    "SRC_a8afec8c0d001208e271cb9c"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1962_003",
+    "nom_operation": "Derniers duels d'artillerie et harcèlements sur la Ligne Morice-Challe à la veille du cessez-le-feu (Tébessa - Souk Ahras - El Tarf)",
+    "date_debut": "1962-03-01",
+    "date_fin": "1962-03-18",
+    "wilaya_concernee": "Armée des Frontières (EMG - Front Est)",
+    "localisation": {
+      "region_ou_ville": "Ensemble du front Est sur les Lignes Challe et Morice : d'El Kala / El Tarf à Souk Ahras, El Meridj et Tébessa",
+      "coordonnees_approximatives": {
+        "latitude": 36.2864,
+        "longitude": 7.9511
+      }
+    },
+    "commandement_aln": [
+      "Houari Boumédiène (Chef de l'EMG)",
+      "Ali Mendjeli",
+      "Chadli Bendjedid",
+      "Tahar Zbiri"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Durant les dix-huit premiers jours de mars 1962, pendant la conférence finale d'Évian (7-18 mars 1962), les bataillons de l'Armée des frontières maintiennent un harcèlement quotidien d'artillerie (mortiers, canons sans recul, mitrailleuses lourdes) et d'incursions de patrouilles tout au long des Lignes Challe et Morice entre El Tarf, Souk Ahras et Tébessa jusqu'à l'entrée en vigueur officielle du cessez-le-feu le 19 mars 1962 à midi.",
+    "bilan_et_pertes": {
+      "aln": "Derniers martyrs tombés sur la ligne électrifiée avant le 19 mars 1962 ; préparation immédiate de l'entrée des bataillons de l'ALN en Algérie",
+      "forces_francaises": "Derniers soldats français tués ou blessés sur le barrage frontalier avant le cessez-le-feu du 19 mars",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "Permet au GPRA de signer les Accords d'Évian le 18 mars 1962 en s'appuyant sur une armée régulière intacte et puissamment équipée aux portes de l'Algérie.",
+    "sources": [
+      {
+        "titre": "Ligne Morice — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Ligne_Morice",
+        "type_source": "Article"
+      },
+      {
+        "titre": "La guerre de libération et l'Armée des frontières — Cairn.info",
+        "url": "https://shs.cairn.info/guerre-de-liberation--9789961634547-page-127?lang=fr",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

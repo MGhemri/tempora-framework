@@ -1,0 +1,89 @@
+{
+  "id": "OP_1962_007",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Contre-attaque des katibas de la Wilaya IV et de la ZAA contre le maquis OAS de l'Ouarsenis (Molière - Oued Fodda)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1962-03-28",
+    "latest": "1962-03-28",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1962-04-08",
+    "latest": "1962-04-08",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif de l'Ouarsenis : entre Oued Fodda, Lamartine (El Karimia) et Bordj Bounaama (ex-Molière, Wilayas de Chlef et Tissemsilt)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.5833,
+          36.0167
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya IV (Zone 3 - Ouarsenis / Vallée du Chélif)",
+  "source_ids": [
+    "SRC_9f68a9786f75267e65a357e0",
+    "SRC_6dc024ba80fc62d6264665f1"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1962_007",
+    "nom_operation": "Contre-attaque des katibas de la Wilaya IV et de la ZAA contre le maquis OAS de l'Ouarsenis (Molière - Oued Fodda)",
+    "date_debut": "1962-03-28",
+    "date_fin": "1962-04-08",
+    "wilaya_concernee": "Wilaya IV (Zone 3 - Ouarsenis / Vallée du Chélif)",
+    "localisation": {
+      "region_ou_ville": "Massif de l'Ouarsenis : entre Oued Fodda, Lamartine (El Karimia) et Bordj Bounaama (ex-Molière, Wilayas de Chlef et Tissemsilt)",
+      "coordonnees_approximatives": {
+        "latitude": 36.0167,
+        "longitude": 1.5833
+      }
+    },
+    "commandement_aln": [
+      "Youcef Khatib dit Colonel Si Hassan (Commandant de la Wilaya IV)",
+      "Commandants des katibas de l'Ouarsenis (Wilaya IV)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Fin mars 1962, l'OAS tente de créer une zone insurrectionnelle rurale (« maquis Bonaparte » dirigé par le commandant Gardes et des officiers déserteurs) dans le massif de l'Ouarsenis en s'appuyant sur certains postes de harkis. Les katibas de la Wilaya IV du colonel Si Hassan encerclent immédiatement les colonnes de l'OAS, rallient une partie des supplétifs algériens et attaquent les commandos OAS dans les gorges de l'Ouarsenis, mettant en déroute complète l'expédition avant l'intervention des troupes françaises.",
+    "bilan_et_pertes": {
+      "aln": "Pertes minimes ; capture d'un important stock d'armes lourdes, de mortiers et de munitions abandonnés par le maquis OAS",
+      "forces_francaises": "Effondrement et capture des membres du maquis OAS de l'Ouarsenis",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "Anéantit en quelques jours l'unique tentative de l'OAS d'implanter un maquis rural dans les montagnes algériennes.",
+    "sources": [
+      {
+        "titre": "Il y a 60 ans, l'OAS en Algérie (L'échec du maquis OAS de l'Ouarsenis) — La Revue d'Histoire Militaire",
+        "url": "https://larevuedhistoiremilitaire.fr/2021/03/22/il-y-a-60-ans-loas-en-algerie/",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Wilaya IV historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_IV_historique",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

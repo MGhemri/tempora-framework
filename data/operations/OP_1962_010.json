@@ -1,0 +1,90 @@
+{
+  "id": "OP_1962_010",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Opérations de neutralisation des équipes de « terre brûlée » de l'OAS par la ZAA à Alger et El Harrach (Juin 1962)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1962-06-07",
+    "latest": "1962-06-07",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1962-06-17",
+    "latest": "1962-06-17",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Alger (Faculté d'Alger, Télemly, Hydra, Belcourt) et zone industrielle d'El Harrach / Gué de Constantine",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.055,
+          36.7689
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone autonome d'Alger (ZAA) et Force locale",
+  "source_ids": [
+    "SRC_986962338efcd06710e308a0",
+    "SRC_d393031bdbc2495cb12842ac"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1962_010",
+    "nom_operation": "Opérations de neutralisation des équipes de « terre brûlée » de l'OAS par la ZAA à Alger et El Harrach (Juin 1962)",
+    "date_debut": "1962-06-07",
+    "date_fin": "1962-06-17",
+    "wilaya_concernee": "Zone autonome d'Alger (ZAA) et Force locale",
+    "localisation": {
+      "region_ou_ville": "Alger (Faculté d'Alger, Télemly, Hydra, Belcourt) et zone industrielle d'El Harrach / Gué de Constantine",
+      "coordonnees_approximatives": {
+        "latitude": 36.7689,
+        "longitude": 3.055
+      }
+    },
+    "commandement_aln": [
+      "Commandant Azzedine (ZAA)",
+      "Chawki Mostefaï (Exécutif provisoire / FLN)",
+      "Commandos de protection des infrastructures de la ZAA"
+    ],
+    "type_action": "Guérilla urbaine",
+    "description": "Face à la politique de la « terre brûlée » déclenchée par les commandos Delta de l'OAS début juin 1962 (incendie de la bibliothèque universitaire d'Alger le 7 juin, plasticage d'écoles, d'hôpitaux et de mairies), les commandos de la ZAA prennent le contrôle armé des usines, des centrales électriques, des dépôts d'eau et des hôpitaux de la périphérie d'Alger (Belcourt, El Harrach, Hussein Dey), repoussant par le feu les équipes de saboteurs de l'OAS jusqu'à la capitulation de l'OAS d'Alger le 17 juin 1962.",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs fidayin tués ou blessés lors de la garde armée des infrastructures d'Alger",
+      "forces_francaises": "Mise en échec de la destruction des infrastructures vitales d'eau, d'électricité et d'industrie d'Alger ; arrêt des combats de l'OAS à Alger le 17 juin 1962",
+      "civils": "Destruction de la bibliothèque universitaire d'Alger par l'OAS le 7 juin 1962"
+    },
+    "impact_strategique": "Préserve l'appareil industriel, portuaire et administratif de la capitale algérienne à deux semaines du référendum d'autodétermination et de la proclamation de l'indépendance.",
+    "sources": [
+      {
+        "titre": "Il y a 60 ans, l'OAS en Algérie (La politique de la terre brûlée et les accords de juin 1962) — La Revue d'Histoire Militaire",
+        "url": "https://larevuedhistoiremilitaire.fr/2021/03/22/il-y-a-60-ans-loas-en-algerie/",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Guerre d'Algérie — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Guerre_d%27Alg%C3%A9rie",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

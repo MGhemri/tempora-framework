@@ -1,0 +1,89 @@
+{
+  "id": "OP_1958_011",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille de Settara et du Djebel Dar El Hadada dans les Monts de Collo",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-04-26",
+    "latest": "1958-04-26",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-04-27",
+    "latest": "1958-04-27",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Djebel Dar El Hadada (Beni Sbih), commune de Settara, massif de Collo (Confins des Wilayas de Jijel et Skikda)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.3833,
+          36.7167
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya II (Secteur des Monts de Collo - Settara - El Milia)",
+  "source_ids": [
+    "SRC_1c49f4f4c8371f973afb5ac8",
+    "SRC_6df2600aef0f25caa0f3e85f"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_011",
+    "nom_operation": "Bataille de Settara et du Djebel Dar El Hadada dans les Monts de Collo",
+    "date_debut": "1958-04-26",
+    "date_fin": "1958-04-27",
+    "wilaya_concernee": "Wilaya II (Secteur des Monts de Collo - Settara - El Milia)",
+    "localisation": {
+      "region_ou_ville": "Djebel Dar El Hadada (Beni Sbih), commune de Settara, massif de Collo (Confins des Wilayas de Jijel et Skikda)",
+      "coordonnees_approximatives": {
+        "latitude": 36.7167,
+        "longitude": 6.3833
+      }
+    },
+    "commandement_aln": [
+      "Mustapha Filali",
+      "Commandants de la Zone de Collo - El Milia (Wilaya II)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Au printemps 1958, simultanément à la grande bataille des frontières à l'Est, les katibas du massif de Collo dirigées par Mustapha Filali livrent une bataille d'une extrême intensité de quarante-huit heures à Settara (Djebel Dar El Hadada / Beni Sbih) contre les régiments d'infanterie et de parachutistes français appuyés par l'aviation et l'artillerie de marine.",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs dizaines de moudjahidine tombés au champ d'honneur sous les bombardements au napalm",
+      "forces_francaises": "Pertes très sévères dans les rangs français lors des combats rapprochés dans le maquis de Settara",
+      "civils": "Destruction de mechtas et regroupements forcés de la population des Beni Sbih et de Collo"
+    },
+    "impact_strategique": "Fixe d'importantes forces françaises dans le massif littoral de Collo au moment même où l'armée française tente de concentrer ses réserves sur la Ligne Morice.",
+    "sources": [
+      {
+        "titre": "Wilaya II historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_II_historique",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Répertoire numérique de la série 1H (Secteur de Collo / El Milia) — Service Historique de la Défense (SHD)",
+        "url": "https://www.servicehistorique.sga.defense.gouv.fr/sites/default/files/notices_files/SHDGR_REP_1H_1091_A_4881_T2_1.pdf",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

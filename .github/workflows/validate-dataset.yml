@@ -1,0 +1,73 @@
+name: Validate TEMPORA and ALNOP compatibility
+
+on:
+  push:
+    branches:
+      - main
+      - 'fix/**'
+      - 'feat/**'
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test-and-validate:
+    name: Test API & Validate Dataset Integrity
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Validate canonical records and publication approvals
+        run: npm run validate:profiles && npm run validate:canonical
+
+      - name: Require fresh reviews for canonical data changes
+        if: github.event_name == 'push' || github.event_name == 'pull_request'
+        env:
+          REVIEW_BASE_SHA: ${{ github.event.pull_request.base.sha || github.event.before }}
+        run: |
+          base="$REVIEW_BASE_SHA"
+          if [[ "$base" =~ ^0+$ ]]; then base="$(git merge-base HEAD origin/main)"; fi
+          npm run review:changes -- --base "$base"
+
+      - name: Generate duplicate candidates without modifying the corpus
+        run: npm run quality:duplicates && npm run quality:benchmark && npm run quality:conflicts
+
+      - name: Check canonical and public exports
+        run: npm run check:canonical
+
+      - name: Check immutable ALNOP archives
+        run: npm run check:releases && npm run check:tempora:baseline
+
+      - name: Check documentary observatory artifacts
+        run: npm run check:coverage && npm run check:assistance && npm run check:entity-search
+
+      - name: Check local documentation
+        run: npm run check:documentation
+
+      - name: Run API Contract & Regression Tests
+        run: npm run test:api
+
+      - name: Run dataset validation suite
+        run: python validate_dataset.py

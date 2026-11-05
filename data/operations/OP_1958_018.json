@@ -1,0 +1,88 @@
+{
+  "id": "OP_1958_018",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Opérations de sabotage et attaques contre la Manufacture d'armes et les postes de police de Saint-Étienne",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-09-05",
+    "latest": "1958-09-05",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-10-15",
+    "latest": "1958-10-15",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Saint-Étienne, Firminy et vallée de l'Ondaine / Gier (Département de la Loire)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.3872,
+          45.4397
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Fédération de France du FLN (« 7e Wilaya » - Secteur Loire / Saint-Étienne)",
+  "source_ids": [
+    "SRC_ee46779a37de64ca02885f0d",
+    "SRC_389ca3ed046f69498259d19f"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_018",
+    "nom_operation": "Opérations de sabotage et attaques contre la Manufacture d'armes et les postes de police de Saint-Étienne",
+    "date_debut": "1958-09-05",
+    "date_fin": "1958-10-15",
+    "wilaya_concernee": "Fédération de France du FLN (« 7e Wilaya » - Secteur Loire / Saint-Étienne)",
+    "localisation": {
+      "region_ou_ville": "Saint-Étienne, Firminy et vallée de l'Ondaine / Gier (Département de la Loire)",
+      "coordonnees_approximatives": {
+        "latitude": 45.4397,
+        "longitude": 4.3872
+      }
+    },
+    "commandement_aln": [
+      "Commandos de l'OS de la Fédération de France (Secteur Loire / Rhône-Alpes)"
+    ],
+    "type_action": "Sabotage",
+    "description": "Dans le bassin houiller et métallurgique stéphanois, les cellules de l'OS du FLN planifient et exécutent des actions de sabotage contre des installations électriques, des dépôts industriels et la Manufacture nationale d'armes de Saint-Étienne (MAS, qui produit l'armement individuel de l'armée française), tout en menant des attaques armées contre les forces de police et les foyers rivaux dans la vallée de l'Ondaine et à Saint-Étienne.",
+    "bilan_et_pertes": {
+      "aln": "Vague d'arrestations par la police judiciaire et incarcération des commandos à Saint-Étienne et à la prison Montluc de Lyon",
+      "forces_francaises": "Policiers et gardiens blessés lors de fusillades ; mise sous protection militaire renforcée de la Manufacture d'armes de Saint-Étienne",
+      "civils": "Aucune victime civile hors des affrontements armés"
+    },
+    "impact_strategique": "Menace directement l'un des centres névralgiques de l'industrie d'armement française en métropole et oblige l'État à renforcer la surveillance militaire des usines de défense de la Loire.",
+    "sources": [
+      {
+        "titre": "L'Organisation Spéciale de la Fédération de France du FLN — Cairn.info",
+        "url": "https://shs.cairn.info/l-organisation-speciale-de-la-federation-de-france--9789961638798-page-242?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Police générale : attentats et sabotages du FLN en métropole — FranceArchives",
+        "url": "https://francearchives.gouv.fr/findingaid/b5007a886e4825bfd4b46f8220b3b3ee7d19d6dd",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

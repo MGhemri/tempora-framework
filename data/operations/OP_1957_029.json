@@ -1,0 +1,90 @@
+{
+  "id": "OP_1957_029",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscade de Damous / Lalla Aouda dans le Dahra (Destruction d'un convoi et d'un avion français)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-02-23",
+    "latest": "1957-02-23",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-02-24",
+    "latest": "1957-02-24",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Lalla Aouda / Damous (ex-Dupleix) et Beni Haoua, entre Cherchell et Ténès (Wilaya de Tipaza / Chlef)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.7,
+          36.55
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya IV (Zone 3 - Dahra oriental / Damous / Beni Haoua)",
+  "source_ids": [
+    "SRC_34cddc2829d63776f70456df",
+    "SRC_879383a0374829e8e07a59d1"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_029",
+    "nom_operation": "Embuscade de Damous / Lalla Aouda dans le Dahra (Destruction d'un convoi et d'un avion français)",
+    "date_debut": "1957-02-23",
+    "date_fin": "1957-02-24",
+    "wilaya_concernee": "Wilaya IV (Zone 3 - Dahra oriental / Damous / Beni Haoua)",
+    "localisation": {
+      "region_ou_ville": "Lalla Aouda / Damous (ex-Dupleix) et Beni Haoua, entre Cherchell et Ténès (Wilaya de Tipaza / Chlef)",
+      "coordonnees_approximatives": {
+        "latitude": 36.55,
+        "longitude": 1.7
+      }
+    },
+    "commandement_aln": [
+      "Ahmed Noufi dit Si Abdelhak",
+      "Commandant Si Slimane",
+      "Katiba du Dahra (Wilaya IV)"
+    ],
+    "type_action": "Embuscade",
+    "description": "Fin février 1957, les commandos de la Wilaya IV dirigés par Si Abdelhak (Ahmed Noufi) et Si Slimane tendent une embuscade d'une rare efficacité près de Damous / Lalla Aouda (entre Cherchell et Ténès) contre un convoi du bataillon de tirailleurs et de l'infanterie française. En quelques minutes d'assaut, l'unité ennemie est anéantie et un avion d'appui-feu T-6 est abattu par les tireurs de fusil-mitrailleur de l'ALN.",
+    "bilan_et_pertes": {
+      "aln": "Pertes minimes ; saisie d'un arsenal complet (fusils-mitrailleurs BAR, pistolets-mitrailleurs MAT-49, fusils Garand et postes radio)",
+      "forces_francaises": "Plusieurs dizaines de soldats français mis hors de combat, destruction du convoi et 1 avion militaire abattu",
+      "civils": "Vastes opérations de représailles dans les douars de Damous et Beni Haoua"
+    },
+    "impact_strategique": "Considérée comme l'une des embuscades les plus réussies de la Wilaya IV au début de l'année 1957, permettant d'équiper en armes automatiques modernes une nouvelle compagnie de choc du Dahra.",
+    "sources": [
+      {
+        "titre": "Anniversaire de l'embuscade de Lalla Aouda (Tipasa) — El Watan",
+        "url": "https://elwatan.dz/66e-anniversaire-de-lembuscade-de-lalla-aouda-tipasa-pourquoi-sobstine-t-on-a-etouffer-les-actes-heroiques-des-jeunes-algeriens/",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Ahmed El-Noufi, martyr de Cherchell — Algérie Presse Service (APS)",
+        "url": "https://www.aps.dz/fr/culture/edition/mheuff2l-ahmed-el-noufi-martyr-de-cherchell-une-nouvelle-publication-en-hommage-aux-heros-de-la-revolution",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "id": "OP_1954_005",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille de T'baboucht dans la forêt des Beni Melloul (Kimel / Arris)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1954-11-29",
+    "latest": "1954-11-29",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1954-12-02",
+    "latest": "1954-12-02",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Gorges de T'baboucht, forêt domaniale de Kimel / Beni Melloul (Sud-Est d'Arris, Wilaya de Batna / Biskra)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.4667,
+          35.0667
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya I (Aurès - Secteur de Kimel / Arris)",
+  "source_ids": [
+    "SRC_bd1eec955fc4055579fb649b",
+    "SRC_ce8fc4c4f6c95c9ddaefa780"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1954_005",
+    "nom_operation": "Bataille de T'baboucht dans la forêt des Beni Melloul (Kimel / Arris)",
+    "date_debut": "1954-11-29",
+    "date_fin": "1954-12-02",
+    "wilaya_concernee": "Wilaya I (Aurès - Secteur de Kimel / Arris)",
+    "localisation": {
+      "region_ou_ville": "Gorges de T'baboucht, forêt domaniale de Kimel / Beni Melloul (Sud-Est d'Arris, Wilaya de Batna / Biskra)",
+      "coordonnees_approximatives": {
+        "latitude": 35.0667,
+        "longitude": 6.4667
+      }
+    },
+    "commandement_aln": [
+      "Mostefa Ben Boulaïd",
+      "Adjel Adjoul",
+      "Messaoud Belaïch"
+    ],
+    "type_action": "Embuscade",
+    "description": "Face aux premières opérations de ratissage des parachutistes du 18e RIPC et des spahis dans le massif forestier de Kimel (forêt des Beni Melloul), les groupes de Mostefa Ben Boulaïd et d'Adjel Adjoul tendent une embuscade meurtrière dans le défilé encaissé de T'baboucht le 29 novembre 1954, suivie de quatre jours de combats intenses en forêt.",
+    "bilan_et_pertes": {
+      "aln": "5 à 8 moudjahidine tués ; saisie de fusils-mitrailleurs, de pistolets-mitrailleurs MAT-49 et d'équipements",
+      "forces_francaises": "Au moins 12 à 20 parachutistes et tirailleurs tués (dont le lieutenant Grillet) et une vingtaine de blessés",
+      "civils": "Bombardements aériens et évacuation forcée des habitants des mechtas de Kimel"
+    },
+    "impact_strategique": "Consacre la forêt de Kimel comme citadelle imprenable de la Wilaya I durant l'hiver 1954-1955 et prouve que les groupes de Ben Boulaïd peuvent tenir tête aux troupes d'élite parachutistes françaises.",
+    "sources": [
+      {
+        "titre": "Adjel Adjoul (1922-1993) et les combats de l'Aurès (Kimel / T'baboucht) — Revue Insaniyat (CRASC)",
+        "url": "https://www.insaniyat.crasc.dz/ar/article/adjel-adjoul-1922-1993-un-combat-inacheve",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Adjoul-Adjoul — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Adjoul-Adjoul",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

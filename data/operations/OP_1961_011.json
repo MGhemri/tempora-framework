@@ -1,0 +1,90 @@
+{
+  "id": "OP_1961_011",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Pilonnage massif au mortier de 120 mm contre les postes de la Ligne Morice à El Meridj et Ouenza",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1961-09-02",
+    "latest": "1961-09-02",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1961-09-04",
+    "latest": "1961-09-04",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Postes frontaliers d'El Meridj, Aïn Zerga et Ouenza (Wilaya de Tébessa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.25,
+          35.7833
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Armée des Frontières (EMG - Front Est / Secteur d'El Meridj - Ouenza)",
+  "source_ids": [
+    "SRC_9b897ae3ad3d4e615d835878",
+    "SRC_630c7df7b758d080eff00bd4"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1961_011",
+    "nom_operation": "Pilonnage massif au mortier de 120 mm contre les postes de la Ligne Morice à El Meridj et Ouenza",
+    "date_debut": "1961-09-02",
+    "date_fin": "1961-09-04",
+    "wilaya_concernee": "Armée des Frontières (EMG - Front Est / Secteur d'El Meridj - Ouenza)",
+    "localisation": {
+      "region_ou_ville": "Postes frontaliers d'El Meridj, Aïn Zerga et Ouenza (Wilaya de Tébessa)",
+      "coordonnees_approximatives": {
+        "latitude": 35.7833,
+        "longitude": 8.25
+      }
+    },
+    "commandement_aln": [
+      "Houari Boumédiène",
+      "Ali Mendjeli",
+      "Commandants d'artillerie de l'EMG (Front Est)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Au début de septembre 1961, les unités d'artillerie lourde de l'EMG déclenchent un bombardement coordonné de plusieurs centaines d'obus de mortiers de 82 mm et 120 mm et de canons sans recul contre la chaîne de postes fortifiés français d'El Meridj, d'Aïn Zerga et d'Ouenza, accompagné d'assauts d'infanterie pour détruire les réseaux barbelés électrifiés.",
+    "bilan_et_pertes": {
+      "aln": "Quelques blessés dans les positions de batterie lors des tirs de riposte de l'artillerie française",
+      "forces_francaises": "Ouvrages bétonnés et radars endommagés, une vingtaine de militaires français tués ou blessés",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "Souligne le basculement du rapport de force conventionnel sur les frontières à l'automne 1961, l'ALN disposant désormais d'une artillerie de campagne lourde et structurée.",
+    "sources": [
+      {
+        "titre": "El Meridj — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/El_Meridj",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Ligne Morice — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Ligne_Morice",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

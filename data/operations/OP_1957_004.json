@@ -1,0 +1,102 @@
+{
+  "id": "OP_1957_004",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille de Fellaoucène (Djebel Fillaoucène)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-04-20",
+    "latest": "1957-04-20",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-04-22",
+    "latest": "1957-04-22",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif du Djebel Fellaoucène, entre Nedroma, Maghnia et Ghazaouet (Wilaya de Tlemcen)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.7333,
+          35.0167
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Oranie - Région de Tlemcen)",
+  "source_ids": [
+    "SRC_7763b08e55eeebc50a353812",
+    "SRC_03c4396f54ac0d909c60ec46",
+    "SRC_5d416881f3fd6fa6e1692fb1",
+    "SRC_8d8e55bbfa9279b1b6e021aa"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_004",
+    "nom_operation": "Bataille de Fellaoucène (Djebel Fillaoucène)",
+    "date_debut": "1957-04-20",
+    "date_fin": "1957-04-22",
+    "wilaya_concernee": "Wilaya V (Oranie - Région de Tlemcen)",
+    "localisation": {
+      "region_ou_ville": "Massif du Djebel Fellaoucène, entre Nedroma, Maghnia et Ghazaouet (Wilaya de Tlemcen)",
+      "coordonnees_approximatives": {
+        "latitude": 35.0167,
+        "longitude": -1.7333
+      }
+    },
+    "commandement_aln": [
+      "Boussouf Abdelhafid",
+      "Boumediene (Houari Boumédiène)",
+      "Si Rachid (Mustapha Menouar)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Suite à une série d'embuscades et de harcèlements des katibas de la Wilaya V près de la frontière marocaine, environ 330 combattants de l'ALN engagent un combat acharné dans le massif montagneux de Fellaoucène contre d'importantes forces françaises appuyées par l'aviation et l'artillerie, parvenant à infliger de lourdes pertes avant d'exfiltrer le gros de leurs unités.",
+    "bilan_et_pertes": {
+      "aln": "60 à 120 combattants tués selon les estimations croisées",
+      "forces_francaises": "Plusieurs dizaines de soldats hors de combat (jusqu'à plusieurs centaines selon les sources algériennes) et un aéronef d'observation abattu",
+      "civils": "Nombreuses victimes civiles dans les douars environnants lors des ratissages"
+    },
+    "impact_strategique": "Démontre la montée en puissance militaire et l'équipement moderne de la Wilaya V dans le secteur frontalier de Tlemcen-Nedroma, alimenté par les réseaux logistiques depuis le Maroc.",
+    "sources": [
+      {
+        "titre": "Bataille de Fellaoucène — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Bataille_de_Fellaoucene",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Répertoire des archives militaires de la Guerre d'Algérie — Service historique de la Défense",
+        "url": "https://www.servicehistorique.sga.defense.gouv.fr/sites/default/files/notices_files/SHDGR_REP_1H_1091_A_4881_T1.pdf",
+        "type_source": "Archive"
+      },
+      {
+        "titre": "Bataille de Fellaoucene (aps.dz)",
+        "url": "https://www.aps.dz/fr/algerie/societe/mo7csj5d-commemoration-du-69e-anniversaire-de-la-grande-bataille-de-felaoucene",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Bataille de Fellaoucene (asjp.cerist.dz)",
+        "url": "https://asjp.cerist.dz/en/article/78595",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

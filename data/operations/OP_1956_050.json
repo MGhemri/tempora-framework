@@ -1,0 +1,90 @@
+{
+  "id": "OP_1956_050",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Vague d'attentats ciblés des fidayin de Médina Jdida dans les faubourgs mixtes d'Oran (Eckmühl, Gambetta et Choupot)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-09-14",
+    "latest": "1956-09-14",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-09-15",
+    "latest": "1956-09-15",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Eckmühl, Gambetta et Choupot (Oran)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.6552,
+          35.6881
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Organisation urbaine d'Oran - Fidayin de Médina Jdida)",
+  "source_ids": [
+    "SRC_9b949b95fb1ef069abbef15b",
+    "SRC_373185a72062f2a9425fd956",
+    "SRC_3a0b44a3634ae2ce011fc148"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_050",
+    "nom_operation": "Vague d'attentats ciblés des fidayin de Médina Jdida dans les faubourgs mixtes d'Oran (Eckmühl, Gambetta et Choupot)",
+    "date_debut": "1956-09-14",
+    "date_fin": "1956-09-15",
+    "wilaya_concernee": "Wilaya V (Organisation urbaine d'Oran - Fidayin de Médina Jdida)",
+    "localisation": {
+      "region_ou_ville": "Eckmühl, Gambetta et Choupot (Oran)",
+      "coordonnees_approximatives": {
+        "latitude": 35.6881,
+        "longitude": -0.6552
+      }
+    },
+    "commandement_aln": [
+      "Responsables des groupes de choc FLN de Ville Nouvelle (Médina Jdida)"
+    ],
+    "type_action": "Guérilla urbaine et attentats ciblés",
+    "description": "Coordonnée par les cellules clandestines de Ville Nouvelle (M'dina J'dida), une série d'attaques au pistolet et à la grenade est exécutée simultanément contre des commissariats de quartier, des débits de boissons fréquentés par les forces de répression et des informateurs notoires de la DST à Eckmühl, Gambetta et Choupot.",
+    "bilan_et_pertes": "3 policiers et 2 indicateurs hors de combat, plusieurs postes de garde endommagés ; arrestation ultérieure de 4 militants lors du bouclage militaire du faubourg Eckmühl.",
+    "impact_strategique": "Inaugure la guérilla urbaine permanente à Oran et impose aux autorités françaises l'instauration d'un quadrillage policier strict et de couvre-feux nocturnes dans les quartiers périphériques.",
+    "sources": [
+      {
+        "titre": "Saddek Benkada, « Quelques jalons préliminaires à propos de la Zone Autonome d'Oran », Insaniyat / CRASC n° 100",
+        "url": "https://journals.openedition.org/insaniyat/30472",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Revue de recherche historique ASJP : Le réseau des fidayin et la lutte urbaine en Oranie (1956–1958)",
+        "url": "https://asjp.cerist.dz/en/article/123690",
+        "type_source": "Revue scientifique"
+      },
+      {
+        "titre": "Archives régionales d'Oran — Synthèse historique sur les réseaux fidayin de Médina Jdida (APS)",
+        "url": "https://www.aps.dz/fr/algerie/societe",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

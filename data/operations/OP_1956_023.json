@@ -1,0 +1,102 @@
+{
+  "id": "OP_1956_023",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille de Taourirt Moussa et d'Aït Mahmoud (Massif de Beni Douala)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-10-08",
+    "latest": "1956-10-08",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-10-09",
+    "latest": "1956-10-09",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Villages de Taourirt Moussa, Taguemount Azouz et Aït Mahmoud, daïra de Beni Douala (Wilaya de Tizi Ouzou)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.0931,
+          36.6194
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya III (Zone 1 - Grande Kabylie / Beni Douala)",
+  "source_ids": [
+    "SRC_df4930a6bb0c1770ac5fee8a",
+    "SRC_1b5535866d4e1672f780a425",
+    "SRC_91d4e1810c0520883a6435eb",
+    "SRC_d461f26949de50086e2abbf9"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_023",
+    "nom_operation": "Bataille de Taourirt Moussa et d'Aït Mahmoud (Massif de Beni Douala)",
+    "date_debut": "1956-10-08",
+    "date_fin": "1956-10-09",
+    "wilaya_concernee": "Wilaya III (Zone 1 - Grande Kabylie / Beni Douala)",
+    "localisation": {
+      "region_ou_ville": "Villages de Taourirt Moussa, Taguemount Azouz et Aït Mahmoud, daïra de Beni Douala (Wilaya de Tizi Ouzou)",
+      "coordonnees_approximatives": {
+        "latitude": 36.6194,
+        "longitude": 4.0931
+      }
+    },
+    "commandement_aln": [
+      "Mohammedi Saïd (Colonel de la Wilaya III)",
+      "Krim Belkacem",
+      "Chefs de katibas du secteur de Beni Douala - Larbaâ Nath Irathen"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Dans le bastion montagneux de Beni Douala (au sud-est de Tizi Ouzou), une compagnie de l'ALN tend une embuscade à une colonne du 9e RIC et de chasseurs alpins sur les crêtes d'Aït Mahmoud et de Taourirt Moussa, suivie d'une bataille de vingt-quatre heures au cœur des villages fortifiés de crête.",
+    "bilan_et_pertes": {
+      "aln": "Une vingtaine de moudjahidine tombés au champ d'honneur",
+      "forces_francaises": "Pertes élevées parmi les troupes alpines et coloniales françaises lors des combats de ruelles et de ravins",
+      "civils": "Destruction partielle de maisons et représailles contre la population civile d'Aït Mahmoud et de Beni Douala"
+    },
+    "impact_strategique": "Illustre l'imbrication totale entre l'Organisation politico-administrative (OPA) des villages kabyles de Beni Douala et les katibas de combat de la Wilaya III après le Congrès de la Soummam.",
+    "sources": [
+      {
+        "titre": "La question kabyle dans le nationalisme algérien — Cairn.info",
+        "url": "https://shs.cairn.info/question-kabyle-nationalisme-algerien--9782365122757-page-271?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Wilaya III historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_III_historique",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Batailles du Guergour et des monts Babors (fr.wikipedia.org)",
+        "url": "https://fr.wikipedia.org/wiki/Amirouche_A%C3%AFt_Hamouda",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Batailles du Guergour et des monts Babors (elmoudjahid.dz)",
+        "url": "https://www.elmoudjahid.dz/fr/actualite/ces-jeunes-intellectuels-dans-les-maquis-261319",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

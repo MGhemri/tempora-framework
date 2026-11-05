@@ -1,0 +1,102 @@
+{
+  "id": "OP_1956_024",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscades des gorges de Kherrata et combats du massif des Babors (Petite Kabylie)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-11-22",
+    "latest": "1956-11-22",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-11-24",
+    "latest": "1956-11-24",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Gorges de Kherrata (Chabet El Akra) et massif du Mont Babor / Tizi N'Bechar (Confins des Wilayas de Béjaïa et Sétif)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.2778,
+          36.4928
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya III (Confins orientaux - Massif des Babors / Kherrata / Béjaïa)",
+  "source_ids": [
+    "SRC_e114a19691d7687658c3a917",
+    "SRC_2b3630c6515a9de697fc740b",
+    "SRC_87fe809180c53c5968abb697",
+    "SRC_497419a6c7b0461ceeb5d454"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_024",
+    "nom_operation": "Embuscades des gorges de Kherrata et combats du massif des Babors (Petite Kabylie)",
+    "date_debut": "1956-11-22",
+    "date_fin": "1956-11-24",
+    "wilaya_concernee": "Wilaya III (Confins orientaux - Massif des Babors / Kherrata / Béjaïa)",
+    "localisation": {
+      "region_ou_ville": "Gorges de Kherrata (Chabet El Akra) et massif du Mont Babor / Tizi N'Bechar (Confins des Wilayas de Béjaïa et Sétif)",
+      "coordonnees_approximatives": {
+        "latitude": 36.4928,
+        "longitude": 5.2778
+      }
+    },
+    "commandement_aln": [
+      "Amirouche Aït Hamouda",
+      "Abderrahmane Mira",
+      "Commandants de katibas du secteur des Babors"
+    ],
+    "type_action": "Embuscade",
+    "description": "Les katibas de Petite Kabylie rattachées à la Wilaya III tendent une embuscade spectaculaire dans le défilé vertigineux des gorges de Kherrata (axe stratégique reliant le port de Bougie/Béjaïa aux Hauts Plateaux de Sétif), bloquant une colonne motorisée française sous le feu des mitrailleuses installées sur les falaises avant de livrer deux jours de combats dans les forêts de cèdres et de sapins des Babors.",
+    "bilan_et_pertes": {
+      "aln": "Une quinzaine de moudjahidine tués ; récupération d'armes lourdes et de munitions",
+      "forces_francaises": "Plusieurs camions précipités dans le ravin ou incendiés, une trentaine de soldats français tués ou blessés",
+      "civils": "Fermeture de la route des gorges de Kherrata à la circulation civile sans escorte"
+    },
+    "impact_strategique": "Coupe temporairement l'unique grand axe routier nord-sud traversant les Babors entre Béjaïa et Sétif et affirme le contrôle de la Wilaya III sur les confins de la Petite Kabylie.",
+    "sources": [
+      {
+        "titre": "L'organisation politico-militaire de l'ALN dans le massif des Babors — Revue académique CERIST (ASJP)",
+        "url": "https://asjp.cerist.dz/en/downArticle/178/5/17/27827",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Répertoire numérique de la série 1H (Secteur de Bougie et de Sétif) — Service Historique de la Défense (SHD)",
+        "url": "https://www.servicehistorique.sga.defense.gouv.fr/sites/default/files/notices_files/SHDGR_REP_1H_1091_A_4881_T2_1.pdf",
+        "type_source": "Archive"
+      },
+      {
+        "titre": "Batailles du Djebel Zaccar (dknews-dz.com)",
+        "url": "https://www.dknews-dz.com/article/92792-des-recherches-pour-elucider-les-circonstances-exactes-de-la-mort-du-colonel-si-mhamed-bougara.html",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Batailles du Djebel Zaccar (fr.wikipedia.org)",
+        "url": "https://fr.wikipedia.org/wiki/M%27Hamed_Bougara",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

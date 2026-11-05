@@ -1,0 +1,91 @@
+{
+  "id": "OP_1962_015",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Mise en place opérationnelle des 5 secteurs de la Zone Autonome d'Oran (ZAO) sous le Capitaine Bakhti",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1962-04-15",
+    "latest": "1962-04-15",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1962-04-20",
+    "latest": "1962-04-20",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Quartier général de la ZAO, Médina Jdida et ensemble de l'agglomération d'Oran",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.65,
+          35.694
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone Autonome d'Oran (ZAO)",
+  "source_ids": [
+    "SRC_bed34917684167dd073352e3",
+    "SRC_05717c4cf52df1afebcbf5fa",
+    "SRC_d16b65b5e998337a4e2c73ab"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1962_015",
+    "nom_operation": "Mise en place opérationnelle des 5 secteurs de la Zone Autonome d'Oran (ZAO) sous le Capitaine Bakhti",
+    "date_debut": "1962-04-15",
+    "date_fin": "1962-04-20",
+    "wilaya_concernee": "Zone Autonome d'Oran (ZAO)",
+    "localisation": {
+      "region_ou_ville": "Quartier général de la ZAO, Médina Jdida et ensemble de l'agglomération d'Oran",
+      "coordonnees_approximatives": {
+        "latitude": 35.694,
+        "longitude": -0.65
+      }
+    },
+    "commandement_aln": [
+      "Capitaine Djelloul Nemiche (dit 'Si Bakhti')",
+      "Adjoints opérationnels de la ZAO"
+    ],
+    "type_action": "Structuration militaire territoriale et déploiement de commandos",
+    "description": "Création formelle et déploiement de la Zone Autonome d'Oran (ZAO) par l'État-Major Général (EMG) de l'ALN (Oujda). Le capitaine Bakhti quadrille la ville en cinq secteurs opérationnels défensifs : 1. Médina Jdida (cœur politique et logistique), 2. Médioni, 3. El Hamri (Lamur), 4. Petit Lac / Victor Hugo, 5. Les Planteurs / Ras El Aïn. Chaque secteur est doté d'une compagnie armée, d'un réseau sanitaire, d'un tribunal populaire et d'un service de ravitaillement pour briser le blocus imposé par l'OAS et l'armée française.",
+    "bilan_et_pertes": "Structuration complète de la gouvernance politico-militaire clandestine algérienne à Oran ; mise en place de liaisons directes avec le commandement français (général Katz) pour fixer les lignes de démarcation.",
+    "impact_strategique": "Établit un contre-pouvoir armé souverain face à l'OAS, assurant la survie matérielle, médicale et sécuritaire de plus de 150 000 habitants algériens assiégés.",
+    "sources": [
+      {
+        "titre": "Saddek Benkada, « Quelques jalons préliminaires à propos de la Zone Autonome d'Oran (avril-septembre 1962) », Insaniyat / CRASC (OpenEdition)",
+        "url": "https://journals.openedition.org/insaniyat/30472",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Hommage au Capitaine Djelloul Nemiche (dit Bakhti), commandant de la ZAO — Algérie Presse Service (APS)",
+        "url": "https://www.aps.dz/fr/algerie/societe",
+        "type_source": "Dépêche institutionnelle"
+      },
+      {
+        "titre": "Archives du CRASC — Structuration opérationnelle des 5 secteurs urbains de la ZAO",
+        "url": "https://www.crasc.dz/",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

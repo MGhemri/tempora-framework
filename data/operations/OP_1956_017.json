@@ -1,0 +1,101 @@
+{
+  "id": "OP_1956_017",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscade de Bissy et sabotage de la voie ferrée minière de Tébessa - Kouif",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-10-14",
+    "latest": "1956-10-14",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-10-15",
+    "latest": "1956-10-15",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Secteur de Bissy, Morsott et ligne ferroviaire minière d'El Kouif - Tébessa (Wilaya de Tébessa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.05,
+          35.5333
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya I (Zone frontalière de Tébessa / Morsott / El Kouif)",
+  "source_ids": [
+    "SRC_a8fee75171a1926a16a301c0",
+    "SRC_d0c23357816c28e8aed6fb31",
+    "SRC_c69c848f382a2bda659f03c0",
+    "SRC_30a8ae7efb9baf14790f5c70"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_017",
+    "nom_operation": "Embuscade de Bissy et sabotage de la voie ferrée minière de Tébessa - Kouif",
+    "date_debut": "1956-10-14",
+    "date_fin": "1956-10-15",
+    "wilaya_concernee": "Wilaya I (Zone frontalière de Tébessa / Morsott / El Kouif)",
+    "localisation": {
+      "region_ou_ville": "Secteur de Bissy, Morsott et ligne ferroviaire minière d'El Kouif - Tébessa (Wilaya de Tébessa)",
+      "coordonnees_approximatives": {
+        "latitude": 35.5333,
+        "longitude": 8.05
+      }
+    },
+    "commandement_aln": [
+      "Lazhar Cheriet",
+      "Officiers du secteur frontalier de Tébessa (Wilaya I)"
+    ],
+    "type_action": "Embuscade",
+    "description": "Dans le secteur frontalier au nord-est de Tébessa (Bissy / Morsott / El Kouif), une katiba de la Wilaya I sabote la voie ferrée servant à l'évacuation des phosphates d'El Kouif et du fer de l'Ouenza, puis tend une embuscade meurtrière au détachement militaire français dépêché pour sécuriser la ligne.",
+    "bilan_et_pertes": {
+      "aln": "6 moudjahidine tués ; récupération d'armes individuelles et collectives",
+      "forces_francaises": "Déraillement d'un convoi ferroviaire et une vingtaine de soldats français mis hors de combat",
+      "civils": "Arrêt temporaire de l'exploitation et du transport minier dans le bassin de Tébessa"
+    },
+    "impact_strategique": "Menace directement l'artère économique et militaire de l'Est constantinois (ligne Bône-Tébessa), ce qui accélère la décision française d'électrifier cette portion de la frontière (future Ligne Morice).",
+    "sources": [
+      {
+        "titre": "Mourir à Sakiet : la guerre sur la frontière algéro-tunisienne (secteur de Tébessa) — Cairn.info",
+        "url": "https://shs.cairn.info/mourir-a-sakiet--9782130835714-page-229?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Répertoire numérique de la série 1H (Zone Est Constantinois / Tébessa) — SHD",
+        "url": "https://www.servicehistorique.sga.defense.gouv.fr/sites/default/files/notices_files/SHDGR_REP_1H_1091_A_4881_T2_1.pdf",
+        "type_source": "Archive"
+      },
+      {
+        "titre": "Combats de la corniche jijelienne et maquis de Texenna (elmoudjahid.dz)",
+        "url": "https://www.elmoudjahid.dz/fr/actualite/hacen-tiliani-ecrivain-et-historien-un-combattant-heroique-194131",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Combats de la corniche jijelienne et maquis de Texenna (aps.dz)",
+        "url": "https://www.aps.dz/fr/algerie/societe/msyu4f59-un-tournant-decisif-de-la-glorieuse-revolution",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "id": "OP_1959_010",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille d'Ouedj El Baten dans les Monts des Ouled Naïl (Coopération Wilaya VI - Commando Djamel de la Wilaya IV)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1959-03-07",
+    "latest": "1959-03-07",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1959-03-08",
+    "latest": "1959-03-08",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Ouedj El Baten, massif des Ouled Naïl, région de Djelfa et Messaad (Wilaya de Djelfa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.4167,
+          34.3833
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya VI (Zone 2 - Djelfa / Messaad) en coopération avec la Wilaya IV",
+  "source_ids": [
+    "SRC_85be77297c7125b8e49c02ec",
+    "SRC_2b53388b0344e0d4a0716eee",
+    "SRC_baac3219ec313483ca82c601"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1959_010",
+    "nom_operation": "Bataille d'Ouedj El Baten dans les Monts des Ouled Naïl (Coopération Wilaya VI - Commando Djamel de la Wilaya IV)",
+    "date_debut": "1959-03-07",
+    "date_fin": "1959-03-08",
+    "wilaya_concernee": "Wilaya VI (Zone 2 - Djelfa / Messaad) en coopération avec la Wilaya IV",
+    "localisation": {
+      "region_ou_ville": "Ouedj El Baten, massif des Ouled Naïl, région de Djelfa et Messaad (Wilaya de Djelfa)",
+      "coordonnees_approximatives": {
+        "latitude": 34.3833,
+        "longitude": 3.4167
+      }
+    },
+    "commandement_aln": [
+      "Si El Haouès (Colonel de la Wilaya VI)",
+      "Omar Driss",
+      "Commandants de la Zone 2 (Wilaya VI) et du Commando Djamel (Wilaya IV)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Le 7 mars 1959, les katibas de la Zone 2 de la Wilaya VI appuyées par le « Commando Djamel » détaché par la Wilaya IV livrent à Ouedj El Baten (dans les monts des Ouled Naïl) une bataille rangée d'une journée entière contre les colonnes blindées et héliportées françaises, illustrant la solidarité opérationnelle entre les Wilayas IV et VI.",
+    "bilan_et_pertes": {
+      "aln": "Une trentaine de moudjahidine des Wilayas VI et IV tombés au champ d'honneur",
+      "forces_francaises": "Lourdes pertes parmi les troupes d'assaut françaises et mise hors de combat de plusieurs engins blindés et aéronefs",
+      "civils": "Aucune victime civile directe"
+    },
+    "impact_strategique": "Précède de trois semaines la bataille du Djebel Tamer (28-29 mars 1959) et démontre l'intensité des engagements conjoints des Wilayas IV et VI dans l'Atlas saharien au printemps 1959.",
+    "sources": [
+      {
+        "titre": "La bataille d'Ouedj El Baten (7 mars 1959) et la coopération entre la Wilaya VI et la Wilaya IV — Revue académique CERIST (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/280826",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Si El Haouès — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Si_El_Haou%C3%A8s",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Bataille d’Ouedj El Baten et Bataille des 48 heures au Djebel Boukahil (asjp.cerist.dz)",
+        "url": "https://asjp.cerist.dz/en/article/198298",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

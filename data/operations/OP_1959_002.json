@@ -1,0 +1,97 @@
+{
+  "id": "OP_1959_002",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats de guérilla de l'Ouarsenis (Opération Couronne) et du Djebel Tamer",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1959-02-06",
+    "latest": "1959-02-06",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1959-04-06",
+    "latest": "1959-04-06",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif de l'Ouarsenis (Chlef / Tissemsilt) et Djebel Tamer près de Bou Saâda (Wilaya de M'Sila)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.63,
+          35.87
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya IV (Ouarsenis), Wilaya V et Wilaya VI (Djebel Tamer)",
+  "source_ids": [
+    "SRC_a6a6d085fae2d2799374c1ab",
+    "SRC_81d570cdc822a057f913280a",
+    "SRC_9ecfec40d6d0e283f59c7c08"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1959_002",
+    "nom_operation": "Combats de guérilla de l'Ouarsenis (Opération Couronne) et du Djebel Tamer",
+    "date_debut": "1959-02-06",
+    "date_fin": "1959-04-06",
+    "wilaya_concernee": "Wilaya IV (Ouarsenis), Wilaya V et Wilaya VI (Djebel Tamer)",
+    "localisation": {
+      "region_ou_ville": "Massif de l'Ouarsenis (Chlef / Tissemsilt) et Djebel Tamer près de Bou Saâda (Wilaya de M'Sila)",
+      "coordonnees_approximatives": {
+        "latitude": 35.87,
+        "longitude": 1.63
+      }
+    },
+    "commandement_aln": [
+      "Si M'Hamed Bougara",
+      "Youcef Khatib dit Si Hassan",
+      "Colonel Amirouche",
+      "Si El Haouès"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Face au déclenchement du Plan Challe (Opération Couronne dans l'Ouarsenis à partir du 6 février 1959, puis Opération Jumelles en Kabylie), les katibas des Wilayas III, IV et VI livrent de violents combats retardateurs avant de fractionner leurs unités. Le 28 mars 1959, au Djebel Tamer (près de Bou Saâda), les colonels Amirouche et Si El Haouès livrent un combat héroïque d'une journée entière contre le 6e RPIMa et l'aviation française.",
+    "bilan_et_pertes": {
+      "aln": "Environ 1 600 combattants mis hors de combat dans l'Ouarsenis selon le bilan français ; mort au combat des colonels Amirouche et Si El Haouès et de 70 moudjahidine au Djebel Tamer le 28 mars 1959, puis de Si M'Hamed Bougara le 5 mai 1959",
+      "forces_francaises": "Plusieurs dizaines de parachutistes et légionnaires tués lors des assauts de grottes et de crêtes dans l'Ouarsenis et au Djebel Tamer",
+      "civils": "Regroupements massifs de centaines de milliers de paysans de l'Ouarsenis dans des camps surveillés"
+    },
+    "impact_strategique": "Bien que le Plan Challe inflige de lourdes pertes à l'ALN de l'intérieur et coûte la vie à plusieurs colonels emblématiques, les structures de guérilla survivent en passant à une guerre de petits groupes insaisissables, empêchant toute victoire politique française.",
+    "sources": [
+      {
+        "titre": "Opération Couronne — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Op%C3%A9ration_Couronne",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Si El Haouès et la bataille du Djebel Tamer — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Si_El_Haou%C3%A8s",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Combat du Djebel Thameur (aps.dz)",
+        "url": "https://www.aps.dz/fr/algerie/societe/mnanrw2x-commemoration-de-la-mort-en-martyrs-des-colonels-amirouche-et-si-el-houes",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

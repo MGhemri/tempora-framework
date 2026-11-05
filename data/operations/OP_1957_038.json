@@ -1,0 +1,102 @@
+{
+  "id": "OP_1957_038",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Sabotage et franchissement en force de la Ligne Pedron (Barrage Ouest) dans le secteur de Maghnia - El Abed",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-07-22",
+    "latest": "1957-07-22",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-07-24",
+    "latest": "1957-07-24",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Secteur frontalier de Maghnia, Boukanoun et cité minière d'El Abed (face à Oujda, Wilaya de Tlemcen)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.7333,
+          34.6333
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 1 - Frontière algéro-marocaine / Maghnia / El Abed)",
+  "source_ids": [
+    "SRC_370083f2c4bffdb49494db41",
+    "SRC_22229baa605783366ee0f362",
+    "SRC_356225521d56c3e00c70fa51",
+    "SRC_e88455e8509c204e06814f1a"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_038",
+    "nom_operation": "Sabotage et franchissement en force de la Ligne Pedron (Barrage Ouest) dans le secteur de Maghnia - El Abed",
+    "date_debut": "1957-07-22",
+    "date_fin": "1957-07-24",
+    "wilaya_concernee": "Wilaya V (Zone 1 - Frontière algéro-marocaine / Maghnia / El Abed)",
+    "localisation": {
+      "region_ou_ville": "Secteur frontalier de Maghnia, Boukanoun et cité minière d'El Abed (face à Oujda, Wilaya de Tlemcen)",
+      "coordonnees_approximatives": {
+        "latitude": 34.6333,
+        "longitude": -1.7333
+      }
+    },
+    "commandement_aln": [
+      "Houari Boumédiène (Commandant de la Wilaya V)",
+      "Benali Boudghène dit Colonel Lotfi",
+      "Commandant Ferradj (Mohamed Laoudj)"
+    ],
+    "type_action": "Sabotage",
+    "description": "Face à l'érection par le général Pedron du barrage frontalier ouest (réseaux de barbelés, champs de mines, postes radars et projecteurs longeant la frontière marocaine depuis Marsa Ben M'Hidi jusqu'au Sud-Oranais), les commandos du génie de la Wilaya V ouvrent à la bangalore et à l'explosif plusieurs brèches nocturnes entre Maghnia et le secteur minier d'El Abed, tout en neutralisant au mortier et au bazooka les blockhaus français pour faire passer une importante caravane d'armes vers les monts de Tlemcen.",
+    "bilan_et_pertes": {
+      "aln": "Une quinzaine de moudjahidine tués dans les champs de mines et sous les tirs d'artillerie ; passage réussi de la majeure partie du convoi d'armes",
+      "forces_francaises": "Destruction de deux postes de surveillance du barrage Pedron et pertes parmi les pelotons blindés de herse",
+      "civils": "Élargissement du « no man's land » interdit le long de la frontière d'Oujda à El Abed"
+    },
+    "impact_strategique": "Contrainte par la pression continue des commandos de la Wilaya V sur la Ligne Pedron, l'armée française doit électrifier à haute tension et dédoubler le barrage ouest en 1958-1959.",
+    "sources": [
+      {
+        "titre": "La garde de la frontière algéro-marocaine et la Ligne Pedron (Guerres mondiales et conflits contemporains) — Cairn.info",
+        "url": "https://shs.cairn.info/revue-guerres-mondiales-et-conflits-contemporains-2018-1-page-91?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Colonel Lotfi — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Colonel_Lotfi",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Batailles de franchissement du barrage frontalier de l'Ouest (fr.wikipedia.org)",
+        "url": "https://fr.wikipedia.org/wiki/Ligne_Morice",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Batailles de franchissement du barrage frontalier de l'Ouest (fr.wikipedia.org)",
+        "url": "https://fr.wikipedia.org/wiki/Abdelhafid_Boussouf",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

@@ -1,0 +1,84 @@
+{
+  "id": "OP_1962_018",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille défensive du Petit Lac et de Victor Hugo contre les commandos motorisés de l'OAS",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1962-05-20",
+    "latest": "1962-05-20",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1962-05-20",
+    "latest": "1962-05-20",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Quartiers Petit Lac, Victor Hugo et Boulanger (Oran sud-est)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.621,
+          35.6795
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone Autonome d'Oran (ZAO)",
+  "source_ids": [
+    "SRC_32b8d9ab871a903fca55f38f",
+    "SRC_5078740a9ef9923f2f162e83"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1962_018",
+    "nom_operation": "Bataille défensive du Petit Lac et de Victor Hugo contre les commandos motorisés de l'OAS",
+    "date_debut": "1962-05-20",
+    "date_fin": "1962-05-20",
+    "wilaya_concernee": "Zone Autonome d'Oran (ZAO)",
+    "localisation": {
+      "region_ou_ville": "Quartiers Petit Lac, Victor Hugo et Boulanger (Oran sud-est)",
+      "coordonnees_approximatives": {
+        "latitude": 35.6795,
+        "longitude": -0.621
+      }
+    },
+    "commandement_aln": [
+      "Commandant du Secteur 4 de la ZAO (Petit Lac / Victor Hugo)"
+    ],
+    "type_action": "Combat défensif et embuscade de rupture",
+    "description": "Tentative d'incursion en profondeur de commandos de l'OAS visant à massacrer les habitants du bidonville du Petit Lac et de Victor Hugo. Alertés par le réseau de guetteurs, les combattants de la ZAO attirent la colonne ennemie dans une zone préparée avec des herses et des fossés avant de déclencher des tirs croisés à bout portant.",
+    "bilan_et_pertes": "2 véhicules de l'OAS détruits, 5 assaillants tués et plusieurs blessés abandonnés dans leur fuite vers Maraval ; 2 fidayin algériens blessés.",
+    "impact_strategique": "Sanctuarise le flanc sud-est de la ville et consolide la liaison vitale entre Oran et l'arrière-pays rural de Sidi Chami et Hassi Bounif.",
+    "sources": [
+      {
+        "titre": "Saddek Benkada, « Les combats défensifs du Petit Lac et de Victor Hugo en mai 1962 », Insaniyat / CRASC",
+        "url": "https://journals.openedition.org/insaniyat/30472",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Revue ASJP — المواجهات المسلحة لحماية الأحياء الشرقية لوهران خلال ربيع 1962",
+        "url": "https://asjp.cerist.dz/en/article/123690",
+        "type_source": "Revue scientifique"
+      }
+    ]
+  }
+}

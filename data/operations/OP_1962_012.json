@@ -1,0 +1,90 @@
+{
+  "id": "OP_1962_012",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Attentat de la Place Tahtaha et riposte armée des commandos FLN à Médina Jdida",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1962-02-28",
+    "latest": "1962-02-28",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1962-02-28",
+    "latest": "1962-02-28",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Place Tahtaha (Médina Jdida, Oran)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.651,
+          35.6925
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone Autonome d'Oran (ZAO)",
+  "source_ids": [
+    "SRC_1f73aa110502d3462de8427a",
+    "SRC_b0be960fd70d6af32bc87a32",
+    "SRC_4ca22a2fdbc6cde05772ae8f"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1962_012",
+    "nom_operation": "Attentat de la Place Tahtaha et riposte armée des commandos FLN à Médina Jdida",
+    "date_debut": "1962-02-28",
+    "date_fin": "1962-02-28",
+    "wilaya_concernee": "Zone Autonome d'Oran (ZAO)",
+    "localisation": {
+      "region_ou_ville": "Place Tahtaha (Médina Jdida, Oran)",
+      "coordonnees_approximatives": {
+        "latitude": 35.6925,
+        "longitude": -0.651
+      }
+    },
+    "commandement_aln": [
+      "Groupes d'autodéfense armée du FLN de Médina Jdida"
+    ],
+    "type_action": "Riposte armée contre attentat terroriste de l'OAS",
+    "description": "Le 28 février 1962, à quelques minutes de la rupture du jeûne du Ramadan, deux voitures piégées par l'OAS explosent au milieu de la foule sur la place Tahtaha, faisant un carnage monstre. Alors que des commandos de l'OAS tentent une incursion armée motorisée pour achever les survivants et semer la panique, les fidayin du FLN jaillissent des rues adjacentes (rue de Tombouctou, rue du Caire) et ouvrent un feu nourri, repoussant les assaillants vers les quartiers européens et empêchant l'invasion de Médina Jdida.",
+    "bilan_et_pertes": "L'attentat de l'OAS cause la mort de près de 80 civils algériens et plus de 150 blessés ; la riposte immédiate du FLN élimine 3 membres du commando terroriste et met en fuite les autres.",
+    "impact_strategique": "Événement traumatique majeur qui accélère la décision de l'État-Major Général (EMG) de l'ALN de constituer une structure militaire permanente et autonome à Oran pour protéger la population : la future ZAO.",
+    "sources": [
+      {
+        "titre": "Attentat de la Place Tahtaha à Oran : Le crime abject de l'OAS reste gravé dans la mémoire collective — APS",
+        "url": "https://www.aps.dz/fr/algerie/136067-attentat-de-la-place-tahtaha-a-oran-le-crime-abject-de-l-oas-reste-grave-dans-la-memoire-collective",
+        "type_source": "Dépêche institutionnelle"
+      },
+      {
+        "titre": "Saddek Benkada, « Le 28 février 1962 à Oran : L'attentat de la place Tahtaha et ses répercussions », Insaniyat / CRASC",
+        "url": "https://journals.openedition.org/insaniyat/30472",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Le carnage de la place Tahtaha à Oran : Témoignages et archives — El Moudjahid",
+        "url": "https://www.elmoudjahid.dz/fr/histoire",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

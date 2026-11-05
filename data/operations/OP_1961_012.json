@@ -1,0 +1,88 @@
+{
+  "id": "OP_1961_012",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Attaque coordonnée des bataillons de l'EMG contre les postes du secteur de Souk Ahras - Merahna (Hiver 1961-1962)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1961-12-15",
+    "latest": "1961-12-15",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1961-12-17",
+    "latest": "1961-12-17",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Merahna, Heddada et Ouled Moumen, à l'est de Souk Ahras sur la Ligne Challe (Wilaya de Souk Ahras)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.1556,
+          36.1972
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Armée des Frontières (EMG - Front Est / Secteur de Souk Ahras - Merahna)",
+  "source_ids": [
+    "SRC_45dfced366232c9e642d77a8",
+    "SRC_630c7df7b758d080eff00bd4"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1961_012",
+    "nom_operation": "Attaque coordonnée des bataillons de l'EMG contre les postes du secteur de Souk Ahras - Merahna (Hiver 1961-1962)",
+    "date_debut": "1961-12-15",
+    "date_fin": "1961-12-17",
+    "wilaya_concernee": "Armée des Frontières (EMG - Front Est / Secteur de Souk Ahras - Merahna)",
+    "localisation": {
+      "region_ou_ville": "Merahna, Heddada et Ouled Moumen, à l'est de Souk Ahras sur la Ligne Challe (Wilaya de Souk Ahras)",
+      "coordonnees_approximatives": {
+        "latitude": 36.1972,
+        "longitude": 8.1556
+      }
+    },
+    "commandement_aln": [
+      "Commandants des bataillons frontaliers de Souk Ahras (EMG)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "En décembre 1961, au moment où s'engagent les négociations secrètes décisives des Rousses, plusieurs compagnies de l'EMG mènent un coup de main nocturne d'envergure contre les avant-postes de la Ligne Challe dans le secteur de Merahna et d'Ouled Moumen (Souk Ahras), détruisant les casemates au bazooka et au canon sans recul.",
+    "bilan_et_pertes": {
+      "aln": "9 moudjahidine tués au cours de l'assaut nocturne ; capture d'armes et de prisonniers français",
+      "forces_francaises": "Une quinzaine de soldats français tués ou blessés et plusieurs prisonniers capturés par l'ALN (libérés ensuite après les Accords d'Évian)",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "La capture de militaires français sur le barrage Est conforte le statut de belligérant régulier de l'ALN/GPRA dans la dernière ligne droite des négociations.",
+    "sources": [
+      {
+        "titre": "Mourir à Sakiet : les opérations frontalières et les prisonniers sur la frontière tunisienne — Cairn.info",
+        "url": "https://shs.cairn.info/mourir-a-sakiet--9782130835714-page-229?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Ligne Morice — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Ligne_Morice",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

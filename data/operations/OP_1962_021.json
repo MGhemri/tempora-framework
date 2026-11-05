@@ -1,0 +1,84 @@
+{
+  "id": "OP_1962_021",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Désarmement des derniers bastions de l'OAS et neutralisation des tireurs isolés à Saint-Pierre et Gambetta",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1962-07-02",
+    "latest": "1962-07-02",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1962-07-04",
+    "latest": "1962-07-04",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Quartiers Saint-Pierre, Gambetta et Miramar (Oran centre-est)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.6315,
+          35.702
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone Autonome d'Oran (ZAO)",
+  "source_ids": [
+    "SRC_3eb13dc1b67f57f011fda1dc",
+    "SRC_e9d3e1a87888f88603b57786"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1962_021",
+    "nom_operation": "Désarmement des derniers bastions de l'OAS et neutralisation des tireurs isolés à Saint-Pierre et Gambetta",
+    "date_debut": "1962-07-02",
+    "date_fin": "1962-07-04",
+    "wilaya_concernee": "Zone Autonome d'Oran (ZAO)",
+    "localisation": {
+      "region_ou_ville": "Quartiers Saint-Pierre, Gambetta et Miramar (Oran centre-est)",
+      "coordonnees_approximatives": {
+        "latitude": 35.702,
+        "longitude": -0.6315
+      }
+    },
+    "commandement_aln": [
+      "Commandos de patrouille de la ZAO (Capitaine Bakhti)"
+    ],
+    "type_action": "Opération de désarmement, sécurisation et purge de tireurs isolés",
+    "description": "Dans les heures précédant la proclamation officielle de l'indépendance du 5 juillet 1962, des patrouilles d'élite de la ZAO pénètrent dans les anciens quartiers généraux désertés par l'OAS (Saint-Pierre, Gambetta, Miramar) pour désarmer les caches résiduelles d'explosifs, récupérer l'armement abandonné et neutraliser les tireurs isolés fanatiques embusqués qui continuent de tirer sur les avenues principales.",
+    "bilan_et_pertes": "Saisie de plusieurs centaines de fusils, pistolets-mitrailleurs et caisses de plastic ; 7 tireurs ultras arrêtés et remis aux autorités judiciaires ; 1 djoundi de la ZAO blessé.",
+    "impact_strategique": "Élimine les derniers réduits clandestins de l'OAS à Oran, préparant la liesse populaire pour la célébration de l'indépendance.",
+    "sources": [
+      {
+        "titre": "Saddek Benkada, « Les ultimes opérations de neutralisation des commandos de l'OAS à Oran (2–4 juillet 1962) », Insaniyat / CRASC",
+        "url": "https://journals.openedition.org/insaniyat/30472",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "La fin de l'OAS à Oran à la veille du 5 Juillet : Reddition et neutralisation des tireurs des toits — El Moudjahid",
+        "url": "https://www.elmoudjahid.dz/fr/histoire",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

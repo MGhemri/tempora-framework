@@ -1,0 +1,90 @@
+{
+  "id": "OP_1956_015",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille de Chegga et de Bir Djefeir (Secteur d'Aïn M'lila / Biskra)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-03-02",
+    "latest": "1956-03-02",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-03-03",
+    "latest": "1956-03-03",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Bir Djefeir / Chegga, aux confins des secteurs de Biskra, Batna et Oum El Bouaghi",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.25,
+          35.0333
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya I (Aurès - Confins nord et sud du massif)",
+  "source_ids": [
+    "SRC_906cdde683fd914e4fa89d5e",
+    "SRC_9a579ee0f66c1cde93d358e2"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_015",
+    "nom_operation": "Bataille de Chegga et de Bir Djefeir (Secteur d'Aïn M'lila / Biskra)",
+    "date_debut": "1956-03-02",
+    "date_fin": "1956-03-03",
+    "wilaya_concernee": "Wilaya I (Aurès - Confins nord et sud du massif)",
+    "localisation": {
+      "region_ou_ville": "Bir Djefeir / Chegga, aux confins des secteurs de Biskra, Batna et Oum El Bouaghi",
+      "coordonnees_approximatives": {
+        "latitude": 35.0333,
+        "longitude": 6.25
+      }
+    },
+    "commandement_aln": [
+      "Mostefa Ben Boulaïd",
+      "Hadj Lakhdar",
+      "Tahar Zbiri"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Quelques semaines après sa spectaculaire évasion de la prison du Coudiat de Constantine (novembre 1955), Mostefa Ben Boulaïd reprend la tête des opérations dans l'Aurès et dirige début mars 1956 de violents engagements contre les colonnes françaises à Chegga et Bir Djefeir, peu avant sa mort le 22 mars 1956 au Djebel Lazrag (explosion d'un poste radio piégé parachuté par les services spéciaux français).",
+    "bilan_et_pertes": {
+      "aln": "Une vingtaine de moudjahidine tués lors des combats de mars 1956 ; suivis le 22 mars 1956 par la mort de Mostefa Ben Boulaïd et d'Abdelhamid Lamrani au Djebel Lazrag",
+      "forces_francaises": "Pertes sensibles infligées aux unités motorisées françaises lors des accrochages de Chegga",
+      "civils": "Aucune victime civile directe"
+    },
+    "impact_strategique": "Illustre le redressement militaire des maquis de l'Aurès sous l'impulsion de Ben Boulaïd au printemps 1956, bien que sa disparition le 22 mars ouvre une période de crise de succession difficile en Wilaya I.",
+    "sources": [
+      {
+        "titre": "Wilaya I historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_I_historique",
+        "type_source": "Article"
+      },
+      {
+        "titre": "L'insurrection dans les Aurès (Revue Insaniyat) — OpenEdition Journals",
+        "url": "https://journals.openedition.org/insaniyat/6187",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

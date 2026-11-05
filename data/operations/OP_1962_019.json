@@ -1,0 +1,92 @@
+{
+  "id": "OP_1962_019",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Protection des réservoirs de la BP et des installations du Port d'Oran face à la terre brûlée de l'OAS",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1962-06-25",
+    "latest": "1962-06-25",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1962-06-27",
+    "latest": "1962-06-27",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Terminaux pétroliers et zone portuaire d'Oran (Bassin du port et jetée du Large)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.639,
+          35.7115
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone Autonome d'Oran (ZAO)",
+  "source_ids": [
+    "SRC_b52b5ebbe45814449bc86722",
+    "SRC_31033dfea553f7b48a59738c",
+    "SRC_2ea94a31ff5d43c21d4f0b86"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1962_019",
+    "nom_operation": "Protection des réservoirs de la BP et des installations du Port d'Oran face à la terre brûlée de l'OAS",
+    "date_debut": "1962-06-25",
+    "date_fin": "1962-06-27",
+    "wilaya_concernee": "Zone Autonome d'Oran (ZAO)",
+    "localisation": {
+      "region_ou_ville": "Terminaux pétroliers et zone portuaire d'Oran (Bassin du port et jetée du Large)",
+      "coordonnees_approximatives": {
+        "latitude": 35.7115,
+        "longitude": -0.639
+      }
+    },
+    "commandement_aln": [
+      "Commandos de la ZAO",
+      "Capitaine Bakhti",
+      "Cellules syndicales de dockers du FLN"
+    ],
+    "type_action": "Protection d'infrastructure stratégique et sécurisation industrielle",
+    "description": "Le 25 juin 1962 en fin d'après-midi, dans le cadre de leur politique désespérée de 'terre brûlée', des commandos de l'OAS font sauter les immenses cuves d'hydrocarbures de la British Petroleum (BP) au port d'Oran, embrasant des millions de litres de pétrole et tentant d'étendre le sinistre aux installations de gaz et aux quais marchands. Les commandos de la ZAO interviennent en force pour boucler le périmètre, repousser les saboteurs qui tiraient sur les réservoirs voisins et escorter les équipes de pompiers et dockers algériens qui parviennent à circonscrire le brasier après 48 heures de lutte héroïque.",
+    "bilan_et_pertes": "Préservation de 70% des installations portuaires, neutralisation de 3 saboteurs de l'OAS ; 2 ouvriers pompiers algériens et 1 combattant de la ZAO morts par asphyxie et brûlures.",
+    "impact_strategique": "Sauve le premier port commercial de l'Ouest algérien de la destruction totale programmée par l'OAS à une semaine de la proclamation de l'indépendance.",
+    "sources": [
+      {
+        "titre": "Saddek Benkada, « La défense du port d'Oran et des cuves pétrolières face à la politique de terre brûlée de l'OAS », Insaniyat / CRASC",
+        "url": "https://journals.openedition.org/insaniyat/30472",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Politique de la terre brûlée de l'OAS à Oran en juin 1962 : L'incendie des cuves BP — Algérie Presse Service (APS)",
+        "url": "https://www.aps.dz/fr/algerie/societe",
+        "type_source": "Dépêche institutionnelle"
+      },
+      {
+        "titre": "Service Historique de la Défense (SHD) — Journal de marche des unités de surveillance du port d'Oran (juin 1962)",
+        "url": "https://www.servicehistorique.sdefense.gouv.fr/",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

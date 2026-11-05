@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:tempora:ingestion-mapping:1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "mapping_schema_version",
+    "id",
+    "version",
+    "profile_id",
+    "profile_version",
+    "format",
+    "fields"
+  ],
+  "properties": {
+    "mapping_schema_version": {
+      "const": "1.0.0"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{0,79}$"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "profile_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]{0,79}$"
+    },
+    "profile_version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    },
+    "format": {
+      "enum": [
+        "json",
+        "csv",
+        "geojson"
+      ]
+    },
+    "records_pointer": {
+      "type": "string",
+      "maxLength": 512,
+      "pattern": "^(?:/(?:[^~/]|~[01])*)*$"
+    },
+    "delimiter": {
+      "enum": [
+        ",",
+        ";",
+        "\t"
+      ]
+    },
+    "default_geometry_role": {
+      "enum": [
+        "exact_site",
+        "approximate_site",
+        "approximate_area",
+        "representative_point",
+        "operation_area",
+        "administrative_area"
+      ]
+    },
+    "fields": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/pointer"
+        },
+        "start_date": {
+          "$ref": "#/$defs/pointer"
+        },
+        "end_date": {
+          "$ref": "#/$defs/pointer"
+        },
+        "event_type": {
+          "$ref": "#/$defs/pointer"
+        },
+        "source_ids": {
+          "$ref": "#/$defs/pointer"
+        },
+        "evidence": {
+          "$ref": "#/$defs/pointer"
+        },
+        "geometry": {
+          "$ref": "#/$defs/pointer"
+        },
+        "geometry_role": {
+          "$ref": "#/$defs/pointer"
+        },
+        "longitude": {
+          "$ref": "#/$defs/pointer"
+        },
+        "latitude": {
+          "$ref": "#/$defs/pointer"
+        },
+        "precision_meters": {
+          "$ref": "#/$defs/pointer"
+        },
+        "geocoding_method": {
+          "$ref": "#/$defs/pointer"
+        },
+        "reference_version": {
+          "$ref": "#/$defs/pointer"
+        },
+        "territory_ids": {
+          "$ref": "#/$defs/pointer"
+        },
+        "title": {
+          "$ref": "#/$defs/localized"
+        },
+        "description": {
+          "$ref": "#/$defs/localized"
+        },
+        "location_label": {
+          "$ref": "#/$defs/localized"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "pointer": {
+      "type": "string",
+      "maxLength": 512,
+      "pattern": "^(?:/(?:[^~/]|~[01])*)+$"
+    },
+    "localized": {
+      "type": "object",
+      "minProperties": 1,
+      "propertyNames": {
+        "pattern": "^[a-z]{2,3}(-[A-Za-z0-9]+)*$"
+      },
+      "additionalProperties": {
+        "$ref": "#/$defs/pointer"
+      }
+    }
+  }
+}

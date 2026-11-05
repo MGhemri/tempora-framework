@@ -1,0 +1,101 @@
+{
+  "id": "OP_1959_009",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille d'Ouled Bouachra face à l'Opération Courroie (Mort au combat du Colonel Si M'Hamed Bougara)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1959-05-04",
+    "latest": "1959-05-04",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1959-05-05",
+    "latest": "1959-05-05",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Commune d'Ouled Bouachra (massif entre Médéa, Berrouaghia et Aïn Boucif, Wilaya de Médéa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.6681,
+          36.1222
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya IV (Zone 2 - Ouled Bouachra / Médéa)",
+  "source_ids": [
+    "SRC_f8a7b1637e49b88f8cca64a1",
+    "SRC_6dc024ba80fc62d6264665f1",
+    "SRC_9eb78ef50d245ca567932f83",
+    "SRC_7d543e81821c434d2af18eb9"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1959_009",
+    "nom_operation": "Bataille d'Ouled Bouachra face à l'Opération Courroie (Mort au combat du Colonel Si M'Hamed Bougara)",
+    "date_debut": "1959-05-04",
+    "date_fin": "1959-05-05",
+    "wilaya_concernee": "Wilaya IV (Zone 2 - Ouled Bouachra / Médéa)",
+    "localisation": {
+      "region_ou_ville": "Commune d'Ouled Bouachra (massif entre Médéa, Berrouaghia et Aïn Boucif, Wilaya de Médéa)",
+      "coordonnees_approximatives": {
+        "latitude": 36.1222,
+        "longitude": 2.6681
+      }
+    },
+    "commandement_aln": [
+      "Si M'Hamed Bougara (Colonel de la Wilaya IV)",
+      "Escorte et section de commandement de la Wilaya IV"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Dans le cadre de l'Opération « Courroie » (second volet du Plan Challe ciblant l'Algérois, l'Atlas blidéen et le Titteri à partir d'avril 1959), le poste de commandement mobile du colonel Si M'Hamed Bougara est encerclé dans la nuit du 4 au 5 mai 1959 à Ouled Bouachra par les troupes de marine et les parachutistes français. Le colonel Bougara et ses compagnons livrent un combat acharné à bout portant pour tenter de percer les lignes ennemies.",
+    "bilan_et_pertes": {
+      "aln": "Mort au champ d'honneur du colonel Si M'Hamed Bougara (à l'âge de 36 ans) et de plusieurs moudjahidine de sa garde le 5 mai 1959",
+      "forces_francaises": "Pertes parmi les unités d'encerclement françaises lors de l'assaut nocturne et matinal",
+      "civils": "Quadrillage intégral du massif d'Ouled Bouachra par l'armée française"
+    },
+    "impact_strategique": "La mort au combat du colonel Si M'Hamed Bougara — figure respectée de toute la Wilaya IV — porte un coup sévère au commandement (suivi de l'affaire Si Salah), mais la relève assurée par Djilali Bounaâma puis Youcef Khatib (Si Hassan) maintient la Wilaya IV au combat jusqu'en 1962.",
+    "sources": [
+      {
+        "titre": "Ouled Bouachra (Mort au combat du colonel Si M'Hamed Bougara le 5 mai 1959) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Ouled_Bouachra",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Wilaya IV historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_IV_historique",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Martyre du colonel Si M'Hammed Bougara (jeune-independant.net)",
+        "url": "https://www.jeune-independant.net/medea-commemoration-du-63e-anniversaire-de-la-mort-du-colonel-mhamed-bougara/",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Martyre du colonel Si M'Hammed Bougara (fr.wikipedia.org)",
+        "url": "https://fr.wikipedia.org/wiki/M%27Hamed_Bougara",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

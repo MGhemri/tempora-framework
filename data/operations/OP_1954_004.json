@@ -1,0 +1,89 @@
+{
+  "id": "OP_1954_004",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille du Djebel Khaled à Yabous (Secteur de Khenchela)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1954-11-15",
+    "latest": "1954-11-15",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1954-11-15",
+    "latest": "1954-11-15",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Djebel Khaled, près de Yabous et Bouhmama, flanc nord du Djebel Chélia (Wilaya de Khenchela)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.65,
+          35.3833
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya I (Aurès-Nemencha - Secteur de Khenchela)",
+  "source_ids": [
+    "SRC_796fc837f18c5d605441594c",
+    "SRC_906cdde683fd914e4fa89d5e"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1954_004",
+    "nom_operation": "Bataille du Djebel Khaled à Yabous (Secteur de Khenchela)",
+    "date_debut": "1954-11-15",
+    "date_fin": "1954-11-15",
+    "wilaya_concernee": "Wilaya I (Aurès-Nemencha - Secteur de Khenchela)",
+    "localisation": {
+      "region_ou_ville": "Djebel Khaled, près de Yabous et Bouhmama, flanc nord du Djebel Chélia (Wilaya de Khenchela)",
+      "coordonnees_approximatives": {
+        "latitude": 35.3833,
+        "longitude": 6.65
+      }
+    },
+    "commandement_aln": [
+      "Abbas Laghrour",
+      "Adjel Adjoul"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Deux semaines après le déclenchement du 1er novembre 1954 à Khenchela, les groupes armés de l'ALN dirigés par Abbas Laghrour attirent une importante colonne militaire française lancée à leur poursuite sur les pentes boisées du Djebel Khaled (près de Yabous). Les moudjahidine livrent l'un des tout premiers combats frontaux de la guerre d'Algérie.",
+    "bilan_et_pertes": {
+      "aln": "Quelques combattants blessés ; repli ordonné vers le massif du Chélia avec les armes récupérées",
+      "forces_francaises": "Plusieurs dizaines de soldats français mis hors de combat et échec de la manœuvre d'encerclement",
+      "civils": "Aucune victime civile directe"
+    },
+    "impact_strategique": "Première victoire tactique en rase campagne des maquisards de Khenchela qui consolide l'autorité d'Abbas Laghrour et stimule le recrutement dans tout le massif de l'Aurès-Nemencha.",
+    "sources": [
+      {
+        "titre": "Abbas Laghrour et les premiers combats de Khenchela — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Abbas_Laghrour",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Wilaya I historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_I_historique",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

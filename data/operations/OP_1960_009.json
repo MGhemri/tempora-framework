@@ -1,0 +1,88 @@
+{
+  "id": "OP_1960_009",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats et embuscades du Djebel Grouz et de Beni Ounif (Front Sud-Oranais / Figuig - Béchar)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1960-11-04",
+    "latest": "1960-11-04",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1960-11-06",
+    "latest": "1960-11-06",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif du Djebel Grouz et secteur frontalier de Beni Ounif (face à l'oasis de Figuig, Wilaya de Béchar)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.25,
+          32.05
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 8 - Béchar / Beni Ounif / Djebel Grouz)",
+  "source_ids": [
+    "SRC_046b95f4a56e105085a304f3",
+    "SRC_22229baa605783366ee0f362"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1960_009",
+    "nom_operation": "Combats et embuscades du Djebel Grouz et de Beni Ounif (Front Sud-Oranais / Figuig - Béchar)",
+    "date_debut": "1960-11-04",
+    "date_fin": "1960-11-06",
+    "wilaya_concernee": "Wilaya V (Zone 8 - Béchar / Beni Ounif / Djebel Grouz)",
+    "localisation": {
+      "region_ou_ville": "Massif du Djebel Grouz et secteur frontalier de Beni Ounif (face à l'oasis de Figuig, Wilaya de Béchar)",
+      "coordonnees_approximatives": {
+        "latitude": 32.05,
+        "longitude": -1.25
+      }
+    },
+    "commandement_aln": [
+      "Commandants de la Zone 8 de la Wilaya V et du secteur opérationnel Sud-Ouest"
+    ],
+    "type_action": "Embuscade",
+    "description": "Sept mois après le martyre du colonel Lotfi et du commandant Ferradj à Béchar, les sections de la Zone 8 de la Wilaya V et les commandos frontaliers du Sud-Ouest mènent une série d'embuscades et de minages de pistes au pied des falaises du Djebel Grouz et autour de Beni Ounif contre les patrouilles de la Légion étrangère et du 35e RI.",
+    "bilan_et_pertes": {
+      "aln": "7 moudjahidine tués au cours des accrochages dans le Djebel Grouz",
+      "forces_francaises": "Destruction de véhicules blindés légers sur mines et une quinzaine de militaires français tués ou blessés",
+      "civils": "Maintien de l'état de siège militaire autour de Beni Ounif et de Colomb-Béchar"
+    },
+    "impact_strategique": "Prouve la continuité de la lutte armée dans l'extrême Sud-Oranais après la disparition du colonel Lotfi et menace directement le centre d'expérimentation militaire français de Colomb-Béchar.",
+    "sources": [
+      {
+        "titre": "Béchar : le colonel Lotfi et la lutte dans la Zone 8 de la Wilaya V — Algérie Presse Service (APS)",
+        "url": "https://www.aps.dz/fr/algerie/societe/mn8zsy8t-bechar-le-colonel-lotfi-un-riche-parcours-de-lutte-et-de-militantisme-durant-la-glorieuse-guerre-de-liberation-nationale",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Colonel Lotfi — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Colonel_Lotfi",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

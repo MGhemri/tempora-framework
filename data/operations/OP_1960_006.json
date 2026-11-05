@@ -1,0 +1,89 @@
+{
+  "id": "OP_1960_006",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Batailles de Tadmit et d'El Nessafa au Djebel Boudrine (Secteur de Djelfa - Messaad)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1960-10-14",
+    "latest": "1960-10-14",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1960-11-18",
+    "latest": "1960-11-18",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Tadmit et Djebel Boudrine (El Nessafa), au sud-ouest de Djelfa et vers Messaad (Wilaya de Djelfa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.0833,
+          34.2833
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya VI (Zone 2 - Tadmit, Aïn El Ibel et Messaad / Djelfa)",
+  "source_ids": [
+    "SRC_20d4b50953323d4c63d19eff",
+    "SRC_3c0c9a3a68f91e9182bfcfcb"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1960_006",
+    "nom_operation": "Batailles de Tadmit et d'El Nessafa au Djebel Boudrine (Secteur de Djelfa - Messaad)",
+    "date_debut": "1960-10-14",
+    "date_fin": "1960-11-18",
+    "wilaya_concernee": "Wilaya VI (Zone 2 - Tadmit, Aïn El Ibel et Messaad / Djelfa)",
+    "localisation": {
+      "region_ou_ville": "Tadmit et Djebel Boudrine (El Nessafa), au sud-ouest de Djelfa et vers Messaad (Wilaya de Djelfa)",
+      "coordonnees_approximatives": {
+        "latitude": 34.2833,
+        "longitude": 3.0833
+      }
+    },
+    "commandement_aln": [
+      "Mohamed Chaâbani (Colonel de la Wilaya VI)",
+      "Commandants de katibas des Monts des Ouled Naïl"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Sous le commandement du jeune colonel Mohamed Chaâbani (qui a succédé à Si El Haouès à la tête de la Wilaya VI), les katibas des monts des Ouled Naïl livrent à l'automne 1960 deux batailles majeures : à Tadmit en octobre 1960, puis au lieu-dit El Nessafa dans le massif du Djebel Boudrine en novembre 1960, repoussant les assauts des troupes aéroportées et de la Légion étrangère et infligeant de lourdes pertes à l'ennemi.",
+    "bilan_et_pertes": {
+      "aln": "Une quarantaine de moudjahidine tombés au champ d'honneur sur l'ensemble des deux batailles ; maintien intégral de l'organisation de la Wilaya VI",
+      "forces_francaises": "Plusieurs dizaines de soldats français tués ou blessés et 1 hélicoptère abattu au Djebel Boudrine",
+      "civils": "Renforcement des camps de regroupement autour de Tadmit, Aïn El Ibel et Messaad"
+    },
+    "impact_strategique": "Confirme le génie tactique du colonel Mohamed Chaâbani dans la guerre de montagne saharienne et prépare la grande victoire du Djebel Bouk'hil de septembre 1961.",
+    "sources": [
+      {
+        "titre": "Les batailles de la Wilaya VI sous le commandement du colonel Mohamed Chaâbani — Revue académique CERIST (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/280826",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Battle of Djebel Bouk'hil (1961) and Colonel Mohamed Chaâbani — Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Battle_of_Djebel_Bouk%27hil_(1961)",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

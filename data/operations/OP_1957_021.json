@@ -1,0 +1,90 @@
+{
+  "id": "OP_1957_021",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille du Djebel Stah / Staiha dans le massif des Beni Ouelbane (Skikda - Collo)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-05-12",
+    "latest": "1957-05-12",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-05-14",
+    "latest": "1957-05-14",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Djebel Stah (Staiha), entre Beni Ouelbane, Sidi Mezghiche et Tamalous (Wilaya de Skikda)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.615,
+          36.695
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya II (Massif de Collo / Beni Ouelbane / Sidi Mezghiche)",
+  "source_ids": [
+    "SRC_b61f3298b23952abecef83d6",
+    "SRC_4cf4115e95c79ff1d23ce603"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_021",
+    "nom_operation": "Bataille du Djebel Stah / Staiha dans le massif des Beni Ouelbane (Skikda - Collo)",
+    "date_debut": "1957-05-12",
+    "date_fin": "1957-05-14",
+    "wilaya_concernee": "Wilaya II (Massif de Collo / Beni Ouelbane / Sidi Mezghiche)",
+    "localisation": {
+      "region_ou_ville": "Djebel Stah (Staiha), entre Beni Ouelbane, Sidi Mezghiche et Tamalous (Wilaya de Skikda)",
+      "coordonnees_approximatives": {
+        "latitude": 36.695,
+        "longitude": 6.615
+      }
+    },
+    "commandement_aln": [
+      "Lakhdar Bentobbal",
+      "Ali Kafi",
+      "Commandants des bataillons de la Wilaya II"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Trois jours d'affrontements continus opposent les katibas d'élite de la Wilaya II aux régiments parachutistes et d'infanterie coloniale français sur les crêtes boisées du Djebel Stah (secteur de Beni Ouelbane et Sidi Mezghiche). Retranchés dans des casemates naturelles, les moudjahidine repoussent plusieurs vagues d'assaut héliportées avant d'effectuer une percée nocturne.",
+    "bilan_et_pertes": {
+      "aln": "Une quarantaine de moudjahidine tombés au champ d'honneur sous les bombardements aériens",
+      "forces_francaises": "Lourdes pertes dans les compagnies d'assaut françaises (plusieurs dizaines de tués et blessés)",
+      "civils": "Bombardements au napalm des forêts et douars des Beni Ouelbane"
+    },
+    "impact_strategique": "Démontre la solidité des bataillons constitués en Wilaya II sous le commandement de Lakhdar Bentobbal et Ali Kafi au printemps 1957.",
+    "sources": [
+      {
+        "titre": "Histoire et mémoire : Skikda (Wilaya II) et la bataille de Djebel Stah — Algérie 62",
+        "url": "https://www.algerie62.dz/histoire-et-memoire-skikda-wilaya-ii-accueille-la-wilaya-iii-avec-tous-les-honneurs/",
+        "type_source": "Article"
+      },
+      {
+        "titre": "La Wilaya II historique — Cairn.info",
+        "url": "https://shs.cairn.info/la-wilaya-ii-historique--9789947394052-page-103?lang=fr",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

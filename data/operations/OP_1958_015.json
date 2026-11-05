@@ -1,0 +1,88 @@
+{
+  "id": "OP_1958_015",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Attaque à l'explosif contre la raffinerie Mobil Oil de Frontignan (Hérault)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-08-25",
+    "latest": "1958-08-25",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-08-25",
+    "latest": "1958-08-25",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Raffinerie de pétrole de Frontignan, près de Sète (Hérault, Occitanie)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.7583,
+          43.4375
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Fédération de France du FLN (« 7e Wilaya » - Organisation Spéciale / Hérault)",
+  "source_ids": [
+    "SRC_490f48b98e70b7d056b1c382",
+    "SRC_77e91f24bac9644187d20029"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_015",
+    "nom_operation": "Attaque à l'explosif contre la raffinerie Mobil Oil de Frontignan (Hérault)",
+    "date_debut": "1958-08-25",
+    "date_fin": "1958-08-25",
+    "wilaya_concernee": "Fédération de France du FLN (« 7e Wilaya » - Organisation Spéciale / Hérault)",
+    "localisation": {
+      "region_ou_ville": "Raffinerie de pétrole de Frontignan, près de Sète (Hérault, Occitanie)",
+      "coordonnees_approximatives": {
+        "latitude": 43.4375,
+        "longitude": 3.7583
+      }
+    },
+    "commandement_aln": [
+      "Commandos de l'OS de la Fédération de France (Secteur Montpellier-Sète)"
+    ],
+    "type_action": "Sabotage",
+    "description": "Un commando de l'OS de la Fédération de France du FLN pénètre dans le périmètre de la grande raffinerie Mobil Oil de Frontignan (près du port de Sète) et dispose plusieurs engins explosifs et incendiaires contre les conduites et bacs de stockage d'hydrocarbures afin de paralyser le raffinage dans le Midi.",
+    "bilan_et_pertes": {
+      "aln": "Arrestation ultérieure de plusieurs militants du réseau de l'Hérault par la DST et la PJ",
+      "forces_francaises": "Dégâts sur les installations périphériques ; une partie des charges désamorcée in extremis par les équipes de sécurité",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "Cible l'une des principales raffineries françaises de Méditerranée et oblige le gouvernement français à déployer l'armée et les CRS autour de tous les complexes pétrochimiques de province.",
+    "sources": [
+      {
+        "titre": "La guerre d'Algérie en France : le second front en métropole — Cairn.info",
+        "url": "https://shs.cairn.info/la-guerre-d-algerie-en-france--9789947392263-page-95",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Combattre en Algérie, combattre en métropole — Ministère des Armées (Chemins de mémoire)",
+        "url": "https://www.defense.gouv.fr/chemins-memoire/histoire-memoires/ressources-historiques/guerre-dalgerie/combattre-algerie-combattre-metropole-2",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

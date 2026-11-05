@@ -1,0 +1,82 @@
+{
+  "id": "OP_1956_040",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats de liaison et résistance du Djebel Boutaleb (Hodna)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-01-01",
+    "latest": "1956-01-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-12-31",
+    "latest": "1958-12-31",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif du Djebel Boutaleb / Barika (Batna / Sétif)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.334,
+          35.708
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya I / Wilaya III (Confins du Hodna - Barika)",
+  "source_ids": [
+    "SRC_066a6ad211132bac14ef8fbd"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_040",
+    "nom_operation": "Combats de liaison et résistance du Djebel Boutaleb (Hodna)",
+    "date_debut": "1956-01-01",
+    "date_fin": "1958-12-31",
+    "wilaya_concernee": "Wilaya I / Wilaya III (Confins du Hodna - Barika)",
+    "localisation": {
+      "region_ou_ville": "Massif du Djebel Boutaleb / Barika (Batna / Sétif)",
+      "coordonnees_approximatives": {
+        "latitude": 35.708,
+        "longitude": 5.334
+      }
+    },
+    "commandement_aln": [
+      "Unités de liaison inter-wilayas"
+    ],
+    "type_action": "Combat de rencontre / Guérilla de montagne",
+    "description": "Combats répétés livrés sur les crêtes du Boutaleb pour protéger les routes clandestines de transmission reliant l'Aurès (Wilaya I) à la Kabylie (Wilaya III) et au Sahara (Wilaya VI).",
+    "bilan_et_pertes": {
+      "aln": "Pertes régulières au sein des compagnies de marche",
+      "forces_francaises": "Pertes infligées aux bataillons héliportés coloniaux",
+      "civils": "0"
+    },
+    "impact_strategique": "Préservation du nœud stratégique de communication inter-wilayas au cœur des Hauts Plateaux.",
+    "sources": [
+      {
+        "titre": "Les wilayas dans la crise du FLN (Insaniyat / CRASC)",
+        "url": "https://insaniyat.crasc.dz/en/article/les-wilayas-dans-la-crise-du-fln-de-lete-1962",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

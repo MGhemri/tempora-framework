@@ -1,0 +1,102 @@
+{
+  "id": "OP_1956_021",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscades des gorges du Rhummel et harcèlements de la garnison de Constantine (Hamma Bouziane)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-11-10",
+    "latest": "1956-11-10",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-11-12",
+    "latest": "1956-11-12",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Hamma Bouziane, Bekira, Djebel El Ouahch et gorges du Rhummel à Constantine (Wilaya de Constantine)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.596,
+          36.412
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya II (Zone de Constantine - Hamma Bouziane - El Khroub)",
+  "source_ids": [
+    "SRC_4cf4115e95c79ff1d23ce603",
+    "SRC_e2062e57a011820258321cae",
+    "SRC_ba17f48558bba76d55d741f6",
+    "SRC_e784b20e419d3b9d1cd2b5f9"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_021",
+    "nom_operation": "Embuscades des gorges du Rhummel et harcèlements de la garnison de Constantine (Hamma Bouziane)",
+    "date_debut": "1956-11-10",
+    "date_fin": "1956-11-12",
+    "wilaya_concernee": "Wilaya II (Zone de Constantine - Hamma Bouziane - El Khroub)",
+    "localisation": {
+      "region_ou_ville": "Hamma Bouziane, Bekira, Djebel El Ouahch et gorges du Rhummel à Constantine (Wilaya de Constantine)",
+      "coordonnees_approximatives": {
+        "latitude": 36.412,
+        "longitude": 6.596
+      }
+    },
+    "commandement_aln": [
+      "Lakhdar Bentobbal (Colonel de la Wilaya II)",
+      "Salah Boubnider dit Sawt El Arab",
+      "Commandos urbains et périurbains de Constantine"
+    ],
+    "type_action": "Guérilla urbaine",
+    "description": "Les commandos de fidayin de Constantine et les sections de l'ALN basées au Djebel El Ouahch et à Hamma Bouziane mènent une série d'actions coordonnées aux portes et au cœur de Constantine : attaques à la grenade contre des patrouilles militaires près des ponts du Rhummel, sabotages de transformateurs électriques et embuscades sur la route de Hamma Bouziane.",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs fidayin arrêtés ou tués lors des bouclages de la médina (Souika) de Constantine",
+      "forces_francaises": "Une vingtaine de militaires et policiers tués ou blessés et coupures d'électricité à Constantine",
+      "civils": "Couvre-feu sévère et fouilles systématiques des quartiers de la Souika et de Sidi Mabrouk"
+    },
+    "impact_strategique": "Maintient une insécurité permanente au siège même du commandement civil (préfecture/IGAME) et militaire de l'Est algérien à Constantine.",
+    "sources": [
+      {
+        "titre": "La Wilaya II historique — Cairn.info",
+        "url": "https://shs.cairn.info/la-wilaya-ii-historique--9789947394052-page-103?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Inventaire des archives de la préfecture et de l'IGAME de Constantine — Archives nationales d'outre-mer (ANOM)",
+        "url": "https://recherche-anom.culture.gouv.fr/ark:/61561/zf476wvrwx",
+        "type_source": "Archive"
+      },
+      {
+        "titre": "Batailles d'Oum Toub et du bassin d'El Harrouch (elmoudjahid.dz)",
+        "url": "https://www.elmoudjahid.dz/fr/l-evenement/l-offensive-du-20-aout-1955-impact-decisif-des-represailles-a-grande-echelle-187171",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Batailles d'Oum Toub et du bassin d'El Harrouch (fr.wikipedia.org)",
+        "url": "https://fr.wikipedia.org/wiki/Massacres_d%27ao%C3%BBt_1955_dans_le_Constantinois",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

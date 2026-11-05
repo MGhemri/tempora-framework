@@ -1,0 +1,82 @@
+{
+  "id": "OP_1959_018",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille de Zid El Moumen à Merine",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1959-10-01",
+    "latest": "1959-10-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1959-10-31",
+    "latest": "1959-10-31",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Zid El Moumen / Merine (Sidi Bel Abbès)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.465,
+          34.812
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 5 - Commune de Merine)",
+  "source_ids": [
+    "SRC_890a5057f3dcdf9fff6d5b9f"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1959_018",
+    "nom_operation": "Bataille de Zid El Moumen à Merine",
+    "date_debut": "1959-10-01",
+    "date_fin": "1959-10-31",
+    "wilaya_concernee": "Wilaya V (Zone 5 - Commune de Merine)",
+    "localisation": {
+      "region_ou_ville": "Zid El Moumen / Merine (Sidi Bel Abbès)",
+      "coordonnees_approximatives": {
+        "latitude": 34.812,
+        "longitude": -0.465
+      }
+    },
+    "commandement_aln": [
+      "Katiba ALN de Merine"
+    ],
+    "type_action": "Guérilla de montagne / Combat de rencontre",
+    "description": "Combat en pleine phase du Plan Challe dans la commune de Merine entre une katiba de la Wilaya V et les troupes d'assaut coloniales.",
+    "bilan_et_pertes": {
+      "aln": "Pertes sévères sous les bombardements aériens",
+      "forces_francaises": "Pertes reconnues dans les rangs des troupes d'intervention",
+      "civils": "0"
+    },
+    "impact_strategique": "Preuve de la résilience et de l'activité offensive des maquis de la Wilaya V malgré les opérations massives Challe.",
+    "sources": [
+      {
+        "titre": "Étude historique sur la Zone 5 de la Wilaya V (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/127641",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

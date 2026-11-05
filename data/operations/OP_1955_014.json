@@ -1,0 +1,83 @@
+{
+  "id": "OP_1955_014",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Résistance du sanctuaire de Kimmel (Beni Imloul) à l'Opération Violette",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1955-01-20",
+    "latest": "1955-01-20",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1955-02-15",
+    "latest": "1955-02-15",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Forêt de Kimmel / Beni Imloul (Batna)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.512,
+          35.105
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya I (Aurès - Forêt de Kimmel)",
+  "source_ids": [
+    "SRC_0aea261bfe06ab0f56c6d382"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1955_014",
+    "nom_operation": "Résistance du sanctuaire de Kimmel (Beni Imloul) à l'Opération Violette",
+    "date_debut": "1955-01-20",
+    "date_fin": "1955-02-15",
+    "wilaya_concernee": "Wilaya I (Aurès - Forêt de Kimmel)",
+    "localisation": {
+      "region_ou_ville": "Forêt de Kimmel / Beni Imloul (Batna)",
+      "coordonnees_approximatives": {
+        "latitude": 35.105,
+        "longitude": 6.512
+      }
+    },
+    "commandement_aln": [
+      "Mostefa Ben Boulaïd",
+      "Bachir Chihani"
+    ],
+    "type_action": "Défense de bastion / Guérilla de montagne",
+    "description": "Opération française de grande envergure (« Violette ») mobilisant des milliers de soldats contre la forêt de Kimmel ; l'ALN esquive l'encerclement et harcèle les arrières de l'ennemi.",
+    "bilan_et_pertes": {
+      "aln": "Pertes limitées",
+      "forces_francaises": "Lourdes pertes infligées par des tirs embusqués sous couvert forestier",
+      "civils": "0"
+    },
+    "impact_strategique": "Confirmation du rôle de forteresse naturelle imprenable du massif de Kimmel pour l'état-major de l'Aurès.",
+    "sources": [
+      {
+        "titre": "Mostefa Ben Boulaïd (Wikipédia)",
+        "url": "https://fr.wikipedia.org/wiki/Mostefa_Ben_Boula%C3%AFd",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

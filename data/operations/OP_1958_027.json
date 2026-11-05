@@ -1,0 +1,109 @@
+{
+  "id": "OP_1958_027",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille du Djebel Mongorno à Ouled Bouachra (Massif de Médéa - Berrouaghia)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-12-23",
+    "latest": "1958-12-23",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-12-28",
+    "latest": "1958-12-28",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif du Djebel Mongorno, commune d'Ouled Bouachra, au sud-ouest de Médéa et de Berrouaghia (Wilaya de Médéa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.6833,
+          36.1167
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya IV (Zone 2 - Ouled Bouachra / Berrouaghia / Médéa)",
+  "source_ids": [
+    "SRC_c77a9b2142f4c5c7917e7590",
+    "SRC_eb6fa5bd867808c6d6579cee",
+    "SRC_f0f067cff76b7c8dbaeb4a0d",
+    "SRC_81dea2157e5d1c6fe8b79144",
+    "SRC_3250d3f7185ba9a37d0e5694"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_027",
+    "nom_operation": "Bataille du Djebel Mongorno à Ouled Bouachra (Massif de Médéa - Berrouaghia)",
+    "date_debut": "1958-12-23",
+    "date_fin": "1958-12-28",
+    "wilaya_concernee": "Wilaya IV (Zone 2 - Ouled Bouachra / Berrouaghia / Médéa)",
+    "localisation": {
+      "region_ou_ville": "Massif du Djebel Mongorno, commune d'Ouled Bouachra, au sud-ouest de Médéa et de Berrouaghia (Wilaya de Médéa)",
+      "coordonnees_approximatives": {
+        "latitude": 36.1167,
+        "longitude": 2.6833
+      }
+    },
+    "commandement_aln": [
+      "Si M'Hamed Bougara (Colonel de la Wilaya IV)",
+      "Lakhdar Bourégaâ",
+      "Youcef Khatib dit Si Hassan",
+      "Chefs du Bataillon Ben Badis et des katibas Zoubiria, El Omaria et El Hamdania"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Fin décembre 1958, au lendemain de la réunion inter-wilayas des colonels, le général Massu engage une armada terrestre et aérienne (plus de 10 000 soldats, parachutistes du 1er REP, Légion, blindés et aviation) contre le massif boisé du Djebel Mongorno à Ouled Bouachra. Les katibas d'élite de la Wilaya IV (Zoubiria, El Omaria, El Hamdania) livrent une bataille héroïque de cinq jours sous la pluie et dans le brouillard, infligeant de lourdes pertes aux assaillants et abattant des appareils aériens.",
+    "bilan_et_pertes": {
+      "aln": "Environ 120 à 140 moudjahidine tombés au champ d'honneur ; rupture réussie de l'encerclement par le gros des katibas et l'état-major de Si M'Hamed Bougara",
+      "forces_francaises": "Pertes très lourdes dans les rangs parachutistes et d'infanterie (plusieurs centaines de tués et blessés selon les témoignages algériens) et 2 aéronefs abattus",
+      "civils": "Destruction de mechtas et bombardements au napalm sur la forêt du Djebel Mongorno"
+    },
+    "impact_strategique": "L'une des plus grandes batailles rangées de l'histoire de la Wilaya IV, démontrant la puissance de feu et la cohésion tactique des compagnies du Titteri à la veille du Plan Challe.",
+    "sources": [
+      {
+        "titre": "Battle of Ouled Bouachra (Djebel Mongorno, December 1958) — Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Battle_of_Ouled_Bouachra",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Ouled Bouachra et les batailles du Djebel Mongorno — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Ouled_Bouachra",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Lakhdar Bourégaâ — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Lakhdar_Bouregaa",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Bataille d’Ouled Bouachra au Djebel Mokorno (Mongorno) (djazairess.com)",
+        "url": "https://www.djazairess.com/aps/409240",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Bataille d’Ouled Bouachra au Djebel Mokorno (Mongorno) (babzman.com)",
+        "url": "https://babzman.com/un-30-decembre-1958-la-bataille-de-djebel-mongorno/",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

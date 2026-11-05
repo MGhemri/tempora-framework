@@ -1,0 +1,12 @@
+{
+  "id": "W2",
+  "names": {
+    "fr": "Wilaya II (Nord-Constantinois)",
+    "ar": "الولاية الثانية (الشمال القسنطيني)"
+  },
+  "type": "editorial_category",
+  "valid_from": null,
+  "valid_to": null,
+  "source_ids": [],
+  "review_status": "needs_review"
+}

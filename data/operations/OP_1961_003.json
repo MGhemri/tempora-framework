@@ -1,0 +1,89 @@
+{
+  "id": "OP_1961_003",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Sabotages de lignes à haute tension et de voies ferrées dans l'Est (Nancy, Metz et Strasbourg)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1961-02-10",
+    "latest": "1961-02-10",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1961-08-30",
+    "latest": "1961-08-30",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Agglomérations et axes ferroviaires de Metz, Nancy, Longwy et Strasbourg (Moselle, Meurthe-et-Moselle, Bas-Rhin)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.1844,
+          48.6921
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Fédération de France du FLN (« 7e Wilaya » - Wilaya de l'Est / Lorraine - Alsace)",
+  "source_ids": [
+    "SRC_8ce30d02b3361e170b72b87d",
+    "SRC_389ca3ed046f69498259d19f"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1961_003",
+    "nom_operation": "Sabotages de lignes à haute tension et de voies ferrées dans l'Est (Nancy, Metz et Strasbourg)",
+    "date_debut": "1961-02-10",
+    "date_fin": "1961-08-30",
+    "wilaya_concernee": "Fédération de France du FLN (« 7e Wilaya » - Wilaya de l'Est / Lorraine - Alsace)",
+    "localisation": {
+      "region_ou_ville": "Agglomérations et axes ferroviaires de Metz, Nancy, Longwy et Strasbourg (Moselle, Meurthe-et-Moselle, Bas-Rhin)",
+      "coordonnees_approximatives": {
+        "latitude": 48.6921,
+        "longitude": 6.1844
+      }
+    },
+    "commandement_aln": [
+      "Direction de la Wilaya de l'Est de la Fédération de France du FLN",
+      "Cellules techniques de l'OS (Lorraine-Alsace)"
+    ],
+    "type_action": "Sabotage",
+    "description": "Au cours de l'année 1961, les équipes spécialisées de l'OS dans l'Est de la France procèdent au cisaillement et au dynamitage de pylônes électriques à haute tension alimentant les aciéries lorraines ainsi qu'au sabotage de voies ferrées et de câbles de télécommunications militaires entre Nancy, Metz et Strasbourg.",
+    "bilan_et_pertes": {
+      "aln": "Arrestations de plusieurs cellules de sabotages et saisies d'explosifs acheminés depuis l'Allemagne",
+      "forces_francaises": "Coupures d'alimentation électrique industrielle et perturbations sur le réseau ferré de l'Est",
+      "civils": "Aucune victime civile directe lors des sabotages techniques"
+    },
+    "impact_strategique": "Maintient une pression économique et sécuritaire constante dans la région frontalière de l'Est pendant la phase décisive des pourparlers d'Évian et de Lugrin en 1961.",
+    "sources": [
+      {
+        "titre": "La guerre d'Algérie dans l'Est de la France — Revue Le Portique (OpenEdition Journals)",
+        "url": "https://journals.openedition.org/leportique/4467?lang=en",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Police générale : attentats et sabotages du FLN en métropole — FranceArchives",
+        "url": "https://francearchives.gouv.fr/findingaid/b5007a886e4825bfd4b46f8220b3b3ee7d19d6dd",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

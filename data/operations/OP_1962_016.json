@@ -1,0 +1,91 @@
+{
+  "id": "OP_1962_016",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Organisation du réseau hospitalier et sanitaire clandestin de la ZAO à Médina Jdida",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1962-04-25",
+    "latest": "1962-04-25",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1962-05-30",
+    "latest": "1962-05-30",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Rue de Tombouctou et Sbitar Bendaoud, Médina Jdida (Oran)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.6522,
+          35.6931
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone Autonome d'Oran (ZAO)",
+  "source_ids": [
+    "SRC_b25313b2b0f88b05ddcda352",
+    "SRC_95bffe775df64faa1e6c2f3b",
+    "SRC_dc54b3ff8528ed7892842b69"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1962_016",
+    "nom_operation": "Organisation du réseau hospitalier et sanitaire clandestin de la ZAO à Médina Jdida",
+    "date_debut": "1962-04-25",
+    "date_fin": "1962-05-30",
+    "wilaya_concernee": "Zone Autonome d'Oran (ZAO)",
+    "localisation": {
+      "region_ou_ville": "Rue de Tombouctou et Sbitar Bendaoud, Médina Jdida (Oran)",
+      "coordonnees_approximatives": {
+        "latitude": 35.6931,
+        "longitude": -0.6522
+      }
+    },
+    "commandement_aln": [
+      "Service de santé de la ZAO",
+      "Médecins, infirmiers et étudiants patriotes du FLN"
+    ],
+    "type_action": "Logistique sanitaire de guerre et secours sous blocus",
+    "description": "Face au blocus total des quartiers musulmans et à l'impossibilité de transporter les blessés algériens vers l'Hôpital civil d'Oran (où les commandos de l'OAS assassinent les malades algériens sur leurs lits), la ZAO transforme en hôpitaux de campagne l'école de la rue de Tombouctou, le dispensaire Charles de Foucauld et le centre de Sbitar Bendaoud. Des salles d'opération chirurgicales d'urgence sont équipées avec des générateurs autonomes et du matériel pharmaceutique acheminé clandestinement par les réseaux FLN.",
+    "bilan_et_pertes": "Plus de 2 000 interventions chirurgicales et soins d'urgence prodigués sous les tirs de snipers et les coupures d'électricité ; plusieurs infirmiers et secouristes blessés lors des bombardements au mortier.",
+    "impact_strategique": "Permet d'éviter une catastrophe humanitaire majeure à Médina Jdida et assure l'autonomie sanitaire complète de la population assiégée.",
+    "sources": [
+      {
+        "titre": "Saddek Benkada, « L'organisation sanitaire et hospitalière clandestine de la ZAO », Insaniyat / CRASC",
+        "url": "https://journals.openedition.org/insaniyat/30472",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Revue ASJP — المنظومة الصحية لجبهة التحرير الوطني خلال حرب التحرير بالمدن الكبرى والمستشفيات الميدانية",
+        "url": "https://asjp.cerist.dz/en/article/123690",
+        "type_source": "Revue scientifique"
+      },
+      {
+        "titre": "Témoignages du corps médical et paramédical algérien de Médina Jdida — Faculté de Médecine d'Oran",
+        "url": "https://www.elmoudjahid.dz/fr/histoire",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "id": "OP_1957_033",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscades de la Compagnie Zoubiria et combats de Berrouaghia - Boghari (Titteri)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-10-12",
+    "latest": "1957-10-12",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-10-14",
+    "latest": "1957-10-14",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Zoubiria, Berrouaghia, Ksar El Boukhari (Boghari) et monts du Titteri (Wilaya de Médéa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.9167,
+          36.1
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya IV (Zone 2 - Monts du Titteri / Médéa / Berrouaghia / Boghari)",
+  "source_ids": [
+    "SRC_1dbd3460ae2f7fc2da141bf7",
+    "SRC_963935941b814d2ee192508d"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_033",
+    "nom_operation": "Embuscades de la Compagnie Zoubiria et combats de Berrouaghia - Boghari (Titteri)",
+    "date_debut": "1957-10-12",
+    "date_fin": "1957-10-14",
+    "wilaya_concernee": "Wilaya IV (Zone 2 - Monts du Titteri / Médéa / Berrouaghia / Boghari)",
+    "localisation": {
+      "region_ou_ville": "Zoubiria, Berrouaghia, Ksar El Boukhari (Boghari) et monts du Titteri (Wilaya de Médéa)",
+      "coordonnees_approximatives": {
+        "latitude": 36.1,
+        "longitude": 2.9167
+      }
+    },
+    "commandement_aln": [
+      "Lakhdar Bourégaâ",
+      "Si M'Hamed Bougara",
+      "Commandant Si Lakhdar (Rabah Mokrani)"
+    ],
+    "type_action": "Embuscade",
+    "description": "La célèbre katiba « Zoubiria » et les unités de choc de la Zone 2 de la Wilaya IV (dirigées par Si Lakhdar et Lakhdar Bourégaâ) tendent une série d'embuscades coordonnées sur la Route Nationale 1 entre Médéa, Berrouaghia et Boghari (Ksar El Boukhari), détruisant un convoi militaire avant d'affronter les renforts blindés et héliportés dans les ravins de Zoubiria.",
+    "bilan_et_pertes": {
+      "aln": "Une dizaine de moudjahidine tués ; capture d'un important lot d'armes automatiques, de mortiers et d'équipements",
+      "forces_francaises": "Plusieurs camions et blindés légers détruits et une trentaine de soldats français mis hors de combat",
+      "civils": "Ratissages et regroupements de populations dans le secteur de Berrouaghia et Zoubiria"
+    },
+    "impact_strategique": "Fait des monts du Titteri (entre Médéa et Boghari) le réduit central et le poste de commandement privilégié de la Wilaya IV sous l'autorité de Si M'Hamed Bougara.",
+    "sources": [
+      {
+        "titre": "Lakhdar Bourégaâ et les combats de la Wilaya IV dans le Titteri — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Lakhdar_Bouregaa",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Les mémoires et combats en Wilaya IV (Guerres mondiales et conflits contemporains) — Cairn.info",
+        "url": "https://shs.cairn.info/article/GMCC_201_0163/pdf?lang=fr&download=1&ID_ARTICLE=GMCC_201_0163",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

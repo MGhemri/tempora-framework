@@ -1,0 +1,82 @@
+{
+  "id": "OP_1958_040",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille des M'Hadid (Mahamid)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-08-28",
+    "latest": "1958-08-28",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-08-30",
+    "latest": "1958-08-30",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Monts des M'Hadid / Télagh (Sidi Bel Abbès)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.635,
+          34.815
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 5 - Commune de Télagh)",
+  "source_ids": [
+    "SRC_890a5057f3dcdf9fff6d5b9f"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_040",
+    "nom_operation": "Bataille des M'Hadid (Mahamid)",
+    "date_debut": "1958-08-28",
+    "date_fin": "1958-08-30",
+    "wilaya_concernee": "Wilaya V (Zone 5 - Commune de Télagh)",
+    "localisation": {
+      "region_ou_ville": "Monts des M'Hadid / Télagh (Sidi Bel Abbès)",
+      "coordonnees_approximatives": {
+        "latitude": 34.815,
+        "longitude": -0.635
+      }
+    },
+    "commandement_aln": [
+      "Commandement ALN de la Zone 5"
+    ],
+    "type_action": "Combat de rencontre / Guérilla de montagne",
+    "description": "Bataille défensive de trois jours dans le massif des M'Hadid opposant les moudjahidine à des forces combinées coloniales, documentée par Abdelhak Kerkeb.",
+    "bilan_et_pertes": {
+      "aln": "Environ 15 moudjahidine tombés au champ d'honneur",
+      "forces_francaises": "Pertes humaines significatives et hélicoptères touchés",
+      "civils": "0"
+    },
+    "impact_strategique": "Retrait des troupes françaises après trois jours d'assauts infructueux ; renforcement de la cohésion des maquis du Sud-Sidi Bel Abbès.",
+    "sources": [
+      {
+        "titre": "Étude historique sur la Zone 5 de la Wilaya V (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/127641",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

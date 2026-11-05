@@ -1,0 +1,90 @@
+{
+  "id": "OP_1956_007",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Tentative de sabotage de l'usine à gaz du Hamma à Alger (Opération Fernand Iveton)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-11-14",
+    "latest": "1956-11-14",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Usine Électricité et Gaz d'Algérie (EGA) du Hamma, rue Sadi-Carnot (Belcourt, Alger)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.0714,
+          36.7492
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone autonome d'Alger (ZAA)",
+  "source_ids": [
+    "SRC_addb952f66c04314c3ba7917",
+    "SRC_1a9585af87d455c8a7ff07d2"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_007",
+    "nom_operation": "Tentative de sabotage de l'usine à gaz du Hamma à Alger (Opération Fernand Iveton)",
+    "date_debut": "1956-11-14",
+    "date_fin": null,
+    "wilaya_concernee": "Zone autonome d'Alger (ZAA)",
+    "localisation": {
+      "region_ou_ville": "Usine Électricité et Gaz d'Algérie (EGA) du Hamma, rue Sadi-Carnot (Belcourt, Alger)",
+      "coordonnees_approximatives": {
+        "latitude": 36.7492,
+        "longitude": 3.0714
+      }
+    },
+    "commandement_aln": [
+      "Fernand Iveton",
+      "Jacqueline Guerroudj",
+      "Abdelkader Guerroudj dit Djilali (liaison FLN / CDL)"
+    ],
+    "type_action": "Sabotage",
+    "description": "Suite aux accords d'intégration des Combattants de la Libération (CDL) au sein du FLN/ALN (juillet 1956), l'ouvrier tourneur Fernand Iveton dépose le 14 novembre 1956 à 14h00 une bombe à retardement (fournie par le réseau de la ZAA et réglée pour exploser à 19h30 après le départ des ouvriers) dans un local de l'usine à gaz du Hamma afin de provoquer une panne générale d'électricité dans Alger.",
+    "bilan_et_pertes": {
+      "aln": "Bombe désamorcée avant explosion ; arrestation de Fernand Iveton, condamné à mort et guillotiné le 11 février 1957 à la prison de Serkadji",
+      "forces_francaises": "Aucune perte",
+      "civils": "Aucune victime (sabotage conçu spécifiquement sans perte humaine)"
+    },
+    "impact_strategique": "L'exécution de Fernand Iveton (seul Européen guillotiné de la guerre d'Algérie) malgré l'absence de toute victime provoque une vive émotion politique et intellectuelle et symbolise l'engagement d'une frange anticolonialiste européenne au sein du FLN.",
+    "sources": [
+      {
+        "titre": "Fernand Iveton — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Fernand_Iveton",
+        "type_source": "Article"
+      },
+      {
+        "titre": "La guerre d'Algérie : La bataille d'Alger — FranceArchives",
+        "url": "https://francearchives.gouv.fr/fr/pages_histoire/39692",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "id": "OP_1956_035",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille de Sidi Ghalem (Bataille des Ghoualem)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-07-18",
+    "latest": "1956-07-18",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-07-20",
+    "latest": "1956-07-20",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Sidi Ghalem / Forêt de Sidi Ghalem / Tafraoui (Daïra d'Oued Tlélat, Wilaya d'Oran)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.548,
+          35.475
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 3 - Massifs de Tafraoui / Monts du Tessala)",
+  "source_ids": [
+    "SRC_6a84e3476651e5937dc3d706",
+    "SRC_8dadb54799b2ca3d6f8d0e5d"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_035",
+    "nom_operation": "Bataille de Sidi Ghalem (Bataille des Ghoualem)",
+    "date_debut": "1956-07-18",
+    "date_fin": "1956-07-20",
+    "wilaya_concernee": "Wilaya V (Zone 3 - Massifs de Tafraoui / Monts du Tessala)",
+    "localisation": {
+      "region_ou_ville": "Sidi Ghalem / Forêt de Sidi Ghalem / Tafraoui (Daïra d'Oued Tlélat, Wilaya d'Oran)",
+      "coordonnees_approximatives": {
+        "latitude": 35.475,
+        "longitude": -0.548
+      }
+    },
+    "commandement_aln": [
+      "Kada Ben Saha",
+      "Commandement de zone de la Wilaya V"
+    ],
+    "type_action": "Offensive coordonnée / Combat de rencontre",
+    "description": "Grande confrontation de trois jours au sud d'Oran dans le secteur de Sidi Ghalem / Tafraoui, où les katibas de l'ALN affrontent les blindés et les chasseurs-bombardiers de l'armée coloniale.",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs dizaines de moudjahidine tombés au champ d'honneur",
+      "forces_francaises": "Lourdes pertes en hommes et véhicules blindés endommagés",
+      "civils": "Victimes civiles lors des bombardements sur les mechtas voisines"
+    },
+    "impact_strategique": "Affirmation de la puissance de frappe de l'ALN aux portes méridionales d'Oran, confirmant l'extension irréversible de l'insurrection en Oranie intérieure.",
+    "sources": [
+      {
+        "titre": "La bataille de Sidi Ghalem à travers le témoignage du moudjahid Ben Saha Kada (CRASC)",
+        "url": "https://www.crasc.dz/fr/scientific-event/la-bataille-de-sidi-ghalem-a-travers-le-temoignage-du-moudjahid-ben-saha-kada",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Une des épopées héroïques de la glorieuse révolution de libération (APS)",
+        "url": "https://www.aps.dz/fr/algerie/societe/mrrwhz0b-une-des-epopees-heroiques-de-la-glorieuse-revolution-de-liberation",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

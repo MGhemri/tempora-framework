@@ -1,0 +1,82 @@
+{
+  "id": "OP_1956_038",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille de Chouabir à El Ghicha (Djebel Amour)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-10-03",
+    "latest": "1956-10-03",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-10-04",
+    "latest": "1956-10-04",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Chouabir / El Ghicha (Laghouat)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.145,
+          33.935
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 7 - Djebel Amour / Laghouat)",
+  "source_ids": [
+    "SRC_6960f6836440eeadebc8d613"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_038",
+    "nom_operation": "Bataille de Chouabir à El Ghicha (Djebel Amour)",
+    "date_debut": "1956-10-03",
+    "date_fin": "1956-10-04",
+    "wilaya_concernee": "Wilaya V (Zone 7 - Djebel Amour / Laghouat)",
+    "localisation": {
+      "region_ou_ville": "Chouabir / El Ghicha (Laghouat)",
+      "coordonnees_approximatives": {
+        "latitude": 33.935,
+        "longitude": 2.145
+      }
+    },
+    "commandement_aln": [
+      "Commandement ALN du Djebel Amour"
+    ],
+    "type_action": "Offensive coordonnée / Embuscade",
+    "description": "Considérée comme la première grande défaite de l'armée coloniale dans le Djebel Amour, cette bataille de deux jours a opposé les combattants de l'ALN à une armada coloniale.",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs martyrs",
+      "forces_francaises": "Dizaines de soldats coloniaux tués, matériel militaire abondant récupéré",
+      "civils": "0"
+    },
+    "impact_strategique": "Retentissement immense dans toute la région saharienne et ralliement massif des populations du Djebel Amour à la cause de l'ALN.",
+    "sources": [
+      {
+        "titre": "La bataille de Chouabir à El Ghicha : première grosse défaite de l'armée coloniale dans la région (APS)",
+        "url": "https://www.aps.dz/fr/algerie/actualite-nationale/mgq8qooq-la-bataille-de-chouabir-a-el-ghicha-laghouat-1e-grosse-defaite-de-l-armee-coloniale-dans-cette-region-de-pays",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

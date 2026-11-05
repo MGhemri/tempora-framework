@@ -1,0 +1,90 @@
+{
+  "id": "OP_1958_034",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscades de Moghrar et de Djenien Bou Rezg dans les Monts des Ksour (Zone 8 - Sud-Oranais)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-02-11",
+    "latest": "1958-02-11",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-02-13",
+    "latest": "1958-02-13",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Oasis de Moghrar, Tiout et défilé de Djenien Bou Rezg, au sud d'Aïn Sefra vers Figuig (Wilaya de Naâma)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.6,
+          32.5167
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 8 - Aïn Sefra / Moghrar / Djenien Bou Rezg)",
+  "source_ids": [
+    "SRC_bb50e16d0b68809694aa0431",
+    "SRC_388042fe36bca84028dc051d"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_034",
+    "nom_operation": "Embuscades de Moghrar et de Djenien Bou Rezg dans les Monts des Ksour (Zone 8 - Sud-Oranais)",
+    "date_debut": "1958-02-11",
+    "date_fin": "1958-02-13",
+    "wilaya_concernee": "Wilaya V (Zone 8 - Aïn Sefra / Moghrar / Djenien Bou Rezg)",
+    "localisation": {
+      "region_ou_ville": "Oasis de Moghrar, Tiout et défilé de Djenien Bou Rezg, au sud d'Aïn Sefra vers Figuig (Wilaya de Naâma)",
+      "coordonnees_approximatives": {
+        "latitude": 32.5167,
+        "longitude": -0.6
+      }
+    },
+    "commandement_aln": [
+      "Benali Boudghène dit Colonel Lotfi",
+      "Commandant Ferradj (Mohamed Laoudj)",
+      "Chefs des katibas de la Zone 8 (Monts des Ksour)"
+    ],
+    "type_action": "Embuscade",
+    "description": "Les katibas de la Zone 8 de la Wilaya V dirigées par le commandant Ferradj sous l'autorité de Lotfi tendent une embuscade coordonnée contre un convoi de la Légion étrangère (2e REI) et sabotent la voie ferrée et la route reliant Aïn Sefra à Beni Ounif et Colomb-Béchar à hauteur des gorges de Moghrar et de Djenien Bou Rezg.",
+    "bilan_et_pertes": {
+      "aln": "9 moudjahidine tués ; récupération d'armement collectif et de caisses de munitions",
+      "forces_francaises": "Destruction de plusieurs camions d'escorte, coupure de la voie ferrée du Sud-Oranais et une vingtaine de légionnaires tués ou blessés",
+      "civils": "Blocus militaire des ksour de Moghrar et de Tiout"
+    },
+    "impact_strategique": "Menace directement la liaison stratégique entre l'Oranie et les bases sahariennes de Colomb-Béchar et de Hammaguir.",
+    "sources": [
+      {
+        "titre": "Béchar : le colonel Lotfi, un riche parcours de lutte durant la Guerre de libération — Algérie Presse Service (APS)",
+        "url": "https://www.aps.dz/fr/algerie/societe/mn8zsy8t-bechar-le-colonel-lotfi-un-riche-parcours-de-lutte-et-de-militantisme-durant-la-glorieuse-guerre-de-liberation-nationale",
+        "type_source": "Article"
+      },
+      {
+        "titre": "La lutte armée dans le Sud-Oranais et les monts des Ksour — Revue académique CERIST (ASJP)",
+        "url": "https://asjp.cerist.dz/en/downArticle/20/16/5/254394",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "id": "OP_1955_013",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscades et résistance du canyon de l'Oued El Abiodh (Balcons du Rhoufi)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1955-01-01",
+    "latest": "1955-01-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-12-31",
+    "latest": "1956-12-31",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Canyon d'Ighzir Amellal / Balcons du Rhoufi (Batna)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.171,
+          35.05
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya I (Aurès - Secteur de Ghassira / Rhoufi)",
+  "source_ids": [
+    "SRC_e93a06dad2fdbd8098e87d4f"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1955_013",
+    "nom_operation": "Embuscades et résistance du canyon de l'Oued El Abiodh (Balcons du Rhoufi)",
+    "date_debut": "1955-01-01",
+    "date_fin": "1956-12-31",
+    "wilaya_concernee": "Wilaya I (Aurès - Secteur de Ghassira / Rhoufi)",
+    "localisation": {
+      "region_ou_ville": "Canyon d'Ighzir Amellal / Balcons du Rhoufi (Batna)",
+      "coordonnees_approximatives": {
+        "latitude": 35.05,
+        "longitude": 6.171
+      }
+    },
+    "commandement_aln": [
+      "Chihani Bachir",
+      "Commandement local des Aurès"
+    ],
+    "type_action": "Embuscade / Guérilla de montagne",
+    "description": "Série de harcèlements et d'embuscades meurtrières tendues par les moudjahidine dans les gorges encaissées du Rhoufi contre les convois militaires reliant Batna à Biskra.",
+    "bilan_et_pertes": {
+      "aln": "Faibles pertes grâce à l'utilisation des habitats troglodytiques",
+      "forces_francaises": "Convois de camions et blindés détruits, nombreuses pertes chez les troupes de convoi",
+      "civils": "0"
+    },
+    "impact_strategique": "Sanctuarisation du couloir de l'Oued El Abiodh et interdiction de passage sans escorte blindée et couverture aérienne pour l'armée coloniale.",
+    "sources": [
+      {
+        "titre": "L'étincelle de la révolution dans les Ziban et le sud du pays (APS)",
+        "url": "https://www.aps.dz/fr/algerie/societe/mvuu8h9u-l-etincelle-de-la-revolution-dans-les-ziban-et-le-sud-du-pays",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

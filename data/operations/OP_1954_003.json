@@ -1,0 +1,90 @@
+{
+  "id": "OP_1954_003",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscade des gorges de Tighanimine et attaque du poste de M'Chouneche (Aurès)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1954-11-01",
+    "latest": "1954-11-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1954-11-02",
+    "latest": "1954-11-02",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Gorges de Tighanimine (route Arris-Biskra) et oasis de M'Chouneche (Wilayas de Batna et Biskra)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.0861,
+          35.1258
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya I (Zone I - Aurès / Arris - Biskra)",
+  "source_ids": [
+    "SRC_906cdde683fd914e4fa89d5e",
+    "SRC_d256181a75f817406a52ab8d"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1954_003",
+    "nom_operation": "Embuscade des gorges de Tighanimine et attaque du poste de M'Chouneche (Aurès)",
+    "date_debut": "1954-11-01",
+    "date_fin": "1954-11-02",
+    "wilaya_concernee": "Wilaya I (Zone I - Aurès / Arris - Biskra)",
+    "localisation": {
+      "region_ou_ville": "Gorges de Tighanimine (route Arris-Biskra) et oasis de M'Chouneche (Wilayas de Batna et Biskra)",
+      "coordonnees_approximatives": {
+        "latitude": 35.1258,
+        "longitude": 6.0861
+      }
+    },
+    "commandement_aln": [
+      "Mostefa Ben Boulaïd",
+      "Hadj Lakhdar (Abidi Mohamed Tahar)",
+      "Messaoud Belaggoune"
+    ],
+    "type_action": "Embuscade",
+    "description": "Au premier jour de l'insurrection dans les Aurès, tandis que les groupes de Ben Boulaïd attaquent la garnison de Batna et assiègent Arris, un commando de l'ALN coupe la route stratégique reliant Arris à Biskra dans le défilé rocheux des gorges de Tighanimine et attaque le poste de M'Chouneche, bloquant la progression des colonnes de secours françaises vers le cœur du massif aurésien.",
+    "bilan_et_pertes": {
+      "aln": "Aucune perte initiale ; contrôle temporaire de l'axe routier Arris-Biskra",
+      "forces_francaises": "Mort du caïd Hadj Sadok et blessure d'officiers SAS/administrateurs ; blocage des renforts militaires",
+      "civils": "2 civils européens (les époux Monnerot, instituteurs) touchés dont Guy Monnerot décédé"
+    },
+    "impact_strategique": "Isolant totalement la cuvette d'Arris pendant plusieurs jours, cette action marque l'ancrage immédiat et irréversible du maquis dans la vallée de l'Oued El Abiod (Aurès).",
+    "sources": [
+      {
+        "titre": "Wilaya I historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_I_historique",
+        "type_source": "Article"
+      },
+      {
+        "titre": "L'insurrection dans les Aurès (Revue Insaniyat / CRASC) — OpenEdition Journals",
+        "url": "https://journals.openedition.org/insaniyat/6187",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

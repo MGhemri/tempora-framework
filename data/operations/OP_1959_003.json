@@ -1,0 +1,96 @@
+{
+  "id": "OP_1959_003",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Contre-offensives et guérilla d'usure en Kabylie face à l'Opération Jumelles",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1959-07-22",
+    "latest": "1959-07-22",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1960-03-31",
+    "latest": "1960-03-31",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massifs du Djurdjura, de l'Akfadou, de Yakouren et vallée de la Soummam (Wilayas de Tizi Ouzou, Béjaïa, Bouira)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.2281,
+          36.4689
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya III (Kabylie)",
+  "source_ids": [
+    "SRC_1b6996ef5a0df0f44603451d",
+    "SRC_c4996e4f3f23c3c9f91eb30e",
+    "SRC_2bf3c51ab90fadfacc6cb2d9"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1959_003",
+    "nom_operation": "Contre-offensives et guérilla d'usure en Kabylie face à l'Opération Jumelles",
+    "date_debut": "1959-07-22",
+    "date_fin": "1960-03-31",
+    "wilaya_concernee": "Wilaya III (Kabylie)",
+    "localisation": {
+      "region_ou_ville": "Massifs du Djurdjura, de l'Akfadou, de Yakouren et vallée de la Soummam (Wilayas de Tizi Ouzou, Béjaïa, Bouira)",
+      "coordonnees_approximatives": {
+        "latitude": 36.4689,
+        "longitude": 4.2281
+      }
+    },
+    "commandement_aln": [
+      "Mohand Oulhadj (Colonel de la Wilaya III)",
+      "Abderrahmane Mira",
+      "Tahar Amirouchen"
+    ],
+    "type_action": "Embuscade",
+    "description": "Face au déploiement de 60 000 soldats français dans le cadre de l'Opération Jumelles (Plan Challe), le colonel Mohand Oulhadj ordonne l'éclatement des bataillons et katibas de la Wilaya III en petites sections autonomes (groupes de choc et de harcèlement nocturne), multipliant les embuscades éclair, le minage des pistes et les percées de bouclage dans les forêts d'Akfadou et du Djurdjura.",
+    "bilan_et_pertes": {
+      "aln": "Lourdes pertes estimées entre 3 700 et 7 500 combattants et membres de l'OPA mis hors de combat (dont le commandant Abderrahmane Mira tué le 6 novembre 1959 à Chelata) ; préservation du commandement de la Wilaya III",
+      "forces_francaises": "Plusieurs centaines de soldats français tués ou blessés lors des accrochages continus en montagne sur huit mois d'opérations",
+      "civils": "Destruction de centaines de villages kabyles classés en « zones interdites » et déplacement forcé des populations vers des camps de regroupement"
+    },
+    "impact_strategique": "Malgré l'ampleur sans précédent des moyens engagés par le général Challe, la survie de l'appareil politico-militaire de la Wilaya III démontre l'impossibilité d'une éradication purement militaire du FLN/ALN.",
+    "sources": [
+      {
+        "titre": "Opération Jumelles — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Op%C3%A9ration_Jumelles",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Mohand Oulhadj et la direction de la Wilaya III — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Mohand_Oulhadj",
+        "type_source": "Article"
+      },
+      {
+        "titre": "La Wilaya III face à l'Opération Jumelles — Cairn.info",
+        "url": "https://shs.cairn.info/question-kabyle-nationalisme-algerien--9782365122757-page-421?lang=fr",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

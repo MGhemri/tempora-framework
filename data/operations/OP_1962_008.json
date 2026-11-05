@@ -1,0 +1,89 @@
+{
+  "id": "OP_1962_008",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Structuration militaire de la Zone Autonome d'Oran (ZAO) et combats des barricades de Ville Nouvelle et Médioni",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1962-04-10",
+    "latest": "1962-04-10",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1962-05-15",
+    "latest": "1962-05-15",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Oran : Ville Nouvelle (Médina Jdida / Place Tahtaha), Médioni, Lamur et Petit Lac",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.6381,
+          35.6889
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone Autonome d'Oran (ZAO - Wilaya V)",
+  "source_ids": [
+    "SRC_cb6e875318a61cc019c70f21",
+    "SRC_bc997edb2f4a1882ed7d1e01"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1962_008",
+    "nom_operation": "Structuration militaire de la Zone Autonome d'Oran (ZAO) et combats des barricades de Ville Nouvelle et Médioni",
+    "date_debut": "1962-04-10",
+    "date_fin": "1962-05-15",
+    "wilaya_concernee": "Zone Autonome d'Oran (ZAO - Wilaya V)",
+    "localisation": {
+      "region_ou_ville": "Oran : Ville Nouvelle (Médina Jdida / Place Tahtaha), Médioni, Lamur et Petit Lac",
+      "coordonnees_approximatives": {
+        "latitude": 35.6889,
+        "longitude": -0.6381
+      }
+    },
+    "commandement_aln": [
+      "Capitaine Djelloul Nemiche dit Bakhti (Chef de la Zone Autonome d'Oran - ZAO)",
+      "Officiers et chefs de groupes de choc de la ZAO"
+    ],
+    "type_action": "Guérilla urbaine",
+    "description": "En avril 1962, l'état-major de l'ALN crée officiellement la Zone Autonome d'Oran (ZAO) sous le commandement du capitaine Djelloul Nemiche (dit Bakhti). La ZAO organise militairement les quartiers algériens d'Oran (Ville Nouvelle, Médioni, Lamur, Petit Lac, Planteurs) en secteurs dotés de groupes de choc armés, de tranchées, d'hôpitaux clandestins et de postes de tir qui repoussent les assauts des commandos de l'OAS et protègent près de 200 000 habitants algériens assiégés.",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs dizaines de combattants et moussebiline de la ZAO tués sur les lignes de démarcation urbaines d'Oran",
+      "forces_francaises": "Échec des tentatives d'incursion des commandos de l'OAS contre Ville Nouvelle et Médioni",
+      "civils": "Mise en place d'un ravitaillement et d'un système sanitaire autonomes pour la population algérienne d'Oran soumise au blocus de l'OAS"
+    },
+    "impact_strategique": "La création de la ZAO sauve les quartiers algériens d'Oran de l'asphyxie et de la destruction planifiées par l'OAS au printemps 1962.",
+    "sources": [
+      {
+        "titre": "Quelques jalons préliminaires à propos de la Zone Autonome d'Oran (avril-septembre 1962) — Revue Insaniyat (CRASC)",
+        "url": "https://www.insaniyat.crasc.dz/en/article/quelques-jalons-preliminaires-a-propos-de-la-zone-autonome-doran-avril-septembre-1962",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "La Zone Autonome d'Oran (ZAO) — OpenEdition Journals (Insaniyat)",
+        "url": "https://journals.openedition.org/insaniyat/29234?lang=en",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

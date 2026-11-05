@@ -1,0 +1,101 @@
+{
+  "id": "OP_1957_030",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille d'Ahl El Oued dans les gorges de la Chiffa (Atlas blidéen)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-04-15",
+    "latest": "1957-04-15",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-04-15",
+    "latest": "1957-04-15",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Versant d'Ahl El Oued, gorges de la Chiffa, au sud-ouest de Blida sur l'axe Blida - Médéa (Wilaya de Blida)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.75,
+          36.4167
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya IV (Zone 2 - Blida / Gorges de la Chiffa)",
+  "source_ids": [
+    "SRC_02f9a211ceed576a86e40c9e",
+    "SRC_6dc024ba80fc62d6264665f1",
+    "SRC_10e160a5b2d6b32db1d8d070",
+    "SRC_f2253ded1cce292f3a2ef42f"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_030",
+    "nom_operation": "Bataille d'Ahl El Oued dans les gorges de la Chiffa (Atlas blidéen)",
+    "date_debut": "1957-04-15",
+    "date_fin": "1957-04-15",
+    "wilaya_concernee": "Wilaya IV (Zone 2 - Blida / Gorges de la Chiffa)",
+    "localisation": {
+      "region_ou_ville": "Versant d'Ahl El Oued, gorges de la Chiffa, au sud-ouest de Blida sur l'axe Blida - Médéa (Wilaya de Blida)",
+      "coordonnees_approximatives": {
+        "latitude": 36.4167,
+        "longitude": 2.75
+      }
+    },
+    "commandement_aln": [
+      "Si M'Hamed Bougara",
+      "Chefs du commando zonal de l'Atlas blidéen (Zone 2 - Wilaya IV)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Le 15 avril 1957, un commando d'élite de la Wilaya IV positionné sur les hauteurs escarpées d'Ahl El Oued, surplombant le défilé stratégique des gorges de la Chiffa (Route Nationale 1 reliant Alger et Blida à Médéa), affronte pendant toute une journée des milliers de soldats français appuyés par l'artillerie, les blindés et l'aviation.",
+    "bilan_et_pertes": {
+      "aln": "37 commandos moudjahidine tombés au champ d'honneur après avoir combattu jusqu'à l'épuisement de leurs munitions",
+      "forces_francaises": "Lourdes pertes parmi les compagnies d'infanterie et de parachutistes françaises montant à l'assaut des falaises de la Chiffa",
+      "civils": "Blocage total de la Route Nationale 1 dans les gorges de la Chiffa pendant la bataille"
+    },
+    "impact_strategique": "Haut fait d'armes resté célèbre dans la mémoire de l'Atlas blidéen, illustrant l'âpreté de la lutte pour le contrôle du défilé des gorges de la Chiffa entre la Mitidja et le Titteri.",
+    "sources": [
+      {
+        "titre": "Bataille d'Ahl El Oued de Chiffa (Blida) : commémoration de la mort au champ d'honneur de 37 commandos — DK News",
+        "url": "https://dknews-dz.com/article/134965-bataille-ahl-el-oued-de-chiffa-blida-commemoration-de-la-mort-au-champ-dhonneur-de-37-commandos.html?print=1",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Wilaya IV historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_IV_historique",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Combats du massif du Chenoua et des forêts de Gouraya (maitron.fr)",
+        "url": "https://maitron.fr/bounaama-djilali-dit-si-mohamed-dictionnaire-algerie/",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Combats du massif du Chenoua et des forêts de Gouraya (dknews-dz.com)",
+        "url": "https://www.dknews-dz.com/article/92792-des-recherches-pour-elucider-les-circonstances-exactes-de-la-mort-du-colonel-si-mhamed-bougara.html",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

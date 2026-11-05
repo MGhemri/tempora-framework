@@ -1,0 +1,97 @@
+{
+  "id": "OP_1958_004",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Offensives et sabotages du 25 août 1958 en France métropolitaine (Incendie des dépôts de Mourepiane)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-08-25",
+    "latest": "1958-08-25",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-09-28",
+    "latest": "1958-09-28",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "France métropolitaine : Marseille (dépôts pétroliers de Mourepiane), Paris, Gennevilliers, Rouen (Grand-Quevilly), Toulouse, Narbonne",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.3444,
+          43.3519
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Fédération de France du FLN (« 7e Wilaya »)",
+  "source_ids": [
+    "SRC_b75f2a02cbf8ac6d6fd11fd4",
+    "SRC_d506f526e86025ccb2cdd648",
+    "SRC_b03963fc7b62c5e8bfcf6a57"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_004",
+    "nom_operation": "Offensives et sabotages du 25 août 1958 en France métropolitaine (Incendie des dépôts de Mourepiane)",
+    "date_debut": "1958-08-25",
+    "date_fin": "1958-09-28",
+    "wilaya_concernee": "Fédération de France du FLN (« 7e Wilaya »)",
+    "localisation": {
+      "region_ou_ville": "France métropolitaine : Marseille (dépôts pétroliers de Mourepiane), Paris, Gennevilliers, Rouen (Grand-Quevilly), Toulouse, Narbonne",
+      "coordonnees_approximatives": {
+        "latitude": 43.3519,
+        "longitude": 5.3444
+      }
+    },
+    "commandement_aln": [
+      "Omar Boudaoud",
+      "Kaddour Ladlani",
+      "Ali Haroun",
+      "Rabah Bouaziz"
+    ],
+    "type_action": "Sabotage",
+    "description": "À la veille du référendum constitutionnel de la Ve République, l'Organisation Spéciale (OS) de la Fédération de France du FLN ouvre un « second front » en métropole le 25 août 1958 à minuit. Plus de 200 actions de sabotage et d'attaques armées ciblent des dépôts de carburant, raffineries, voies ferrées, commissariats et casernes. L'action la plus spectaculaire est le sabotage des dépôts pétroliers de Mourepiane à Marseille, qui brûlent pendant dix jours.",
+    "bilan_et_pertes": {
+      "aln": "Une vingtaine de commandos tués et des centaines de militants arrêtés lors de la vague d'opérations policières",
+      "forces_francaises": "Une vingtaine de policiers, gendarmes et militaires tués en métropole durant la campagne d'août-septembre 1958, et 17 millions de litres de carburant détruits à Mourepiane",
+      "civils": "Évacuation de plusieurs milliers de riverains à Marseille ; quelques victimes collatérales"
+    },
+    "impact_strategique": "L'ouverture du second front en France métropolitaine provoque un choc psychologique majeur, contraint le gouvernement de Charles de Gaulle à mobiliser d'importantes forces de sécurité sur le territoire métropolitain et instaure un couvre-feu pour les Algériens à Paris.",
+    "sources": [
+      {
+        "titre": "Fédération de France du FLN — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/F%C3%A9d%C3%A9ration_de_France_du_FLN",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Combattre en Algérie, combattre en métropole (2) — Ministère des Armées (Chemins de mémoire)",
+        "url": "https://www.defense.gouv.fr/chemins-memoire/histoire-memoires/ressources-historiques/guerre-dalgerie/combattre-algerie-combattre-metropole-2",
+        "type_source": "Archive"
+      },
+      {
+        "titre": "Archives parlementaires sur les dépôts pétroliers de Mourepiane — Sénat français",
+        "url": "https://www.senat.fr/table-nominative-archives/defferre_gaston000250/5R/1960.html",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

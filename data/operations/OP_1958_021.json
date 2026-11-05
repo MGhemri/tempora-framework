@@ -1,0 +1,100 @@
+{
+  "id": "OP_1958_021",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille du Djebel Mermoura à Boumahra Ahmed (Secteur de Guelma)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-05-26",
+    "latest": "1958-05-26",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-05-28",
+    "latest": "1958-05-28",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif du Djebel Mermoura, commune de Boumahra Ahmed, à l'est de Guelma (Wilaya de Guelma)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.5167,
+          36.4583
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Base de l'Est / Wilaya II (Secteur de Guelma - Boumahra Ahmed)",
+  "source_ids": [
+    "SRC_e125b0778d8b35d1c3360b9b",
+    "SRC_936bbe11fb99998ff919598a",
+    "SRC_1202fe71a504ec059552a165",
+    "SRC_8e4f1b7ab89ae197cda24b39"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_021",
+    "nom_operation": "Bataille du Djebel Mermoura à Boumahra Ahmed (Secteur de Guelma)",
+    "date_debut": "1958-05-26",
+    "date_fin": "1958-05-28",
+    "wilaya_concernee": "Base de l'Est / Wilaya II (Secteur de Guelma - Boumahra Ahmed)",
+    "localisation": {
+      "region_ou_ville": "Massif du Djebel Mermoura, commune de Boumahra Ahmed, à l'est de Guelma (Wilaya de Guelma)",
+      "coordonnees_approximatives": {
+        "latitude": 36.4583,
+        "longitude": 7.5167
+      }
+    },
+    "commandement_aln": [
+      "Commandants de bataillons de la Base de l'Est et du secteur de Guelma"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Du 26 au 28 mai 1958, une importante unité de l'ALN positionnée dans le massif forestier et rocheux du Djebel Mermoura (près de Guelma) affronte un dispositif massif de l'armée française appuyé par l'aviation (chasseurs-bombardiers et hélicoptères) et l'artillerie lourde. Les moudjahidine livrent un combat acharné de trois jours au corps à corps et abattent un aéronef français.",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs dizaines de martyrs tombés au champ d'honneur sous les bombardements au napalm",
+      "forces_francaises": "Pertes très lourdes dans les rangs des troupes d'assaut françaises et 1 avion/hélicoptère abattu",
+      "civils": "Ratissages sévères des mechtas environnantes de Boumahra Ahmed et de Héliopolis"
+    },
+    "impact_strategique": "L'une des batailles les plus emblématiques et meurtrières de la région de Guelma en mai 1958, dans le prolongement immédiat de la grande bataille de Souk Ahras.",
+    "sources": [
+      {
+        "titre": "Histoire : La wilaya de Guelma commémore l'anniversaire de la bataille de Mermoura — Le Jour d'Algérie",
+        "url": "https://www.lejourdalgerie.com/histoire-la-wilaya-de-guelma-commemore-le-67e-anniversaire-de-la-bataille-de-mermoura/",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Guelma, la wilaya aux 5 000 martyrs — El Moudjahid",
+        "url": "https://www.elmoudjahid.dz/fr/l-evenement/guelma-la-wilaya-au-5-000-martyrs-195645",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Combats du versant sud du Djurdjura (fr.wikipedia.org)",
+        "url": "https://fr.wikipedia.org/wiki/Op%C3%A9ration_Jumelles",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Combats du versant sud du Djurdjura (elmoudjahid.dz)",
+        "url": "https://www.elmoudjahid.dz/fr/actualite/22-juillet-1959-debut-de-l-operation-jumelles-le-deluge-de-feu-en-kabylie-n-a-pas-aneanti-l-aln-202689",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

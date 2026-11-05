@@ -1,0 +1,90 @@
+{
+  "id": "OP_1956_006",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscade d'El Khotifa et Bataille de Chouabir (Aflou)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-10-02",
+    "latest": "1956-10-02",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-10-04",
+    "latest": "1956-10-04",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Oued El Khotifa et massif de Chouabir, près d'Aflou et El Ghicha (Wilaya de Laghouat)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.1022,
+          34.1128
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Oranie / Front sud - Djebel Amour)",
+  "source_ids": [
+    "SRC_b28da7688946798b72b9d935",
+    "SRC_6b8669fac51e3a44afabc8e5"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_006",
+    "nom_operation": "Embuscade d'El Khotifa et Bataille de Chouabir (Aflou)",
+    "date_debut": "1956-10-02",
+    "date_fin": "1956-10-04",
+    "wilaya_concernee": "Wilaya V (Oranie / Front sud - Djebel Amour)",
+    "localisation": {
+      "region_ou_ville": "Oued El Khotifa et massif de Chouabir, près d'Aflou et El Ghicha (Wilaya de Laghouat)",
+      "coordonnees_approximatives": {
+        "latitude": 34.1128,
+        "longitude": 2.1022
+      }
+    },
+    "commandement_aln": [
+      "Lotfi (Boudghène Ben Ali)",
+      "Moulay Abdallah",
+      "Mokrane Lamari"
+    ],
+    "type_action": "Embuscade",
+    "description": "Le 2 octobre 1956, les katibas de la Wilaya V tendent une embuscade d'envergure dans le défilé d'El Khotifa (route d'Aflou à El Ghicha) contre un convoi motorisé français, détruisant plusieurs camions et récupérant un important lot d'armes. Les 3 et 4 octobre, l'ALN affronte dans le massif voisin de Chouabir les renforts français héliportés et appuyés par l'aviation.",
+    "bilan_et_pertes": {
+      "aln": "Une vingtaine de combattants tués lors de la contre-offensive française à Chouabir",
+      "forces_francaises": "Plusieurs dizaines de soldats tués (jusqu'à 80 selon les sources algériennes) et une dizaine de véhicules militaires détruits",
+      "civils": "Aucun civil directement impliqué dans l'embuscade"
+    },
+    "impact_strategique": "Consacre l'ouverture effective du front sud-oranais et de l'Atlas saharien (future Zone 8 de la Wilaya V), obligeant le commandement français à disperser ses troupes vers les Hauts-Plateaux et les confins sahariens.",
+    "sources": [
+      {
+        "titre": "Guerre de libération : l'extension des opérations dans le Sud — Cairn.info",
+        "url": "https://shs.cairn.info/guerre-de-liberation--9789961634547-page-117?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Combattre en Algérie, combattre en métropole — Ministère des Armées (Chemins de mémoire)",
+        "url": "https://www.defense.gouv.fr/chemins-memoire/histoire-memoires/ressources-historiques/guerre-dalgerie/combattre-algerie-combattre-metropole-3",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

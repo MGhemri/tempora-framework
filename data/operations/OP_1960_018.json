@@ -1,0 +1,91 @@
+{
+  "id": "OP_1960_018",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Soulèvement populaire armé et affrontements de Médina Jdida (10 décembre 1960)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1960-12-10",
+    "latest": "1960-12-10",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1960-12-10",
+    "latest": "1960-12-10",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Place Roux (Place Tahtaha), Médina Jdida (Oran)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.6514,
+          35.6922
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone urbaine d'Oran - Médina Jdida)",
+  "source_ids": [
+    "SRC_fc942dc0d2e269f609faf136",
+    "SRC_3524124df1df25a0a3d425db",
+    "SRC_56df5a5c2b7def71e5d25674"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1960_018",
+    "nom_operation": "Soulèvement populaire armé et affrontements de Médina Jdida (10 décembre 1960)",
+    "date_debut": "1960-12-10",
+    "date_fin": "1960-12-10",
+    "wilaya_concernee": "Wilaya V (Zone urbaine d'Oran - Médina Jdida)",
+    "localisation": {
+      "region_ou_ville": "Place Roux (Place Tahtaha), Médina Jdida (Oran)",
+      "coordonnees_approximatives": {
+        "latitude": 35.6922,
+        "longitude": -0.6514
+      }
+    },
+    "commandement_aln": [
+      "Cadres politico-militaires du FLN d'Oran",
+      "Groupes de choc de Ville Nouvelle"
+    ],
+    "type_action": "Insurrection populaire et protection armée de cortèges",
+    "description": "Dès le matin du 10 décembre 1960, la population algérienne d'Oran se soulève massivement à Médina Jdida, arborant des centaines d'emblèmes nationaux et scandant 'Algérie algérienne' et 'Vive le FLN'. Lorsque les partisans ultras de l'Algérie française et les forces de l'ordre ouvrent le feu sur la foule désarmée à la Tahtaha, les fidayin du FLN postés aux angles des rues ripostent à l'arme automatique pour briser l'assaut et protéger l'évacuation des manifestants.",
+    "bilan_et_pertes": "Plus de 20 civils algériens tués par les tirs des forces coloniales et du FAF, des dizaines de blessés ; 4 policiers et plusieurs miliciens ultras touchés par la riposte armée du FLN.",
+    "impact_strategique": "Bascule politique décisive : marque l'adhésion publique et irréversible de la population oranaise au FLN et au GPRA, annonçant le démantèlement politique de l'Algérie française.",
+    "sources": [
+      {
+        "titre": "Les manifestations du 11 Décembre 1960 à Oran : Une autre épopée du combat libérateur — Algérie Presse Service (APS)",
+        "url": "https://www.aps.dz/fr/algerie/132470-les-manifestations-du-11-decembre-1960-a-oran-une-autre-epopee-du-combat-liberateur",
+        "type_source": "Dépêche institutionnelle"
+      },
+      {
+        "titre": "Revue ASJP — الأبعاد السياسية والعسكرية لمظاهرات 11 ديسمبر 1960 في الغرب الجزائري",
+        "url": "https://asjp.cerist.dz/en/article/123690",
+        "type_source": "Revue scientifique"
+      },
+      {
+        "titre": "Saddek Benkada, « Décembre 1960 à Oran : L'irruption des masses populaires de Médina Jdida », Insaniyat / CRASC",
+        "url": "https://journals.openedition.org/insaniyat/30472",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

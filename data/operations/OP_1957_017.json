@@ -1,0 +1,90 @@
+{
+  "id": "OP_1957_017",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille du Djebel Mechat (Douar Irarem) dans les Monts de Collo - El Milia",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-04-15",
+    "latest": "1957-04-15",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-04-16",
+    "latest": "1957-04-16",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Djebel Mechat / Douar Irarem, entre El Milia et le massif de Collo (Confins des Wilayas de Jijel et Skikda)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.3833,
+          36.85
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya II (Zone des Monts de Collo et d'El Milia)",
+  "source_ids": [
+    "SRC_e57deb5d0d41863411737da1",
+    "SRC_1c49f4f4c8371f973afb5ac8"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_017",
+    "nom_operation": "Bataille du Djebel Mechat (Douar Irarem) dans les Monts de Collo - El Milia",
+    "date_debut": "1957-04-15",
+    "date_fin": "1957-04-16",
+    "wilaya_concernee": "Wilaya II (Zone des Monts de Collo et d'El Milia)",
+    "localisation": {
+      "region_ou_ville": "Djebel Mechat / Douar Irarem, entre El Milia et le massif de Collo (Confins des Wilayas de Jijel et Skikda)",
+      "coordonnees_approximatives": {
+        "latitude": 36.85,
+        "longitude": 6.3833
+      }
+    },
+    "commandement_aln": [
+      "Lakhdar Bentobbal",
+      "Ali Kafi",
+      "Chefs de katibas du secteur d'El Milia - Collo"
+    ],
+    "type_action": "Embuscade",
+    "description": "Dans le massif forestier très dense des monts de Collo et d'El Milia, une katiba de l'ALN tend une embuscade à courte distance contre une unité d'infanterie de marine et de chasseurs français au Djebel Mechat (douar Irarem), déclenchant une bataille acharnée de deux jours au milieu du maquis de chênes-lièges.",
+    "bilan_et_pertes": {
+      "aln": "Une vingtaine de moudjahidine tués ; récupération d'un lot important de fusils et de munitions",
+      "forces_francaises": "Plus d'une vingtaine de soldats français tués au combat et de nombreux blessés",
+      "civils": "Création de zones interdites dans la presqu'île et le massif de Collo"
+    },
+    "impact_strategique": "Confirme que la presqu'île et les monts de Collo constituent l'un des sanctuaires les plus difficilement pénétrables de l'ALN dans l'Est algérien.",
+    "sources": [
+      {
+        "titre": "Répertoire numérique de la série 1H (Secteur de Collo et d'El Milia) — Service Historique de la Défense (SHD)",
+        "url": "https://www.servicehistorique.sga.defense.gouv.fr/sites/default/files/notices_files/SHDGR_REP_1H_1091_A_4881_T2_1.pdf",
+        "type_source": "Archive"
+      },
+      {
+        "titre": "Wilaya II historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_II_historique",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

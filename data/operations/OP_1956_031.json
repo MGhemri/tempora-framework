@@ -1,0 +1,89 @@
+{
+  "id": "OP_1956_031",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscade de Tadjmout et combats du Djebel Milok (Secteur de Laghouat - Aïn Madhi)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-11-24",
+    "latest": "1956-11-24",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-11-25",
+    "latest": "1956-11-25",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Djebel Milok, Tadjmout et Aïn Madhi, au nord-ouest de Laghouat (Wilaya de Laghouat)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.55,
+          33.9167
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya VI (Zone 2 - Laghouat / Tadjmout / Djebel Milok)",
+  "source_ids": [
+    "SRC_c05da67ec861ec5af97b9a26",
+    "SRC_a9e4b6613f12970cab56eafa"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_031",
+    "nom_operation": "Embuscade de Tadjmout et combats du Djebel Milok (Secteur de Laghouat - Aïn Madhi)",
+    "date_debut": "1956-11-24",
+    "date_fin": "1956-11-25",
+    "wilaya_concernee": "Wilaya VI (Zone 2 - Laghouat / Tadjmout / Djebel Milok)",
+    "localisation": {
+      "region_ou_ville": "Djebel Milok, Tadjmout et Aïn Madhi, au nord-ouest de Laghouat (Wilaya de Laghouat)",
+      "coordonnees_approximatives": {
+        "latitude": 33.9167,
+        "longitude": 2.55
+      }
+    },
+    "commandement_aln": [
+      "Ali Mellah dit Colonel Si Chérif",
+      "Chefs des sections de l'ALN du secteur de Laghouat"
+    ],
+    "type_action": "Embuscade",
+    "description": "Dans les reliefs du Djebel Milok et aux abords de l'oasis de Tadjmout (près de Laghouat), une unité de la Wilaya VI tend une embuscade à un détachement motorisé français, suivie d'un engagement d'une journée entière dans les escarpements rocheux dominant le piémont saharien.",
+    "bilan_et_pertes": {
+      "aln": "Une dizaine de moudjahidine tués ; récupération d'armes individuelles et de munitions",
+      "forces_francaises": "Plusieurs véhicules endommagés et une quinzaine de militaires français tués ou blessés",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "Assure la jonction dans l'Atlas saharien central entre les unités de la Wilaya VI (Laghouat / Djelfa) et celles de la Wilaya V (El Bayadh / Aflou).",
+    "sources": [
+      {
+        "titre": "Les batailles de la Wilaya VI dans la région de Djelfa et Laghouat — Revue académique CERIST (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/280826",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Wilaya (guerre d'Algérie) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_(guerre_d%27Alg%C3%A9rie)",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

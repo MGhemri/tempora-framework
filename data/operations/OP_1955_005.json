@@ -1,0 +1,90 @@
+{
+  "id": "OP_1955_005",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscade de Foum Toub et combats de la vallée de l'Oued Abdi (Secteur de Batna)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1955-05-08",
+    "latest": "1955-05-08",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1955-05-09",
+    "latest": "1955-05-09",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Foum Toub, Ichmoul et vallée de l'Oued Abdi, au sud-est de Batna (Wilaya de Batna)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.55,
+          35.4056
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya I (Aurès - Secteurs de Foum Toub, Ichmoul et Oued Abdi)",
+  "source_ids": [
+    "SRC_906cdde683fd914e4fa89d5e",
+    "SRC_9a579ee0f66c1cde93d358e2"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1955_005",
+    "nom_operation": "Embuscade de Foum Toub et combats de la vallée de l'Oued Abdi (Secteur de Batna)",
+    "date_debut": "1955-05-08",
+    "date_fin": "1955-05-09",
+    "wilaya_concernee": "Wilaya I (Aurès - Secteurs de Foum Toub, Ichmoul et Oued Abdi)",
+    "localisation": {
+      "region_ou_ville": "Foum Toub, Ichmoul et vallée de l'Oued Abdi, au sud-est de Batna (Wilaya de Batna)",
+      "coordonnees_approximatives": {
+        "latitude": 35.4056,
+        "longitude": 6.55
+      }
+    },
+    "commandement_aln": [
+      "Adjel Adjoul",
+      "Bachir Chihani",
+      "Mostefa Ben Boulaïd"
+    ],
+    "type_action": "Embuscade",
+    "description": "Les sections de l'ALN de la Zone I tendent une embuscade coordonnée contre un convoi militaire français sur la route montagneuse de Foum Toub et harcèlent simultanément les postes implantés dans la vallée de l'Oued Abdi, coupant les lignes téléphoniques et routières reliant Batna au massif d'Ichmoul et de Medina.",
+    "bilan_et_pertes": {
+      "aln": "Quelques moudjahidine blessés ; saisie d'armement léger et de vivres",
+      "forces_francaises": "Destruction de camions de ravitaillement et une vingtaine de militaires tués ou blessés",
+      "civils": "Instauration de l'état d'urgence et couvre-feu strict dans les communes mixtes de l'Aurès"
+    },
+    "impact_strategique": "Provoque l'extension de la loi sur l'état d'urgence dans tout l'Est algérien au printemps 1955 et démontre l'échec des opérations « Véronique » et « Violette » à pacifier les vallées de Batna et de Foum Toub.",
+    "sources": [
+      {
+        "titre": "Wilaya I historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_I_historique",
+        "type_source": "Article"
+      },
+      {
+        "titre": "L'insurrection dans les Aurès (Revue Insaniyat) — OpenEdition Journals",
+        "url": "https://journals.openedition.org/insaniyat/6187",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

@@ -1,0 +1,90 @@
+{
+  "id": "OP_1961_005",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats urbains de Blida (Coup de main du commandant Si Mohamed / Djilali Bounaâma) et résistance du Quartier Noir à Théniet El Had",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1961-08-08",
+    "latest": "1961-08-08",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1961-10-06",
+    "latest": "1961-10-06",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Centre-ville de Blida (Rue d'Alger) et Quartier Noir de Théniet El Had dans l'Ouarsenis (Wilayas de Blida et Tissemsilt)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.0281,
+          35.8711
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya IV (Blida et Théniet El Had / Ouarsenis)",
+  "source_ids": [
+    "SRC_9451fa0ba4c6432abe066077",
+    "SRC_6dc024ba80fc62d6264665f1"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1961_005",
+    "nom_operation": "Combats urbains de Blida (Coup de main du commandant Si Mohamed / Djilali Bounaâma) et résistance du Quartier Noir à Théniet El Had",
+    "date_debut": "1961-08-08",
+    "date_fin": "1961-10-06",
+    "wilaya_concernee": "Wilaya IV (Blida et Théniet El Had / Ouarsenis)",
+    "localisation": {
+      "region_ou_ville": "Centre-ville de Blida (Rue d'Alger) et Quartier Noir de Théniet El Had dans l'Ouarsenis (Wilayas de Blida et Tissemsilt)",
+      "coordonnees_approximatives": {
+        "latitude": 35.8711,
+        "longitude": 2.0281
+      }
+    },
+    "commandement_aln": [
+      "Djilali Bounaâma dit Si Mohamed (Commandant de la Wilaya IV)",
+      "Youcef Khatib dit Colonel Si Hassan",
+      "Commandos de Blida et de Théniet El Had"
+    ],
+    "type_action": "Guérilla urbaine",
+    "description": "Durant l'été et l'automne 1961, les commandos de la Wilaya IV livrent deux batailles urbaines héroïques illustrant le refus de toute reddition : le 8 août 1961 à Blida, Djilali Bounaâma (Si Mohamed) et ses compagnons assiégés dans la maison Naïmi résistent pendant des heures aux parachutistes du 1er REP et aux blindés ; le 6 octobre 1961 au « Quartier Noir » de Théniet El Had (Ouarsenis), un groupe de moudjahidine retranché repousse tous les assauts de l'armée française jusqu'au sacrifice suprême.",
+    "bilan_et_pertes": {
+      "aln": "Mort au champ d'honneur du commandant Djilali Bounaâma et de 5 compagnons à Blida le 8 août 1961 ; mort en martyrs des moudjahidine du Quartier Noir à Théniet El Had le 6 octobre 1961 ; le colonel Youcef Khatib (Si Hassan) prend le commandement de la Wilaya IV",
+      "forces_francaises": "Nombreux parachutistes et militaires tués ou blessés lors des assauts à l'arme lourde et au bazooka à Blida et Théniet El Had",
+      "civils": "Destruction à l'explosif et au canon des habitations assiégées à Blida et à Théniet El Had, suivie de manifestations populaires massives"
+    },
+    "impact_strategique": "Ces résistances héroïques au cœur des villes de garnison de Blida et de Théniet El Had en 1961 galvanisent la population algérienne de la Wilaya IV et confirment l'autorité du colonel Si Hassan (Youcef Khatib) jusqu'à l'indépendance.",
+    "sources": [
+      {
+        "titre": "L'affrontement du Quartier Noir à Théniet El Had : une épopée de moudjahidine ayant refusé d'abdiquer — Algérie Presse Service (APS)",
+        "url": "https://www.aps.dz/fr/algerie/societe/mgdst039-l-affrontement-du-quartier-noir-a-theniet-el-had-une-epopee-de-moudjahidine-ayant-refuse-d-abdiquer-au-colonialisme",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Wilaya IV historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_IV_historique",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

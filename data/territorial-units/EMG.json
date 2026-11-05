@@ -1,0 +1,12 @@
+{
+  "id": "EMG",
+  "names": {
+    "fr": "Base de l'Est & EMG",
+    "ar": "قاعدة الشرق وهيئة الأركان (EMG)"
+  },
+  "type": "editorial_category",
+  "valid_from": null,
+  "valid_to": null,
+  "source_ids": [],
+  "review_status": "needs_review"
+}

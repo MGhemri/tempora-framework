@@ -1,0 +1,108 @@
+{
+  "id": "OP_1957_036",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscades contre les convois logistiques et pétroliers sur l'axe Biskra - El Meghaïer - Touggourt (Oued Rhir)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-11-18",
+    "latest": "1957-11-18",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-11-20",
+    "latest": "1957-11-20",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Axe routier et ferroviaire Biskra - El Meghaïer - Djamaâ - Touggourt, vallée de l'Oued Rhir (Wilayas d'El Meghaïer et Touggourt)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.9167,
+          33.95
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya VI (Zone 4 Saharienne - Oued Rhir / El Meghaïer / Touggourt / Ouargla)",
+  "source_ids": [
+    "SRC_db442e0d07b23157e23a048a",
+    "SRC_521f8f3589687ea27b8cfdd1",
+    "SRC_05ca56f644babe56ec5ad0ae",
+    "SRC_2a4244182bf8ec49d26abbe4",
+    "SRC_eb3bf6243fd5f2fd9705a38e"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_036",
+    "nom_operation": "Embuscades contre les convois logistiques et pétroliers sur l'axe Biskra - El Meghaïer - Touggourt (Oued Rhir)",
+    "date_debut": "1957-11-18",
+    "date_fin": "1957-11-20",
+    "wilaya_concernee": "Wilaya VI (Zone 4 Saharienne - Oued Rhir / El Meghaïer / Touggourt / Ouargla)",
+    "localisation": {
+      "region_ou_ville": "Axe routier et ferroviaire Biskra - El Meghaïer - Djamaâ - Touggourt, vallée de l'Oued Rhir (Wilayas d'El Meghaïer et Touggourt)",
+      "coordonnees_approximatives": {
+        "latitude": 33.95,
+        "longitude": 5.9167
+      }
+    },
+    "commandement_aln": [
+      "Si El Haouès",
+      "Mohamed Chaâbani",
+      "Chefs de la Zone 4 de la Wilaya VI (Touggourt - Ouargla)"
+    ],
+    "type_action": "Sabotage",
+    "description": "Alors que les autorités françaises inaugurent l'acheminement des premiers chargements de pétrole brut de Hassi Messaoud vers Touggourt (par oléoduc provisoire « baby-pipe ») puis par train de Touggourt à Biskra et Philippeville, les commandos sahariens de la Wilaya VI sabotent à l'explosif plusieurs tronçons de la voie ferrée Touggourt-Biskra près d'El Meghaïer et de Djamaâ et tendent des embuscades aux convois routiers d'escorte.",
+    "bilan_et_pertes": {
+      "aln": "Repli rapide des commandos dans les palmeraies de l'Oued Rhir",
+      "forces_francaises": "Déraillement de wagons-citernes, coupures de la voie ferrée du désert et plusieurs militaires d'escorte blessés",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "Envoie un signal politique et économique retentissant en démontrant que l'ALN est capable de frapper la route du pétrole saharien au cœur même de l'Organisation commune des régions sahariennes (OCRS).",
+    "sources": [
+      {
+        "titre": "Hassi Messaoud et l'évacuation du pétrole saharien pendant la guerre d'Algérie — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Hassi_Messaoud",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Le Sahara dans la guerre d'Algérie — Dictionnaire de la guerre d'Algérie (Cairn.info)",
+        "url": "https://shs.cairn.info/dictionnaire-de-la-guerre-d-algerie--9782382923061-page-902?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "La question saharienne et le FLN (L'Année du Maghreb) — OpenEdition Journals",
+        "url": "https://journals.openedition.org/anneemaghreb/3647?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Batailles du massif de Senalba (aps.dz)",
+        "url": "https://www.aps.dz/fr/algerie/societe/mnanrw2x-commemoration-de-la-mort-en-martyrs-des-colonels-amirouche-et-si-el-houes",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Batailles du massif de Senalba (elmoudjahid.dz)",
+        "url": "https://www.elmoudjahid.dz/fr/actualite/premier-commandant-de-la-vie-wilaya-historique-ali-mellah-du-djurdjura-au-sahara-249960",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

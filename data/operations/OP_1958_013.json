@@ -1,0 +1,90 @@
+{
+  "id": "OP_1958_013",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Sabotage à l'explosif et incendie du dépôt pétrolier Mobil Oil de Toulouse",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-08-25",
+    "latest": "1958-08-25",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-08-26",
+    "latest": "1958-08-26",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Dépôt pétrolier Mobil Oil (quartier de Lalande / Fenouillet), Toulouse (Haute-Garonne)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.425,
+          43.6486
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Fédération de France du FLN (« 7e Wilaya » - Organisation Spéciale / Sud-Ouest)",
+  "source_ids": [
+    "SRC_b38dc8dd2d28aae6984c43d4",
+    "SRC_b75f2a02cbf8ac6d6fd11fd4"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_013",
+    "nom_operation": "Sabotage à l'explosif et incendie du dépôt pétrolier Mobil Oil de Toulouse",
+    "date_debut": "1958-08-25",
+    "date_fin": "1958-08-26",
+    "wilaya_concernee": "Fédération de France du FLN (« 7e Wilaya » - Organisation Spéciale / Sud-Ouest)",
+    "localisation": {
+      "region_ou_ville": "Dépôt pétrolier Mobil Oil (quartier de Lalande / Fenouillet), Toulouse (Haute-Garonne)",
+      "coordonnees_approximatives": {
+        "latitude": 43.6486,
+        "longitude": 1.425
+      }
+    },
+    "commandement_aln": [
+      "Omar Boudaoud",
+      "Mohammedi Saddek",
+      "Cellule régionale Sud-Ouest de l'OS du FLN"
+    ],
+    "type_action": "Sabotage",
+    "description": "Un groupe de choc de la Fédération de France du FLN place des charges explosives incendiaires contre les cuves de stockage du dépôt pétrolier Mobil Oil à Toulouse dans la nuit du 24 au 25 août 1958. Les explosions embrasent plusieurs réservoirs d'essence et de gasoil, provoquant un sinistre majeur visible à des dizaines de kilomètres autour de la ville rose.",
+    "bilan_et_pertes": {
+      "aln": "Repli sans perte des membres du commando",
+      "forces_francaises": "Destruction de plusieurs milliers de mètres cubes de produits pétroliers et mobilisation de l'armée pour garder les sites sensibles de Haute-Garonne",
+      "civils": "Dégâts matériels considérables sur les installations pétrolières toulousaines"
+    },
+    "impact_strategique": "Prouve que l'implantation opérationnelle du FLN en métropole s'étend jusqu'au Grand Sud-Ouest (Toulouse), pourtant éloigné des grands bassins traditionnels d'immigration algérienne.",
+    "sources": [
+      {
+        "titre": "L'Organisation Spéciale de la Fédération de France du FLN — Cairn.info",
+        "url": "https://shs.cairn.info/l-organisation-speciale-de-la-federation-de-france--9789961638798-page-233?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Fédération de France du FLN — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/F%C3%A9d%C3%A9ration_de_France_du_FLN",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

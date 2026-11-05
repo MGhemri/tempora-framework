@@ -1,0 +1,82 @@
+{
+  "id": "OP_1956_044",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille du Djebel Asfour à Chechar",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-05-01",
+    "latest": "1956-05-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-05-31",
+    "latest": "1956-05-31",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Djebel Asfour / Chechar (Khenchela)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.035,
+          34.965
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya I (Aurès-Nemencha - Chechar / Khenchela)",
+  "source_ids": [
+    "SRC_116591771817c8a78107e55d"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_044",
+    "nom_operation": "Bataille du Djebel Asfour à Chechar",
+    "date_debut": "1956-05-01",
+    "date_fin": "1956-05-31",
+    "wilaya_concernee": "Wilaya I (Aurès-Nemencha - Chechar / Khenchela)",
+    "localisation": {
+      "region_ou_ville": "Djebel Asfour / Chechar (Khenchela)",
+      "coordonnees_approximatives": {
+        "latitude": 34.965,
+        "longitude": 7.035
+      }
+    },
+    "commandement_aln": [
+      "Katibas de Chechar (Wilaya I)"
+    ],
+    "type_action": "Guérilla de montagne / Combat de rencontre",
+    "description": "Engagement armé dans le secteur sud de Khenchela où les katibas de l'ALN brisent une puissante opération d'encerclement de l'armée française.",
+    "bilan_et_pertes": {
+      "aln": "Pertes maîtrisées sous couvert des falaises",
+      "forces_francaises": "Plusieurs dizaines de soldats coloniaux mis hors de combat",
+      "civils": "0"
+    },
+    "impact_strategique": "Maintien de la continuité territoriale entre les maquis de Khenchela et ceux des Nemencha.",
+    "sources": [
+      {
+        "titre": "Étude sur les batailles de l'Aurès-Nemencha (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/277462",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

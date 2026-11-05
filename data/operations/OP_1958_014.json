@@ -1,0 +1,88 @@
+{
+  "id": "OP_1958_014",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Sabotage des dépôts d'hydrocarbures de Narbonne et Port-la-Nouvelle (Aude)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-08-25",
+    "latest": "1958-08-25",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-08-25",
+    "latest": "1958-08-25",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Dépôts pétroliers de Narbonne et du port de Port-la-Nouvelle (Aude, Occitanie)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.0439,
+          43.0211
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Fédération de France du FLN (« 7e Wilaya » - Organisation Spéciale / Languedoc)",
+  "source_ids": [
+    "SRC_9a88f1d7677fbce9c03a4702",
+    "SRC_389ca3ed046f69498259d19f"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_014",
+    "nom_operation": "Sabotage des dépôts d'hydrocarbures de Narbonne et Port-la-Nouvelle (Aude)",
+    "date_debut": "1958-08-25",
+    "date_fin": "1958-08-25",
+    "wilaya_concernee": "Fédération de France du FLN (« 7e Wilaya » - Organisation Spéciale / Languedoc)",
+    "localisation": {
+      "region_ou_ville": "Dépôts pétroliers de Narbonne et du port de Port-la-Nouvelle (Aude, Occitanie)",
+      "coordonnees_approximatives": {
+        "latitude": 43.0211,
+        "longitude": 3.0439
+      }
+    },
+    "commandement_aln": [
+      "Commandos de l'OS de la Fédération de France (Secteur Languedoc-Roussillon)"
+    ],
+    "type_action": "Sabotage",
+    "description": "À 3 h 15 du matin le 25 août 1958, un commando de l'OS du FLN déclenche des charges explosives contre les cuves d'hydrocarbures de Narbonne et du complexe portuaire de Port-la-Nouvelle dans l'Aude, provoquant de violents incendies de carburant sur la façade méditerranéenne languedocienne.",
+    "bilan_et_pertes": {
+      "aln": "Aucune perte immédiate au sein du commando",
+      "forces_francaises": "Destruction de réservoirs de stockage pétrolier et mise en état d'alerte de tous les ports du Languedoc",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "Complète la frappe stratégique contre la chaîne logistique pétrolière du littoral méditerranéen français aux côtés des attaques de Mourepiane (Marseille) et de Frontignan.",
+    "sources": [
+      {
+        "titre": "L'Organisation Spéciale de la Fédération de France du FLN : chronologie des sabotages en province — Cairn.info",
+        "url": "https://shs.cairn.info/l-organisation-speciale-de-la-federation-de-france--9789961638798-page-242?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Police générale : attentats et sabotages du FLN en métropole — FranceArchives",
+        "url": "https://francearchives.gouv.fr/findingaid/b5007a886e4825bfd4b46f8220b3b3ee7d19d6dd",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

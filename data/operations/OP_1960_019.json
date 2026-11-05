@@ -1,0 +1,84 @@
+{
+  "id": "OP_1960_019",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille des Planteurs et de Ras El Aïn lors des manifestations de Décembre 1960",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1960-12-11",
+    "latest": "1960-12-11",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1960-12-12",
+    "latest": "1960-12-12",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Faubourgs des Planteurs, Sidi El Houari et Ras El Aïn (Oran)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.6595,
+          35.7011
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone urbaine d'Oran - Les Planteurs et Ras El Aïn)",
+  "source_ids": [
+    "SRC_a7feb32e9701dafd85f797d5",
+    "SRC_a146cc19564d2e5d647c46f9"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1960_019",
+    "nom_operation": "Bataille des Planteurs et de Ras El Aïn lors des manifestations de Décembre 1960",
+    "date_debut": "1960-12-11",
+    "date_fin": "1960-12-12",
+    "wilaya_concernee": "Wilaya V (Zone urbaine d'Oran - Les Planteurs et Ras El Aïn)",
+    "localisation": {
+      "region_ou_ville": "Faubourgs des Planteurs, Sidi El Houari et Ras El Aïn (Oran)",
+      "coordonnees_approximatives": {
+        "latitude": 35.7011,
+        "longitude": -0.6595
+      }
+    },
+    "commandement_aln": [
+      "Cellules armées du FLN des Planteurs et de Sidi El Houari"
+    ],
+    "type_action": "Combats de rue et défense de quartiers populaires",
+    "description": "Les 11 et 12 décembre 1960, les cortèges descendant des hauteurs des Planteurs et du ravin de Ras El Aïn tentent de faire la jonction avec la place d'Armes et Médina Jdida. Bloqués par des tirs de mitrailleuses lourdes et des barricades de barbelés tenues par les parachutistes, les groupes de choc du FLN engagent de violents accrochages urbains depuis les toits et venelles pour empêcher l'entrée des troupes coloniales dans le bidonville des Planteurs.",
+    "bilan_et_pertes": "Près de 15 martyrs parmi les manifestants algériens, plus de 60 blessés ; pertes sévères infligées aux pelotons de maintien de l'ordre (au moins 8 blessés et un blindé léger immobilisé).",
+    "impact_strategique": "Sanctuarise le quartier des Planteurs comme bastion insurrectionnel imprenable de la résistance urbaine oranaise jusqu'en 1962.",
+    "sources": [
+      {
+        "titre": "Les manifestations du 11 Décembre 1960 à Oran : Rôle des faubourgs populaires des Planteurs et de Ras El Aïn — APS",
+        "url": "https://www.aps.dz/fr/algerie/132470-les-manifestations-du-11-decembre-1960-a-oran-une-autre-epopee-du-combat-liberateur",
+        "type_source": "Dépêche institutionnelle"
+      },
+      {
+        "titre": "Revue Insaniyat / CRASC — Histoire spatiale et résistance des quartiers spontanés d'Oran (Les Planteurs, Ras El Aïn)",
+        "url": "https://journals.openedition.org/insaniyat/30472",
+        "type_source": "Revue scientifique"
+      }
+    ]
+  }
+}

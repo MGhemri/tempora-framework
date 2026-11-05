@@ -1,0 +1,83 @@
+{
+  "id": "OP_1955_016",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Batailles des dunes du Souf (Mih Ouensa et Houdh Echouf)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1955-08-01",
+    "latest": "1955-08-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-12-31",
+    "latest": "1957-12-31",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Mih Ouensa / Houdh Echouf / El Oued",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.725,
+          33.268
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya I (Zone saharienne - El Oued / Oued Souf)",
+  "source_ids": [
+    "SRC_e93a06dad2fdbd8098e87d4f"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1955_016",
+    "nom_operation": "Batailles des dunes du Souf (Mih Ouensa et Houdh Echouf)",
+    "date_debut": "1955-08-01",
+    "date_fin": "1957-12-31",
+    "wilaya_concernee": "Wilaya I (Zone saharienne - El Oued / Oued Souf)",
+    "localisation": {
+      "region_ou_ville": "Mih Ouensa / Houdh Echouf / El Oued",
+      "coordonnees_approximatives": {
+        "latitude": 33.268,
+        "longitude": 6.725
+      }
+    },
+    "commandement_aln": [
+      "Hamma Lakhdar",
+      "Ali Ben Messaoud"
+    ],
+    "type_action": "Combat saharien / Protection de caravanes",
+    "description": "Combats épiques en plein désert de dunes menés par le commandant Hamma Lakhdar pour protéger les convois chameliers d'acheminement d'armes venant de Libye et de Tunisie.",
+    "bilan_et_pertes": {
+      "aln": "Le commandant Hamma Lakhdar et plusieurs fidayin tombés en martyrs",
+      "forces_francaises": "Blindés légers et patrouilles méharistes coloniales anéantis",
+      "civils": "0"
+    },
+    "impact_strategique": "Sécurisation de l'axe logistique transfrontalier saharien alimentant les Wilayas I, II et III en armement moderne.",
+    "sources": [
+      {
+        "titre": "L'étincelle de la révolution dans les Ziban et le sud du pays (APS)",
+        "url": "https://www.aps.dz/fr/algerie/societe/mvuu8h9u-l-etincelle-de-la-revolution-dans-les-ziban-et-le-sud-du-pays",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

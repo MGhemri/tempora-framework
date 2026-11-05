@@ -1,0 +1,68 @@
+{
+  "id": "TEST_SYNTHETIC_001",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Événement fictif de validation",
+    "ar": "حدث تجريبي غير تاريخي"
+  },
+  "start_date": {
+    "earliest": "1956-01-01",
+    "latest": "1956-12-31",
+    "precision": "year",
+    "certainty": "approximate"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": null,
+      "geometry": null,
+      "geometry_role": "unknown",
+      "review_status": "needs_review"
+    }
+  ],
+  "legacy_territorial_label": null,
+  "territorial_assignments": [
+    {
+      "territory_id": "W1",
+      "role": "cross_territorial",
+      "source_ids": [
+        "SRC_000000000000000000000001"
+      ]
+    },
+    {
+      "territory_id": "W3",
+      "role": "cross_territorial",
+      "source_ids": [
+        "SRC_000000000000000000000001"
+      ]
+    }
+  ],
+  "source_ids": [
+    "SRC_000000000000000000000001"
+  ],
+  "editorial_status": "proposed",
+  "quality_flags": [
+    "synthetic_fixture",
+    "uncertain_location"
+  ],
+  "description": {
+    "fr": "Événement synthétique sans réalité historique, réservé aux tests.",
+    "ar": "حدث افتراضي مخصص للاختبارات فقط."
+  },
+  "event_type": [
+    "Embuscade"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "human_review",
+    "human_review_recorded": false
+  },
+  "review_history": [],
+  "created_at": "2026-11-05T00:00:00Z",
+  "updated_at": "2026-11-05T00:00:00Z"
+}

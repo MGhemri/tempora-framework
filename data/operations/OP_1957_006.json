@@ -1,0 +1,108 @@
+{
+  "id": "OP_1957_006",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscade et bataille d'Agounennda",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-05-23",
+    "latest": "1957-05-23",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-05-25",
+    "latest": "1957-05-25",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Oued Agounennda, massif du Djurdjura / sud de Larbaâ Nath Irathen et confins de Médéa-Tizi Ouzou",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.15,
+          36.55
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya IV (Algérois - Secteur Est / limite Wilaya III)",
+  "source_ids": [
+    "SRC_7c85fcdfab9f1af8c5001257",
+    "SRC_35e66b0af831fa3e237f8deb",
+    "SRC_d5b6e1506877b6309016b77b",
+    "SRC_3a72c82c9f76b1e065061214",
+    "SRC_26b7be25a4d6b8e1b9410562"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_006",
+    "nom_operation": "Embuscade et bataille d'Agounennda",
+    "date_debut": "1957-05-23",
+    "date_fin": "1957-05-25",
+    "wilaya_concernee": "Wilaya IV (Algérois - Secteur Est / limite Wilaya III)",
+    "localisation": {
+      "region_ou_ville": "Oued Agounennda, massif du Djurdjura / sud de Larbaâ Nath Irathen et confins de Médéa-Tizi Ouzou",
+      "coordonnees_approximatives": {
+        "latitude": 36.55,
+        "longitude": 4.15
+      }
+    },
+    "commandement_aln": [
+      "Rabah Zerari dit Commandant Azzedine",
+      "Si Mohand Oulhadj",
+      "Omar Oussedik"
+    ],
+    "type_action": "Embuscade",
+    "description": "Après plusieurs embuscades victorieuses menées par le Commando 41 (commando Ali Khodja, fort d'environ 300 hommes dirigés par le commandant Azzedine), l'unité de l'ALN tend un piège et affronte pendant 48 heures le 3e régiment de parachutistes coloniaux (3e RPC) du lieutenant-colonel Bigeard, héliporté en urgence sur les crêtes d'Agounennda.",
+    "bilan_et_pertes": {
+      "aln": "96 tués et 12 prisonniers selon le bilan officiel français ; Azzedine parvient à rompre l'encerclement avec les deux tiers de ses effectifs",
+      "forces_francaises": "8 parachutistes tués et 29 blessés (3e RPC)",
+      "civils": "Aucun civil impliqué"
+    },
+    "impact_strategique": "Illustration de la guerre des commandos zonaux de l'ALN capables d'affronter en combat rapproché les unités parachutistes d'élite françaises ; malgré de lourdes pertes, la survie du commando Ali Khodja lui permet de se reconstituer dès l'été 1957.",
+    "sources": [
+      {
+        "titre": "Battle of Agounennda — Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Battle_of_Agounennda",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Combattre en Algérie — Ministère des Armées (Chemins de mémoire)",
+        "url": "https://www.defense.gouv.fr/chemins-memoire/histoire-memoires/ressources-historiques/guerre-dalgerie/combattre-algerie-combattre-metropole-3",
+        "type_source": "Archive"
+      },
+      {
+        "titre": "Explosions aux stades d’El Biar et du Ruisseau (areq.net)",
+        "url": "https://areq.net/lang/fr/1957.html",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Explosions aux stades d’El Biar et du Ruisseau (universalis.fr)",
+        "url": "https://www.universalis.fr/encyclopedie/guerre-d-algerie/5-dans-l-engrenage-de-la-terreur-la-bataille-d-alger/",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Explosions aux stades d’El Biar et du Ruisseau (en.wikipedia.org)",
+        "url": "https://en.wikipedia.org/wiki/Baya_Hocine",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="fr" dir="ltr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Observatoire documentaire · ALNOP</title><link rel="stylesheet" href="documentation/documentation.css"><link rel="stylesheet" href="observatory.css"><script src="site-context.js?v=4.3" defer></script><script src="coverage-query.js?v=1" defer></script><script src="coverage-model.js?v=1" defer></script><script src="observatory.js?v=1" defer></script></head>
+<body><main><nav><a href="index.html">Atlas · الأطلس</a><a href="documentation/">Documentation · الوثائق</a><a href="releases.html">Versions · الإصدارات</a><button id="obs-language" type="button">العربية</button></nav>
+<h1 data-msg="title">Observatoire documentaire</h1><p class="obs-notice" data-msg="notice">Ces indicateurs décrivent les fiches recensées dans ALNOP, pas l’intensité réelle des opérations ni la couverture historique de la guerre.</p>
+<p data-msg="classificationNotice">Un classement primaire absent ne signifie pas qu’aucune source primaire n’existe. Les catégories territoriales héritées ne sont pas des attributions structurées validées.</p>
+<p><a href="documentation/observatory.html" data-msg="guide">Méthode et définitions</a></p>
+<form id="obs-filters" novalidate><fieldset><legend data-msg="filters">Sélection documentaire</legend><div class="obs-controls">
+<label for="obs-q"><span data-msg="search">Titre ou description</span><input id="obs-q" name="q" type="search" maxlength="1000"></label>
+<label for="obs-from"><span data-msg="from">À partir de</span><input id="obs-from" name="from" type="text" placeholder="YYYY / YYYY-MM / YYYY-MM-DD" maxlength="10"></label>
+<label for="obs-to"><span data-msg="to">Jusqu’à</span><input id="obs-to" name="to" type="text" placeholder="YYYY / YYYY-MM / YYYY-MM-DD" maxlength="10"></label>
+<label for="obs-territory"><span data-msg="territory">Territoire structuré</span><select id="obs-territory" name="territory"></select></label>
+<label for="obs-type"><span data-msg="eventType">Type documenté</span><select id="obs-type" name="type"></select></label>
+<label for="obs-precision"><span data-msg="precision">Précision du début</span><select id="obs-precision" name="date_precision"></select></label>
+<label for="obs-geometry"><span data-msg="geometry">Géométrie enregistrée</span><select id="obs-geometry" name="has_geometry"></select></label>
+<label for="obs-group"><span data-msg="group">Regrouper le tableau</span><select id="obs-group" name="group"></select></label>
+</div><div class="obs-actions"><button type="submit" id="obs-apply" disabled data-msg="apply">Appliquer</button><button type="button" id="obs-reset" data-msg="reset">Réinitialiser</button></div></fieldset></form>
+<p id="obs-error" role="alert" hidden></p><p id="obs-status" role="status" aria-live="polite">Chargement du corpus…</p>
+<section id="obs-results" hidden aria-labelledby="obs-summary-title"><h2 id="obs-summary-title" data-msg="summary">État de la sélection</h2><dl id="obs-cards" class="obs-cards"></dl>
+<p data-msg="uncertaintyNotice">Les incertitudes et l’absence de trace de revue ne sont pas des scores de vérité. Une fiche peut cumuler plusieurs réserves.</p>
+<h2 data-msg="tableTitle">Répartition documentaire</h2><p id="obs-group-notice"></p><p id="obs-domain-notice" hidden data-msg="domainNotice">Pour cette plage supérieure à 200 ans, seules les années enregistrées sont affichées.</p>
+<div class="obs-table-region" role="region" aria-labelledby="obs-table-caption" tabindex="0"><table id="obs-table"><caption id="obs-table-caption"></caption><thead><tr id="obs-head"></tr></thead><tbody id="obs-rows"></tbody></table></div>
+<div class="obs-actions"><button id="obs-export-json" type="button" data-msg="json">Exporter la sélection JSON</button><button id="obs-export-csv" type="button" data-msg="csv">Exporter le tableau CSV</button></div>
+<details><summary data-msg="reproduce">Reproduire cette sélection</summary><p id="obs-version"></p><p id="obs-snapshot" dir="ltr"></p><pre id="obs-parameters" dir="ltr"></pre><p><a href="coverage-model.js?v=1" download>coverage-model.js</a> · <a href="coverage-query.js?v=1" download>coverage-query.js</a></p></details>
+</section></main></body></html>

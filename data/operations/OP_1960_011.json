@@ -1,0 +1,88 @@
+{
+  "id": "OP_1960_011",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats frontaliers de Heddada et de Sakiet Sidi Youssef (Secteur de Souk Ahras - Ghardimaou)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1960-05-06",
+    "latest": "1960-05-06",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1960-05-08",
+    "latest": "1960-05-08",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Heddada, Sidi Fredj et face à Sakiet Sidi Youssef / Ghardimaou, à l'est de Souk Ahras (Wilaya de Souk Ahras)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.33,
+          36.245
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Armée des Frontières (EMG - Front Est / Secteur de Souk Ahras)",
+  "source_ids": [
+    "SRC_1d68dc55c2b3b2e6e6a668be",
+    "SRC_bd13f0a868eefe619edf9502"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1960_011",
+    "nom_operation": "Combats frontaliers de Heddada et de Sakiet Sidi Youssef (Secteur de Souk Ahras - Ghardimaou)",
+    "date_debut": "1960-05-06",
+    "date_fin": "1960-05-08",
+    "wilaya_concernee": "Armée des Frontières (EMG - Front Est / Secteur de Souk Ahras)",
+    "localisation": {
+      "region_ou_ville": "Heddada, Sidi Fredj et face à Sakiet Sidi Youssef / Ghardimaou, à l'est de Souk Ahras (Wilaya de Souk Ahras)",
+      "coordonnees_approximatives": {
+        "latitude": 36.245,
+        "longitude": 8.33
+      }
+    },
+    "commandement_aln": [
+      "Commandants des bataillons d'assaut de l'EMG (Secteur de Ghardimaou - Souk Ahras)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Trois compagnies de l'Armée des frontières franchissent le premier réseau barbelé de la Ligne Challe à hauteur de Heddada et de Sidi Fredj (secteur de Souk Ahras) sous la couverture d'un barrage massif de mortiers lourds de 120 mm, engageant un combat violent de quarante-huit heures contre les régiments d'infanterie et de parachutistes français.",
+    "bilan_et_pertes": {
+      "aln": "Une vingtaine de combattants de l'ALN tués ou blessés ; repli tactique ordonné avec les armes capturées",
+      "forces_francaises": "Plus d'une vingtaine de militaires français tués ou blessés et destruction d'un fortin frontalier à Heddada",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "Provoque une vive tension diplomatique et militaire sur la frontière algéro-tunisienne au printemps 1960, l'armée française redoutant une offensive générale des 20 000 hommes de l'EMG.",
+    "sources": [
+      {
+        "titre": "Mourir à Sakiet : la guerre sur la frontière algéro-tunisienne — Cairn.info",
+        "url": "https://shs.cairn.info/mourir-a-sakiet--9782130835714-page-229?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Bataille des frontières (guerre d'Algérie) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Bataille_des_fronti%C3%A8res_(guerre_d%27Alg%C3%A9rie)",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

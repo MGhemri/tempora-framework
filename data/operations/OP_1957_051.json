@@ -1,0 +1,95 @@
+{
+  "id": "OP_1957_051",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille d'Issine (Essien) aux confins algéro-libyens",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-10-03",
+    "latest": "1957-10-03",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-10-04",
+    "latest": "1957-10-04",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Issine / Djanet (Frontière algéro-libyenne)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          10.125,
+          24.895
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya VI (Sahara oriental - Djanet / Confins libyens)",
+  "source_ids": [
+    "SRC_a8f29f509ea23cc00a48cdce",
+    "SRC_bcc7657a5afa604f487ae3e2",
+    "SRC_86e97dc8348c4b6828f10ba9"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_051",
+    "nom_operation": "Bataille d'Issine (Essien) aux confins algéro-libyens",
+    "date_debut": "1957-10-03",
+    "date_fin": "1957-10-04",
+    "wilaya_concernee": "Wilaya VI (Sahara oriental - Djanet / Confins libyens)",
+    "localisation": {
+      "region_ou_ville": "Issine / Djanet (Frontière algéro-libyenne)",
+      "coordonnees_approximatives": {
+        "latitude": 24.895,
+        "longitude": 10.125
+      }
+    },
+    "commandement_aln": [
+      "Détachement ALN du Sahara oriental",
+      "Forces de volontaires libyens"
+    ],
+    "type_action": "Embuscade transfrontalière / Combat combiné",
+    "description": "À la suite d'une embuscade de l'ALN contre un convoi colonial et du bombardement français en représailles du village libyen d'Issine, les combattants de l'ALN et les forces libyennes interceptent une puissante colonne motorisée française le 4 octobre 1957.",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs martyrs algériens et volontaires libyens",
+      "forces_francaises": "Véhicules blindés détruits et dizaines de soldats coloniaux tués ou capturés",
+      "civils": "Destruction de maisons à Issine par les raids aériens français"
+    },
+    "impact_strategique": "Scelle la fraternité d'armes et la solidarité algéro-libyenne pour la sécurisation des filières d'approvisionnement en armement lourd à travers le Sahara.",
+    "sources": [
+      {
+        "titre": "Battle of Essien 1957 (Wikipedia)",
+        "url": "https://en.wikipedia.org/wiki/Battle_of_Essien_(1957)",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Djanet : la bataille d'Issine, importante étape ayant scellé la solidarité algéro-libyenne (APS)",
+        "url": "https://www.aps.dz/algerie/128452-djanet-la-bataille-d-issine-importante-etape-ayant-scelle-la-solidarite-algero-libyenne",
+        "type_source": "Article"
+      },
+      {
+        "titre": "La bataille d'Issine, symbole de fraternité et de sacrifice (El Moudjahid)",
+        "url": "https://www.elmoudjahid.dz/fr/actualite/il-y-a-66-ans-la-bataille-d-issine-symbole-de-fraternite-de-sacrifice-et-de-cohesion-entre-algeriens-et-libyens-206523",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

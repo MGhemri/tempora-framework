@@ -1,0 +1,95 @@
+{
+  "id": "OP_1962_011",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Opérations de sécurisation du port et des quartiers d'Oran par la ZAO face aux derniers commandos OAS (Fin juin 1962)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1962-06-20",
+    "latest": "1962-06-20",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1962-06-28",
+    "latest": "1962-06-28",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Oran : Port d'Oran (dépôts de la British Petroleum), Ville Nouvelle, Médioni, Petit Lac et Saint-Eugène",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.645,
+          35.705
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone Autonome d'Oran (ZAO - Wilaya V)",
+  "source_ids": [
+    "SRC_cb6e875318a61cc019c70f21",
+    "SRC_e3a91e693cdcc9b14f2fc20b",
+    "SRC_8d9d91343ba2df42732f1002"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1962_011",
+    "nom_operation": "Opérations de sécurisation du port et des quartiers d'Oran par la ZAO face aux derniers commandos OAS (Fin juin 1962)",
+    "date_debut": "1962-06-20",
+    "date_fin": "1962-06-28",
+    "wilaya_concernee": "Zone Autonome d'Oran (ZAO - Wilaya V)",
+    "localisation": {
+      "region_ou_ville": "Oran : Port d'Oran (dépôts de la British Petroleum), Ville Nouvelle, Médioni, Petit Lac et Saint-Eugène",
+      "coordonnees_approximatives": {
+        "latitude": 35.705,
+        "longitude": -0.645
+      }
+    },
+    "commandement_aln": [
+      "Capitaine Djelloul Nemiche dit Bakhti (Chef de la ZAO)",
+      "Officiers de la Wilaya V et de la Zone Autonome d'Oran"
+    ],
+    "type_action": "Guérilla urbaine",
+    "description": "Alors que les derniers irréductibles de l'OAS d'Oran (sous les ordres du général Gardy) refusent l'arrêt des combats d'Alger et font sauter le 25 juin 1962 les gigantesques réservoirs de mazout de la British Petroleum au port d'Oran (plongeant la ville sous un nuage de fumée noire), les unités de la Zone Autonome d'Oran (ZAO) sortent des périmètres de Ville Nouvelle, Médioni et du Petit Lac pour sécuriser les infrastructures d'Oran, désarmer les derniers îlots OAS et préparer le scrutin d'autodétermination du 1er juillet 1962.",
+    "bilan_et_pertes": {
+      "aln": "Quelques combattants de la ZAO blessés lors des derniers accrochages avec les arrière-gardes de l'OAS fin juin 1962",
+      "forces_francaises": "Fuite des derniers chefs de l'OAS d'Oran le 27-28 juin 1962 et reddition des derniers groupes armés",
+      "civils": "Destruction de millions de litres de carburant au port d'Oran par l'OAS le 25 juin 1962"
+    },
+    "impact_strategique": "Marque l'effondrement final du dernier bastion de l'OAS en Algérie et permet la tenue pacifique du référendum d'indépendance du 1er juillet 1962 à Oran (99,7 % de « Oui » à l'échelle nationale).",
+    "sources": [
+      {
+        "titre": "Quelques jalons préliminaires à propos de la Zone Autonome d'Oran (avril-septembre 1962) — Revue Insaniyat (CRASC)",
+        "url": "https://www.insaniyat.crasc.dz/en/article/quelques-jalons-preliminaires-a-propos-de-la-zone-autonome-doran-avril-septembre-1962",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "L'action du FLN et de la ZAO à Oran en 1962 — Revue académique CERIST (ASJP)",
+        "url": "https://asjp.cerist.dz/en/downArticle/396/5/2/32080",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Chronologie de la guerre d'Algérie (Juin 1962) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Chronologie_de_la_guerre_d%27Alg%C3%A9rie",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

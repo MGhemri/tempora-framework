@@ -1,0 +1,88 @@
+{
+  "id": "OP_1960_012",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Opération de commando et sabotage de la voie ferrée minière à Morsott - El Kouif (Nord de Tébessa)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1960-08-15",
+    "latest": "1960-08-15",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1960-08-16",
+    "latest": "1960-08-16",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Morsott, Bir Dheb et cité minière de phosphates d'El Kouif, au nord-est de Tébessa (Wilaya de Tébessa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.3167,
+          35.5
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Armée des Frontières (EMG) et Wilaya I (Secteur de Morsott - El Kouif - Tébessa)",
+  "source_ids": [
+    "SRC_d4b971c09ae66eb95d0d7379",
+    "SRC_e5830463238eb650c4a90849"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1960_012",
+    "nom_operation": "Opération de commando et sabotage de la voie ferrée minière à Morsott - El Kouif (Nord de Tébessa)",
+    "date_debut": "1960-08-15",
+    "date_fin": "1960-08-16",
+    "wilaya_concernee": "Armée des Frontières (EMG) et Wilaya I (Secteur de Morsott - El Kouif - Tébessa)",
+    "localisation": {
+      "region_ou_ville": "Morsott, Bir Dheb et cité minière de phosphates d'El Kouif, au nord-est de Tébessa (Wilaya de Tébessa)",
+      "coordonnees_approximatives": {
+        "latitude": 35.5,
+        "longitude": 8.3167
+      }
+    },
+    "commandement_aln": [
+      "Officiers des commandos frontaliers de Tébessa (EMG / Wilaya I)"
+    ],
+    "type_action": "Sabotage",
+    "description": "Un commando de démolition de l'ALN traverse de nuit le réseau électrifié entre El Kouif et Morsott, place de fortes charges d'explosifs sous la voie ferrée et fait dérailler un train minier escorté par un wagon blindé, avant d'attaquer à la roquette antichar les blindés venus de Tébessa.",
+    "bilan_et_pertes": {
+      "aln": "3 moudjahidine blessés ; exfiltration réussie du commando",
+      "forces_francaises": "Déraillement du convoi ferroviaire d'El Kouif, destruction d'une automitrailleuse d'escorte et une douzaine de soldats blessés ou tués",
+      "civils": "Interruption de l'évacuation des phosphates d'El Kouif vers Bône"
+    },
+    "impact_strategique": "Prouve la perméabilité persistante du double barrage face à de petits commandos d'élite dotés d'explosifs modernes et d'armes antichars.",
+    "sources": [
+      {
+        "titre": "El Meridj et le secteur frontalier de Morsott / El Kouif — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/El_Meridj",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Répertoire numérique de la série 1H (Zone Est Constantinois / Tébessa) — Service Historique de la Défense (SHD)",
+        "url": "https://www.servicehistorique.sga.defense.gouv.fr/sites/default/files/notices_files/SHDGR_REP_1H_1091_A_4881_T2_1.pdf",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

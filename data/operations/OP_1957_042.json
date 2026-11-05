@@ -1,0 +1,82 @@
+{
+  "id": "OP_1957_042",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combat de Beni Ghezil dans le secteur d'Ouled Mimoun",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-10-01",
+    "latest": "1957-10-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-10-31",
+    "latest": "1957-10-31",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Beni Ghezil / Ouled Mimoun (Tlemcen / Sidi Bel Abbès)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.055,
+          34.935
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 1 / Zone 2 - Secteur d'Ouled Mimoun)",
+  "source_ids": [
+    "SRC_890a5057f3dcdf9fff6d5b9f"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_042",
+    "nom_operation": "Combat de Beni Ghezil dans le secteur d'Ouled Mimoun",
+    "date_debut": "1957-10-01",
+    "date_fin": "1957-10-31",
+    "wilaya_concernee": "Wilaya V (Zone 1 / Zone 2 - Secteur d'Ouled Mimoun)",
+    "localisation": {
+      "region_ou_ville": "Beni Ghezil / Ouled Mimoun (Tlemcen / Sidi Bel Abbès)",
+      "coordonnees_approximatives": {
+        "latitude": 34.935,
+        "longitude": -1.055
+      }
+    },
+    "commandement_aln": [
+      "Détachement ALN d'Ouled Mimoun"
+    ],
+    "type_action": "Combat de rencontre",
+    "description": "Accrochage dans le secteur d'Ouled Mimoun opposant un détachement de moudjahidine à une colonne de ratissage française, documenté par Abdelhak Kerkeb.",
+    "bilan_et_pertes": {
+      "aln": "Faibles pertes parmi les moudjahidine",
+      "forces_francaises": "Plusieurs soldats français mis hors de combat",
+      "civils": "0"
+    },
+    "impact_strategique": "Préservation des couloirs de liaison clandestins reliant les monts de Tlemcen aux maquis de Sidi Bel Abbès.",
+    "sources": [
+      {
+        "titre": "Étude historique sur la Zone 5 de la Wilaya V (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/127641",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

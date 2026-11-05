@@ -1,0 +1,12 @@
+cff-version: 1.2.0
+message: "Citez la version des données utilisée, avec son empreinte et son commit source."
+type: dataset
+title: "ALNOP — ALN Historical Operations Dataset (1954–1962)"
+authors:
+  - name: "ALNOP"
+    email: "contact@connect-gm.com"
+version: "data-2026.11.1"
+date-released: "2026-11-05"
+url: "https://alnop.vercel.app/data/releases/data-2026.11.1/release.json"
+commit: "a05ed618f30dbb5cae63ba6517b6dc433ac4a3db"
+abstract: "Corpus documentaire incomplet. Publication technique du corpus existant, sans nouvelle validation historique. Licences et droits existants conservés."

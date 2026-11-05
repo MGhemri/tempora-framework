@@ -1,0 +1,89 @@
+{
+  "id": "OP_1960_002",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Offensive urbaine et manifestations insurrectionnelles de Décembre 1960",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1960-12-10",
+    "latest": "1960-12-10",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1960-12-16",
+    "latest": "1960-12-16",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Alger (Belcourt, Clos-Salembier, Casbah, Bab El Oued), Oran, Constantine, Bône (Annaba)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.0692,
+          36.7483
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone autonome d'Alger (ZAA reconstituée) et Wilayas II, IV et V",
+  "source_ids": [
+    "SRC_d393031bdbc2495cb12842ac",
+    "SRC_9e609aca81d2da721bda6af4"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1960_002",
+    "nom_operation": "Offensive urbaine et manifestations insurrectionnelles de Décembre 1960",
+    "date_debut": "1960-12-10",
+    "date_fin": "1960-12-16",
+    "wilaya_concernee": "Zone autonome d'Alger (ZAA reconstituée) et Wilayas II, IV et V",
+    "localisation": {
+      "region_ou_ville": "Alger (Belcourt, Clos-Salembier, Casbah, Bab El Oued), Oran, Constantine, Bône (Annaba)",
+      "coordonnees_approximatives": {
+        "latitude": 36.7483,
+        "longitude": 3.0692
+      }
+    },
+    "commandement_aln": [
+      "Cadres clandestins de la ZAA et de la Wilaya IV",
+      "Gouvernement provisoire de la République algérienne (GPRA)"
+    ],
+    "type_action": "Guérilla urbaine",
+    "description": "À l'occasion du voyage du général de Gaulle en Algérie, les réseaux clandestins reconstitués du FLN dans les grandes villes encadrent et transforment les contre-manifestations en un soulèvement urbain massif arborant pour la première fois par milliers le drapeau algérien dans les rues d'Alger (Belcourt, Clos-Salembier, Casbah) et d'Oran, affrontant les forces de l'ordre et les parachutistes.",
+    "bilan_et_pertes": {
+      "aln": "Reprise en main totale de la Casbah et des quartiers algériens par les réseaux urbains du FLN",
+      "forces_francaises": "Plusieurs blessés parmi le service d'ordre et débordement total du dispositif de contrôle urbain",
+      "civils": "120 morts (dont 112 Algériens et 8 Européens) selon le bilan officiel français, plusieurs centaines de blessés"
+    },
+    "impact_strategique": "Véritable « Dien Bien Phu psychologique et politique » selon les historiens : alors que le Plan Challe avait affaibli les maquis ruraux, le soulèvement urbain de décembre 1960 prouve l'adhésion massive des villes au FLN, entraîne la reconnaissance par l'ONU du droit de l'Algérie à l'indépendance (19 décembre 1960) et convainc De Gaulle d'ouvrir des négociations directes avec le FLN.",
+    "sources": [
+      {
+        "titre": "Guerre d'Algérie — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Guerre_d%27Alg%C3%A9rie",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Chronologie de la guerre d'Algérie — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Chronologie_de_la_guerre_d%27Alg%C3%A9rie",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

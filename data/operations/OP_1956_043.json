@@ -1,0 +1,89 @@
+{
+  "id": "OP_1956_043",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Arraisonnement naval du cargo d'armement « Athos » au large de Nemours",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-10-15",
+    "latest": "1956-10-15",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-10-16",
+    "latest": "1956-10-16",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Au large de Ghazaouet (ex-Nemours, Tlemcen)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.86,
+          35.102
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Façade maritime des Trara - Ghazaouet / Nemours)",
+  "source_ids": [
+    "SRC_7431dca95d777148a75e8f3e",
+    "SRC_912a8fee470a4c2b1fb33f42"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_043",
+    "nom_operation": "Arraisonnement naval du cargo d'armement « Athos » au large de Nemours",
+    "date_debut": "1956-10-15",
+    "date_fin": "1956-10-16",
+    "wilaya_concernee": "Wilaya V (Façade maritime des Trara - Ghazaouet / Nemours)",
+    "localisation": {
+      "region_ou_ville": "Au large de Ghazaouet (ex-Nemours, Tlemcen)",
+      "coordonnees_approximatives": {
+        "latitude": 35.102,
+        "longitude": -1.86
+      }
+    },
+    "commandement_aln": [
+      "Délégation extérieure du FLN (Le Caire)",
+      "Commandement de la Zone V"
+    ],
+    "type_action": "Opération logistique maritime / Arraisonnement",
+    "description": "Parti d'Alexandrie chargé de 70 tonnes d'armes et munitions destinées à équiper les katibas de la Wilaya V, le navire marchand Athos est repéré et intercepté au large de Nemours par la marine de guerre française.",
+    "bilan_et_pertes": {
+      "aln": "Saisie de la cargaison militaire et équipage capturé",
+      "forces_francaises": "0",
+      "civils": "0"
+    },
+    "impact_strategique": "L'arraisonnement provoque une crise diplomatique internationale majeure entre la France et l'Égypte, précipitant l'intervention franco-britannique de Suez quelques jours plus tard.",
+    "sources": [
+      {
+        "titre": "L'interception de l'Athos et ses répercussions diplomatiques (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/256401",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Rapport du Conseil de sécurité de l'ONU sur l'affaire de l'Athos (ONU)",
+        "url": "https://digitallibrary.un.org/record/633315/files/S_PV-747-EN.pdf",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

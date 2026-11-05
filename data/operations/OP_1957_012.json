@@ -1,0 +1,88 @@
+{
+  "id": "OP_1957_012",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille du douar Hemaïdia dans les Monts des Beni Chougrane",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-03-09",
+    "latest": "1957-03-09",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-03-11",
+    "latest": "1957-03-11",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Douar Hemaïdia (El Bordj / Khalouia), Monts des Beni Chougrane (Wilaya de Mascara)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.25,
+          35.505
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 5 - Mascara / Beni Chougrane)",
+  "source_ids": [
+    "SRC_0dceb42311b26253537daee1",
+    "SRC_7579971de0bb1d7716383e8f"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_012",
+    "nom_operation": "Bataille du douar Hemaïdia dans les Monts des Beni Chougrane",
+    "date_debut": "1957-03-09",
+    "date_fin": "1957-03-11",
+    "wilaya_concernee": "Wilaya V (Zone 5 - Mascara / Beni Chougrane)",
+    "localisation": {
+      "region_ou_ville": "Douar Hemaïdia (El Bordj / Khalouia), Monts des Beni Chougrane (Wilaya de Mascara)",
+      "coordonnees_approximatives": {
+        "latitude": 35.505,
+        "longitude": 0.25
+      }
+    },
+    "commandement_aln": [
+      "Chefs de la Zone 5 de la Wilaya V (Secteur de Mascara / Beni Chougrane)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "À la suite d'actions de harcèlement contre les postes militaires et axes routiers de la région de Mascara, les katibas de la Zone 5 (Wilaya V) stationnées dans les reliefs accidentés du douar Hemaïdia (monts des Beni Chougrane) affrontent pendant trois jours d'importantes forces françaises appuyées par l'artillerie et l'aviation, multipliant les contre-attaques pour briser l'encerclement.",
+    "bilan_et_pertes": {
+      "aln": "Lourdes pertes parmi les combattants de l'ALN et les moussebiline du secteur",
+      "forces_francaises": "Plusieurs dizaines de soldats français mis hors de combat lors des assauts dans les ravins des Beni Chougrane",
+      "civils": "Exactions, bombardements de mechtas et lourdes pertes civiles dans les douars des Beni Chougrane"
+    },
+    "impact_strategique": "Marque l'intensification de la guerre de montagne dans le massif des Beni Chougrane, qui demeure tout au long du conflit une zone de transit stratégique entre l'Oranie et l'Ouarsenis.",
+    "sources": [
+      {
+        "titre": "Dans les douars des Beni Chougrane à Mascara : les batailles de mars 1957 — El Watan",
+        "url": "https://elwatan.dz/dans-les-douars-des-beni-chougrane-a-mascara-tant-que-des-victimes-resteront-sans-nom-le-travail-de-memoire-restera-inacheve/",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Inventaire des archives de la Guerre d'Algérie — Archives nationales d'outre-mer (ANOM)",
+        "url": "https://recherche-anom.culture.gouv.fr/ark:/61561/zf476wvrwx",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

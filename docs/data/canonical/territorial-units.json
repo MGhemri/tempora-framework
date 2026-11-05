@@ -1,0 +1,125 @@
+{
+  "schema_version": "2.0.0",
+  "territorial_units": [
+    {
+      "id": "EMG",
+      "names": {
+        "fr": "Base de l'Est & EMG",
+        "ar": "قاعدة الشرق وهيئة الأركان (EMG)"
+      },
+      "type": "editorial_category",
+      "valid_from": null,
+      "valid_to": null,
+      "source_ids": [],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "W1",
+      "names": {
+        "fr": "Wilaya I (Aurès)",
+        "ar": "الولاية الأولى (الأوراس - النمامشة)"
+      },
+      "type": "editorial_category",
+      "valid_from": null,
+      "valid_to": null,
+      "source_ids": [],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "W2",
+      "names": {
+        "fr": "Wilaya II (Nord-Constantinois)",
+        "ar": "الولاية الثانية (الشمال القسنطيني)"
+      },
+      "type": "editorial_category",
+      "valid_from": null,
+      "valid_to": null,
+      "source_ids": [],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "W3",
+      "names": {
+        "fr": "Wilaya III (Kabylie)",
+        "ar": "الولاية الثالثة (القبائل)"
+      },
+      "type": "editorial_category",
+      "valid_from": null,
+      "valid_to": null,
+      "source_ids": [],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "W4",
+      "names": {
+        "fr": "Wilaya IV (Algérois)",
+        "ar": "الولاية الرابعة (الجزائر والوسط)"
+      },
+      "type": "editorial_category",
+      "valid_from": null,
+      "valid_to": null,
+      "source_ids": [],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "W5",
+      "names": {
+        "fr": "Wilaya V (Oranie)",
+        "ar": "الولاية الخامسة (الغرب الوهراني)"
+      },
+      "type": "editorial_category",
+      "valid_from": null,
+      "valid_to": null,
+      "source_ids": [],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "W6",
+      "names": {
+        "fr": "Wilaya VI (Sahara)",
+        "ar": "الولاية السادسة (الصحراء)"
+      },
+      "type": "editorial_category",
+      "valid_from": null,
+      "valid_to": null,
+      "source_ids": [],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "W7",
+      "names": {
+        "fr": "7e Wilaya (Fédération de France)",
+        "ar": "الولاية السابعة (فيدرالية جبهة التحرير بفرنسا)"
+      },
+      "type": "editorial_category",
+      "valid_from": null,
+      "valid_to": null,
+      "source_ids": [],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "ZAA",
+      "names": {
+        "fr": "Zone Autonome d'Alger",
+        "ar": "المنطقة المستقلة للعاصمة (ZAA)"
+      },
+      "type": "editorial_category",
+      "valid_from": null,
+      "valid_to": null,
+      "source_ids": [],
+      "review_status": "needs_review"
+    },
+    {
+      "id": "ZAO",
+      "names": {
+        "fr": "Zone Autonome d'Oran (ZAO)",
+        "ar": "المنطقة المستقلة لوهران (ZAO)"
+      },
+      "type": "editorial_category",
+      "valid_from": null,
+      "valid_to": null,
+      "source_ids": [],
+      "review_status": "needs_review"
+    }
+  ]
+}

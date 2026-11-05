@@ -1,0 +1,82 @@
+{
+  "id": "OP_1956_048",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Opérations fidaïyes et maquis des Beni Chougrane à Mascara",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-01-01",
+    "latest": "1956-01-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-12-31",
+    "latest": "1958-12-31",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Mascara et monts de Beni Chougrane",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.185,
+          35.445
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 6 - Mascara)",
+  "source_ids": [
+    "SRC_6a99924484e495926c1cbf06"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_048",
+    "nom_operation": "Opérations fidaïyes et maquis des Beni Chougrane à Mascara",
+    "date_debut": "1956-01-01",
+    "date_fin": "1958-12-31",
+    "wilaya_concernee": "Wilaya V (Zone 6 - Mascara)",
+    "localisation": {
+      "region_ou_ville": "Mascara et monts de Beni Chougrane",
+      "coordonnees_approximatives": {
+        "latitude": 35.445,
+        "longitude": 0.185
+      }
+    },
+    "commandement_aln": [
+      "Réseaux urbains et katibas de la Zone 6"
+    ],
+    "type_action": "Guérilla urbaine et rurale combinée",
+    "description": "Multiplication des actions de choc des commandos fidaïyine en ville et embuscades des katibas dans les contreforts des Beni Chougrane.",
+    "bilan_et_pertes": {
+      "aln": "Quelques arrestations et combattants tués",
+      "forces_francaises": "Attentats ciblés contre officiers de police et patrouilles militaires",
+      "civils": "0"
+    },
+    "impact_strategique": "Fixation d'importantes forces de police et de gendarmerie dans l'agglomération de Mascara au détriment des ratissages de djebel.",
+    "sources": [
+      {
+        "titre": "Le mouvement fidaï à Mascara (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/128366",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

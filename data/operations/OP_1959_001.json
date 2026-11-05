@@ -1,0 +1,116 @@
+{
+  "id": "OP_1959_001",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille d'Aït Yahia Moussa (Vougarfène) et percée des colonels",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1959-01-06",
+    "latest": "1959-01-06",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1959-01-07",
+    "latest": "1959-01-07",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Aït Yahia Moussa (village de Tizra Aïssa / Vougarfène), près de Draâ El Mizan (Wilaya de Tizi Ouzou)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.8886,
+          36.6408
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya III (Kabylie) et états-majors des Wilayas IV et VI",
+  "source_ids": [
+    "SRC_66eac7455a4c47dd0974d52e",
+    "SRC_4064c6901260ca44aed62064",
+    "SRC_ed8bbf400bc51baaab9d9604",
+    "SRC_0a62a4df9d267318a0c8c0ec",
+    "SRC_5f9a2a60a58085991bc9a4dc",
+    "SRC_c271ffdac6c22730c743ebeb"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1959_001",
+    "nom_operation": "Bataille d'Aït Yahia Moussa (Vougarfène) et percée des colonels",
+    "date_debut": "1959-01-06",
+    "date_fin": "1959-01-07",
+    "wilaya_concernee": "Wilaya III (Kabylie) et états-majors des Wilayas IV et VI",
+    "localisation": {
+      "region_ou_ville": "Aït Yahia Moussa (village de Tizra Aïssa / Vougarfène), près de Draâ El Mizan (Wilaya de Tizi Ouzou)",
+      "coordonnees_approximatives": {
+        "latitude": 36.6408,
+        "longitude": 3.8886
+      }
+    },
+    "commandement_aln": [
+      "Colonel Amirouche (Wilaya III)",
+      "Si M'Hamed Bougara (Wilaya IV)",
+      "Si El Haouès (Wilaya VI)",
+      "Mohand Oulhadj",
+      "Lakhdar Bourégaâ"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Informée du passage des colonels Amirouche, Si M'Hamed Bougara et Si El Haouès (après la réunion inter-wilayas de décembre 1958) près du village natal de Krim Belkacem à Aït Yahia Moussa, l'armée française engage plus de 30 000 hommes appuyés par l'aviation (napalm) et les hélicoptères. Plusieurs katibas d'élite de l'ALN livrent une bataille acharnée au corps à corps à Vougarfène pour briser l'encerclement et permettre l'exfiltration de tous les colonels.",
+    "bilan_et_pertes": {
+      "aln": "382 à 391 moudjahidine tués au combat (principalement sous les bombardements au napalm) ; exfiltration réussie d'Amirouche, Bougara et Si El Haouès",
+      "forces_francaises": "Pertes sensibles dans les rangs parachutistes (dont le capitaine Jean Graziani du 6e RPC et le lieutenant Jean Chassin tués au combat)",
+      "civils": "Plus d'une centaine de villageois tués lors des bombardements et ratissages d'Aït Yahia Moussa"
+    },
+    "impact_strategique": "Échec de la tentative française d'éliminer simultanément les chefs des Wilayas III, IV et VI ; la mort au combat du capitaine Graziani (figure de la Bataille d'Alger) a un fort retentissement au sein de l'armée française.",
+    "sources": [
+      {
+        "titre": "Bataille d'Aït Yahia Moussa — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Bataille_d%27A%C3%AFt_Yahia_Moussa",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Si El Haouès et les combats de 1959 — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Si_El_Haou%C3%A8s",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Bataille de Tizra-Aïssa (Vougarfen) à Aït Yahia Moussa (en.wikipedia.org)",
+        "url": "https://en.wikipedia.org/wiki/Battle_of_Ath_Yahia_Moussa",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Bataille de Tizra-Aïssa (Vougarfen) à Aït Yahia Moussa (djazairess.com)",
+        "url": "https://www.djazairess.com/djazairnews/11400",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Bataille de Tizra-Aïssa (Vougarfen) à Aït Yahia Moussa (archive.wikiwix.com)",
+        "url": "https://archive.wikiwix.com/cache/index2.php?url=https://www.depechedekabylie.com/national/il-y-a-61-ans-la-grande-bataille-de-vougarfen/#federation=archive.wikiwix.com&tab=url",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Bataille de Tizra-Aïssa (Vougarfen) à Aït Yahia Moussa (books.google.com)",
+        "url": "https://books.google.com/books?id=yS0hAAAAMAAJ&q=%22Capitaine+Graziani%22+++%22chassin%22",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

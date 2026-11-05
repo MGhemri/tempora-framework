@@ -1,0 +1,12 @@
+{
+  "id": "ZAA",
+  "names": {
+    "fr": "Zone Autonome d'Alger",
+    "ar": "المنطقة المستقلة للعاصمة (ZAA)"
+  },
+  "type": "editorial_category",
+  "valid_from": null,
+  "valid_to": null,
+  "source_ids": [],
+  "review_status": "needs_review"
+}

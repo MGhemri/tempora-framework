@@ -1,0 +1,91 @@
+{
+  "id": "OP_1957_005",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscade d'Oued Zeggar (Aïn Kechra)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-05-11",
+    "latest": "1957-05-11",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Pont d'Oued Zeggar, commune d'Aïn Kechra, massif de Collo (Wilaya de Skikda)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.4308,
+          36.7519
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya II (Nord-Constantinois)",
+  "source_ids": [
+    "SRC_e31a95552757f679c93c4863",
+    "SRC_347c274f280d767ee52a7ad9"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_005",
+    "nom_operation": "Embuscade d'Oued Zeggar (Aïn Kechra)",
+    "date_debut": "1957-05-11",
+    "date_fin": null,
+    "wilaya_concernee": "Wilaya II (Nord-Constantinois)",
+    "localisation": {
+      "region_ou_ville": "Pont d'Oued Zeggar, commune d'Aïn Kechra, massif de Collo (Wilaya de Skikda)",
+      "coordonnees_approximatives": {
+        "latitude": 36.7519,
+        "longitude": 6.4308
+      }
+    },
+    "commandement_aln": [
+      "Lakhdar Bentobal",
+      "Ali Kafi",
+      "Aïssa Abdelouahab",
+      "Lakhdar Boukercha"
+    ],
+    "type_action": "Embuscade",
+    "description": "L'une des embuscades les plus meurtrières menées par la Wilaya II : plusieurs katibas de l'ALN tendent un piège sur la route nationale reliant Constantine à Collo, au niveau du pont d'Oued Zeggar, contre un important convoi motorisé français (comprenant des éléments du 15e RTS). Le convoi est immobilisé à l'explosif et pris sous un feu croisé d'armes automatiques et de mortiers.",
+    "bilan_et_pertes": {
+      "aln": "Pertes très faibles (0 à 3 morts et quelques blessés selon les sources algériennes) et saisie d'un important lot d'armes lourdes, de radios et de munitions",
+      "forces_francaises": "Plusieurs dizaines de soldats tués (jusqu'à 80 à 93 morts selon les sources algériennes), 12 soldats faits prisonniers et plusieurs camions et blindés détruits",
+      "civils": "Lourdes représailles militaires françaises contre les mechtas d'Aïn Kechra dans les jours suivants"
+    },
+    "impact_strategique": "Démontre la maîtrise tactique des unités régulières de la Wilaya II dans le massif forestier de Collo et leur capacité à anéantir des convois blindés en plein jour.",
+    "sources": [
+      {
+        "titre": "Oued Zeggar ambush — Wikipedia",
+        "url": "https://en.wikipedia.org/wiki/Oued_Zeggar_ambush",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Catégorie:Bataille impliquant l'Algérie — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Cat%C3%A9gorie:Bataille_impliquant_l%27Alg%C3%A9rie",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

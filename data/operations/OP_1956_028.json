@@ -1,0 +1,90 @@
+{
+  "id": "OP_1956_028",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Implantation armée de la Wilaya VI et combats de Had-Sahary et Aïn Oussera (Monts des Ouled Naïl)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-10-15",
+    "latest": "1956-10-15",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-10-18",
+    "latest": "1956-10-18",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Had-Sahary, Aïn Oussera, Birine et monts du Titteri-Sud / Ouled Naïl (Nord de la Wilaya de Djelfa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.35,
+          35.35
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya VI (Zone 1 et Zone 2 - Djelfa / Had-Sahary / Bou Saâda)",
+  "source_ids": [
+    "SRC_cabb06658f69b71359ad6775",
+    "SRC_e8603cc7e9b4ded807ac35ee"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_028",
+    "nom_operation": "Implantation armée de la Wilaya VI et combats de Had-Sahary et Aïn Oussera (Monts des Ouled Naïl)",
+    "date_debut": "1956-10-15",
+    "date_fin": "1956-10-18",
+    "wilaya_concernee": "Wilaya VI (Zone 1 et Zone 2 - Djelfa / Had-Sahary / Bou Saâda)",
+    "localisation": {
+      "region_ou_ville": "Had-Sahary, Aïn Oussera, Birine et monts du Titteri-Sud / Ouled Naïl (Nord de la Wilaya de Djelfa)",
+      "coordonnees_approximatives": {
+        "latitude": 35.35,
+        "longitude": 3.35
+      }
+    },
+    "commandement_aln": [
+      "Ali Mellah dit Colonel Si Chérif (Premier commandant de la Wilaya VI)",
+      "Tayeb Ferhat",
+      "Chefs de katibas dépêchés après le Congrès de la Soummam"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Désigné par le Congrès de la Soummam (août 1956) à la tête de la nouvelle Wilaya VI (Sahara et Hauts Plateaux du Sud), le colonel Ali Mellah (dit Si Chérif) marche vers le sud avec plusieurs compagnies aguerries. En octobre 1956, ses unités livrent une série de combats dans le secteur de Had-Sahary, Birine et Djelfa contre les troupes coloniales françaises et les groupes dissidents messalistes pour implanter l'autorité du FLN/ALN dans le pays des Ouled Naïl.",
+    "bilan_et_pertes": {
+      "aln": "Une vingtaine de moudjahidine tués lors des accrochages de la marche vers le Sud ; création des premiers comités politico-militaires de la Wilaya VI",
+      "forces_francaises": "Pertes sensibles parmi les garnisons steppiques et les pelotons blindés de reconnaissance",
+      "civils": "Ralliement de nombreuses fractions semi-nomades des Ouled Naïl à l'organisation de la Wilaya VI"
+    },
+    "impact_strategique": "Concrétise sur le terrain la décision stratégique du Congrès de la Soummam d'ouvrir une sixième Wilaya englobant les Hauts Plateaux steppiques et le Sahara.",
+    "sources": [
+      {
+        "titre": "Wilaya (guerre d'Algérie) : création et histoire de la Wilaya VI — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_(guerre_d%27Alg%C3%A9rie)",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Les wilayas du Sud et la question saharienne (L'Année du Maghreb) — OpenEdition Journals",
+        "url": "https://journals.openedition.org/anneemaghreb/335?lang=ar",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

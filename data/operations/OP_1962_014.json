@@ -1,0 +1,84 @@
+{
+  "id": "OP_1962_014",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats de la ligne de démarcation d'El Hamri (Lamur) et de Médioni contre les commandos OAS",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1962-03-28",
+    "latest": "1962-03-28",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1962-04-05",
+    "latest": "1962-04-05",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Faubourgs El Hamri (Lamur) et Médioni (Oran)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.6358,
+          35.6845
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone Autonome d'Oran (ZAO)",
+  "source_ids": [
+    "SRC_3b762870aee1938f3973ea0c",
+    "SRC_52f46774a926a3c5aa0c508b"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1962_014",
+    "nom_operation": "Combats de la ligne de démarcation d'El Hamri (Lamur) et de Médioni contre les commandos OAS",
+    "date_debut": "1962-03-28",
+    "date_fin": "1962-04-05",
+    "wilaya_concernee": "Zone Autonome d'Oran (ZAO)",
+    "localisation": {
+      "region_ou_ville": "Faubourgs El Hamri (Lamur) et Médioni (Oran)",
+      "coordonnees_approximatives": {
+        "latitude": 35.6845,
+        "longitude": -0.6358
+      }
+    },
+    "commandement_aln": [
+      "Responsables militaires de secteur de Lamur et Médioni"
+    ],
+    "type_action": "Combat urbain défensif et contre-sniping",
+    "description": "Escalade d'affrontements armés le long des rues de contact séparant El Hamri et Médioni des secteurs européens de Saint-Pierre et Delmonte. Les miliciens de l'OAS multiplient les tirs aveugles depuis les toits sur les passants algériens. Des tireurs d'élite du FLN/ALN mènent des opérations de contre-sniping coordonnées pour éliminer les nids de tir ennemis.",
+    "bilan_et_pertes": "Au moins 6 tireurs de l'OAS neutralisés ou mis en déroute ; 4 civils et 1 fida algérien tombés sous les tirs de snipers ennemis.",
+    "impact_strategique": "Sécurise les voies de ravitaillement entre Médioni et El Hamri et empêche la pénétration terroriste vers le sud de l'agglomération oranaise.",
+    "sources": [
+      {
+        "titre": "Saddek Benkada, « La résistance armée d'El Hamri (Lamur) et Médioni face aux commandos Delta », Insaniyat / CRASC n° 100",
+        "url": "https://journals.openedition.org/insaniyat/30472",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Revue ASJP — استراتيجية الدفاع الشعبي والمواجهة المسلحة بالقطاع الوهراني 1962",
+        "url": "https://asjp.cerist.dz/en/article/123690",
+        "type_source": "Revue scientifique"
+      }
+    ]
+  }
+}

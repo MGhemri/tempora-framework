@@ -1,0 +1,119 @@
+{
+  "id": "OP_1959_011",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscade saharienne contre une escorte de convoi pétrolier et patrouille méhariste (Axe Ouargla - Hassi Messaoud)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1959-10-19",
+    "latest": "1959-10-19",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1959-10-20",
+    "latest": "1959-10-20",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Piste désertique et axe routier entre Ouargla, Hassi Messaoud et Fort-Lallemand / Hassi Bel Guebbour (Wilaya d'Ouargla)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.0729,
+          31.6804
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya VI (Zone 4 Saharienne - Ouargla / Hassi Messaoud)",
+  "source_ids": [
+    "SRC_bee43fa8274e03efeea32276",
+    "SRC_ffd35954639ef094e8c68f40",
+    "SRC_521f8f3589687ea27b8cfdd1",
+    "SRC_f322f7eb9f837770c015cc6a",
+    "SRC_dce85426eca74ae41bd40170",
+    "SRC_a1f77ca80c7ff424219a2350",
+    "SRC_93d176ed004b46facfcd9783"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1959_011",
+    "nom_operation": "Embuscade saharienne contre une escorte de convoi pétrolier et patrouille méhariste (Axe Ouargla - Hassi Messaoud)",
+    "date_debut": "1959-10-19",
+    "date_fin": "1959-10-20",
+    "wilaya_concernee": "Wilaya VI (Zone 4 Saharienne - Ouargla / Hassi Messaoud)",
+    "localisation": {
+      "region_ou_ville": "Piste désertique et axe routier entre Ouargla, Hassi Messaoud et Fort-Lallemand / Hassi Bel Guebbour (Wilaya d'Ouargla)",
+      "coordonnees_approximatives": {
+        "latitude": 31.6804,
+        "longitude": 6.0729
+      }
+    },
+    "commandement_aln": [
+      "Mohamed Chaâbani (Colonel de la Wilaya VI)",
+      "Chefs des groupes mobiles sahariens de la Zone 4 (Ouargla - Touggourt)"
+    ],
+    "type_action": "Embuscade",
+    "description": "Malgré le dispositif de surveillance aérienne et terrestre exceptionnel déployé autour des puits de Hassi Messaoud et d'Ouargla, un groupe mobile saharien de la Wilaya VI tend une embuscade et mine la piste empruntée par une escorte militaire de convoi pétrolier et une patrouille méhariste au sud-est d'Ouargla et de Hassi Messaoud, avant de se fondre dans le Grand Erg Oriental.",
+    "bilan_et_pertes": {
+      "aln": "2 moudjahidine blessés ; saisie d'armement léger, de jumelles et de postes radio",
+      "forces_francaises": "Destruction de deux camions militaires d'escorte par mines et tirs d'armes automatiques, une douzaine de soldats et méharistes mis hors de combat",
+      "civils": "Renforcement drastique des escortes armées pour les compagnies pétrolières (SN REPAL / CFP) au Sahara"
+    },
+    "impact_strategique": "Maintient une menace constante jusqu'au cœur du bassin pétrolier de Hassi Messaoud et d'Ouargla, obligeant la France à sanctuariser militairement chaque chantier de forage saharien à grands frais.",
+    "sources": [
+      {
+        "titre": "Hassi Messaoud — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Hassi_Messaoud",
+        "type_source": "Article"
+      },
+      {
+        "titre": "La question saharienne et la guerre d'Algérie (L'Année du Maghreb) — OpenEdition Journals",
+        "url": "https://journals.openedition.org/anneemaghreb/3647?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Le Sahara dans la guerre d'Algérie — Dictionnaire de la guerre d'Algérie (Cairn.info)",
+        "url": "https://shs.cairn.info/dictionnaire-de-la-guerre-d-algerie--9782382923061-page-902?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Opération « Pierres précieuses » dans le Nord-Constantinois (Plan Challe) (editions-harmattan.fr)",
+        "url": "https://www.editions-harmattan.fr/media/104794/download/Site%20du%20C.D.H.A.-1.pdf",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Opération « Pierres précieuses » dans le Nord-Constantinois (Plan Challe) (bibliotheque.ummto.dz)",
+        "url": "https://bibliotheque.ummto.dz/fr/opac/download_document/824269",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Opération « Pierres précieuses » dans le Nord-Constantinois (Plan Challe) (journals.univ-msila.dz)",
+        "url": "https://journals.univ-msila.dz/index.php/AHJ/article/view/9051",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Opération « Pierres précieuses » dans le Nord-Constantinois (Plan Challe) (cheminsdememoire.gouv.fr)",
+        "url": "https://www.cheminsdememoire.gouv.fr/en/node/8448",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

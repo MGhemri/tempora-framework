@@ -1,0 +1,82 @@
+{
+  "id": "OP_1960_014",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Grande bataille du Djebel M'zi (Imzi) dans les monts des Ksour",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1960-05-06",
+    "latest": "1960-05-06",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1960-05-08",
+    "latest": "1960-05-08",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Djebel M'zi / Djenien Bourezg (Aïn Sefra, Naâma)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.545,
+          32.745
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 8 - Naâma / Aïn Sefra)",
+  "source_ids": [
+    "SRC_3827b108d8d4e2fdd9d32fab"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1960_014",
+    "nom_operation": "Grande bataille du Djebel M'zi (Imzi) dans les monts des Ksour",
+    "date_debut": "1960-05-06",
+    "date_fin": "1960-05-08",
+    "wilaya_concernee": "Wilaya V (Zone 8 - Naâma / Aïn Sefra)",
+    "localisation": {
+      "region_ou_ville": "Djebel M'zi / Djenien Bourezg (Aïn Sefra, Naâma)",
+      "coordonnees_approximatives": {
+        "latitude": 32.745,
+        "longitude": -0.545
+      }
+    },
+    "commandement_aln": [
+      "Commandement de la Zone 8 de la Wilaya V"
+    ],
+    "type_action": "Combat de rencontre / Guérilla de montagne",
+    "description": "Grande confrontation de trois jours en mai 1960 dans le massif escarpé du Djebel M'zi (Imzi), au sud d'Aïn Sefra, opposant les katibas de la Zone 8 aux régiments d'élite français appuyés par une intense aviation.",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs dizaines de moudjahidine tombés au champ d'honneur",
+      "forces_francaises": "Très lourdes pertes infligées aux colonnes coloniales, aéronefs endommagés",
+      "civils": "0"
+    },
+    "impact_strategique": "L'une des plus célèbres batailles du Sud-Oranais en 1960, brisant le verrouillage colonial sur la route saharienne des armes.",
+    "sources": [
+      {
+        "titre": "La bataille d'Imzi à Naâma témoigne de l'héroïsme des moudjahidine de l'ALN (L'Expression)",
+        "url": "https://www.lexpressiondz.com/index.php/info-en-continu/la-bataille-d-imzi-a-naama-temoigne-de-l-heroisme-des-moudjahidine-de-l-aln-face-aux-crimes-abjects-du-colonialisme-francais-342001",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

@@ -1,0 +1,89 @@
+{
+  "id": "OP_1958_053",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille de Bab El Bekkouche dans l'Ouarsenis",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-05-28",
+    "latest": "1958-05-28",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-05-31",
+    "latest": "1958-05-31",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Bab El Bekkouche / Lardjem (Tissemsilt)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.547,
+          35.751
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya IV (Zone 3 - Ouarsenis / Lardjem)",
+  "source_ids": [
+    "SRC_ad43c469c0b226d9bf90f45c",
+    "SRC_0f9cef0aeab01c6f0ef35108"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_053",
+    "nom_operation": "Bataille de Bab El Bekkouche dans l'Ouarsenis",
+    "date_debut": "1958-05-28",
+    "date_fin": "1958-05-31",
+    "wilaya_concernee": "Wilaya IV (Zone 3 - Ouarsenis / Lardjem)",
+    "localisation": {
+      "region_ou_ville": "Bab El Bekkouche / Lardjem (Tissemsilt)",
+      "coordonnees_approximatives": {
+        "latitude": 35.751,
+        "longitude": 1.547
+      }
+    },
+    "commandement_aln": [
+      "Si Ameur Mesbah",
+      "Katiba El Karimia"
+    ],
+    "type_action": "Offensive coordonnée / Assauts de diversion",
+    "description": "Face à un puissant encerclement colonial dans l'Ouarsenis, la katiba El Karimia commandée par Si Ameur Mesbah lance des attaques de diversion audacieuses contre les postes de Bordj Bounaama, Lardjem et Tamalaht pendant quatre jours de combats féroces.",
+    "bilan_et_pertes": {
+      "aln": "Pertes sévères mais rupture de l'encerclement ennemi",
+      "forces_francaises": "Lourdes pertes infligées aux garnisons de poste et troupes de secours",
+      "civils": "0"
+    },
+    "impact_strategique": "Désorganisation complète du dispositif de ratissage français dans l'Ouarsenis occidental.",
+    "sources": [
+      {
+        "titre": "Battle of Bab El Bekkouche (Wikipedia)",
+        "url": "https://en.wikipedia.org/wiki/Battle_of_Bab_El_Bekkouche",
+        "type_source": "Article"
+      },
+      {
+        "titre": "La grande bataille de Bab El Bekkouche (APS)",
+        "url": "http://www.oran-aps.dz/spip.php?article28327",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

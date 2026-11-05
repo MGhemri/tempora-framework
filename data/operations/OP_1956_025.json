@@ -1,0 +1,102 @@
+{
+  "id": "OP_1956_025",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Offensives de la ceinture sud de la Mitidja et sabotages ferroviaires de l'axe Alger - Oran (El Affroun - Chiffa)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-05-10",
+    "latest": "1956-05-10",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-05-12",
+    "latest": "1956-05-12",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Ceinture sud de la Mitidja : Soumaâ, Bouinan, Mouzaïa, El Affroun et voie ferrée Alger - Blida - Oran (Wilaya de Blida)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.6167,
+          36.4667
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya IV (Zone 1 et Zone 2 - Mitidja, Blida, El Affroun, Mouzaïa)",
+  "source_ids": [
+    "SRC_6dc024ba80fc62d6264665f1",
+    "SRC_7c274d53bd01dcde97924d0b",
+    "SRC_d7b84ded537e7202a470c136",
+    "SRC_f47f2ffb71e70f7073e7851f"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_025",
+    "nom_operation": "Offensives de la ceinture sud de la Mitidja et sabotages ferroviaires de l'axe Alger - Oran (El Affroun - Chiffa)",
+    "date_debut": "1956-05-10",
+    "date_fin": "1956-05-12",
+    "wilaya_concernee": "Wilaya IV (Zone 1 et Zone 2 - Mitidja, Blida, El Affroun, Mouzaïa)",
+    "localisation": {
+      "region_ou_ville": "Ceinture sud de la Mitidja : Soumaâ, Bouinan, Mouzaïa, El Affroun et voie ferrée Alger - Blida - Oran (Wilaya de Blida)",
+      "coordonnees_approximatives": {
+        "latitude": 36.4667,
+        "longitude": 2.6167
+      }
+    },
+    "commandement_aln": [
+      "Amar Ouamrane (Chef de la Zone IV / Wilaya IV)",
+      "Si M'Hamed Bougara",
+      "M'hamed Zamoum dit Si Salah"
+    ],
+    "type_action": "Sabotage",
+    "description": "Au printemps 1956, les katibas de l'Atlas blidéen descendent de nuit dans la plaine de la Mitidja pour mener des attaques coordonnées contre les grands domaines coloniaux fortifiés (entre Bouinan, Blida, Mouzaïa et El Affroun) et faire sauter à l'explosif la voie ferrée stratégique Alger-Oran ainsi que les pylônes électriques et téléphoniques.",
+    "bilan_et_pertes": {
+      "aln": "Pertes légères ; repli rapide vers les crêtes de Chréa et des Beni Salah",
+      "forces_francaises": "Déraillement d'un train de marchandises près d'El Affroun, pertes parmi les patrouilles de garde territoriale et mobilisation de bataillons entiers pour quadriller la Mitidja",
+      "civils": "Importants dégâts économiques sur les exploitations coloniales de la Mitidja"
+    },
+    "impact_strategique": "Brise le sentiment de sécurité du colonat de la Mitidja à quelques dizaines de kilomètres d'Alger et oblige l'armée française à disperser ses réserves dans la garde statique de la plaine.",
+    "sources": [
+      {
+        "titre": "Wilaya IV historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_IV_historique",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Inventaire des archives de la préfecture d'Alger et de l'IGAME — Archives nationales d'outre-mer (ANOM)",
+        "url": "https://recherche-anom.culture.gouv.fr/ark:/61561/zf476wvrwx",
+        "type_source": "Archive"
+      },
+      {
+        "titre": "Embuscades des gorges de Ténès et combats du Dahra (fr.wikipedia.org)",
+        "url": "https://fr.wikipedia.org/wiki/M%27Hamed_Bougara",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Embuscades des gorges de Ténès et combats du Dahra (fr.wikipedia.org)",
+        "url": "https://fr.wikipedia.org/wiki/Plan_Challe",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

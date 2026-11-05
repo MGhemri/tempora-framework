@@ -1,0 +1,88 @@
+{
+  "id": "OP_1961_008",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscades et coups de main des maquis des Trara et de Nedroma contre les postes côtiers (Hiver 1961)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1961-11-01",
+    "latest": "1961-11-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1961-11-03",
+    "latest": "1961-11-03",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Nedroma, Djebel Fellaoucène et abords de Ghazaouet (Nemours) (Wilaya de Tlemcen)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.7478,
+          35.0136
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 1 - Monts des Trara / Nedroma / Ghazaouet)",
+  "source_ids": [
+    "SRC_16a8e4bd2c2cc52b52851e0a",
+    "SRC_a9e4b6613f12970cab56eafa"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1961_008",
+    "nom_operation": "Embuscades et coups de main des maquis des Trara et de Nedroma contre les postes côtiers (Hiver 1961)",
+    "date_debut": "1961-11-01",
+    "date_fin": "1961-11-03",
+    "wilaya_concernee": "Wilaya V (Zone 1 - Monts des Trara / Nedroma / Ghazaouet)",
+    "localisation": {
+      "region_ou_ville": "Nedroma, Djebel Fellaoucène et abords de Ghazaouet (Nemours) (Wilaya de Tlemcen)",
+      "coordonnees_approximatives": {
+        "latitude": 35.0136,
+        "longitude": -1.7478
+      }
+    },
+    "commandement_aln": [
+      "Commandants de la Zone 1 de la Wilaya V"
+    ],
+    "type_action": "Embuscade",
+    "description": "À l'occasion du septième anniversaire du 1er novembre 1954, les groupes armés de la Zone 1 de la Wilaya V dans les monts des Trara mènent une série de coups de main et d'embuscades contre les postes de la DBFM autour de Nedroma et de Ghazaouet, accompagnés de manifestations patriotiques de la population arborant le drapeau algérien.",
+    "bilan_et_pertes": {
+      "aln": "Pertes légères ; maintien intégral du contrôle politique du FLN sur le massif des Trara",
+      "forces_francaises": "Plusieurs fusiliers marins et gendarmes blessés lors des accrochages et du service d'ordre",
+      "civils": "Plusieurs manifestants blessés lors des rassemblements du 1er novembre 1961 à Nedroma et Ghazaouet"
+    },
+    "impact_strategique": "Scelle l'échec définitif de la pacification dans le secteur côtier de la DBFM à quelques mois de la fin de la guerre.",
+    "sources": [
+      {
+        "titre": "Demi-brigade de fusiliers marins (Fin de campagne en mars 1962) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Demi-brigade_de_fusiliers_marins",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Wilaya (guerre d'Algérie) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_(guerre_d%27Alg%C3%A9rie)",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

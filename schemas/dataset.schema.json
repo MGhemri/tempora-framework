@@ -1,0 +1,6 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema","type":"object","additionalProperties":false,
+  "required":["schema_version","source_commit","dataset_metadata","legacy_order"],
+  "properties":{"schema_version":{"const":"2.0.0"},"source_commit":{"type":"string","pattern":"^[a-f0-9]{40}$"},
+    "dataset_metadata":{"type":"object"},"legacy_order":{"type":"array","uniqueItems":true,"items":{"type":"string","pattern":"^[A-Za-z0-9_-]+$"}}}
+}

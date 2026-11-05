@@ -1,0 +1,88 @@
+{
+  "id": "OP_1958_028",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille d'El Skhouna et accrochages des patrouilles méharistes dans le secteur de Touggourt - Ouargla",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-02-02",
+    "latest": "1958-02-02",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-02-03",
+    "latest": "1958-02-03",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Secteur d'El Skhouna / Taïbet, entre Touggourt, El Oued et Ouargla (Wilayas de Touggourt et Ouargla)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.0667,
+          33.1
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya VI (Zone 4 - Bas-Sahara / Touggourt / Ouargla / El Oued)",
+  "source_ids": [
+    "SRC_521f8f3589687ea27b8cfdd1",
+    "SRC_39560249ec1c3a970f9bb066"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_028",
+    "nom_operation": "Bataille d'El Skhouna et accrochages des patrouilles méharistes dans le secteur de Touggourt - Ouargla",
+    "date_debut": "1958-02-02",
+    "date_fin": "1958-02-03",
+    "wilaya_concernee": "Wilaya VI (Zone 4 - Bas-Sahara / Touggourt / Ouargla / El Oued)",
+    "localisation": {
+      "region_ou_ville": "Secteur d'El Skhouna / Taïbet, entre Touggourt, El Oued et Ouargla (Wilayas de Touggourt et Ouargla)",
+      "coordonnees_approximatives": {
+        "latitude": 33.1,
+        "longitude": 6.0667
+      }
+    },
+    "commandement_aln": [
+      "Commandants de la Zone 4 de la Wilaya VI (Sahara oriental)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Le 2 février 1958, une unité saharienne de l'ALN opérant dans le Bas-Sahara entre Touggourt, Ouargla et le Souf affronte à El Skhouna les Compagnies sahariennes portées de la Légion étrangère, les pelotons méharistes et l'aviation française venus intercepter les réseaux d'approvisionnement reliant le Sud tunisien et libyen aux oasis algériennes.",
+    "bilan_et_pertes": {
+      "aln": "Une vingtaine de moudjahidine sahariens tombés au champ d'honneur après un combat acharné dans les dunes",
+      "forces_francaises": "Pertes sensibles au sein des compagnies sahariennes portées et méharistes et destruction de véhicules tout-terrain",
+      "civils": "Contrôle militaire renforcé sur les oasis de Touggourt, Ouargla et Hassi Messaoud"
+    },
+    "impact_strategique": "Prouve la présence active de katibas combattantes de la Wilaya VI en plein désert oriental à proximité des gisements pétroliers d'Ouargla et de Hassi Messaoud.",
+    "sources": [
+      {
+        "titre": "Le Sahara dans la guerre d'Algérie — Dictionnaire de la guerre d'Algérie (Cairn.info)",
+        "url": "https://shs.cairn.info/dictionnaire-de-la-guerre-d-algerie--9782382923061-page-902?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Les combats de la Wilaya VI historique — Revue académique CERIST (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/280826",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

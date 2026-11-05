@@ -1,0 +1,90 @@
+{
+  "id": "OP_1958_036",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille du Djebel M'zi et d'Asla dans les Monts des Ksour (Katibas du Commandant Ferradj)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-11-18",
+    "latest": "1958-11-18",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-11-20",
+    "latest": "1958-11-20",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif du Djebel M'zi et oasis d'Asla / Chellala, à l'est et au sud d'Aïn Sefra (Wilaya de Naâma / El Bayadh)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.0833,
+          32.9833
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 8 - Aïn Sefra / Asla / Monts des Ksour)",
+  "source_ids": [
+    "SRC_4fbc3af0d38d011785a8fc40",
+    "SRC_a6c5c7a630d828bf25bc51c3"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_036",
+    "nom_operation": "Bataille du Djebel M'zi et d'Asla dans les Monts des Ksour (Katibas du Commandant Ferradj)",
+    "date_debut": "1958-11-18",
+    "date_fin": "1958-11-20",
+    "wilaya_concernee": "Wilaya V (Zone 8 - Aïn Sefra / Asla / Monts des Ksour)",
+    "localisation": {
+      "region_ou_ville": "Massif du Djebel M'zi et oasis d'Asla / Chellala, à l'est et au sud d'Aïn Sefra (Wilaya de Naâma / El Bayadh)",
+      "coordonnees_approximatives": {
+        "latitude": 32.9833,
+        "longitude": -0.0833
+      }
+    },
+    "commandement_aln": [
+      "Commandant Ferradj (Mohamed Laoudj)",
+      "Colonel Lotfi",
+      "Commandants de katibas de la Zone 8"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "En novembre 1958, les katibas de la Zone 8 commandées sur le terrain par le commandant Ferradj harcèlent les postes militaires français d'Asla et de Chellala puis attirent les colonnes du 2e REI et les troupes aéroportées sur les falaises rocheuses du Djebel M'zi, où se déroule un affrontement violent de quarante-huit heures.",
+    "bilan_et_pertes": {
+      "aln": "Une vingtaine de moudjahidine tués au combat ; 1 avion d'observation français touché",
+      "forces_francaises": "Plusieurs dizaines de légionnaires et soldats français mis hors de combat",
+      "civils": "Aucune victime civile directe"
+    },
+    "impact_strategique": "Illustre l'efficacité tactique du tandem Colonel Lotfi – Commandant Ferradj dans la guerre de mouvement à travers l'Atlas saharien occidental.",
+    "sources": [
+      {
+        "titre": "Les combats de la Légion étrangère dans le secteur d'Aïn Sefra — FSALE",
+        "url": "https://www.legionetrangere.fr/la-fsale/actualites-de-la-fsale/808-histoire-decembre-1959-bataille-du-djebel-beni-smir.html",
+        "type_source": "Archive"
+      },
+      {
+        "titre": "Béchar : le colonel Lotfi et ses compagnons dans le Sud-Oranais — Algérie Presse Service (APS)",
+        "url": "https://www.aps.dz/fr/algerie/societe/mn8zsy8t-bechar-le-colonel-lotfi-un-riche-parcours-de-lutte-et-de-militantisme-durant-la-glorieuse-guerre-de-liberation-nationale",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

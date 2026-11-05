@@ -1,0 +1,90 @@
+{
+  "id": "OP_1957_019",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille d'Aouchaaoua (El Mehmel) dans le secteur de Khenchela - Babar",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-12-05",
+    "latest": "1957-12-05",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-12-06",
+    "latest": "1957-12-06",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif d'Aouchaaoua (commune d'El Mehmel / Ouled Rechache / Zoui), à l'est de Khenchela (Wilaya de Khenchela)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.2667,
+          35.3333
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya I (Aurès-Nemencha - Secteur d'El Mehmel / Khenchela)",
+  "source_ids": [
+    "SRC_906cdde683fd914e4fa89d5e",
+    "SRC_efc4bfc215cdd82cc9bed628"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_019",
+    "nom_operation": "Bataille d'Aouchaaoua (El Mehmel) dans le secteur de Khenchela - Babar",
+    "date_debut": "1957-12-05",
+    "date_fin": "1957-12-06",
+    "wilaya_concernee": "Wilaya I (Aurès-Nemencha - Secteur d'El Mehmel / Khenchela)",
+    "localisation": {
+      "region_ou_ville": "Massif d'Aouchaaoua (commune d'El Mehmel / Ouled Rechache / Zoui), à l'est de Khenchela (Wilaya de Khenchela)",
+      "coordonnees_approximatives": {
+        "latitude": 35.3333,
+        "longitude": 7.2667
+      }
+    },
+    "commandement_aln": [
+      "Saad Boussaha",
+      "Larbi Charrab",
+      "Commandants de katibas de la Région de Khenchela (Wilaya I)"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Les katibas de la Wilaya I dirigées par Saad Boussaha et Larbi Charrab affrontent dans les reliefs d'Aouchaaoua (commune d'El Mehmel, entre Khenchela et les Nemencha) un important dispositif d'encerclement français combinant infanterie motorisée, artillerie et bombardements aériens.",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs dizaines de moudjahidine tombés au champ d'honneur au cours de l'engagement",
+      "forces_francaises": "Lourdes pertes parmi les colonnes d'assaut françaises et mise hors service de véhicules blindés légers",
+      "civils": "Bombardements des mechtas du secteur d'El Mehmel et d'Ouled Rechache"
+    },
+    "impact_strategique": "Démontre la persistance des grands engagements de katibas dans le secteur de Khenchela fin 1957 en dépit de la pression exercée par les réserves générales françaises.",
+    "sources": [
+      {
+        "titre": "Wilaya I historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_I_historique",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Nemencha (Combats de la région de Khenchela et Tébessa) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Nemencha",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

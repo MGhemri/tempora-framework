@@ -1,0 +1,90 @@
+{
+  "id": "OP_1959_015",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats et sabotages du barrage dans le secteur minier de l'Ouenza et de Boukhadra",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1959-06-11",
+    "latest": "1959-06-11",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1959-06-13",
+    "latest": "1959-06-13",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Complexe minier de fer de l'Ouenza et du Djebel Boukhadra, entre Souk Ahras et Tébessa (Wilaya de Tébessa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.1333,
+          35.95
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Base de l'Est / Wilaya I (Secteur d'Ouenza - Boukhadra - Souk Ahras)",
+  "source_ids": [
+    "SRC_ffddb3278292c034c9687950",
+    "SRC_630c7df7b758d080eff00bd4"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1959_015",
+    "nom_operation": "Combats et sabotages du barrage dans le secteur minier de l'Ouenza et de Boukhadra",
+    "date_debut": "1959-06-11",
+    "date_fin": "1959-06-13",
+    "wilaya_concernee": "Base de l'Est / Wilaya I (Secteur d'Ouenza - Boukhadra - Souk Ahras)",
+    "localisation": {
+      "region_ou_ville": "Complexe minier de fer de l'Ouenza et du Djebel Boukhadra, entre Souk Ahras et Tébessa (Wilaya de Tébessa)",
+      "coordonnees_approximatives": {
+        "latitude": 35.95,
+        "longitude": 8.1333
+      }
+    },
+    "commandement_aln": [
+      "Tahar Zbiri",
+      "Chadli Bendjedid",
+      "Officiers des bataillons de la frontière Est"
+    ],
+    "type_action": "Sabotage",
+    "description": "Un commando lourd de l'ALN franchit le premier rideau frontalier et attaque les installations électriques et la voie ferrée minière desservant les gisements stratégiques de fer de l'Ouenza et de Boukhadra, tout en engageant un combat acharné de quarante-huit heures contre les régiments blindés et parachutistes de la « herse » française.",
+    "bilan_et_pertes": {
+      "aln": "Une vingtaine de moudjahidine tués au combat ; repli du reste de l'unité sous la couverture des mortiers de l'ALN",
+      "forces_francaises": "Dégâts majeurs aux pylônes électriques et au chemin de fer minier de l'Ouenza, une vingtaine de militaires français mis hors de combat",
+      "civils": "Arrêt temporaire de l'extraction du minerai de fer à l'Ouenza"
+    },
+    "impact_strategique": "Cible l'un des fleurons miniers de l'Algérie coloniale situé immédiatement sur le tracé de la Ligne Morice.",
+    "sources": [
+      {
+        "titre": "La guerre de libération sur la frontière de l'Est — Cairn.info",
+        "url": "https://shs.cairn.info/guerre-de-liberation--9789961634547-page-127?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Ligne Morice — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Ligne_Morice",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

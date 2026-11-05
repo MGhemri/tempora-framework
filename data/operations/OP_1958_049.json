@@ -1,0 +1,82 @@
+{
+  "id": "OP_1958_049",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille de Foughala dans les Ziban occidentaux",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-02-23",
+    "latest": "1958-02-23",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Oasis et reliefs de Foughala (Biskra)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.525,
+          34.718
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya I (Zone des Ziban - Foughala / Biskra)",
+  "source_ids": [
+    "SRC_18ba855666c22893815a4f69"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_049",
+    "nom_operation": "Bataille de Foughala dans les Ziban occidentaux",
+    "date_debut": "1958-02-23",
+    "date_fin": null,
+    "wilaya_concernee": "Wilaya I (Zone des Ziban - Foughala / Biskra)",
+    "localisation": {
+      "region_ou_ville": "Oasis et reliefs de Foughala (Biskra)",
+      "coordonnees_approximatives": {
+        "latitude": 34.718,
+        "longitude": 5.525
+      }
+    },
+    "commandement_aln": [
+      "Commandement ALN des Ziban"
+    ],
+    "type_action": "Combat de rencontre",
+    "description": "Affrontement d'envergure dans l'oasis de Foughala opposant une unité de l'ALN de la Wilaya I aux troupes coloniales motorisées appuyées par l'aviation.",
+    "bilan_et_pertes": {
+      "aln": "Une quinzaine de chouhada",
+      "forces_francaises": "Lourdes pertes infligées aux colonnes terrestres françaises",
+      "civils": "Dégâts dans les palmeraies"
+    },
+    "impact_strategique": "Échec d'une tentative de pacification des Ziban occidentaux par l'état-major français de Biskra.",
+    "sources": [
+      {
+        "titre": "La bataille de Foughala (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/180829",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

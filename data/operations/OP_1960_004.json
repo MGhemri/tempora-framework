@@ -1,0 +1,89 @@
+{
+  "id": "OP_1960_004",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Contre-offensives et guérilla des monts de Collo et d'El Milia face à l'Opération Pierres Précieuses",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1959-11-06",
+    "latest": "1959-11-06",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1960-05-30",
+    "latest": "1960-05-30",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Presqu'île de Collo, massif d'El Milia, forêt des Beni Toufout et monts de Jijel (Wilayas de Skikda et Jijel)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.45,
+          36.95
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya II (Massif de Collo, El Milia, Jijel et Edough)",
+  "source_ids": [
+    "SRC_e55a50cb37eac1896a1487ac",
+    "SRC_947849a84404e77899323729"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1960_004",
+    "nom_operation": "Contre-offensives et guérilla des monts de Collo et d'El Milia face à l'Opération Pierres Précieuses",
+    "date_debut": "1959-11-06",
+    "date_fin": "1960-05-30",
+    "wilaya_concernee": "Wilaya II (Massif de Collo, El Milia, Jijel et Edough)",
+    "localisation": {
+      "region_ou_ville": "Presqu'île de Collo, massif d'El Milia, forêt des Beni Toufout et monts de Jijel (Wilayas de Skikda et Jijel)",
+      "coordonnees_approximatives": {
+        "latitude": 36.95,
+        "longitude": 6.45
+      }
+    },
+    "commandement_aln": [
+      "Salah Boubnider dit Sawt El Arab (Colonel de la Wilaya II)",
+      "Boudjemaâ Souidani / Tahar Bouderbala (Chefs de zones de la Wilaya II)"
+    ],
+    "type_action": "Embuscade",
+    "description": "Face au déclenchement de l'Opération « Pierres Précieuses » (volet du Plan Challe ciblant la Wilaya II avec les opérations Rubis, Turquoise, Émeraude et Topaze à partir de novembre 1959 et durant le premier semestre 1960), le colonel Sawt El Arab fractionne ses katibas en petits groupes de choc ultra-mobiles dans le maquis impénétrable de Collo et d'El Milia, multipliant les embuscades meurtrières, les piégeages de pistes et les attaques nocturnes sur les arrières des régiments de parachutistes et de fusiliers marins.",
+    "bilan_et_pertes": {
+      "aln": "Lourdes pertes parmi les maquisards et les refuges logistiques souterrains de la Wilaya II, mais survie du commandement de Sawt El Arab et maintien des unités de guérilla",
+      "forces_francaises": "Pertes continues tout au long des sept mois d'opérations dans les forêts de chênes-lièges de Collo et de Jijel",
+      "civils": "Déplacement forcé de la quasi-totalité de la population montagnarde de Collo et d'El Milia vers des camps de regroupement"
+    },
+    "impact_strategique": "L'échec du Plan Challe à éradiquer les maquis de la presqu'île de Collo et d'El Milia démontre la résilience exceptionnelle de la Wilaya II, qui reste opérationnelle jusqu'au cessez-le-feu de mars 1962.",
+    "sources": [
+      {
+        "titre": "La Wilaya II historique face au Plan Challe — Cairn.info",
+        "url": "https://shs.cairn.info/la-wilaya-ii-historique--9789947394052-page-103?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Dictionnaire de la guerre d'Algérie : les opérations du Plan Challe — Cairn.info",
+        "url": "https://shs.cairn.info/dictionnaire-de-la-guerre-d-algerie--9782382923061-page-380?lang=fr",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

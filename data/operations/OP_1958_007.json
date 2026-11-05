@@ -1,0 +1,90 @@
+{
+  "id": "OP_1958_007",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats du massif de l'Akfadou et résistance à l'Opération Brumaire",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-10-13",
+    "latest": "1958-10-13",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-10-28",
+    "latest": "1958-10-28",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif forestier de l'Akfadou et Aourir N'Aït Hssaïne (confins de Tizi Ouzou et Béjaïa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.5833,
+          36.6333
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya III (Kabylie)",
+  "source_ids": [
+    "SRC_d9494d75d8dc6ed52489a6c0",
+    "SRC_1b5535866d4e1672f780a425"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_007",
+    "nom_operation": "Combats du massif de l'Akfadou et résistance à l'Opération Brumaire",
+    "date_debut": "1958-10-13",
+    "date_fin": "1958-10-28",
+    "wilaya_concernee": "Wilaya III (Kabylie)",
+    "localisation": {
+      "region_ou_ville": "Massif forestier de l'Akfadou et Aourir N'Aït Hssaïne (confins de Tizi Ouzou et Béjaïa)",
+      "coordonnees_approximatives": {
+        "latitude": 36.6333,
+        "longitude": 4.5833
+      }
+    },
+    "commandement_aln": [
+      "Colonel Amirouche (Amirouche Aït Hamouda)",
+      "Mira Abderrahmane",
+      "Mohand Oulhadj"
+    ],
+    "type_action": "Guérilla urbaine",
+    "description": "Face à l'Opération Brumaire dirigée par le général Massu (35 000 soldats français) visant à détruire le PC de la Wilaya III dans la forêt de l'Akfadou, le colonel Amirouche applique une tactique d'éclatement et de contre-embuscades sur les arrières français, culminant lors de la percée d'Aourir N'Aït Hssaïne (27-28 octobre 1958) qui permet l'exfiltration de l'état-major de la Wilaya III.",
+    "bilan_et_pertes": {
+      "aln": "87 à 200 combattants et auxiliaires tués lors des deux semaines d'opérations ; survie intacte de l'état-major du colonel Amirouche",
+      "forces_francaises": "Au moins 58 tués et 140 blessés selon les sources françaises (plusieurs centaines selon l'ALN)",
+      "civils": "Nombreux villages kabyles bombardés et populations déplacées autour de l'Akfadou"
+    },
+    "impact_strategique": "Mise en échec de la tentative française de décapiter la Wilaya III à l'automne 1958, ce qui conduira le général Challe à concevoir l'année suivante l'opération géante « Jumelles ».",
+    "sources": [
+      {
+        "titre": "Opération Brumaire — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Op%C3%A9ration_Brumaire",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Wilaya III historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_III_historique",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>API REST v2 et provenance · TEMPORA</title><script>const base=document.createElement('base');base.href=location.pathname.split('/documentation')[0].replace(/\/api\/docs$/,'')+'/documentation/';document.head.append(base);</script><link rel="stylesheet" href="documentation.css"><script src="../site-context.js?v=4.3"></script></head><body><main><nav><a data-atlas-link href="../index.html">Atlas ALNOP · الأطلس</a><a href="../contribute.html">Contribuer · ساهم</a><a href="index.html">Documentation · الوثائق</a></nav><p class="documentation-context"><span data-framework-presentation>TEMPORA — Framework pour les corpus historiques</span><span data-profile-presentation hidden>ALNOP — Profil du framework TEMPORA</span></p><h1 id="api-rest-v2--données-et-provenance">API REST v2 — Données et provenance</h1>
+<p>L’API v2 donne accès au corpus publié, sans compte ni clé, en lecture seule. Elle complète l’API v1, dont les URL et les réponses existantes sont conservées. Les brouillons et les contributions reçues par courriel ne sont pas exposés.</p>
+<p>Base : <code>https://alnop.vercel.app/api/v2</code></p>
+<p><a href="https://alnop.vercel.app/api/v2/openapi.json">Consulter le contrat OpenAPI</a> · <a href="../data/api-v2/openapi.json">Télécharger sa copie statique</a></p>
+<p>GitHub Pages héberge la documentation et les téléchargements ; les requêtes d’API s’exécutent sur Vercel.</p>
+<h2 id="ressources">Ressources</h2>
+<table>
+<thead>
+<tr>
+<th>Route après <code>/api/v2</code></th>
+<th>Contenu</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>/operations</code> et <code>/operations/{id}</code></td>
+<td>Fiches canoniques, précision, provenance et original conservé</td>
+</tr>
+<tr>
+<td><code>/operations/{id}/evidence</code></td>
+<td>Assertions publiées, contradictions et sources associées</td>
+</tr>
+<tr>
+<td><code>/sources</code> et <code>/sources/{id}</code></td>
+<td>Notices bibliographiques utilisées dans la publication</td>
+</tr>
+<tr>
+<td><code>/places</code>, <code>/persons</code>, <code>/organizations</code></td>
+<td>Référentiels publiés ; détail par <code>/{id}</code></td>
+</tr>
+<tr>
+<td><code>/territorial-units</code> et <code>/territorial-units/{id}</code></td>
+<td>Unités et classifications éditoriales, avec leur statut de revue</td>
+</tr>
+<tr>
+<td><code>/claims</code> et <code>/claims/{id}</code></td>
+<td>Assertions publiées et passages sources</td>
+</tr>
+<tr>
+<td><code>/stats</code></td>
+<td>Effectifs du corpus, années de début, précisions et types</td>
+</tr>
+<tr>
+<td><code>/coverage</code></td>
+<td>Qualité et lacunes des métadonnées du corpus</td>
+</tr>
+<tr>
+<td><code>/releases</code> et <code>/releases/{id}</code></td>
+<td>Versions archivées, dates UTC, provenance et téléchargements</td>
+</tr>
+<tr>
+<td><code>/releases/current</code></td>
+<td>Manifeste du snapshot courant et empreintes</td>
+</tr>
+<tr>
+<td><code>/exports</code></td>
+<td>Liens locaux des formats publics et leurs empreintes</td>
+</tr>
+<tr>
+<td><code>/openapi.json</code></td>
+<td>Contrat OpenAPI 3.1</td>
+</tr>
+</tbody>
+</table>
+<p>Les référentiels et assertions peuvent être vides tant qu’aucun contenu n’a été revu et publié. Une collection vide ne signifie pas une absence historique.</p>
+<h2 id="pagination-et-réponse">Pagination et réponse</h2>
+<p>Les collections acceptent <code>page</code> (à partir de 1) et <code>limit</code> (20 par défaut, maximum 200). La réponse contient <code>data</code> et <code>meta</code> : <code>total</code>, <code>count</code>, <code>page</code>, <code>limit</code>, <code>has_next</code>, <code>sort</code>, <code>snapshot_sha256</code>, <code>dataset_release</code> et <code>corpus_is_incomplete</code>.</p>
+<p><code>total</code> compte les fiches correspondant au filtre, pas toutes les opérations ayant historiquement existé. <code>corpus_is_incomplete</code> vaut toujours <code>true</code>.</p>
+<p><code>dataset_release</code> indique la version archivée correspondant exactement au manifeste courant. Si les exports évoluent avant une nouvelle publication, cette valeur redevient <code>null</code>. Le snapshot reste identifié par son empreinte SHA-256 ; <code>/releases/current</code> expose son manifeste. Les archives et leurs citations sont disponibles sur <a href="../releases.html">la page des versions</a>, selon <a href="releases.html">la politique de publication</a>. Une version technique préserve les réserves historiques et ne vaut pas nouvelle validation scientifique.</p>
+<h2 id="filtres">Filtres</h2>
+<table>
+<thead>
+<tr>
+<th>Paramètre</th>
+<th>Règle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>q</code></td>
+<td>Sous-chaîne dans titres/descriptions des opérations ; dans les noms des entités, titres/auteurs des sources ou prédicats/valeurs des assertions selon la ressource. Casse et diacritiques normalisés, aucune traduction automatique.</td>
+</tr>
+<tr>
+<td><code>source_id</code></td>
+<td>Identifiants séparés par des virgules ; au moins une correspondance. Pour une source, filtre son propre identifiant.</td>
+</tr>
+<tr>
+<td><code>status</code></td>
+<td>Seul <code>published</code> est accepté ; une demande de brouillons reçoit une erreur 400.</td>
+</tr>
+<tr>
+<td><code>sort</code></td>
+<td><code>id</code> ou <code>-id</code> ; pour les opérations également <code>start_date</code> ou <code>-start_date</code>.</td>
+</tr>
+<tr>
+<td><code>from</code>, <code>to</code></td>
+<td>Opérations : bornes inclusives <code>YYYY</code>, <code>YYYY-MM</code> ou <code>YYYY-MM-DD</code>, sélection par chevauchement.</td>
+</tr>
+<tr>
+<td><code>date_precision</code></td>
+<td>Précision du début : <code>day</code>, <code>month</code>, <code>year</code>, <code>range</code>, <code>unknown</code>.</td>
+</tr>
+<tr>
+<td><code>territory</code>, <code>territory_role</code></td>
+<td>Appartenances structurées explicites, jamais déduites du texte hérité. Rôles : <code>primary</code>, <code>secondary</code>, <code>cross_territorial</code>, <code>uncertain</code>.</td>
+</tr>
+<tr>
+<td><code>type</code></td>
+<td>Types d’événements ; les valeurs héritées sont conservées.</td>
+</tr>
+<tr>
+<td><code>has_geometry</code></td>
+<td><code>true</code> ou <code>false</code> ; ne garantit pas une localisation exacte.</td>
+</tr>
+<tr>
+<td><code>min_sources</code></td>
+<td>Minimum de références au niveau de la fiche d’opération, entier positif ou nul.</td>
+</tr>
+<tr>
+<td><code>bbox</code></td>
+<td><code>ouest,sud,est,nord</code>, WGS84 ; ouest supérieur à est traverse l’antiméridien.</td>
+</tr>
+<tr>
+<td><code>format</code></td>
+<td>Opérations : <code>json</code> ou <code>geojson</code>.</td>
+</tr>
+<tr>
+<td><code>subject</code>, <code>claim_status</code></td>
+<td>Assertions : identifiant d’opération et statut <code>supported</code>, <code>contested</code> ou <code>unverified</code>.</td>
+</tr>
+</tbody>
+</table>
+<p>Les familles de filtres se combinent par <strong>ET</strong>, les listes de <code>source_id</code>, <code>date_precision</code>, <code>territory</code>, <code>territory_role</code> et <code>type</code> par <strong>OU</strong>. Territoire et rôle doivent correspondre à la même attribution. Un identifiant valide mais inconnu produit une collection vide ; une syntaxe ou un paramètre non pris en charge produit une erreur 400. Les paramètres répétés sont refusés : utiliser une liste séparée par des virgules.</p>
+<p>Les bornes partielles ne sont développées que pour comparer les intervalles. Les données renvoyées gardent leur précision initiale. L’intervalle comparé va de la première borne du début à la dernière borne de fin connue ; à défaut de fin, aux bornes du début. Un début inconnu est exclu des filtres temporels. Le tri utilise la première borne connue du début, puis l’identifiant croissant ; les dates inconnues restent à la fin dans les deux sens.</p>
+<p>Les dix catégories initiales sont des classifications éditoriales, pas dix territoires historiquement équivalents. Les attributions canoniques initiales restent à revoir : un filtre v2 <code>territory=W1</code> peut donc être vide alors que le classement de compatibilité v1 affiche des fiches. Ce comportement évite de transformer une ancienne étiquette en preuve d’appartenance.</p>
+<h2 id="geojson">GeoJSON</h2>
+<p><code>format=geojson</code> renvoie une <code>FeatureCollection</code>, paginée comme le JSON, avec le même <code>meta</code>. Les géométries nulles sont conservées. Plusieurs points connus produisent un <code>MultiPoint</code>. Les propriétés contiennent la fiche canonique et les rôles de précision des localisations.</p>
+<p>Une BBOX sélectionne une fiche si au moins un point connu intersecte la boîte. Elle n’est pas un test d’exactitude géographique : les points représentatifs peuvent aussi être sélectionnés et restent signalés dans les propriétés. Cette livraison n’ajoute pas de polygones historiques supposés.</p>
+<h2 id="statistiques-et-lacunes">Statistiques et lacunes</h2>
+<p><code>/stats</code> et <code>/coverage</code> acceptent les filtres des opérations, sans pagination, tri ni changement de format. Les sources comptées dans les statistiques sont celles des fiches sélectionnées et de leurs assertions. Les types multiples peuvent compter une fiche dans plusieurs catégories ; les années représentent les années de début enregistrées.</p>
+<p><code>/coverage</code> expose les dates inconnues, absences de géométrie, attributions territoriales non structurées, sources manquantes, imports restant à revoir et assertions contestées. <code>pending_contributions</code> vaut <code>null</code> : les messages reçus ne constituent pas une file éditoriale publique mesurable. Une sélection vide indique « aucune fiche actuellement recensée », jamais « aucune opération historique ».</p>
+<p>Ces indicateurs mesurent la documentation d’ALNOP. Ils ne calculent ni un taux de couverture de la guerre ni une intensité militaire réelle. Le champ additionnel <code>documentary_report</code> fournit les tableaux par année, territoire structuré et type, ainsi que les métadonnées à compléter. Il utilise le même moteur que <a href="../observatory.html">l’observatoire documentaire</a>. Les empreintes du modèle et du filtrage sont indiquées dans <code>meta</code> pour identifier le calcul. Voir <a href="observatory.html">la méthode de l’observatoire</a>.</p>
+<h2 id="exemples">Exemples</h2>
+<p><a href="https://alnop.vercel.app/api/v2/operations?limit=2">Premières fiches</a> · <a href="https://alnop.vercel.app/api/v2/operations/OP_1954_001">Fiche initiale</a> · <a href="https://alnop.vercel.app/api/v2/operations/OP_1954_001/evidence">Preuves associées</a></p>
+<pre><code class="language-sh">curl 'https://alnop.vercel.app/api/v2/operations?from=1956&amp;to=1956&amp;limit=20'
+curl 'https://alnop.vercel.app/api/v2/operations?format=geojson&amp;limit=20'
+curl 'https://alnop.vercel.app/api/v2/coverage?from=1900&amp;to=1900'
+</code></pre>
+<p>Pour vérifier les exemples après déploiement : <code>npm run smoke:api:v2</code>. Cette commande effectue uniquement des lectures GET, y compris les cas 400, 404, sélection vide et cache 304. Elle enregistre le résultat dans <code>work/api-v2-smoke.json</code>.</p>
+<h2 id="erreurs-cache-et-limites">Erreurs, cache et limites</h2>
+<p>Les erreurs suivent <code>{error:{code,message}}</code> : 400 pour une requête invalide, 404 pour une ressource absente, 405 pour une méthode interdite, 413 pour une représentation supérieure à 4 Mio, 500 si le snapshot ne peut être chargé. Aucune pile d’erreur interne n’est exposée. Les réponses d’erreur ne sont pas mises en cache.</p>
+<p>GET et OPTIONS sont autorisés. Les réponses 200 possèdent un <code>ETag</code> calculé sur la représentation renvoyée ; <code>If-None-Match</code> permet une réponse 304. CORS autorise la lecture publique et expose l’ETag. Le cache annonce 60 secondes côté client et 300 secondes côté cache partagé. Une instance conserve son snapshot validé en mémoire pendant sa durée de vie.</p>
+<p>L’API vérifie les empreintes des collections chargées. Son interface de lecture est séparée du stockage sur fichiers pour permettre une autre implémentation ultérieure. Il n’existe aucun endpoint public d’écriture.</p>
+<p>Les tests vérifient la structure OpenAPI et les réponses par JSON Schema, les filtres, les limites, la BBOX traversant l’antiméridien, les erreurs, les preuves contradictoires et les exemples HTTP. Ils ne remplacent ni une revue historique ni des mesures de performance à grande échelle.</p>
+<p>Références techniques : <a href="https://spec.openapis.org/oas/v3.1.0">OpenAPI 3.1</a> et <a href="https://vercel.com/docs/functions/runtimes/node-js">fonctions Node.js Vercel</a>.</p>
+</main></body></html>

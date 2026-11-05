@@ -1,0 +1,90 @@
+{
+  "id": "OP_1955_011",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscades de l'Atlas blidéen et combats de Chréa - Sakamody - Tablat",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1955-10-18",
+    "latest": "1955-10-18",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1955-10-20",
+    "latest": "1955-10-20",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif de Chréa, col de Sakamody (Larbaâ) et secteur de Tablat (Wilayas de Blida et Médéa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.1667,
+          36.4833
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya IV (Zone IV - Atlas blidéen / Chréa / Larbaâ / Tablat)",
+  "source_ids": [
+    "SRC_6dc024ba80fc62d6264665f1",
+    "SRC_c02b25f54dc75e28e0675336"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1955_011",
+    "nom_operation": "Embuscades de l'Atlas blidéen et combats de Chréa - Sakamody - Tablat",
+    "date_debut": "1955-10-18",
+    "date_fin": "1955-10-20",
+    "wilaya_concernee": "Wilaya IV (Zone IV - Atlas blidéen / Chréa / Larbaâ / Tablat)",
+    "localisation": {
+      "region_ou_ville": "Massif de Chréa, col de Sakamody (Larbaâ) et secteur de Tablat (Wilayas de Blida et Médéa)",
+      "coordonnees_approximatives": {
+        "latitude": 36.4833,
+        "longitude": 3.1667
+      }
+    },
+    "commandement_aln": [
+      "Amar Ouamrane",
+      "Si M'Hamed Bougara",
+      "Ali Khodja"
+    ],
+    "type_action": "Embuscade",
+    "description": "À l'automne 1955, sous l'impulsion d'Amar Ouamrane et de son adjoint politique et militaire Si M'Hamed Bougara, les premières sections structurées de la Zone IV tendent une série d'embuscades coordonnées sur les routes de montagne de Chréa et du col de Sakamody (entre Larbaâ et Tablat), s'emparant d'un armement moderne et affirmant l'implantation durable du maquis aux portes sud d'Alger.",
+    "bilan_et_pertes": {
+      "aln": "Quelques blessés ; récupération de fusils-mitrailleurs, de pistolets-mitrailleurs et de munitions",
+      "forces_francaises": "Une quinzaine de soldats et gendarmes mis hors de combat et plusieurs véhicules militaires incendiés",
+      "civils": "Évacuation de plusieurs maisons forestières isolées de l'Atlas blidéen"
+    },
+    "impact_strategique": "Permet la constitution des premières katibas régulières de la Zone IV et prépare l'intégration dès octobre 1955 du sergent déserteur Ali Khodja, qui formera le célèbre commando zonal de l'Algérois.",
+    "sources": [
+      {
+        "titre": "Wilaya IV historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_IV_historique",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Wilaya IV : Les maquis de la dignité — El Moudjahid",
+        "url": "https://www.elmoudjahid.dz/fr/actualite/wilaya-iv-les-maquis-de-la-dignite-242798",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

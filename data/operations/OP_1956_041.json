@@ -1,0 +1,88 @@
+{
+  "id": "OP_1956_041",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Accrochage de Koudiet Boukerker et martyre du colonel Zighoud Youcef",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-09-23",
+    "latest": "1956-09-23",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Koudiet Boukerker / Sidi Mezghiche (Skikda)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.702,
+          36.685
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya II (Nord-Constantinois - Secteur de Sidi Mezghiche)",
+  "source_ids": [
+    "SRC_665827cc3f48e85d168a5f71",
+    "SRC_e308032e41fa5ab21d5f339d"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_041",
+    "nom_operation": "Accrochage de Koudiet Boukerker et martyre du colonel Zighoud Youcef",
+    "date_debut": "1956-09-23",
+    "date_fin": null,
+    "wilaya_concernee": "Wilaya II (Nord-Constantinois - Secteur de Sidi Mezghiche)",
+    "localisation": {
+      "region_ou_ville": "Koudiet Boukerker / Sidi Mezghiche (Skikda)",
+      "coordonnees_approximatives": {
+        "latitude": 36.685,
+        "longitude": 6.702
+      }
+    },
+    "commandement_aln": [
+      "Zighoud Youcef"
+    ],
+    "type_action": "Combat de rencontre",
+    "description": "Le chef historique de la Wilaya II et architecte du 20 août 1955, le colonel Zighoud Youcef, tombe les armes à la main lors d'un accrochage violent avec une patrouille française au retour du Congrès de la Soummam.",
+    "bilan_et_pertes": {
+      "aln": "Le colonel Zighoud Youcef et ses compagnons tombés en martyrs",
+      "forces_francaises": "Plusieurs soldats français tués ou blessés lors de l'échange de tirs",
+      "civils": "0"
+    },
+    "impact_strategique": "Choc politique majeur pour la Révolution ; Lakhdar Bentobbal et Ali Kafi prendront le relais pour consolider l'organisation militaire de la Wilaya II.",
+    "sources": [
+      {
+        "titre": "Forum de la mémoire d'El Moudjahid : Zighoud Youcef, l'homme-symbole (El Moudjahid)",
+        "url": "https://www.elmoudjahid.dz/fr/actualite/forum-de-la-memoire-d-el-moudjahid-zighoud-youcef-l-homme-symbole-15378",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Youcef Zighoud (Wikipédia)",
+        "url": "https://fr.wikipedia.org/wiki/Youcef_Zighoud",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "id": "OP_1955_012",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Attentats et actions urbaines du groupe Boumelik à Sidi Bel-Abbès",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1955-10-01",
+    "latest": "1955-10-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1955-10-31",
+    "latest": "1955-10-31",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Sidi Bel-Abbès (Centre urbain)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.63085,
+          35.18994
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 5 - Secteur urbain de Sidi Bel-Abbès)",
+  "source_ids": [
+    "SRC_b0ae4e4f222d84da91226b62"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1955_012",
+    "nom_operation": "Attentats et actions urbaines du groupe Boumelik à Sidi Bel-Abbès",
+    "date_debut": "1955-10-01",
+    "date_fin": "1955-10-31",
+    "wilaya_concernee": "Wilaya V (Zone 5 - Secteur urbain de Sidi Bel-Abbès)",
+    "localisation": {
+      "region_ou_ville": "Sidi Bel-Abbès (Centre urbain)",
+      "coordonnees_approximatives": {
+        "latitude": 35.18994,
+        "longitude": -0.63085
+      }
+    },
+    "commandement_aln": [
+      "Groupe Boumelik",
+      "Réseaux urbains FLN de Sidi Bel-Abbès"
+    ],
+    "type_action": "Guérilla urbaine / Sabotage",
+    "description": "Première campagne d'explosions et de sabotages à la bombe artisanale menée par le groupe de fidaïyine de Boumelik contre des édifices coloniaux dans la capitale de la Légion étrangère.",
+    "bilan_et_pertes": {
+      "aln": "Réseau clandestin préservé",
+      "forces_francaises": "Dégâts matériels importants et climat de panique chez les autorités coloniales",
+      "civils": "0"
+    },
+    "impact_strategique": "Entrée de la lutte armée urbaine dans la ville garnison emblématique de l'Algérie coloniale ; documenté par Rédouane Ainad Tabet.",
+    "sources": [
+      {
+        "titre": "Sidi Bel-Abbès : des mythes fondateurs de la colonisation à la libération (Insaniyat / CRASC)",
+        "url": "https://insaniyat.crasc.dz/fr/article/sidi-bel-abbes-des-mythes-fondateurs-de-la-colonisation-a-la-liberation",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

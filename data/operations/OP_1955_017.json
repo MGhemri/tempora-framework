@@ -1,0 +1,90 @@
+{
+  "id": "OP_1955_017",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Batailles d'Oum El Kmakem et du Djebel Ergou (Argou)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1955-07-23",
+    "latest": "1955-07-23",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-06-17",
+    "latest": "1956-06-17",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Oum El Kmakem / Djebel Ergou (Bir El Ater, Tébessa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.058,
+          34.748
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya I (Monts des Nemencha - Bir El Ater)",
+  "source_ids": [
+    "SRC_19a2c1a0243375317c488648",
+    "SRC_94654a5838335044e8718e0e"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1955_017",
+    "nom_operation": "Batailles d'Oum El Kmakem et du Djebel Ergou (Argou)",
+    "date_debut": "1955-07-23",
+    "date_fin": "1956-06-17",
+    "wilaya_concernee": "Wilaya I (Monts des Nemencha - Bir El Ater)",
+    "localisation": {
+      "region_ou_ville": "Oum El Kmakem / Djebel Ergou (Bir El Ater, Tébessa)",
+      "coordonnees_approximatives": {
+        "latitude": 34.748,
+        "longitude": 8.058
+      }
+    },
+    "commandement_aln": [
+      "Lazhar Cheriet",
+      "Bachir Chihani",
+      "Abbas Laghrour"
+    ],
+    "type_action": "Combat de rencontre / Guérilla de montagne",
+    "description": "Deux grandes batailles consécutives dans les Nemencha (juillet 1955 et juin 1956) où les katibas de Lazhar Cheriet mettent en échec les parachutistes coloniaux de Bigeard.",
+    "bilan_et_pertes": {
+      "aln": "Pertes au cours des bombardements aériens intensifs",
+      "forces_francaises": "Dizaines de parachutistes tués et blessés (dont le colonel Bigeard blessé)",
+      "civils": "0"
+    },
+    "impact_strategique": "Victoire militaire éclatante consolidant l'autorité de l'ALN sur le versant sud des monts des Nemencha.",
+    "sources": [
+      {
+        "titre": "La bataille d'Oum El Kmakem dans les Nemencha (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/138657",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Lazhar Cheriet, héros des Nemencha (Zoom Algérie)",
+        "url": "https://zoomalgerie.com/lazhar-cheriet/",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "id": "OP_1956_002",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Opération de détournement du convoi d'armes d'Henri Maillot (Miliana - Baïnem)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-04-04",
+    "latest": "1956-04-04",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "De Miliana (Wilaya d'Aïn Defla) à la forêt de Baïnem (Alger)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.9694,
+          36.7986
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone IV (future Wilaya IV - Algérois) et Zone autonome d'Alger",
+  "source_ids": [
+    "SRC_c2bb3d7fed09a88ea4891df5",
+    "SRC_c10e67c6dfd2c548a5cbd20b",
+    "SRC_0e108717520d3c264d7a3dfb",
+    "SRC_34b21d0a3ef904a4d309189c",
+    "SRC_a0258a5e8e068ff1bc88ed70"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_002",
+    "nom_operation": "Opération de détournement du convoi d'armes d'Henri Maillot (Miliana - Baïnem)",
+    "date_debut": "1956-04-04",
+    "date_fin": null,
+    "wilaya_concernee": "Zone IV (future Wilaya IV - Algérois) et Zone autonome d'Alger",
+    "localisation": {
+      "region_ou_ville": "De Miliana (Wilaya d'Aïn Defla) à la forêt de Baïnem (Alger)",
+      "coordonnees_approximatives": {
+        "latitude": 36.7986,
+        "longitude": 2.9694
+      }
+    },
+    "commandement_aln": [
+      "Henri Maillot (aspirant rallié aux Combattants de la Libération / ALN)",
+      "Réseaux logistiques FLN / PCA d'Alger et de l'Ouarsenis"
+    ],
+    "type_action": "Sabotage",
+    "description": "Le 4 avril 1956, l'aspirant Henri Maillot (du 504e bataillon du Train basé à Miliana) détourne un camion militaire chargé d'un important stock d'armes et de munitions qu'il achemine jusqu'à la forêt de Baïnem près d'Alger. Ligotant le chauffeur, il remet la majeure partie de l'arsenal (120 mitraillettes, fusils, pistolets et caisses de grenades) aux réseaux du FLN/ALN et aux maquis de l'Ouarsenis.",
+    "bilan_et_pertes": {
+      "aln": "Aucune perte lors de l'opération ; récupération de plus de 200 armes à feu et caisses de munitions (Henri Maillot sera tué au combat deux mois plus tard, le 5 juin 1956, près de Lamartine / El Karimia)",
+      "forces_francaises": "Perte sèche d'un convoi entier d'armement militaire moderne",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "Opération logistique spectaculaire qui fournit notamment aux fidayin d'Alger et de la Zone IV les pistolets-mitrailleurs MAT 49 utilisés lors des actions urbaines de 1956-1957.",
+    "sources": [
+      {
+        "titre": "Henri Maillot (militant anticolonialiste) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Henri_Maillot_(militant_anticolonialiste)",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Déserteurs de l'armée française durant la guerre d'Algérie — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/D%C3%A9serteurs_de_l%27arm%C3%A9e_fran%C3%A7aise_durant_la_guerre_d%27Alg%C3%A9rie",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Notice biographique MAÏLLOT Henri — Le Maitron",
+        "url": "https://maitron.fr/maillot-henri/",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Embuscade de Palestro (Djerrah) (elwatan.dz)",
+        "url": "https://elwatan.dz/70e-anniversaire-de-lembuscade-de-djerrah-pres-de-lakhdaria-quand-le-commando-ali-khodja-fait-trembler-larmee-coloniale/",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Embuscade de Palestro (Djerrah) (fr.wikipedia.org)",
+        "url": "https://fr.wikipedia.org/wiki/Embuscade_de_Palestro",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

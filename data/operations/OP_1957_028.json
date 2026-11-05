@@ -1,0 +1,102 @@
+{
+  "id": "OP_1957_028",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscade et bataille du Col de Tirourda dans le massif du Djurdjura (Iferhounène - Aghbalou)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-12-11",
+    "latest": "1957-12-11",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-12-12",
+    "latest": "1957-12-12",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Col de Tirourda (1 758 m d'altitude), entre Iferhounène (Tizi Ouzou) et Aghbalou / Chorfa (Bouira)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.3514,
+          36.4775
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya III (Zone 1 / Zone 2 - Haute Kabylie / Col de Tirourda)",
+  "source_ids": [
+    "SRC_e338304e024bb0a659ba60f3",
+    "SRC_1b5535866d4e1672f780a425",
+    "SRC_8c3c77e3ad386f0cc0295778",
+    "SRC_b7b9f6ade6d2037f8bbe348c"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_028",
+    "nom_operation": "Embuscade et bataille du Col de Tirourda dans le massif du Djurdjura (Iferhounène - Aghbalou)",
+    "date_debut": "1957-12-11",
+    "date_fin": "1957-12-12",
+    "wilaya_concernee": "Wilaya III (Zone 1 / Zone 2 - Haute Kabylie / Col de Tirourda)",
+    "localisation": {
+      "region_ou_ville": "Col de Tirourda (1 758 m d'altitude), entre Iferhounène (Tizi Ouzou) et Aghbalou / Chorfa (Bouira)",
+      "coordonnees_approximatives": {
+        "latitude": 36.4775,
+        "longitude": 4.3514
+      }
+    },
+    "commandement_aln": [
+      "Colonel Amirouche Aït Hamouda",
+      "Mohand Oulhadj",
+      "Chefs des katibas d'Iferhounène et du Djurdjura"
+    ],
+    "type_action": "Embuscade",
+    "description": "Le 11 décembre 1957, sur les pentes enneigées du col de Tirourda (passage stratégique à 1 758 mètres d'altitude franchissant la barrière du Djurdjura entre la Grande Kabylie et la vallée du Sahel/Soummam), une katiba d'élite du colonel Amirouche tend une embuscade dévastatrice contre un convoi militaire français, suivie de deux jours de combats en haute montagne contre les chasseurs alpins et les parachutistes.",
+    "bilan_et_pertes": {
+      "aln": "Une quinzaine de moudjahidine tués dans les combats d'altitude ; récupération d'un lot important d'armes automatiques et de munitions",
+      "forces_francaises": "Destruction de plusieurs véhicules militaires et plus d'une vingtaine de soldats français mis hors de combat",
+      "civils": "Blocus militaire hivernal des villages d'Iferhounène et d'Illiltène"
+    },
+    "impact_strategique": "Rend le franchissement hivernal du Djurdjura extrêmement périlleux pour les troupes françaises et confirme la maîtrise des combats de haute montagne par les bataillons de choc créés par le colonel Amirouche.",
+    "sources": [
+      {
+        "titre": "La question kabyle dans le nationalisme algérien (Les bataillons de choc de la Wilaya III) — Cairn.info",
+        "url": "https://shs.cairn.info/question-kabyle-nationalisme-algerien--9782365122757-page-421?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Wilaya III historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_III_historique",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Sabotages des Portes de Fer et affrontements dans les Bibans (fr.wikipedia.org)",
+        "url": "https://fr.wikipedia.org/wiki/Massacre_de_Melouza",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Sabotages des Portes de Fer et affrontements dans les Bibans (insaniyat.crasc.dz)",
+        "url": "https://insaniyat.crasc.dz/en/article/les-wilayas-dans-la-crise-du-fln-de-lete-1962",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

@@ -1,0 +1,442 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://alnop.vercel.app/schemas/operation.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "schema_version",
+    "title",
+    "start_date",
+    "end_date",
+    "locations",
+    "territorial_assignments",
+    "source_ids",
+    "editorial_status",
+    "quality_flags",
+    "provenance",
+    "legacy_territorial_label"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9_-]+$"
+    },
+    "schema_version": {
+      "const": "2.0.0"
+    },
+    "title": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fr",
+        "ar"
+      ],
+      "properties": {
+        "fr": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "ar": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "start_date": {
+      "$ref": "#/$defs/date"
+    },
+    "end_date": {
+      "$ref": "#/$defs/date"
+    },
+    "locations": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "label",
+          "geometry",
+          "geometry_role",
+          "review_status"
+        ],
+        "properties": {
+          "place_id": {"type":"string","pattern":"^PLC_[A-Za-z0-9_-]+$"},
+          "source_ids": {"type":"array","minItems":1,"uniqueItems":true,"items":{"type":"string","pattern":"^SRC_[a-f0-9]{24}$"}},
+          "label": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "geometry": {
+            "oneOf": [
+              {
+                "type": "null"
+              },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "type",
+                  "coordinates"
+                ],
+                "properties": {
+                  "type": {
+                    "const": "Point"
+                  },
+                  "coordinates": {
+                    "type": "array",
+                    "minItems": 2,
+                    "maxItems": 2,
+                    "items": {
+                      "type": "number"
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "geometry_role": {
+            "enum": [
+              "representative_point",
+              "unknown",
+              "approximate_site",
+              "exact_site"
+            ]
+          },
+          "review_status": {
+            "enum": [
+              "needs_review",
+              "reviewed"
+            ]
+          }
+        }
+      }
+    },
+    "territorial_assignments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "territory_id",
+          "role",
+          "source_ids"
+        ],
+        "properties": {
+          "territory_id": {
+            "type": "string",
+            "pattern": "^[A-Za-z0-9_-]+$"
+          },
+          "role": {
+            "enum": [
+              "primary",
+              "secondary",
+              "cross_territorial",
+              "uncertain"
+            ]
+          },
+          "source_ids": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "legacy_territorial_label": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "source_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^SRC_[a-f0-9]{24}$"
+      }
+    },
+    "editorial_status": {
+      "enum": [
+        "proposed",
+        "under_review",
+        "published",
+        "disputed",
+        "withdrawn"
+      ]
+    },
+    "quality_flags": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "source_commit",
+        "publication_basis",
+        "human_review_recorded"
+      ],
+      "properties": {
+        "source_commit": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{40}$"
+        },
+        "publication_basis": {
+          "enum": [
+            "previously_public_legacy_corpus",
+            "human_review"
+          ]
+        },
+        "human_review_recorded": {
+          "type": "boolean"
+        }
+      }
+    },
+    "legacy": {
+      "type": "object"
+    },
+    "description": {
+      "$ref": "#/$defs/text"
+    },
+    "event_type": {
+      "type": "array",
+      "minItems": 0,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "aliases":{"type":"array","uniqueItems":true,"items":{"type":"object","additionalProperties":false,"required":["value","language","source_ids"],"properties":{"value":{"type":"string","minLength":1,"maxLength":1000},"language":{"enum":["fr","ar"]},"source_ids":{"type":"array","minItems":1,"uniqueItems":true,"items":{"type":"string","pattern":"^SRC_[a-f0-9]{24}$"}}}}},
+    "participants": {"type":"array","uniqueItems":true,"items":{
+      "type":"object","additionalProperties":false,"required":["entity_id","role","source_ids"],
+      "properties":{"entity_id":{"type":"string","pattern":"^(PER|ORG)_[A-Za-z0-9_-]+$"},"role":{"type":"string","minLength":1},
+        "source_ids":{"type":"array","minItems":1,"uniqueItems":true,"items":{"type":"string","pattern":"^SRC_[a-f0-9]{24}$"}}}}},
+    "commanders": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "strategic_impact": {
+      "$ref": "#/$defs/text"
+    },
+    "outcomes": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "aln": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "forces_francaises": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "civils": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "review_history": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "reviewer",
+          "decision",
+          "reference",
+          "reason",
+          "reviewed_at"
+        ],
+        "properties": {
+          "reviewer": {
+            "type": "string",
+            "minLength": 1
+          },
+          "decision": {
+            "enum": [
+              "approved",
+              "rejected",
+              "needs_information"
+            ]
+          },
+          "reference": {
+            "type": "string",
+            "format": "uri"
+          },
+          "reason": {
+            "type": "string",
+            "minLength": 1
+          },
+          "content_sha256": {"type":"string","pattern":"^[a-f0-9]{64}$"},
+          "reviewed_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "editorial_notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "$defs": {
+    "date": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "earliest",
+        "latest",
+        "precision",
+        "certainty"
+      ],
+      "properties": {
+        "earliest": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "latest": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "precision": {
+          "enum": [
+            "day",
+            "month",
+            "year",
+            "range",
+            "unknown"
+          ]
+        },
+        "certainty": {
+          "enum": [
+            "documented",
+            "approximate",
+            "disputed",
+            "unknown"
+          ]
+        }
+      }
+    },
+    "text": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fr",
+        "ar"
+      ],
+      "properties": {
+        "fr": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "minLength": 1
+        },
+        "ar": {
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "provenance": {
+            "properties": {
+              "publication_basis": {
+                "const": "previously_public_legacy_corpus"
+              }
+            },
+            "type": "object"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "legacy"
+        ],
+        "properties": {
+          "legacy": {}
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "provenance": {
+            "properties": {
+              "publication_basis": {
+                "const": "human_review"
+              }
+            },
+            "type": "object"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "description",
+          "event_type",
+          "review_history",
+          "created_at",
+          "updated_at"
+        ],
+        "properties": {
+          "description": {},
+          "event_type": {},
+          "review_history": {},
+          "created_at": {},
+          "updated_at": {}
+        }
+      }
+    }
+  ]
+}

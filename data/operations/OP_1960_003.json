@@ -1,0 +1,89 @@
+{
+  "id": "OP_1960_003",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Attaques à la grenade et au pistolet-mitrailleur des commandos FLN à Lille, Roubaix et Tourcoing",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1960-03-15",
+    "latest": "1960-03-15",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1960-11-20",
+    "latest": "1960-11-20",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Roubaix (quartier du Pile et de l'Épeule), Lille (quartier de Wazemmes et Fives) et Tourcoing (Département du Nord)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.1746,
+          50.6942
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Fédération de France du FLN (« 7e Wilaya » - Wilaya du Nord)",
+  "source_ids": [
+    "SRC_64158d24b501d641539e6017",
+    "SRC_1693d9a6ce6f456155ce6d05"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1960_003",
+    "nom_operation": "Attaques à la grenade et au pistolet-mitrailleur des commandos FLN à Lille, Roubaix et Tourcoing",
+    "date_debut": "1960-03-15",
+    "date_fin": "1960-11-20",
+    "wilaya_concernee": "Fédération de France du FLN (« 7e Wilaya » - Wilaya du Nord)",
+    "localisation": {
+      "region_ou_ville": "Roubaix (quartier du Pile et de l'Épeule), Lille (quartier de Wazemmes et Fives) et Tourcoing (Département du Nord)",
+      "coordonnees_approximatives": {
+        "latitude": 50.6942,
+        "longitude": 3.1746
+      }
+    },
+    "commandement_aln": [
+      "Chefs de la Wilaya du Nord de la Fédération de France",
+      "Groupes de choc de Roubaix-Tourcoing-Lille"
+    ],
+    "type_action": "Guérilla urbaine",
+    "description": "Dans la métropole textile de Lille-Roubaix-Tourcoing, frontalière de la Belgique, les groupes armés du FLN mènent en 1960 une série d'attaques audacieuses au pistolet-mitrailleur et à la grenade contre des postes de police, des patrouilles de CRS et des bastions messalistes (notamment à Roubaix, rue d'Archimède et quartier de l'Épeule), utilisant la frontière belge toute proche comme zone de repli immédiat.",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs membres des commandos abattus lors de barrages routiers ou arrêtés par la police de Lille",
+      "forces_francaises": "Policiers et CRS tués ou blessés lors des fusillades nocturnes à Roubaix et Lille",
+      "civils": "Nombreuses victimes lors de la « guerre des cafés » à Roubaix et Tourcoing"
+    },
+    "impact_strategique": "Consacre l'agglomération de Lille-Roubaix-Tourcoing comme l'un des bastions les plus actifs et les mieux armés de la 7e Wilaya grâce à la porosité de la frontière franco-belge.",
+    "sources": [
+      {
+        "titre": "Les Algériens dans le Nord pendant la guerre d'indépendance — Presses Universitaires du Septentrion (OpenEdition Books)",
+        "url": "https://books.openedition.org/septentrion/47798?lang=en",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "La guerre d'Algérie dans le Nord (Lille-Roubaix-Tourcoing) — IRHiS (OpenEdition Books)",
+        "url": "https://books.openedition.org/irhis/2322?lang=en",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

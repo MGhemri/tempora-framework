@@ -1,0 +1,90 @@
+{
+  "id": "OP_1957_031",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscade et bataille d'El Hassania / Djebel Louh (Secteur d'Aïn Defla - Chlef)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-05-05",
+    "latest": "1957-05-05",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-05-06",
+    "latest": "1957-05-06",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Secteur d'El Hassania, Bourached et massif du Djebel Louh, au sud d'Aïn Defla et d'El Attaf (Wilaya d'Aïn Defla / Chlef)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.95,
+          36.1333
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya IV (Zone 3 - Vallée du Chélif / Aïn Defla / Ouarsenis Nord)",
+  "source_ids": [
+    "SRC_c02b25f54dc75e28e0675336",
+    "SRC_3083531056cbd5b680cecfae"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_031",
+    "nom_operation": "Embuscade et bataille d'El Hassania / Djebel Louh (Secteur d'Aïn Defla - Chlef)",
+    "date_debut": "1957-05-05",
+    "date_fin": "1957-05-06",
+    "wilaya_concernee": "Wilaya IV (Zone 3 - Vallée du Chélif / Aïn Defla / Ouarsenis Nord)",
+    "localisation": {
+      "region_ou_ville": "Secteur d'El Hassania, Bourached et massif du Djebel Louh, au sud d'Aïn Defla et d'El Attaf (Wilaya d'Aïn Defla / Chlef)",
+      "coordonnees_approximatives": {
+        "latitude": 36.1333,
+        "longitude": 1.95
+      }
+    },
+    "commandement_aln": [
+      "Si M'Hamed Bougara",
+      "Djilali Bounaâma dit Si Mohamed",
+      "Commandants des katibas de la Zone 3 (Wilaya IV)"
+    ],
+    "type_action": "Embuscade",
+    "description": "Les katibas de la Zone 3 de la Wilaya IV tendent une embuscade dévastatrice contre une compagnie militaire française engagée sur les contreforts nord de l'Ouarsenis (secteur d'El Hassania / Djebel Louh, près d'Aïn Defla), détruisant le détachement ennemi avant de repousser les contre-attaques héliportées.",
+    "bilan_et_pertes": {
+      "aln": "Une quinzaine de moudjahidine tués ou blessés ; récupération d'un important lot de fusils-mitrailleurs, de mortiers et de munitions",
+      "forces_francaises": "Une compagnie française décimée (plusieurs dizaines de tués et blessés) et 1 hélicoptère touché",
+      "civils": "Bombardements des douars du Djebel Louh et de Bourached"
+    },
+    "impact_strategique": "Confirme la montée en puissance des bataillons de la Wilaya IV au printemps 1957 entre la vallée du Chélif et le massif de l'Ouarsenis.",
+    "sources": [
+      {
+        "titre": "Wilaya IV : Les maquis de la dignité — El Moudjahid",
+        "url": "https://www.elmoudjahid.dz/fr/actualite/wilaya-iv-les-maquis-de-la-dignite-242798",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Répertoire numérique de la série 1H (Zone Nord-Algérois et Vallée du Chélif) — Service Historique de la Défense (SHD)",
+        "url": "https://www.servicehistorique.sga.defense.gouv.fr/sites/default/files/notices_files/SHDGR_REP_1H_1091_A_4881_T2_1.pdf",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

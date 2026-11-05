@@ -1,0 +1,88 @@
+{
+  "id": "OP_1959_004",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats de Frenda et de l'Ouarsenis-Ouest (Secteur Tiaret - Relizane)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1959-03-14",
+    "latest": "1959-03-14",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1959-03-17",
+    "latest": "1959-03-17",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massifs forestiers de Frenda, Djebel Guezoul et contreforts ouest de l'Ouarsenis entre Tiaret et Relizane (Wilayas de Tiaret et Relizane)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.05,
+          35.06
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 4 / Zone 6 - Tiaret, Frenda et Ouarsenis-Ouest)",
+  "source_ids": [
+    "SRC_eba69212f15888997ff9fbf8",
+    "SRC_cbfd6a95297c0e7a95b045fc"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1959_004",
+    "nom_operation": "Combats de Frenda et de l'Ouarsenis-Ouest (Secteur Tiaret - Relizane)",
+    "date_debut": "1959-03-14",
+    "date_fin": "1959-03-17",
+    "wilaya_concernee": "Wilaya V (Zone 4 / Zone 6 - Tiaret, Frenda et Ouarsenis-Ouest)",
+    "localisation": {
+      "region_ou_ville": "Massifs forestiers de Frenda, Djebel Guezoul et contreforts ouest de l'Ouarsenis entre Tiaret et Relizane (Wilayas de Tiaret et Relizane)",
+      "coordonnees_approximatives": {
+        "latitude": 35.06,
+        "longitude": 1.05
+      }
+    },
+    "commandement_aln": [
+      "Commandants de la Zone de Tiaret-Relizane (Wilaya V)"
+    ],
+    "type_action": "Embuscade",
+    "description": "Pour soulager la Wilaya IV voisine soumise à l'Opération Couronne (Plan Challe), les katibas orientales de la Wilaya V (secteurs de Frenda, Tiaret et Zemmora/Relizane) lancent une série d'embuscades et d'accrochages violents contre les unités de réserve générale françaises sur le flanc ouest du massif de l'Ouarsenis et dans les forêts de Frenda.",
+    "bilan_et_pertes": {
+      "aln": "Une quarantaine de moudjahidine tués au cours de quatre jours d'opérations mobiles",
+      "forces_francaises": "Plusieurs dizaines de soldats français tués ou blessés dans les embuscades forestières",
+      "civils": "Extension des zones interdites et des camps de regroupement dans la région de Tiaret et Relizane"
+    },
+    "impact_strategique": "Démontre la solidarité inter-wilayas entre la Wilaya V et la Wilaya IV aux confins de l'Ouarsenis occidental et oblige le commandement français à maintenir d'importantes forces dans le secteur de Tiaret-Relizane.",
+    "sources": [
+      {
+        "titre": "Opération Couronne et combats dans l'Ouarsenis — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Op%C3%A9ration_Couronne",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Répertoire numérique de la série 1H (Tome 2 - Opérations et Wilayas) — Service Historique de la Défense (SHD)",
+        "url": "https://www.servicehistorique.sga.defense.gouv.fr/sites/default/files/notices_files/SHDGR_REP_1H_1091_A_4881_T2_1.pdf",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

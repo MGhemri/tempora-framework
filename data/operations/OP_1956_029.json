@@ -1,0 +1,90 @@
+{
+  "id": "OP_1956_029",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Embuscades des palmeraies des Ziban (Tolga - Sidi Okba) et harcèlement de la garnison de Biskra",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1956-12-08",
+    "latest": "1956-12-08",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1956-12-10",
+    "latest": "1956-12-10",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Oasis de Tolga, Bouchagroune, Sidi Okba et abords de Biskra (Wilaya de Biskra)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          5.3833,
+          34.7222
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya VI (Zone 3 / Région des Ziban - Biskra / Tolga / Sidi Okba)",
+  "source_ids": [
+    "SRC_2b53388b0344e0d4a0716eee",
+    "SRC_39560249ec1c3a970f9bb066"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1956_029",
+    "nom_operation": "Embuscades des palmeraies des Ziban (Tolga - Sidi Okba) et harcèlement de la garnison de Biskra",
+    "date_debut": "1956-12-08",
+    "date_fin": "1956-12-10",
+    "wilaya_concernee": "Wilaya VI (Zone 3 / Région des Ziban - Biskra / Tolga / Sidi Okba)",
+    "localisation": {
+      "region_ou_ville": "Oasis de Tolga, Bouchagroune, Sidi Okba et abords de Biskra (Wilaya de Biskra)",
+      "coordonnees_approximatives": {
+        "latitude": 34.7222,
+        "longitude": 5.3833
+      }
+    },
+    "commandement_aln": [
+      "Si El Haouès",
+      "Mohamed Chaâbani",
+      "Amor Driss"
+    ],
+    "type_action": "Embuscade",
+    "description": "Dans le couloir des oasis des Ziban au sud et à l'ouest de Biskra (Tolga, Bouchagroune, Sidi Okba), les sections de l'ALN dirigées par Si El Haouès et le jeune officier Mohamed Chaâbani tendent des embuscades aux patrouilles motorisées et méharistes françaises sous le couvert des palmeraies et coupent les lignes télégraphiques reliant Biskra à l'Oued Rhir (Touggourt).",
+    "bilan_et_pertes": {
+      "aln": "Quelques fidayin et moudjahidine blessés ; saisie d'armes automatiques et de munitions",
+      "forces_francaises": "Une quinzaine de soldats et supplétifs mis hors de combat et deux véhicules blindés légers détruits",
+      "civils": "Couvre-feu et ratissages dans les palmeraies de Tolga et de Sidi Okba"
+    },
+    "impact_strategique": "Ancre durablement la Wilaya VI dans les oasis du Bas-Sahara septentrional (Ziban) et assure la liaison avec la Wilaya I (Aurès).",
+    "sources": [
+      {
+        "titre": "Si El Haouès — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Si_El_Haou%C3%A8s",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Les combats de la Wilaya VI historique — Revue académique CERIST (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/280826",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

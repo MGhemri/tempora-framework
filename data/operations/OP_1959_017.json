@@ -1,0 +1,90 @@
+{
+  "id": "OP_1959_017",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille de franchissement de Bekkaria et du Djebel Anoual (Sud de Tébessa - Ligne Morice)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1959-12-14",
+    "latest": "1959-12-14",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1959-12-16",
+    "latest": "1959-12-16",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Bekkaria, El Kouif et massif du Djebel Anoual, à l'est et au sud-ouest de Tébessa (Wilaya de Tébessa)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          8.2333,
+          35.3667
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya I (Aurès-Nemencha) et Armée des Frontières (Secteur de Tébessa - Bekkaria)",
+  "source_ids": [
+    "SRC_906cdde683fd914e4fa89d5e",
+    "SRC_7b023a770a8074fb60dfc782"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1959_017",
+    "nom_operation": "Bataille de franchissement de Bekkaria et du Djebel Anoual (Sud de Tébessa - Ligne Morice)",
+    "date_debut": "1959-12-14",
+    "date_fin": "1959-12-16",
+    "wilaya_concernee": "Wilaya I (Aurès-Nemencha) et Armée des Frontières (Secteur de Tébessa - Bekkaria)",
+    "localisation": {
+      "region_ou_ville": "Bekkaria, El Kouif et massif du Djebel Anoual, à l'est et au sud-ouest de Tébessa (Wilaya de Tébessa)",
+      "coordonnees_approximatives": {
+        "latitude": 35.3667,
+        "longitude": 8.2333
+      }
+    },
+    "commandement_aln": [
+      "Tahar Zbiri",
+      "Mostefa Benloucif",
+      "Officiers de liaison de la Wilaya I"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "En décembre 1959, une colonne de renfort et de ravitaillement en armes et munitions destinée à la Wilaya I perce de nuit les réseaux de barbelés électrifiés et les champs de mines du secteur de Bekkaria (près de Tébessa), puis livre deux jours de combats intenses au Djebel Anoual contre les régiments de la Légion étrangère et les parachutistes français.",
+    "bilan_et_pertes": {
+      "aln": "Une trentaine de moudjahidine tombés au champ d'honneur ; jonction réussie du reste de la colonne avec les katibas des Nemencha",
+      "forces_francaises": "Pertes sévères parmi les unités d'interception françaises et 1 hélicoptère abattu au Djebel Anoual",
+      "civils": "Aucune victime civile"
+    },
+    "impact_strategique": "Assure le ravitaillement vital en munitions des maquis de l'Aurès-Nemencha (Wilaya I) dirigés par Tahar Zbiri à l'hiver 1959-1960.",
+    "sources": [
+      {
+        "titre": "Wilaya I historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_I_historique",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Mourir à Sakiet : les combats sur la frontière de Tébessa — Cairn.info",
+        "url": "https://shs.cairn.info/mourir-a-sakiet--9782130835714-page-229?lang=fr",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

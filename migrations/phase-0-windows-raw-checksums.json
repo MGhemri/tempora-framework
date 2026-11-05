@@ -1,0 +1,599 @@
+{
+  "files": {
+    "operations_fln_1954_1962.json": "5aae90f9ebcda7fcaeea965c429812c017f54cbdc9d9779ae6850612b5213180",
+    "operations_fln_1954_1962.geojson": "958945316fec773aff1106ced48de2a27eafba4be60a248e77ef67616739e57c",
+    "docs/data/operations_fln_1954_1962.json": "5aae90f9ebcda7fcaeea965c429812c017f54cbdc9d9779ae6850612b5213180",
+    "docs/data/operations_fln_1954_1962.geojson": "958945316fec773aff1106ced48de2a27eafba4be60a248e77ef67616739e57c"
+  },
+  "ids": [
+    "OP_1954_001",
+    "OP_1954_003",
+    "OP_1954_007",
+    "OP_1954_008",
+    "OP_1954_010",
+    "OP_1954_006",
+    "OP_1954_009",
+    "OP_1954_004",
+    "OP_1954_011",
+    "OP_1954_005",
+    "OP_1954_002",
+    "OP_1955_013",
+    "OP_1955_007",
+    "OP_1955_014",
+    "OP_1955_008",
+    "OP_1955_004",
+    "OP_1955_010",
+    "OP_1955_005",
+    "OP_1955_015",
+    "OP_1955_017",
+    "OP_1955_006",
+    "OP_1955_016",
+    "OP_1955_001",
+    "OP_1955_002",
+    "OP_1955_003",
+    "OP_1955_012",
+    "OP_1955_009",
+    "OP_1955_011",
+    "OP_1956_040",
+    "OP_1956_042",
+    "OP_1956_047",
+    "OP_1956_048",
+    "OP_1956_014",
+    "OP_1956_015",
+    "OP_1956_018",
+    "OP_1956_039",
+    "OP_1956_001",
+    "OP_1956_002",
+    "OP_1956_009",
+    "OP_1956_044",
+    "OP_1956_025",
+    "OP_1956_045",
+    "OP_1956_003",
+    "OP_1956_010",
+    "OP_1956_019",
+    "OP_1956_037",
+    "OP_1956_046",
+    "OP_1956_022",
+    "OP_1956_032",
+    "OP_1956_049",
+    "OP_1956_036",
+    "OP_1956_011",
+    "OP_1956_016",
+    "OP_1956_035",
+    "OP_1956_026",
+    "OP_1956_012",
+    "OP_1956_004",
+    "OP_1956_034",
+    "OP_1956_050",
+    "OP_1956_020",
+    "OP_1956_041",
+    "OP_1956_005",
+    "OP_1956_006",
+    "OP_1956_038",
+    "OP_1956_023",
+    "OP_1956_017",
+    "OP_1956_028",
+    "OP_1956_043",
+    "OP_1956_033",
+    "OP_1956_027",
+    "OP_1956_013",
+    "OP_1956_021",
+    "OP_1956_007",
+    "OP_1956_030",
+    "OP_1956_051",
+    "OP_1956_024",
+    "OP_1956_031",
+    "OP_1956_029",
+    "OP_1956_008",
+    "OP_1957_048",
+    "OP_1957_049",
+    "OP_1957_043",
+    "OP_1957_016",
+    "OP_1957_001",
+    "OP_1957_002",
+    "OP_1957_044",
+    "OP_1957_003",
+    "OP_1957_011",
+    "OP_1957_029",
+    "OP_1957_020",
+    "OP_1957_012",
+    "OP_1957_024",
+    "OP_1957_052",
+    "OP_1957_017",
+    "OP_1957_030",
+    "OP_1957_034",
+    "OP_1957_004",
+    "OP_1957_031",
+    "OP_1957_005",
+    "OP_1957_021",
+    "OP_1957_050",
+    "OP_1957_006",
+    "OP_1957_007",
+    "OP_1957_047",
+    "OP_1957_040",
+    "OP_1957_041",
+    "OP_1957_008",
+    "OP_1957_013",
+    "OP_1957_022",
+    "OP_1957_053",
+    "OP_1957_025",
+    "OP_1957_037",
+    "OP_1957_038",
+    "OP_1957_009",
+    "OP_1957_032",
+    "OP_1957_014",
+    "OP_1957_035",
+    "OP_1957_018",
+    "OP_1957_026",
+    "OP_1957_042",
+    "OP_1957_051",
+    "OP_1957_039",
+    "OP_1957_033",
+    "OP_1957_010",
+    "OP_1957_023",
+    "OP_1957_015",
+    "OP_1957_045",
+    "OP_1957_046",
+    "OP_1957_036",
+    "OP_1957_027",
+    "OP_1957_019",
+    "OP_1957_028",
+    "OP_1958_044",
+    "OP_1958_001",
+    "OP_1958_051",
+    "OP_1958_028",
+    "OP_1958_045",
+    "OP_1958_034",
+    "OP_1958_002",
+    "OP_1958_020",
+    "OP_1958_049",
+    "OP_1958_026",
+    "OP_1958_052",
+    "OP_1958_046",
+    "OP_1958_047",
+    "OP_1958_023",
+    "OP_1958_038",
+    "OP_1958_030",
+    "OP_1958_043",
+    "OP_1958_008",
+    "OP_1958_003",
+    "OP_1958_011",
+    "OP_1958_054",
+    "OP_1958_024",
+    "OP_1958_035",
+    "OP_1958_021",
+    "OP_1958_039",
+    "OP_1958_050",
+    "OP_1958_053",
+    "OP_1958_031",
+    "OP_1958_009",
+    "OP_1958_029",
+    "OP_1958_037",
+    "OP_1958_032",
+    "OP_1958_025",
+    "OP_1958_022",
+    "OP_1958_004",
+    "OP_1958_005",
+    "OP_1958_012",
+    "OP_1958_013",
+    "OP_1958_014",
+    "OP_1958_015",
+    "OP_1958_019",
+    "OP_1958_017",
+    "OP_1958_040",
+    "OP_1958_016",
+    "OP_1958_018",
+    "OP_1958_006",
+    "OP_1958_010",
+    "OP_1958_007",
+    "OP_1958_042",
+    "OP_1958_033",
+    "OP_1958_036",
+    "OP_1958_041",
+    "OP_1958_048",
+    "OP_1958_027",
+    "OP_1959_001",
+    "OP_1959_002",
+    "OP_1959_014",
+    "OP_1959_010",
+    "OP_1959_004",
+    "OP_1959_012",
+    "OP_1959_006",
+    "OP_1959_019",
+    "OP_1959_007",
+    "OP_1959_009",
+    "OP_1959_015",
+    "OP_1959_003",
+    "OP_1959_013",
+    "OP_1959_016",
+    "OP_1959_018",
+    "OP_1959_011",
+    "OP_1959_008",
+    "OP_1960_004",
+    "OP_1959_005",
+    "OP_1959_017",
+    "OP_1960_010",
+    "OP_1960_015",
+    "OP_1960_003",
+    "OP_1960_007",
+    "OP_1960_001",
+    "OP_1960_011",
+    "OP_1960_014",
+    "OP_1960_005",
+    "OP_1960_008",
+    "OP_1960_012",
+    "OP_1960_017",
+    "OP_1960_006",
+    "OP_1960_016",
+    "OP_1960_009",
+    "OP_1960_013",
+    "OP_1960_002",
+    "OP_1960_018",
+    "OP_1960_019",
+    "OP_1961_001",
+    "OP_1961_009",
+    "OP_1961_003",
+    "OP_1961_006",
+    "OP_1961_004",
+    "OP_1961_013",
+    "OP_1961_007",
+    "OP_1961_014",
+    "OP_1961_010",
+    "OP_1961_017",
+    "OP_1961_005",
+    "OP_1961_018",
+    "OP_1961_015",
+    "OP_1961_011",
+    "OP_1961_002",
+    "OP_1961_008",
+    "OP_1961_016",
+    "OP_1961_012",
+    "OP_1962_001",
+    "OP_1962_002",
+    "OP_1962_004",
+    "OP_1962_005",
+    "OP_1962_012",
+    "OP_1962_003",
+    "OP_1962_006",
+    "OP_1962_013",
+    "OP_1962_007",
+    "OP_1962_014",
+    "OP_1962_008",
+    "OP_1962_015",
+    "OP_1962_016",
+    "OP_1962_009",
+    "OP_1962_017",
+    "OP_1962_018",
+    "OP_1962_010",
+    "OP_1962_011",
+    "OP_1962_019",
+    "OP_1962_020",
+    "OP_1962_021"
+  ],
+  "contracts": [
+    {
+      "handler": "operations",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, OPTIONS",
+        "access-control-allow-headers": "Content-Type, Accept",
+        "cache-control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+        "content-type": "application/json; charset=utf-8"
+      },
+      "body_sha256": "5c4f3bf803295abc5620f2a6afd36655daf43f581f660ded61aa9a7982fae106"
+    },
+    {
+      "handler": "operations",
+      "query": {
+        "page": "2",
+        "limit": "20"
+      },
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, OPTIONS",
+        "access-control-allow-headers": "Content-Type, Accept",
+        "cache-control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+        "content-type": "application/json; charset=utf-8"
+      },
+      "body_sha256": "1eda05a2f5ed01d91add2e81e9cfa572a59786bb0992778baaeaf0e2af26bb71"
+    },
+    {
+      "handler": "operations",
+      "query": {
+        "year": "1954"
+      },
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, OPTIONS",
+        "access-control-allow-headers": "Content-Type, Accept",
+        "cache-control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+        "content-type": "application/json; charset=utf-8"
+      },
+      "body_sha256": "5bd4bd64e6e49e04a24e533346633b9c744d7d77dd320389a9afaf71694d921f"
+    },
+    {
+      "handler": "operations",
+      "query": {
+        "wilaya": "W3"
+      },
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, OPTIONS",
+        "access-control-allow-headers": "Content-Type, Accept",
+        "cache-control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+        "content-type": "application/json; charset=utf-8"
+      },
+      "body_sha256": "bfdc2fb1482eccd29e51018a5db2932e5f4599553a166ed13f5d84bbdbb1bb37"
+    },
+    {
+      "handler": "operations",
+      "query": {
+        "q": "Kabylie"
+      },
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, OPTIONS",
+        "access-control-allow-headers": "Content-Type, Accept",
+        "cache-control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+        "content-type": "application/json; charset=utf-8"
+      },
+      "body_sha256": "fefb4d7572d29aeb738dd9b07b820e8a1af8983045e612f43e2db3dcbc90e331"
+    },
+    {
+      "handler": "operations",
+      "query": {
+        "format": "geojson"
+      },
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, OPTIONS",
+        "access-control-allow-headers": "Content-Type, Accept",
+        "cache-control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+        "content-type": "application/geo+json; charset=utf-8"
+      },
+      "body_sha256": "7be8744e0259970021ab63bf96683fccd28d2cac885566ab43461a4b49481e4b"
+    },
+    {
+      "handler": "operations",
+      "query": {
+        "id": "OP_1954_001"
+      },
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, OPTIONS",
+        "access-control-allow-headers": "Content-Type, Accept",
+        "cache-control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+        "content-type": "application/json; charset=utf-8"
+      },
+      "body_sha256": "dbd86d467066d62fcc003a3342f729d4dd0b6c103d464478e1ff72bf8be6f962"
+    },
+    {
+      "handler": "operations",
+      "query": {
+        "id": "UNKNOWN"
+      },
+      "method": "GET",
+      "status": 404,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, OPTIONS",
+        "access-control-allow-headers": "Content-Type, Accept",
+        "cache-control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+        "content-type": "application/json; charset=utf-8"
+      },
+      "body_sha256": "b62b3e828c531b43e0b4b29bea2d42bcd4562a73705438bac3bbc5e8f0a3cf50"
+    },
+    {
+      "handler": "operations",
+      "query": {
+        "page": "0"
+      },
+      "method": "GET",
+      "status": 400,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, OPTIONS",
+        "access-control-allow-headers": "Content-Type, Accept",
+        "cache-control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+        "content-type": "application/json; charset=utf-8"
+      },
+      "body_sha256": "d7999244a0e46eb10667824250cea5cb44b80ba7c9506e06d8dbaa20c2947201"
+    },
+    {
+      "handler": "operations",
+      "query": {
+        "limit": "301"
+      },
+      "method": "GET",
+      "status": 400,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, OPTIONS",
+        "access-control-allow-headers": "Content-Type, Accept",
+        "cache-control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+        "content-type": "application/json; charset=utf-8"
+      },
+      "body_sha256": "132a4a7144e333786baf3b1dd3040f4c90e992febead8c7439f9d6b4cfcb64b2"
+    },
+    {
+      "handler": "operations",
+      "query": {
+        "date_from": "1962",
+        "date_to": "1954"
+      },
+      "method": "GET",
+      "status": 400,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, OPTIONS",
+        "access-control-allow-headers": "Content-Type, Accept",
+        "cache-control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+        "content-type": "application/json; charset=utf-8"
+      },
+      "body_sha256": "75b551fb9121f909dd8f0540adca7a889a38d56e49a33ae582b101c20368dcb7"
+    },
+    {
+      "handler": "operations",
+      "query": {
+        "sort": "invalid"
+      },
+      "method": "GET",
+      "status": 400,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, OPTIONS",
+        "access-control-allow-headers": "Content-Type, Accept",
+        "cache-control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+        "content-type": "application/json; charset=utf-8"
+      },
+      "body_sha256": "08a83024e34665565e1c19d52c64236e1f8acbc35813cef55d97862a83b526c2"
+    },
+    {
+      "handler": "operations",
+      "query": {
+        "format": "xml"
+      },
+      "method": "GET",
+      "status": 400,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, OPTIONS",
+        "access-control-allow-headers": "Content-Type, Accept",
+        "cache-control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+        "content-type": "application/json; charset=utf-8"
+      },
+      "body_sha256": "4204ba53f5e6f42e4274b036c8af0b23b6e9ae2cdcc4738da121fc7a9468b875"
+    },
+    {
+      "handler": "operations",
+      "query": {
+        "q": "NO_MATCH_SYNTHETIC_938273"
+      },
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, OPTIONS",
+        "access-control-allow-headers": "Content-Type, Accept",
+        "cache-control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+        "content-type": "application/json; charset=utf-8"
+      },
+      "body_sha256": "bb8df6538b04daf938f658eb73062214765fb881e0cfb08e4aee04032ecb563e"
+    },
+    {
+      "handler": "operations/[id]",
+      "query": {
+        "id": "OP_1954_001"
+      },
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, OPTIONS",
+        "access-control-allow-headers": "Content-Type, Accept",
+        "cache-control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+        "content-type": "application/json; charset=utf-8"
+      },
+      "body_sha256": "dbd86d467066d62fcc003a3342f729d4dd0b6c103d464478e1ff72bf8be6f962"
+    },
+    {
+      "handler": "operations/[id]",
+      "query": {},
+      "method": "GET",
+      "status": 400,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, OPTIONS",
+        "access-control-allow-headers": "Content-Type, Accept",
+        "cache-control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+        "content-type": "application/json; charset=utf-8"
+      },
+      "body_sha256": "06bee35376ceec0415ba3dbcc70caf716d428e031a5c8b9b7b14f641a9f4254a"
+    },
+    {
+      "handler": "stats",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, OPTIONS",
+        "access-control-allow-headers": "Content-Type, Accept",
+        "cache-control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+        "content-type": "application/json; charset=utf-8"
+      },
+      "body_sha256": "f62ec789ed18a73da3df1528032d413cc08df1fc9244b05cc56631f651c6eba0"
+    },
+    {
+      "handler": "wilayas",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, OPTIONS",
+        "access-control-allow-headers": "Content-Type, Accept",
+        "cache-control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+        "content-type": "application/json; charset=utf-8"
+      },
+      "body_sha256": "d7b9a9fe0fe3e8cd0830b90fb310715d3f9831426c67185ae1a602729db796a3"
+    },
+    {
+      "handler": "index",
+      "query": {},
+      "method": "GET",
+      "status": 200,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, OPTIONS",
+        "access-control-allow-headers": "Content-Type, Accept",
+        "cache-control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+        "content-type": "application/json; charset=utf-8"
+      },
+      "body_sha256": "c2618f450e4f93ee9a9919d01ccd72de890f8772349a4ffc23ccf4fbdb4d16b8"
+    },
+    {
+      "handler": "operations",
+      "query": {},
+      "method": "OPTIONS",
+      "status": 204,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, OPTIONS",
+        "access-control-allow-headers": "Content-Type, Accept",
+        "cache-control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+        "content-type": "application/json; charset=utf-8"
+      },
+      "body_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b"
+    },
+    {
+      "handler": "operations",
+      "query": {},
+      "method": "POST",
+      "status": 405,
+      "headers": {
+        "access-control-allow-origin": "*",
+        "access-control-allow-methods": "GET, OPTIONS",
+        "access-control-allow-headers": "Content-Type, Accept",
+        "cache-control": "public, max-age=3600, s-maxage=86400, stale-while-revalidate=604800",
+        "content-type": "application/json; charset=utf-8"
+      },
+      "body_sha256": "1bf5dc72f16cebc83ed6251cd67da6f07584c6f94b6ed8cbb346a425f7b44796"
+    }
+  ]
+}

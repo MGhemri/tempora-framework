@@ -1,0 +1,102 @@
+{
+  "id": "OP_1958_022",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Opérations de commando et sabotage des dépôts pétroliers du port de Philippeville (Skikda)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-08-14",
+    "latest": "1958-08-14",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-08-15",
+    "latest": "1958-08-15",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Zone portuaire et dépôts d'hydrocarbures de Philippeville (actuelle Skikda, Wilaya de Skikda)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.9092,
+          36.8797
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya II (Zone de Skikda / Philippeville et Massif de Collo)",
+  "source_ids": [
+    "SRC_4cf4115e95c79ff1d23ce603",
+    "SRC_1c49f4f4c8371f973afb5ac8",
+    "SRC_577a4990a73aa8b3ce1e3795",
+    "SRC_6cca3f69498f39bbf79b350e"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_022",
+    "nom_operation": "Opérations de commando et sabotage des dépôts pétroliers du port de Philippeville (Skikda)",
+    "date_debut": "1958-08-14",
+    "date_fin": "1958-08-15",
+    "wilaya_concernee": "Wilaya II (Zone de Skikda / Philippeville et Massif de Collo)",
+    "localisation": {
+      "region_ou_ville": "Zone portuaire et dépôts d'hydrocarbures de Philippeville (actuelle Skikda, Wilaya de Skikda)",
+      "coordonnees_approximatives": {
+        "latitude": 36.8797,
+        "longitude": 6.9092
+      }
+    },
+    "commandement_aln": [
+      "Ali Kafi (Colonel de la Wilaya II)",
+      "Salah Boubnider dit Sawt El Arab",
+      "Commandos de fidayin et artificiers de Skikda"
+    ],
+    "type_action": "Sabotage",
+    "description": "Un commando spécialisé de la Wilaya II s'infiltre dans le périmètre sécurisé du port de Philippeville (Skikda) — principal débouché maritime et base logistique militaire du Constantinois — et déclenche des charges explosives contre les cuves de carburant et les entrepôts portuaires, provoquant un gigantesque incendie.",
+    "bilan_et_pertes": {
+      "aln": "Exfiltration réussie d'une partie du commando vers les collines de Stora et le massif de Collo",
+      "forces_francaises": "Destruction d'importants stocks d'hydrocarbures et d'équipements logistiques ; plusieurs militaires blessés",
+      "civils": "Évacuation temporaire des quais du port de Philippeville"
+    },
+    "impact_strategique": "Frappe directement la principale base logistique navale et pétrolière de l'armée française dans le Nord-Constantinois quelques jours avant l'ouverture du second front en métropole.",
+    "sources": [
+      {
+        "titre": "La Wilaya II historique — Cairn.info",
+        "url": "https://shs.cairn.info/la-wilaya-ii-historique--9789947394052-page-103?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Wilaya II historique — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_II_historique",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Batailles du Djebel Maâdid et couloir du Hodna (aps.dz)",
+        "url": "https://www.aps.dz/fr/algerie/societe/mnanrw2x-commemoration-de-la-mort-en-martyrs-des-colonels-amirouche-et-si-el-houes",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Batailles du Djebel Maâdid et couloir du Hodna (fr.wikipedia.org)",
+        "url": "https://fr.wikipedia.org/wiki/Amirouche_A%C3%AFt_Hamouda",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

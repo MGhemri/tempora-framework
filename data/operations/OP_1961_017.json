@@ -1,0 +1,82 @@
+{
+  "id": "OP_1961_017",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combat et harcèlement de Sidi Ali Benyoub",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1961-07-31",
+    "latest": "1961-07-31",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1961-08-02",
+    "latest": "1961-08-02",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Sidi Ali Benyoub (Sidi Bel Abbès)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -0.71667,
+          34.95
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 5 - Sidi Bel Abbès)",
+  "source_ids": [
+    "SRC_890a5057f3dcdf9fff6d5b9f"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1961_017",
+    "nom_operation": "Combat et harcèlement de Sidi Ali Benyoub",
+    "date_debut": "1961-07-31",
+    "date_fin": "1961-08-02",
+    "wilaya_concernee": "Wilaya V (Zone 5 - Sidi Bel Abbès)",
+    "localisation": {
+      "region_ou_ville": "Sidi Ali Benyoub (Sidi Bel Abbès)",
+      "coordonnees_approximatives": {
+        "latitude": 34.95,
+        "longitude": -0.71667
+      }
+    },
+    "commandement_aln": [
+      "Commandos ALN de la Zone 5"
+    ],
+    "type_action": "Combat de rencontre / Embuscade",
+    "description": "Engagement de harcèlement et de résistance armée mené pendant près de trois jours dans le secteur de Sidi Ali Benyoub, documenté par Abdelhak Kerkeb.",
+    "bilan_et_pertes": {
+      "aln": "Quelques martyrs",
+      "forces_francaises": "Pertes matérielles et militaires infligées aux garnisons locales",
+      "civils": "0"
+    },
+    "impact_strategique": "Démonstration de force politique et militaire de l'ALN à la veille des négociations finales d'Évian.",
+    "sources": [
+      {
+        "titre": "Étude historique sur la Zone 5 de la Wilaya V (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/127641",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

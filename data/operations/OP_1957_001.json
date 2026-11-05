@@ -1,0 +1,110 @@
+{
+  "id": "OP_1957_001",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Triple attentat de l'Otomatic, du Coq Hardi et de la Cafétéria (Alger)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-01-26",
+    "latest": "1957-01-26",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Rue Michelet et rue Charles-Péguy (Plateau des Glières), Alger",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.0575,
+          36.7711
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Zone autonome d'Alger (ZAA)",
+  "source_ids": [
+    "SRC_1a9585af87d455c8a7ff07d2",
+    "SRC_430fb83914595ff648684164",
+    "SRC_dd50cfdc2fc6bb8ffaa8123a",
+    "SRC_023bdf427c92615993113161",
+    "SRC_e7d4e9d44b5baac0999de268"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_001",
+    "nom_operation": "Triple attentat de l'Otomatic, du Coq Hardi et de la Cafétéria (Alger)",
+    "date_debut": "1957-01-26",
+    "date_fin": null,
+    "wilaya_concernee": "Zone autonome d'Alger (ZAA)",
+    "localisation": {
+      "region_ou_ville": "Rue Michelet et rue Charles-Péguy (Plateau des Glières), Alger",
+      "coordonnees_approximatives": {
+        "latitude": 36.7711,
+        "longitude": 3.0575
+      }
+    },
+    "commandement_aln": [
+      "Yacef Saâdi",
+      "Larbi Ben M'hidi",
+      "Djamila Bouazza",
+      "Danièle Minne (Djamila Amrane)",
+      "Zohra Drif"
+    ],
+    "type_action": "Attentat ciblé",
+    "description": "Deux jours avant le déclenchement de la grève générale des huit jours et alors que les parachutistes de Massu quadrillent déjà Alger, les poseuses de bombes du réseau de Yacef Saâdi franchissent les barrages militaires et déposent simultanément à 17h30 trois engins explosifs dans les brasseries L'Otomatic (Danièle Minne), Le Coq Hardi (Djamila Bouazza) et La Cafétéria.",
+    "bilan_et_pertes": {
+      "aln": "Aucune arrestation immédiate sur les lieux",
+      "forces_francaises": "Aucune perte militaire",
+      "civils": "4 à 5 personnes tuées sur le coup et environ 60 blessés, suivis d'une lynchage mortel d'un passant algérien par la foule européenne"
+    },
+    "impact_strategique": "Démontre la capacité du réseau bombes de la ZAA à frapper au cœur du dispositif sécuritaire de la 10e DP à la veille de l'ouverture des débats à l'ONU.",
+    "sources": [
+      {
+        "titre": "La guerre d'Algérie : La bataille d'Alger — FranceArchives",
+        "url": "https://francearchives.gouv.fr/fr/pages_histoire/39692",
+        "type_source": "Archive"
+      },
+      {
+        "titre": "Attentats pendant la guerre d'Algérie — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Attentats_pendant_la_guerre_d%27Alg%C3%A9rie",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Bataille d’Alger (lemonde.fr)",
+        "url": "https://www.lemonde.fr/a-la-une/article/2007/01/29/50-ans-apres-les-survivants-du-nettoyage-d-alger_860986_3208.html",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Dynamitage du 5 rue des Abderrames (horizons.dz)",
+        "url": "https://www.horizons.dz/2023/10/ain-defla-commemoration-du-66e-anniversaire-de-la-mort-en-martyr-dali-la-pointe/",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Dynamitage du 5 rue des Abderrames (fr.wikipedia.org)",
+        "url": "https://fr.wikipedia.org/wiki/Ali_la_Pointe",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

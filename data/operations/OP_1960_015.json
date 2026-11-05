@@ -1,0 +1,82 @@
+{
+  "id": "OP_1960_015",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combat de Beni Smir–Oued Sidi Saïd",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1960-03-01",
+    "latest": "1960-03-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1960-03-31",
+    "latest": "1960-03-31",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Ras Beni Smir / Oued Sidi Saïd (Béchar)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.12094,
+          32.4036
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 8 - Béchar / Ras Beni Smir)",
+  "source_ids": [
+    "SRC_31454db4f6ba0e493ad5deeb"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1960_015",
+    "nom_operation": "Combat de Beni Smir–Oued Sidi Saïd",
+    "date_debut": "1960-03-01",
+    "date_fin": "1960-03-31",
+    "wilaya_concernee": "Wilaya V (Zone 8 - Béchar / Ras Beni Smir)",
+    "localisation": {
+      "region_ou_ville": "Ras Beni Smir / Oued Sidi Saïd (Béchar)",
+      "coordonnees_approximatives": {
+        "latitude": 32.4036,
+        "longitude": -1.12094
+      }
+    },
+    "commandement_aln": [
+      "Détachement ALN Front Sud-Oranais"
+    ],
+    "type_action": "Combat de rencontre",
+    "description": "Affrontement armé dans les défilés rocheux de Beni Smir consigné dans le témoignage du moudjahid Khlifi Bounoua publié par Hocine Touati.",
+    "bilan_et_pertes": {
+      "aln": "Faibles pertes",
+      "forces_francaises": "Pertes au sein des patrouilles sahariennes coloniales",
+      "civils": "0"
+    },
+    "impact_strategique": "Maintien des couloirs de pénétration sahariens vers Béchar.",
+    "sources": [
+      {
+        "titre": "Témoignage sur les combats du Sud-Oranais (ASJP)",
+        "url": "https://asjp.cerist.dz/en/article/34346",
+        "type_source": "Ouvrage académique"
+      }
+    ]
+  }
+}

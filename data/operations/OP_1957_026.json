@@ -1,0 +1,89 @@
+{
+  "id": "OP_1957_026",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Combats du Djebel Zbarbar et embuscades de la charnière Bouira - Lakhdaria",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-09-20",
+    "latest": "1957-09-20",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1957-09-22",
+    "latest": "1957-09-22",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Massif du Djebel Zbarbar, Kadiria et axe routier Bouira - Lakhdaria (Confins des Wilayas de Bouira et Boumerdès)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          3.6833,
+          36.5167
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya III (Zone 4 - Bouira / Lakhdaria) en liaison avec la Wilaya IV",
+  "source_ids": [
+    "SRC_876201fac41522772c453707",
+    "SRC_2d3bf26a234676fe82b1c4bb"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_026",
+    "nom_operation": "Combats du Djebel Zbarbar et embuscades de la charnière Bouira - Lakhdaria",
+    "date_debut": "1957-09-20",
+    "date_fin": "1957-09-22",
+    "wilaya_concernee": "Wilaya III (Zone 4 - Bouira / Lakhdaria) en liaison avec la Wilaya IV",
+    "localisation": {
+      "region_ou_ville": "Massif du Djebel Zbarbar, Kadiria et axe routier Bouira - Lakhdaria (Confins des Wilayas de Bouira et Boumerdès)",
+      "coordonnees_approximatives": {
+        "latitude": 36.5167,
+        "longitude": 3.6833
+      }
+    },
+    "commandement_aln": [
+      "Mohand Oulhadj (Commandant de la Zone 4 de la Wilaya III)",
+      "Commandants de katibas du secteur de Bouira - Zbarbar"
+    ],
+    "type_action": "Embuscade",
+    "description": "À la charnière hautement stratégique reliant la Grande Kabylie (Wilaya III) à l'Atlas blidéen (Wilaya IV), les katibas de la Zone 4 de la Wilaya III et les unités de liaison opérant dans le massif du Djebel Zbarbar attaquent des convois militaires sur la RN 5 entre Lakhdaria (Palestro) et Bouira, puis soutiennent trois jours de combats défensifs sur les crêtes boisées de Zbarbar.",
+    "bilan_et_pertes": {
+      "aln": "Une vingtaine de moudjahidine tués au combat ; maintien du couloir de liaison inter-wilayas III-IV",
+      "forces_francaises": "Pertes sensibles parmi les troupes de garnison de Bouira et de Palestro et destruction de véhicules blindés d'escorte",
+      "civils": "Ratissage des douars du massif de Zbarbar et de Kadiria"
+    },
+    "impact_strategique": "Garantit la permanence des liaisons physiques et logistiques entre les états-majors de la Wilaya III (Amirouche) et de la Wilaya IV (Si M'Hamed Bougara).",
+    "sources": [
+      {
+        "titre": "Wilaya III historique (Organisation de la Zone 4 : Bouira, Draâ El Mizan, Dellys) — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Wilaya_III_historique",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Répertoire numérique de la série 1H (Secteur de Bouira et Palestro) — Service Historique de la Défense (SHD)",
+        "url": "https://www.servicehistorique.sga.defense.gouv.fr/sites/default/files/notices_files/SHDGR_REP_1H_1091_A_4881_T2_1.pdf",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

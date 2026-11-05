@@ -1,0 +1,90 @@
+{
+  "id": "OP_1958_012",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Sabotage et incendie du dépôt pétrolier du Petit-Quevilly à Rouen",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1958-08-25",
+    "latest": "1958-08-25",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1958-08-26",
+    "latest": "1958-08-26",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Le Petit-Quevilly, zone industrielle et portuaire de Rouen (Seine-Maritime, Normandie)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          1.0592,
+          49.4275
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Fédération de France du FLN (« 7e Wilaya » - Organisation Spéciale / Normandie)",
+  "source_ids": [
+    "SRC_83198221b772fc1a292589ab",
+    "SRC_f529fb73deac23386b67a71d"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1958_012",
+    "nom_operation": "Sabotage et incendie du dépôt pétrolier du Petit-Quevilly à Rouen",
+    "date_debut": "1958-08-25",
+    "date_fin": "1958-08-26",
+    "wilaya_concernee": "Fédération de France du FLN (« 7e Wilaya » - Organisation Spéciale / Normandie)",
+    "localisation": {
+      "region_ou_ville": "Le Petit-Quevilly, zone industrielle et portuaire de Rouen (Seine-Maritime, Normandie)",
+      "coordonnees_approximatives": {
+        "latitude": 49.4275,
+        "longitude": 1.0592
+      }
+    },
+    "commandement_aln": [
+      "Omar Boudaoud",
+      "Rabah Bouaziz",
+      "Commandos de l'OS de la Fédération de France (Secteur de Rouen)"
+    ],
+    "type_action": "Sabotage",
+    "description": "Dans la nuit du 24 au 25 août 1958, un commando de sabotage de l'Organisation Spéciale (OS) de la Fédération de France du FLN s'infiltre dans le dépôt d'hydrocarbures Purfina / Desmarais Frères au Petit-Quevilly (agglomération de Rouen) et pose des charges explosives incendiaires à retardement. L'explosion provoque un gigantesque incendie détruisant quatre réservoirs géants (environ 4 000 m³ de carburant) et menaçant toute la zone industrielle rouennaise.",
+    "bilan_et_pertes": {
+      "aln": "Exfiltration réussie du commando de sabotage sans perte",
+      "forces_francaises": "Intervention de centaines de sapeurs-pompiers et de militaires de toute la Normandie ; destruction de 4 millions de litres de carburant",
+      "civils": "Évacuation d'urgence des habitations riveraines du Petit-Quevilly"
+    },
+    "impact_strategique": "L'un des sabotages industriels les plus spectaculaires et coûteux menés par la 7e Wilaya dans le nord-ouest de la France, démontrant la vulnérabilité des infrastructures énergétiques de la métropole.",
+    "sources": [
+      {
+        "titre": "L'Organisation Spéciale de la Fédération de France du FLN : les sabotages d'août-septembre 1958 — Cairn.info",
+        "url": "https://shs.cairn.info/l-organisation-speciale-de-la-federation-de-france--9789961638798-page-233?lang=fr",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Police générale : attentats et sabotages du FLN en métropole (1958) — FranceArchives (Archives nationales)",
+        "url": "https://francearchives.gouv.fr/findingaid/b5007a886e4825bfd4b46f8220b3b3ee7d19d6dd",
+        "type_source": "Archive"
+      }
+    ]
+  }
+}

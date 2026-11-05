@@ -1,0 +1,147 @@
+{
+  "id": "OP_1954_001",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Déclenchement du 1er Novembre 1954 (« Toussaint rouge »)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1954-11-01",
+    "latest": "1954-11-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": "1954-11-01",
+    "latest": "1954-11-01",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Ensemble du territoire algérien (épicentre dans les Aurès : Batna, Arris, Biskra, Tighanimine, ainsi qu'à Alger, Constantine et Oran)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.1741,
+          35.5559
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Toutes les zones historiques (Zones I à V : Aurès, Nord-Constantinois, Kabylie, Algérois, Oranie)",
+  "source_ids": [
+    "SRC_4e276105442df2826bf0df9f",
+    "SRC_afae251de5d4cd03754f9084",
+    "SRC_b26037eb191b7c0201f9b476",
+    "SRC_7a23e41eaba6933fb66207e1",
+    "SRC_64a325b9062ec80818182167",
+    "SRC_3eb1797881e6be0b1ed40cba",
+    "SRC_fc8446b86480ac6d3bacf649",
+    "SRC_873049634c1ab5e80c42fb1c",
+    "SRC_00eee54564dca5ded22cdd85",
+    "SRC_665aefe19cb3e3769c6bd733",
+    "SRC_e49008a4d15a35ac685ab910"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1954_001",
+    "nom_operation": "Déclenchement du 1er Novembre 1954 (« Toussaint rouge »)",
+    "date_debut": "1954-11-01",
+    "date_fin": "1954-11-01",
+    "wilaya_concernee": "Toutes les zones historiques (Zones I à V : Aurès, Nord-Constantinois, Kabylie, Algérois, Oranie)",
+    "localisation": {
+      "region_ou_ville": "Ensemble du territoire algérien (épicentre dans les Aurès : Batna, Arris, Biskra, Tighanimine, ainsi qu'à Alger, Constantine et Oran)",
+      "coordonnees_approximatives": {
+        "latitude": 35.5559,
+        "longitude": 6.1741
+      }
+    },
+    "commandement_aln": [
+      "Mostefa Ben Boulaïd",
+      "Didouche Mourad",
+      "Krim Belkacem",
+      "Rabah Bitat",
+      "Larbi Ben M'hidi",
+      "Mohamed Boudiaf"
+    ],
+    "type_action": "Offensive coordonnée",
+    "description": "Série d'environ 70 actions coordonnées (attaques de casernes et de gendarmeries, sabotages d'infrastructures électriques et téléphoniques, attentats à l'explosif et embuscades) menées simultanément dans une trentaine de localités algériennes dans la nuit du 31 octobre au 1er novembre 1954, accompagnées de la diffusion de la Déclaration du 1er novembre proclamant la lutte pour l'indépendance.",
+    "bilan_et_pertes": {
+      "aln": "Quelques combattants tués (dont Abdelmalek Ramdane dans l'Oranais) et plusieurs arrestations dans les jours suivants",
+      "forces_francaises": "4 militaires et gendarmes tués lors des attaques nocturnes, une vingtaine de blessés",
+      "civils": "6 civils tués (dont l'instituteur Georges Monnerot et le caïd Hadj Saddok dans les gorges de Tighanimine)"
+    },
+    "impact_strategique": "Acte fondateur de la Guerre d'Algérie et apparition publique du FLN/ALN. Bien que le bilan tactique immédiat soit limité faute d'armement lourd, l'opération provoque une onde de choc politique à Paris et entraîne l'envoi massif de renforts militaires français.",
+    "sources": [
+      {
+        "titre": "Toussaint rouge — Wikipédia",
+        "url": "https://fr.wikipedia.org/wiki/Toussaint_rouge",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Note 108 : Les débuts de la guerre d'Algérie, les gendarmes face à la Toussaint rouge — Centre de Recherche de la Gendarmerie Nationale",
+        "url": "https://www.gendarmerie.interieur.gouv.fr/crgn/actus/note-108-les-debuts-de-la-guerre-d-algerie-les-gendarmes-face-a-la-toussaint-rouge",
+        "type_source": "Archive"
+      },
+      {
+        "titre": "Déclenchement d'une insurrection armée en Algérie — Perspective Monde (Université de Sherbrooke)",
+        "url": "https://perspective.usherbrooke.ca/bilan/servlet/BMEve/47",
+        "type_source": "Ouvrage académique"
+      },
+      {
+        "titre": "Actions du déclenchement (ambalg.ma)",
+        "url": "https://www.ambalg.ma/histoire-dalgerie/",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Attaque du poste de gendarmerie (aps.dz)",
+        "url": "https://www.aps.dz/fr/algerie/societe/mvuz37r6-l-attaque-contre-la-gendarmerie-coloniale-de-sidi-ali-un-haut-fait-d-armes-au-c%C5%93ur-des-monts-du-dahra-dans-la-nuit-du-1er-novembre-1954",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Attaques du déclenchement (aps.dz)",
+        "url": "https://www.aps.dz/fr/algerie/societe/mvuu8h9u-l-etincelle-de-la-revolution-dans-les-ziban-et-le-sud-du-pays",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Embuscade des gorges de Tighanimine (elmoudjahid.dz)",
+        "url": "https://www.elmoudjahid.dz/fr/l-evenement/la-premiere-semaine-de-la-guerre-de-liberation-vue-par-l-echo-d-alger-les-commentaires-d-un-journal-colonialiste-225935",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Opérations de la nuit du déclenchement en Kabylie (elmoudjahid.dz)",
+        "url": "https://www.elmoudjahid.dz/fr/histoire/ighil-imoula-le-souvenir-de-la-proclamation-du-1er-novembre-1010",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Sabotages et maquis entre Dahra et Ouarsenis (fr.wikipedia.org)",
+        "url": "https://fr.wikipedia.org/wiki/Op%C3%A9ration_Couronne",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Sabotages du 1er novembre et batailles des cèdres du Belezma (horizons.dz)",
+        "url": "https://www.horizons.dz/2025/03/mostefa-ben-boulaid-une-source-dinspiration/",
+        "type_source": "Article"
+      },
+      {
+        "titre": "Sabotages ferroviaires et embuscades de l'axe Batna–Biskra (fr.wikipedia.org)",
+        "url": "https://fr.wikipedia.org/wiki/Mostefa_Ben_Boula%C3%AFd",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

@@ -1,0 +1,82 @@
+{
+  "id": "OP_1957_045",
+  "schema_version": "2.0.0",
+  "title": {
+    "fr": "Bataille d'Oued Allala (Ouled Ben Abderrahim)",
+    "ar": null
+  },
+  "start_date": {
+    "earliest": "1957-11-13",
+    "latest": "1957-11-13",
+    "precision": "day",
+    "certainty": "unknown"
+  },
+  "end_date": {
+    "earliest": null,
+    "latest": null,
+    "precision": "unknown",
+    "certainty": "unknown"
+  },
+  "locations": [
+    {
+      "label": "Oued Allala / Mendes (Relizane)",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          0.86452,
+          35.65008
+        ]
+      },
+      "geometry_role": "representative_point",
+      "review_status": "needs_review"
+    }
+  ],
+  "territorial_assignments": [],
+  "legacy_territorial_label": "Wilaya V (Zone 4 - Relizane)",
+  "source_ids": [
+    "SRC_a2800a7a7430cc1d63af9a61"
+  ],
+  "editorial_status": "published",
+  "quality_flags": [
+    "legacy_import_needs_review",
+    "territorial_assignment_needs_review",
+    "representative_location_needs_review"
+  ],
+  "provenance": {
+    "source_commit": "97eef827834a7463e85eed8b5bd5c81e08069420",
+    "publication_basis": "previously_public_legacy_corpus",
+    "human_review_recorded": false
+  },
+  "legacy": {
+    "id": "OP_1957_045",
+    "nom_operation": "Bataille d'Oued Allala (Ouled Ben Abderrahim)",
+    "date_debut": "1957-11-13",
+    "date_fin": null,
+    "wilaya_concernee": "Wilaya V (Zone 4 - Relizane)",
+    "localisation": {
+      "region_ou_ville": "Oued Allala / Mendes (Relizane)",
+      "coordonnees_approximatives": {
+        "latitude": 35.65008,
+        "longitude": 0.86452
+      }
+    },
+    "commandement_aln": [
+      "Katiba ALN de la Zone 4"
+    ],
+    "type_action": "Combat de rencontre / Guérilla de montagne",
+    "description": "Épique engagement armé livré dans la commune de Mendes au sud de Relizane opposant les moudjahidine à une vaste opération de ratissage colonial.",
+    "bilan_et_pertes": {
+      "aln": "Plusieurs combattants tombés en martyrs",
+      "forces_francaises": "Pertes substantielles parmi les unités d'infanterie coloniales",
+      "civils": "0"
+    },
+    "impact_strategique": "Mise en échec de la tentative de verrouillage colonial de la vallée de la Mina.",
+    "sources": [
+      {
+        "titre": "La bataille de Oued Allala : une épopée héroïque des moudjahidine de l'ALN (APS)",
+        "url": "https://www.aps.dz/fr/algerie/actualite-nationale/mhvx1cjl-la-bataille-de-oued-allala-une-epopee-heroique-des-moudjahidine-de-l-armee-de-liberation-nationale",
+        "type_source": "Article"
+      }
+    ]
+  }
+}

@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TEMPORA — Import local et prévisualisation · TEMPORA</title><script>const base=document.createElement('base');base.href=location.pathname.split('/documentation')[0].replace(/\/api\/docs$/,'')+'/documentation/';document.head.append(base);</script><link rel="stylesheet" href="documentation.css"><script src="../site-context.js?v=4.3"></script></head><body><main><nav><a data-atlas-link href="../index.html">Atlas ALNOP · الأطلس</a><a href="../contribute.html">Contribuer · ساهم</a><a href="index.html">Documentation · الوثائق</a></nav><p class="documentation-context"><span data-framework-presentation>TEMPORA — Framework pour les corpus historiques</span><span data-profile-presentation hidden>ALNOP — Profil du framework TEMPORA</span></p><h1 id="tempora--import-local-et-prévisualisation">TEMPORA — Import local et prévisualisation</h1>
+<p>Le pipeline TEMPORA prépare des <strong>propositions d’événements</strong> à partir de fichiers JSON, CSV ou GeoJSON. Il utilise un profil, un corpus de travail v3 et un mapping déclaratif. Il conserve les octets du fichier d’origine et permet de revoir les résultats avant de créer une nouvelle copie locale. Le formulaire public ALNOP, les API et la publication du corpus continuent d’utiliser leurs circuits existants.</p>
+<h2 id="préparer-et-vérifier">Préparer et vérifier</h2>
+<p>Pour partir du corpus ALNOP actuel, créer une copie v3 si elle n’existe pas déjà :</p>
+<pre><code class="language-sh">npm run migrate:tempora -- --write
+</code></pre>
+<p>Prévisualiser un fichier local en choisissant le mapping correspondant :</p>
+<pre><code class="language-sh">npm run ingest:tempora -- import --base work/tempora-v3/corpus-v3.json --input lot.csv --mapping profiles/alnop/imports/csv.json --report markdown
+</code></pre>
+<p>Sans <code>--write</code>, la commande ne crée aucun fichier. <code>--report json</code> fournit les diagnostics par ligne pour un traitement automatique ; sans option de rapport, la commande affiche les comptes et l’empreinte du lot. Pour obtenir le JSON sans la bannière npm, utiliser <code>npm run --silent ingest:tempora</code>.</p>
+<table>
+<thead>
+<tr>
+<th>Résultat</th>
+<th>Signification</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>create</code></td>
+<td>Identifiant libre et proposition valide techniquement</td>
+</tr>
+<tr>
+<td><code>unchanged</code></td>
+<td>Même identifiant et contenu mappé équivalent, dans le lot ou dans la base</td>
+</tr>
+<tr>
+<td><code>conflict</code></td>
+<td>Identifiant déjà utilisé avec un autre contenu, ou désaccord dans le lot</td>
+</tr>
+<tr>
+<td><code>quarantined</code></td>
+<td>Ligne non exploitable : champ, date, source, géométrie ou règle bloquante</td>
+</tr>
+</tbody>
+</table>
+<p>Une ligne en quarantaine ne bloque pas les autres identifiants. Si son identifiant est reconnaissable, une autre ligne de ce même identifiant est bloquée en conflit. Un JSON mal formé, des clés dupliquées, un encodage illisible, des nombres JSON hors précision prise en charge, ou des guillemets CSV qui rendent les limites des lignes ambiguës rejettent le fichier entier. Aucune ligne n’est devinée ou abandonnée silencieusement.</p>
+<h2 id="mappings-par-profil">Mappings par profil</h2>
+<p>Le <a href="../schemas/tempora.ingestion-mapping.schema.json">schéma de mapping 1.0.0</a> déclare le format, l’identifiant et la version du profil, les champs et les options. Il n’exécute ni code ni requête réseau. Les chemins utilisent JSON Pointer : <code>~1</code> désigne <code>/</code> et <code>~0</code> désigne <code>~</code>. Les langues doivent être déclarées dans le profil.</p>
+<table>
+<thead>
+<tr>
+<th>Format ALNOP</th>
+<th>Mapping fourni</th>
+<th>Structure attendue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>JSON</td>
+<td><a href="../profiles/alnop/imports/json.json">json.json</a></td>
+<td>Objet dont <code>/operations</code> est un tableau au format historique ALNOP</td>
+</tr>
+<tr>
+<td>CSV</td>
+<td><a href="../profiles/alnop/imports/csv.json">csv.json</a></td>
+<td>En-têtes explicites, séparateur virgule, dates historiques dans <code>date_debut</code> et <code>date_fin</code></td>
+</tr>
+<tr>
+<td>GeoJSON</td>
+<td><a href="../profiles/alnop/imports/geojson.json">geojson.json</a></td>
+<td><code>FeatureCollection</code>, champs dans <code>properties</code>, géométrie dans <code>geometry</code></td>
+</tr>
+</tbody>
+</table>
+<p>Le CSV préparé n’est pas l’export CSV aplati existant. Il attend les champs que décrit son mapping. Cet exemple est <strong>fictif et réservé à un test local</strong> :</p>
+<pre><code class="language-csv">id,nom_operation,nom_operation_ar,date_debut,type_action,longitude,latitude,geometry_role
+TEST_IMPORT_1,Notice fictive de vérification,اختبار,1956,Embuscade,,,
+</code></pre>
+<p>Un autre profil peut utiliser ses propres colonnes et vocabulaires. Une base vide se prépare avec <code>--profile profil.json --taxonomies taxonomies.json</code> à la place de <code>--base</code>. Le fichier de taxonomies associe chaque vocabulaire déclaré à sa liste de valeurs. Les sources et territoires à référencer doivent déjà exister dans la base de travail.</p>
+<p>Pour un JSON générique, <code>records_pointer</code> indique le tableau de lignes ; une valeur vide désigne un tableau à la racine. Le CSV prend un séparateur explicite parmi virgule, point-virgule et tabulation, gère les guillemets doublés et les cellules sur plusieurs lignes. Les champs CSV sont conservés comme texte avant conversion déclarée. Le GeoJSON doit utiliser les coordonnées WGS84 standard ; un autre CRS n’est ni supposé ni reprojeté.</p>
+<h2 id="ce-que-la-normalisation-conserve">Ce que la normalisation conserve</h2>
+<ul>
+<li><strong>Identifiant et texte</strong> : l’identifiant explicite est contrôlé après retrait des espaces externes. Les textes non vides, accents et caractères bidirectionnels sont conservés. Une traduction manquante reste inconnue.</li>
+<li><strong>Dates</strong> : année, mois et jour gardent leur précision. Un champ vide reste inconnu. Un objet temporel canonique complet peut être fourni en JSON pour un intervalle ou une borne ouverte.</li>
+<li><strong>Vocabulaires</strong> : seules les correspondances exactes avec un alias déclaré sont normalisées. Les règles et sévérités du profil s’appliquent au résultat.</li>
+<li><strong>Lieu</strong> : le mapping peut lire une géométrie, ou une paire longitude/latitude. Il ne complète jamais la paire. Une géométrie présente requiert un rôle déclaré dans la ligne ou le mapping. Les mappings historiques ALNOP JSON/GeoJSON déclarent le rôle de point représentatif pour leurs coordonnées approximatives ; le CSV demande un rôle explicite. Le pipeline ne déduit ni précision métrique ni lieu exact.</li>
+<li><strong>Sources</strong> : <code>source_ids</code> référence une source ou une liste de sources existantes ; <code>evidence</code> permet d’indiquer <code>source_id</code>, <code>locator</code> et <code>quotation</code> dans un tableau JSON. Ces deux modes sont exclusifs. Un identifiant inconnu est bloquant. Les références bibliographiques intégrées à un ancien export restent dans l’original et ne deviennent pas des liens inventés.</li>
+</ul>
+<p>Les chemins mappés, l’objet original et les références de transformation sont conservés avec la proposition. Le lot conserve le fichier à l’octet près, y compris son éventuel BOM UTF-8. Les champs non mappés sont conservés dans l’original et ne sont pas intégrés automatiquement au modèle. Le journal contient la source, son empreinte, le profil, le mapping, leurs versions, la date, les diagnostics et le résultat par ligne.</p>
+<h2 id="enregistrer-le-lot-et-accepter-une-sélection">Enregistrer le lot et accepter une sélection</h2>
+<p>Pour conserver une prévisualisation, ajouter <code>--write</code> à <code>import</code>. La commande indique le chemin <code>local_output</code> du fichier de lot dans <code>work/tempora-v3/ingestion/</code>. Il contient les diagnostics JSON, le rapport Markdown, les ajouts proposés et l’entrée originale. Il peut contenir des données non publiées : ce répertoire est privé et exclu des sites et de Git.</p>
+<p>Relire le rapport, puis sélectionner les identifiants à accepter. Remplacer les chemins et valeurs ci-dessous par ceux du lot local :</p>
+<pre><code class="language-sh">npm run ingest:tempora -- accept --base work/tempora-v3/corpus-v3.json --batch CHEMIN_DU_LOT --id IDENTIFIANT --reviewer REVUE_LOCALE --reason &quot;Motif de la sélection&quot; --write
+</code></pre>
+<p><code>--id</code> peut être répété. Seules les lignes <code>create</code> sont sélectionnables. La commande recalcule le lot avant de l’appliquer et refuse une base modifiée depuis la prévisualisation. Elle crée une <strong>nouvelle copie</strong> et inscrit une décision d’acceptation locale ; les événements restent <code>proposed</code>. Le libellé de revue est déclaré par la personne qui exécute la commande ; ce n’est ni une authentification ni une approbation scientifique.</p>
+<p>Vérifier le résultat ou l’utiliser comme base du prochain import :</p>
+<pre><code class="language-sh">npm run ingest:tempora -- validate --base CHEMIN_DE_LA_COPIE
+</code></pre>
+<p>Les fichiers existants ne sont jamais écrasés. Réimporter les mêmes octets avec le même mapping, profil et vocabulaires conserve l’identité du lot. Après acceptation, les notices au contenu équivalent sont <code>unchanged</code>, sans nouvel ajout. Des octets différents peuvent produire le même contenu mappé ; les différences non mappées restent consultables dans l’original. Un conflit ne déclenche ni fusion, ni correction, ni suppression. Préparer un nouveau lot après correction de l’entrée ou traiter la divergence dans une revue distincte.</p>
+<h2 id="périmètre-et-limites">Périmètre et limites</h2>
+<p>Entrées UTF-8 jusqu’à 16 Mio et 100 000 lignes ; artefacts locaux jusqu’à 128 Mio. Ces bornes protègent le traitement, elles ne sont pas des résultats de benchmark. Une proposition correspond à une notice d’événement et à une localisation mappée, qui peut contenir une géométrie à plusieurs points. Les autres objets canoniques restent disponibles dans la base, mais ne sont pas créés par les mappings d’événements de cette version.</p>
+<p>Le pipeline s’arrête à l’acceptation locale. Il ne publie pas d’archives, ne modifie pas la base ALNOP et n’expose pas les brouillons par l’API. La revue scientifique et les décisions de publication restent distinctes du contrôle technique.</p>
+</main></body></html>
