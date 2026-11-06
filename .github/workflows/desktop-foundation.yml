@@ -15,3 +15,13 @@ jobs:
           node-version: '22'
       - run: node --check apps/desktop/ui/app.js
       - run: node --test apps/desktop/tests/foundation.test.mjs
+  native-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: apps/desktop/src-tauri
+      - name: Check native Rust host
+        run: cargo check --manifest-path apps/desktop/src-tauri/Cargo.toml
