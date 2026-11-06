@@ -54,6 +54,7 @@ const text = {
     validCanonical: "Conforme au schéma", invalidCanonical: "Non conforme au schéma",
     enginePending: "Validation par le moteur en cours…", engineUnavailable: "Moteur indisponible",
     workbenchTitle: "Atelier scientifique · dossier en lecture seule", workbenchIntro: "Aperçu structurel des preuves déclarées, sans certification historique.", workbenchEmpty: "Validez d’abord un corpus dans Documents pour charger cet atelier.", workbenchEvidence: "Pièces de preuve déclarées", workbenchNoEvidence: "Assertions sans preuve déclarée", workbenchEvents: "Événements", workbenchSources: "Sources", workbenchClaims: "Assertions", workbenchStatus: "Statut éditorial", workbenchLimited: "Aperçu limité à 20 lignes par collection. Les totaux reflètent le fichier sélectionné.",
+    draftTitle: "Préparer un brouillon de revue", draftDescription: "Brouillon non canonique, non signé, non approuvé. Copie manuelle uniquement : aucun corpus n’est modifié.", draftReviewer: "Nom du chercheur", draftSubject: "Identifiant de l’élément examiné", draftMethod: "Méthode de revue", draftReason: "Justification et références des sources", draftCopy: "Copier le brouillon JSON", draftMissing: "Complète tous les champs et valide d’abord un corpus conforme.", draftCopied: "Brouillon JSON copié — non approuvé", draftCopyFailed: "Impossible de copier le brouillon",
     reviewsTitle: "Dossiers de revue", reviewsSummary: "Revues enregistrées", humanReviews: "Revues explicitement humaines", reviewAgent: "Auteur / Type", reviewMethod: "Méthode", reviewDecision: "Décision déclarée", reviewSubject: "Sujet examiné", reviewReason: "Justification", reviewDate: "Date", reviewHash: "Empreinte du contenu", reviewNoClaims: "Aucune revue enregistrée dans ce corpus", reviewsDisclaimer: "Lecture des décisions déclarées uniquement : aucune approbation, création ou modification.",
     contradictionsTitle: "Contradictions déclarées", contradictionsDescription: "Relations explicitement déclarées par le corpus, sans détection automatique ni évaluation historique.", contradictionsPresent: "Cible présente", contradictionsMissing: "Cible absente ou autre espace de noms", contradictionsSource: "Assertion source", contradictionsTarget: "Assertion cible",
     evidenceLinks: "Références déclarées", evidenceSelect: "Sélectionnez une ligne pour examiner ses références.", evidenceSubject: "Sujet", evidenceSources: "Sources citées", evidenceMissing: "Référence absente de l’aperçu", evidenceNone: "Aucune référence déclarée",
@@ -87,6 +88,7 @@ const text = {
     validCanonical: "Schema valid", invalidCanonical: "Schema invalid",
     enginePending: "Engine validation running…", engineUnavailable: "Engine unavailable",
     workbenchTitle: "Scientific workbench · read-only dossier", workbenchIntro: "Structural overview of declared evidence, not historical certification.", workbenchEmpty: "First validate a corpus under Documents to load the workbench.", workbenchEvidence: "Declared evidence items", workbenchNoEvidence: "Claims without declared evidence", workbenchEvents: "Events", workbenchSources: "Sources", workbenchClaims: "Claims", workbenchStatus: "Editorial status", workbenchLimited: "Preview capped at 20 rows per collection. Counts reflect the selected file.",
+    draftTitle: "Prepare a review draft", draftDescription: "Non-canonical, unsigned, unapproved draft. Manual copy only: no corpus is modified.", draftReviewer: "Researcher name", draftSubject: "Reviewed record ID", draftMethod: "Review method", draftReason: "Rationale and source references", draftCopy: "Copy draft JSON", draftMissing: "Fill in all fields and first validate a conformant corpus.", draftCopied: "Draft JSON copied — not approved", draftCopyFailed: "Unable to copy the draft",
     reviewsTitle: "Review dossiers", reviewsSummary: "Recorded reviews", humanReviews: "Explicit human reviews", reviewAgent: "Reviewer / Type", reviewMethod: "Method", reviewDecision: "Declared decision", reviewSubject: "Subject", reviewReason: "Reason", reviewDate: "Date", reviewHash: "Content digest", reviewNoClaims: "No review records in this corpus", reviewsDisclaimer: "Read-only declared decisions: no approval, creation or modification.",
     contradictionsTitle: "Declared contradictions", contradictionsDescription: "Links explicitly recorded in the corpus, without automated detection or historical assessment.", contradictionsPresent: "Target present", contradictionsMissing: "Target absent or different namespace", contradictionsSource: "Source claim", contradictionsTarget: "Target claim",
     evidenceLinks: "Declared references", evidenceSelect: "Select a row to inspect declared references.", evidenceSubject: "Subject", evidenceSources: "Cited sources", evidenceMissing: "Reference outside preview", evidenceNone: "No declared reference",
@@ -277,6 +279,48 @@ function renderWorkbench(): void {
   }
 }
 
+// An intentionally NON-CANONICAL review draft. This function does not issue a
+// scientific approval, save data, or modify the original corpus.
+function buildReviewDraft(): Record<string, unknown> | null {
+  const result = selectedValidation;
+  if (!result?.valid) return null;
+  const field = (id: string) => (byId(id) as HTMLInputElement | HTMLTextAreaElement).value.trim();
+  const reviewer = field("draft-reviewer");
+  const subjectId = field("draft-subject");
+  const method = field("draft-method");
+  const reason = field("draft-reason");
+  if (!reviewer || !subjectId || !method || !reason) return null;
+  const identifiers = [
+    ...result.overview.events, ...result.overview.sources,
+    ...result.overview.claims,
+  ].map(item => item.id);
+  if (!identifiers.includes(subjectId)) return null;
+  return {
+    document_type: "tempora.review_draft",
+    draft_schema_version: "1.0.0",
+    status: "draft",
+    approved: false,
+    signed: false,
+    target: { id: subjectId, corpus_sha256: result.sha256 },
+    reviewer,
+    method,
+    rationale: reason,
+    engine_version: result.engineVersion,
+    notice: "This is a researcher-authored draft, NOT a canonical TEMPORA review, approval or publication.",
+  };
+}
+
+async function copyReviewDraft(): Promise<void> {
+  const draft = buildReviewDraft();
+  if (!draft) { notify(text[language].draftMissing); return; }
+  try {
+    await navigator.clipboard.writeText(JSON.stringify(draft, null, 2));
+    notify(text[language].draftCopied);
+  } catch {
+    notify(text[language].draftCopyFailed);
+  }
+}
+
 async function validateCorpus(): Promise<void> {
   if (!isTauri()) { notify(text[language].nativeOnly); return; }
   if (validationBusy) return;
@@ -325,5 +369,6 @@ byId("language").addEventListener("click", () => { language = language === "fr" 
 byId("hero-open").addEventListener("click", () => void openDocument());
 byId("document-open").addEventListener("click", () => void openDocument());
 byId("validate-corpus").addEventListener("click", () => void validateCorpus());
+byId("draft-copy").addEventListener("click", () => void copyReviewDraft());
 localize();
 showView("overview");
