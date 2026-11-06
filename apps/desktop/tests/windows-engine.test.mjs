@@ -42,3 +42,11 @@ test('Installed qualification isolates GUI and verifies complete runtime invento
  const ci=read('../../.github/workflows/desktop-foundation.yml');
  assert.match(ci,/run: npx --no-install tauri build --config src-tauri\/tauri\.windows\.conf\.json/);
 });
+
+test('npm v3 lockfile root empty key is parsed as a hashtable in Windows smoke',()=>{
+ const installed=read('scripts/verify-windows-install.ps1');
+ assert.match(installed,/ConvertFrom-Json -AsHashtable/);
+ assert.match(installed,/\$locked\['packages'\]\.GetEnumerator\(\)/);
+ assert.match(installed,/\$entry\.Key/);
+ assert.match(installed,/\$entry\.Value\['version'\]/);
+});
