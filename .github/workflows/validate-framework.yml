@@ -1,0 +1,27 @@
+name: TEMPORA Framework
+on:
+  push:
+    branches: [main, 'fix/**', 'feat/**']
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  framework:
+    name: TEMPORA Framework on ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm test
+        env:
+          TEMPORA_AUDIT_RUNTIME: '1'
+      - run: npm run check:publication-files
+      - run: npm run test:standalone

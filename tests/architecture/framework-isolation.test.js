@@ -3,7 +3,7 @@ const {spawnSync} = require('node:child_process');
 const fs = require('node:fs');
 const path = require('node:path');
 const {test} = require('node:test');
-const {checkBoundaries} = require('../../scripts/check-framework-boundaries');
+const {checkBoundaries,checkPublicSurfaces} = require('../../scripts/check-framework-boundaries');
 
 const root = path.resolve(__dirname, '../..');
 const work = path.join(root, 'work');
@@ -19,6 +19,7 @@ function scratch(t, directory = work) {
 
 test('Framework imports stay within the core and generic schemas', () => {
   checkBoundaries(root);
+  checkPublicSurfaces(root);
 });
 
 test('Boundary checks reject forbidden imports, implicit corpus paths and cycles', t => {

@@ -14,15 +14,18 @@ const layers = {
 };
 const layerOf = file => Object.keys(layers).find(layer => layers[layer].files.test(path.basename(file)));
 
-function collectImports(source, name) {
+function collectImports(source, name, entry = false) {
   const ast = parse(source, {ecmaVersion: 'latest', sourceType: 'module', allowHashBang: true});
   const imports = [];
   function visit(node, parent) {
     if (node.type === 'Identifier' && node.name === 'module') {
-      assert.ok(parent?.type === 'MemberExpression' && parent.object === node && !parent.computed &&
+      const mainGuard=entry&&parent?.type==='BinaryExpression'&&parent.operator==='==='&&
+        parent.left?.type==='MemberExpression'&&parent.left.object.name==='require'&&parent.left.property.name==='main'&&!parent.left.computed;
+      assert.ok(mainGuard || parent?.type === 'MemberExpression' && parent.object === node && !parent.computed &&
         parent.property.name === 'exports', `${name}: indirect module access`);
     }
     if (node.type === 'Identifier' && node.name === 'require') {
+      if(entry&&parent?.type==='MemberExpression'&&parent.object===node&&!parent.computed&&parent.property.name==='main') return;
       assert.ok(parent?.type === 'CallExpression' && parent.callee === node && !parent.optional &&
         parent.arguments.length === 1, `${name}: indirect require`);
       const [argument] = parent.arguments;
@@ -94,4 +97,17 @@ function checkBoundaries(root) {
   for (const file of graph.keys()) visit(file);
 }
 
-module.exports = {checkBoundaries};
+function checkPublicSurfaces(root) {
+  const scripts=['ingest-tempora.js','analyze-tempora.js','publish-tempora.js','serve-tempora.js'];
+  const entries=[...scripts.map(name=>'scripts/'+name),'src/sdk/index.js','src/cli/tempora.js'];
+  for(const file of entries) {
+    const full=path.join(root,file), resolve=createRequire(full).resolve;
+    for(const target of collectImports(fs.readFileSync(full,'utf8'),file,true)) {
+      if(target.startsWith('node:')) continue;
+      const relative=path.relative(root,resolve(target)).split(path.sep).join('/');
+      assert.ok(relative==='package.json'||relative.startsWith('src/framework/')||
+        relative.startsWith('src/sdk/')||entries.includes(relative),file+': forbidden dependency '+target);
+    }
+  }
+}
+module.exports = {checkBoundaries,checkPublicSurfaces};

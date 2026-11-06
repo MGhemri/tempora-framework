@@ -89,7 +89,13 @@ function build({check=false,output}={}) {
     for(const file of schemas) generated.set('schemas/'+file,read('schemas/'+file));
   }
   const target=output?path.resolve(output):path.join(root,'docs');
-  if(output&&fs.existsSync(target)&&fs.readdirSync(target).length) throw Error('Pages output directory must be empty');
+  if(output&&fs.existsSync(target)) {
+    for(const file of fs.readdirSync(target,{recursive:true})) {
+      const full=path.join(target,file), stat=fs.lstatSync(full);
+      if(stat.isSymbolicLink() || (stat.isFile()&&!generated.has(file.split(path.sep).join('/'))))
+        throw Error('Unexpected file in Pages output: '+file);
+    }
+  }
   for(const [file,content] of generated){
     const destination=path.join(target,file);
     if(check){if(read(destination)!==content)throw Error('Stale TEMPORA site file: '+file);}

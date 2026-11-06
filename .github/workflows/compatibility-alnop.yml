@@ -1,0 +1,47 @@
+name: Optional ALNOP compatibility
+on:
+  pull_request:
+    paths: ['compatibility/**', 'tests/compatibility/**', 'src/framework/**', '.github/workflows/compatibility-alnop.yml']
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  minimal:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - run: npm ci
+      - run: npm run test:compat:alnop:minimal
+  full:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: npm ci
+      - name: Read the pinned historical revision
+        id: pin
+        run: node -e "require('fs').appendFileSync(process.env.GITHUB_OUTPUT, 'revision=' + require('./compatibility/alnop/pin.json').git_commit + '\n')"
+      - uses: actions/checkout@v4
+        with:
+          repository: MGhemri/aln-historical-operations-dataset
+          ref: ${{ steps.pin.outputs.revision }}
+          path: work/alnop-reference
+          persist-credentials: false
+      - run: npm ci --prefix work/alnop-reference
+      - run: npm run test:compat:alnop:full -- --alnop-dir work/alnop-reference
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: compatibility-alnop-result
+          path: work/compatibility-alnop-result.json

@@ -1,4 +1,4 @@
-name: Contribution interface FR-AR
+name: TEMPORA Documentation UI
 on:
   pull_request:
   push:
@@ -14,9 +14,6 @@ jobs:
         with:
           node-version: 20
           cache: npm
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.11'
       - run: npm ci
       - run: npx playwright install --with-deps chromium
       - run: npm run test:browser

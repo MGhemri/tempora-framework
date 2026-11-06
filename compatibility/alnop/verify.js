@@ -74,7 +74,19 @@ function verifyFull(directory) {
 if (require.main === module) {
   const {values} = require('node:util').parseArgs({options: {'alnop-dir': {type: 'string'}, output: {type: 'string'}}});
   let report;
-  try {report = {ok: true, ...verifyFull(values['alnop-dir'])};}
+  try {
+    report = {ok: true, ...verifyFull(values['alnop-dir'])};
+    const root = path.resolve(__dirname, '../..');
+    const directory = path.join(root, 'tests/compatibility/alnop');
+    const files = fs.readdirSync(directory).filter(name => /^full-.*\.test\.js$/.test(name)).sort();
+    const result = require('node:child_process').spawnSync(process.execPath,
+      ['--test', ...files.map(file => path.join(directory, file))],
+      {cwd:root, env:{...process.env, ALNOP_REFERENCE:fs.realpathSync(values['alnop-dir'])}, encoding:'utf8', timeout:120000});
+    if (result.error) throw result.error;
+    assert.equal(result.status, 0, result.stdout + result.stderr);
+    report.regression_suites = files;
+    console.log(result.stdout);
+  }
   catch (error) {report = {ok: false, revision: pin.git_commit, error: error.message}; process.exitCode = 1;}
   const output = path.resolve(values.output || 'work/compatibility-alnop-result.json');
   fs.mkdirSync(path.dirname(output), {recursive: true});

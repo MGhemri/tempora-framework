@@ -1,9 +1,6 @@
 const {test} = require('node:test');
 const assert = require('node:assert/strict');
 const {nativeCorpus} = require('./helpers/tempora');
-const {readCorpus, root} = require('../src/canonical');
-const {toTempora} = require('../src/profiles/alnop-migration');
-const {load} = require('../src/profiles/alnop');
 const {reviewPolicy, contentDigest, recordDecision, verifyReviewJournal, validatePublicationEligibility} = require('../src/framework/editorial-review');
 
 const date = '2026-11-05T12:00:00Z';
@@ -83,8 +80,11 @@ test('Quorum counts distinct reviewers and a new withdrawal remains append-only'
 });
 
 test('A technically valid 264th event cannot pass the publication gate on its published label', () => {
-  const corpus = toTempora(readCorpus(), load(root));
-  const additional = {...structuredClone(corpus.events[0]), id: 'PROPOSED_TEST_264', spatial_refs: [], review_refs: []};
+  const corpus = nativeCorpus();
+  corpus.sources[0].editorial_status = 'published';
+  const first = structuredClone(corpus.events[0]);
+  corpus.events = Array.from({length:263},(_,i)=>({...structuredClone(first),id:i===0?first.id:'SYN_'+i}));
+  const additional = {...structuredClone(corpus.events[0]), id: 'PROPOSED_TEST_264', editorial_status: 'published', spatial_refs: [], review_refs: []};
   corpus.events.push(additional);
   const {validate} = setup(corpus);
   assert.equal(corpus.events.length, 264);
