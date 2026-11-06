@@ -73,6 +73,21 @@
             <p id="workbench-review-count" class="subnote"></p>
             <p class="subnote" data-i18n="reviewsDisclaimer">Lecture des décisions déclarées uniquement : aucune approbation, création ou modification.</p>
             <div class="table-wrap"><table><thead><tr><th>ID</th><th data-i18n="reviewSubject">Sujet examiné</th><th data-i18n="reviewAgent">Auteur / Type</th><th data-i18n="reviewMethod">Méthode</th><th data-i18n="reviewDecision">Décision déclarée</th><th data-i18n="reviewReason">Justification</th><th data-i18n="reviewDate">Date</th><th data-i18n="reviewHash">Empreinte du contenu</th></tr></thead><tbody id="workbench-reviews"></tbody></table></div>
+            <section class="result-panel" id="workbench-draft-panel">
+              <h3 data-i18n="draftTitle">Préparer un brouillon de revue</h3>
+              <p class="subnote" data-i18n="draftDescription">Brouillon non canonique, non signé, non approuvé. Copie manuelle uniquement : aucun corpus n’est modifié.</p>
+              <div class="draft-fields">
+                <label for="draft-reviewer" data-i18n="draftReviewer">Nom du chercheur</label>
+                <input id="draft-reviewer" type="text" maxlength="140" autocomplete="off"/>
+                <label for="draft-subject" data-i18n="draftSubject">Identifiant de l’élément examiné</label>
+                <input id="draft-subject" type="text" maxlength="200" autocomplete="off"/>
+                <label for="draft-method" data-i18n="draftMethod">Méthode de revue</label>
+                <input id="draft-method" type="text" maxlength="200" autocomplete="off"/>
+                <label for="draft-reason" data-i18n="draftReason">Justification et références des sources</label>
+                <textarea id="draft-reason" maxlength="4000" rows="4"></textarea>
+                <button class="primary" type="button" id="draft-copy" data-i18n="draftCopy">Copier le brouillon JSON</button>
+              </div>
+            </section>
             <section id="workbench-evidence-detail" class="validation-errors" role="status" aria-live="polite"><p data-i18n="evidenceSelect">Sélectionnez une ligne pour examiner ses références.</p></section>
             <p class="subnote" data-i18n="sourceReviewNotice">La conformité au schéma ne prouve pas la véracité des événements.</p>
           </section>
