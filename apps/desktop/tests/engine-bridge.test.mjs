@@ -100,3 +100,24 @@ test('Canonical review records are read-only and human authorship must be explic
  assert.match(ui,/reviews\.replaceChildren\(\)/);
  assert.match(html,/id="workbench-reviews"/);
 });
+
+test('Human review draft remains noncanonical, manual, and bound to validated corpus',()=>{
+  const ui=readFileSync(new URL('../src/main.ts',import.meta.url),'utf8');
+  const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+  assert.match(ui,/function buildReviewDraft\(/);
+  assert.match(ui,/if \(!result\?\.valid\) return null/);
+  assert.match(ui,/identifiers\.includes\(subjectId\)/);
+  assert.match(ui,/document_type: "tempora\.review_draft"/);
+  assert.match(ui,/approved: false/);
+  assert.match(ui,/signed: false/);
+  assert.match(ui,/corpus_sha256: result\.sha256/);
+  assert.match(ui,/navigator\.clipboard\.writeText/);
+  assert.doesNotMatch(ui,/invoke\([^)]*save.*review/i);
+  for(const id of ['draft-reviewer','draft-subject','draft-method','draft-reason','draft-copy'])
+    assert.ok(html.includes('id="'+id+'"'),id);
+});
+
+test('Tauri Manager trait import is Windows-only to avoid Linux unused import warnings',()=>{
+ const rust=readFileSync(new URL('../src-tauri/src/engine_bridge.rs',import.meta.url),'utf8');
+ assert.match(rust,/#\[cfg\(target_os = "windows"\)\]\s*use tauri::Manager;/);
+});

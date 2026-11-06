@@ -8,6 +8,7 @@ use std::path::Path;
 use std::process::{Command, Stdio};
 use std::thread;
 use std::time::Duration;
+#[cfg(target_os = "windows")]
 use tauri::Manager;
 use wait_timeout::ChildExt;
 

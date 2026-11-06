@@ -39,3 +39,17 @@
 @media(max-width:900px){#app{grid-template-columns:76px 1fr}.brand{padding:0}.brand div,.nav-caption,.nav-item span:not(.nav-symbol),.sidebar-bottom{display:none}.sidebar{padding:25px 12px}.nav-item{justify-content:center}.hero-art{display:none}.hero{grid-template-columns:1fr}.metric-grid{gap:8px}.metric{padding:14px}.cards{grid-template-columns:1fr}.work-card:last-child{grid-column:auto}}
 
 .secondary-action{margin-left:12px;background:#27433f;color:#d9f0e9;border:1px solid #4a7169}.secondary-action:disabled{opacity:.48;cursor:not-allowed}.validation-panel{background:#122328;border:1px solid #345a56;border-radius:12px;padding:25px}.validation-digest{color:#9fd6ca;font-size:11px;overflow-wrap:anywhere;font-family:ui-monospace,Consolas,monospace}.validation-errors{max-height:260px;overflow:auto}.validation-errors p{border-left:2px solid #d4a06d;padding:8px 12px;margin:7px 0;background:#1c282e;color:#d6dedd;font-size:12px;overflow-wrap:anywhere}
+
+/* Scientific workbench: explicit, non-canonical review draft editor */
+.draft-fields { display: grid; gap: .7rem; max-width: 48rem; }
+.draft-fields label { font-size: .86rem; font-weight: 600; }
+.draft-fields input, .draft-fields textarea {
+  width: 100%; box-sizing: border-box; padding: .8rem 1rem;
+  border: 1px solid var(--border, #46516a); border-radius: .55rem;
+  background: var(--surface, #171e2c); color: inherit; font: inherit;
+}
+.draft-fields textarea { resize: vertical; min-height: 7rem; }
+.draft-fields input:focus-visible, .draft-fields textarea:focus-visible {
+  outline: 2px solid #8cbdff; outline-offset: 2px;
+}
+.draft-fields button { justify-self: start; }

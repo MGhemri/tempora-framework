@@ -147,3 +147,17 @@ automatic/unspecified ones. The structural inventory never changes
 the underlying corpus, never signs a review, and does not alter the
 canonical validator's scientific decision. Output is capped to 20
 review rows, with full counts.
+
+## Phase 1E — Preparation of human-review drafts
+
+The frontend creates a strictly noncanonical, unsigned, non-approved
+researcher draft only when the pinned engine has validated the loaded
+corpus as conformant. Its target ID must appear in the bounded preview.
+It carries the canonical source corpus digest for subsequent provenance
+checks. The only transfer is **explicit user-triggered clipboard copy**;
+neither Rust nor the Node worker gets write, signature, approval or
+publication capabilities. Drafts are never inserted into `reviews[]`.
+
+Future persistent review workflows need a separate threat model for
+identity, privacy, cross-namespace IDs, immutable snapshots, signatures,
+audit logs, evidence verification and deliberate export safeguards.
