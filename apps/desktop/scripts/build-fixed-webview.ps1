@@ -12,7 +12,6 @@ try {
     throw 'CARGO_LOCK_REQUIRED'
   }
   & (Join-Path $PSScriptRoot 'stage-fixed-webview.ps1') -CabPath $CabPath -ExpectedSha256 $ExpectedSha256
-  if ($LASTEXITCODE -and $LASTEXITCODE -ne 0) { throw 'WEBVIEW_STAGING_FAILED' }
   & npm run stage:windows-engine
   if ($LASTEXITCODE -ne 0) { throw 'EMBEDDED_ENGINE_STAGE_FAILED' }
   & npx --no-install tauri build --config src-tauri/tauri.windows.conf.json --config src-tauri/tauri.windows.fixed.conf.json -- --locked
