@@ -30,3 +30,11 @@ test('Distribution qualification asserts installed GUI startup, lockfile integri
  assert.match(installed,/INSTALLED_TAURI_GUI_EXITED_EARLY/);
  assert.match(installed,/Get-AuthenticodeSignature/);
 });
+
+test('CI generates genuine Cargo.lock candidate and tests that exact Rust resolution',()=>{
+ const ci=read('../../.github/workflows/desktop-foundation.yml');
+ assert.match(ci,/cargo generate-lockfile --manifest-path src-tauri\/Cargo\.toml/);
+ assert.match(ci,/cargo test --locked --manifest-path src-tauri\/Cargo\.toml/);
+ assert.match(ci,/TEMPORA-Desktop-Cargo-Lock-Candidate-NOT-VERSIONED/);
+ assert.match(ci,/sha256sum src-tauri\/Cargo\.lock/);
+});
