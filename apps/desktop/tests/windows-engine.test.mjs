@@ -58,3 +58,13 @@ test('GUI smoke requires WebView2 child process, not merely a living native wind
  assert.match(script,/Get-CimInstance Win32_Process/);
  assert.match(script,/msedgewebview2\.exe/);
 });
+
+test('Fixed WebView2 experiment requires verified CAB and uses application-local runtime',()=>{
+ const conf=JSON.parse(read('src-tauri/tauri.windows.fixed.conf.json'));
+ assert.deepEqual(conf.bundle.windows.webviewInstallMode,{type:'fixedRuntime',path:'./resources/webview2-fixed/'});
+ const stage=read('scripts/stage-fixed-webview.ps1');
+ assert.match(stage,/WEBVIEW_CAB_SHA256_MISMATCH/);
+ assert.match(stage,/msedgewebview2\.exe/);
+ assert.match(stage,/expand\.exe/);
+ assert.match(read('scripts/diagnose-webview2.ps1'),/read-only/);
+});
