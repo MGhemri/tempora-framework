@@ -30,3 +30,15 @@ test('Distribution qualification asserts installed GUI startup, lockfile integri
  assert.match(installed,/INSTALLED_TAURI_GUI_EXITED_EARLY/);
  assert.match(installed,/Get-AuthenticodeSignature/);
 });
+
+test('Installed qualification isolates GUI and verifies complete runtime inventory and uninstall',()=>{
+ const script=read('scripts/verify-windows-install.ps1');
+ const isolated=script.indexOf('SYSTEM_NODE_STILL_AVAILABLE');
+ const gui=script.indexOf('Start-Process -FilePath $appExe');
+ assert.ok(isolated>=0 && gui>isolated,'GUI startup must occur after system Node is removed from PATH');
+ for (const name of ['RUNTIME_INVENTORY_COUNT_MISMATCH','INSTALLED_DEPENDENCY_VERSION_MISMATCH','INSTALLED_DEPENDENCY_INVENTORY_MISMATCH','NSIS_UNINSTALL_FAILED','NSIS_UNINSTALL_LEFT_EXECUTABLE']) {
+   assert.ok(script.includes(name),name);
+ }
+ const ci=read('../../.github/workflows/desktop-foundation.yml');
+ assert.match(ci,/run: npm run tauri -- build --config src-tauri\/tauri\.windows\.conf\.json/);
+});
