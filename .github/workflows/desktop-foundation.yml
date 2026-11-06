@@ -85,6 +85,21 @@ jobs:
           $binary = Get-ChildItem "src-tauri/target/release/bundle/nsis" -Filter "*setup.exe" -ErrorAction Stop | Select-Object -First 1
           if (-not $binary) { throw "NSIS installer missing" }
           ./scripts/verify-windows-install.ps1 -Installer $binary.FullName -InstallDirectory "$env:RUNNER_TEMP/tempora-desktop-install"
+      - name: Write installer and runtime checksums for provenance
+        shell: pwsh
+        run: |
+          $install = Get-ChildItem "src-tauri/target/release/bundle/nsis" -Filter "*setup.exe" | Select-Object -First 1
+          if (-not $install) { throw "No installer" }
+          $manifest = Get-Content "src-tauri/resources/engine/runtime-manifest.json" -Raw | ConvertFrom-Json
+          $rows = @(
+            ("installer_sha256=" + (Get-FileHash $install.FullName -Algorithm SHA256).Hash.ToLowerInvariant()),
+            ("node_sha256=" + $manifest.node_sha256),
+            ("worker_sha256=" + $manifest.worker_sha256),
+            ("lock_sha256=" + $manifest.lock_sha256),
+            ("source_sha=" + "$env:GITHUB_SHA")
+          )
+          $rows | Set-Content "src-tauri/target/release/bundle/nsis/provenance-sha256.txt"
+          $manifest | ConvertTo-Json -Depth 10 | Set-Content "src-tauri/target/release/bundle/nsis/engine-inventory.json"
       - name: Check NSIS artifact and embedded engine
         shell: pwsh
         run: |
@@ -99,5 +114,13 @@ jobs:
         with:
           name: TEMPORA-Desktop-Windows-x64-UNSIGNED-NOT-A-RELEASE
           path: apps/desktop/src-tauri/target/release/bundle/nsis/*setup.exe
+          if-no-files-found: error
+          retention-days: 7
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TEMPORA-Desktop-Windows-x64-Provenance-SHA256
+          path: |
+            apps/desktop/src-tauri/target/release/bundle/nsis/provenance-sha256.txt
+            apps/desktop/src-tauri/target/release/bundle/nsis/engine-inventory.json
           if-no-files-found: error
           retention-days: 7
