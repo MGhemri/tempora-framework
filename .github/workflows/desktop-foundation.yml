@@ -51,7 +51,22 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev patchelf
-      - run: cargo test --manifest-path src-tauri/Cargo.toml
+      # Generate the authentic Cargo resolution on a real Rust runner.
+      # Until Cargo.lock is committed, this is a provenance artifact and NOT
+      # a guarantee of reproducibility across different workflow runs.
+      - name: Generate Cargo lockfile and print digest
+        shell: bash
+        run: |
+          cargo generate-lockfile --manifest-path src-tauri/Cargo.toml
+          sha256sum src-tauri/Cargo.lock
+      - name: Upload candidate Cargo.lock for review and commit
+        uses: actions/upload-artifact@v4
+        with:
+          name: TEMPORA-Desktop-Cargo-Lock-Candidate-NOT-VERSIONED
+          path: apps/desktop/src-tauri/Cargo.lock
+          if-no-files-found: error
+          retention-days: 30
+      - run: cargo test --locked --manifest-path src-tauri/Cargo.toml
 
   windows-installer:
     name: Desktop Windows x64 standalone NSIS
