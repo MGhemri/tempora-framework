@@ -27,6 +27,68 @@ pub struct CanonicalValidation {
     pub warnings: Vec<Value>,
     pub sha256: String,
     pub note: String,
+    pub overview: ResearchOverview,
+}
+
+// Bounded structural evidence overview for the scientific workspace.
+// The canonical validity decision continues to come ONLY from TEMPORA Engine.
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct EvidenceRow {
+    pub id: String,
+    pub title: String,
+    pub status: String,
+    pub evidence_count: usize,
+}
+
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
+pub struct ResearchOverview {
+    pub event_count: usize,
+    pub source_count: usize,
+    pub claim_count: usize,
+    pub unsupported_claim_count: usize,
+    pub events: Vec<EvidenceRow>,
+    pub sources: Vec<EvidenceRow>,
+    pub claims: Vec<EvidenceRow>,
+}
+
+fn safe_label(value: Option<&str>) -> String {
+    value.unwrap_or("—").chars().take(140).collect()
+}
+
+fn overview_rows(corpus: &Value, key: &str) -> Vec<EvidenceRow> {
+    corpus.get(key).and_then(Value::as_array).into_iter()
+        .flat_map(|items| items.iter().take(20))
+        .map(|item| {
+            let title = item.get("title").and_then(|title| {
+                title.as_str().or_else(|| title.as_object()
+                    .and_then(|translations| translations.values().find_map(Value::as_str)))
+            });
+            EvidenceRow {
+                id: safe_label(item.get("id").and_then(Value::as_str)),
+                title: safe_label(title.or_else(|| item.get("predicate").and_then(Value::as_str))),
+                status: safe_label(item.get("assertion_status").or_else(|| item.get("editorial_status")).and_then(Value::as_str)),
+                evidence_count: item.pointer("/provenance/evidence").and_then(Value::as_array).map_or(0, Vec::len),
+            }
+        }).collect()
+}
+
+fn research_overview(corpus: &Value) -> ResearchOverview {
+    let count = |key: &str| corpus.get(key).and_then(Value::as_array).map_or(0, Vec::len);
+    let unsupported_claim_count = corpus.get("claims").and_then(Value::as_array)
+        .map_or(0, |claims| claims.iter().filter(|claim| {
+            claim.pointer("/provenance/evidence").and_then(Value::as_array).map_or(true, Vec::is_empty)
+        }).count());
+    ResearchOverview {
+        event_count: count("events"),
+        source_count: count("sources"),
+        claim_count: count("claims"),
+        unsupported_claim_count,
+        events: overview_rows(corpus, "events"),
+        sources: overview_rows(corpus, "sources"),
+        claims: overview_rows(corpus, "claims"),
+    }
 }
 
 fn document_payload(path: &Path) -> Result<(String, Value), String> {
@@ -165,6 +227,7 @@ pub fn validate_selected_corpus(path: &Path, app: &tauri::AppHandle) -> Result<C
     Ok(CanonicalValidation {
         file_name, engine_version: version.to_owned(), valid, errors, warnings, sha256,
         note: "Canonical schema validation only; historical claims still require source review.".into(),
+        overview: research_overview(&corpus),
     })
 }
 
@@ -184,6 +247,30 @@ mod tests {
         assert_eq!(v["protocol_version"], PROTOCOL);
         assert_eq!(v["request_id"], "abc_123");
         assert!(message("id", "corpus.digest", json!({"x":"a".repeat(4 * 1024 * 1024)})).is_err());
+    }
+    #[test]
+    fn scientific_overview_is_bounded_and_never_guesses_historical_truth() {
+        let source = json!({
+            "events": [{"id":"E1","title":{"fr":"Événement fictif"},"editorial_status":"proposed",
+                "provenance":{"evidence":[]}}],
+            "sources": [{"id":"S1","title":{"fr":"Source fictive"},"provenance":{"evidence":[]}}],
+            "claims": [{"id":"C1","predicate":"unknown","assertion_status":"unverified",
+                "provenance":{"evidence":[]}}]
+        });
+        let overview = research_overview(&source);
+        assert_eq!(overview.event_count, 1);
+        assert_eq!(overview.source_count, 1);
+        assert_eq!(overview.claim_count, 1);
+        assert_eq!(overview.unsupported_claim_count, 1);
+        assert_eq!(overview.events[0].title, "Événement fictif");
+        assert_eq!(overview.claims[0].status, "unverified");
+    }
+    #[test]
+    fn scientific_overview_limits_rows_to_twenty() {
+        let corpus = json!({"events": (0..40).map(|n| json!({"id":n.to_string()})).collect::<Vec<_>>()});
+        let overview = research_overview(&corpus);
+        assert_eq!(overview.event_count, 40);
+        assert_eq!(overview.events.len(), 20);
     }
     #[test]
     fn malformed_or_oversized_documents_are_not_read_as_corpora() {
