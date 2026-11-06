@@ -79,6 +79,28 @@ jobs:
         run: npm run test:bridge
       - name: Verify packager contracts
         run: npm run test:windows-engine
+      - name: Verify Fixed WebView2 staging rejects tampered and non-CAB files
+        shell: pwsh
+        run: |
+          $dummy = Join-Path $env:RUNNER_TEMP "tempora-invalid-webview2.cab"
+          [IO.File]::WriteAllText($dummy, "not an authentic Microsoft CAB")
+          $realHash = (Get-FileHash $dummy -Algorithm SHA256).Hash.ToLowerInvariant()
+          $stager = (Resolve-Path "./scripts/stage-fixed-webview.ps1").Path
+          try {
+            & $stager -CabPath $dummy -ExpectedSha256 ('0' * 64)
+            throw "TAMPERED_CAB_WAS_ACCEPTED"
+          } catch {
+            if ($_.Exception.Message -notmatch "WEBVIEW_CAB_SHA256_MISMATCH") { throw }
+          }
+          try {
+            & $stager -CabPath $dummy -ExpectedSha256 $realHash
+            throw "MALFORMED_CAB_WAS_ACCEPTED"
+          } catch {
+            if ($_.Exception.Message -notmatch "WEBVIEW_CAB_EXPANSION_FAILED") { throw }
+          }
+          if (Test-Path "./src-tauri/resources/webview2-fixed/msedgewebview2.exe") {
+            throw "INVALID_CAB_LEFT_EXECUTABLE"
+          }
       - name: Stage pinned Node and scientific engine
         run: npm run stage:windows-engine
       - name: Verify locked Cargo dependency metadata on Windows
