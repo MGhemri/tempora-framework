@@ -161,3 +161,17 @@ publication capabilities. Drafts are never inserted into `reviews[]`.
 Future persistent review workflows need a separate threat model for
 identity, privacy, cross-namespace IDs, immutable snapshots, signatures,
 audit logs, evidence verification and deliberate export safeguards.
+
+## Cargo.lock reproducibility gate
+
+The Desktop Cargo dependency graph is now locked by the genuine
+`apps/desktop/src-tauri/Cargo.lock`, imported from the verified
+GitHub Actions artifact (SHA-256
+`14200f525820cd8b8303938af6ee77426fae64a4d78df8d0472f59b302e726f9`).
+Linux CI runs `cargo test --locked` without re-generating the lockfile.
+Windows CI checks locked metadata, sends `--locked` to the Cargo runner
+via Tauri CLI, and rejects build-induced edits to the lockfile.
+
+This establishes dependency-resolution consistency across checked-out
+commits and platforms, not full bit-for-bit binary reproducibility.
+Future Rust updates must include a reviewed Cargo-generated lockfile diff.

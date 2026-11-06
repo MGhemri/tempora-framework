@@ -51,7 +51,11 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev patchelf
-      - run: cargo test --manifest-path src-tauri/Cargo.toml
+      - name: Check committed Cargo.lock provenance
+        shell: bash
+        run: |
+          echo "14200f525820cd8b8303938af6ee77426fae64a4d78df8d0472f59b302e726f9  src-tauri/Cargo.lock" | sha256sum --check
+      - run: cargo test --locked --manifest-path src-tauri/Cargo.toml
 
   windows-installer:
     name: Desktop Windows x64 standalone NSIS
@@ -77,8 +81,15 @@ jobs:
         run: npm run test:windows-engine
       - name: Stage pinned Node and scientific engine
         run: npm run stage:windows-engine
+      - name: Verify locked Cargo dependency metadata on Windows
+        run: cargo metadata --locked --manifest-path src-tauri/Cargo.toml --no-deps --format-version 1
       - name: Build native NSIS installer (unsigned CI artifact only)
         run: npm run build:windows
+      - name: Verify installer did not alter committed Cargo.lock
+        shell: pwsh
+        run: |
+          git diff --exit-code -- src-tauri/Cargo.lock
+          if ($LASTEXITCODE -ne 0) { throw "Cargo.lock was modified by the Windows installer build" }
       - name: Smoke-test installed NSIS package without system Node on PATH
         shell: pwsh
         run: |
