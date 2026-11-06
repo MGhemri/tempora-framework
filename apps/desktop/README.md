@@ -91,3 +91,27 @@ Before an official public release: commit audited npm and Cargo locks, inspect b
 Windows qualification now starts both the Tauri GUI and scientific worker with the runner's Node.js removed from PATH. The smoke validates that each production dependency in the embedded lockfile has an installed manifest with the expected version and is represented in the declared license inventory. An installer is rejected if silent uninstallation fails or leaves the main executable behind. CI stages the embedded engine only once per run, avoiding a second unreviewed npm resolution during packaging.
 
 These are **runner-based checks, not clean-VM interactive acceptance**. A release remains blocked on source-controlled audited npm/Cargo locks, a real clean Windows VM (native file dialogs and end-to-end corpus validation), license-text review, code signing and final provenance verification. Do not publish unsigned experimental artifacts as an official release.
+
+## Phase 1G — WebView2 offline qualification (Windows sandbox regression)
+
+A manual Windows sandbox installation exposed a **blank Tauri window** and an
+error saying `Could not find the WebView2 Runtime` even though the EXE
+stayed alive for six seconds. The CI startup smoke had therefore produced a
+false positive about GUI usability.
+
+The experimental NSIS package now sets
+`bundle.windows.webviewInstallMode = { "type": "offlineInstaller", "silent": true }`.
+Tauri embeds Microsoft's **Evergreen WebView2 offline installer**, allowing
+installation with no network connection. Expect roughly 127 MB additional
+installer size. This is not the fixed-version runtime: installed Evergreen
+WebView2 is managed and updated by Windows/Microsoft.
+
+CI requires the installed Tauri process to spawn a `msedgewebview2.exe`
+descendant; a living native shell alone is no longer accepted. The test
+still does not assert that the HTML interface rendered correctly or that
+file dialogs work. The user's isolated Windows sandbox remains a separate
+manual acceptance gate. Microsoft WebView2 installation can be restricted
+by machine policy, permissions or sandbox configuration; those cases must
+be tested and documented, not treated as a passing GUI.
+
+No public release is authorized by this change alone.
