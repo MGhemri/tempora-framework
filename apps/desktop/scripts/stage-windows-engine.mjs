@@ -20,7 +20,7 @@ copyFileSync(process.execPath,join(out,'node.exe'));
 copyFileSync(join(root,'bridge','worker.cjs'),join(out,'worker.cjs'));
 const npm = process.env.npm_execpath;
 if (!npm) throw Error('Run via npm script for exact npm CLI path');
-const options = ['--prefix',out,'--ignore-scripts','--omit=dev','--no-audit','--no-fund','--package-lock=true'];
+const options = ['--prefix',out,'--workspaces=false','--ignore-scripts','--omit=dev','--no-audit','--no-fund','--package-lock=true'];
 const result=spawnSync(process.execPath,[npm,'install',...options],{cwd:root,stdio:'inherit',shell:false});
 if (result.status !== 0) throw Error('Runtime dependency installation failed');
 if (!existsSync(join(out,'package-lock.json'))) throw Error('Missing runtime dependency lockfile');
