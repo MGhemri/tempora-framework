@@ -45,11 +45,21 @@ pub struct EvidenceRow {
 
 #[derive(Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
+pub struct DeclaredContradiction {
+    pub claim_id: String,
+    pub target_id: String,
+    pub target_present: bool,
+}
+
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct ResearchOverview {
     pub event_count: usize,
     pub source_count: usize,
     pub claim_count: usize,
     pub unsupported_claim_count: usize,
+    pub contradiction_count: usize,
+    pub contradictions: Vec<DeclaredContradiction>,
     pub events: Vec<EvidenceRow>,
     pub sources: Vec<EvidenceRow>,
     pub claims: Vec<EvidenceRow>,
@@ -81,13 +91,50 @@ fn overview_rows(corpus: &Value, key: &str) -> Vec<EvidenceRow> {
         }).collect()
 }
 
+// Only the explicit 'contradicts' links in the source document are reported.
+// No semantic comparison or automated inference is performed.
+fn declared_contradictions(corpus: &Value) -> (usize, Vec<DeclaredContradiction>) {
+    let claims = corpus.get("claims").and_then(Value::as_array);
+    let claim_ids: std::collections::HashSet<(&str, &str)> = claims.into_iter()
+        .flat_map(|items| items.iter())
+        .filter_map(|claim| Some((
+            claim.get("namespace")?.as_str()?,
+            claim.get("id")?.as_str()?,
+        ))).collect();
+    let mut total = 0usize;
+    let mut preview = Vec::new();
+    for claim in claims.into_iter().flat_map(|items| items.iter()) {
+        let claim_id = claim.get("id").and_then(Value::as_str).unwrap_or("—");
+        let namespace = claim.get("namespace").and_then(Value::as_str).unwrap_or("");
+        if let Some(targets) = claim.get("contradicts").and_then(Value::as_array) {
+            for target in targets {
+                let target_id = target.get("id").and_then(Value::as_str).unwrap_or("—");
+                let target_namespace = target.get("namespace").and_then(Value::as_str).unwrap_or("");
+                total += 1;
+                if preview.len() < 20 {
+                    preview.push(DeclaredContradiction {
+                        claim_id: safe_label(Some(claim_id)),
+                        target_id: safe_label(Some(target_id)),
+                        target_present: claim_ids.contains(&(target_namespace, target_id))
+                            && namespace == target_namespace,
+                    });
+                }
+            }
+        }
+    }
+    (total, preview)
+}
+
 fn research_overview(corpus: &Value) -> ResearchOverview {
     let count = |key: &str| corpus.get(key).and_then(Value::as_array).map_or(0, Vec::len);
     let unsupported_claim_count = corpus.get("claims").and_then(Value::as_array)
         .map_or(0, |claims| claims.iter().filter(|claim| {
             claim.pointer("/provenance/evidence").and_then(Value::as_array).map_or(true, Vec::is_empty)
         }).count());
+    let (contradiction_count, contradictions) = declared_contradictions(corpus);
     ResearchOverview {
+        contradiction_count,
+        contradictions,
         event_count: count("events"),
         source_count: count("sources"),
         claim_count: count("claims"),
@@ -272,6 +319,29 @@ mod tests {
         assert_eq!(overview.events[0].title, "Événement fictif");
         assert_eq!(overview.claims[0].status, "unverified");
         assert!(overview.claims[0].source_refs.is_empty());
+    }
+    #[test]
+    fn only_explicit_contradictions_are_listed_and_unresolved_links_marked() {
+        let corpus = json!({"claims":[
+            {"namespace":"N1","id":"C1","contradicts":[
+                {"namespace":"N1","id":"C2"},{"namespace":"N1","id":"UNKNOWN"}]},
+            {"namespace":"N1","id":"C2","contradicts":[]},
+            {"namespace":"N2","id":"C3","contradicts":[{"namespace":"N1","id":"C2"}]}
+        ]});
+        let (total, links) = declared_contradictions(&corpus);
+        assert_eq!(total, 3);
+        assert_eq!(links.len(), 3);
+        assert!(links[0].target_present);
+        assert!(!links[1].target_present);
+        assert!(!links[2].target_present);
+    }
+    #[test]
+    fn contradiction_preview_is_bounded_but_total_count_is_complete() {
+        let refs = (0..40).map(|n| json!({"namespace":"N","id":format!("C{n}")})).collect::<Vec<_>>();
+        let corpus = json!({"claims":[{"namespace":"N","id":"A","contradicts":refs}]});
+        let (total, links) = declared_contradictions(&corpus);
+        assert_eq!(total, 40);
+        assert_eq!(links.len(), 20);
     }
     #[test]
     fn scientific_overview_links_only_declared_references() {

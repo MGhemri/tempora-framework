@@ -127,3 +127,12 @@ and up to 20 evidence summaries for each of events, sources and claims.
 historical support. The GUI renders user strings using `textContent`,
 without HTML injection. No indexing, writes, source ranking, historical
 verification, review action, inference or TensorFlow training is performed.
+
+## Phase 1C — Explicit contradiction inventory
+
+The Rust bridge reads `claims[].contradicts[]` *only* for an informational
+display, preserving the canonical validator as the scientific authority.
+The complete link count is returned with a bounded first-20-entry preview.
+An absent or other-namespace target is clearly labelled as unresolved.
+Neither semantic contradictions, corroboration nor truth are inferred.
+No reviewer writes, model execution or publishing actions are included.
