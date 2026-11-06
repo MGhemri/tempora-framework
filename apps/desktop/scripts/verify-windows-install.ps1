@@ -13,6 +13,21 @@ try {
   Write-Host "Installing unsigned TEMPORA Desktop in isolated directory"
   $installerProcess = Start-Process -FilePath $installerFile -ArgumentList @("/S", "/D=$InstallDirectory") -Wait -PassThru
   if ($installerProcess.ExitCode -ne 0) { throw "NSIS_INSTALL_FAILED: $($installerProcess.ExitCode)" }
+  Write-Host "Requested installer directory: $InstallDirectory"
+  $installedFiles = @(Get-ChildItem -LiteralPath $InstallDirectory -Recurse -File -ErrorAction SilentlyContinue | Select-Object -First 30 -ExpandProperty FullName)
+  Write-Host ("Installed tree (up to 30 files): " + ($installedFiles -join "; "))
+  $uninstallKeys = @(
+    'HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall',
+    'HKLM:\Software\Microsoft\Windows\CurrentVersion\Uninstall'
+  )
+  foreach ($key in $uninstallKeys) {
+    Get-ChildItem -Path $key -ErrorAction SilentlyContinue | ForEach-Object {
+      $entry = Get-ItemProperty $_.PSPath -ErrorAction SilentlyContinue
+      if ($entry.DisplayName -like '*TEMPORA*') {
+        Write-Host ('TEMPORA registry: ' + $entry.DisplayName + '; location=' + $entry.InstallLocation)
+      }
+    }
+  }
   $runtimeDir = Join-Path $InstallDirectory "engine"
   $node = Join-Path $runtimeDir "node.exe"
   $worker = Join-Path $runtimeDir "worker.cjs"
