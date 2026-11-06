@@ -5,7 +5,7 @@ const root = path.resolve(__dirname, '..');
 // Explicit generic inputs: this also defines the independently reproducible checkout.
 const inputs = [
   'package.json','package-lock.json','distribution','LICENSE','README.md','FRAMEWORK.md',
-  'CANONICAL_MODEL.md','INGESTION.md','ANALYSIS.md','SECURITY.md',
+  'CANONICAL_MODEL.md','INGESTION.md','ANALYSIS.md','SECURITY.md','RELEASE_POLICY.md',
   'src/framework','src/sdk','src/cli','schemas/tempora',
   'schemas/tempora.profile.schema.json','schemas/tempora.ingestion-mapping.schema.json',
   'docs/.nojekyll','docs/index.html','docs/guides','docs/site-src','docs/openapi',
