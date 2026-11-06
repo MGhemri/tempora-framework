@@ -46,6 +46,13 @@ test('CI enforces committed Cargo.lock and Tauri runner must use locked resoluti
  assert.match(lock,/name = "tempora-desktop"/);
 });
 
+test('NSIS installs Evergreen WebView2 as explicit prerequisite before launch',()=>{
+ const offline=JSON.parse(read('src-tauri/tauri.windows.conf.json'));
+ const online=JSON.parse(read('src-tauri/tauri.windows.online.conf.json'));
+ assert.deepEqual(offline.bundle.windows.webviewInstallMode,{type:'offlineInstaller',silent:true});
+ assert.deepEqual(online.bundle.windows.webviewInstallMode,{type:'embedBootstrapper',silent:true});
+ assert.match(read('scripts/build-online-webview.ps1'),/tauri build --config src-tauri\/tauri\.windows\.conf\.json --config src-tauri\/tauri\.windows\.online\.conf\.json -- --locked/);
+});
 test('Fixed WebView2 experiment requires locally verified CAB and Cargo-locked Tauri build',()=>{
  const conf=JSON.parse(read('src-tauri/tauri.windows.fixed.conf.json'));
  assert.deepEqual(conf.bundle.windows.webviewInstallMode,
