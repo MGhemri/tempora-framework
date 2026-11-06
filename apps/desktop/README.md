@@ -58,6 +58,10 @@ The GUI must not import `src/framework/` directly in a WebView: TEMPORA 3.0.0 is
 
 L'interface n'embarque **aucune copie** du moteur scientifique ni des données ALNOP. L'adaptateur avec le SDK npm restera versionné, isolé et testé.
 
+## Phase 1A — Engine worker protocol (under test)
+
+A separate, pinned Node worker invokes the genuine npm TEMPORA SDK (health, canonical validation, SHA-256). It is **not yet called from Tauri**. Run `npm run test:bridge` and see [ENGINE_BRIDGE.md](../../docs/reference/ENGINE_BRIDGE.md). The WebView has no access to Node APIs.
+
 ## Next steps
 
 See [`docs/reference/DESKTOP_ARCHITECTURE.md`](../../docs/reference/DESKTOP_ARCHITECTURE.md) for the integration plan and TensorFlow-ready inference contracts.

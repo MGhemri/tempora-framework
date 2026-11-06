@@ -7,10 +7,12 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "test:bridge": "node --test tests/engine-bridge.test.mjs"
   },
   "dependencies": {
-    "@tauri-apps/api": "^2.0.0"
+    "@tauri-apps/api": "^2.0.0",
+    "tempora-framework": "3.0.0"
   },
   "devDependencies": {
     "@tauri-apps/cli": "^2.0.0",
