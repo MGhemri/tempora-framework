@@ -191,3 +191,17 @@ This is **not** yet a passing clean-VM rendering test or a release
 configuration. Only a real sandbox test without WebView2 registration can
 qualify it. The unrelated #20 contains older pre-lockfile experiments
 and must not be merged without conflict review.
+
+## Evergreen WebView2 prerequisite policy
+
+The standard Windows NSIS build packages Microsoft Evergreen WebView2
+**offline** as a prerequisite, within the same TEMPORA Desktop
+installer. WebView2 is installed only if missing before first GUI
+launch. This is preferable to distributing two separate EXE files.
+
+An optional `embedBootstrapper` online build is configured for
+network-connected clients. A separate `fixedRuntime` experiment exists
+only for environments where Evergreen runtime registration cannot be
+relied upon. None of these removes the need for clean-Windows GUI
+rendering and install/uninstall acceptance tests. Don't conflate a
+green NSIS build with a verified WebView runtime on the target host.
