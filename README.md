@@ -4,7 +4,7 @@
 [![Documentation](https://github.com/MGhemri/tempora-framework/actions/workflows/test-documentation-ui.yml/badge.svg)](https://github.com/MGhemri/tempora-framework/actions/workflows/test-documentation-ui.yml)
 [![GitHub Pages](https://github.com/MGhemri/tempora-framework/actions/workflows/pages-framework.yml/badge.svg)](https://github.com/MGhemri/tempora-framework/actions/workflows/pages-framework.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-![Release stage](https://img.shields.io/badge/Release-3.0.0--dev.0-orange)
+![Release stage](https://img.shields.io/badge/Release-3.0.0--rc.1-orange)
 
 **An open-source, profile-driven framework for reproducible historical corpora.**  
 **Un framework open source piloté par profils pour des corpus historiques reproductibles.**
@@ -66,7 +66,7 @@ npm run test:package
 npm run test:standalone
 ```
 
-The package is currently a **development tarball**, version `3.0.0-dev.0`, marked `private: true`. TEMPORA is **not presented as a published stable npm package**. Use the [SDK and CLI guide](https://mghemri.github.io/tempora-framework/guides/sdk-cli.html) for local packaging and usage.
+The package is currently a **development tarball**, version `3.0.0-rc.1`, marked `private: true`. TEMPORA is **not presented as a published stable npm package**. Use the [SDK and CLI guide](https://mghemri.github.io/tempora-framework/guides/sdk-cli.html) for local packaging and usage.
 
 ### Architecture and documentation
 
@@ -82,6 +82,8 @@ docs/site-src/          Additional sources for the documentation site
 docs/guides/            Generated HTML documentation
 tests/                  Unit, integration, architecture, and browser tests
 ```
+
+See the [release qualification checklist](docs/reference/RELEASE_CHECKLIST.md) before any stable release.
 
 Read the [reference documentation](docs/reference/README.md): [architecture](docs/reference/FRAMEWORK.md), [canonical data model](docs/reference/CANONICAL_MODEL.md), [ingestion](docs/reference/INGESTION.md), [analysis](docs/reference/ANALYSIS.md), and [release policy](docs/reference/RELEASE_POLICY.md).
 
@@ -172,11 +174,13 @@ npm run test:package
 npm run test:standalone
 ```
 
-TEMPORA est actuellement distribué comme **tarball local de développement** (`3.0.0-dev.0`, `private: true`) ; aucune publication npm stable n'est annoncée. Consulter le [guide SDK/CLI](https://mghemri.github.io/tempora-framework/guides/sdk-cli.html).
+TEMPORA est actuellement distribué comme **tarball local de développement** (`3.0.0-rc.1`, `private: true`) ; aucune publication npm stable n'est annoncée. Consulter le [guide SDK/CLI](https://mghemri.github.io/tempora-framework/guides/sdk-cli.html).
 
 ### Organisation et documentation
 
 Les composants génériques sont regroupés sous `src/framework/`, `src/sdk/`, `src/cli/` et `schemas/tempora/`. Les profils fictifs vivent sous `profiles/` ; la compatibilité ALNOP reste isolée sous `compatibility/alnop/`.
+
+La [checklist de qualification](docs/reference/RELEASE_CHECKLIST.md) décrit les conditions préalables à toute version stable.
 
 Les documents techniques versionnés sont réunis dans [`docs/reference/`](docs/reference/README.md) : [architecture](docs/reference/FRAMEWORK.md), [modèle canonique](docs/reference/CANONICAL_MODEL.md), [ingestion](docs/reference/INGESTION.md), [analyses](docs/reference/ANALYSIS.md) et [politique de publication](docs/reference/RELEASE_POLICY.md).
 

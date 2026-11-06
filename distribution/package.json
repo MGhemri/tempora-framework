@@ -1,6 +1,6 @@
 {
   "name": "tempora-framework",
-  "version": "3.0.0-dev.0",
+  "version": "3.0.0-rc.1",
   "private": true,
   "description": "Independent toolkit for historical corpora",
   "license": "MIT",

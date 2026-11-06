@@ -5,7 +5,7 @@ title: "TEMPORA Framework"
 authors:
   - name: "TEMPORA"
     email: "contact@connect-gm.com"
-version: "3.0.0-dev.0"
+version: "3.0.0-rc.1"
 repository-code: "https://github.com/MGhemri/tempora-framework"
 url: "https://mghemri.github.io/tempora-framework/"
 license: MIT
