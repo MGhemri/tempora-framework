@@ -79,7 +79,7 @@ jobs:
         run: npm run stage:windows-engine
       - name: Build native NSIS installer (unsigned CI artifact only)
         # Staging has already been audited above; do not resolve dependencies again.
-        run: npm run tauri -- build --config src-tauri/tauri.windows.conf.json
+        run: npx --no-install tauri build --config src-tauri/tauri.windows.conf.json
       - name: Smoke-test installed NSIS package without system Node on PATH
         shell: pwsh
         run: |
