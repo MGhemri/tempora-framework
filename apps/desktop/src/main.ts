@@ -6,7 +6,8 @@ type Language = "fr" | "en";
 type PreviewRow = { id: string; title: string; kind: string };
 type EngineDiagnostic = { code?: string; message?: string; path?: string; id?: string };
 type EvidenceRow = { id: string; title: string; status: string; evidenceCount: number; sourceRefs: string[]; subjectRef: string | null };
-type ResearchOverview = { eventCount: number; sourceCount: number; claimCount: number; unsupportedClaimCount: number; events: EvidenceRow[]; sources: EvidenceRow[]; claims: EvidenceRow[] };
+type DeclaredContradiction = { claimId: string; targetId: string; targetPresent: boolean };
+type ResearchOverview = { contradictionCount: number; contradictions: DeclaredContradiction[]; eventCount: number; sourceCount: number; claimCount: number; unsupportedClaimCount: number; events: EvidenceRow[]; sources: EvidenceRow[]; claims: EvidenceRow[] };
 type CanonicalResult = {
   overview: ResearchOverview;
   fileName: string; engineVersion: string; valid: boolean;
@@ -52,6 +53,7 @@ const text = {
     validCanonical: "Conforme au schéma", invalidCanonical: "Non conforme au schéma",
     enginePending: "Validation par le moteur en cours…", engineUnavailable: "Moteur indisponible",
     workbenchTitle: "Atelier scientifique · dossier en lecture seule", workbenchIntro: "Aperçu structurel des preuves déclarées, sans certification historique.", workbenchEmpty: "Validez d’abord un corpus dans Documents pour charger cet atelier.", workbenchEvidence: "Pièces de preuve déclarées", workbenchNoEvidence: "Assertions sans preuve déclarée", workbenchEvents: "Événements", workbenchSources: "Sources", workbenchClaims: "Assertions", workbenchStatus: "Statut éditorial", workbenchLimited: "Aperçu limité à 20 lignes par collection. Les totaux reflètent le fichier sélectionné.",
+    contradictionsTitle: "Contradictions déclarées", contradictionsDescription: "Relations explicitement déclarées par le corpus, sans détection automatique ni évaluation historique.", contradictionsPresent: "Cible présente", contradictionsMissing: "Cible absente ou autre espace de noms", contradictionsSource: "Assertion source", contradictionsTarget: "Assertion cible",
     evidenceLinks: "Références déclarées", evidenceSelect: "Sélectionnez une ligne pour examiner ses références.", evidenceSubject: "Sujet", evidenceSources: "Sources citées", evidenceMissing: "Référence absente de l’aperçu", evidenceNone: "Aucune référence déclarée",
     diagnostics: "diagnostics", sourceReviewNotice: "La conformité au schéma ne prouve pas la véracité des événements.",
   },
@@ -83,6 +85,7 @@ const text = {
     validCanonical: "Schema valid", invalidCanonical: "Schema invalid",
     enginePending: "Engine validation running…", engineUnavailable: "Engine unavailable",
     workbenchTitle: "Scientific workbench · read-only dossier", workbenchIntro: "Structural overview of declared evidence, not historical certification.", workbenchEmpty: "First validate a corpus under Documents to load the workbench.", workbenchEvidence: "Declared evidence items", workbenchNoEvidence: "Claims without declared evidence", workbenchEvents: "Events", workbenchSources: "Sources", workbenchClaims: "Claims", workbenchStatus: "Editorial status", workbenchLimited: "Preview capped at 20 rows per collection. Counts reflect the selected file.",
+    contradictionsTitle: "Declared contradictions", contradictionsDescription: "Links explicitly recorded in the corpus, without automated detection or historical assessment.", contradictionsPresent: "Target present", contradictionsMissing: "Target absent or different namespace", contradictionsSource: "Source claim", contradictionsTarget: "Target claim",
     evidenceLinks: "Declared references", evidenceSelect: "Select a row to inspect declared references.", evidenceSubject: "Subject", evidenceSources: "Cited sources", evidenceMissing: "Reference outside preview", evidenceNone: "No declared reference",
     diagnostics: "diagnostics", sourceReviewNotice: "Schema validation does not establish historical truth.",
   },
@@ -214,6 +217,19 @@ function renderWorkbench(): void {
     text[language].workbenchNoEvidence + ": " + overview.unsupportedClaimCount,
   ].join(" · "));
   fill("workbench-validation", result.valid ? text[language].validCanonical : text[language].invalidCanonical);
+  fill("workbench-contradiction-count", text[language].contradictionsTitle + ": " + overview.contradictionCount);
+  const conflicts = byId("workbench-contradictions");
+  conflicts.replaceChildren();
+  for (const conflict of overview.contradictions) {
+    const tr = document.createElement("tr");
+    for (const value of [conflict.claimId, conflict.targetId, conflict.targetPresent
+      ? text[language].contradictionsPresent : text[language].contradictionsMissing]) {
+      const td = document.createElement("td");
+      td.textContent = value;
+      tr.append(td);
+    }
+    conflicts.append(tr);
+  }
   const kinds: Array<[string, EvidenceRow[]]> = [
     ["workbench-events", overview.events],
     ["workbench-sources", overview.sources],
