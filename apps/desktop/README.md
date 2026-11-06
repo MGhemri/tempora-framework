@@ -85,3 +85,11 @@ The Windows CI installer is **silently installed into an isolated runner directo
 The Windows CI now checks the **installed GUI process** stays running for six seconds, independently of the installed Node worker tests. This is a startup smoke test, **not** a full interactive GUI acceptance test. The package staging generates a dependency lockfile within the **bundled runtime** and records its SHA-256 and an inventory of declared licenses. The npm CLI performs an audit that rejects reported **high/critical** production dependency vulnerabilities at build time. GitHub Actions also uploads the installer SHA-256 and an inventory alongside the unsigned experimental installer. These checks are reproducibility *evidence*, but do **not** replace a source-controlled dependency lockfile or a signed, hermetic release; transitive dependency resolution may still change between builds.
 
 Before an official public release: commit audited npm and Cargo locks, inspect bundled license texts and the runtime's Node.js licensing, sign the Windows executable/NSIS installer, test native file dialogs and corpus validation inside a **genuinely clean Windows VM without Node**, perform accessibility checks and keep the updater disabled until signed metadata is available.
+
+## Scientific workbench — Phase 1A (read-only)
+
+After validating a selected canonical JSON corpus in Documents, open **Analyses** to inspect a bounded evidence dossier. The application displays total event/source/claim counts and the number of claims with **zero declared evidence entries**, plus the first 20 records per collection with identifiers, titles/predicates, editorial/claim status and declared evidence counts.
+
+The canonical validation and SHA-256 digest are still performed only by the pinned TEMPORA Engine 3.0.0. Rust produces a **structural inventory**, never a scholarly assessment of the truth or quality of evidence. No input files are changed, no index is persisted, and the WebView receives only bounded, text-rendered records. A corpus invalid under canonical v3 may still be inspected, but its validation badge remains explicit.
+
+The window remains a single-document, ephemeral workbench: no source editing, review decisions, evidence scoring, ingestion or TensorFlow execution in this tranche.
