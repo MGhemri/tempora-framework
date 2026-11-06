@@ -115,3 +115,35 @@ by machine policy, permissions or sandbox configuration; those cases must
 be tested and documented, not treated as a passing GUI.
 
 No public release is authorized by this change alone.
+
+## Phase 1H — Sandbox failure reproduction and fixed-runtime experiment
+
+**Manual regression, 2026-11-06:** A Windows sandbox still displayed
+`Could not find the WebView2 Runtime` after installing the much larger
+`offlineInstaller` NSIS artifact. GitHub runner green status therefore
+does **not** mean that the application will work inside the sandbox.
+
+The next test path is an **experimental, separate fixed-runtime build**.
+Unlike the offline Evergreen installer, a fixed WebView2 Runtime ships
+beside the application and does not require registration of a shared
+WebView2 Runtime. Microsoft explicitly requires the application vendor
+to maintain security updates for this runtime.
+
+1. Obtain a Windows x64 **Fixed Version WebView2 CAB** from the official
+   [Microsoft download page](https://developer.microsoft.com/microsoft-edge/webview2/).
+   Record the version, Microsoft download provenance and independent SHA-256.
+2. In PowerShell, from `apps/desktop`, run
+   `./scripts/stage-fixed-webview.ps1 -CabPath "C:\path\Microsoft.WebView2.FixedVersionRuntime.x64.cab" -ExpectedSha256 "<verified-64-hex-sha256>"`.
+   The stage **rejects SHA mismatch** and does not install anything into Windows.
+3. Prepare the engine using `npm run stage:windows-engine`. Build with
+   `npx --no-install tauri build --config src-tauri/tauri.windows.conf.json --config src-tauri/tauri.windows.fixed.conf.json`.
+4. Install the resulting **experimental** NSIS artifact in the isolated
+   sandbox, then verify the main interface and native JSON dialog.
+   If it still fails, run `./scripts/diagnose-webview2.ps1` and collect
+   Windows event logs; the diagnostic script changes no system settings.
+
+**Never use an unverified third-party CAB mirror**, never commit a
+Microsoft runtime binary to the source repository, and never interpret
+the existing runner GUI process smoke as a full rendering test.
+This build is only possible after obtaining and verifying the genuine
+fixed-runtime CAB. The PR does not claim to have produced or tested it.
