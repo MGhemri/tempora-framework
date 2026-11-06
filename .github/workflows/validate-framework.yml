@@ -8,7 +8,7 @@ permissions:
   contents: read
 jobs:
   framework:
-    name: TEMPORA Framework on ${{ matrix.os }}
+    name: TEMPORA Framework / ${{ matrix.os }} / Node ${{ matrix.node }}
     strategy:
       matrix:
         include:
