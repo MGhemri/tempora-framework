@@ -63,7 +63,26 @@ try {
     Start-Sleep -Seconds 6
     $appProcess.Refresh()
     if ($appProcess.HasExited) { throw "INSTALLED_TAURI_GUI_EXITED_EARLY: $($appProcess.ExitCode)" }
-    Write-Host "Installed Tauri GUI process started and remained alive for 6 seconds."
+    # A process being alive does not prove that a WebView2 child exists.
+    # Inspect the descendant tree of this installed app, not unrelated browsers.
+    $allProcesses = @(Get-CimInstance Win32_Process -ErrorAction Stop |
+      Select-Object ProcessId, ParentProcessId, Name)
+    $descendants = @([int]$appProcess.Id)
+    for ($depth = 0; $depth -lt 5; $depth++) {
+      $children = @($allProcesses | Where-Object {
+        $descendants -contains [int]$_.ParentProcessId
+      } | Select-Object -ExpandProperty ProcessId)
+      if ($children.Count -eq 0) { break }
+      $descendants += $children
+    }
+    $webviewChildren = @($allProcesses | Where-Object {
+      $descendants -contains [int]$_.ProcessId -and
+      $_.Name -ieq 'msedgewebview2.exe'
+    })
+    if ($webviewChildren.Count -eq 0) {
+      throw "INSTALLED_GUI_WEBVIEW2_PROCESS_MISSING"
+    }
+    Write-Host "Installed TEMPORA GUI spawned $($webviewChildren.Count) WebView2 child process(es)."
   } finally {
     if (-not $appProcess.HasExited) { Stop-Process -Id $appProcess.Id -Force -ErrorAction SilentlyContinue }
     $appProcess.Dispose()
