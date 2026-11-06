@@ -1,0 +1,80 @@
+name: Stage TEMPORA on npm
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Existing approved release tag (example v3.0.1)'
+        required: true
+        type: string
+      confirmation:
+        description: 'Type STAGE-NPM (staging requires a later human 2FA approval)'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+concurrency:
+  group: npm-stage-${{ inputs.tag }}
+  cancel-in-progress: false
+
+jobs:
+  stage:
+    if: github.repository == 'MGhemri/tempora-framework'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag }}
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: 'https://registry.npmjs.org'
+          package-manager-cache: false
+      - name: Verify release tag, ancestry and confirmation
+        env:
+          RELEASE_TAG: ${{ inputs.tag }}
+          RELEASE_CONFIRMATION: ${{ inputs.confirmation }}
+        run: |
+          set -euo pipefail
+          test "$RELEASE_CONFIRMATION" = "STAGE-NPM"
+          [[ "$RELEASE_TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]
+          test "$(git rev-parse "refs/tags/$RELEASE_TAG^{commit}")" = "$(git rev-parse HEAD)"
+          git merge-base --is-ancestor HEAD origin/main
+          node - <<'NODE'
+          const fs = require('node:fs');
+          const version = JSON.parse(fs.readFileSync('distribution/package.json','utf8')).version;
+          if ('v'+version !== process.env.RELEASE_TAG) throw Error('Tag/version mismatch');
+          const root=JSON.parse(fs.readFileSync('package.json','utf8'));
+          if(!root.private) throw Error('Root must not be npm-publishable');
+          NODE
+      - name: Upgrade npm for staged OIDC publishing
+        run: npm install --global npm@^11.15.0
+      - name: Inspect toolchain
+        run: |
+          node --version
+          npm --version
+      - run: npm ci --ignore-scripts
+      - run: npm run check:release
+      - run: npm test
+        env:
+          TEMPORA_AUDIT_RUNTIME: '1'
+      - run: npm run test:standalone
+      - run: npm run test:compat:alnop:minimal
+      - name: Build and check public tarball
+        run: |
+          mkdir -p work/npm-release
+          npm run pack:tempora -- --out work/npm-release --write
+          sha256sum work/npm-release/*.tgz
+          test "$(find work/npm-release -maxdepth 1 -name '*.tgz' | wc -l)" -eq 1
+      - name: Stage on npm using GitHub OIDC (never auto-approve)
+        env:
+          RELEASE_TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+          VERSION="${RELEASE_TAG#v}"
+          npm stage publish "./work/npm-release/tempora-framework-${VERSION}.tgz" --access public

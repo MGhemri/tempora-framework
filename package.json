@@ -29,7 +29,8 @@
     "test:api:v3": "node --test tests/framework-published-api.test.js",
     "test:publication": "node --test tests/framework-editorial-review.test.js tests/framework-publication.test.js",
     "test:standalone": "node scripts/test-standalone.js",
-    "check:release": "node scripts/check-release-metadata.js"
+    "check:release": "node scripts/check-release-metadata.js",
+    "check:npm:distribution": "npm run check:release && npm run test:package"
   },
   "dependencies": {},
   "devDependencies": {

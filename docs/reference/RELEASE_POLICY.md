@@ -13,8 +13,10 @@ TEMPORA distingue strictement **cinq versions** qui ne doivent pas être confond
 
 Le framework dispose d'une **distribution locale** (voir
 [`distribution/package.json`](../../distribution/package.json)).
-La distribution npm publique et un tag stable `v3.0.0` ne sont pas annoncés ;
-la propriété `private: true` ne doit pas être retirée sans revue explicite.
+Le dépôt de développement conserve `private: true`, mais le paquet généré depuis
+`distribution/package.json` est préparé pour une publication npm publique.
+Une publication effective sur npm et la création d'un tag stable restent des opérations
+distinctes nécessitant une approbation explicite ; voir le [guide npm](NPM_PUBLISHING.md).
 La [checklist de qualification](RELEASE_CHECKLIST.md) définit les validations obligatoires et les conditions de passage à une version stable.
 
 ## Préparer une version logicielle
