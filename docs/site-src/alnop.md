@@ -9,5 +9,8 @@ TEMPORA utilise ALNOP pour vérifier que la migration conserve les données et q
 - [Modèle canonique et migration](canonical.html)
 
 ```sh
-npm run test:compat:alnop
+npm run test:compat:alnop:minimal
+npm run test:compat:alnop:full -- --alnop-dir ../alnop-reference
 ```
+
+La suite complète exige une copie propre à la révision épinglée dans `compatibility/alnop/pin.json`. Aucun corpus distant n’est téléchargé automatiquement.

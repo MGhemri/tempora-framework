@@ -13,7 +13,8 @@ const inputs = [
   'scripts/ingest-tempora.js','scripts/analyze-tempora.js','scripts/evaluate-tempora.js',
   'scripts/publish-tempora.js','scripts/serve-tempora.js','scripts/pack-tempora.js',
   'scripts/check-framework-boundaries.js','scripts/build-framework-site.js',
-  'scripts/check-publication-files.js','scripts/benchmark-tempora.js',
+  'scripts/check-publication-files.js','scripts/benchmark-tempora.js','scripts/validate-profiles.js',
+  'profiles/synthetic-history','tests/publication-files.test.js',
   'tests/architecture','tests/helpers/tempora.js','tests/helpers/analysis-reference.js',
   'tests/helpers/publication-request.js','tests/vendor','tests/fixtures/profiles/synthetic-history',
   'tests/fixtures/profiles/synthetic-maritime','tests/fixtures/analysis-reference.json',
@@ -33,7 +34,7 @@ function run() {
       if (fs.existsSync(path.join(dir,forbidden))) throw Error('Unexpected historical input: '+forbidden);
     }
     const env = {...process.env}; delete env.NODE_PATH; delete env.NODE_TEST_CONTEXT;
-    for (const args of [['ci'], ['run','test:core'], ['run','test:package'], ['run','check:site'], ['run','build']]) {
+    for (const args of [['ci'], ['run','test:core'], ['run','test:package'], ['run','check:site'], ['run','validate:profiles'], ['run','build']]) {
       const result = spawnSync(process.execPath,[process.env.npm_execpath,...args],
         {cwd:dir,env,stdio:'inherit',timeout:180000});
       if (result.error) throw result.error;

@@ -1,12 +1,12 @@
 cff-version: 1.2.0
-message: "Citez la version des données utilisée, avec son empreinte et son commit source."
-type: dataset
-title: "ALNOP — ALN Historical Operations Dataset (1954–1962)"
+message: "Citez le logiciel TEMPORA avec sa version et son commit ; citez séparément les corpus utilisés."
+type: software
+title: "TEMPORA Framework"
 authors:
-  - name: "ALNOP"
+  - name: "TEMPORA"
     email: "contact@connect-gm.com"
-version: "data-2026.11.1"
-date-released: "2026-11-05"
-url: "https://alnop.vercel.app/data/releases/data-2026.11.1/release.json"
-commit: "a05ed618f30dbb5cae63ba6517b6dc433ac4a3db"
-abstract: "Corpus documentaire incomplet. Publication technique du corpus existant, sans nouvelle validation historique. Licences et droits existants conservés."
+version: "3.0.0-dev.0"
+repository-code: "https://github.com/MGhemri/tempora-framework"
+url: "https://mghemri.github.io/tempora-framework/"
+license: MIT
+abstract: "Framework scientifique pour structurer, analyser, réviser et publier des corpus historiques. Préversion de développement distribuée localement."

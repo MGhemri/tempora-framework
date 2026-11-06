@@ -20,14 +20,12 @@
 <a class="sidelink" href="../guides/alnop.html">Compatibilité ALNOP</a>
 <a class="sidelink" href="../guides/security.html">Sécurité</a>
 <div class="sidenote">TEMPORA 3.0.0-dev.0<br>Préversion locale · MIT</div></nav>
-<main class="main" id="contenu"><h1>Ingestion</h1><div class="article"><p>Le pipeline TEMPORA prépare des <strong>propositions d’événements</strong> à partir de fichiers JSON, CSV ou GeoJSON. Il utilise un profil, un corpus de travail v3 et un mapping déclaratif. Il conserve les octets du fichier d’origine et permet de revoir les résultats avant de créer une nouvelle copie locale. Le formulaire public ALNOP, les API et la publication du corpus continuent d’utiliser leurs circuits existants.</p>
+<main class="main" id="contenu"><h1>Ingestion</h1><div class="article"><p>Le pipeline TEMPORA prépare des <strong>propositions d’événements</strong> à partir de fichiers JSON, CSV ou GeoJSON. Il utilise un profil, un corpus de travail v3 et un mapping déclaratif. Il conserve les octets du fichier d’origine et permet de revoir les résultats avant de créer une nouvelle copie locale.</p>
 <h2 id="préparer-et-vérifier">Préparer et vérifier</h2>
-<p>Pour partir du corpus ALNOP actuel, créer une copie v3 si elle n’existe pas déjà :</p>
-<div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-sh">npm run migrate:tempora -- --write
+<p>Le dépôt fournit un exemple CSV entièrement fictif. Prévisualiser ses propositions avec le profil et les taxonomies explicites :</p>
+<div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-sh">npm run ingest:tempora -- import --profile profiles/synthetic-history/profile.json --taxonomies profiles/synthetic-history/taxonomies.json --input profiles/synthetic-history/sample.csv --mapping profiles/synthetic-history/mapping.json --report markdown
 </code></pre>
-<p>Prévisualiser un fichier local en choisissant le mapping correspondant :</p>
-<div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-sh">npm run ingest:tempora -- import --base work/tempora-v3/corpus-v3.json --input lot.csv --mapping profiles/alnop/imports/csv.json --report markdown
-</code></pre>
+<p>Pour un corpus déjà constitué, remplacer <code>--profile</code> et <code>--taxonomies</code> par <code>--base /chemin/corpus.json</code>.</p>
 <p>Sans <code>--write</code>, la commande ne crée aucun fichier. <code>--report json</code> fournit les diagnostics par ligne pour un traitement automatique ; sans option de rapport, la commande affiche les comptes et l’empreinte du lot. Pour obtenir le JSON sans la bannière npm, utiliser <code>npm run --silent ingest:tempora</code>.</p>
 <table>
 <thead>
@@ -61,33 +59,29 @@
 <table>
 <thead>
 <tr>
-<th>Format ALNOP</th>
-<th>Mapping fourni</th>
-<th>Structure attendue</th>
+<th>Format</th>
+<th>Structure et mapping</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>JSON</td>
-<td><a href="https://github.com/MGhemri/tempora-framework/blob/main/profiles/alnop/imports/json.json">json.json</a></td>
-<td>Objet dont <code>/operations</code> est un tableau au format historique ALNOP</td>
+<td>Tableau ou collection désignée par le mapping</td>
 </tr>
 <tr>
 <td>CSV</td>
-<td><a href="https://github.com/MGhemri/tempora-framework/blob/main/profiles/alnop/imports/csv.json">csv.json</a></td>
-<td>En-têtes explicites, séparateur virgule, dates historiques dans <code>date_debut</code> et <code>date_fin</code></td>
+<td>En-têtes correspondant aux pointeurs des champs ; exemple synthétique fourni</td>
 </tr>
 <tr>
 <td>GeoJSON</td>
-<td><a href="https://github.com/MGhemri/tempora-framework/blob/main/profiles/alnop/imports/geojson.json">geojson.json</a></td>
-<td><code>FeatureCollection</code>, champs dans <code>properties</code>, géométrie dans <code>geometry</code></td>
+<td><code>FeatureCollection</code>, propriétés et géométrie déclarées dans le mapping</td>
 </tr>
 </tbody>
 </table>
-<p>Le CSV préparé n’est pas l’export CSV aplati existant. Il attend les champs que décrit son mapping. Cet exemple est <strong>fictif et réservé à un test local</strong> :</p>
-<div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-csv">id,nom_operation,nom_operation_ar,date_debut,type_action,longitude,latitude,geometry_role
-TEST_IMPORT_1,Notice fictive de vérification,اختبار,1956,Embuscade,,,
+<div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-csv">id,title,date,type
+EXAMPLE_1,Fictional assembly,1700,fictional assembly
 </code></pre>
+<p>Les mappings ALNOP sont conservés dans <code>compatibility/alnop/profile/imports</code> pour la suite facultative.</p>
 <p>Un autre profil peut utiliser ses propres colonnes et vocabulaires. Une base vide se prépare avec <code>--profile profil.json --taxonomies taxonomies.json</code> à la place de <code>--base</code>. Le fichier de taxonomies associe chaque vocabulaire déclaré à sa liste de valeurs. Les sources et territoires à référencer doivent déjà exister dans la base de travail.</p>
 <p>Pour un JSON générique, <code>records_pointer</code> indique le tableau de lignes ; une valeur vide désigne un tableau à la racine. Le CSV prend un séparateur explicite parmi virgule, point-virgule et tabulation, gère les guillemets doublés et les cellules sur plusieurs lignes. Les champs CSV sont conservés comme texte avant conversion déclarée. Le GeoJSON doit utiliser les coordonnées WGS84 standard ; un autre CRS n’est ni supposé ni reprojeté.</p>
 <h2 id="ce-que-la-normalisation-conserve">Ce que la normalisation conserve</h2>
@@ -111,7 +105,7 @@ TEST_IMPORT_1,Notice fictive de vérification,اختبار,1956,Embuscade,,,
 <p>Les fichiers existants ne sont jamais écrasés. Réimporter les mêmes octets avec le même mapping, profil et vocabulaires conserve l’identité du lot. Après acceptation, les notices au contenu équivalent sont <code>unchanged</code>, sans nouvel ajout. Des octets différents peuvent produire le même contenu mappé ; les différences non mappées restent consultables dans l’original. Un conflit ne déclenche ni fusion, ni correction, ni suppression. Préparer un nouveau lot après correction de l’entrée ou traiter la divergence dans une revue distincte.</p>
 <h2 id="périmètre-et-limites">Périmètre et limites</h2>
 <p>Entrées UTF-8 jusqu’à 16 Mio et 100 000 lignes ; artefacts locaux jusqu’à 128 Mio. Ces bornes protègent le traitement, elles ne sont pas des résultats de benchmark. Une proposition correspond à une notice d’événement et à une localisation mappée, qui peut contenir une géométrie à plusieurs points. Les autres objets canoniques restent disponibles dans la base, mais ne sont pas créés par les mappings d’événements de cette version.</p>
-<p>Le pipeline s’arrête à l’acceptation locale. Il ne publie pas d’archives, ne modifie pas la base ALNOP et n’expose pas les brouillons par l’API. La revue scientifique et les décisions de publication restent distinctes du contrôle technique.</p>
+<p>Le pipeline s’arrête à l’acceptation locale. Il ne publie pas d’archives, ne modifie pas une publication existante et n’expose pas les brouillons par l’API. La revue scientifique et les décisions de publication restent distinctes du contrôle technique.</p>
 <h2 id="importer-plusieurs-types-de-notices">Importer plusieurs types de notices</h2>
 <p>Le mapping historique à champs séparés reste disponible pour les événements. Pour importer des notices déjà structurées au format canonique v3, déclarer <code>record_kind</code> et un pointeur <code>fields.record</code>. Le type peut être <code>event</code>, <code>source</code>, <code>entity</code>, <code>claim</code>, <code>spatial</code>, <code>relation</code> ou <code>mixed</code>. Le profil et sa version sont requis comme pour tout mapping.</p>
 <div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-json">{

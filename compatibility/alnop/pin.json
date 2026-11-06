@@ -8,7 +8,7 @@
   "text_normalization": "CRLF to LF, UTF-8; binary archives unchanged",
   "local_files": {
     "profile/profile.json": "964238406a97fb3633be516adb11c07b60454788321a83cfa158fbd94c0a9601",
-    "profile/README.md": "a777a552ad756c54321714e1c4f9ffc7d43410a5e8fa9c5de26bcbdfed9acd9d",
+    "profile/README.md": "04f694a93d564011889d0ac5235fbfa7148a421ebe79c03535831663d1c78c86",
     "profile/imports/csv.json": "4abd682773645319ee9fb477b0b6b98073b3e0dd29456e7bc83f82d1e1228dc1",
     "profile/imports/geojson.json": "be773dc10b8dbfc85e5229d40f8928e4d5bb85867dbd7b0b8c61e83a7e94951d",
     "profile/imports/json.json": "ac162b5e185f7fbbd205606811ba6db6cbf1d1d8fe0ed9e64e6f160aad6c8a66",

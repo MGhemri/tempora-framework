@@ -11,24 +11,24 @@ Le noyau TEMPORA fournit les contrats communs aux corpus historiques. Les profil
 | Adaptateur | Conversion des données d’origine et conservation de leur provenance |
 | Application | Consultation du corpus et parcours de contribution du profil |
 
-ALNOP fournit un exemple complet de profil et d’application de consultation. Les analyses v3 et les imports utilisent une copie de travail locale. [Profil ALNOP](./ALNOP.md) · [Modèle et migration](./CANONICAL_MODEL.md) · [Import local](./INGESTION.md) · [Analyses](./ANALYSIS.md)
+Le profil synthétique fourni illustre un corpus fictif indépendant. ALNOP est un profil de compatibilité facultatif. Les analyses v3 et les imports utilisent une copie de travail locale. [Profil ALNOP](./ALNOP.md) · [Modèle et migration](./CANONICAL_MODEL.md) · [Import local](./INGESTION.md) · [Analyses](./ANALYSIS.md)
 
 ## Valider un profil
 
 ```sh
 npm run validate:profiles
-npm run validate:profiles -- --profile profiles/alnop/profile.json
+npm run validate:profiles -- --profile profiles/synthetic-history/profile.json
 ```
 
-La première commande découvre les configurations publiées sous `profiles/`, vérifie leurs identifiants et valide les opérations ALNOP avec les vocabulaires actuels. La seconde vérifie un manifeste explicite, sans importer de corpus. Les formats et contraintes figurent dans `schemas/tempora.profile.schema.json`, version `1.0.0`.
+La première commande valide l’exemple synthétique sans charger de corpus. La seconde vérifie un manifeste explicite. Les formats et contraintes figurent dans `schemas/tempora.profile.schema.json`, version `1.0.0`.
 
-Le profil ALNOP reprend la fenêtre annuelle de validation historique existante : 1954 à 1962 inclus. Il ne restreint pas artificiellement le dernier jour au 5 juillet. Cette fenêtre est une règle technique du profil, pas une preuve de date ni une mesure d'exhaustivité historique. Les vocabulaires restent lus depuis les données canoniques ; ils ne sont pas recopiés dans le profil.
+Les périodes, langues et vocabulaires appartiennent au profil. L’exemple est fictif et ne constitue pas une source historique.
 
 ## Charger une configuration
 
 ```js
 const {loadProfile} = require('./src/framework/profile-loader');
-const profile = loadProfile('/chemin/projet/profiles/alnop/profile.json', {
+const profile = loadProfile('/chemin/projet/profiles/synthetic-history/profile.json', {
   rootDirectory: '/chemin/projet'
 });
 ```
@@ -49,7 +49,7 @@ const adjusted = loadProfile('/racine/profiles/example/profile.json', {
 });
 ```
 
-Les surcharges de sévérité doivent désigner une règle existante. Les paramètres sont exposés à l'appelant ; ils ne reconfigurent pas automatiquement l'atlas ou les algorithmes ALNOP. Les résultats sont des objets gelés et indépendants, sans cache global partagé entre profils.
+Les surcharges de sévérité doivent désigner une règle existante. Les paramètres sont exposés à l'appelant ; leur interprétation appartient à l’application hôte. Les résultats sont des objets gelés et indépendants, sans cache global partagé entre profils.
 
 ## Compatibilité et limites
 
@@ -93,17 +93,17 @@ Ces contrôles complètent les schémas et règles canoniques existants. Un rés
 
 `defineAdapter` vérifie une interface composée de `id`, `formats`, `parse` et `serialize`. Il conserve les fonctions fournies et fige les métadonnées. Il n'implémente pas à lui seul une ingestion CSV/GeoJSON, une quarantaine ou une publication. Les adaptateurs doivent déclarer leurs limites et être testés séparément.
 
-## Erreurs et compatibilité ALNOP
+## Erreurs et compatibilité
 
 Les erreurs de configuration utilisent `ProfileError` avec `code`, `message` et `details`. Les codes distinguent notamment schéma invalide, incompatibilité de version, calendrier non pris en charge, chemin interdit, héritage cyclique et taxonomie absente.
 
 Un chemin absent ou des options d'appel invalides sont également refusés par des erreurs typées (`PROFILE_ARGUMENT_INVALID`, `PROFILE_ROOT_INVALID`) avant tout accès au fichier.
 
-L'adaptateur `src/profiles/alnop.js` projette les champs utiles pour ces règles sans modifier les objets d'origine. Le validateur Python historique lit désormais sa fenêtre annuelle depuis le même profil. Les chemins d'exports et les routes API v1/v2 restent identiques. Aucun nouvel endpoint TEMPORA n'est annoncé par ce guide.
+Les adaptateurs facultatifs ALNOP sont isolés dans `compatibility/alnop/adapters`. Leur suite minimale fonctionne hors réseau ; la suite complète exige le dépôt historique à une révision épinglée.
 
 ## Modèle canonique et migration
 
-Le [modèle canonique TEMPORA v3](./CANONICAL_MODEL.md) fournit les schémas versionnés, les invariants temporels et spatiaux et une migration ALNOP réversible sur une copie intacte. La commande `npm run migrate:tempora` vérifie le parcours sans écrire dans les données de production.
+Le [modèle canonique TEMPORA v3](./CANONICAL_MODEL.md) fournit les schémas versionnés, les invariants temporels et spatiaux et une migration ALNOP réversible sur une copie intacte. La suite `npm run test:compat:alnop:full -- --alnop-dir ../alnop-reference` vérifie ce parcours sur une copie extérieure.
 
 ## Importer des propositions
 
@@ -125,7 +125,7 @@ Le module `src/framework/editorial-review.js` sépare la validation technique du
 
 L’approbation porte sur le contenu exact et sur des preuves liées au sujet. Elle consigne la décision sur les droits de redistribution et la sensibilité. Un changement de contenu ou l’expiration des décisions exige une nouvelle revue. La liste des relecteurs contrôle les identifiants déclarés. L’identité réelle et l’autorisation d’utiliser la politique relèvent du mainteneur. Le journal est un document de travail privé. Pour une vérification ancrée, conserver l’empreinte terminale SHA-256 dans un registre contrôlé indépendamment du journal. Transmettre cette empreinte à `verifyReviewJournal({corpus, policy, journal, expectedHead})` ou au contrôle d’éligibilité via `expectedHead`. Une chaîne réécrite ou tronquée peut rester cohérente en interne. La comparaison avec l’empreinte indépendante détecte cet écart. Le choix du registre et l’authentification des relecteurs relèvent de l’hôte.
 
-Pour contrôler une évolution du code contre l’état de référence ALNOP, lancer `npm run check:tempora:baseline`. Le résultat JSON compare les collections, les exports, les archives et un ensemble de réponses des API v1 et v2. Une évolution autorisée du corpus nécessite une nouvelle référence validée.
+Pour contrôler une évolution du code contre l’état de référence ALNOP, lancer `npm run test:compat:alnop:full -- --alnop-dir ../alnop-reference`. Le résultat JSON compare les collections, les exports, les archives et un ensemble de réponses des API v1 et v2. Une évolution autorisée du corpus nécessite une nouvelle référence validée.
 
 
 ## Préparer et activer un snapshot local

@@ -4,7 +4,7 @@ Les analyses locales v3 produisent des pistes de revue à partir d’un corpus e
 
 ## Produire un rapport
 
-Pour analyser la copie v3 du corpus ALNOP créée par la migration locale, indiquer son chemin. La commande écrit le rapport JSON sur la sortie standard.
+Pour analyser un corpus canonique v3 issu du parcours d’ingestion, indiquer son chemin. La commande écrit le rapport JSON sur la sortie standard.
 
 ```sh
 npm run --silent quality:tempora -- --base work/tempora-v3/corpus-v3.json

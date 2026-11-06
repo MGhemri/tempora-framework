@@ -1,0 +1,16 @@
+{
+  "mapping_schema_version": "1.0.0",
+  "id": "synthetic-csv",
+  "version": "1.0.0",
+  "profile_id": "synthetic-history",
+  "profile_version": "1.0.0",
+  "format": "csv",
+  "fields": {
+    "id": "/id",
+    "title": {
+      "en": "/title"
+    },
+    "start_date": "/date",
+    "event_type": "/type"
+  }
+}

@@ -17,3 +17,7 @@ La vérification recalcule les sommes et contrôle la cohérence entre les fichi
 L’adaptateur Node écoute sur la boucle locale. Il ne sert que les versions activées, applique des limites de requête et de réponse et filtre les détails d’erreur. Un hôte distant doit définir ses propres limites de débit, permissions et règles CORS. Le dossier des versions activées et ses pointeurs doivent être accessibles en écriture aux seuls opérateurs autorisés.
 
 Le paquet d’exécution est testé par installation depuis le tarball. La CI audite ses dépendances d’exécution. Les politiques propres aux corpus et les droits de redistribution restent distincts de la licence MIT du logiciel.
+
+## Signalement
+
+Signaler une vulnérabilité à contact@connect-gm.com avec les étapes de reproduction et la version concernée. Garder les secrets, corpus privés et données personnelles hors des tickets publics.

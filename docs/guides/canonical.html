@@ -21,7 +21,7 @@
 <a class="sidelink" href="../guides/security.html">Sécurité</a>
 <div class="sidenote">TEMPORA 3.0.0-dev.0<br>Préversion locale · MIT</div></nav>
 <main class="main" id="contenu"><h1>Modèle canonique</h1><div class="article"><p>Le modèle canonique TEMPORA <code>3.0.0</code> distingue les événements, sources, assertions, entités, expressions temporelles, assertions spatiales, relations, revues, évaluations et versions de corpus. Les schémas sont versionnés indépendamment du manifeste de profil <code>1.0.0</code>.</p>
-<p>Cette représentation est disponible pour validation et migration locale. Les données ALNOP en production restent au format canonique v2 ; leurs API, exports et archives ne sont pas remplacés. Cette étape ne constitue pas une release complète de la plateforme TEMPORA v3.</p>
+<p>Cette représentation est utilisée par la validation, l’ingestion, les analyses, la revue, la publication et l’API v3. La distribution reste une préversion locale <code>3.0.0-dev.0</code>.</p>
 <h2 id="schémas-et-validation">Schémas et validation</h2>
 <ul>
 <li><a href="../schemas/tempora/v3/corpus.schema.json">Schéma du corpus</a></li>
@@ -61,19 +61,10 @@ const result = validateCorpus(corpus);
 <p>Précision en mètres, méthode de géocodage et version de référentiel sont explicites et peuvent rester inconnues. Aucune valeur métrique n’est déduite du nombre de décimales. Les événements peuvent avoir plusieurs assertions spatiales et plusieurs territoires ; ceux-ci peuvent porter des périodes de validité.</p>
 <p>Les contrôles topologiques portent sur la fermeture, l’aire non nulle, les auto-intersections, les trous et les recouvrements de composantes. Ils travaillent sur des segments plans en coordonnées WGS84. Les polygones traversant l’antiméridien sont refusés explicitement. Ce composant n’est pas un moteur SIG géodésique ; il ne corrige ni ne reprojette une géométrie. Les limites numériques des calculs en virgule flottante restent à considérer pour les géométries proches de la dégénérescence.</p>
 <h2 id="migration-alnop-v2-vers-tempora-v3">Migration ALNOP v2 vers TEMPORA v3</h2>
-<div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-sh"># Vérification sans écrire de fichier
-npm run migrate:tempora
-
-# Copie locale, jamais dans les fichiers publiés
-npm run migrate:tempora -- --write
-
-# Vérifier le retour vers les objets ALNOP d’origine
-npm run migrate:tempora -- --reverse work/tempora-v3/corpus-v3.json
-
-# Écrire ce retour dans work/tempora-v3/restored-alnop.json
-npm run migrate:tempora -- --reverse work/tempora-v3/corpus-v3.json --write
+<div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-sh">npm run test:compat:alnop:minimal
+npm run test:compat:alnop:full -- --alnop-dir ../alnop-reference
 </code></pre>
-<p>Les écritures refusent d’écraser un fichier existant. Le répertoire <code>work/</code> est exclu de Git et du site. Une copie de migration peut contenir des propositions non publiées : elle ne doit pas être exposée comme un export public. La commande ne modifie ni <code>data/</code>, ni les exports historiques, ni les API, ni les archives de versions.</p>
+<p>Les tests comparent les données et les conversions en mémoire. Le rapport reste sous <code>work/</code>, exclu de Git et du site. Une copie de migration peut contenir des propositions non publiées et doit rester privée. La référence historique et ses archives ne sont jamais réécrites.</p>
 <table>
 <thead>
 <tr>
@@ -121,7 +112,7 @@ npm run migrate:tempora -- --reverse work/tempora-v3/corpus-v3.json --write
 <p>Le retour est garanti pour une copie de migration intacte. Si la représentation TEMPORA a été modifiée, le retour refuse de perdre silencieusement les changements. Une migration inverse de données éditées exigera un mapping explicite et une revue. Les décisions de revue conservées portent sur leur contenu ALNOP original ; elles ne valent pas nouvelle approbation de la représentation v3.</p>
 <p>Les manifestes d’archives conservent leur version de corpus historique et leurs empreintes. Aucune archive v3 n’est créée et aucune archive existante n’est réécrite. Un CSV aplati ne permet pas cette garantie de restitution ; utiliser le JSON canonique pour les données riches.</p>
 <h2 id="périmètre-suivant">Périmètre suivant</h2>
-<p>Le <a href="ingestion.html">pipeline local d’ingestion</a> peut préparer des propositions JSON, CSV et GeoJSON dans une copie de travail v3. La publication générique, l’API multi-profils, le SDK et les benchmarks de charge restent des étapes distinctes.</p>
+<p>Le <a href="ingestion.html">pipeline local d’ingestion</a> peut préparer des propositions JSON, CSV et GeoJSON dans une copie de travail v3. La publication générique, l’API multi-profils, le SDK et les benchmarks de charge sont disponibles et disposent de tests séparés.</p>
 </div>
 <footer><a href="https://github.com/MGhemri/tempora-framework">Code source TEMPORA</a><a href="mailto:contact@connect-gm.com">Contact</a></footer></main>
 </div><script src="../assets/site.js" defer></script></body></html>

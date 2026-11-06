@@ -2,7 +2,7 @@
 
 Le modèle canonique TEMPORA `3.0.0` distingue les événements, sources, assertions, entités, expressions temporelles, assertions spatiales, relations, revues, évaluations et versions de corpus. Les schémas sont versionnés indépendamment du manifeste de profil `1.0.0`.
 
-Cette représentation est disponible pour validation et migration locale. Les données ALNOP en production restent au format canonique v2 ; leurs API, exports et archives ne sont pas remplacés. Cette étape ne constitue pas une release complète de la plateforme TEMPORA v3.
+Cette représentation est utilisée par la validation, l’ingestion, les analyses, la revue, la publication et l’API v3. La distribution reste une préversion locale `3.0.0-dev.0`.
 
 ## Schémas et validation
 
@@ -66,20 +66,11 @@ Les contrôles topologiques portent sur la fermeture, l’aire non nulle, les au
 ## Migration ALNOP v2 vers TEMPORA v3
 
 ```sh
-# Vérification sans écrire de fichier
-npm run migrate:tempora
-
-# Copie locale, jamais dans les fichiers publiés
-npm run migrate:tempora -- --write
-
-# Vérifier le retour vers les objets ALNOP d’origine
-npm run migrate:tempora -- --reverse work/tempora-v3/corpus-v3.json
-
-# Écrire ce retour dans work/tempora-v3/restored-alnop.json
-npm run migrate:tempora -- --reverse work/tempora-v3/corpus-v3.json --write
+npm run test:compat:alnop:minimal
+npm run test:compat:alnop:full -- --alnop-dir ../alnop-reference
 ```
 
-Les écritures refusent d’écraser un fichier existant. Le répertoire `work/` est exclu de Git et du site. Une copie de migration peut contenir des propositions non publiées : elle ne doit pas être exposée comme un export public. La commande ne modifie ni `data/`, ni les exports historiques, ni les API, ni les archives de versions.
+Les tests comparent les données et les conversions en mémoire. Le rapport reste sous `work/`, exclu de Git et du site. Une copie de migration peut contenir des propositions non publiées et doit rester privée. La référence historique et ses archives ne sont jamais réécrites.
 
 | ALNOP v2 | TEMPORA v3 |
 |---|---|
@@ -102,4 +93,4 @@ Les manifestes d’archives conservent leur version de corpus historique et leur
 
 ## Périmètre suivant
 
-Le [pipeline local d’ingestion](./INGESTION.md) peut préparer des propositions JSON, CSV et GeoJSON dans une copie de travail v3. La publication générique, l’API multi-profils, le SDK et les benchmarks de charge restent des étapes distinctes.
+Le [pipeline local d’ingestion](./INGESTION.md) peut préparer des propositions JSON, CSV et GeoJSON dans une copie de travail v3. La publication générique, l’API multi-profils, le SDK et les benchmarks de charge sont disponibles et disposent de tests séparés.

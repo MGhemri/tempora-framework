@@ -27,8 +27,10 @@
 <li><a href="https://alnop.vercel.app/">Atlas et contributions ALNOP</a></li>
 <li><a href="canonical.html">Modèle canonique et migration</a></li>
 </ul>
-<div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-sh">npm run test:compat:alnop
+<div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-sh">npm run test:compat:alnop:minimal
+npm run test:compat:alnop:full -- --alnop-dir ../alnop-reference
 </code></pre>
+<p>La suite complète exige une copie propre à la révision épinglée dans <code>compatibility/alnop/pin.json</code>. Aucun corpus distant n’est téléchargé automatiquement.</p>
 </div>
 <footer><a href="https://github.com/MGhemri/tempora-framework">Code source TEMPORA</a><a href="mailto:contact@connect-gm.com">Contact</a></footer></main>
 </div><script src="../assets/site.js" defer></script></body></html>

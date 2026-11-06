@@ -1,20 +1,16 @@
 # TEMPORA — Import local et prévisualisation
 
-Le pipeline TEMPORA prépare des **propositions d’événements** à partir de fichiers JSON, CSV ou GeoJSON. Il utilise un profil, un corpus de travail v3 et un mapping déclaratif. Il conserve les octets du fichier d’origine et permet de revoir les résultats avant de créer une nouvelle copie locale. Le formulaire public ALNOP, les API et la publication du corpus continuent d’utiliser leurs circuits existants.
+Le pipeline TEMPORA prépare des **propositions d’événements** à partir de fichiers JSON, CSV ou GeoJSON. Il utilise un profil, un corpus de travail v3 et un mapping déclaratif. Il conserve les octets du fichier d’origine et permet de revoir les résultats avant de créer une nouvelle copie locale.
 
 ## Préparer et vérifier
 
-Pour partir du corpus ALNOP actuel, créer une copie v3 si elle n’existe pas déjà :
+Le dépôt fournit un exemple CSV entièrement fictif. Prévisualiser ses propositions avec le profil et les taxonomies explicites :
 
 ```sh
-npm run migrate:tempora -- --write
+npm run ingest:tempora -- import --profile profiles/synthetic-history/profile.json --taxonomies profiles/synthetic-history/taxonomies.json --input profiles/synthetic-history/sample.csv --mapping profiles/synthetic-history/mapping.json --report markdown
 ```
 
-Prévisualiser un fichier local en choisissant le mapping correspondant :
-
-```sh
-npm run ingest:tempora -- import --base work/tempora-v3/corpus-v3.json --input lot.csv --mapping profiles/alnop/imports/csv.json --report markdown
-```
+Pour un corpus déjà constitué, remplacer `--profile` et `--taxonomies` par `--base /chemin/corpus.json`.
 
 Sans `--write`, la commande ne crée aucun fichier. `--report json` fournit les diagnostics par ligne pour un traitement automatique ; sans option de rapport, la commande affiche les comptes et l’empreinte du lot. Pour obtenir le JSON sans la bannière npm, utiliser `npm run --silent ingest:tempora`.
 
@@ -31,18 +27,18 @@ Une ligne en quarantaine ne bloque pas les autres identifiants. Si son identifia
 
 Le [schéma de mapping 1.0.0](schemas/tempora.ingestion-mapping.schema.json) déclare le format, l’identifiant et la version du profil, les champs et les options. Il n’exécute ni code ni requête réseau. Les chemins utilisent JSON Pointer : `~1` désigne `/` et `~0` désigne `~`. Les langues doivent être déclarées dans le profil.
 
-| Format ALNOP | Mapping fourni | Structure attendue |
-|---|---|---|
-| JSON | [json.json](profiles/alnop/imports/json.json) | Objet dont `/operations` est un tableau au format historique ALNOP |
-| CSV | [csv.json](profiles/alnop/imports/csv.json) | En-têtes explicites, séparateur virgule, dates historiques dans `date_debut` et `date_fin` |
-| GeoJSON | [geojson.json](profiles/alnop/imports/geojson.json) | `FeatureCollection`, champs dans `properties`, géométrie dans `geometry` |
-
-Le CSV préparé n’est pas l’export CSV aplati existant. Il attend les champs que décrit son mapping. Cet exemple est **fictif et réservé à un test local** :
+| Format | Structure et mapping |
+|---|---|
+| JSON | Tableau ou collection désignée par le mapping |
+| CSV | En-têtes correspondant aux pointeurs des champs ; exemple synthétique fourni |
+| GeoJSON | `FeatureCollection`, propriétés et géométrie déclarées dans le mapping |
 
 ```csv
-id,nom_operation,nom_operation_ar,date_debut,type_action,longitude,latitude,geometry_role
-TEST_IMPORT_1,Notice fictive de vérification,اختبار,1956,Embuscade,,,
+id,title,date,type
+EXAMPLE_1,Fictional assembly,1700,fictional assembly
 ```
+
+Les mappings ALNOP sont conservés dans `compatibility/alnop/profile/imports` pour la suite facultative.
 
 Un autre profil peut utiliser ses propres colonnes et vocabulaires. Une base vide se prépare avec `--profile profil.json --taxonomies taxonomies.json` à la place de `--base`. Le fichier de taxonomies associe chaque vocabulaire déclaré à sa liste de valeurs. Les sources et territoires à référencer doivent déjà exister dans la base de travail.
 
@@ -82,7 +78,7 @@ Les fichiers existants ne sont jamais écrasés. Réimporter les mêmes octets a
 
 Entrées UTF-8 jusqu’à 16 Mio et 100 000 lignes ; artefacts locaux jusqu’à 128 Mio. Ces bornes protègent le traitement, elles ne sont pas des résultats de benchmark. Une proposition correspond à une notice d’événement et à une localisation mappée, qui peut contenir une géométrie à plusieurs points. Les autres objets canoniques restent disponibles dans la base, mais ne sont pas créés par les mappings d’événements de cette version.
 
-Le pipeline s’arrête à l’acceptation locale. Il ne publie pas d’archives, ne modifie pas la base ALNOP et n’expose pas les brouillons par l’API. La revue scientifique et les décisions de publication restent distinctes du contrôle technique.
+Le pipeline s’arrête à l’acceptation locale. Il ne publie pas d’archives, ne modifie pas une publication existante et n’expose pas les brouillons par l’API. La revue scientifique et les décisions de publication restent distinctes du contrôle technique.
 
 ## Importer plusieurs types de notices
 

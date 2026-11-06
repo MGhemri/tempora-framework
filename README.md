@@ -6,7 +6,7 @@
 
 ## Démarrage
 
-La CI utilise Node.js 20 et Python 3.11. Le parcours de référence exécute une analyse sur un profil fictif indépendant, en anglais et en espagnol.
+Le parcours du framework utilise Node.js 20 ou supérieur et npm. Le parcours de référence exécute une analyse sur un profil fictif indépendant, en anglais et en espagnol.
 
 ```sh
 git clone https://github.com/MGhemri/tempora-framework.git
@@ -27,7 +27,7 @@ Le parcours synthétique vérifie le noyau, puis installe le tarball dans un pro
 | Examiner les données | Rapprochements à revoir, assertions divergentes et couverture documentaire | [Analyses](ANALYSIS.md) |
 | Préparer une décision éditoriale | Journal privé, empreinte du contenu et contrôle d’éligibilité | [Éligibilité d’une proposition](FRAMEWORK.md#vérifier-léligibilité-dune-proposition-v3) |
 
-La préparation et l’activation locale de snapshots v3 sont disponibles. L’API générique lit les versions activées via un serveur local. Le SDK et la CLI sont disponibles sous forme de [tarball de développement](FRAMEWORK.md#installer-le-sdk-et-la-cli-hors-du-dépôt). [Journal des versions du framework](TEMPORA_CHANGELOG.md)
+La préparation et l’activation locale de snapshots v3 sont disponibles. L’API générique lit les versions activées via un serveur local. Le SDK et la CLI sont disponibles sous forme de [tarball de développement](FRAMEWORK.md#installer-le-sdk-et-la-cli-hors-du-dépôt). [Journal des versions du framework](CHANGELOG.md)
 
 Pour vérifier les exports, activer une version locale ou revenir à la précédente, consulter le [guide de publication locale](FRAMEWORK.md#préparer-et-activer-un-snapshot-local).
 
@@ -35,22 +35,30 @@ Pour vérifier les exports, activer une version locale ou revenir à la précéd
 
 - [Noyau TEMPORA](src/framework/) pour les profils, le canon, l’ingestion, les analyses et la revue.
 - [Schémas](schemas/) pour les contrats versionnés.
-- [Profils](profiles/) pour les règles métier et les mappings.
+- [Profils](profiles/) pour les exemples synthétiques et leurs mappings.
 - [Tests](tests/) pour les cas de référence, les profils indépendants et la compatibilité ALNOP.
 
-## Profil de référence ALNOP
+## Profil de compatibilité ALNOP
 
-ALNOP est un profil historique de TEMPORA sur les opérations du FLN et de l’ALN pendant la guerre d’indépendance algérienne. Ce dépôt fournit sa configuration, ses adaptateurs et le corpus de référence qui permet d’exécuter les tests de compatibilité et de vérifier les archives. Le projet historique porte l’atlas, les API publiques et les publications de données ALNOP. [Guide ALNOP](ALNOP.md) · [Atlas](https://alnop.vercel.app/) · [Dépôt historique](https://github.com/MGhemri/aln-historical-operations-dataset)
-
-Pour vérifier le profil et simuler la migration de ses 263 notices vers une copie de travail v3.
+ALNOP est facultatif. Ses contrats et adaptateurs sont regroupés dans [compatibility/alnop](compatibility/alnop/README.md). Le corpus, l’atlas et les API historiques appartiennent au [dépôt ALNOP](https://github.com/MGhemri/aln-historical-operations-dataset).
 
 ```sh
-npm run validate:profiles
-npm run migrate:tempora
-npm run check:tempora:baseline
+npm run test:compat:alnop:minimal
+npm run test:compat:alnop:full -- --alnop-dir ../alnop-reference
 ```
 
-Le contrôle d’intégrité des archives est disponible ici avec `npm run check:releases`. La reconstruction depuis les commits historiques s’exécute dans le dépôt ALNOP avec `npm run check:releases -- --sources`. [Versions et citation ALNOP](RELEASE_POLICY.md)
+Le test complet exige une copie extérieure propre à la révision définie dans `compatibility/alnop/pin.json`. Il ne télécharge rien implicitement. Des copies historiques restent temporairement dans l’arbre en attente de leur retrait contrôlé ; les tests et builds du framework fonctionnent sans elles.
+
+## Vérifications du framework
+
+```sh
+npm test
+npm run test:standalone
+npx playwright install chromium
+npm run test:browser
+```
+
+`test:standalone` installe et teste une copie contenant seulement les fichiers génériques. La suite navigateur contrôle les 14 pages TEMPORA et l’absence des exports ALNOP dans l’artefact publié.
 
 ## Générer le site documentaire
 
@@ -60,10 +68,10 @@ npm run check:site
 npm run build:site -- --output work/pages
 ```
 
-Les guides sont générés à partir des documents Markdown de référence. Le déploiement Pages utilise l’export isolé du site TEMPORA. Les fichiers historiques restent dans les tests de compatibilité du dépôt.
+Les guides sont générés à partir des documents Markdown de référence. Le déploiement Pages utilise l’export isolé du site TEMPORA. La compatibilité ALNOP dispose de sa propre suite facultative.
 
 ## Contribuer
 
 Pour une évolution du noyau, indiquer le comportement attendu et les profils concernés. Les propositions documentaires ALNOP suivent le parcours de contribution du profil. [Guide de contribution](CONTRIBUTING.md)
 
-Le code est distribué sous licence MIT. Les droits et références des données et documents sont décrits séparément dans la politique de publication. [Licence](LICENSE) · [Politique des données](RELEASE_POLICY.md) · [Sécurité](SECURITY.md)
+Le code est distribué sous licence MIT. Les droits des corpus et des documents restent définis par leurs propriétaires. [Licence](LICENSE) · [Sécurité](SECURITY.md)

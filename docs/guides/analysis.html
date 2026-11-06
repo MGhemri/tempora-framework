@@ -22,7 +22,7 @@
 <div class="sidenote">TEMPORA 3.0.0-dev.0<br>Préversion locale · MIT</div></nav>
 <main class="main" id="contenu"><h1>Analyses</h1><div class="article"><p>Les analyses locales v3 produisent des pistes de revue à partir d’un corpus et de son profil. Chaque rapport identifie le corpus par son empreinte SHA-256 et indique les versions des méthodes, les paramètres et le périmètre de calcul.</p>
 <h2 id="produire-un-rapport">Produire un rapport</h2>
-<p>Pour analyser la copie v3 du corpus ALNOP créée par la migration locale, indiquer son chemin. La commande écrit le rapport JSON sur la sortie standard.</p>
+<p>Pour analyser un corpus canonique v3 issu du parcours d’ingestion, indiquer son chemin. La commande écrit le rapport JSON sur la sortie standard.</p>
 <div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-sh">npm run --silent quality:tempora -- --base work/tempora-v3/corpus-v3.json
 </code></pre>
 <p>Le périmètre par défaut est <code>published</code>. Utiliser <code>--scope working</code> pour une copie de travail qui inclut les propositions et les notices en revue. Conserver ces rapports dans un espace privé. L’option <code>--parameters fichier.json</code> permet de fixer <code>title_threshold</code>, <code>shared_place_threshold</code>, <code>entity_threshold</code>, <code>nearby_km</code> et <code>max_pairs</code>. Le plafond du nombre de paires déclenche une erreur explicite si le calcul le dépasse.</p>

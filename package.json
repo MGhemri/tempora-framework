@@ -1,12 +1,12 @@
 {
   "name": "tempora-framework",
-  "version": "1.0.0",
+  "version": "3.0.0-dev.0",
   "private": true,
   "description": "TEMPORA Framework pour structurer, valider et analyser des corpus historiques par profil",
   "scripts": {
     "test": "npm run test:core && npm run test:package && npm run check:site",
     "test:framework": "npm run test:core",
-    "test:core": "node --test tests/framework-canonical.test.js tests/framework-profiles.test.js tests/framework-contracts.test.js tests/framework-ingestion.test.js tests/framework-analysis.test.js tests/framework-editorial-review.test.js tests/framework-publication.test.js tests/framework-published-api.test.js tests/architecture/framework-isolation.test.js",
+    "test:core": "node --test tests/framework-canonical.test.js tests/framework-profiles.test.js tests/framework-contracts.test.js tests/framework-ingestion.test.js tests/framework-analysis.test.js tests/framework-editorial-review.test.js tests/framework-publication.test.js tests/framework-published-api.test.js tests/architecture/framework-isolation.test.js tests/publication-files.test.js",
     "test:api": "node --test tests/*.test.js",
     "test:blind": "node tests/blind-test.js",
     "test:data": "node tests/run-validation.js",
