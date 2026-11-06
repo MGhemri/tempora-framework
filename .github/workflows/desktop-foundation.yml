@@ -78,7 +78,7 @@ jobs:
       - name: Stage pinned Node and scientific engine
         run: npm run stage:windows-engine
       - name: Build native NSIS installer (unsigned CI artifact only)
-        run: npm run tauri -- build --config src-tauri/tauri.windows.conf.json
+        run: npm run build:windows
       - name: Check NSIS artifact and embedded engine
         shell: pwsh
         run: |
