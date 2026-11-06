@@ -45,3 +45,20 @@ test('CI enforces committed Cargo.lock and Tauri runner must use locked resoluti
  assert.match(lock,/^version = 4$/m);
  assert.match(lock,/name = "tempora-desktop"/);
 });
+
+test('Fixed WebView2 experiment requires locally verified CAB and Cargo-locked Tauri build',()=>{
+ const conf=JSON.parse(read('src-tauri/tauri.windows.fixed.conf.json'));
+ assert.deepEqual(conf.bundle.windows.webviewInstallMode,
+   {type:'fixedRuntime',path:'./resources/webview2-fixed/'});
+ const stage=read('scripts/stage-fixed-webview.ps1');
+ const build=read('scripts/build-fixed-webview.ps1');
+ const diag=read('scripts/diagnose-webview2.ps1');
+ assert.match(stage,/WEBVIEW_CAB_SHA256_MISMATCH/);
+ assert.match(stage,/msedgewebview2\.exe/);
+ assert.match(build,/stage-fixed-webview\.ps1/);
+ assert.match(build,/tauri build --config src-tauri\/tauri\.windows\.conf\.json --config src-tauri\/tauri\.windows\.fixed\.conf\.json -- --locked/);
+ assert.match(build,/CARGO_LOCK_MODIFIED/);
+ assert.match(diag,/WebView2|webview2/i);
+ const ignore=read('../../.gitignore');
+ assert.match(ignore,/resources\/webview2-fixed\//);
+});
