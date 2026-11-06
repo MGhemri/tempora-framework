@@ -8,6 +8,7 @@ Ce dossier regroupe les **documents techniques versionnés** de TEMPORA. Le [sit
 |---|---|
 | [Architecture / Framework](FRAMEWORK.md) | Profiles, boundaries, CLI, SDK, API / profils, frontières, CLI, SDK et API |
 | [Native desktop architecture / Architecture desktop native](DESKTOP_ARCHITECTURE.md) | Tauri workspace, engine bridge and TensorFlow readiness / GUI, moteur et préparation IA |
+| [Desktop engine bridge / Pont moteur](ENGINE_BRIDGE.md) | Safe, pinned SDK worker protocol / protocole local du moteur validé |
 | [Canonical model / Modèle canonique](CANONICAL_MODEL.md) | V3 schemas and provenance / schémas v3 et provenance |
 | [Ingestion](INGESTION.md) | Import preview, quarantine, acceptance / prévisualisation, quarantaine, acceptation |
 | [Analysis / Analyses](ANALYSIS.md) | Candidate identification, reproducibility / rapprochements, reproductibilité |
