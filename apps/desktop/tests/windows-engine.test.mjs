@@ -59,6 +59,10 @@ test('Fixed WebView2 experiment requires locally verified CAB and Cargo-locked T
  assert.match(build,/tauri build --config src-tauri\/tauri\.windows\.conf\.json --config src-tauri\/tauri\.windows\.fixed\.conf\.json -- --locked/);
  assert.match(build,/CARGO_LOCK_MODIFIED/);
  assert.match(diag,/WebView2|webview2/i);
+ const ci=read('../../.github/workflows/desktop-foundation.yml');
+ assert.match(ci,/Verify Fixed WebView2 staging rejects tampered and non-CAB files/);
+ assert.match(ci,/WEBVIEW_CAB_SHA256_MISMATCH/);
+ assert.match(ci,/WEBVIEW_CAB_EXPANSION_FAILED/);
  const ignore=read('../../.gitignore');
  assert.match(ignore,/resources\/webview2-fixed\//);
 });
