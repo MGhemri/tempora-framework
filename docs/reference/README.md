@@ -11,6 +11,7 @@ Ce dossier regroupe les **documents techniques versionnés** de TEMPORA. Le [sit
 | [Ingestion](INGESTION.md) | Import preview, quarantine, acceptance / prévisualisation, quarantaine, acceptation |
 | [Analysis / Analyses](ANALYSIS.md) | Candidate identification, reproducibility / rapprochements, reproductibilité |
 | [Publication policy / Politique de publication](RELEASE_POLICY.md) | Software and corpus versions / versions logicielles et des corpus |
+| [Release qualification / Qualification de release](RELEASE_CHECKLIST.md) | Candidate and stable release gates / conditions de qualification |
 | [ALNOP compatibility / Compatibilité ALNOP](ALNOP.md) | Optional pinned historical test profile / profil historique de test facultatif |
 
 **Maintainer-facing documents remain in the repository root:** [README](../../README.md), [Contributing](../../CONTRIBUTING.md), [Security](../../SECURITY.md), [Changelog](../../CHANGELOG.md), [Code of Conduct](../../CODE_OF_CONDUCT.md), [License](../../LICENSE), and [Citation](../../CITATION.cff).

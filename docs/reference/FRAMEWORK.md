@@ -176,12 +176,12 @@ Les versions explicites sont immuables et les réponses ont un ETag. L’option 
 
 ## Installer le SDK et la CLI hors du dépôt
 
-Le manifeste de distribution est séparé du dépôt de développement. Le paquet CommonJS est marqué privé et sa version de travail `3.0.0-dev.0` est indépendante du numéro de schéma. La commande de paquetage copie une liste explicite de fichiers génériques. Le tarball utilise Ajv et ajv-formats comme dépendances d’exécution.
+Le manifeste de distribution est séparé du dépôt de développement. Le paquet CommonJS est marqué privé et sa version de travail `3.0.0-rc.1` est indépendante du numéro de schéma. La commande de paquetage copie une liste explicite de fichiers génériques. Le tarball utilise Ajv et ajv-formats comme dépendances d’exécution.
 
 ```sh
 mkdir -p work
 npm run pack:tempora -- --out work --write
-npm install /chemin/vers/tempora-framework-3.0.0-dev.0.tgz
+npm install /chemin/vers/tempora-framework-3.0.0-rc.1.tgz
 npx tempora --help
 npx tempora profile validate profil.json
 ```

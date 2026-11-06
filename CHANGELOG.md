@@ -1,5 +1,12 @@
 # Versions du framework TEMPORA
 
+## 3.0.0-rc.1 — release candidate en qualification
+
+- Métadonnées logiciel, citation et documentation synchronisées sur la préversion RC.
+- Contrôle automatisé de cohérence du versionnement et procédure de qualification.
+- Tests du framework sur Node.js 20 et 22, Linux et Windows.
+- Paquet toujours privé ; aucune publication stable ou npm automatique.
+
 ## 3.0.0-dev.0 — version de travail
 
 - Noyau testé hors des données ALNOP sur deux profils synthétiques.

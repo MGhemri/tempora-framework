@@ -4,7 +4,7 @@ const {spawnSync} = require('node:child_process');
 const root = path.resolve(__dirname, '..');
 // Explicit generic inputs: this also defines the independently reproducible checkout.
 const inputs = [
-  'package.json','package-lock.json','distribution','LICENSE','README.md',
+  'package.json','package-lock.json','distribution','LICENSE','README.md','CITATION.cff','CHANGELOG.md',
   'docs/reference','SECURITY.md',
   'src/framework','src/sdk','src/cli','schemas/tempora',
   'schemas/tempora.profile.schema.json','schemas/tempora.ingestion-mapping.schema.json',
@@ -13,7 +13,7 @@ const inputs = [
   'scripts/ingest-tempora.js','scripts/analyze-tempora.js','scripts/evaluate-tempora.js',
   'scripts/publish-tempora.js','scripts/serve-tempora.js','scripts/pack-tempora.js',
   'scripts/check-framework-boundaries.js','scripts/build-framework-site.js',
-  'scripts/check-publication-files.js','scripts/benchmark-tempora.js','scripts/validate-profiles.js',
+  'scripts/check-publication-files.js','scripts/check-release-metadata.js','scripts/benchmark-tempora.js','scripts/validate-profiles.js',
   'profiles/synthetic-history','tests/publication-files.test.js',
   'tests/architecture','tests/helpers/tempora.js','tests/helpers/analysis-reference.js',
   'tests/helpers/publication-request.js','tests/vendor','tests/fixtures/profiles/synthetic-history',
@@ -34,7 +34,7 @@ function run() {
       if (fs.existsSync(path.join(dir,forbidden))) throw Error('Unexpected historical input: '+forbidden);
     }
     const env = {...process.env}; delete env.NODE_PATH; delete env.NODE_TEST_CONTEXT;
-    for (const args of [['ci'], ['run','test:core'], ['run','test:package'], ['run','check:site'], ['run','validate:profiles'], ['run','build']]) {
+    for (const args of [['ci'], ['run','test:core'], ['run','test:package'], ['run','check:site'], ['run','check:release'], ['run','validate:profiles'], ['run','build']]) {
       const result = spawnSync(process.execPath,[process.env.npm_execpath,...args],
         {cwd:dir,env,stdio:'inherit',timeout:180000});
       if (result.error) throw result.error;

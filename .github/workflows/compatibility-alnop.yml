@@ -1,7 +1,7 @@
 name: Optional ALNOP compatibility
 on:
   pull_request:
-    paths: ['compatibility/**', 'tests/compatibility/**', 'src/framework/**', '.github/workflows/compatibility-alnop.yml']
+    paths: ['compatibility/**', 'tests/compatibility/**', 'src/framework/**', 'src/sdk/**', 'src/cli/**', 'distribution/**', 'schemas/tempora/**', 'package.json', 'package-lock.json', 'docs/reference/RELEASE_CHECKLIST.md', '.github/workflows/compatibility-alnop.yml']
   workflow_dispatch:
 permissions:
   contents: read
@@ -17,7 +17,7 @@ jobs:
       - run: npm ci
       - run: npm run test:compat:alnop:minimal
   full:
-    if: github.event_name == 'workflow_dispatch'
+    if: github.event_name == 'workflow_dispatch' || startsWith(github.head_ref, 'release/')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

@@ -1,6 +1,6 @@
 {
   "name": "tempora-framework",
-  "version": "3.0.0-dev.0",
+  "version": "3.0.0-rc.1",
   "private": true,
   "description": "TEMPORA Framework pour structurer, valider et analyser des corpus historiques par profil",
   "scripts": {
@@ -28,7 +28,8 @@
     "test:compat:alnop:full": "node compatibility/alnop/verify.js",
     "test:api:v3": "node --test tests/framework-published-api.test.js",
     "test:publication": "node --test tests/framework-editorial-review.test.js tests/framework-publication.test.js",
-    "test:standalone": "node scripts/test-standalone.js"
+    "test:standalone": "node scripts/test-standalone.js",
+    "check:release": "node scripts/check-release-metadata.js"
   },
   "dependencies": {},
   "devDependencies": {

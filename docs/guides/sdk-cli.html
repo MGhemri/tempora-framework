@@ -19,12 +19,12 @@
 <a class="sidelink" href="../guides/science.html">Méthodologie</a>
 <a class="sidelink" href="../guides/alnop.html">Compatibilité ALNOP</a>
 <a class="sidelink" href="../guides/security.html">Sécurité</a>
-<div class="sidenote">TEMPORA 3.0.0-dev.0<br>Préversion locale · MIT</div></nav>
+<div class="sidenote">TEMPORA 3.0.0-rc.1<br>Préversion locale · MIT</div></nav>
 <main class="main" id="contenu"><h1>SDK et CLI</h1><div class="article"><h2 id="installer-le-sdk-et-la-cli-hors-du-dépôt">Installer le SDK et la CLI hors du dépôt</h2>
-<p>Le manifeste de distribution est séparé du dépôt de développement. Le paquet CommonJS est marqué privé et sa version de travail <code>3.0.0-dev.0</code> est indépendante du numéro de schéma. La commande de paquetage copie une liste explicite de fichiers génériques. Le tarball utilise Ajv et ajv-formats comme dépendances d’exécution.</p>
+<p>Le manifeste de distribution est séparé du dépôt de développement. Le paquet CommonJS est marqué privé et sa version de travail <code>3.0.0-rc.1</code> est indépendante du numéro de schéma. La commande de paquetage copie une liste explicite de fichiers génériques. Le tarball utilise Ajv et ajv-formats comme dépendances d’exécution.</p>
 <div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-sh">mkdir -p work
 npm run pack:tempora -- --out work --write
-npm install /chemin/vers/tempora-framework-3.0.0-dev.0.tgz
+npm install /chemin/vers/tempora-framework-3.0.0-rc.1.tgz
 npx tempora --help
 npx tempora profile validate profil.json
 </code></pre>
