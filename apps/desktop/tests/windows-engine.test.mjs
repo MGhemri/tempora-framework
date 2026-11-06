@@ -73,3 +73,11 @@ test('Fixed WebView2 experiment requires locally verified CAB and Cargo-locked T
  const ignore=read('../../.gitignore');
  assert.match(ignore,/resources\/webview2-fixed\//);
 });
+
+test('Installed TEMPORA smoke verifies a WebView2 child belonging to its GUI process',()=>{
+ const installed=read('scripts/verify-windows-install.ps1');
+ assert.match(installed,/Get-CimInstance Win32_Process/);
+ assert.match(installed,/ParentProcessId/);
+ assert.match(installed,/msedgewebview2\.exe/);
+ assert.match(installed,/INSTALLED_GUI_WEBVIEW2_PROCESS_MISSING/);
+});
