@@ -5,6 +5,8 @@ param(
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
 $installerFile = (Resolve-Path $Installer).Path
+# NSIS /D requires a native Windows path: forward slashes are silently stripped.
+$InstallDirectory = [System.IO.Path]::GetFullPath($InstallDirectory).Replace("/", "\\")
 if (-not (Test-Path $installerFile -PathType Leaf)) { throw "INSTALLER_MISSING" }
 if (Test-Path $InstallDirectory) { throw "TEST_DIRECTORY_MUST_BE_EMPTY" }
 New-Item -ItemType Directory -Force -Path $InstallDirectory | Out-Null
