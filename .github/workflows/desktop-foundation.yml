@@ -143,6 +143,37 @@ jobs:
           if (-not (Test-Path $node) -or -not (Test-Path $worker)) { throw "Embedded runtime resources absent" }
           Get-FileHash $binary.FullName -Algorithm SHA256 | Format-List
           Get-FileHash $node -Algorithm SHA256 | Format-List
+      - name: Validate two-stage WebView2 prerequisite checker (read-only)
+        shell: pwsh
+        run: |
+          $tool = "./scripts/two-stage/Install-TEMPORA.ps1"
+          $result = & $tool -CheckOnly 2>&1 | Out-String
+          if ($result -notmatch "WEBVIEW2_READY|WEBVIEW2_NOT_INSTALLED") {
+            throw "TWO_STAGE_PREREQUISITE_CHECK_FAILED: $result"
+          }
+          Write-Host $result
+      - name: Assemble two-stage Windows installer experiment
+        shell: pwsh
+        run: |
+          $packageDir = Join-Path $env:RUNNER_TEMP "TEMPORA-Windows-TwoStage"
+          New-Item -ItemType Directory -Force -Path $packageDir | Out-Null
+          Copy-Item "./scripts/two-stage/INSTALL_TEMPORA.cmd" -Destination $packageDir
+          Copy-Item "./scripts/two-stage/Install-TEMPORA.ps1" -Destination $packageDir
+          Copy-Item "./scripts/two-stage/README.txt" -Destination $packageDir
+          $installer = Get-ChildItem "./src-tauri/target/release/bundle/nsis" -Filter "*setup.exe" |
+            Select-Object -First 1
+          if (-not $installer) { throw "TEMPORA_INSTALLER_MISSING_FOR_TWO_STAGE" }
+          Copy-Item -LiteralPath $installer.FullName -Destination $packageDir
+          "TEMPORA two-stage package: download official WebView2 Evergreen Standalone x64 from Microsoft and place it beside these files before running INSTALL_TEMPORA.cmd" |
+            Set-Content (Join-Path $packageDir "WEBVIEW2_DOWNLOAD_REQUIRED.txt")
+          New-Item -ItemType Directory -Force -Path "./src-tauri/target/two-stage" | Out-Null
+          Copy-Item (Join-Path $packageDir "*") -Destination "./src-tauri/target/two-stage/"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TEMPORA-Desktop-Windows-TwoStage-SETUP-WEBVIEW2-REQUIRED
+          path: apps/desktop/src-tauri/target/two-stage/*
+          if-no-files-found: error
+          retention-days: 7
       - uses: actions/upload-artifact@v4
         with:
           name: TEMPORA-Desktop-Windows-x64-UNSIGNED-NOT-A-RELEASE
