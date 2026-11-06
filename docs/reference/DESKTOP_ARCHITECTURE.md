@@ -175,3 +175,19 @@ via Tauri CLI, and rejects build-induced edits to the lockfile.
 This establishes dependency-resolution consistency across checked-out
 commits and platforms, not full bit-for-bit binary reproducibility.
 Future Rust updates must include a reviewed Cargo-generated lockfile diff.
+
+## Windows sandbox Fixed Version WebView2 experiment
+
+The production NSIS build on `main` remains a separate qualification
+concern. For a system without Evergreen WebView2, the experimental
+`tauri.windows.fixed.conf.json` overrides the Windows WebView mode with
+a **Fixed Version runtime deployed beside the application**.
+`scripts/stage-fixed-webview.ps1` checks the externally obtained CAB's
+SHA-256 before extracting it; `scripts/build-fixed-webview.ps1` builds
+NSIS with the locked Cargo dependency graph and no runtime file checked
+into source control.
+
+This is **not** yet a passing clean-VM rendering test or a release
+configuration. Only a real sandbox test without WebView2 registration can
+qualify it. The unrelated #20 contains older pre-lockfile experiments
+and must not be merged without conflict review.
