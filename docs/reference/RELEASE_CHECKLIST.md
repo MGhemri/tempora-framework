@@ -46,9 +46,9 @@ Les anciens tags historiques **`v1.0.0`** et **`v3.0.0`** ont été vérifiés a
 
 ## Stable release gate / Passage en version stable
 
-A stable release requires all checks green on the **merged** and frozen commit, explicit maintainer approval, documented licenses and changes, reproducible source and package checksums, and resolution of the obsolete tag. Npm publication is a separate decision; keep **root** `private:true` while the **distribution** manifest is public-ready. See [npm publishing](NPM_PUBLISHING.md).
+A stable release requires all checks green on the **merged** and frozen commit, explicit maintainer approval, documented licenses and changes, reproducible source and package checksums, and resolution of the obsolete tag. Npm publication is a separate decision; keep `private:true` until explicitly approved.
 
-Une version stable exige les tests réussis sur le commit fusionné, une validation du mainteneur, le contrôle des licences et des empreintes, et le traitement explicite de l'ancien tag. **Aucune publication npm automatique sans étape de staging et validation manuelle 2FA**.
+Une version stable exige les tests réussis sur le commit fusionné, une validation du mainteneur, le contrôle des licences et des empreintes, et le traitement explicite de l'ancien tag. **Aucune publication npm automatique**.
 
 ## Branch protection / Protection de main
 

@@ -27,7 +27,3 @@ docs/architecture/*baseline*.md
 private-reports/
 
 /docs/atlas.html
-
-# TEMPORA Desktop local build outputs
-apps/desktop/dist/
-apps/desktop/src-tauri/target/

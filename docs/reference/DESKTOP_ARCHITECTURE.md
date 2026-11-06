@@ -1,115 +1,95 @@
-# TEMPORA Desktop — Architecture scientifique et préparation TensorFlow
+# TEMPORA Studio — Architecture & implementation roadmap
 
-**Statut : Phase 0 / Tauri 2 · Application native en cours de développement**
+**Status:** architectural foundation `0.1.0`. **Not a release.** The TEMPORA Engine `3.0.0` npm package is an independent project with a compatibility boundary.
 
-## 1. Principes non négociables
+## Vision
 
-1. Le **moteur TEMPORA** (`tempora-framework` 3.0.0) reste l'autorité de validation, ingestion, analyse, revue et publication. Aucune duplication des algorithmes dans l'interface.
-2. L'application `apps/desktop/` est **indépendante du package npm** ; elle possède son propre cycle de versions, dépendances, tests et installateurs.
-3. Les corpus, documents privés, journaux et modèles restent locaux par défaut. Aucune synchronisation cloud ni télémétrie implicite.
-4. **Un modèle IA propose ; un humain vérifie et décide.** Les suggestions ne deviennent jamais des données historiques publiées sans preuves et approbation.
-5. L'interface présente distinctement : aperçu structurel, validation de schéma, analyse scientifique, inférence probabiliste et décision humaine.
-6. Les profils d'autres périodes, langues ou territoires ne doivent pas être traités comme des variantes d'ALNOP.
+TEMPORA Studio is an offline-first, native desktop scientific workstation for creating, importing, evaluating, reviewing, and publishing *multiple independent* historical corpora. It must not inherit historical assumptions from ALNOP or embed the ALNOP dataset.
 
-## 2. Découpage technique
+Native host: **Tauri 2 / Rust**, UI initially framework-free HTML/CSS/JavaScript to minimize prototype dependencies; select a stable component architecture after actual UX testing. First intended OS: Windows 10/11, then Linux and macOS.
+
+**Architecture:**
 
 ```text
-Desktop GUI  (TypeScript / WebView)
-       |
-       |  IPC JSON sérialisé, commandes explicitement exposées
-       v
-Tauri native authority  (Rust)
-       |  file picker / filesystem constraints / process management
-       |  no arbitrary shell execution or unscoped filesystem access
-       v
-TEMPORA engine adapter  (future, separate process with versioned contract)
-       |  pinned `tempora-framework` runtime, no direct WebView Node APIs
-       v
-Canonical v3 · Ingestion · Analysis · Review · Publication
-       |
-       +------------------------------+
-                                      |
-                         Future inference service
-                         Model registry / TensorFlow
-                         Suggestions + provenance
-                         NEVER direct publication
+┌────────────────────────────── TEMPORA Studio ──────────────────────────────┐
+│ Tauri WebView UI                                                          │
+│  Dashboard | Corpus workspace | Import | Review | Analysis | Publication │
+│            │ typed IPC (commands; no raw shell access)                   │
+│ Rust host  │ file dialog & scoped storage | jobs | logging | integrity   │
+│            │                                                              │
+│        engine adapter ←── bounded JSON messages ──→ pinned Node sidecar   │
+│                                              TEMPORA Framework SDK 3.x    │
+│        intelligence adapter ← optional local inference runtime            │
+│                                              models, features, provenance │
+└───────────────────────────────────────────────────────────────────────────┘
 ```
 
-Tauri 2 grants window capabilities explicitly. The Phase-0 Rust command opens the **native file chooser itself**; the frontend does not receive arbitrary read/write permission or pick its own file paths. The 8 MiB preview size limit protects memory usage. The UI uses DOM-safe rendering.
+**Hard boundary:** The `tempora-framework` npm library is a CommonJS SDK using Node.js. Its `fs`, `path`, and other Node dependencies mean it **must not be imported into the WebView**. The Rust host should own the isolation boundary and invoke an audited, bundled **Node sidecar** with a fixed command vocabulary, fixed message envelope and pinned engine version. The final distribution must bundle the runtime: requiring a user's separately installed Node.js is not acceptable for a native release.
 
-## 3. Functional phases / Tranches de réalisation
+Tauri officially supports explicitly bundled external binaries/sidecars: https://v2.tauri.app/develop/sidecar/ . The **sidecar choice and packaging strategy remain to be implemented and tested**, not invented as already working.
 
-| Phase | Deliverable | Acceptance criterion |
-|---|---|---|
-| 0 — Native foundation | Tauri shell, FR/EN navigation, native JSON/GeoJSON read-only previews | Rust tests, frontend compilation, no network dependency, no write |
-| 1 — TEMPORA engine bridge | Profile selection, validated corpus import, dry-run, quarantine, analysis, reviewer workspace | Uses genuine SDK v3; stable IPC protocol; independent installer test |
-| 1b — Research tools | Comparisons, discrepancy views, source provenance, human review and immutable snapshots | Every decision attributable and repeatable; exact artifact hash |
-| 2 — Inference provider | Explicit opt-in local inference, provider API, model registry | No implicit model loading; actionable suggestions with uncertainty |
-| 3 — TensorFlow | Audited TensorFlow-compatible runtime, benchmarks and opt-in models | Reproducible datasets and evaluations, licensing, CPU/GPU fallback |
-| 4 — Distribution | Signed Windows/macOS/Linux installers, auto-updates only if opted in | Reproducible binaries, vulnerability checks, release attestations |
+## Phase D0 — Native shell (this PR)
 
-### Phase-1 bridge — engineering decision
+- Native Tauri 2 process with a narrow `runtime_info` IPC command.
+- Local, offline, responsive UI with French and English controls.
+- Read-only file *preview* (JSON/GeoJSON/CSV), size-limited to 8 MiB.
+- No file writes, web calls, shell access, or AI inference.
+- No claims that parsing JSON constitutes canonical validation.
+- Avoid adding desktop dependencies to the framework root or npm public tarball.
 
-TEMPORA npm 3.0.0 currently exports a CommonJS SDK requiring Node APIs. **Do not import it into the WebView**. The preferred initial integration is a separately versioned, locally packaged **Node worker** that speaks length-bounded JSON messages with Rust and never exposes arbitrary shell or filesystem commands.
+**Acceptance:** static tests pass, no accidental network or production data access; Windows native build and installer must be verified in D1.
 
-Alternative evaluated later: a **Rust-native module** only if it can preserve the canonical schemas and produces identical output verified by cross-language fixtures. Never attempt to maintain two divergent scientific engines.
+## Phase D1 — Canonical SDK bridge and first desktop build
 
-The worker will use stable message envelopes:
-- `protocol_version`, `request_id`, `operation`, `profile_id`
-- `input_hash`, `expected_schema_version`, `read_only`, `limits`
-- response `status`, `result`, `diagnostics`, `output_hash`, `engine_version`
-- default to dry-run, cap input and response size, allowlist methods and paths
-- propagate cancellations, timeouts and structured errors with no secret leakage
+**Native delivery gates:** Windows x64 build; reproducible install; WebView2 handling; icons; code signing plan; Tauri capability audit; exact component licenses; automated updater *disabled until signed releases exist*.
 
-A file preview **must not** be reported as passing canonical validation.
+1. Build an isolated Node sidecar with pinned TEMPORA SDK version and predeclared command schemas.
+2. Define request: `{id, protocol_version, method, payload}`; response: `{id, ok, data?, diagnostics?, error?}`.
+3. IPC `runtime_info`, `workspace_open`, `profile_validate`, `corpus_validate`, `ingestion_preview`, `analysis_run`, `review_eligibility`, `publication_preview`.
+4. Worker communicates via length-prefixed bounded UTF-8 JSON over pipe, not an exposed HTTP port.
+5. **No arbitrary path or command arguments from WebView**; paths must be chosen through trusted OS dialogs, canonicalized, and constrained to an approved workspace.
+6. Sidecar must be restarted under bounded conditions, with timeout/cancellation, budgets, error mapping and nonzero exit handling.
+7. Never mutate source files. Writes require explicit previews, approvals and atomic revisioned snapshots. Lock concurrent writes.
+8. Compare output bit-for-bit with framework SDK tests; no separate implementation of validation or scientific operations in Rust or UI.
 
-### Phase-2/3 inference contract
+**Acceptance:** a real corpus is validated by SDK via native IPC; invalid data produces identical diagnostics; sidecar unavailability fails closed; no runtime internet access; true desktop build and installation validated on Windows.
 
-Implement an extension point, **not TensorFlow code in the desktop main process**:
+## Phase D2 — Workspace research tools
 
-```typescript
-type InferenceProposal = {
-  provider: "tensorflow" | "baseline";
-  modelId: string;
-  modelVersion: string;
-  modelSha256: string;
-  datasetSha256: string;
-  operation: "candidate-duplicate" | "entity-link" | "source-assistance";
-  recordIds: string[];
-  confidence: number | null;
-  calibrationId: string | null;
-  evidenceRefs: string[];
-  explanation: string;
-  createdAt: string;
-  status: "proposal";
-};
-```
+- Multi-corpus management: workspace manifest, profile versions, corpus snapshots, SHA-256, automatic checkpointing of *working copies*.
+- Imports: CSV/JSON/GeoJSON mappings, preview, quarantine, conflicts and source traceability.
+- Evidence lab: sources, assertions, identities, temporal/spatial uncertainty, two-way provenance links.
+- Review workstation: reviewer identities, signed/append-only (or externally anchored) journal, decisions, contested claims.
+- Analysis: comparison candidates, coverage, contradiction explorer, explicit parameter and method versioning.
+- Publication: immutable manifests, reproducible exports, version promotion and rollback. No release without human review.
+- Accessibility: keyboard, screen reader labels, high contrast, responsive scaling; FR/EN first, RTL Arabic after verified corpus-independent localization.
 
-Providers are loaded **only after explicit consent**, with verified hashes, declared licenses, provenance, runtime version, hardware support and resource limits. Record CPU/GPU device, runtime library version, inference parameters, time and (if applicable) deterministic seed. Keep offline CPU fallback and disable untrusted remote model execution.
+## Phase D3 — TensorFlow readiness (not model training yet)
 
-Training and inference are **separate**. Do not train on the 263 incomplete ALNOP notices as if they formed a complete or ground-truth historical universe. Require held-out, independently annotated validation and leakage checks before making scientific claims.
+**Do not bind the desktop to one ML runtime yet.** Specify a model provider interface and benchmark candidates:
 
-Evaluate precision, recall, calibration, false positive risks, profile transfer, temporal ambiguities and language coverage (including Arabic script) against human-curated reference sets. Proposals must show provenance and allow explicit reviewer rejection.
+- TensorFlow.js in the Node worker versus Python TensorFlow *only if justified*; evaluate CPU behavior, model size, packaging, startup, offline load, native bindings/ABI, GPU access, licenses and Windows installability.
+- Local embedding models and sentence similarity; entity/linkage candidates; potential duplicates; source quality *review hints*, temporal conflicts.
+- Models and datasets are stored and versioned separately from published corpora and the stable engine.
+- Every inference record captures `model_id`, `model_version`, `model_sha256`, `dataset_version`, `feature_pipeline_version`, `parameters`, `score`, `calibration`, `explanation`, `created_at`, `approved_by?`.
+- Require experiment registry: train/test separation by document/source, leakage checks, reproducible splits, metrics, subgroup/temporal drift, baseline comparison, and human acceptance.
+- Never auto-merge entities, rewrite citations, invent sources or promote historical facts.
+- Train only with rights-cleared datasets; avoid training on private journals unless explicit approval and documented governance.
+- Inference can be disabled; **the application must remain functional without ML**.
 
-Never let an ML score overwrite a sourced historical claim, assign exact coordinates without evidence, or autonomously approve publication.
+A practical first ML candidate is a **non-destructive duplicate-ranking assistant**. Benchmarks determine whether TensorFlow is the right runtime; **the eventual learning model must not be confused with the source of scientific truth**.
 
-## 4. Native security and governance
+## Repository and release policy
 
-- Tauri 2 capability allowlist per window; remote content must not gain IPC access.
-- Production CSP and self-hosted/local assets; no remote fonts, analytics or default internet permission.
-- Never use a generic `execute(command)` endpoint or unsandboxed file-read IPC.
-- All export locations via native picker, verified within an approved user workspace.
-- No permanent file persistence until explicit project creation and retention policy.
-- Use a SQLite-based local index only when the workflow and migration policy justify it; keep canonical JSON snapshots immutable.
-- Separate public data from private review journals and identifiers.
-- Threat model: malicious JSON, deep nesting, ZIP bombs, symlink escapes, stale model versions, compromised workers, poisoned training data.
+- `src/framework`, `src/sdk`, `src/cli`, `distribution`: the generic published engine. **No desktop import into core.**
+- `apps/desktop`: independently versioned desktop application, Rust host, UI, OS packaging and desktop-only tests.
+- `docs/reference`: architectural contracts and scientific limits.
+- Future sidecar versions and hashes must be auditable, offline and separately tested.
+- Desktop releases and npm SDK versions use **independent version numbers**.
+- Installer signing, Windows x64, Linux and macOS testing are explicit gates, not implied by web UI passing.
 
-## 5. Test and release gates
+## Security threat model (minimum)
 
-- Phase 0: `npm run build` in `apps/desktop/`, `cargo test` with a native toolchain, GitHub Actions platform smoke checks.
-- Phase 1: compare engine adapter results byte-for-byte or canonical-hash-for-canonical-hash with framework tests; match API v3 golden fixtures.
-- Phase 2: deterministic inference fixtures, calibration benchmarks, failure simulations and license checks.
-- Phase 4: build Windows MSI/NSIS, macOS DMG, Linux DEB/AppImage with platform-specific toolchains; sign packages before distribution.
-- Fail closed on unsupported schema/model versions. Never block researchers from exporting unmodified source files.
+Untrusted inputs: files, metadata, profile config, import mappings, model outputs and inter-process messages. Protect against path traversal, symlink escapes, decompression bombs, overly nested JSON, long input lines, UI HTML injection, hostile sidecar arguments, model tampering, arbitrary network traffic, corrupt checkpoints and stale review approvals. Set explicit per-command permission scopes. Do not enable shell access in JavaScript or permit raw filesystem paths without Rust validation.
 
-**Statut actuel :** le bureau est un véritable projet Tauri, mais **pas encore un outil d'édition canonique ni un moteur TensorFlow**. Ces fonctionnalités exigent les phases décrites ci-dessus.
+**Sources:** [Tauri v2 capabilities](https://v2.tauri.app/security/capabilities/), [Tauri sidecar documentation](https://v2.tauri.app/develop/sidecar/), [Tauri Windows installers](https://v2.tauri.app/distribute/windows-installer/).

@@ -1,51 +1,17 @@
-name: TEMPORA Desktop Foundation
-
+name: TEMPORA Studio Foundation
 on:
   pull_request:
-    paths:
-      - "apps/desktop/**"
-      - "docs/reference/DESKTOP_ARCHITECTURE.md"
-      - ".github/workflows/desktop-foundation.yml"
-  push:
-    branches: [main]
-    paths:
-      - "apps/desktop/**"
-      - "docs/reference/DESKTOP_ARCHITECTURE.md"
-      - ".github/workflows/desktop-foundation.yml"
+    paths: ['apps/desktop/**', 'docs/reference/DESKTOP_ARCHITECTURE.md', '.github/workflows/desktop-foundation.yml']
   workflow_dispatch:
-
 permissions:
   contents: read
-
 jobs:
-  frontend:
-    name: Desktop TypeScript and Vite
+  static:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: apps/desktop
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
-          node-version: 22
-      - run: npm install --ignore-scripts --no-audit --no-fund
-      - run: npm run build
-
-  rust:
-    name: Desktop Rust native tests
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: apps/desktop
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: Swatinem/rust-cache@v2
-        with:
-          workspaces: apps/desktop/src-tauri
-      - name: Install Tauri Linux dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev patchelf
-      - run: cargo test --manifest-path src-tauri/Cargo.toml
+          node-version: '22'
+      - run: node --check apps/desktop/ui/app.js
+      - run: node --test apps/desktop/tests/foundation.test.mjs

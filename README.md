@@ -66,11 +66,7 @@ npm run test:package
 npm run test:standalone
 ```
 
-The repository root remains **`private: true`** to prevent accidental publishing. Its separate, audited distribution manifest is configured for **public npm publishing**; public availability is **not claimed until an authenticated npm publish succeeds**. Follow the [npm publishing guide](docs/reference/NPM_PUBLISHING.md). Use the [SDK and CLI guide](https://mghemri.github.io/tempora-framework/guides/sdk-cli.html) for local packaging and usage.
-
-### Desktop application (Tauri 2)
-
-The new [TEMPORA Desktop alpha](apps/desktop/README.md) provides a native FR/EN research workspace with **read-only local JSON/GeoJSON preview**. Scientific engine integration and TensorFlow are planned but **not yet implemented**. See the [desktop architecture and AI roadmap](docs/reference/DESKTOP_ARCHITECTURE.md).
+The local package is versioned **`3.0.0`** and remains marked **`private: true`**. A public npm package or GitHub release has **not** been published; release tagging is a separate maintainer-controlled step. Use the [SDK and CLI guide](https://mghemri.github.io/tempora-framework/guides/sdk-cli.html) for local packaging and usage.
 
 ### Architecture and documentation
 
@@ -87,7 +83,7 @@ docs/guides/            Generated HTML documentation
 tests/                  Unit, integration, architecture, and browser tests
 ```
 
-See the [npm publishing guide](docs/reference/NPM_PUBLISHING.md) and the [release qualification checklist](docs/reference/RELEASE_CHECKLIST.md) before any stable release.
+See the [release qualification checklist](docs/reference/RELEASE_CHECKLIST.md) before any stable release.
 
 Read the [reference documentation](docs/reference/README.md): [architecture](docs/reference/FRAMEWORK.md), [canonical data model](docs/reference/CANONICAL_MODEL.md), [ingestion](docs/reference/INGESTION.md), [analysis](docs/reference/ANALYSIS.md), and [release policy](docs/reference/RELEASE_POLICY.md).
 
@@ -178,17 +174,13 @@ npm run test:package
 npm run test:standalone
 ```
 
-Le dépôt racine reste marqué **`private: true`** pour empêcher toute publication accidentelle. Un manifeste de distribution séparé est préparé pour npm public ; **la disponibilité sur le registre ne sera annoncée qu'après une publication authentifiée réussie**. Voir le [guide npm](docs/reference/NPM_PUBLISHING.md). Consulter le [guide SDK/CLI](https://mghemri.github.io/tempora-framework/guides/sdk-cli.html).
-
-### Application desktop native (Tauri 2)
-
-La nouvelle [application TEMPORA Desktop alpha](apps/desktop/README.md) propose un espace de recherche FR/EN et un **aperçu local JSON/GeoJSON en lecture seule**. La connexion au moteur scientifique et TensorFlow sont **encore à développer**. Voir l'[architecture desktop et la feuille de route IA](docs/reference/DESKTOP_ARCHITECTURE.md).
+Le paquet local porte la version **`3.0.0`** et reste marqué **`private: true`**. Aucune publication npm publique ni release GitHub stable n'a encore été effectuée ; la création du tag relève d'une étape distincte approuvée par le mainteneur. Consulter le [guide SDK/CLI](https://mghemri.github.io/tempora-framework/guides/sdk-cli.html).
 
 ### Organisation et documentation
 
 Les composants génériques sont regroupés sous `src/framework/`, `src/sdk/`, `src/cli/` et `schemas/tempora/`. Les profils fictifs vivent sous `profiles/` ; la compatibilité ALNOP reste isolée sous `compatibility/alnop/`.
 
-Le [guide de publication npm](docs/reference/NPM_PUBLISHING.md) détaille la première publication et l'automatisation sécurisée. La [checklist de qualification](docs/reference/RELEASE_CHECKLIST.md) décrit les conditions préalables à toute version stable.
+La [checklist de qualification](docs/reference/RELEASE_CHECKLIST.md) décrit les conditions préalables à toute version stable.
 
 Les documents techniques versionnés sont réunis dans [`docs/reference/`](docs/reference/README.md) : [architecture](docs/reference/FRAMEWORK.md), [modèle canonique](docs/reference/CANONICAL_MODEL.md), [ingestion](docs/reference/INGESTION.md), [analyses](docs/reference/ANALYSIS.md) et [politique de publication](docs/reference/RELEASE_POLICY.md).
 

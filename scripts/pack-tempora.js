@@ -4,7 +4,7 @@ const {spawnSync} = require('node:child_process');
 const {parseArgs} = require('node:util');
 
 const root = path.resolve(__dirname,'..');
-const inputs = ['LICENSE','src/framework','src/sdk','src/cli','schemas/tempora',
+const inputs = ['LICENSE','README.md','src/framework','src/sdk','src/cli','schemas/tempora',
   'schemas/tempora.profile.schema.json','schemas/tempora.ingestion-mapping.schema.json',
   'scripts/ingest-tempora.js','scripts/analyze-tempora.js','scripts/publish-tempora.js','scripts/serve-tempora.js'];
 
@@ -31,10 +31,9 @@ function pack(directory,{write=false,offline=false}={}) {
       fs.cpSync(path.join(root,entry),file,{recursive:true});
     }
     fs.copyFileSync(path.join(root,'distribution/package.json'),path.join(staging,'package.json'));
-    fs.copyFileSync(path.join(root,'distribution/README.md'),path.join(staging,'README.md'));
     const [preview]=JSON.parse(npm(['pack','--dry-run','--json','--ignore-scripts'],staging,offline));
     for(const file of preview.files){
-      if(['package.json','README.md'].includes(file.path)||inputs.some(entry=>file.path===entry||file.path.startsWith(entry+'/'))) continue;
+      if(file.path==='package.json'||inputs.some(entry=>file.path===entry||file.path.startsWith(entry+'/'))) continue;
       throw Error('Unexpected package entry: '+file.path);
     }
     if(!write)return preview;

@@ -5,7 +5,7 @@ const path = require('node:path');
 const {test} = require('node:test');
 const {pack,npm} = require('../../scripts/pack-tempora');
 
-test('The distributable tarball installs and executes a synthetic project outside the repository',t=>{
+test('The private tarball installs and executes a synthetic project outside the repository',t=>{
   const parent=fs.realpathSync(path.join(__dirname,'../../..'));
   const directory=fs.mkdtempSync(path.join(parent,'tempora-package-test-'));
   t.after(()=>fs.rmSync(directory,{recursive:true,force:true}));
@@ -22,10 +22,7 @@ test('The distributable tarball installs and executes a synthetic project outsid
   const installed=path.join(consumer,'node_modules/tempora-framework');
   const manifest=JSON.parse(fs.readFileSync(path.join(installed,'package.json'),'utf8'));
   assert.deepEqual(Object.keys(manifest.dependencies).sort(),['ajv','ajv-formats']);
-  assert.equal(manifest.private,false);
-  assert.equal(manifest.publishConfig.access,'public');
-  assert.equal(manifest.repository.url,'git+https://github.com/MGhemri/tempora-framework.git');
-  assert.ok(fs.readFileSync(path.join(installed,'README.md'),'utf8').includes('npm install tempora-framework'));
+  assert.equal(manifest.private,true);
   const source=path.join(__dirname,'../fixtures/profiles/synthetic-history/profile.json');
   fs.copyFileSync(source,path.join(consumer,'profile.json'));
   const script=path.join(consumer,'index.cjs');
