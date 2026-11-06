@@ -136,3 +136,14 @@ The complete link count is returned with a bounded first-20-entry preview.
 An absent or other-namespace target is clearly labelled as unresolved.
 Neither semantic contradictions, corroboration nor truth are inferred.
 No reviewer writes, model execution or publishing actions are included.
+
+## Phase 1D — Human review dossier (read-only)
+
+The scientific workspace shows only review entries already included in
+a selected corpus's `reviews[]`. These originate from canonical v3
+records and are not decisions performed by the application. The
+`agent_type` discriminator separates explicit human entries from
+automatic/unspecified ones. The structural inventory never changes
+the underlying corpus, never signs a review, and does not alter the
+canonical validator's scientific decision. Output is capped to 20
+review rows, with full counts.
