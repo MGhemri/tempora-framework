@@ -173,3 +173,84 @@ lockfile with Cargo, and receive review.
 This pins the Rust dependency graph, **not** entire machine environments,
 all npm tooling, compiler versions, binary timestamps, or bit-for-bit
 Windows installer outputs. WebView2 sandbox compatibility remains separate.
+
+## Fixed Version WebView2 — controlled sandbox experiment
+
+The existing NSIS Windows workflow is **not** proven to work on machines
+without an Evergreen WebView2 registration. The Windows development PC
+tests demonstrate genuine canonical engine execution, but the clean sandbox
+previously displayed `Could not find the WebView2 Runtime`.
+
+This experimental build is intentionally **manual and isolated**. Obtain the
+official **Microsoft Edge WebView2 Fixed Version Runtime x64 CAB** from
+Microsoft; verify the source and independently record the CAB SHA-256.
+The required runtime archive is not downloaded automatically and is
+**never** committed. On Windows, with Rust, npm and Tauri prerequisites
+installed, run from `apps/desktop/`:
+
+```powershell
+./scripts/build-fixed-webview.ps1 -CabPath "C:\\path\\Microsoft.WebView2.FixedVersionRuntime.x64.cab" -ExpectedSha256 "<64-character-verified-sha256>"
+```
+
+The script validates the CAB digest, stages the runtime in
+`src-tauri/resources/webview2-fixed/`, stages the pinned scientific
+Node/SDK runtime, and invokes Tauri NSIS with the override
+`src-tauri/tauri.windows.fixed.conf.json` and Cargo `--locked`.
+
+**Acceptance gate:** install the resulting unsigned NSIS executable in a
+Windows sandbox where neither Evergreen WebView2 nor system Node is
+installed. Confirm visible UI rendering, JSON file picker, valid/invalid
+canonical corpus outcomes, shutdown and uninstall. A running GUI process
+alone is not sufficient proof. The fixed-runtime experiment is not a
+public release, is not yet an automated CI artifact, and does not
+resolve licensing or code-signing requirements. Do not merge the old
+experimental #20 blindly into the now advanced `main` branch.
+
+## Recommended Windows installation — one NSIS setup, two components
+
+**Default Windows installer:** `src-tauri/tauri.windows.conf.json`
+now enables `offlineInstaller`. It installs TEMPORA Desktop and, where
+missing, the official Microsoft **Evergreen WebView2 Runtime** during the
+same setup, before the first GUI launch. It does not need network access,
+but makes the installer substantially larger. This uses Tauri's supported
+NSIS prerequisite mechanism; **the user does not run a second setup**.
+
+**Lightweight online alternative:** run
+`./scripts/build-online-webview.ps1` on Windows to embed Microsoft's
+small WebView2 bootstrapper. If WebView2 is missing, the installer needs
+Internet access to download the runtime. Already-installed Evergreen
+runtimes are reused.
+
+**Third fallback:** `build-fixed-webview.ps1` packages an application-
+local Fixed Version runtime and requires a genuine Microsoft CAB plus an
+independently verified SHA-256. Fixed Version is a distinct distribution
+strategy, not the default, and requires application-managed security
+updates.
+
+The previous CI failure of the malformed-CAB test was caused by
+`expand.exe` returning without producing `msedgewebview2.exe`.
+The staging script now classifies empty extraction as an invalid CAB.
+A failed verification step is not proof that the actual installer or
+user's desktop application failed. The final acceptance still requires
+clean-machine GUI display and real corpus validation.
+
+## New TEMPORA visual identity — integration handoff
+
+The project has received two official images from its maintainer:
+a **transparent** black-and-gold logo and a **white-background** variant.
+The original images must remain unaltered and be stored separately
+from generated desktop icons. The associated user-provided files
+are prepared in an external Desktop Branding Assets package, not
+yet uploaded to this repository.
+
+Proposed paths after asset upload:
+- `apps/desktop/public/branding/tempora-brand-transparent-1024.png`
+- `apps/desktop/public/branding/tempora-brand-white-1024.png`
+- `apps/desktop/src-tauri/icons/icon.png`
+- `apps/desktop/src-tauri/icons/icon.ico`
+
+**Do not reference missing assets or replace build icons until these
+files have actually been committed.** The black lettering is not
+legible on the app's dark sidebar without a light background or
+a distinct high-contrast variant. Treat final brand use and
+high-DPI screenshots as visual acceptance criteria.

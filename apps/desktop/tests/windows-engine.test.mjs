@@ -45,3 +45,31 @@ test('CI enforces committed Cargo.lock and Tauri runner must use locked resoluti
  assert.match(lock,/^version = 4$/m);
  assert.match(lock,/name = "tempora-desktop"/);
 });
+
+test('NSIS installs Evergreen WebView2 as explicit prerequisite before launch',()=>{
+ const offline=JSON.parse(read('src-tauri/tauri.windows.conf.json'));
+ const online=JSON.parse(read('src-tauri/tauri.windows.online.conf.json'));
+ assert.deepEqual(offline.bundle.windows.webviewInstallMode,{type:'offlineInstaller',silent:true});
+ assert.deepEqual(online.bundle.windows.webviewInstallMode,{type:'embedBootstrapper',silent:true});
+ assert.match(read('scripts/build-online-webview.ps1'),/tauri build --config src-tauri\/tauri\.windows\.conf\.json --config src-tauri\/tauri\.windows\.online\.conf\.json -- --locked/);
+});
+test('Fixed WebView2 experiment requires locally verified CAB and Cargo-locked Tauri build',()=>{
+ const conf=JSON.parse(read('src-tauri/tauri.windows.fixed.conf.json'));
+ assert.deepEqual(conf.bundle.windows.webviewInstallMode,
+   {type:'fixedRuntime',path:'./resources/webview2-fixed/'});
+ const stage=read('scripts/stage-fixed-webview.ps1');
+ const build=read('scripts/build-fixed-webview.ps1');
+ const diag=read('scripts/diagnose-webview2.ps1');
+ assert.match(stage,/WEBVIEW_CAB_SHA256_MISMATCH/);
+ assert.match(stage,/msedgewebview2\.exe/);
+ assert.match(build,/stage-fixed-webview\.ps1/);
+ assert.match(build,/tauri build --config src-tauri\/tauri\.windows\.conf\.json --config src-tauri\/tauri\.windows\.fixed\.conf\.json -- --locked/);
+ assert.match(build,/CARGO_LOCK_MODIFIED/);
+ assert.match(diag,/WebView2|webview2/i);
+ const ci=read('../../.github/workflows/desktop-foundation.yml');
+ assert.match(ci,/Verify Fixed WebView2 staging rejects tampered and non-CAB files/);
+ assert.match(ci,/WEBVIEW_CAB_SHA256_MISMATCH/);
+ assert.match(ci,/WEBVIEW_CAB_EXPANSION_FAILED/);
+ const ignore=read('../../.gitignore');
+ assert.match(ignore,/resources\/webview2-fixed\//);
+});
