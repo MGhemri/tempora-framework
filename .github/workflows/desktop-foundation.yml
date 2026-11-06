@@ -19,42 +19,6 @@ permissions:
   contents: read
 
 jobs:
-  # One-shot, branch-restricted handoff of the exact audited Cargo.lock
-  # from run 42295928577. Does not execute any project source code.
-  import-reviewed-lockfile:
-    name: Commit verified Cargo.lock candidate
-    if: ${{ github.event_name == 'pull_request' && github.head_ref == 'chore/desktop-cargo-lock-provenance' && github.event.pull_request.head.repo.full_name == github.repository }}
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          ref: ${{ github.head_ref }}
-          persist-credentials: true
-      - name: Import exact SHA256-pinned candidate from completed workflow
-        shell: bash
-        env:
-          GH_TOKEN: ${{ github.token }}
-        run: |
-          set -euo pipefail
-          if test -f apps/desktop/src-tauri/Cargo.lock; then
-            echo "Lockfile already present: no automated commit."
-            exit 0
-          fi
-          curl --fail --location --silent --show-error \
-            --header "Authorization: Bearer $GH_TOKEN" \
-            --header "Accept: application/vnd.github+json" \
-            "https://api.github.com/repos/MGhemri/tempora-framework/actions/artifacts/13541602602/zip" \
-            --output "$RUNNER_TEMP/cargo-lock-artifact.zip"
-          unzip -p "$RUNNER_TEMP/cargo-lock-artifact.zip" Cargo.lock > apps/desktop/src-tauri/Cargo.lock
-          echo "14200f525820cd8b8303938af6ee77426fae64a4d78df8d0472f59b302e726f9  apps/desktop/src-tauri/Cargo.lock" | sha256sum --check
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add apps/desktop/src-tauri/Cargo.lock
-          git commit -m "build(desktop): commit audited Cargo.lock from GitHub runner"
-          git push origin HEAD:refs/heads/chore/desktop-cargo-lock-provenance
-
   frontend:
     name: Desktop TypeScript and Vite
     runs-on: ubuntu-latest
@@ -87,21 +51,10 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev patchelf
-      # Generate the authentic Cargo resolution on a real Rust runner.
-      # Until Cargo.lock is committed, this is a provenance artifact and NOT
-      # a guarantee of reproducibility across different workflow runs.
-      - name: Generate Cargo lockfile and print digest
+      - name: Check committed Cargo.lock provenance
         shell: bash
         run: |
-          cargo generate-lockfile --manifest-path src-tauri/Cargo.toml
-          sha256sum src-tauri/Cargo.lock
-      - name: Upload candidate Cargo.lock for review and commit
-        uses: actions/upload-artifact@v4
-        with:
-          name: TEMPORA-Desktop-Cargo-Lock-Candidate-NOT-VERSIONED
-          path: apps/desktop/src-tauri/Cargo.lock
-          if-no-files-found: error
-          retention-days: 30
+          echo "14200f525820cd8b8303938af6ee77426fae64a4d78df8d0472f59b302e726f9  src-tauri/Cargo.lock" | sha256sum --check
       - run: cargo test --locked --manifest-path src-tauri/Cargo.toml
 
   windows-installer:
@@ -128,8 +81,15 @@ jobs:
         run: npm run test:windows-engine
       - name: Stage pinned Node and scientific engine
         run: npm run stage:windows-engine
+      - name: Verify locked Cargo dependency metadata on Windows
+        run: cargo metadata --locked --manifest-path src-tauri/Cargo.toml --no-deps --format-version 1
       - name: Build native NSIS installer (unsigned CI artifact only)
         run: npm run build:windows
+      - name: Verify installer did not alter committed Cargo.lock
+        shell: pwsh
+        run: |
+          git diff --exit-code -- src-tauri/Cargo.lock
+          if ($LASTEXITCODE -ne 0) { throw "Cargo.lock was modified by the Windows installer build" }
       - name: Smoke-test installed NSIS package without system Node on PATH
         shell: pwsh
         run: |
