@@ -74,3 +74,16 @@ test('Evidence navigation displays bounded references declared by the corpus',()
  assert.match(ui,/paragraph\.textContent = label/);
  assert.match(html,/id="workbench-evidence-detail"/);
 });
+
+test('Declared contradictions are rendered only from explicit corpus references',()=>{
+ const rust=readFileSync(new URL('../src-tauri/src/engine_bridge.rs',import.meta.url),'utf8');
+ const ui=readFileSync(new URL('../src/main.ts',import.meta.url),'utf8');
+ const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+ assert.match(rust,/fn declared_contradictions\(/);
+ assert.match(rust,/claim\.get\("contradicts"\)/);
+ assert.match(rust,/preview\.len\(\) < 20/);
+ assert.match(rust,/fn only_explicit_contradictions_are_listed_and_unresolved_links_marked/);
+ assert.match(ui,/overview\.contradictions/);
+ assert.match(ui,/td\.textContent = value/);
+ assert.match(html,/id="workbench-contradictions"/);
+});
