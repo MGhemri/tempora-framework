@@ -153,3 +153,24 @@ are shown to the researcher rather than silently treated as success.
 No persistence, cryptographic signing, identity verification or automatic
 review is implemented in this tranche. The user must protect any copied
 private data and handle retention separately.
+
+## Rust dependency reproducibility — Cargo.lock handoff
+
+The application does not yet commit a Rust `Cargo.lock`. Until it does,
+Cargo may resolve different semver-compatible dependency versions in
+different workflow runs. This is **not** the same as a failure of the
+existing unit tests.
+
+The Desktop Foundation Linux Rust job now runs
+`cargo generate-lockfile --manifest-path src-tauri/Cargo.toml`,
+prints the SHA-256, uploads the *actual generated file* as
+`TEMPORA-Desktop-Cargo-Lock-Candidate-NOT-VERSIONED`, and uses
+`cargo test --locked --manifest-path src-tauri/Cargo.toml` so the test
+uses the exact generated resolution.
+
+**Next required release-hardening action:** review and commit the
+candidate as `apps/desktop/src-tauri/Cargo.lock`, then remove
+lockfile regeneration and enforce `--locked` for every Rust and Tauri
+Windows build. Do **not** interpret this candidate-artifact step alone
+as cross-run or cross-platform build reproducibility. The lockfile does
+not independently guarantee bit-for-bit reproducible installers.
