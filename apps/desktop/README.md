@@ -39,9 +39,9 @@ To run the native Rust tests:
 cargo test --manifest-path src-tauri/Cargo.toml
 ```
 
-This **0.1.0 foundation is not a packaged installer yet**: `bundle.active` is deliberately set to `false` pending application icons, signing, reproducible dependency locks, and tested Windows/Linux/macOS bundling. Don't distribute unsigned executables as official releases.
+The default Tauri configuration keeps `bundle.active=false`. **Windows x64 CI** now has a dedicated release-bundle configuration and attempts an **unsigned NSIS installer** with bundled Node.js and TEMPORA Engine. Any resulting GitHub Actions artifact is **experimental**, **not code-signed** and **not an official release**. Complete reproducibility and OS-level installation tests remain release gates.
 
-La version 0.1.0 se lance en mode développement. Les installateurs natifs, les signatures et la chaîne de publication seront traités après validation du cœur Tauri.
+La phase 1C prépare un installeur NSIS Windows x64 expérimental en CI et embarque Node.js ; un artefact non signé ne constitue pas une distribution officielle. Linux/macOS et la signature restent à qualifier.
 
 ## Architecture
 
@@ -69,3 +69,9 @@ Click **Valider un corpus TEMPORA** in Documents, choose a JSON corpus through t
 ## Next steps
 
 See [`docs/reference/DESKTOP_ARCHITECTURE.md`](../../docs/reference/DESKTOP_ARCHITECTURE.md) for the integration plan and TensorFlow-ready inference contracts.
+
+## Phase 1C — Windows standalone experiment
+
+On Windows x64 with Rust and Node.js 22.16.0, run `npm install`, `npm run test:bridge`, `npm run stage:windows-engine` and `npm run tauri -- build --config src-tauri/tauri.windows.conf.json`. The staging script copies the fixed Node.js executable and installs `tempora-framework@3.0.0` alongside `bridge/worker.cjs`. The Rust release code locates them under the Tauri **resource directory** and never falls back to system Node. The default development build still uses installed Node.
+
+**Security and reproducibility limits:** The CI installer is unsigned and not released publicly. Runtime SHA-256 manifest is captured at staging, but dependency lockfile/signed provenance, clean-VM no-Node end-to-end verification, and Windows antivirus/code-signing review are still required before any production release. The UI never accepts raw shell arguments or executable paths.
