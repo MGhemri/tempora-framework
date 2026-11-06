@@ -1,38 +1,49 @@
-# ALNOP — Un profil du framework TEMPORA
+# ALNOP — Profil de compatibilité de TEMPORA
 
-ALNOP documente les opérations du FLN/ALN durant la guerre d’indépendance algérienne (1954–1962). Il constitue un profil du framework TEMPORA, avec un corpus de 263 notices, ses sources, ses règles historiques et une application de consultation en français et en arabe.
+**ALNOP est un banc d'essai facultatif ; il n'est ni le moteur, ni une dépendance d'exécution du framework TEMPORA.**
 
-## Consulter le profil ALNOP
+Le corpus ALNOP étudie les opérations FLN/ALN de la guerre d'indépendance algérienne (1954–1962).
+Ses 263 notices, son atlas, ses archives et les API historiques v1/v2 appartiennent au
+[dépôt ALNOP](https://github.com/MGhemri/aln-historical-operations-dataset) et à
+[l'application historique](https://alnop.vercel.app/).
 
-L’[application ALNOP sur Vercel](https://alnop.vercel.app/) donne accès à la carte, aux recherches, aux fiches, aux personnes, organisations et lieux, aux comparaisons et à l’observatoire documentaire. L’affichage s’adapte aux mobiles et à l’arabe de droite à gauche. Les propositions passent par le formulaire de contribution et une revue avant toute publication.
+## Ce qui reste dans TEMPORA
 
-Le portail GitHub Pages présente le framework TEMPORA et donne accès à l’atlas ALNOP depuis sa navigation.
+Le dossier [`compatibility/alnop/`](compatibility/alnop/README.md) fournit :
+- le manifeste de profil, les mappings et les adaptateurs de migration ;
+- une fixture minimale, les schémas historiques utiles et les empreintes de contrôle ;
+- la référence Git épinglée [`pin.json`](compatibility/alnop/pin.json) ;
+- une suite minimale sans réseau et une suite complète facultative contre le dépôt ALNOP externe.
 
-## Ce qui appartient au profil
+Le moteur `src/framework/`, l'API v3, le SDK, la CLI et les publications TEMPORA fonctionnent
+sans ce profil et sans ses données. Les anciennes copies du corpus et les anciennes API ne
+sont plus présentes dans ce dépôt.
 
-Le manifeste `profiles/alnop/profile.json` définit notamment la fenêtre de validation 1954–1962 et les langues du profil. Les vocabulaires proviennent des données canoniques. L’adaptateur `src/profiles/alnop.js` présente les champs utiles au validateur TEMPORA sans modifier les notices d’origine.
+## Vérifier la compatibilité
 
-Les Wilayas, les types d’opérations, les conventions d’identification et les exigences documentaires ALNOP ne sont pas des règles universelles du framework. Un autre profil définit son propre contexte ; il ne reprend pas automatiquement le contenu ALNOP.
+```sh
+npm ci
+npm run test:compat:alnop:minimal
+```
 
-## Méthode et données
+Pour exécuter le contrôle complet sur une copie **propre** du dépôt ALNOP, placer cette copie
+à la révision précise de `compatibility/alnop/pin.json`, puis lancer :
 
-Une notice peut couvrir plusieurs épisodes. Les coordonnées sont des repères documentés, sans prétention à une précision tactique artificielle. Les incertitudes, variantes et contradictions doivent rester explicites ; un contrôle technique réussi ne prouve pas la vérité historique.
+```sh
+npm run test:compat:alnop:full -- --alnop-dir ../alnop-reference
+```
 
-- [Méthodologie historique et cartographique](./METHODOLOGIE.md)
-- [Dictionnaire des données](./DATA_DICTIONARY.md)
-- [Assertions, sources et contradictions](./PROVENANCE_POLICY.md)
-- [Référentiels et revue](./ENTITY_REVIEW_GUIDE.md)
-- [Contributions et revue éditoriale](./CONTRIBUTING.md)
-- [Préparer un lot de propositions en local](./INGESTION.md)
+Le test complet vérifie les 263 notices, la migration aller-retour, l'ingestion,
+les fichiers et archives archivés et les contrats API historiques. Aucune référence
+n'est régénérée automatiquement après un échec.
 
-Les exports historiques JSON et GeoJSON, les identifiants permanents et les routes existantes restent disponibles. Les [API v1](./API.md) et [v2](./API_V2.md) interrogent le corpus ALNOP ; elles ne sont pas des API génériques multi-profils TEMPORA.
+## Documentation scientifique du corpus
 
-### Citation académique recommandée
+Les méthodes historiques, droits et citations propres à ALNOP sont publiés et maintenus
+dans le [dépôt historique](https://github.com/MGhemri/aln-historical-operations-dataset).
+Pour les méthodes **génériques** de TEMPORA, voir [le modèle canonique](CANONICAL_MODEL.md),
+[l'ingestion](INGESTION.md), [les analyses](ANALYSIS.md) et
+[la documentation du framework](FRAMEWORK.md).
 
-Citer la version du corpus réellement utilisée et ses conditions de réutilisation selon la [politique des versions et de citation](./RELEASE_POLICY.md). Contact : contact@connect-gm.com.
-
-## Compatibilité locale avec TEMPORA
-
-`npm run test:compat:alnop` exécute séparément la migration aller-retour, les imports historiques et les comparaisons de référence. L’empreinte complète est épinglée au commit ALNOP `2428a693393a4a635d5eeac3e3c8542498b8b9d6`. Le test réduit `node --test tests/alnop-minimal-compatibility.test.js` utilise une seule notice avec ses sources et des métadonnées ajustées à la taille du sous-ensemble. Il n’accède ni au corpus complet ni au réseau. Les droits du corpus d’origine s’appliquent à cet extrait.
-
-Le paquet TEMPORA et son parcours synthétique ne contiennent aucune donnée ni aucun service ALNOP. Les copies historiques de ce dépôt restent disponibles pendant la transition et leur retrait sera décidé séparément après vérification de tous les usages.
+Un test de compatibilité réussi garantit un contrat logiciel de référence, non
+l'exhaustivité ni la véracité historique de chaque notice.
