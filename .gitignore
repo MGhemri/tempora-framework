@@ -34,3 +34,6 @@ apps/desktop/src-tauri/target/
 
 # TEMPORA Windows engine is built only on CI from a verified Node runtime.
 apps/desktop/src-tauri/resources/engine/
+
+# Locally staged proprietary Microsoft WebView2 Fixed Version runtime.
+apps/desktop/src-tauri/resources/webview2-fixed/
