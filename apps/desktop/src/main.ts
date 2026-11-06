@@ -5,7 +5,7 @@ type View = "overview" | "documents" | "research" | "models";
 type Language = "fr" | "en";
 type PreviewRow = { id: string; title: string; kind: string };
 type EngineDiagnostic = { code?: string; message?: string; path?: string; id?: string };
-type EvidenceRow = { id: string; title: string; status: string; evidenceCount: number };
+type EvidenceRow = { id: string; title: string; status: string; evidenceCount: number; sourceRefs: string[]; subjectRef: string | null };
 type ResearchOverview = { eventCount: number; sourceCount: number; claimCount: number; unsupportedClaimCount: number; events: EvidenceRow[]; sources: EvidenceRow[]; claims: EvidenceRow[] };
 type CanonicalResult = {
   overview: ResearchOverview;
@@ -52,6 +52,7 @@ const text = {
     validCanonical: "Conforme au schéma", invalidCanonical: "Non conforme au schéma",
     enginePending: "Validation par le moteur en cours…", engineUnavailable: "Moteur indisponible",
     workbenchTitle: "Atelier scientifique · dossier en lecture seule", workbenchIntro: "Aperçu structurel des preuves déclarées, sans certification historique.", workbenchEmpty: "Validez d’abord un corpus dans Documents pour charger cet atelier.", workbenchEvidence: "Pièces de preuve déclarées", workbenchNoEvidence: "Assertions sans preuve déclarée", workbenchEvents: "Événements", workbenchSources: "Sources", workbenchClaims: "Assertions", workbenchStatus: "Statut éditorial", workbenchLimited: "Aperçu limité à 20 lignes par collection. Les totaux reflètent le fichier sélectionné.",
+    evidenceLinks: "Références déclarées", evidenceSelect: "Sélectionnez une ligne pour examiner ses références.", evidenceSubject: "Sujet", evidenceSources: "Sources citées", evidenceMissing: "Référence absente de l’aperçu", evidenceNone: "Aucune référence déclarée",
     diagnostics: "diagnostics", sourceReviewNotice: "La conformité au schéma ne prouve pas la véracité des événements.",
   },
   en: {
@@ -82,6 +83,7 @@ const text = {
     validCanonical: "Schema valid", invalidCanonical: "Schema invalid",
     enginePending: "Engine validation running…", engineUnavailable: "Engine unavailable",
     workbenchTitle: "Scientific workbench · read-only dossier", workbenchIntro: "Structural overview of declared evidence, not historical certification.", workbenchEmpty: "First validate a corpus under Documents to load the workbench.", workbenchEvidence: "Declared evidence items", workbenchNoEvidence: "Claims without declared evidence", workbenchEvents: "Events", workbenchSources: "Sources", workbenchClaims: "Claims", workbenchStatus: "Editorial status", workbenchLimited: "Preview capped at 20 rows per collection. Counts reflect the selected file.",
+    evidenceLinks: "Declared references", evidenceSelect: "Select a row to inspect declared references.", evidenceSubject: "Subject", evidenceSources: "Cited sources", evidenceMissing: "Reference outside preview", evidenceNone: "No declared reference",
     diagnostics: "diagnostics", sourceReviewNotice: "Schema validation does not establish historical truth.",
   },
 } as const;
@@ -178,11 +180,30 @@ function renderValidation(): void {
   }
 }
 
+function showEvidenceLinks(kind: string, row: EvidenceRow): void {
+  const panel = byId("workbench-evidence-detail");
+  panel.replaceChildren();
+  const heading = document.createElement("h3");
+  heading.textContent = kind + " · " + row.id;
+  panel.append(heading);
+  const overview = selectedValidation?.overview;
+  const line = (label: string, ids: string[], rows: EvidenceRow[]) => {
+    const paragraph = document.createElement("p");
+    const known = new Map(rows.map(item => [item.id, item]));
+    paragraph.textContent = label + ": " + (ids.length
+      ? ids.map(id => known.has(id) ? id + " — " + known.get(id)!.title : id + " (" + text[language].evidenceMissing + ")").join("; ")
+      : text[language].evidenceNone);
+    panel.append(paragraph);
+  };
+  line(text[language].evidenceSubject, row.subjectRef ? [row.subjectRef] : [], overview?.events ?? []);
+  line(text[language].evidenceSources, row.sourceRefs, overview?.sources ?? []);
+}
 function renderWorkbench(): void {
   const result = selectedValidation;
   const panel = byId("workbench-panel");
   panel.classList.toggle("hidden", !result);
   byId("workbench-empty").classList.toggle("hidden", Boolean(result));
+  if (!result) byId("workbench-evidence-detail").replaceChildren();
   if (!result) return;
   const overview = result.overview;
   fill("workbench-file", result.fileName + " · TEMPORA " + result.engineVersion);
@@ -203,6 +224,14 @@ function renderWorkbench(): void {
     target.replaceChildren();
     for (const row of rows) {
       const tr = document.createElement("tr");
+      tr.tabIndex = 0;
+      tr.setAttribute("role", "button");
+      tr.setAttribute("aria-label", row.id);
+      const activate = () => showEvidenceLinks(targetId, row);
+      tr.addEventListener("click", activate);
+      tr.addEventListener("keydown", event => {
+        if (event.key === "Enter" || event.key === " ") { event.preventDefault(); activate(); }
+      });
       for (const value of [row.id, row.title, row.status, String(row.evidenceCount)]) {
         const td = document.createElement("td");
         td.textContent = value;
