@@ -93,3 +93,17 @@ After validating a selected canonical JSON corpus in Documents, open **Analyses*
 The canonical validation and SHA-256 digest are still performed only by the pinned TEMPORA Engine 3.0.0. Rust produces a **structural inventory**, never a scholarly assessment of the truth or quality of evidence. No input files are changed, no index is persisted, and the WebView receives only bounded, text-rendered records. A corpus invalid under canonical v3 may still be inspected, but its validation badge remains explicit.
 
 The window remains a single-document, ephemeral workbench: no source editing, review decisions, evidence scoring, ingestion or TensorFlow execution in this tranche.
+
+## Scientific workbench — Phase 1B (reference navigation)
+
+In **Analyses**, select an event, claim or source row using mouse,
+Enter or Space. The evidence panel shows the record's declared subject
+and source references. Identifiers resolve to titles only if the
+referenced event or source is within the bounded, first-20-row preview;
+otherwise the UI states that the reference is outside this preview.
+No hyperlink is invented and no external URL is opened.
+
+All reference values are extracted from `subject.id` and
+`provenance.evidence[].source.id` by Rust, capped at 20 references per
+record. The view is ephemeral, read-only, and does not imply the
+referenced material supports the historical assertion.
