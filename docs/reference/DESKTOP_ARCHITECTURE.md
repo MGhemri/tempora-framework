@@ -113,3 +113,17 @@ Never let an ML score overwrite a sourced historical claim, assign exact coordin
 - Fail closed on unsupported schema/model versions. Never block researchers from exporting unmodified source files.
 
 **Statut actuel :** le bureau est un véritable projet Tauri, mais **pas encore un outil d'édition canonique ni un moteur TensorFlow**. Ces fonctionnalités exigent les phases décrites ci-dessus.
+
+## Phase 1A — Evidence workbench / Atelier scientifique
+
+The first scientific-workbench tranche keeps the existing native file-picker
+and TEMPORA Engine validation workflow. On successful engine invocation, Rust
+returns a **bounded structural evidence inventory** alongside the engine's
+canonical decision and digest. `Analyses` displays counts, editorial statuses,
+and up to 20 evidence summaries for each of events, sources and claims.
+
+`unsupportedClaimCount` means only **zero declared
+`provenance.evidence` entries**; it does not assert that a claim lacks real
+historical support. The GUI renders user strings using `textContent`,
+without HTML injection. No indexing, writes, source ranking, historical
+verification, review action, inference or TensorFlow training is performed.
