@@ -82,18 +82,18 @@ try {
     }
 
     # Every installed dependency must correspond to the bundled lockfile inventory.
-    $locked = Get-Content -LiteralPath $lockFile -Raw | ConvertFrom-Json
+    $locked = Get-Content -LiteralPath $lockFile -Raw | ConvertFrom-Json -AsHashtable
     $installedInventory = @($manifest.dependencies)
-    $lockedEntries = @($locked.packages.PSObject.Properties | Where-Object { $_.Name -like 'node_modules/*' })
+    $lockedEntries = @($locked['packages'].GetEnumerator() | Where-Object { $_.Key -like 'node_modules/*' })
     if ($installedInventory.Count -ne $lockedEntries.Count) { throw "RUNTIME_INVENTORY_COUNT_MISMATCH" }
     foreach ($entry in $lockedEntries) {
-      $depPath = Join-Path $runtimeDir ($entry.Name.Replace('/', [System.IO.Path]::DirectorySeparatorChar))
+      $depPath = Join-Path $runtimeDir ($entry.Key.Replace('/', [System.IO.Path]::DirectorySeparatorChar))
       $depManifest = Join-Path $depPath 'package.json'
-      if (-not (Test-Path -LiteralPath $depManifest -PathType Leaf)) { throw "INSTALLED_DEPENDENCY_MISSING: $($entry.Name)" }
+      if (-not (Test-Path -LiteralPath $depManifest -PathType Leaf)) { throw "INSTALLED_DEPENDENCY_MISSING: $($entry.Key)" }
       $dep = Get-Content -LiteralPath $depManifest -Raw | ConvertFrom-Json
-      if ($dep.version -ne $entry.Value.version) { throw "INSTALLED_DEPENDENCY_VERSION_MISMATCH: $($entry.Name)" }
+      if ($dep.version -ne $entry.Value['version']) { throw "INSTALLED_DEPENDENCY_VERSION_MISMATCH: $($entry.Key)" }
       $match = @($installedInventory | Where-Object { $_.name -eq $dep.name -and $_.version -eq $dep.version -and $_.license -eq $dep.license })
-      if ($match.Count -ne 1) { throw "INSTALLED_DEPENDENCY_INVENTORY_MISMATCH: $($entry.Name)" }
+      if ($match.Count -ne 1) { throw "INSTALLED_DEPENDENCY_INVENTORY_MISMATCH: $($entry.Key)" }
     }
     $smoke = @(
       @{ protocol_version="1.0.0"; request_id="installed_health"; operation="health"; payload=@{} },
