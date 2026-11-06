@@ -16,7 +16,11 @@ New-Item -ItemType Directory -Path $staging -Force | Out-Null
 try {
   & expand.exe '-F:*' $source $staging | Out-Null
   if ($LASTEXITCODE -ne 0) { throw 'WEBVIEW_CAB_EXPANSION_FAILED' }
+  if (-not (Get-ChildItem -LiteralPath $staging -File -Recurse -ErrorAction SilentlyContinue | Select-Object -First 1)) {
+    throw 'WEBVIEW_CAB_EXPANSION_FAILED'
+  }
   $binaries = @(Get-ChildItem -LiteralPath $staging -Recurse -File -Filter msedgewebview2.exe)
+  if ($binaries.Count -eq 0) { throw 'WEBVIEW_CAB_EXPANSION_FAILED' }
   if ($binaries.Count -ne 1) { throw 'WEBVIEW_FIXED_RUNTIME_EXECUTABLE_NOT_UNIQUE' }
   $root = $binaries[0].Directory.FullName
   Copy-Item -Path (Join-Path $root '*') -Destination $target -Recurse -Force
