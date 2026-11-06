@@ -6,7 +6,7 @@
   "scripts": {
     "test": "npm run test:core && npm run test:package && npm run check:site",
     "test:framework": "npm run test:core",
-    "test:core": "node --test tests/framework-canonical.test.js tests/framework-profiles.test.js tests/framework-contracts.test.js tests/framework-ingestion.test.js tests/framework-analysis.test.js tests/framework-editorial-review.test.js tests/framework-publication.test.js tests/framework-published-api.test.js tests/architecture/framework-isolation.test.js tests/publication-files.test.js",
+    "test:core": "node --test tests/framework-canonical.test.js tests/framework-profiles.test.js tests/framework-contracts.test.js tests/framework-ingestion.test.js tests/framework-analysis.test.js tests/framework-editorial-review.test.js tests/framework-publication.test.js tests/framework-published-api.test.js tests/architecture/framework-isolation.test.js tests/architecture/repository-hygiene.test.js tests/publication-files.test.js",
     "test:browser": "playwright test",
     "check:publication-files": "node scripts/check-publication-files.js",
     "validate:profiles": "node scripts/validate-profiles.js",
