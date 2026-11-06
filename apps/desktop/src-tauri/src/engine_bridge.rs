@@ -1,5 +1,5 @@
-// TEMPORA Desktop: development-only, fixed worker invocation.
-// A production build fails closed until the Node runtime and dependencies are bundled.
+// TEMPORA Desktop: fixed Node worker invocation, bundled for Windows release.
+// This module never accepts executable paths or commands from the WebView.
 use serde::Serialize;
 use serde_json::{json, Value};
 use std::fs;
@@ -8,6 +8,7 @@ use std::path::Path;
 use std::process::{Command, Stdio};
 use std::thread;
 use std::time::Duration;
+use tauri::Manager;
 use wait_timeout::ChildExt;
 
 const MAX_DOCUMENT: u64 = 3 * 1024 * 1024;
@@ -73,16 +74,38 @@ fn parse_response(stdout: &[u8], expected_id: &str) -> Result<Value, String> {
     response.get("result").cloned().ok_or_else(|| "PROTOCOL_MISSING_RESULT".into())
 }
 
-#[cfg(debug_assertions)]
-fn invoke_worker(request: &[u8], id: &str) -> Result<Value, String> {
-    let desktop = Path::new(env!("CARGO_MANIFEST_DIR")).parent().ok_or("BRIDGE_PATH")?;
-    let worker = desktop.join("bridge").join("worker.cjs");
-    if !worker.is_file() { return Err("ENGINE_WORKER_MISSING".into()); }
+fn engine_runtime(app: &tauri::AppHandle) -> Result<(std::path::PathBuf, std::path::PathBuf, std::path::PathBuf), String> {
+    if cfg!(debug_assertions) {
+        let desktop = Path::new(env!("CARGO_MANIFEST_DIR")).parent().ok_or("BRIDGE_PATH")?;
+        let worker = desktop.join("bridge").join("worker.cjs");
+        if !worker.is_file() { return Err("ENGINE_WORKER_MISSING".into()); }
+        return Ok((std::path::PathBuf::from("node"), worker, desktop.to_path_buf()));
+    }
+    #[cfg(target_os = "windows")]
+    {
+        let resource = app.path().resource_dir().map_err(|_| "ENGINE_RESOURCE_UNAVAILABLE")?;
+        let runtime = resource.join("engine");
+        let node = runtime.join("node.exe");
+        let worker = runtime.join("worker.cjs");
+        let package = runtime.join("node_modules").join("tempora-framework").join("package.json");
+        if !node.is_file() || !worker.is_file() || !package.is_file() {
+            return Err("ENGINE_RUNTIME_NOT_BUNDLED".into());
+        }
+        return Ok((node, worker, runtime));
+    }
+    #[cfg(not(target_os = "windows"))]
+    {
+        let _ = app;
+        Err("ENGINE_RUNTIME_NOT_BUNDLED".into())
+    }
+}
 
-    // Fixed executable and script; the WebView cannot choose executable, arguments or paths.
-    let mut child = Command::new("node")
+fn invoke_worker(request: &[u8], id: &str, app: &tauri::AppHandle) -> Result<Value, String> {
+    let (node, worker, runtime) = engine_runtime(app)?;
+    // Fixed executable and worker script: UI controls neither executable nor arguments.
+    let mut child = Command::new(&node)
         .arg(&worker)
-        .current_dir(desktop)
+        .current_dir(&runtime)
         .env_remove("NODE_OPTIONS")
         .env_remove("NODE_PATH")
         .stdin(Stdio::piped())
@@ -120,23 +143,17 @@ fn invoke_worker(request: &[u8], id: &str) -> Result<Value, String> {
     parse_response(&output, id)
 }
 
-#[cfg(not(debug_assertions))]
-fn invoke_worker(_request: &[u8], _id: &str) -> Result<Value, String> {
-    // Do not silently use the user's Node installation in a production executable.
-    Err("ENGINE_RUNTIME_NOT_BUNDLED".into())
-}
-
-pub fn validate_selected_corpus(path: &Path) -> Result<CanonicalValidation, String> {
+pub fn validate_selected_corpus(path: &Path, app: &tauri::AppHandle) -> Result<CanonicalValidation, String> {
     let (file_name, corpus) = document_payload(path)?;
-    let health = invoke_worker(&message("health_01", "health", json!({}))?, "health_01")?;
+    let health = invoke_worker(&message("health_01", "health", json!({}))?, "health_01", app)?;
     let version = health.get("engine_version").and_then(Value::as_str).ok_or("ENGINE_NO_VERSION")?;
     if version != "3.0.0" { return Err("ENGINE_VERSION_MISMATCH".into()); }
 
     let validation = invoke_worker(
-        &message("validation_01", "corpus.validate", json!({"corpus": &corpus}))?, "validation_01"
+        &message("validation_01", "corpus.validate", json!({"corpus": &corpus}))?, "validation_01", app
     )?;
     let digest = invoke_worker(
-        &message("digest_01", "corpus.digest", json!({"corpus": &corpus}))?, "digest_01"
+        &message("digest_01", "corpus.digest", json!({"corpus": &corpus}))?, "digest_01", app
     )?;
     let valid = validation.get("valid").and_then(Value::as_bool).ok_or("ENGINE_INVALID_RESULT")?;
     let errors = validation.get("errors").and_then(Value::as_array).cloned().ok_or("ENGINE_NO_DIAGNOSTICS")?;

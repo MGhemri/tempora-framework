@@ -31,3 +31,6 @@ private-reports/
 # TEMPORA Desktop local build outputs
 apps/desktop/dist/
 apps/desktop/src-tauri/target/
+
+# TEMPORA Windows engine is built only on CI from a verified Node runtime.
+apps/desktop/src-tauri/resources/engine/

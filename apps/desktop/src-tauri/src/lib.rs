@@ -147,7 +147,7 @@ async fn validate_corpus_native(app: tauri::AppHandle) -> Result<Option<engine_b
         match selected {
             Some(file) => {
                 let path = file.into_path().map_err(|_| "LOCAL_FILE_ONLY".to_owned())?;
-                engine_bridge::validate_selected_corpus(&path).map(Some)
+                engine_bridge::validate_selected_corpus(&path, &app).map(Some)
             }
             None => Ok(None),
         }

@@ -5,6 +5,7 @@ on:
     paths:
       - "apps/desktop/**"
       - "docs/reference/DESKTOP_ARCHITECTURE.md"
+      - "docs/reference/ENGINE_BRIDGE.md"
       - ".github/workflows/desktop-foundation.yml"
   push:
     branches: [main]
@@ -32,6 +33,7 @@ jobs:
       - run: npm install --ignore-scripts --no-audit --no-fund
       - run: npm run build
       - run: npm run test:bridge
+      - run: npm run test:windows-engine
 
   rust:
     name: Desktop Rust native tests
@@ -50,3 +52,46 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev patchelf
       - run: cargo test --manifest-path src-tauri/Cargo.toml
+
+  windows-installer:
+    name: Desktop Windows x64 standalone NSIS
+    runs-on: windows-latest
+    timeout-minutes: 35
+    defaults:
+      run:
+        working-directory: apps/desktop
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: apps/desktop/src-tauri
+      - name: Install Desktop dependencies
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Verify bridge
+        run: npm run test:bridge
+      - name: Verify packager contracts
+        run: npm run test:windows-engine
+      - name: Stage pinned Node and scientific engine
+        run: npm run stage:windows-engine
+      - name: Build native NSIS installer (unsigned CI artifact only)
+        run: npm run tauri -- build --config src-tauri/tauri.windows.conf.json
+      - name: Check NSIS artifact and embedded engine
+        shell: pwsh
+        run: |
+          $binary = Get-ChildItem "src-tauri/target/release/bundle/nsis" -Filter "*setup.exe" -ErrorAction Stop | Select-Object -First 1
+          if (-not $binary) { throw "NSIS installer not created" }
+          $node = "src-tauri/resources/engine/node.exe"
+          $worker = "src-tauri/resources/engine/worker.cjs"
+          if (-not (Test-Path $node) -or -not (Test-Path $worker)) { throw "Embedded runtime resources absent" }
+          Get-FileHash $binary.FullName -Algorithm SHA256 | Format-List
+          Get-FileHash $node -Algorithm SHA256 | Format-List
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TEMPORA-Desktop-Windows-x64-UNSIGNED-NOT-A-RELEASE
+          path: apps/desktop/src-tauri/target/release/bundle/nsis/*setup.exe
+          if-no-files-found: error
+          retention-days: 7
