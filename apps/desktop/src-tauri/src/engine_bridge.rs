@@ -53,6 +53,20 @@ pub struct DeclaredContradiction {
 
 #[derive(Debug, Serialize)]
 #[serde(rename_all = "camelCase")]
+pub struct ReviewRow {
+    pub id: String,
+    pub subject_id: String,
+    pub agent_type: String,
+    pub agent: String,
+    pub method: String,
+    pub decision: String,
+    pub reason: String,
+    pub reviewed_at: String,
+    pub content_sha256: String,
+}
+
+#[derive(Debug, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct ResearchOverview {
     pub event_count: usize,
     pub source_count: usize,
@@ -60,6 +74,9 @@ pub struct ResearchOverview {
     pub unsupported_claim_count: usize,
     pub contradiction_count: usize,
     pub contradictions: Vec<DeclaredContradiction>,
+    pub review_count: usize,
+    pub human_review_count: usize,
+    pub reviews: Vec<ReviewRow>,
     pub events: Vec<EvidenceRow>,
     pub sources: Vec<EvidenceRow>,
     pub claims: Vec<EvidenceRow>,
@@ -125,6 +142,29 @@ fn declared_contradictions(corpus: &Value) -> (usize, Vec<DeclaredContradiction>
     (total, preview)
 }
 
+// A review authored by a human must be explicitly labelled agent_type=human.
+// This view never infers decisions from claim status or automated assessments.
+fn declared_reviews(corpus: &Value) -> (usize, usize, Vec<ReviewRow>) {
+    let reviews = corpus.get("reviews").and_then(Value::as_array);
+    let total = reviews.map_or(0, Vec::len);
+    let humans = reviews.map_or(0, |items| items.iter().filter(|item| {
+        item.get("agent_type").and_then(Value::as_str) == Some("human")
+    }).count());
+    let preview = reviews.into_iter().flat_map(|items| items.iter().take(20))
+        .map(|item| ReviewRow {
+            id: safe_label(item.get("id").and_then(Value::as_str)),
+            subject_id: safe_label(item.pointer("/subject/id").and_then(Value::as_str)),
+            agent_type: safe_label(item.get("agent_type").and_then(Value::as_str)),
+            agent: safe_label(item.get("agent").and_then(Value::as_str)),
+            method: safe_label(item.get("method").and_then(Value::as_str)),
+            decision: safe_label(item.get("decision").and_then(Value::as_str)),
+            reason: safe_label(item.get("reason").and_then(Value::as_str)),
+            reviewed_at: safe_label(item.get("reviewed_at").and_then(Value::as_str)),
+            content_sha256: safe_label(item.get("content_sha256").and_then(Value::as_str)),
+        }).collect();
+    (total, humans, preview)
+}
+
 fn research_overview(corpus: &Value) -> ResearchOverview {
     let count = |key: &str| corpus.get(key).and_then(Value::as_array).map_or(0, Vec::len);
     let unsupported_claim_count = corpus.get("claims").and_then(Value::as_array)
@@ -132,9 +172,13 @@ fn research_overview(corpus: &Value) -> ResearchOverview {
             claim.pointer("/provenance/evidence").and_then(Value::as_array).map_or(true, Vec::is_empty)
         }).count());
     let (contradiction_count, contradictions) = declared_contradictions(corpus);
+    let (review_count, human_review_count, reviews) = declared_reviews(corpus);
     ResearchOverview {
         contradiction_count,
         contradictions,
+        review_count,
+        human_review_count,
+        reviews,
         event_count: count("events"),
         source_count: count("sources"),
         claim_count: count("claims"),
@@ -319,6 +363,29 @@ mod tests {
         assert_eq!(overview.events[0].title, "Événement fictif");
         assert_eq!(overview.claims[0].status, "unverified");
         assert!(overview.claims[0].source_refs.is_empty());
+    }
+    #[test]
+    fn human_review_dossier_never_promotes_automatic_agents_to_human() {
+        let corpus = json!({"reviews":[
+          {"id":"REV_1","subject":{"id":"CL_1"},"agent_type":"human",
+            "agent":"Reviewer A","method":"archive cross-check","decision":"needs_review",
+            "reason":"Conflicting dates","reviewed_at":"2026-01-01T00:00:00Z",
+            "content_sha256":"abcd"},
+          {"id":"REV_2","subject":{"id":"CL_1"},"agent_type":"automatic",
+            "decision":"proposed"}
+        ]});
+        let (total, humans, reviews) = declared_reviews(&corpus);
+        assert_eq!(total, 2);
+        assert_eq!(humans, 1);
+        assert_eq!(reviews[0].subject_id, "CL_1");
+        assert_eq!(reviews[0].agent_type, "human");
+        assert_eq!(reviews[1].agent_type, "automatic");
+    }
+    #[test]
+    fn review_preview_is_bounded_to_twenty_without_losing_counts() {
+        let reviews = (0..40).map(|n| json!({"id":format!("R{n}"),"agent_type":"human"})).collect::<Vec<_>>();
+        let (total, humans, preview) = declared_reviews(&json!({"reviews":reviews}));
+        assert_eq!((total, humans, preview.len()), (40, 40, 20));
     }
     #[test]
     fn only_explicit_contradictions_are_listed_and_unresolved_links_marked() {
