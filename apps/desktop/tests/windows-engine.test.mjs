@@ -102,5 +102,5 @@ test('Two-stage setup verifies Microsoft WebView2 registration before starting T
  assert.match(src,/Get-AuthenticodeSignature/);
  assert.match(cmd,/Install-TEMPORA\.ps1/);
  assert.match(ci,/TEMPORA-Desktop-Windows-TwoStage-SETUP-WEBVIEW2-REQUIRED/);
- assert.match(ci,/Install-TEMPORA\.ps1.*-CheckOnly/);
+ assert.match(ci,/Install-TEMPORA\.ps1[\s\S]*?-CheckOnly/);
 });
