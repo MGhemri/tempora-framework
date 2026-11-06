@@ -164,10 +164,14 @@ audit logs, evidence verification and deliberate export safeguards.
 
 ## Cargo.lock reproducibility gate
 
-Cargo emits a fresh dependency resolution when no versioned lockfile
-exists. The CI Rust job now creates a genuine `Cargo.lock` candidate
-and retains it as an Actions artifact with SHA-256, then tests that
-resolution with `--locked`. This is a staged handoff, **not** cross-run
-reproducibility: the exact reviewed candidate must be committed and
-Windows builds must use the same lockfile before claiming dependency
-reproducibility. Never hand-author a fake `Cargo.lock`.
+The Desktop Cargo dependency graph is now locked by the genuine
+`apps/desktop/src-tauri/Cargo.lock`, imported from the verified
+GitHub Actions artifact (SHA-256
+`14200f525820cd8b8303938af6ee77426fae64a4d78df8d0472f59b302e726f9`).
+Linux CI runs `cargo test --locked` without re-generating the lockfile.
+Windows CI checks locked metadata, sends `--locked` to the Cargo runner
+via Tauri CLI, and rejects build-induced edits to the lockfile.
+
+This establishes dependency-resolution consistency across checked-out
+commits and platforms, not full bit-for-bit binary reproducibility.
+Future Rust updates must include a reviewed Cargo-generated lockfile diff.
