@@ -161,3 +161,13 @@ publication capabilities. Drafts are never inserted into `reviews[]`.
 Future persistent review workflows need a separate threat model for
 identity, privacy, cross-namespace IDs, immutable snapshots, signatures,
 audit logs, evidence verification and deliberate export safeguards.
+
+## Cargo.lock reproducibility gate
+
+Cargo emits a fresh dependency resolution when no versioned lockfile
+exists. The CI Rust job now creates a genuine `Cargo.lock` candidate
+and retains it as an Actions artifact with SHA-256, then tests that
+resolution with `--locked`. This is a staged handoff, **not** cross-run
+reproducibility: the exact reviewed candidate must be committed and
+Windows builds must use the same lockfile before claiming dependency
+reproducibility. Never hand-author a fake `Cargo.lock`.
