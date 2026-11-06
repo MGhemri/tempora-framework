@@ -1,0 +1,23 @@
+{
+  "profile_schema_version":"1.0.0",
+  "version":"1.0.0",
+  "id":"alnop",
+  "display_name":"ALNOP",
+  "namespace":"ALNOP",
+  "framework":">=3.0.0 <4.0.0",
+  "default_locale":"fr",
+  "locales":["fr","ar"],
+  "time":{"calendar":"gregorian","coverage":{"earliest":"1954-01-01","latest":"1962-12-31"}},
+  "spatial":{"crs":"EPSG:4326"},
+  "taxonomies":["event_types","territorial_units"],
+  "aliases":[],
+  "parameters":{"coverage":{"from_year":1954,"to_year":1962}},
+  "rules":[
+    {"id":"event-id","type":"required","field":"id","severity":"error"},
+    {"id":"start-window","type":"date_range","field":"start_date","severity":"error"},
+    {"id":"end-window","type":"date_range","field":"end_date","severity":"error"},
+    {"id":"event-type","type":"vocabulary","field":"event_type","taxonomy":"event_types","severity":"error"},
+    {"id":"territory","type":"vocabulary","field":"territory_ids","taxonomy":"territorial_units","severity":"error"}
+  ],
+  "exports":["json","geojson","csv"]
+}

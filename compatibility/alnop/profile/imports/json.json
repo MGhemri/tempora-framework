@@ -1,0 +1,30 @@
+{
+  "mapping_schema_version": "1.0.0",
+  "version": "1.0.0",
+  "profile_id": "alnop",
+  "profile_version": "1.0.0",
+  "id": "alnop-json-events",
+  "format": "json",
+  "fields": {
+    "id": "/id",
+    "title": {
+      "fr": "/nom_operation",
+      "ar": "/nom_operation_ar"
+    },
+    "description": {
+      "fr": "/description",
+      "ar": "/description_ar"
+    },
+    "start_date": "/date_debut",
+    "end_date": "/date_fin",
+    "event_type": "/type_action",
+    "longitude": "/localisation/coordonnees_approximatives/longitude",
+    "latitude": "/localisation/coordonnees_approximatives/latitude",
+    "location_label": {
+      "fr": "/localisation/region_ou_ville"
+    },
+    "source_ids": "/source_ids"
+  },
+  "records_pointer": "/operations",
+  "default_geometry_role": "representative_point"
+}

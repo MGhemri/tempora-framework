@@ -50,7 +50,9 @@
     "test:e2e:synthetic": "npm run test:core && npm run test:package",
     "benchmark:tempora": "node scripts/benchmark-tempora.js",
     "build:site": "node scripts/build-framework-site.js",
-    "check:site": "node scripts/build-framework-site.js --check && node --test tests/framework-site.test.js"
+    "check:site": "node scripts/build-framework-site.js --check && node --test tests/framework-site.test.js",
+    "test:compat:alnop:minimal": "node --test tests/compatibility/alnop/minimal.test.js",
+    "test:compat:alnop:full": "node compatibility/alnop/verify.js"
   },
   "dependencies": {
     "nodemailer": "^10.3.1"

@@ -1,0 +1,31 @@
+{
+  "mapping_schema_version": "1.0.0",
+  "version": "1.0.0",
+  "profile_id": "alnop",
+  "profile_version": "1.0.0",
+  "id": "alnop-csv-events",
+  "format": "csv",
+  "fields": {
+    "id": "/id",
+    "title": {
+      "fr": "/nom_operation",
+      "ar": "/nom_operation_ar"
+    },
+    "description": {
+      "fr": "/description",
+      "ar": "/description_ar"
+    },
+    "start_date": "/date_debut",
+    "end_date": "/date_fin",
+    "event_type": "/type_action",
+    "longitude": "/longitude",
+    "latitude": "/latitude",
+    "geometry_role": "/geometry_role",
+    "location_label": {
+      "fr": "/lieu",
+      "ar": "/lieu_ar"
+    },
+    "source_ids": "/source_id"
+  },
+  "delimiter": ","
+}

@@ -1,0 +1,27 @@
+{
+  "format_version": "1.0.0",
+  "repository": "https://github.com/MGhemri/aln-historical-operations-dataset",
+  "git_commit": "2428a693393a4a635d5eeac3e3c8542498b8b9d6",
+  "dataset_records": 263,
+  "baseline": "baselines/alnop-compatibility.json",
+  "validation_protocol": "alnop-compatibility-v1",
+  "text_normalization": "CRLF to LF, UTF-8; binary archives unchanged",
+  "local_files": {
+    "profile/profile.json": "964238406a97fb3633be516adb11c07b60454788321a83cfa158fbd94c0a9601",
+    "profile/README.md": "a777a552ad756c54321714e1c4f9ffc7d43410a5e8fa9c5de26bcbdfed9acd9d",
+    "profile/imports/csv.json": "4abd682773645319ee9fb477b0b6b98073b3e0dd29456e7bc83f82d1e1228dc1",
+    "profile/imports/geojson.json": "be773dc10b8dbfc85e5229d40f8928e4d5bb85867dbd7b0b8c61e83a7e94951d",
+    "profile/imports/json.json": "ac162b5e185f7fbbd205606811ba6db6cbf1d1d8fe0ed9e64e6f160aad6c8a66",
+    "fixtures/corpus.json": "f341b5095c53b48f63290b5b93ae98054a2891c88c2f7c82f52e23b2dd801784",
+    "baselines/alnop-compatibility.json": "7a5b30d76cde98cff20acaa59efe16b10766b9a7a619b81617e2e8aa4430d945",
+    "schemas/claim.schema.json": "0bd2319d932b3f9695ff056285c0b630e85e2242037d7f5cd1236805f4877153",
+    "schemas/dataset.schema.json": "22b0f128376f9a4c990d7d608a92c67964d370db9f922a2d103c78ea5f1888a0",
+    "schemas/duplicate-assessment.schema.json": "924062b29bf21ea87388ee0b6c6f41e08cbbcb802622a15d4de5adb4f4ae828d",
+    "schemas/entity.schema.json": "47478b2bc7679c2619ae3a150431b31cd6ce9b2f1ef0f1c5c739c39c4b1f448b",
+    "schemas/operation.schema.json": "1456a855225eb4e0ed0b58d4adda7c4eedf35d28835cca67ed8c986235a29260",
+    "schemas/release.schema.json": "efd1ffe8f2ed283c72a5ef208561f11e3dc1379231a5a2c44d2ba3e96b4a132b",
+    "schemas/source.schema.json": "9a629251fa9637f8cb2fad508ca1e61b855a558e8881bbf979243176e9b4cf07",
+    "schemas/territorial-unit.schema.json": "8881f095c5806de4b0a573bc4bde225191e166e2cf4b0338c266d87a0c845b70",
+    "schemas/vocabularies.schema.json": "43f371622af97cc68eef25557ff1303dc883ca8726e4adb0db0a8918db9cf1d6"
+  }
+}

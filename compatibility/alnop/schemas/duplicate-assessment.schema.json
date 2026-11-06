@@ -1,0 +1,14 @@
+{
+  "$schema":"https://json-schema.org/draft/2020-12/schema",
+  "type":"object","additionalProperties":false,
+  "required":["id","left_id","right_id","label","rationale","evidence","operation_fingerprints","source_fingerprints","editorial_status","review_history","created_at","updated_at"],
+  "properties":{
+    "id":{"type":"string","pattern":"^QA_[A-Za-z0-9_-]+$"},"left_id":{"type":"string","pattern":"^[A-Za-z0-9_-]+$"},"right_id":{"type":"string","pattern":"^[A-Za-z0-9_-]+$"},
+    "label":{"enum":["same_event","distinct_events","uncertain"]},"rationale":{"type":"string","minLength":1,"maxLength":10000},
+    "evidence":{"type":"array","items":{"type":"object","additionalProperties":false,"required":["source_id","locator"],"properties":{"source_id":{"type":"string","pattern":"^SRC_[a-f0-9]{24}$"},"locator":{"type":"string","minLength":1}}}},
+    "operation_fingerprints":{"type":"object","additionalProperties":false,"required":["left","right"],"properties":{"left":{"type":"string","pattern":"^[a-f0-9]{64}$"},"right":{"type":"string","pattern":"^[a-f0-9]{64}$"}}},
+    "source_fingerprints":{"type":"object","propertyNames":{"pattern":"^SRC_[a-f0-9]{24}$"},"additionalProperties":{"type":"string","pattern":"^[a-f0-9]{64}$"}},
+    "editorial_status":{"enum":["proposed","under_review","reviewed","withdrawn"]},"review_history":{"$ref":"https://alnop.vercel.app/schemas/operation.schema.json#/properties/review_history"},
+    "created_at":{"type":"string","format":"date-time"},"updated_at":{"type":"string","format":"date-time"}
+  }
+}
