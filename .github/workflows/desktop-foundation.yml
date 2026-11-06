@@ -79,6 +79,12 @@ jobs:
         run: npm run stage:windows-engine
       - name: Build native NSIS installer (unsigned CI artifact only)
         run: npm run build:windows
+      - name: Smoke-test installed NSIS package without system Node on PATH
+        shell: pwsh
+        run: |
+          $binary = Get-ChildItem "src-tauri/target/release/bundle/nsis" -Filter "*setup.exe" -ErrorAction Stop | Select-Object -First 1
+          if (-not $binary) { throw "NSIS installer missing" }
+          ./scripts/verify-windows-install.ps1 -Installer $binary.FullName -InstallDirectory "$env:RUNNER_TEMP/tempora-desktop-install"
       - name: Check NSIS artifact and embedded engine
         shell: pwsh
         run: |

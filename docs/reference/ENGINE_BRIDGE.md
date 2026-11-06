@@ -66,3 +66,7 @@ The ML provider is **not part of the engine worker protocol**; add a separate, o
 For each proposal, persist model ID/version/SHA-256, dataset revision, confidence, calibration, feature transformation version, evidence references and human decision. Never train on ALNOP's 263 incomplete notices as if they were exhaustive truth.
 
 See also [Desktop architecture](DESKTOP_ARCHITECTURE.md).
+
+## Phase 1D — Installer-level verification
+
+CI must install the unsigned NSIS output in a unique test directory, inspect the installed runtime (rather than the build staging directory), remove Node.js from the child process `PATH`, compare both shipped runtime hashes, exercise real `health`, `corpus.validate` and `corpus.digest` requests, and uninstall it. The follow-up release gate remains a **clean Windows VM** without system Node, interactive Tauri GUI validation, signatures and dependency lockfile/provenance. A CI runner with Node removed from PATH is **not equivalent to a Node-free operating system**.
