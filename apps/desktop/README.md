@@ -133,3 +133,23 @@ human approval. The canonical engine validator remains authoritative.
 A future opt-in editable review workflow must include explicit reviewer
 identity, selected evidence, signed decision provenance, safe export
 and independent acceptance tests before enabling writes.
+
+## Scientific workbench — Phase 1E (local, noncanonical review draft)
+
+In **Analyses**, after validating a canonical corpus, researchers may prepare
+a review draft consisting of their declared name, an **existing record ID
+visible in the 20-item preview**, the review method and supporting rationale.
+The draft includes the **TEMPORA Engine 3.0.0 canonical SHA-256** of the
+selected source corpus. It is explicitly marked
+`document_type: tempora.review_draft`, `status: draft`,
+`approved: false`, and `signed: false`.
+
+The **Copy draft JSON** button uses the local clipboard only after an
+explicit click. A non-conforming corpus or an unknown subject ID blocks
+draft creation. The file is never modified, and a draft is **not** a canonical
+v3 `reviews[]` entry and cannot approve, publish or overwrite anything.
+Clipboard permission may vary by WebView2/sandbox policy; copy failures
+are shown to the researcher rather than silently treated as success.
+No persistence, cryptographic signing, identity verification or automatic
+review is implemented in this tranche. The user must protect any copied
+private data and handle retention separately.
