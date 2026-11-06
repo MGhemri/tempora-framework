@@ -54,6 +54,11 @@ function verifyFull(directory) {
   assert.equal(batch.report.summary.total, pin.dataset_records);
   assert.equal(batch.report.summary.create, 0);
   assert.equal(batch.report.summary.quarantined, 0);
+  // Historical handlers resolve some assets against cwd. Bind them to their owner,
+  // so a successful comparison cannot accidentally read TEMPORA's remaining copies.
+  const previousDirectory = process.cwd();
+  try {
+  process.chdir(root);
   const snapshot = require(path.join(root, 'scripts/capture-v1-baseline')).snapshot();
   assert.deepEqual(snapshot, baseline.v1, 'ALNOP v1 contracts changed');
   const handler = require(path.join(root, 'api/v2/handler'));
@@ -66,6 +71,7 @@ function verifyFull(directory) {
     assert.deepEqual({url: expected.url, method: expected.method, status: response.statusCode, headers,
       body_sha256: sha(JSON.stringify(response.body))}, expected, `ALNOP v2 contract changed: ${expected.url}`);
   }
+  } finally {process.chdir(previousDirectory);}
   return {revision: pin.git_commit, records: corpus.operations.length, collections,
     checked_files: Object.keys(baseline.files).length, checked_archives: Object.keys(baseline.archives).length,
     v1_contracts: baseline.v1.contracts.length, v2_contracts: baseline.v2.length, round_trip: true, ingestion: true};
@@ -81,7 +87,7 @@ if (require.main === module) {
     const files = fs.readdirSync(directory).filter(name => /^full-.*\.test\.js$/.test(name)).sort();
     const result = require('node:child_process').spawnSync(process.execPath,
       ['--test', ...files.map(file => path.join(directory, file))],
-      {cwd:root, env:{...process.env, ALNOP_REFERENCE:fs.realpathSync(values['alnop-dir'])}, encoding:'utf8', timeout:120000});
+      {cwd:fs.realpathSync(values['alnop-dir']), env:{...process.env, ALNOP_REFERENCE:fs.realpathSync(values['alnop-dir'])}, encoding:'utf8', timeout:120000});
     if (result.error) throw result.error;
     assert.equal(result.status, 0, result.stdout + result.stderr);
     report.regression_suites = files;
