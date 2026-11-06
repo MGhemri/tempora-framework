@@ -2,7 +2,7 @@
 
 TEMPORA distingue strictement **cinq versions** qui ne doivent pas être confondues :
 
-1. **Logiciel TEMPORA** : version du SDK, du moteur et de la CLI (`3.0.0-rc.1`
+1. **Logiciel TEMPORA** : version du SDK, du moteur et de la CLI (`3.0.0`
    à la rédaction de cette politique), régie par un historique logiciel et SemVer.
 2. **Contrats et schémas** : version du modèle canonique, des profils et des mappings.
 3. **Profil de corpus** : version des vocabulaires, contraintes et paramètres propres au corpus.
@@ -11,7 +11,7 @@ TEMPORA distingue strictement **cinq versions** qui ne doivent pas être confond
 
 ## État actuel
 
-Le framework dispose d'une **distribution locale en préversion** (voir
+Le framework dispose d'une **distribution locale** (voir
 [`distribution/package.json`](../../distribution/package.json)).
 La distribution npm publique et un tag stable `v3.0.0` ne sont pas annoncés ;
 la propriété `private: true` ne doit pas être retirée sans revue explicite.
