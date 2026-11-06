@@ -24,7 +24,7 @@ Modifier les sources Markdown et `docs/site-src`, puis exécuter `npm run build:
 
 Le guide [ALNOP](compatibility/alnop/README.md) décrit les tests minimaux et complets. Une modification des références ou empreintes nécessite une revue explicite ; ne jamais les régénérer pour masquer une régression.
 
-Les anciens scripts `build:legacy`, `test:legacy` et `test:browser:legacy` sont des outils transitoires, hors CI générique, destinés aux copies historiques encore présentes. Leur retrait accompagne celui de ces copies.
+Les commandes historiques `build:legacy`, `test:legacy` et `test:browser:legacy` ont été retirées. Les vérifications du corpus et des API historiques utilisent la suite complète avec une copie ALNOP extérieure épinglée.
 
 ## Contributions aux corpus
 

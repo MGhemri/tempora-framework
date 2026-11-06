@@ -1,5 +1,0 @@
-{
-  "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "urn:tempora:schema:3.0.0:relation",
-  "$ref": "urn:tempora:schema:3.0.0:model#/$defs/Relation"
-}

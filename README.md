@@ -47,7 +47,7 @@ npm run test:compat:alnop:minimal
 npm run test:compat:alnop:full -- --alnop-dir ../alnop-reference
 ```
 
-Le test complet exige une copie extérieure propre à la révision définie dans `compatibility/alnop/pin.json`. Il ne télécharge rien implicitement. Des copies historiques restent temporairement dans l’arbre en attente de leur retrait contrôlé ; les tests et builds du framework fonctionnent sans elles.
+Le test complet exige une copie extérieure propre à la révision définie dans `compatibility/alnop/pin.json`. Il ne télécharge rien implicitement. Le corpus complet, les exports et les anciennes API ont été retirés de ce dépôt. Quelques fichiers de transition restent réservés pour examen ; les tests et builds du framework fonctionnent sans eux.
 
 ## Vérifications du framework
 

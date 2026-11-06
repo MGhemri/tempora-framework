@@ -12,7 +12,7 @@
 
 ## Transition depuis les outils du profil historique
 
-Les scripts npm historiques restent disponibles pour la compatibilité. Pour un nouveau projet, utiliser le SDK ou la CLI du tarball, puis fournir un manifeste de profil et des mappings explicites. Le [guide du framework](FRAMEWORK.md) décrit le parcours. Le [guide de migration](CANONICAL_MODEL.md) couvre le modèle canonique et l’aller-retour avec ALNOP.
+Les commandes npm historiques de construction, de publication des données et de test de l’atlas ont été retirées. La compatibilité utilise les suites explicites sous `compatibility/alnop`. Pour un nouveau projet, utiliser le SDK ou la CLI du tarball, puis fournir un manifeste de profil et des mappings explicites. Le [guide du framework](FRAMEWORK.md) décrit le parcours. Le [guide de migration](CANONICAL_MODEL.md) couvre le modèle canonique et l’aller-retour avec ALNOP.
 
 Le code du framework relève de la [licence MIT](LICENSE). Chaque publication de données porte ses droits et sa citation propres. Les versions archivées du corpus ALNOP figurent dans le [journal des données](https://github.com/MGhemri/aln-historical-operations-dataset/blob/2428a693393a4a635d5eeac3e3c8542498b8b9d6/CHANGELOG.md).
 
@@ -21,6 +21,7 @@ Le code du framework relève de la [licence MIT](LICENSE). Chaque publication de
 - Compatibilité ALNOP facultative, avec référence externe épinglée et contrôle des empreintes.
 - Tests et CI du framework indépendants du corpus historique ; tests navigateur dédiés aux guides TEMPORA.
 - Exemple d’ingestion synthétique et métadonnées logicielles TEMPORA.
-- Les copies historiques restantes font l’objet d’un retrait contrôlé séparé.
+- Retrait de 961 fichiers historiques conservés dans le dépôt ALNOP, de 30 commandes npm et des dépendances SMTP et cartographiques héritées.
+- Les fichiers réservés pour examen restent conservés hors des parcours génériques.
 
 Les notes de versions des données sont conservées dans le [dépôt ALNOP](https://github.com/MGhemri/aln-historical-operations-dataset/blob/2428a693393a4a635d5eeac3e3c8542498b8b9d6/CHANGELOG.md).
