@@ -12,7 +12,7 @@ TEMPORA distingue strictement **cinq versions** qui ne doivent pas être confond
 ## État actuel
 
 Le framework dispose d'une **distribution locale en préversion** (voir
-[`distribution/package.json`](distribution/package.json)).
+[`distribution/package.json`](../../distribution/package.json)).
 La distribution npm publique et un tag stable `v3.0.0` ne sont pas annoncés ;
 la propriété `private: true` ne doit pas être retirée sans revue explicite.
 
@@ -40,7 +40,7 @@ antérieure sans modifier les archives.
 La vérification d'une publication ne démontre pas que les faits historiques sont
 exhaustifs ou exacts. Les limites, contradictions et incertitudes demeurent explicites.
 
-Voir [`FRAMEWORK.md`](FRAMEWORK.md) et [le guide de publication](docs/guides/publication.html).
+Voir [`FRAMEWORK.md`](FRAMEWORK.md) et [le guide de publication](../guides/publication.html).
 
 ## Versions historiques ALNOP
 
@@ -50,5 +50,5 @@ Pour leurs archives, conditions de citation et politique de versionnement, consu
 et sa [politique historique](https://github.com/MGhemri/aln-historical-operations-dataset/blob/main/RELEASE_POLICY.md).
 
 La suite de compatibilité du framework est épinglée à un commit ALNOP distinct
-dans [`compatibility/alnop/pin.json`](compatibility/alnop/pin.json). Modifier cet
+dans [`compatibility/alnop/pin.json`](../../compatibility/alnop/pin.json). Modifier cet
 ancrage exige une revue et la régénération explicitement approuvée des références.

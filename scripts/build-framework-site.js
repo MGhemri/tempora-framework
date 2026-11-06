@@ -8,7 +8,7 @@ const {version} = require('../distribution/package.json');
 const root = path.join(__dirname,'..');
 const repo = 'https://github.com/MGhemri/tempora-framework';
 const read = file => fs.readFileSync(path.resolve(root,file),'utf8').replace(/^\uFEFF/,'').replace(/\r\n/g,'\n');
-const sections = read('FRAMEWORK.md').split(/(?=^## )/m);
+const sections = read('docs/reference/FRAMEWORK.md').split(/(?=^## )/m);
 function section(heading, end) {
   const start=sections.findIndex(part=>part.startsWith('## '+heading+'\n')||part.startsWith('## '+heading+' :'));
   if(start<1)throw Error('Missing framework heading: '+heading);
@@ -21,9 +21,9 @@ const guides = {
   'getting-started':['Démarrage',local('getting-started')],
   architecture:['Architecture',section('Architecture')],
   profiles:['Profils',section('Valider un profil','Modèle canonique et migration')],
-  canonical:['Modèle canonique',read('CANONICAL_MODEL.md')],
-  ingestion:['Ingestion',read('INGESTION.md')],
-  analysis:['Analyses',read('ANALYSIS.md')],
+  canonical:['Modèle canonique',read('docs/reference/CANONICAL_MODEL.md')],
+  ingestion:['Ingestion',read('docs/reference/INGESTION.md')],
+  analysis:['Analyses',read('docs/reference/ANALYSIS.md')],
   review:['Revue',section('Vérifier l’éligibilité d’une proposition v3')],
   publication:['Publication',section('Préparer et activer un snapshot local')],
   api:['API REST v3',section('Consulter des versions publiées par l’API locale')+'\n[Consulter le contrat OpenAPI](../openapi/v3.json)\n'],
@@ -45,7 +45,7 @@ md.renderer.rules.heading_open = (tokens,index,options,env,self) => {
 md.renderer.rules.link_open = (tokens,index,options,env,self) => {
   const link=tokens[index], href=link.attrGet('href');
   const [raw,encoded] = href.split('#',2);
-  const file=raw.replace(/^\.\//,'');
+  const file=raw.replace(/^\.\//,'').replace(/^\.\.\/\.\.\//,'');
   const fragment=encoded&&decodeURIComponent(encoded);
   if (Object.hasOwn(aliases,file)) {
     const guide=(file==='FRAMEWORK.md'&&frameworkSections[fragment])||aliases[file];

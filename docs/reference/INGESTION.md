@@ -25,7 +25,7 @@ Une ligne en quarantaine ne bloque pas les autres identifiants. Si son identifia
 
 ## Mappings par profil
 
-Le [schéma de mapping 1.0.0](schemas/tempora.ingestion-mapping.schema.json) déclare le format, l’identifiant et la version du profil, les champs et les options. Il n’exécute ni code ni requête réseau. Les chemins utilisent JSON Pointer : `~1` désigne `/` et `~0` désigne `~`. Les langues doivent être déclarées dans le profil.
+Le [schéma de mapping 1.0.0](../../schemas/tempora.ingestion-mapping.schema.json) déclare le format, l’identifiant et la version du profil, les champs et les options. Il n’exécute ni code ni requête réseau. Les chemins utilisent JSON Pointer : `~1` désigne `/` et `~0` désigne `~`. Les langues doivent être déclarées dans le profil.
 
 | Format | Structure et mapping |
 |---|---|

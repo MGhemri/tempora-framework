@@ -1,77 +1,216 @@
 # TEMPORA Framework
 
-**TEMPORA aide à préparer, valider et analyser des corpus historiques.** Un profil déclare les langues, la période, les vocabulaires et les règles documentaires d’un corpus. Le noyau réutilise les mêmes contrats entre profils.
+[![TEMPORA Framework CI](https://github.com/MGhemri/tempora-framework/actions/workflows/validate-framework.yml/badge.svg)](https://github.com/MGhemri/tempora-framework/actions/workflows/validate-framework.yml)
+[![Documentation](https://github.com/MGhemri/tempora-framework/actions/workflows/test-documentation-ui.yml/badge.svg)](https://github.com/MGhemri/tempora-framework/actions/workflows/test-documentation-ui.yml)
+[![GitHub Pages](https://github.com/MGhemri/tempora-framework/actions/workflows/pages-framework.yml/badge.svg)](https://github.com/MGhemri/tempora-framework/actions/workflows/pages-framework.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+![Release stage](https://img.shields.io/badge/Release-3.0.0--dev.0-orange)
 
-[Site et guides TEMPORA](https://mghemri.github.io/tempora-framework/)
+**An open-source, profile-driven framework for reproducible historical corpora.**  
+**Un framework open source piloté par profils pour des corpus historiques reproductibles.**
 
-## Démarrage
+[**English**](#english) · [**Français**](#français) · [Documentation / Docs](https://mghemri.github.io/tempora-framework/) · [OpenAPI 3.1](https://mghemri.github.io/tempora-framework/openapi/v3.json)
 
-Le parcours du framework utilise Node.js 20 ou supérieur et npm. Le parcours de référence exécute une analyse sur un profil fictif indépendant, en anglais et en espagnol.
+---
 
-```sh
+## English
+
+### What is TEMPORA?
+
+TEMPORA helps researchers and developers **structure, validate, compare, review, and publish historical records** without embedding the assumptions of a particular region, period, or archive in the framework itself.
+
+A versioned **profile** describes the corpus-specific languages, chronology, controlled vocabularies, and validation rules. TEMPORA provides the reusable processing engine; humans remain responsible for source interpretation and editorial decisions.
+
+> **Scientific boundary:** Validation, similarity, and automated detection do **not** establish historical truth. Uncertainty, disagreement, evidence, and human review remain explicit.
+
+### Capabilities
+
+| Component | Purpose |
+|---|---|
+| **Profile system** | Versioned JSON manifests, controlled inheritance, local validation, and configurable rules |
+| **Canonical model v3** | Events, sources, entities, claims, relations, temporal/spatial assertions, and provenance |
+| **Ingestion** | JSON, CSV, and GeoJSON preview; mapping, quarantine, and explicit acceptance |
+| **Research assistance** | Candidate duplicate/identity links, competing claims, temporal and spatial comparisons, and corpus coverage |
+| **Editorial governance** | Recorded human decisions, review policies, and content-bound verification |
+| **Reproducible publication** | Review-gated immutable snapshots, manifests, checksums, and rollback |
+| **Read-only API v3** | Versioned access to activated publications, with an OpenAPI 3.1 contract |
+| **Developer tools** | JavaScript SDK (CommonJS), TypeScript declarations, CLI, and synthetic fixtures |
+
+### Quick start
+
+**Requirements:** Node.js 20+, npm, and Git. The commands below work with synthetic historical profiles; **ALNOP is not needed**.
+
+```bash
 git clone https://github.com/MGhemri/tempora-framework.git
 cd tempora-framework
 npm ci
 npm run test:e2e:synthetic
 ```
 
-Le parcours synthétique vérifie le noyau, puis installe le tarball dans un projet indépendant. Il couvre l’import, la revue, la publication et la lecture par l’API. La compatibilité historique se vérifie séparément avec `npm run test:compat:alnop`.
+Preview an import with the included fictitious corpus profile (no files written by default):
 
-## Fonctionnalités disponibles
+```bash
+npm run ingest:tempora -- import \
+  --profile profiles/synthetic-history/profile.json \
+  --taxonomies profiles/synthetic-history/taxonomies.json \
+  --input profiles/synthetic-history/sample.csv \
+  --mapping profiles/synthetic-history/mapping.json \
+  --report markdown
+```
 
-| Usage | Fonctionnalité | Documentation |
-|---|---|---|
-| Définir un corpus | Profils JSON versionnés, héritage et validation configurable | [Architecture et profils](FRAMEWORK.md) |
-| Structurer les données | Modèle canonique v3 et traçabilité des sources et assertions | [Modèle canonique](CANONICAL_MODEL.md) |
-| Intégrer des propositions | Import local JSON, CSV et GeoJSON, simulation et quarantaine | [Ingestion](INGESTION.md) |
-| Examiner les données | Rapprochements à revoir, assertions divergentes et couverture documentaire | [Analyses](ANALYSIS.md) |
-| Préparer une décision éditoriale | Journal privé, empreinte du contenu et contrôle d’éligibilité | [Éligibilité d’une proposition](FRAMEWORK.md#vérifier-léligibilité-dune-proposition-v3) |
+Build and check the documentation; inspect the CLI/SDK packaging locally:
 
-La préparation et l’activation locale de snapshots v3 sont disponibles. L’API générique lit les versions activées via un serveur local. Le SDK et la CLI sont disponibles sous forme de [tarball de développement](FRAMEWORK.md#installer-le-sdk-et-la-cli-hors-du-dépôt). [Journal des versions du framework](CHANGELOG.md)
+```bash
+npm run check:site
+npm run test:package
+npm run test:standalone
+```
 
-Pour vérifier les exports, activer une version locale ou revenir à la précédente, consulter le [guide de publication locale](FRAMEWORK.md#préparer-et-activer-un-snapshot-local).
+The package is currently a **development tarball**, version `3.0.0-dev.0`, marked `private: true`. TEMPORA is **not presented as a published stable npm package**. Use the [SDK and CLI guide](https://mghemri.github.io/tempora-framework/guides/sdk-cli.html) for local packaging and usage.
 
-## Organisation
+### Architecture and documentation
 
-- [Noyau TEMPORA](src/framework/) pour les profils, le canon, l’ingestion, les analyses et la revue.
-- [Schémas](schemas/) pour les contrats versionnés.
-- [Profils](profiles/) pour les exemples synthétiques et leurs mappings.
-- [Tests](tests/) pour les cas de référence, les profils indépendants et la compatibilité ALNOP.
+```text
+src/framework/          Core validation, ingestion, analysis, review, publication, API
+src/sdk/                JavaScript SDK and TypeScript declarations
+src/cli/                Command-line interface
+schemas/tempora/        Canonical v3 JSON Schemas
+profiles/               Synthetic, independent examples
+compatibility/alnop/    Optional pinned ALNOP compatibility fixtures and adapters
+docs/reference/         Versioned technical documentation (Markdown)
+docs/site-src/          Additional sources for the documentation site
+docs/guides/            Generated HTML documentation
+tests/                  Unit, integration, architecture, and browser tests
+```
 
-## Profil de compatibilité ALNOP
+Read the [reference documentation](docs/reference/README.md): [architecture](docs/reference/FRAMEWORK.md), [canonical data model](docs/reference/CANONICAL_MODEL.md), [ingestion](docs/reference/INGESTION.md), [analysis](docs/reference/ANALYSIS.md), and [release policy](docs/reference/RELEASE_POLICY.md).
 
-ALNOP est facultatif. Ses contrats et adaptateurs sont regroupés dans [compatibility/alnop](compatibility/alnop/README.md). Le corpus, l’atlas et les API historiques appartiennent au [dépôt ALNOP](https://github.com/MGhemri/aln-historical-operations-dataset).
+The public [TEMPORA documentation site](https://mghemri.github.io/tempora-framework/) and its [OpenAPI 3.1 contract](https://mghemri.github.io/tempora-framework/openapi/v3.json) are generated from versioned sources. The HTTP adapter serves **published releases locally**; do not assume a hosted public TEMPORA API is available.
 
-```sh
+### ALNOP: optional compatibility profile
+
+[ALNOP](https://github.com/MGhemri/aln-historical-operations-dataset) is a separate historical research dataset and atlas concerning the Algerian War of Independence. Its 263 documented operations, archives, and legacy APIs **remain owned by the ALNOP project**, not by TEMPORA.
+
+TEMPORA keeps a **small, pinned compatibility profile**, not a copy of the full historical dataset:
+
+```bash
 npm run test:compat:alnop:minimal
+# Full verification requires an external clean checkout at compatibility/alnop/pin.json
 npm run test:compat:alnop:full -- --alnop-dir ../alnop-reference
 ```
 
-Le test complet exige une copie extérieure propre à la révision définie dans `compatibility/alnop/pin.json`. Il ne télécharge rien implicitement. Le corpus complet, les exports et les anciennes API ont été retirés de ce dépôt. Quelques fichiers de transition restent réservés pour examen ; les tests et builds du framework fonctionnent sans eux.
+For methodology and compatibility details, see the [ALNOP compatibility guide](compatibility/alnop/README.md). The generic framework works without ALNOP or a network download.
 
-## Vérifications du framework
+### Quality, security, and contributions
 
-```sh
+```bash
 npm test
 npm run test:standalone
+npm run check:site
 npx playwright install chromium
 npm run test:browser
 ```
 
-`test:standalone` installe et teste une copie contenant seulement les fichiers génériques. La suite navigateur contrôle les 14 pages TEMPORA et l’absence des exports ALNOP dans l’artefact publié.
+GitHub Actions runs the framework checks on Linux and Windows, plus documentation/browser checks. The full pinned ALNOP compatibility check is separate. A green CI run does not replace an independent historical source review.
 
-## Générer le site documentaire
+Report vulnerabilities as described in [Security](SECURITY.md); contribute through [Contributing](CONTRIBUTING.md) and follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 
-```sh
-npm run build:site
-npm run check:site
-npm run build:site -- --output work/pages
+**License:** [MIT](LICENSE) for TEMPORA source code. Each historical corpus retains its **own** data licensing and citation obligations. For the software citation, see [CITATION.cff](CITATION.cff); for changes, see [CHANGELOG.md](CHANGELOG.md).
+
+---
+
+## Français
+
+### Qu'est-ce que TEMPORA ?
+
+TEMPORA aide les chercheurs et les développeurs à **structurer, valider, comparer, examiner et publier des données historiques** sans imposer au moteur les particularités d'une époque, d'un territoire ou d'un fonds d'archives.
+
+Chaque **profil versionné** précise les langues, la chronologie, les vocabulaires contrôlés et les règles documentaires du corpus. TEMPORA fournit les mécanismes communs ; les décisions scientifiques et éditoriales restent humaines.
+
+> **Principe scientifique :** un contrôle réussi ou une similarité algorithmique ne démontre **pas** un fait historique. Les incertitudes, les sources, les contradictions et les arbitrages demeurent traçables.
+
+### Fonctionnalités
+
+| Composant | Fonction |
+|---|---|
+| **Système de profils** | Manifestes JSON versionnés, héritage maîtrisé, validation locale et règles configurables |
+| **Modèle canonique v3** | Événements, sources, entités, assertions, relations, temps, espace et provenance |
+| **Ingestion** | Import JSON, CSV, GeoJSON ; simulation, mapping, quarantaine et acceptation explicite |
+| **Assistance scientifique** | Doublons candidats, rapprochements d'entités, assertions divergentes, comparaisons spatio-temporelles et couverture |
+| **Gouvernance éditoriale** | Décisions humaines consignées, politiques de revue et approbations liées au contenu |
+| **Publication reproductible** | Snapshots immuables après revue, manifestes, empreintes et retour vers une version antérieure |
+| **API REST v3** | Consultation en lecture seule des versions activées et contrat OpenAPI 3.1 |
+| **Outils développeur** | SDK JavaScript CommonJS, types TypeScript, CLI et exemples synthétiques |
+
+### Démarrage rapide
+
+**Prérequis :** Node.js 20+, npm et Git. Le parcours utilise des profils fictifs ; **ALNOP n'est pas nécessaire**.
+
+```bash
+git clone https://github.com/MGhemri/tempora-framework.git
+cd tempora-framework
+npm ci
+npm run test:e2e:synthetic
 ```
 
-Les guides sont générés à partir des documents Markdown de référence. Le déploiement Pages utilise l’export isolé du site TEMPORA. La compatibilité ALNOP dispose de sa propre suite facultative.
+Prévisualiser un import sans modifier de données :
 
-## Contribuer
+```bash
+npm run ingest:tempora -- import \
+  --profile profiles/synthetic-history/profile.json \
+  --taxonomies profiles/synthetic-history/taxonomies.json \
+  --input profiles/synthetic-history/sample.csv \
+  --mapping profiles/synthetic-history/mapping.json \
+  --report markdown
+```
 
-Pour une évolution du noyau, indiquer le comportement attendu et les profils concernés. Les propositions documentaires ALNOP suivent le parcours de contribution du profil. [Guide de contribution](CONTRIBUTING.md)
+Vérifier la documentation, le paquet et l'indépendance du moteur :
 
-Le code est distribué sous licence MIT. Les droits des corpus et des documents restent définis par leurs propriétaires. [Licence](LICENSE) · [Sécurité](SECURITY.md)
+```bash
+npm run check:site
+npm run test:package
+npm run test:standalone
+```
+
+TEMPORA est actuellement distribué comme **tarball local de développement** (`3.0.0-dev.0`, `private: true`) ; aucune publication npm stable n'est annoncée. Consulter le [guide SDK/CLI](https://mghemri.github.io/tempora-framework/guides/sdk-cli.html).
+
+### Organisation et documentation
+
+Les composants génériques sont regroupés sous `src/framework/`, `src/sdk/`, `src/cli/` et `schemas/tempora/`. Les profils fictifs vivent sous `profiles/` ; la compatibilité ALNOP reste isolée sous `compatibility/alnop/`.
+
+Les documents techniques versionnés sont réunis dans [`docs/reference/`](docs/reference/README.md) : [architecture](docs/reference/FRAMEWORK.md), [modèle canonique](docs/reference/CANONICAL_MODEL.md), [ingestion](docs/reference/INGESTION.md), [analyses](docs/reference/ANALYSIS.md) et [politique de publication](docs/reference/RELEASE_POLICY.md).
+
+Le [site de documentation TEMPORA](https://mghemri.github.io/tempora-framework/) et son [contrat OpenAPI 3.1](https://mghemri.github.io/tempora-framework/openapi/v3.json) sont générés depuis des sources versionnées. Le serveur REST v3 fonctionne **localement** sur des publications activées ; il ne faut pas le confondre avec un service API public hébergé.
+
+### ALNOP : un profil de compatibilité facultatif
+
+Le [projet ALNOP](https://github.com/MGhemri/aln-historical-operations-dataset) conserve son corpus historique de 263 opérations, son atlas, ses archives et ses anciennes API. TEMPORA conserve uniquement les éléments minimaux permettant de vérifier la compatibilité et la conversion des données.
+
+```bash
+npm run test:compat:alnop:minimal
+# La suite complète exige un clone externe propre à la révision de pin.json
+npm run test:compat:alnop:full -- --alnop-dir ../alnop-reference
+```
+
+Voir le [guide de compatibilité](compatibility/alnop/README.md) et la [référence historique](docs/reference/ALNOP.md). Les tests et l'installation du framework ne nécessitent pas ce corpus.
+
+### Qualité, contributions et licences
+
+```bash
+npm test
+npm run test:standalone
+npm run check:site
+npx playwright install chromium
+npm run test:browser
+```
+
+Les workflows GitHub Actions vérifient le framework sur Linux et Windows ; les tests du site sont indépendants. La compatibilité ALNOP épinglée dispose de sa propre suite. Les tests logiciels n'équivalent pas à une validation historiographique.
+
+Pour contribuer : [CONTRIBUTING.md](CONTRIBUTING.md). Pour signaler une vulnérabilité : [SECURITY.md](SECURITY.md). Respecter le [code de conduite](CODE_OF_CONDUCT.md).
+
+**Licence :** code TEMPORA sous [MIT](LICENSE). Les données des corpus conservent leurs droits et obligations de citation propres. Voir [CITATION.cff](CITATION.cff) et [CHANGELOG.md](CHANGELOG.md).
+
+---
+
+**TEMPORA is a framework for documenting evidence, not manufacturing historical certainty.**  
+**TEMPORA structure les preuves documentaires sans fabriquer de certitudes historiques.**
