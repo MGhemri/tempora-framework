@@ -1,6 +1,12 @@
 # Versions du framework TEMPORA
 
-## 3.0.0-rc.1 — release candidate en qualification
+## 3.0.0 — qualification de version stable (publication en attente)
+
+- Harmonisation des métadonnées et documents sur le numéro de version 3.0.0.
+- Les tests multiplateformes, la documentation et la compatibilité ALNOP épinglée sont des gates obligatoires.
+- Le paquet reste privé ; aucun tag ni publication npm n'est créé automatiquement.
+
+## 3.0.0-rc.1 — release candidate qualifiée
 
 - Métadonnées logiciel, citation et documentation synchronisées sur la préversion RC.
 - Contrôle automatisé de cohérence du versionnement et procédure de qualification.

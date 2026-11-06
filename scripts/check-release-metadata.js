@@ -23,7 +23,7 @@ function check(root = path.resolve(__dirname, '..')) {
   for (const file of ['README.md','CHANGELOG.md','docs/reference/RELEASE_POLICY.md','docs/index.html']) {
     assert.ok(read(file).includes(version), file + ': missing current version');
   }
-  console.log('Release metadata verified: '+version+' (private, local candidate)');
+  console.log('Release metadata verified: '+version+' (private, local package)');
   return {version,private:true};
 }
 if (require.main === module) {
