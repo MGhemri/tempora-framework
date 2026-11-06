@@ -117,3 +117,19 @@ An explicit status distinguishes targets present in the same namespace
 from absent or foreign-namespace targets. This is **not** a contradiction
 detector, historical fact-checker, confidence score, or reconciliation tool.
 Links are read-only; no canonical data is modified.
+
+## Scientific workbench — Phase 1D (canonical review dossier)
+
+**Analyses** now lists review records explicitly declared under `reviews[]`
+with their subject, method, author, agent type, decision, reason, date and
+optional recorded content hash. Totals distinguish reviews that explicitly
+declare `agent_type: "human"` from automatic or unspecified records;
+the first 20 rows are displayed. Missing fields in invalid corpora are
+shown as placeholders, never fabricated.
+
+**No new reviews are created or stored by this tranche.** Reviewing a
+file in the GUI does not change its canonical status or constitute a
+human approval. The canonical engine validator remains authoritative.
+A future opt-in editable review workflow must include explicit reviewer
+identity, selected evidence, signed decision provenance, safe export
+and independent acceptance tests before enabling writes.
