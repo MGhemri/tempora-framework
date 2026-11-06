@@ -1,3 +1,4 @@
+mod engine_bridge;
 use serde::Serialize;
 use serde_json::Value;
 use std::fs;
@@ -136,11 +137,28 @@ async fn select_document(app: tauri::AppHandle) -> Result<Option<DocumentPreview
     .map_err(|_| "Native file operation failed".to_owned())?
 }
 
+// Native picker is the only input authority; no user-supplied path reaches the worker.
+#[tauri::command]
+async fn validate_corpus_native(app: tauri::AppHandle) -> Result<Option<engine_bridge::CanonicalValidation>, String> {
+    tauri::async_runtime::spawn_blocking(move || {
+        let selected = app.dialog().file()
+            .add_filter("TEMPORA canonical corpus", &["json", "geojson"])
+            .blocking_pick_file();
+        match selected {
+            Some(file) => {
+                let path = file.into_path().map_err(|_| "LOCAL_FILE_ONLY".to_owned())?;
+                engine_bridge::validate_selected_corpus(&path).map(Some)
+            }
+            None => Ok(None),
+        }
+    }).await.map_err(|_| "ENGINE_TASK_FAILED".to_owned())?
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
-        .invoke_handler(tauri::generate_handler![select_document])
+        .invoke_handler(tauri::generate_handler![select_document, validate_corpus_native])
         .run(tauri::generate_context!())
         .expect("Unable to start TEMPORA Desktop");
 }

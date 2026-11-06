@@ -4,6 +4,11 @@ import "./style.css";
 type View = "overview" | "documents" | "research" | "models";
 type Language = "fr" | "en";
 type PreviewRow = { id: string; title: string; kind: string };
+type EngineDiagnostic = { code?: string; message?: string; path?: string; id?: string };
+type CanonicalResult = {
+  fileName: string; engineVersion: string; valid: boolean;
+  errors: EngineDiagnostic[]; warnings: EngineDiagnostic[]; sha256: string; note: string;
+};
 type DocumentPreview = {
   fileName: string;
   format: string;
@@ -40,6 +45,10 @@ const text = {
     modelsSoon: "TensorFlow n'est pas encore activé", modelsLong: "Les contrats d'inférence, la version des modèles, les jeux d'évaluation et les journaux de preuve seront développés avant tout téléchargement ou exécution de modèle.",
     nativeOnly: "Le sélecteur natif fonctionne depuis l'application Tauri, pas dans le navigateur.",
     openedFile: "Fichier ouvert en lecture seule", cancelled: "Sélection annulée", failed: "Impossible d'ouvrir le document",
+    validateCanonical: "Valider un corpus TEMPORA", engineResult: "RÉSULTAT DU MOTEUR TEMPORA",
+    validCanonical: "Conforme au schéma", invalidCanonical: "Non conforme au schéma",
+    enginePending: "Validation par le moteur en cours…", engineUnavailable: "Moteur indisponible",
+    diagnostics: "diagnostics", sourceReviewNotice: "La conformité au schéma ne prouve pas la véracité des événements.",
   },
   en: {
     workspace: "WORKSPACE", overview: "Overview", documents: "Documents", research: "Analysis", models: "AI models",
@@ -65,11 +74,17 @@ const text = {
     modelsSoon: "TensorFlow is not enabled yet", modelsLong: "Inference contracts, model versions, evaluation datasets and evidence journals will precede downloads or model execution.",
     nativeOnly: "Native file selection works in the Tauri application, not in a regular browser.",
     openedFile: "File opened read-only", cancelled: "Selection cancelled", failed: "Unable to open document",
+    validateCanonical: "Validate a TEMPORA corpus", engineResult: "TEMPORA ENGINE RESULT",
+    validCanonical: "Schema valid", invalidCanonical: "Schema invalid",
+    enginePending: "Engine validation running…", engineUnavailable: "Engine unavailable",
+    diagnostics: "diagnostics", sourceReviewNotice: "Schema validation does not establish historical truth.",
   },
 } as const;
 
 let language: Language = "fr";
 let selectedPreview: DocumentPreview | null = null;
+let selectedValidation: CanonicalResult | null = null;
+let validationBusy = false;
 
 function byId(id: string): HTMLElement {
   const found = document.getElementById(id);
@@ -93,6 +108,7 @@ function localize(): void {
     if (btn.classList.contains("active")) fill("breadcrumb-label", text[language][btn.dataset.view as View]);
   });
   renderPreview();
+  renderValidation();
 }
 function showView(view: View): void {
   document.querySelectorAll<HTMLElement>(".view").forEach(el => el.classList.toggle("hidden", el.id !== "view-" + view));
@@ -136,6 +152,51 @@ function renderPreview(): void {
     target.append(tr);
   }
 }
+function renderValidation(): void {
+  const result = selectedValidation;
+  byId("validation-panel").classList.toggle("hidden", !result);
+  if (!result) return;
+  fill("validation-title", result.fileName);
+  fill("validation-badge", result.valid ? text[language].validCanonical : text[language].invalidCanonical);
+  fill("validation-summary", "TEMPORA Engine " + result.engineVersion + " · " + (result.errors.length + result.warnings.length) + " " + text[language].diagnostics);
+  fill("validation-digest", "SHA-256 (canonical): " + result.sha256);
+  const errors = byId("validation-errors");
+  errors.replaceChildren();
+  for (const diagnostic of [...result.errors, ...result.warnings].slice(0, 50)) {
+    const item = document.createElement("p");
+    const path = typeof diagnostic.path === "string" ? diagnostic.path : "";
+    const code = typeof diagnostic.code === "string" ? diagnostic.code : "DIAGNOSTIC";
+    const message = typeof diagnostic.message === "string" ? diagnostic.message : "";
+    item.textContent = code + (path ? " · " + path : "") + (message ? " — " + message : "");
+    errors.append(item);
+  }
+}
+
+async function validateCorpus(): Promise<void> {
+  if (!isTauri()) { notify(text[language].nativeOnly); return; }
+  if (validationBusy) return;
+  validationBusy = true;
+  const button = byId("validate-corpus") as HTMLButtonElement;
+  button.disabled = true;
+  notify(text[language].enginePending);
+  selectedValidation = null;
+  renderValidation();
+  try {
+    // Rust opens its own file picker; the WebView never supplies a path or raw bytes.
+    const result = await invoke<CanonicalResult | null>("validate_corpus_native");
+    if (!result) { notify(text[language].cancelled); return; }
+    selectedValidation = result;
+    renderValidation();
+    showView("documents");
+    notify((result.valid ? text[language].validCanonical : text[language].invalidCanonical) + " · " + result.fileName);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    notify(text[language].engineUnavailable + " : " + message);
+  } finally {
+    validationBusy = false;
+    button.disabled = false;
+  }
+}
 async function openDocument(): Promise<void> {
   if (!isTauri()) { notify(text[language].nativeOnly); return; }
   try {
@@ -156,5 +217,6 @@ document.querySelectorAll<HTMLButtonElement>("[data-view]").forEach(button => {
 byId("language").addEventListener("click", () => { language = language === "fr" ? "en" : "fr"; localize(); });
 byId("hero-open").addEventListener("click", () => void openDocument());
 byId("document-open").addEventListener("click", () => void openDocument());
+byId("validate-corpus").addEventListener("click", () => void validateCorpus());
 localize();
 showView("overview");

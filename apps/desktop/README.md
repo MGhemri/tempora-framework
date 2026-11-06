@@ -15,7 +15,7 @@ La première version fournit une interface bilingue professionnelle, un dialogue
 - No persistent index, no file writes, no upload, no telemetry, no model download
 - DOM-rendered user data uses `textContent` to prevent HTML injection
 
-**Scientific honesty:** this UI does **not** yet call the TEMPORA canonical validator. Its counts are *structural observations*, not historical or schema validation. It does **not** execute TensorFlow or any AI.
+**Scientific honesty:** the development build now exposes an explicit **Validate TEMPORA corpus** action calling the genuine pinned TEMPORA Engine through Rust → Node IPC; the structural preview remains separate. Its counts are *structural observations*, not historical or schema validation. It does **not** execute TensorFlow or any AI.
 
 ## Run locally / Démarrer
 
@@ -60,7 +60,11 @@ L'interface n'embarque **aucune copie** du moteur scientifique ni des données A
 
 ## Phase 1A — Engine worker protocol (under test)
 
-A separate, pinned Node worker invokes the genuine npm TEMPORA SDK (health, canonical validation, SHA-256). It is **not yet called from Tauri**. Run `npm run test:bridge` and see [ENGINE_BRIDGE.md](../../docs/reference/ENGINE_BRIDGE.md). The WebView has no access to Node APIs.
+A separate, pinned Node worker invokes the genuine npm TEMPORA SDK (health, canonical validation, SHA-256). It is called **only via a fixed Rust command in development builds** and never imported into the WebView. Run `npm run test:bridge` and see [ENGINE_BRIDGE.md](../../docs/reference/ENGINE_BRIDGE.md). The WebView has no access to Node APIs.
+
+## Phase 1B — Native validation (developer mode only)
+
+Click **Valider un corpus TEMPORA** in Documents, choose a JSON corpus through the native picker, and inspect schema diagnostics and its canonical SHA-256. Install desktop npm dependencies first. Development builds use your installed Node.js (fixed worker script, no user-controlled command arguments). Production builds refuse validation with `ENGINE_RUNTIME_NOT_BUNDLED` until a signed, pinned, audited runtime is embedded; installers remain disabled. The 3 MiB validation limit is intentionally stricter than the 8 MiB structural preview. Neither action edits the input.
 
 ## Next steps
 
