@@ -107,3 +107,13 @@ All reference values are extracted from `subject.id` and
 `provenance.evidence[].source.id` by Rust, capped at 20 references per
 record. The view is ephemeral, read-only, and does not imply the
 referenced material supports the historical assertion.
+
+## Scientific workbench — Phase 1C (declared contradictions)
+
+The **Analyses** view now displays a bounded table of claim-to-claim links
+expressly present in canonical `claims[].contradicts[]`. The total reflects
+all declared links in the selected corpus; at most 20 links are shown.
+An explicit status distinguishes targets present in the same namespace
+from absent or foreign-namespace targets. This is **not** a contradiction
+detector, historical fact-checker, confidence score, or reconciliation tool.
+Links are read-only; no canonical data is modified.
