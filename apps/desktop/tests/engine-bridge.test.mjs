@@ -87,3 +87,16 @@ test('Declared contradictions are rendered only from explicit corpus references'
  assert.match(ui,/td\.textContent = value/);
  assert.match(html,/id="workbench-contradictions"/);
 });
+
+test('Canonical review records are read-only and human authorship must be explicit',()=>{
+ const rust=readFileSync(new URL('../src-tauri/src/engine_bridge.rs',import.meta.url),'utf8');
+ const ui=readFileSync(new URL('../src/main.ts',import.meta.url),'utf8');
+ const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+ assert.match(rust,/fn declared_reviews\(/);
+ assert.match(rust,/Some\("human"\)/);
+ assert.match(rust,/items\.iter\(\)\.take\(20\)/);
+ assert.match(rust,/fn human_review_dossier_never_promotes_automatic_agents_to_human/);
+ assert.match(ui,/overview\.humanReviewCount/);
+ assert.match(ui,/reviews\.replaceChildren\(\)/);
+ assert.match(html,/id="workbench-reviews"/);
+});

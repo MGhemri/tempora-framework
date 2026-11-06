@@ -7,7 +7,8 @@ type PreviewRow = { id: string; title: string; kind: string };
 type EngineDiagnostic = { code?: string; message?: string; path?: string; id?: string };
 type EvidenceRow = { id: string; title: string; status: string; evidenceCount: number; sourceRefs: string[]; subjectRef: string | null };
 type DeclaredContradiction = { claimId: string; targetId: string; targetPresent: boolean };
-type ResearchOverview = { contradictionCount: number; contradictions: DeclaredContradiction[]; eventCount: number; sourceCount: number; claimCount: number; unsupportedClaimCount: number; events: EvidenceRow[]; sources: EvidenceRow[]; claims: EvidenceRow[] };
+type ReviewRow = { id: string; subjectId: string; agentType: string; agent: string; method: string; decision: string; reason: string; reviewedAt: string; contentSha256: string };
+type ResearchOverview = { reviewCount: number; humanReviewCount: number; reviews: ReviewRow[]; contradictionCount: number; contradictions: DeclaredContradiction[]; eventCount: number; sourceCount: number; claimCount: number; unsupportedClaimCount: number; events: EvidenceRow[]; sources: EvidenceRow[]; claims: EvidenceRow[] };
 type CanonicalResult = {
   overview: ResearchOverview;
   fileName: string; engineVersion: string; valid: boolean;
@@ -53,6 +54,7 @@ const text = {
     validCanonical: "Conforme au schéma", invalidCanonical: "Non conforme au schéma",
     enginePending: "Validation par le moteur en cours…", engineUnavailable: "Moteur indisponible",
     workbenchTitle: "Atelier scientifique · dossier en lecture seule", workbenchIntro: "Aperçu structurel des preuves déclarées, sans certification historique.", workbenchEmpty: "Validez d’abord un corpus dans Documents pour charger cet atelier.", workbenchEvidence: "Pièces de preuve déclarées", workbenchNoEvidence: "Assertions sans preuve déclarée", workbenchEvents: "Événements", workbenchSources: "Sources", workbenchClaims: "Assertions", workbenchStatus: "Statut éditorial", workbenchLimited: "Aperçu limité à 20 lignes par collection. Les totaux reflètent le fichier sélectionné.",
+    reviewsTitle: "Dossiers de revue", reviewsSummary: "Revues enregistrées", humanReviews: "Revues explicitement humaines", reviewAgent: "Auteur / Type", reviewMethod: "Méthode", reviewDecision: "Décision déclarée", reviewSubject: "Sujet examiné", reviewReason: "Justification", reviewDate: "Date", reviewHash: "Empreinte du contenu", reviewNoClaims: "Aucune revue enregistrée dans ce corpus", reviewsDisclaimer: "Lecture des décisions déclarées uniquement : aucune approbation, création ou modification.",
     contradictionsTitle: "Contradictions déclarées", contradictionsDescription: "Relations explicitement déclarées par le corpus, sans détection automatique ni évaluation historique.", contradictionsPresent: "Cible présente", contradictionsMissing: "Cible absente ou autre espace de noms", contradictionsSource: "Assertion source", contradictionsTarget: "Assertion cible",
     evidenceLinks: "Références déclarées", evidenceSelect: "Sélectionnez une ligne pour examiner ses références.", evidenceSubject: "Sujet", evidenceSources: "Sources citées", evidenceMissing: "Référence absente de l’aperçu", evidenceNone: "Aucune référence déclarée",
     diagnostics: "diagnostics", sourceReviewNotice: "La conformité au schéma ne prouve pas la véracité des événements.",
@@ -85,6 +87,7 @@ const text = {
     validCanonical: "Schema valid", invalidCanonical: "Schema invalid",
     enginePending: "Engine validation running…", engineUnavailable: "Engine unavailable",
     workbenchTitle: "Scientific workbench · read-only dossier", workbenchIntro: "Structural overview of declared evidence, not historical certification.", workbenchEmpty: "First validate a corpus under Documents to load the workbench.", workbenchEvidence: "Declared evidence items", workbenchNoEvidence: "Claims without declared evidence", workbenchEvents: "Events", workbenchSources: "Sources", workbenchClaims: "Claims", workbenchStatus: "Editorial status", workbenchLimited: "Preview capped at 20 rows per collection. Counts reflect the selected file.",
+    reviewsTitle: "Review dossiers", reviewsSummary: "Recorded reviews", humanReviews: "Explicit human reviews", reviewAgent: "Reviewer / Type", reviewMethod: "Method", reviewDecision: "Declared decision", reviewSubject: "Subject", reviewReason: "Reason", reviewDate: "Date", reviewHash: "Content digest", reviewNoClaims: "No review records in this corpus", reviewsDisclaimer: "Read-only declared decisions: no approval, creation or modification.",
     contradictionsTitle: "Declared contradictions", contradictionsDescription: "Links explicitly recorded in the corpus, without automated detection or historical assessment.", contradictionsPresent: "Target present", contradictionsMissing: "Target absent or different namespace", contradictionsSource: "Source claim", contradictionsTarget: "Target claim",
     evidenceLinks: "Declared references", evidenceSelect: "Select a row to inspect declared references.", evidenceSubject: "Subject", evidenceSources: "Cited sources", evidenceMissing: "Reference outside preview", evidenceNone: "No declared reference",
     diagnostics: "diagnostics", sourceReviewNotice: "Schema validation does not establish historical truth.",
@@ -217,6 +220,22 @@ function renderWorkbench(): void {
     text[language].workbenchNoEvidence + ": " + overview.unsupportedClaimCount,
   ].join(" · "));
   fill("workbench-validation", result.valid ? text[language].validCanonical : text[language].invalidCanonical);
+  fill("workbench-review-count", text[language].reviewsSummary + ": " + overview.reviewCount
+    + " · " + text[language].humanReviews + ": " + overview.humanReviewCount);
+  const reviews = byId("workbench-reviews");
+  reviews.replaceChildren();
+  for (const review of overview.reviews) {
+    const tr = document.createElement("tr");
+    for (const value of [
+      review.id, review.subjectId, review.agentType + " / " + review.agent,
+      review.method, review.decision, review.reason, review.reviewedAt, review.contentSha256
+    ]) {
+      const td = document.createElement("td");
+      td.textContent = value;
+      tr.append(td);
+    }
+    reviews.append(tr);
+  }
   fill("workbench-contradiction-count", text[language].contradictionsTitle + ": " + overview.contradictionCount);
   const conflicts = byId("workbench-contradictions");
   conflicts.replaceChildren();
