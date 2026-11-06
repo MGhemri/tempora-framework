@@ -39,6 +39,8 @@ pub struct EvidenceRow {
     pub title: String,
     pub status: String,
     pub evidence_count: usize,
+    pub source_refs: Vec<String>,
+    pub subject_ref: Option<String>,
 }
 
 #[derive(Debug, Serialize)]
@@ -70,6 +72,11 @@ fn overview_rows(corpus: &Value, key: &str) -> Vec<EvidenceRow> {
                 title: safe_label(title.or_else(|| item.get("predicate").and_then(Value::as_str))),
                 status: safe_label(item.get("assertion_status").or_else(|| item.get("editorial_status")).and_then(Value::as_str)),
                 evidence_count: item.pointer("/provenance/evidence").and_then(Value::as_array).map_or(0, Vec::len),
+                source_refs: item.pointer("/provenance/evidence").and_then(Value::as_array)
+                    .into_iter().flat_map(|evidence| evidence.iter().take(20))
+                    .filter_map(|entry| entry.pointer("/source/id").and_then(Value::as_str))
+                    .map(|id| safe_label(Some(id))).collect(),
+                subject_ref: item.pointer("/subject/id").and_then(Value::as_str).map(|id| safe_label(Some(id))),
             }
         }).collect()
 }
@@ -264,6 +271,16 @@ mod tests {
         assert_eq!(overview.unsupported_claim_count, 1);
         assert_eq!(overview.events[0].title, "Événement fictif");
         assert_eq!(overview.claims[0].status, "unverified");
+        assert!(overview.claims[0].source_refs.is_empty());
+    }
+    #[test]
+    fn scientific_overview_links_only_declared_references() {
+        let corpus = json!({"claims":[{"id":"C1","subject":{"id":"E1"},
+            "provenance":{"evidence":[{"source":{"id":"S1"}},{"source":{"id":"S2"}}]}}]});
+        let overview = research_overview(&corpus);
+        assert_eq!(overview.claims[0].subject_ref.as_deref(), Some("E1"));
+        assert_eq!(overview.claims[0].source_refs, vec!["S1", "S2"]);
+        assert_eq!(overview.claims[0].evidence_count, 2);
     }
     #[test]
     fn scientific_overview_limits_rows_to_twenty() {
