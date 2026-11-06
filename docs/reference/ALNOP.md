@@ -9,10 +9,10 @@ Ses 263 notices, son atlas, ses archives et les API historiques v1/v2 appartienn
 
 ## Ce qui reste dans TEMPORA
 
-Le dossier [`compatibility/alnop/`](compatibility/alnop/README.md) fournit :
+Le dossier [`compatibility/alnop/`](../../compatibility/alnop/README.md) fournit :
 - le manifeste de profil, les mappings et les adaptateurs de migration ;
 - une fixture minimale, les schémas historiques utiles et les empreintes de contrôle ;
-- la référence Git épinglée [`pin.json`](compatibility/alnop/pin.json) ;
+- la référence Git épinglée [`pin.json`](../../compatibility/alnop/pin.json) ;
 - une suite minimale sans réseau et une suite complète facultative contre le dépôt ALNOP externe.
 
 Le moteur `src/framework/`, l'API v3, le SDK, la CLI et les publications TEMPORA fonctionnent

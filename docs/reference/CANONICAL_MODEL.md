@@ -6,11 +6,11 @@ Cette représentation est utilisée par la validation, l’ingestion, les analys
 
 ## Schémas et validation
 
-- [Schéma du corpus](schemas/tempora/v3/corpus.schema.json)
-- [Définitions communes et objets](schemas/tempora/v3/model.schema.json)
-- [Événement](schemas/tempora/v3/event.schema.json), [source](schemas/tempora/v3/source.schema.json), [assertion](schemas/tempora/v3/claim.schema.json), [entité](schemas/tempora/v3/entity.schema.json)
-- [Temps](schemas/tempora/v3/temporal-expression.schema.json), [espace](schemas/tempora/v3/spatial-assertion.schema.json), [relation](schemas/tempora/v3/relation.schema.json)
-- [Revue](schemas/tempora/v3/review.schema.json), [évaluation](schemas/tempora/v3/assessment.schema.json), [version de corpus](schemas/tempora/v3/corpus-release.schema.json)
+- [Schéma du corpus](../../schemas/tempora/v3/corpus.schema.json)
+- [Définitions communes et objets](../../schemas/tempora/v3/model.schema.json)
+- [Événement](../../schemas/tempora/v3/event.schema.json), [source](../../schemas/tempora/v3/source.schema.json), [assertion](../../schemas/tempora/v3/claim.schema.json), [entité](../../schemas/tempora/v3/entity.schema.json)
+- [Temps](../../schemas/tempora/v3/temporal-expression.schema.json), [espace](../../schemas/tempora/v3/spatial-assertion.schema.json), [relation](../../schemas/tempora/v3/relation.schema.json)
+- [Revue](../../schemas/tempora/v3/review.schema.json), [évaluation](../../schemas/tempora/v3/assessment.schema.json), [version de corpus](../../schemas/tempora/v3/corpus-release.schema.json)
 
 Les identifiants `$id` sont des URN de schéma, pas des adresses réseau. Pour un validateur JSON Schema externe, enregistrer le schéma de profil, `model.schema.json`, puis le schéma d’objet souhaité. Le validateur fourni effectue cet enregistrement localement, sans accès réseau.
 

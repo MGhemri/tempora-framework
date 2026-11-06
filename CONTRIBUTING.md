@@ -18,7 +18,7 @@ Le noyau, le SDK, la CLI et les scripts génériques ne doivent pas importer de 
 
 ## Documentation et site
 
-Modifier les sources Markdown et `docs/site-src`, puis exécuter `npm run build:site` et `npm run check:site`. Le workflow Pages publie uniquement `work/pages`. Les rapports privés, cahiers des charges, journaux de revue et données non approuvées restent hors du dépôt et des artefacts publics.
+Modifier les sources Markdown sous `docs/reference/` et `docs/site-src/`, puis exécuter `npm run build:site` et `npm run check:site`. Le workflow Pages publie uniquement `work/pages`. Les rapports privés, cahiers des charges, journaux de revue et données non approuvées restent hors du dépôt et des artefacts publics.
 
 ## Compatibilité facultative
 
