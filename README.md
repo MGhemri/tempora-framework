@@ -4,7 +4,7 @@
 [![Documentation](https://github.com/MGhemri/tempora-framework/actions/workflows/test-documentation-ui.yml/badge.svg)](https://github.com/MGhemri/tempora-framework/actions/workflows/test-documentation-ui.yml)
 [![GitHub Pages](https://github.com/MGhemri/tempora-framework/actions/workflows/pages-framework.yml/badge.svg)](https://github.com/MGhemri/tempora-framework/actions/workflows/pages-framework.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-![Release stage](https://img.shields.io/badge/Release-3.0.0--rc.1-orange)
+![Release stage](https://img.shields.io/badge/Release-3.0.0-blue)
 
 **An open-source, profile-driven framework for reproducible historical corpora.**  
 **Un framework open source piloté par profils pour des corpus historiques reproductibles.**
@@ -66,7 +66,7 @@ npm run test:package
 npm run test:standalone
 ```
 
-The package is currently a **development tarball**, version `3.0.0-rc.1`, marked `private: true`. TEMPORA is **not presented as a published stable npm package**. Use the [SDK and CLI guide](https://mghemri.github.io/tempora-framework/guides/sdk-cli.html) for local packaging and usage.
+The local package is versioned **`3.0.0`** and remains marked **`private: true`**. A public npm package or GitHub release has **not** been published; release tagging is a separate maintainer-controlled step. Use the [SDK and CLI guide](https://mghemri.github.io/tempora-framework/guides/sdk-cli.html) for local packaging and usage.
 
 ### Architecture and documentation
 
@@ -174,7 +174,7 @@ npm run test:package
 npm run test:standalone
 ```
 
-TEMPORA est actuellement distribué comme **tarball local de développement** (`3.0.0-rc.1`, `private: true`) ; aucune publication npm stable n'est annoncée. Consulter le [guide SDK/CLI](https://mghemri.github.io/tempora-framework/guides/sdk-cli.html).
+Le paquet local porte la version **`3.0.0`** et reste marqué **`private: true`**. Aucune publication npm publique ni release GitHub stable n'a encore été effectuée ; la création du tag relève d'une étape distincte approuvée par le mainteneur. Consulter le [guide SDK/CLI](https://mghemri.github.io/tempora-framework/guides/sdk-cli.html).
 
 ### Organisation et documentation
 

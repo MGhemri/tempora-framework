@@ -1,6 +1,6 @@
 # TEMPORA — Release qualification / Qualification de release
 
-**Current target / Version candidate : `3.0.0-rc.1`** — private local tarball, not a stable npm or GitHub release.
+**Proposed version / Version proposée : `3.0.0`** — versioning metadata prepared, but the stable GitHub release, immutable tag and any npm publication are **not yet performed**.
 
 ## Requirements / Prérequis
 
@@ -40,9 +40,9 @@ Review the exact tarball contents, SHA-256, dependency audit, reproducible snaps
 
 ## Tag warning / Avertissement de tag
 
-The obsolete Git tag **`v3.0.0`** was still present when this checklist was drafted and pointed to `55032f630b1b0107f38aa48e4c2b5b7fe3ef37e0`. Removing the corresponding GitHub release **did not remove the tag**.
+The obsolete historical tags **`v1.0.0`** and **`v3.0.0`** were verified as absent before preparing the current stable version. Before publishing, check once more that `v3.0.0` is absent; then create a new immutable tag on the explicitly approved merged commit. Never silently move a published tag.
 
-L'ancien tag **`v3.0.0`** existe encore et pointe vers une révision historique. Le mainteneur doit résoudre cette collision avant une nouvelle release stable. **Ne jamais déplacer silencieusement un tag déjà publié.**
+Les anciens tags historiques **`v1.0.0`** et **`v3.0.0`** ont été vérifiés absents avant cette préparation. Contrôler de nouveau leur absence avant toute publication ; créer ensuite le nouveau tag immuable uniquement sur le commit fusionné et approuvé.
 
 ## Stable release gate / Passage en version stable
 

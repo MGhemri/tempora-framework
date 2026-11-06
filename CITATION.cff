@@ -5,8 +5,8 @@ title: "TEMPORA Framework"
 authors:
   - name: "TEMPORA"
     email: "contact@connect-gm.com"
-version: "3.0.0-rc.1"
+version: "3.0.0"
 repository-code: "https://github.com/MGhemri/tempora-framework"
 url: "https://mghemri.github.io/tempora-framework/"
 license: MIT
-abstract: "Framework scientifique pour structurer, analyser, réviser et publier des corpus historiques. Préversion de développement distribuée localement."
+abstract: "Framework scientifique pour structurer, analyser, réviser et publier des corpus historiques. Distribution locale du logiciel ; les versions des corpus sont indépendantes."

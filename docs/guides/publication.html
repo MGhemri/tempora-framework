@@ -19,7 +19,7 @@
 <a class="sidelink" href="../guides/science.html">Méthodologie</a>
 <a class="sidelink" href="../guides/alnop.html">Compatibilité ALNOP</a>
 <a class="sidelink" href="../guides/security.html">Sécurité</a>
-<div class="sidenote">TEMPORA 3.0.0-rc.1<br>Préversion locale · MIT</div></nav>
+<div class="sidenote">TEMPORA 3.0.0<br>Préversion locale · MIT</div></nav>
 <main class="main" id="contenu"><h1>Publication</h1><div class="article"><h2 id="préparer-et-activer-un-snapshot-local">Préparer et activer un snapshot local</h2>
 <p>Le module de publication produit une projection publique des objets sélectionnés et de leurs dépendances éligibles. Une demande privée contient <code>corpus</code>, <code>policy</code>, <code>journal</code>, <code>subjects</code>, la date UTC <code>asOf</code> et <code>release</code> avec <code>id</code>, <code>source_commit</code>, <code>citation_author</code> et <code>rights_notice</code>. Pour succéder à une version active, joindre son bundle vérifié dans <code>previous</code>.</p>
 <div class="codebar"><span>Exemple</span><button class="copy" type="button">Copier</button></div><pre><code class="language-sh">npm run publication:tempora -- prepare --request demande.json --journal-head EMPREINTE_JOURNAL

@@ -2,7 +2,7 @@
 
 Le modèle canonique TEMPORA `3.0.0` distingue les événements, sources, assertions, entités, expressions temporelles, assertions spatiales, relations, revues, évaluations et versions de corpus. Les schémas sont versionnés indépendamment du manifeste de profil `1.0.0`.
 
-Cette représentation est utilisée par la validation, l’ingestion, les analyses, la revue, la publication et l’API v3. La distribution reste une préversion locale `3.0.0-rc.1`.
+Cette représentation est utilisée par la validation, l’ingestion, les analyses, la revue, la publication et l’API v3. La distribution reste une préversion locale `3.0.0`.
 
 ## Schémas et validation
 
