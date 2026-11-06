@@ -85,3 +85,65 @@ The Windows CI installer is **silently installed into an isolated runner directo
 The Windows CI now checks the **installed GUI process** stays running for six seconds, independently of the installed Node worker tests. This is a startup smoke test, **not** a full interactive GUI acceptance test. The package staging generates a dependency lockfile within the **bundled runtime** and records its SHA-256 and an inventory of declared licenses. The npm CLI performs an audit that rejects reported **high/critical** production dependency vulnerabilities at build time. GitHub Actions also uploads the installer SHA-256 and an inventory alongside the unsigned experimental installer. These checks are reproducibility *evidence*, but do **not** replace a source-controlled dependency lockfile or a signed, hermetic release; transitive dependency resolution may still change between builds.
 
 Before an official public release: commit audited npm and Cargo locks, inspect bundled license texts and the runtime's Node.js licensing, sign the Windows executable/NSIS installer, test native file dialogs and corpus validation inside a **genuinely clean Windows VM without Node**, perform accessibility checks and keep the updater disabled until signed metadata is available.
+
+## Phase 1F — Installed-artifact hardening
+
+Windows qualification now starts both the Tauri GUI and scientific worker with the runner's Node.js removed from PATH. The smoke validates that each production dependency in the embedded lockfile has an installed manifest with the expected version and is represented in the declared license inventory. An installer is rejected if silent uninstallation fails or leaves the main executable behind. CI stages the embedded engine only once per run, avoiding a second unreviewed npm resolution during packaging.
+
+These are **runner-based checks, not clean-VM interactive acceptance**. A release remains blocked on source-controlled audited npm/Cargo locks, a real clean Windows VM (native file dialogs and end-to-end corpus validation), license-text review, code signing and final provenance verification. Do not publish unsigned experimental artifacts as an official release.
+
+## Phase 1G — WebView2 offline qualification (Windows sandbox regression)
+
+A manual Windows sandbox installation exposed a **blank Tauri window** and an
+error saying `Could not find the WebView2 Runtime` even though the EXE
+stayed alive for six seconds. The CI startup smoke had therefore produced a
+false positive about GUI usability.
+
+The experimental NSIS package now sets
+`bundle.windows.webviewInstallMode = { "type": "offlineInstaller", "silent": true }`.
+Tauri embeds Microsoft's **Evergreen WebView2 offline installer**, allowing
+installation with no network connection. Expect roughly 127 MB additional
+installer size. This is not the fixed-version runtime: installed Evergreen
+WebView2 is managed and updated by Windows/Microsoft.
+
+CI requires the installed Tauri process to spawn a `msedgewebview2.exe`
+descendant; a living native shell alone is no longer accepted. The test
+still does not assert that the HTML interface rendered correctly or that
+file dialogs work. The user's isolated Windows sandbox remains a separate
+manual acceptance gate. Microsoft WebView2 installation can be restricted
+by machine policy, permissions or sandbox configuration; those cases must
+be tested and documented, not treated as a passing GUI.
+
+No public release is authorized by this change alone.
+
+## Phase 1H — Sandbox failure reproduction and fixed-runtime experiment
+
+**Manual regression, 2026-11-06:** A Windows sandbox still displayed
+`Could not find the WebView2 Runtime` after installing the much larger
+`offlineInstaller` NSIS artifact. GitHub runner green status therefore
+does **not** mean that the application will work inside the sandbox.
+
+The next test path is an **experimental, separate fixed-runtime build**.
+Unlike the offline Evergreen installer, a fixed WebView2 Runtime ships
+beside the application and does not require registration of a shared
+WebView2 Runtime. Microsoft explicitly requires the application vendor
+to maintain security updates for this runtime.
+
+1. Obtain a Windows x64 **Fixed Version WebView2 CAB** from the official
+   [Microsoft download page](https://developer.microsoft.com/microsoft-edge/webview2/).
+   Record the version, Microsoft download provenance and independent SHA-256.
+2. In PowerShell, from `apps/desktop`, run
+   `./scripts/stage-fixed-webview.ps1 -CabPath "C:\path\Microsoft.WebView2.FixedVersionRuntime.x64.cab" -ExpectedSha256 "<verified-64-hex-sha256>"`.
+   The stage **rejects SHA mismatch** and does not install anything into Windows.
+3. Prepare the engine using `npm run stage:windows-engine`. Build with
+   `npx --no-install tauri build --config src-tauri/tauri.windows.conf.json --config src-tauri/tauri.windows.fixed.conf.json`.
+4. Install the resulting **experimental** NSIS artifact in the isolated
+   sandbox, then verify the main interface and native JSON dialog.
+   If it still fails, run `./scripts/diagnose-webview2.ps1` and collect
+   Windows event logs; the diagnostic script changes no system settings.
+
+**Never use an unverified third-party CAB mirror**, never commit a
+Microsoft runtime binary to the source repository, and never interpret
+the existing runner GUI process smoke as a full rendering test.
+This build is only possible after obtaining and verifying the genuine
+fixed-runtime CAB. The PR does not claim to have produced or tested it.

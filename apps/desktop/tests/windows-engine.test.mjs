@@ -6,6 +6,7 @@ const read=f=>readFileSync(new URL(f,base),'utf8');
 test('Windows NSIS configuration must bundle engine resources and never expose generic shell',()=>{
  const conf=JSON.parse(read('src-tauri/tauri.windows.conf.json'));
  assert.deepEqual(conf.bundle.targets,['nsis']);
+ assert.deepEqual(conf.bundle.windows.webviewInstallMode,{type:'offlineInstaller',silent:true});
  assert.equal(conf.bundle.active,true);
  assert.equal(conf.bundle.resources['resources/engine/'],'engine/');
  assert.match(read('src-tauri/src/engine_bridge.rs'),/resource_dir\(\)/);
@@ -29,4 +30,41 @@ test('Distribution qualification asserts installed GUI startup, lockfile integri
  assert.match(installed,/INSTALLED_LOCKFILE_DIGEST_MISMATCH/);
  assert.match(installed,/INSTALLED_TAURI_GUI_EXITED_EARLY/);
  assert.match(installed,/Get-AuthenticodeSignature/);
+});
+
+test('Installed qualification isolates GUI and verifies complete runtime inventory and uninstall',()=>{
+ const script=read('scripts/verify-windows-install.ps1');
+ const isolated=script.indexOf('SYSTEM_NODE_STILL_AVAILABLE');
+ const gui=script.indexOf('Start-Process -FilePath $appExe');
+ assert.ok(isolated>=0 && gui>isolated,'GUI startup must occur after system Node is removed from PATH');
+ for (const name of ['RUNTIME_INVENTORY_COUNT_MISMATCH','INSTALLED_DEPENDENCY_VERSION_MISMATCH','INSTALLED_DEPENDENCY_INVENTORY_MISMATCH','NSIS_UNINSTALL_FAILED','NSIS_UNINSTALL_LEFT_EXECUTABLE']) {
+   assert.ok(script.includes(name),name);
+ }
+ const ci=read('../../.github/workflows/desktop-foundation.yml');
+ assert.match(ci,/run: npx --no-install tauri build --config src-tauri\/tauri\.windows\.conf\.json/);
+});
+
+test('npm v3 lockfile root empty key is parsed as a hashtable in Windows smoke',()=>{
+ const installed=read('scripts/verify-windows-install.ps1');
+ assert.match(installed,/ConvertFrom-Json -AsHashtable/);
+ assert.match(installed,/\$locked\['packages'\]\.GetEnumerator\(\)/);
+ assert.match(installed,/\$entry\.Key/);
+ assert.match(installed,/\$entry\.Value\['version'\]/);
+});
+
+test('GUI smoke requires WebView2 child process, not merely a living native window',()=>{
+ const script=read('scripts/verify-windows-install.ps1');
+ assert.match(script,/INSTALLED_GUI_WEBVIEW2_PROCESS_MISSING/);
+ assert.match(script,/Get-CimInstance Win32_Process/);
+ assert.match(script,/msedgewebview2\.exe/);
+});
+
+test('Fixed WebView2 experiment requires verified CAB and uses application-local runtime',()=>{
+ const conf=JSON.parse(read('src-tauri/tauri.windows.fixed.conf.json'));
+ assert.deepEqual(conf.bundle.windows.webviewInstallMode,{type:'fixedRuntime',path:'./resources/webview2-fixed/'});
+ const stage=read('scripts/stage-fixed-webview.ps1');
+ assert.match(stage,/WEBVIEW_CAB_SHA256_MISMATCH/);
+ assert.match(stage,/msedgewebview2\.exe/);
+ assert.match(stage,/expand\.exe/);
+ assert.match(read('scripts/diagnose-webview2.ps1'),/read-only/);
 });
