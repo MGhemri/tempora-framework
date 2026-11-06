@@ -233,3 +233,24 @@ The staging script now classifies empty extraction as an invalid CAB.
 A failed verification step is not proof that the actual installer or
 user's desktop application failed. The final acceptance still requires
 clean-machine GUI display and real corpus validation.
+
+## New TEMPORA visual identity — integration handoff
+
+The project has received two official images from its maintainer:
+a **transparent** black-and-gold logo and a **white-background** variant.
+The original images must remain unaltered and be stored separately
+from generated desktop icons. The associated user-provided files
+are prepared in an external Desktop Branding Assets package, not
+yet uploaded to this repository.
+
+Proposed paths after asset upload:
+- `apps/desktop/public/branding/tempora-brand-transparent-1024.png`
+- `apps/desktop/public/branding/tempora-brand-white-1024.png`
+- `apps/desktop/src-tauri/icons/icon.png`
+- `apps/desktop/src-tauri/icons/icon.ico`
+
+**Do not reference missing assets or replace build icons until these
+files have actually been committed.** The black lettering is not
+legible on the app's dark sidebar without a light background or
+a distinct high-contrast variant. Treat final brand use and
+high-DPI screenshots as visual acceptance criteria.
