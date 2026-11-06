@@ -40,5 +40,5 @@ test('Installed qualification isolates GUI and verifies complete runtime invento
    assert.ok(script.includes(name),name);
  }
  const ci=read('../../.github/workflows/desktop-foundation.yml');
- assert.match(ci,/run: npm run tauri -- build --config src-tauri\/tauri\.windows\.conf\.json/);
+ assert.match(ci,/run: npx --no-install tauri build --config src-tauri\/tauri\.windows\.conf\.json/);
 });
