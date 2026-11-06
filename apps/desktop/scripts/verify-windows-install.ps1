@@ -35,11 +35,17 @@ try {
   $worker = Join-Path $runtimeDir "worker.cjs"
   $engine = Join-Path $runtimeDir "node_modules/tempora-framework/package.json"
   $manifestFile = Join-Path $runtimeDir "runtime-manifest.json"
-  foreach ($file in @($node, $worker, $engine, $manifestFile)) {
+  $lockFile = Join-Path $runtimeDir "package-lock.json"
+  $appExe = Join-Path $InstallDirectory "tempora-desktop.exe"
+  foreach ($file in @($node, $worker, $engine, $manifestFile, $lockFile, $appExe)) {
     if (-not (Test-Path $file -PathType Leaf)) { throw "MISSING_INSTALLED_ENGINE_FILE: $file" }
   }
   $manifest = Get-Content -LiteralPath $manifestFile -Raw | ConvertFrom-Json
   $package = Get-Content -LiteralPath $engine -Raw | ConvertFrom-Json
+  if ((Get-FileHash $lockFile -Algorithm SHA256).Hash.ToLowerInvariant() -ne $manifest.lock_sha256) { throw "INSTALLED_LOCKFILE_DIGEST_MISMATCH" }
+  if (-not $manifest.dependencies -or $manifest.dependencies.Count -lt 1) { throw "RUNTIME_DEPENDENCY_INVENTORY_MISSING" }
+  $signature = Get-AuthenticodeSignature -LiteralPath $appExe
+  Write-Host ("Application signature status (informational; not release-ready): " + $signature.Status)
   if ($package.version -ne "3.0.0" -or $manifest.engine -ne "tempora-framework@3.0.0") {
     throw "INSTALLED_ENGINE_VERSION_MISMATCH"
   }
@@ -48,6 +54,19 @@ try {
   }
   if ((Get-FileHash $worker -Algorithm SHA256).Hash.ToLowerInvariant() -ne $manifest.worker_sha256) {
     throw "INSTALLED_WORKER_DIGEST_MISMATCH"
+  }
+
+  # The installed Tauri GUI must start and remain alive; no keyboard automation or dialogs
+  # are asserted here. GUI interaction still requires a clean VM manual acceptance test.
+  $appProcess = Start-Process -FilePath $appExe -WorkingDirectory $InstallDirectory -PassThru
+  try {
+    Start-Sleep -Seconds 6
+    $appProcess.Refresh()
+    if ($appProcess.HasExited) { throw "INSTALLED_TAURI_GUI_EXITED_EARLY: $($appProcess.ExitCode)" }
+    Write-Host "Installed Tauri GUI process started and remained alive for 6 seconds."
+  } finally {
+    if (-not $appProcess.HasExited) { Stop-Process -Id $appProcess.Id -Force -ErrorAction SilentlyContinue }
+    $appProcess.Dispose()
   }
 
   # Remove Node from PATH *for the worker process*; this is a true installed-file test,

@@ -15,13 +15,17 @@ const pkg = JSON.parse(readFileSync(join(root,'package.json'),'utf8'));
 if (pkg.dependencies['tempora-framework'] !== '3.0.0') throw Error('Engine pin must be 3.0.0');
 if (existsSync(out)) rmSync(out, { recursive:true, force:true });
 mkdirSync(out,{recursive:true});
+writeFileSync(join(out,'package.json'),JSON.stringify({name:'tempora-desktop-engine-runtime',version:'0.1.0',private:true,dependencies:{'tempora-framework':'3.0.0'}},null,2)+'\n');
 copyFileSync(process.execPath,join(out,'node.exe'));
 copyFileSync(join(root,'bridge','worker.cjs'),join(out,'worker.cjs'));
 const npm = process.env.npm_execpath;
 if (!npm) throw Error('Run via npm script for exact npm CLI path');
-const options = ['--prefix',out,'--no-save','--ignore-scripts','--omit=dev','--no-audit','--no-fund','--package-lock=false','tempora-framework@3.0.0'];
-const result=spawnSync(process.execPath,[npm,'install',...options],{cwd:root,stdio:'inherit',shell:false});
+const options = ['--workspaces=false','--ignore-scripts','--omit=dev','--no-audit','--no-fund','--package-lock=true'];
+const result=spawnSync(process.execPath,[npm,'install',...options],{cwd:out,stdio:'inherit',shell:false});
 if (result.status !== 0) throw Error('Runtime dependency installation failed');
+if (!existsSync(join(out,'package-lock.json'))) throw Error('Missing runtime dependency lockfile');
+const audit=spawnSync(process.execPath,[npm,'audit','--omit=dev','--audit-level=high'],{cwd:out,stdio:'inherit',shell:false});
+if (audit.status !== 0) throw Error('Runtime dependency security audit failed; do not package vulnerable engine');
 const engine = JSON.parse(readFileSync(join(out,'node_modules','tempora-framework','package.json'),'utf8'));
 if (engine.version !== '3.0.0' || engine.private === true) throw Error('Unexpected installed TEMPORA Engine');
 const result1=spawnSync(join(out,'node.exe'),[join(out,'worker.cjs')],{
@@ -32,7 +36,16 @@ if (result1.status !== 0 || JSON.parse(result1.stdout.trim()).result?.engine_ver
  throw Error('Bundled runtime smoke failed: ' + result1.stderr);
 }
 const digest = name => createHash('sha256').update(readFileSync(join(out,name))).digest('hex');
+const inventory=[];
+for (const entry of Object.keys(JSON.parse(readFileSync(join(out,'package-lock.json'),'utf8')).packages).filter(x=>x.startsWith('node_modules/')).sort()) {
+ const p=join(out,entry,'package.json');
+ if (!existsSync(p)) throw Error('Missing package manifest: '+entry);
+ const info=JSON.parse(readFileSync(p,'utf8'));
+ if (!info.license) throw Error('Dependency missing declared license: '+entry);
+ inventory.push({name:info.name,version:info.version,license:info.license});
+}
 const manifest={target:'windows-x64',engine:'tempora-framework@3.0.0',node:process.version,
+ lock_sha256:digest('package-lock.json'),dependencies:inventory,
  node_sha256:digest('node.exe'),worker_sha256:digest('worker.cjs')};
 writeFileSync(join(out,'runtime-manifest.json'),JSON.stringify(manifest,null,2)+'\n');
 console.log(JSON.stringify(manifest,null,2));

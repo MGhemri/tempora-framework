@@ -19,3 +19,14 @@ test('Windows staging requires pinned SDK and performs bundled-runtime smoke',()
  assert.match(script,/sha256/);
  assert.doesNotMatch(script,/https?:\/\//);
 });
+
+test('Distribution qualification asserts installed GUI startup, lockfile integrity and npm audit',()=>{
+ const stage=read('scripts/stage-windows-engine.mjs');
+ const installed=read('scripts/verify-windows-install.ps1');
+ assert.match(stage,/--audit-level=high/);
+ assert.match(stage,/lock_sha256/);
+ assert.match(stage,/dependencies:inventory/);
+ assert.match(installed,/INSTALLED_LOCKFILE_DIGEST_MISMATCH/);
+ assert.match(installed,/INSTALLED_TAURI_GUI_EXITED_EARLY/);
+ assert.match(installed,/Get-AuthenticodeSignature/);
+});
