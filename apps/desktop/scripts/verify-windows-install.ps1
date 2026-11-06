@@ -56,19 +56,6 @@ try {
     throw "INSTALLED_WORKER_DIGEST_MISMATCH"
   }
 
-  # The installed Tauri GUI must start and remain alive; no keyboard automation or dialogs
-  # are asserted here. GUI interaction still requires a clean VM manual acceptance test.
-  $appProcess = Start-Process -FilePath $appExe -WorkingDirectory $InstallDirectory -PassThru
-  try {
-    Start-Sleep -Seconds 6
-    $appProcess.Refresh()
-    if ($appProcess.HasExited) { throw "INSTALLED_TAURI_GUI_EXITED_EARLY: $($appProcess.ExitCode)" }
-    Write-Host "Installed Tauri GUI process started and remained alive for 6 seconds."
-  } finally {
-    if (-not $appProcess.HasExited) { Stop-Process -Id $appProcess.Id -Force -ErrorAction SilentlyContinue }
-    $appProcess.Dispose()
-  }
-
   # Remove Node from PATH *for the worker process*; this is a true installed-file test,
   # not an accidental invocation of the GitHub runner's globally installed Node.
   $originalPath = $env:PATH
@@ -79,6 +66,35 @@ try {
     Remove-Item Env:NODE_OPTIONS -ErrorAction SilentlyContinue
     Remove-Item Env:NODE_PATH -ErrorAction SilentlyContinue
     if (Get-Command node -ErrorAction SilentlyContinue) { throw "SYSTEM_NODE_STILL_AVAILABLE" }
+
+    # The GUI is also started without access to the runner-installed Node.js.
+    # The installed Tauri GUI must start and remain alive; no keyboard automation or dialogs
+    # are asserted here. GUI interaction still requires a clean VM manual acceptance test.
+    $appProcess = Start-Process -FilePath $appExe -WorkingDirectory $InstallDirectory -PassThru
+    try {
+      Start-Sleep -Seconds 6
+      $appProcess.Refresh()
+      if ($appProcess.HasExited) { throw "INSTALLED_TAURI_GUI_EXITED_EARLY: $($appProcess.ExitCode)" }
+      Write-Host "Installed Tauri GUI process started and remained alive for 6 seconds."
+    } finally {
+      if (-not $appProcess.HasExited) { Stop-Process -Id $appProcess.Id -Force -ErrorAction SilentlyContinue }
+      $appProcess.Dispose()
+    }
+
+    # Every installed dependency must correspond to the bundled lockfile inventory.
+    $locked = Get-Content -LiteralPath $lockFile -Raw | ConvertFrom-Json
+    $installedInventory = @($manifest.dependencies)
+    $lockedEntries = @($locked.packages.PSObject.Properties | Where-Object { $_.Name -like 'node_modules/*' })
+    if ($installedInventory.Count -ne $lockedEntries.Count) { throw "RUNTIME_INVENTORY_COUNT_MISMATCH" }
+    foreach ($entry in $lockedEntries) {
+      $depPath = Join-Path $runtimeDir ($entry.Name.Replace('/', [System.IO.Path]::DirectorySeparatorChar))
+      $depManifest = Join-Path $depPath 'package.json'
+      if (-not (Test-Path -LiteralPath $depManifest -PathType Leaf)) { throw "INSTALLED_DEPENDENCY_MISSING: $($entry.Name)" }
+      $dep = Get-Content -LiteralPath $depManifest -Raw | ConvertFrom-Json
+      if ($dep.version -ne $entry.Value.version) { throw "INSTALLED_DEPENDENCY_VERSION_MISMATCH: $($entry.Name)" }
+      $match = @($installedInventory | Where-Object { $_.name -eq $dep.name -and $_.version -eq $dep.version -and $_.license -eq $dep.license })
+      if ($match.Count -ne 1) { throw "INSTALLED_DEPENDENCY_INVENTORY_MISMATCH: $($entry.Name)" }
+    }
     $smoke = @(
       @{ protocol_version="1.0.0"; request_id="installed_health"; operation="health"; payload=@{} },
       @{ protocol_version="1.0.0"; request_id="installed_validate"; operation="corpus.validate"; payload=@{corpus=@{}} },
@@ -113,5 +129,7 @@ try {
   if (Test-Path $uninstaller) {
     $uninstall = Start-Process -FilePath $uninstaller -ArgumentList @("/S") -Wait -PassThru
     Write-Host "Uninstaller exit: $($uninstall.ExitCode)"
+    if ($uninstall.ExitCode -ne 0) { throw "NSIS_UNINSTALL_FAILED: $($uninstall.ExitCode)" }
+    if (Test-Path -LiteralPath (Join-Path $InstallDirectory "tempora-desktop.exe") -PathType Leaf) { throw "NSIS_UNINSTALL_LEFT_EXECUTABLE" }
   }
 }
