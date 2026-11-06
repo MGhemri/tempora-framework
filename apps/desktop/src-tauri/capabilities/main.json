@@ -1,0 +1,10 @@
+{
+  "identifier": "main",
+  "description": "Minimal permissions for the local TEMPORA research workspace. File selection happens exclusively in Rust.",
+  "windows": [
+    "main"
+  ],
+  "permissions": [
+    "core:default"
+  ]
+}
