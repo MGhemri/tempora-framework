@@ -48,3 +48,16 @@ test('Oversized incoming frames fail closed',() => {
   assert.equal(out.status,1);
   assert.equal(JSON.parse(out.stdout.trim()).error.code,'FRAME_LIMIT');
 });
+
+test('Scientific workbench preserves canonical validation as the sole scientific authority',()=>{
+  const rust=readFileSync(new URL('../src-tauri/src/engine_bridge.rs',import.meta.url),'utf8');
+  const ui=readFileSync(new URL('../src/main.ts',import.meta.url),'utf8');
+  const html=readFileSync(new URL('../index.html',import.meta.url),'utf8');
+  assert.match(rust,/overview: research_overview\(&corpus\)/);
+  assert.match(rust,/invoke_worker\(\s*&message\("validation_01", "corpus\.validate"/);
+  assert.match(rust,/items\.iter\(\)\.take\(20\)/);
+  assert.match(ui,/function renderWorkbench\(\)/);
+  assert.match(ui,/td\.textContent = value/);
+  assert.match(html,/id="workbench-panel"/);
+  assert.match(html,/id="workbench-claims"/);
+});

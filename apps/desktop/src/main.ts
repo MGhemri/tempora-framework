@@ -5,7 +5,10 @@ type View = "overview" | "documents" | "research" | "models";
 type Language = "fr" | "en";
 type PreviewRow = { id: string; title: string; kind: string };
 type EngineDiagnostic = { code?: string; message?: string; path?: string; id?: string };
+type EvidenceRow = { id: string; title: string; status: string; evidenceCount: number };
+type ResearchOverview = { eventCount: number; sourceCount: number; claimCount: number; unsupportedClaimCount: number; events: EvidenceRow[]; sources: EvidenceRow[]; claims: EvidenceRow[] };
 type CanonicalResult = {
+  overview: ResearchOverview;
   fileName: string; engineVersion: string; valid: boolean;
   errors: EngineDiagnostic[]; warnings: EngineDiagnostic[]; sha256: string; note: string;
 };
@@ -48,6 +51,7 @@ const text = {
     validateCanonical: "Valider un corpus TEMPORA", engineResult: "RÉSULTAT DU MOTEUR TEMPORA",
     validCanonical: "Conforme au schéma", invalidCanonical: "Non conforme au schéma",
     enginePending: "Validation par le moteur en cours…", engineUnavailable: "Moteur indisponible",
+    workbenchTitle: "Atelier scientifique · dossier en lecture seule", workbenchIntro: "Aperçu structurel des preuves déclarées, sans certification historique.", workbenchEmpty: "Validez d’abord un corpus dans Documents pour charger cet atelier.", workbenchEvidence: "Pièces de preuve déclarées", workbenchNoEvidence: "Assertions sans preuve déclarée", workbenchEvents: "Événements", workbenchSources: "Sources", workbenchClaims: "Assertions", workbenchStatus: "Statut éditorial", workbenchLimited: "Aperçu limité à 20 lignes par collection. Les totaux reflètent le fichier sélectionné.",
     diagnostics: "diagnostics", sourceReviewNotice: "La conformité au schéma ne prouve pas la véracité des événements.",
   },
   en: {
@@ -77,6 +81,7 @@ const text = {
     validateCanonical: "Validate a TEMPORA corpus", engineResult: "TEMPORA ENGINE RESULT",
     validCanonical: "Schema valid", invalidCanonical: "Schema invalid",
     enginePending: "Engine validation running…", engineUnavailable: "Engine unavailable",
+    workbenchTitle: "Scientific workbench · read-only dossier", workbenchIntro: "Structural overview of declared evidence, not historical certification.", workbenchEmpty: "First validate a corpus under Documents to load the workbench.", workbenchEvidence: "Declared evidence items", workbenchNoEvidence: "Claims without declared evidence", workbenchEvents: "Events", workbenchSources: "Sources", workbenchClaims: "Claims", workbenchStatus: "Editorial status", workbenchLimited: "Preview capped at 20 rows per collection. Counts reflect the selected file.",
     diagnostics: "diagnostics", sourceReviewNotice: "Schema validation does not establish historical truth.",
   },
 } as const;
@@ -109,6 +114,7 @@ function localize(): void {
   });
   renderPreview();
   renderValidation();
+  renderWorkbench();
 }
 function showView(view: View): void {
   document.querySelectorAll<HTMLElement>(".view").forEach(el => el.classList.toggle("hidden", el.id !== "view-" + view));
@@ -172,6 +178,41 @@ function renderValidation(): void {
   }
 }
 
+function renderWorkbench(): void {
+  const result = selectedValidation;
+  const panel = byId("workbench-panel");
+  panel.classList.toggle("hidden", !result);
+  byId("workbench-empty").classList.toggle("hidden", Boolean(result));
+  if (!result) return;
+  const overview = result.overview;
+  fill("workbench-file", result.fileName + " · TEMPORA " + result.engineVersion);
+  fill("workbench-counts", [
+    text[language].workbenchEvents + ": " + overview.eventCount,
+    text[language].workbenchSources + ": " + overview.sourceCount,
+    text[language].workbenchClaims + ": " + overview.claimCount,
+    text[language].workbenchNoEvidence + ": " + overview.unsupportedClaimCount,
+  ].join(" · "));
+  fill("workbench-validation", result.valid ? text[language].validCanonical : text[language].invalidCanonical);
+  const kinds: Array<[string, EvidenceRow[]]> = [
+    ["workbench-events", overview.events],
+    ["workbench-sources", overview.sources],
+    ["workbench-claims", overview.claims],
+  ];
+  for (const [targetId, rows] of kinds) {
+    const target = byId(targetId);
+    target.replaceChildren();
+    for (const row of rows) {
+      const tr = document.createElement("tr");
+      for (const value of [row.id, row.title, row.status, String(row.evidenceCount)]) {
+        const td = document.createElement("td");
+        td.textContent = value;
+        tr.append(td);
+      }
+      target.append(tr);
+    }
+  }
+}
+
 async function validateCorpus(): Promise<void> {
   if (!isTauri()) { notify(text[language].nativeOnly); return; }
   if (validationBusy) return;
@@ -181,12 +222,14 @@ async function validateCorpus(): Promise<void> {
   notify(text[language].enginePending);
   selectedValidation = null;
   renderValidation();
+  renderWorkbench();
   try {
     // Rust opens its own file picker; the WebView never supplies a path or raw bytes.
     const result = await invoke<CanonicalResult | null>("validate_corpus_native");
     if (!result) { notify(text[language].cancelled); return; }
     selectedValidation = result;
     renderValidation();
+    renderWorkbench();
     showView("documents");
     notify((result.valid ? text[language].validCanonical : text[language].invalidCanonical) + " · " + result.fileName);
   } catch (error) {
