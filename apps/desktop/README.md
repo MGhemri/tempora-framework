@@ -173,3 +173,35 @@ lockfile with Cargo, and receive review.
 This pins the Rust dependency graph, **not** entire machine environments,
 all npm tooling, compiler versions, binary timestamps, or bit-for-bit
 Windows installer outputs. WebView2 sandbox compatibility remains separate.
+
+## Fixed Version WebView2 — controlled sandbox experiment
+
+The existing NSIS Windows workflow is **not** proven to work on machines
+without an Evergreen WebView2 registration. The Windows development PC
+tests demonstrate genuine canonical engine execution, but the clean sandbox
+previously displayed `Could not find the WebView2 Runtime`.
+
+This experimental build is intentionally **manual and isolated**. Obtain the
+official **Microsoft Edge WebView2 Fixed Version Runtime x64 CAB** from
+Microsoft; verify the source and independently record the CAB SHA-256.
+The required runtime archive is not downloaded automatically and is
+**never** committed. On Windows, with Rust, npm and Tauri prerequisites
+installed, run from `apps/desktop/`:
+
+```powershell
+./scripts/build-fixed-webview.ps1 -CabPath "C:\\path\\Microsoft.WebView2.FixedVersionRuntime.x64.cab" -ExpectedSha256 "<64-character-verified-sha256>"
+```
+
+The script validates the CAB digest, stages the runtime in
+`src-tauri/resources/webview2-fixed/`, stages the pinned scientific
+Node/SDK runtime, and invokes Tauri NSIS with the override
+`src-tauri/tauri.windows.fixed.conf.json` and Cargo `--locked`.
+
+**Acceptance gate:** install the resulting unsigned NSIS executable in a
+Windows sandbox where neither Evergreen WebView2 nor system Node is
+installed. Confirm visible UI rendering, JSON file picker, valid/invalid
+canonical corpus outcomes, shutdown and uninstall. A running GUI process
+alone is not sufficient proof. The fixed-runtime experiment is not a
+public release, is not yet an automated CI artifact, and does not
+resolve licensing or code-signing requirements. Do not merge the old
+experimental #20 blindly into the now advanced `main` branch.
