@@ -1,0 +1,100 @@
+name: TEMPORA Desktop Fixed WebView2 Experiment
+
+# Explicit opt-in; the official Microsoft Fixed Version CAB URL and its
+# independently recorded SHA-256 are required for every run. NEVER use
+# third-party mirrors or automatically follow unverified release channels.
+on:
+  workflow_dispatch:
+    inputs:
+      cab_url:
+        description: "Official Microsoft HTTPS URL for WebView2 Fixed Version x64 CAB"
+        required: true
+        type: string
+      cab_sha256:
+        description: "Independently verified SHA-256 (64 hexadecimal characters) of the Microsoft CAB"
+        required: true
+        type: string
+
+permissions:
+  contents: read
+
+jobs:
+  fixed-webview2-nsis:
+    name: Experimental Windows x64 Fixed WebView2 NSIS
+    runs-on: windows-latest
+    timeout-minutes: 60
+    defaults:
+      run:
+        working-directory: apps/desktop
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - uses: dtolnay/rust-toolchain@stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: apps/desktop/src-tauri
+      - name: Download and verify official Fixed Version CAB
+        shell: pwsh
+        env:
+          CAB_URL: ${{ inputs.cab_url }}
+          CAB_SHA256: ${{ inputs.cab_sha256 }}
+        run: |
+          $ErrorActionPreference = "Stop"
+          if ($env:CAB_SHA256 -notmatch '^[a-fA-F0-9]{64}$') { throw "INVALID_CAB_SHA256" }
+          $u = [uri]$env:CAB_URL
+          if ($u.Scheme -ne "https" -or $u.Host -notmatch '(^|\.)microsoft\.com$') {
+            throw "OFFICIAL_MICROSOFT_CAB_URL_REQUIRED"
+          }
+          $dest = Join-Path $env:RUNNER_TEMP "tempora-official-fixed-webview2-x64.cab"
+          Invoke-WebRequest -Uri $u -OutFile $dest -MaximumRedirection 5
+          $hash = (Get-FileHash -LiteralPath $dest -Algorithm SHA256).Hash.ToLowerInvariant()
+          if ($hash -ne $env:CAB_SHA256.ToLowerInvariant()) {
+            throw "FIXED_CAB_DIGEST_MISMATCH"
+          }
+          Write-Host "CAB verified SHA256 $hash"
+          & ./scripts/stage-fixed-webview.ps1 -CabPath $dest -ExpectedSha256 $env:CAB_SHA256
+          if (-not (Test-Path "src-tauri/resources/webview2-fixed/msedgewebview2.exe")) {
+            throw "FIXED_RUNTIME_STAGE_MISSING"
+          }
+      - name: Install dependencies and verify desktop bridge
+        run: |
+          npm install --ignore-scripts --no-audit --no-fund
+          npm run build
+          npm run test:bridge
+          npm run test:windows-engine
+      - name: Stage pinned TEMPORA engine
+        run: npm run stage:windows-engine
+      - name: Build native NSIS with application-local Fixed WebView2
+        run: npx --no-install tauri build --config src-tauri/tauri.windows.conf.json --config src-tauri/tauri.windows.fixed.conf.json -- --locked
+      - name: Verify installed app and embedded WebView2 runtime
+        shell: pwsh
+        run: |
+          $exe = Get-ChildItem "src-tauri/target/release/bundle/nsis" -Filter "*setup.exe" | Select-Object -First 1
+          if (-not $exe) { throw "FIXED_NSIS_MISSING" }
+          ./scripts/verify-windows-install.ps1 -Installer $exe.FullName -InstallDirectory "$env:RUNNER_TEMP/tempora-fixed-runtime-install"
+          if ($LASTEXITCODE -ne 0) { throw "FIXED_NSIS_SMOKE_FAILED" }
+          git diff --exit-code -- src-tauri/Cargo.lock
+          if ($LASTEXITCODE -ne 0) { throw "CARGO_LOCK_MODIFIED" }
+      - name: Write provenance for experimental installer
+        shell: pwsh
+        env:
+          CAB_SHA256: ${{ inputs.cab_sha256 }}
+        run: |
+          $dir = "src-tauri/target/release/bundle/nsis"
+          $exe = Get-ChildItem $dir -Filter "*setup.exe" | Select-Object -First 1
+          @(
+            "source_sha=$env:GITHUB_SHA",
+            "webview2_fixed_cab_sha256=$($env:CAB_SHA256.ToLowerInvariant())",
+            "installer_sha256=$((Get-FileHash $exe.FullName -Algorithm SHA256).Hash.ToLowerInvariant())",
+            "cargo_lock_sha256=$((Get-FileHash 'src-tauri/Cargo.lock' -Algorithm SHA256).Hash.ToLowerInvariant())"
+          ) | Set-Content (Join-Path $dir "fixed-webview2-provenance.txt")
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TEMPORA-Windows-x64-Fixed-WebView2-EXPERIMENTAL-NOT-RELEASE
+          path: |
+            apps/desktop/src-tauri/target/release/bundle/nsis/*setup.exe
+            apps/desktop/src-tauri/target/release/bundle/nsis/fixed-webview2-provenance.txt
+          if-no-files-found: error
+          retention-days: 7
