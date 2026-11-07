@@ -17,6 +17,7 @@
         <button class="nav-item" data-view="documents"><span class="nav-symbol">▤</span><span data-i18n="documents">Documents</span></button>
         <button class="nav-item" data-view="research"><span class="nav-symbol">◇</span><span data-i18n="research">Analyses</span></button>
         <button class="nav-item" data-view="models"><span class="nav-symbol">✧</span><span data-i18n="models">Modèles IA</span><span class="tiny-chip">FUTURE</span></button>
+        <button class="nav-item" data-view="about"><span class="nav-symbol">ⓘ</span><span data-i18n="about">À propos</span></button>
       </nav>
       <div class="sidebar-bottom">
         <div class="offline-tag"><span class="status-dot"></span><span data-i18n="offline">Mode local · Aucun envoi réseau</span></div>
@@ -94,6 +95,25 @@
           </section>
         </section>
         <section id="view-models" class="view hidden"><div class="page-heading"><div><div class="eyebrow">TEMPORA / INTELLIGENCE ASSISTÉE</div><h1 data-i18n="models">Modèles IA</h1><p data-i18n="modelsIntro">Espace réservé aux futurs fournisseurs d'inférence, avec séparation stricte entre hypothèses machine et décisions humaines.</p></div></div><div class="placeholder"><span class="placeholder-symbol">✧</span><h2 data-i18n="modelsSoon">TensorFlow n'est pas encore activé</h2><p data-i18n="modelsLong">Les contrats d'inférence, la version des modèles, les jeux d'évaluation et les journaux de preuve seront développés avant tout téléchargement ou exécution de modèle.</p><span class="roadmap-tag">INFERENCE API / PHASE 2</span></div></section>
+        <section id="view-about" class="view hidden" aria-labelledby="about-title">
+          <div class="page-heading"><div><div class="eyebrow">TEMPORA / DESKTOP</div>
+            <h1 id="about-title" data-i18n="about">À propos</h1>
+            <p data-i18n="aboutIntro">Un espace de recherche historique local, traçable et reproductible.</p>
+          </div></div>
+          <div class="about-panel">
+            <img class="about-logo" src="./branding/tempora-logo-transparent.png" alt="TEMPORA Framework" />
+            <dl class="about-details">
+              <div><dt data-i18n="aboutProduct">Application</dt><dd>TEMPORA Desktop</dd></div>
+              <div><dt data-i18n="aboutVersion">Version Desktop</dt><dd id="about-desktop-version">0.1.1-beta.2</dd></div>
+              <div><dt data-i18n="aboutEngine">Moteur scientifique</dt><dd>TEMPORA Framework 3.0.0</dd></div>
+              <div><dt data-i18n="aboutAuthor">Auteur / Projet</dt><dd>Ghemri M</dd></div>
+              <div><dt data-i18n="aboutWebsite">Site</dt><dd><a href="https://connect-gm.com" id="about-website" rel="noopener noreferrer">https://connect-gm.com</a></dd></div>
+              <div><dt data-i18n="aboutLicense">Licence</dt><dd>MIT</dd></div>
+              <div><dt data-i18n="aboutRepository">Code source</dt><dd><a href="https://github.com/MGhemri/tempora-framework" id="about-repository" rel="noopener noreferrer">github.com/MGhemri/tempora-framework</a></dd></div>
+            </dl>
+            <p class="subnote" data-i18n="aboutNotice">La conformité au schéma ne certifie pas la véracité historique. Les décisions de recherche restent humaines.</p>
+          </div>
+        </section>
         <div id="notification" role="status" aria-live="polite" class="notification hidden"></div>
       </main>
     </div>

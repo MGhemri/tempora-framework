@@ -1,0 +1,94 @@
+name: TEMPORA Desktop Windows — Signed Candidate (manual, fail-closed)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: tempora-desktop-windows-signed-candidate
+  cancel-in-progress: false
+
+jobs:
+  signed-candidate:
+    name: Build and verify signed TEMPORA Desktop x64 NSIS
+    runs-on: windows-latest
+    timeout-minutes: 75
+    environment: windows-code-signing
+    defaults:
+      run:
+        working-directory: apps/desktop
+    env:
+      WIN_CSC_LINK: ${{ secrets.WIN_CSC_LINK }}
+      WIN_CSC_KEY_PASSWORD: ${{ secrets.WIN_CSC_KEY_PASSWORD }}
+    steps:
+      - name: Check signing credentials are configured before building
+        shell: pwsh
+        run: |
+          if ([string]::IsNullOrWhiteSpace($env:WIN_CSC_LINK) -or
+              [string]::IsNullOrWhiteSpace($env:WIN_CSC_KEY_PASSWORD)) {
+            throw "WINDOWS_CODE_SIGNING_CERTIFICATE_REQUIRED: configure GitHub environment secrets WIN_CSC_LINK and WIN_CSC_KEY_PASSWORD"
+          }
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+          cache: npm
+          cache-dependency-path: apps/desktop/electron/package-lock.json
+      - name: Build and test TEMPORA Desktop interface
+        run: |
+          npm install --ignore-scripts --no-audit --no-fund
+          npm run build
+          npm run test:bridge
+          npm run test:windows-engine
+          node --test electron/tests/host.test.cjs
+          node --test electron/tests/review-integrity.test.cjs
+      - name: Stage pinned scientific engine
+        run: npm run stage:windows-engine
+      - name: Restore exact electron-builder toolchain
+        working-directory: apps/desktop/electron
+        run: npm ci --no-audit --no-fund
+      - name: Require Authenticode signing of application and installer
+        working-directory: apps/desktop/electron
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+        run: npx --no-install electron-builder --win nsis --x64 --config.forceCodeSigning=true
+      - name: Verify signed application and signed NSIS using Windows Authenticode
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = "Stop"
+          $setup = @(Get-ChildItem electron/release -File -Filter '*SETUP.exe')
+          if ($setup.Count -ne 1) { throw "SIGNED_SETUP_MISSING_OR_AMBIGUOUS" }
+          $appExe = @(Get-ChildItem electron/release/win-unpacked -File -Filter 'TEMPORA Desktop.exe')
+          if ($appExe.Count -ne 1) { throw "SIGNED_APP_MISSING_OR_AMBIGUOUS" }
+          foreach ($exe in @($setup[0], $appExe[0])) {
+            $signature = Get-AuthenticodeSignature -LiteralPath $exe.FullName
+            if ($signature.Status -ne [System.Management.Automation.SignatureStatus]::Valid -or
+                -not $signature.SignerCertificate) {
+              throw "AUTHENTICODE_SIGNATURE_INVALID: $($exe.Name) status=$($signature.Status)"
+            }
+            Write-Host "Verified signed: $($exe.Name)"
+            Write-Host "Signer subject: $($signature.SignerCertificate.Subject)"
+            Write-Host "Signer thumbprint: $($signature.SignerCertificate.Thumbprint)"
+          }
+          node electron/tests/packaged-engine-smoke.cjs "electron/release/win-unpacked/resources"
+          if ($LASTEXITCODE -ne 0) { throw "SIGNED_PACKAGED_ENGINE_TEST_FAILED" }
+          $hash = (Get-FileHash $setup[0].FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+          "$hash  $($setup[0].Name)" | Set-Content electron/release/SHA256SUMS.txt -Encoding ascii
+          @(
+            "source_sha=$env:GITHUB_SHA",
+            "scientific_engine=tempora-framework@3.0.0",
+            "signed=true",
+            "authenticode_status=Valid",
+            "nsis_sha256=$hash"
+          ) | Set-Content electron/release/SIGNED-PROVENANCE.txt -Encoding utf8
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TEMPORA-Desktop-Windows-x64-SIGNED-CANDIDATE-NOT-PUBLISHED
+          path: |
+            apps/desktop/electron/release/*SETUP.exe
+            apps/desktop/electron/release/SHA256SUMS.txt
+            apps/desktop/electron/release/SIGNED-PROVENANCE.txt
+          if-no-files-found: error
+          retention-days: 14
