@@ -11,5 +11,6 @@ contextBridge.exposeInMainWorld('temporaElectron', Object.freeze({
   queryVisualProject: (module, offset, limit) => ipcRenderer.invoke('tempora:visualization:query', module, offset, limit),
   closeVisualProject: () => ipcRenderer.invoke('tempora:visualization:close'),
   analyzeVisualProject: (module,limit,threshold) => ipcRenderer.invoke('tempora:visualization:analyze',module,limit,threshold),
-  exportVisualProject: (module,format,offset,limit) => ipcRenderer.invoke('tempora:visualization:export',module,format,offset,limit)
+  exportVisualProject: (module,format,offset,limit) => ipcRenderer.invoke('tempora:visualization:export',module,format,offset,limit),
+  queryGraphNeighborhood: (root,depth,direction,limit) => ipcRenderer.invoke('tempora:visualization:neighborhood',root,depth,direction,limit)
 }));
