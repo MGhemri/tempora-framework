@@ -96,3 +96,16 @@ test('Electron Beta version in the GUI matches the shipped package',()=>{
  assert.match(view,/window\.temporaElectron\.desktopVersion/);
  assert.match(view,/sidebarVersion\.textContent/);
 });
+
+test('Windows signing is fail-closed and never mislabels an unsigned build',()=>{
+ const sign=src('../../.github/workflows/desktop-electron-signed-candidate.yml');
+ assert.match(sign,/workflow_dispatch:/);
+ assert.match(sign,/WIN_CSC_LINK:/);
+ assert.match(sign,/WIN_CSC_KEY_PASSWORD:/);
+ assert.match(sign,/WINDOWS_CODE_SIGNING_CERTIFICATE_REQUIRED/);
+ assert.match(sign,/forceCodeSigning=true/);
+ assert.match(sign,/Get-AuthenticodeSignature/);
+ assert.match(sign,/AUTHENTICODE_SIGNATURE_INVALID/);
+ assert.match(sign,/TEMPORA-Desktop-Windows-x64-SIGNED-CANDIDATE-NOT-PUBLISHED/);
+ assert.doesNotMatch(sign,/gh release create|publish-prerelease/);
+});
