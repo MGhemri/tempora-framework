@@ -3,7 +3,7 @@
 // TEMPORA Desktop Windows fallback: Electron/Chromium; NO Edge WebView2 dependency.
 // This is an experimental independent host for the existing scientific GUI.
 // Canonical validation is delegated exclusively to the pinned TEMPORA 3.0.0 worker.
-const {app, BrowserWindow, dialog, ipcMain, session, clipboard} = require('electron');
+const {app, BrowserWindow, dialog, ipcMain, session, clipboard, shell} = require('electron');
 const {readFileSync, statSync, existsSync} = require('node:fs');
 const {join, basename, extname, resolve} = require('node:path');
 const {spawn} = require('node:child_process');
@@ -236,6 +236,15 @@ app.whenReady().then(async () => {
   ipcMain.handle('tempora:select_document', selectDocument);
   ipcMain.handle('tempora:validate_corpus_native', validateCorpus);
   ipcMain.handle('tempora:copy_review_draft', copyReviewDraft);
+  ipcMain.handle('tempora:open-official-link', async (event, url) => {
+    validSender(event);
+    if (url !== 'https://connect-gm.com' &&
+        url !== 'https://github.com/MGhemri/tempora-framework') {
+      throw Error('UNAPPROVED_EXTERNAL_URL');
+    }
+    await shell.openExternal(url);
+    return true;
+  });
   // Research data never initiate network requests from the offline renderer.
   session.defaultSession.webRequest.onBeforeRequest((details, callback) => {
     const scheme = new URL(details.url).protocol;
