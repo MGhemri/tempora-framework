@@ -81,3 +81,29 @@ test('Installed TEMPORA smoke verifies a WebView2 child belonging to its GUI pro
  assert.match(installed,/msedgewebview2\.exe/);
  assert.match(installed,/INSTALLED_GUI_WEBVIEW2_PROCESS_MISSING/);
 });
+
+test('Clean Windows diagnosis uses the real Microsoft WebView2 Evergreen registration ID',()=>{
+ const script=read('scripts/diagnose-webview2.ps1');
+ assert.match(script,/F3017226-FE2A-4295-8BDF-00C3A9A7E4C5/);
+ assert.doesNotMatch(script,/F1E7D8D0-5B6A-4D0C-8A62-CC799A23F9B0/);
+ assert.match(script,/HKEY_CURRENT_USER|HKCU/);
+ assert.match(script,/HKEY_LOCAL_MACHINE|HKLM/);
+ assert.match(script,/WebView2 running process count/);
+});
+test('Fixed Runtime CI requires verified official Microsoft CAB and application-local NSIS build',()=>{
+ const ci=read('../../.github/workflows/desktop-fixed-runtime.yml');
+ assert.match(ci,/workflow_dispatch:/);
+ assert.match(ci,/cab_sha256:/);
+ assert.match(ci,/OFFICIAL_MICROSOFT_CAB_URL_REQUIRED/);
+ assert.match(ci,/FIXED_CAB_DIGEST_MISMATCH/);
+ assert.match(ci,/stage-fixed-webview\.ps1/);
+ assert.match(ci,/tauri\.windows\.fixed\.conf\.json -- --locked/);
+ assert.match(ci,/TEMPORA-Windows-x64-Fixed-WebView2-EXPERIMENTAL-NOT-RELEASE/);
+ assert.match(ci,/-RequireLocalFixedRuntime/);
+ const smoke=read("scripts/verify-windows-install.ps1");
+ assert.match(smoke,/FIXED_WEBVIEW2_NOT_APPLICATION_LOCAL/);
+ assert.match(smoke,/ExecutablePath\.StartsWith/);
+ const config=JSON.parse(read('src-tauri/tauri.windows.fixed.conf.json'));
+ assert.deepEqual(config.bundle.windows.webviewInstallMode,
+   {type:'fixedRuntime',path:'./resources/webview2-fixed/'});
+});

@@ -1,6 +1,7 @@
 param(
   [Parameter(Mandatory=$true)][string]$Installer,
-  [Parameter(Mandatory=$true)][string]$InstallDirectory
+  [Parameter(Mandatory=$true)][string]$InstallDirectory,
+  [switch]$RequireLocalFixedRuntime
 )
 $ErrorActionPreference = "Stop"
 $ProgressPreference = "SilentlyContinue"
@@ -66,7 +67,7 @@ try {
     # A process being alive does not prove that a WebView2 child exists.
     # Inspect the descendant tree of this installed app, not unrelated browsers.
     $allProcesses = @(Get-CimInstance Win32_Process -ErrorAction Stop |
-      Select-Object ProcessId, ParentProcessId, Name)
+      Select-Object ProcessId, ParentProcessId, Name, ExecutablePath)
     $descendants = @([int]$appProcess.Id)
     for ($depth = 0; $depth -lt 5; $depth++) {
       $children = @($allProcesses | Where-Object {
@@ -81,6 +82,19 @@ try {
     })
     if ($webviewChildren.Count -eq 0) {
       throw "INSTALLED_GUI_WEBVIEW2_PROCESS_MISSING"
+    }
+    if ($RequireLocalFixedRuntime) {
+      $prefix = $InstallDirectory.TrimEnd('\') + '\'
+      $localChildren = @($webviewChildren | Where-Object {
+        $_.ExecutablePath -and
+        $_.ExecutablePath.StartsWith($prefix, [StringComparison]::OrdinalIgnoreCase)
+      })
+      if ($localChildren.Count -eq 0) {
+        throw "FIXED_WEBVIEW2_NOT_APPLICATION_LOCAL: no child browser executable under TEMPORA installation"
+      }
+      foreach ($child in $localChildren) {
+        Write-Host "Verified bundled WebView2 binary: $($child.ExecutablePath)"
+      }
     }
     Write-Host "Installed TEMPORA GUI spawned $($webviewChildren.Count) WebView2 child process(es)."
   } finally {
