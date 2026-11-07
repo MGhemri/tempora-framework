@@ -15,7 +15,7 @@ const TIME_MODES = Object.freeze(['certain-only','possible-overlap','declared-st
 const MAX_REFS = 256;
 const MAX_DIAGNOSTICS = 200;
 const MAX_RESULT_BYTES = 256 * 1024;
-const IDENTIFIER = /^[^\u0000-\u001f\u007f]{1,200}$/u;
+const IDENTIFIER = /^[A-Za-z0-9][A-Za-z0-9_.:-]{0,199}$/;
 const SHA = /^[a-f0-9]{64}$/;
 
 class ProjectionError extends Error {
