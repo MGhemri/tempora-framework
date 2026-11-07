@@ -3,6 +3,11 @@ import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 import {readFileSync} from 'node:fs';
 const require=createRequire(import.meta.url);
+import {createRequire as makeRequire} from 'node:module';
+const requireFromSdk=makeRequire(require.resolve('tempora-framework'));
+const Ajv=requireFromSdk('ajv/dist/2020');
+const addFormats=requireFromSdk('ajv-formats');
+
 const {canonical}=require('tempora-framework');
 const {
   ProjectionError,ref,refKey,refs,selection,diagnostics,projection
@@ -129,4 +134,29 @@ test('J1A standalone schemas exist without changes to canonical v3',()=>{
     assert.equal(doc.$schema,'https://json-schema.org/draft/2020-12/schema');
     assert.equal(doc.additionalProperties,false);
   }
+});
+
+test('J1A JSON schemas validate exact derived envelopes, selections and canonical typed refs',()=>{
+ const base=new URL('../../../../schemas/tempora/visualization/',import.meta.url);
+ const docs=['typed-ref.schema.json','selection-state.schema.json','projection-envelope.schema.json']
+   .map(file=>JSON.parse(readFileSync(new URL(file,base),'utf8')));
+ const ajv=new Ajv({strict:true,allErrors:true});addFormats(ajv);
+ for(const doc of docs) ajv.addSchema(doc);
+ const validateRef=ajv.getSchema('urn:tempora:visualization:typed-ref:1.0.0');
+ const validateSelection=ajv.getSchema('urn:tempora:visualization:selection-state:1.0.0');
+ const validateProjection=ajv.getSchema('urn:tempora:visualization:projection-envelope:1.0.0');
+ assert.ok(validateRef);assert.ok(validateSelection);assert.ok(validateProjection);
+ assert.equal(validateRef({kind:'event',namespace:'SYNTHETIC_HISTORY',id:'EVENT_001'}),true,JSON.stringify(validateRef.errors));
+ assert.equal(validateRef({kind:'spatial_assertion',namespace:'SYNTHETIC_HISTORY',id:'S1'}),false);
+ assert.equal(validateProjection(projection(meta)),true,JSON.stringify(validateProjection.errors));
+ assert.equal(validateProjection({...projection(meta),unexpected:true}),false);
+ const state={
+   selection_schema_version:'1.0.0',corpusKey:'a'.repeat(64),
+   viewId:'graph',selectedRefs:[{kind:'event',namespace:'SYNTHETIC_HISTORY',id:'EVENT_001'}],
+   timeFilter:{mode:'possible-overlap',earliest:null,latest:null},
+   spatialFilter:null,predicateFilter:null,statusFilter:null,
+   language:'fr',evidenceFilter:null,algorithmContext:null,partialResult:false
+ };
+ assert.equal(validateSelection(selection(state)),true,JSON.stringify(validateSelection.errors));
+ assert.equal(validateSelection({...selection(state),injected:'unsupported'}),false);
 });
