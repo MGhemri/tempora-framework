@@ -100,6 +100,11 @@ test('Two-stage setup verifies Microsoft WebView2 registration before starting T
            src.indexOf('Start-Process -FilePath $temporaExe'));
  assert.match(src,/\[switch\]\$CheckOnly/);
  assert.match(src,/Get-AuthenticodeSignature/);
+ // PowerShell Write-Host uses information stream 6 and is not captured by
+ // '& script | Out-String' on its own. Machine-readable statuses use stream 1.
+ assert.match(src,/Write-Output "WEBVIEW2_READY: \$installed"/);
+ assert.match(src,/Write-Output 'WEBVIEW2_NOT_INSTALLED'/);
+ assert.doesNotMatch(src,/Write-Host "WEBVIEW2_READY: \$installed"/);
  assert.match(cmd,/Install-TEMPORA\.ps1/);
  assert.match(ci,/TEMPORA-Desktop-Windows-TwoStage-SETUP-WEBVIEW2-REQUIRED/);
  assert.match(ci,/Install-TEMPORA\.ps1[\s\S]*?-CheckOnly/);
