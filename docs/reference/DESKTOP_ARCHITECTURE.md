@@ -205,3 +205,23 @@ only for environments where Evergreen runtime registration cannot be
 relied upon. None of these removes the need for clean-Windows GUI
 rendering and install/uninstall acceptance tests. Don't conflate a
 green NSIS build with a verified WebView runtime on the target host.
+
+## Explicit WebView2 → TEMPORA two-stage installation
+
+Windows Sandbox reproduced a missing WebView2 runtime after the
+standard offline-NSIS installation, despite successful build/smoke.
+An experimental **two-stage kit** now separates the Microsoft
+Evergreen standalone EXE from the TEMPORA NSIS EXE. Its launcher
+verifies Microsoft's per-user and per-machine Evergreen registration
+(`pv` of client ID
+`{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}`), validates the
+Microsoft Authenticode signature before executing the official
+installer, then refuses to invoke TEMPORA NSIS until a non-zero
+runtime version is visible. A read-only `-CheckOnly` option exposes
+the current Windows account's registration.
+
+The CI kit omits Microsoft binaries to avoid shipping downloaded,
+unverified third-party executables. A genuine Microsoft offline x64
+installer must be supplied by the researcher before testing. Tests
+cover script ordering and read-only detection; only a fresh Sandbox
+run can prove runtime provisioning and actual GUI rendering.

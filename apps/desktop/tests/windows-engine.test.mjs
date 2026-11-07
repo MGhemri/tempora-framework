@@ -81,3 +81,31 @@ test('Installed TEMPORA smoke verifies a WebView2 child belonging to its GUI pro
  assert.match(installed,/msedgewebview2\.exe/);
  assert.match(installed,/INSTALLED_GUI_WEBVIEW2_PROCESS_MISSING/);
 });
+
+test('Two-stage setup verifies Microsoft WebView2 registration before starting TEMPORA',()=>{
+ const src=read('scripts/two-stage/Install-TEMPORA.ps1');
+ const cmd=read('scripts/two-stage/INSTALL_TEMPORA.cmd');
+ const ci=read('../../.github/workflows/desktop-foundation.yml');
+ for (const key of [
+  'F3017226-FE2A-4295-8BDF-00C3A9A7E4C5',
+  'HKEY_CURRENT_USER',
+  'HKEY_LOCAL_MACHINE',
+  'MICROSOFT_WEBVIEW2_AUTHENTICODE_NOT_VALID',
+  'WEBVIEW2_NOT_REGISTERED_AFTER_INSTALL',
+  'WEBVIEW2_PREREQUISITE_NOT_MET',
+  'Start-Process -FilePath $runtimeExe',
+  'Start-Process -FilePath $temporaExe',
+ ]) assert.ok(src.includes(key),key);
+ assert.ok(src.indexOf('if (-not $installed) {\n    throw \'WEBVIEW2_PREREQUISITE_NOT_MET') <
+           src.indexOf('Start-Process -FilePath $temporaExe'));
+ assert.match(src,/\[switch\]\$CheckOnly/);
+ assert.match(src,/Get-AuthenticodeSignature/);
+ // PowerShell Write-Host uses information stream 6 and is not captured by
+ // '& script | Out-String' on its own. Machine-readable statuses use stream 1.
+ assert.match(src,/Write-Output "WEBVIEW2_READY: \$installed"/);
+ assert.match(src,/Write-Output 'WEBVIEW2_NOT_INSTALLED'/);
+ assert.doesNotMatch(src,/Write-Host "WEBVIEW2_READY: \$installed"/);
+ assert.match(cmd,/Install-TEMPORA\.ps1/);
+ assert.match(ci,/TEMPORA-Desktop-Windows-TwoStage-SETUP-WEBVIEW2-REQUIRED/);
+ assert.match(ci,/Install-TEMPORA\.ps1[\s\S]*?-CheckOnly/);
+});
