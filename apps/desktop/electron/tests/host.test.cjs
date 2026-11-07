@@ -109,3 +109,20 @@ test('Windows signing is fail-closed and never mislabels an unsigned build',()=>
  assert.match(sign,/TEMPORA-Desktop-Windows-x64-SIGNED-CANDIDATE-NOT-PUBLISHED/);
  assert.doesNotMatch(sign,/gh release create|publish-prerelease/);
 });
+
+test('Microsoft Store distribution uses actual Partner Center identity and never claims local signing',()=>{
+ const store=src('electron/store-appx.config.cjs');
+ const flow=src('../../.github/workflows/desktop-electron-microsoft-store-candidate.yml');
+ assert.match(store,/MICROSOFT_STORE_PARTNER_CENTER_IDENTITY_REQUIRED/);
+ assert.match(store,/displayName:'TEMPORA Desktop'/);
+ assert.match(store,/capabilities:\['runFullTrust'\]/);
+ assert.match(flow,/workflow_dispatch:/);
+ assert.match(flow,/TEMPORA_STORE_IDENTITY_NAME/);
+ assert.match(flow,/TEMPORA_STORE_PUBLISHER/);
+ assert.match(flow,/TEMPORA_STORE_PUBLISHER_DISPLAY_NAME/);
+ assert.match(flow,/--win appx --x64/);
+ assert.match(flow,/STORE_MANIFEST_PARTNER_CENTER_IDENTITY_MISMATCH/);
+ assert.match(flow,/STORE_PACKAGED_ENGINE_TEST_FAILED/);
+ assert.match(flow,/UNSIGNED-NOT-PUBLISHED/);
+ assert.doesNotMatch(flow,/gh release create|store publish|partnercenter.*upload/i);
+});
