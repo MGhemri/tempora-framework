@@ -1,7 +1,7 @@
 import { invokeNative, isNative, copyNativeReviewDraft } from "./native";
 import "./style.css";
 
-type View = "overview" | "documents" | "research" | "models";
+type View = "overview" | "documents" | "research" | "models" | "about";
 type Language = "fr" | "en";
 type PreviewRow = { id: string; title: string; kind: string };
 type EngineDiagnostic = { code?: string; message?: string; path?: string; id?: string };
@@ -28,6 +28,10 @@ type DocumentPreview = {
 const text = {
   fr: {
     workspace: "ESPACE DE TRAVAIL", overview: "Vue générale", documents: "Documents", research: "Analyses", models: "Modèles IA",
+    about: "À propos", aboutIntro: "Un espace de recherche historique local, traçable et reproductible.",
+    aboutProduct: "Application", aboutVersion: "Version Desktop", aboutEngine: "Moteur scientifique",
+    aboutAuthor: "Auteur / Projet", aboutWebsite: "Site", aboutLicense: "Licence", aboutRepository: "Code source",
+    aboutNotice: "La conformité au schéma ne certifie pas la véracité historique. Les décisions de recherche restent humaines.",
     offline: "Mode local · Aucun envoi réseau", phase: "Phase 0 — Exploration", local: "Espace local",
     lab: "LABORATOIRE NUMÉRIQUE / TEMPORA", hello: "Bienvenue dans votre espace de recherche.",
     intro: "Organisez vos corpus historiques. Explorez la structure de leurs documents sans modifier les originaux.",
@@ -62,6 +66,10 @@ const text = {
   },
   en: {
     workspace: "WORKSPACE", overview: "Overview", documents: "Documents", research: "Analysis", models: "AI models",
+    about: "About", aboutIntro: "A local, traceable and reproducible historical research workspace.",
+    aboutProduct: "Application", aboutVersion: "Desktop version", aboutEngine: "Scientific engine",
+    aboutAuthor: "Author / Project", aboutWebsite: "Website", aboutLicense: "License", aboutRepository: "Source code",
+    aboutNotice: "Schema conformity does not certify historical truth. Research decisions remain human.",
     offline: "Local mode · No network upload", phase: "Phase 0 — Exploration", local: "Local workspace",
     lab: "DIGITAL RESEARCH LAB / TEMPORA", hello: "Welcome to your research workspace.",
     intro: "Organize historical corpora. Explore document structures without modifying their originals.",
@@ -377,5 +385,7 @@ if (window.temporaElectron) {
   const sidebarVersion = document.querySelector(".sidebar-bottom p b");
   if (edition) edition.textContent = `${version} / BETA`;
   if (sidebarVersion) sidebarVersion.textContent = `Desktop ${version}`;
+  const aboutVersion = document.getElementById("about-desktop-version");
+  if (aboutVersion) aboutVersion.textContent = version;
 }
 showView("overview");
