@@ -8,7 +8,7 @@ const {canonical} = require('tempora-framework');
 const PROJECTION_VERSION = '1.0.0';
 const SELECTION_VERSION = '1.0.0';
 const ENGINE_VERSION = '3.0.0';
-const REF_KINDS = Object.freeze(['event','source','claim','entity','spatial_assertion','relation','review','assessment','corpus_release']);
+const REF_KINDS = Object.freeze(['event','source','claim','entity','spatial','relation','review','assessment','release']);
 const MODES = Object.freeze(['validated','unvalidated-preview']);
 const SEVERITIES = Object.freeze(['info','warning','error']);
 const TIME_MODES = Object.freeze(['certain-only','possible-overlap','declared-start']);
@@ -111,8 +111,8 @@ function diagnostics(input) {
     if(item.count!==undefined && (!Number.isSafeInteger(item.count)||item.count<0)) fail('INVALID_DIAGNOSTIC');
     return item.count===undefined?{code:item.code,severity:item.severity}:
       {code:item.code,severity:item.severity,count:item.count};
-  }).sort((a,b)=>a.code.localeCompare(b.code,'en')||
-      a.severity.localeCompare(b.severity,'en')||(a.count??0)-(b.count??0));
+  }).sort((a,b)=>(a.code<b.code?-1:a.code>b.code?1:0)||
+      (a.severity<b.severity?-1:a.severity>b.severity?1:0)||(a.count??0)-(b.count??0));
 }
 function jsonCopy(value) {
   let copied;
