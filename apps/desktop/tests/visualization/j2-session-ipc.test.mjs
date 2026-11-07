@@ -2,6 +2,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {createRequire} from 'node:module';
 import {spawn} from 'node:child_process';
+import {dirname} from 'node:path';
 import {SYNTHETIC_CASES} from './synthetic-cases.mjs';
 const require=createRequire(import.meta.url);
 const {ProjectManager,TTL_MS}=require('../../bridge/visualization/session.cjs');
@@ -28,7 +29,7 @@ test('J2 rejects invalid corpus without creating a session',()=>{
   assert.throws(()=>project.create(SYNTHETIC_CASES[9].make()),/CORPUS_NOT_VALIDATED/);
 });
 test('V2 persistent Node IPC creates, pages and releases a local corpus; V1 health remains intact',async()=>{
-  const child=spawn(process.execPath,[worker],{cwd:new URL('../../',import.meta.url).pathname,
+  const child=spawn(process.execPath,[worker],{cwd:dirname(worker),
     stdio:['pipe','pipe','ignore']});
   let buffer='';let serial=0;const waiters=new Map();
   child.stdout.on('data',b=>{
