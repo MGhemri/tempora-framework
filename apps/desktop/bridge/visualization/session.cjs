@@ -13,7 +13,7 @@ class ProjectManager {
   constructor(clock=()=>Date.now()) {this.clock=clock;}
   #renew(session){
     if(session.timer)clearTimeout(session.timer);
-    this.#renew(session);
+    session.expiry=this.clock()+TTL_MS;
     session.timer=setTimeout(()=>{
       if(this.#session===session)this.release();
     },TTL_MS);
@@ -47,14 +47,14 @@ class ProjectManager {
     const result=build(session.corpus,{module,offset,limit,
       generatedAt:new Date(this.clock()).toISOString()});
     // Renew only after a successful query.
-    session.expiry=this.clock()+TTL_MS;
+    this.#renew(session);
     return result;
   }
   analyze(id,{module,limit=50,threshold=0.6}={}){
     const session=this.#get(id);
     const result=analyze(session.corpus,{module,limit,threshold,
       generatedAt:new Date(this.clock()).toISOString()});
-    session.expiry=this.clock()+TTL_MS;
+    this.#renew(session);
     return result;
   }
   release(id){
