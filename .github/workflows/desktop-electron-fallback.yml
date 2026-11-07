@@ -27,6 +27,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22.16.0'
+          cache: npm
+          cache-dependency-path: apps/desktop/electron/package-lock.json
       - name: Install TEMPORA frontend dependencies
         run: npm install --ignore-scripts --no-audit --no-fund
       - name: Compile shared TEMPORA frontend
@@ -44,14 +46,14 @@ jobs:
         working-directory: apps/desktop/electron
         env:
           ELECTRON_SKIP_BINARY_DOWNLOAD: 'false'
-        run: npm install --no-audit --no-fund
-      # Temporary bootstrap: export npm-generated lock through the CI log
-      # for an unprivileged, reviewed commit via the GitHub connector.
-      - name: Bootstrap Electron exact dependency lockfile
-        working-directory: apps/desktop/electron
+        run: npm ci --no-audit --no-fund
+      - name: Verify Electron dependency resolution is frozen
         shell: pwsh
         run: |
-          node -e "const fs=require('fs');const t=fs.readFileSync('package-lock.json');const b=t.toString('base64');console.log('TEMPORA_LOCK_BEGIN');for(let i=0;i<b.length;i+=1024)console.log('TEMPORA_LOCK_CHUNK '+b.slice(i,i+1024));console.log('TEMPORA_LOCK_END');"
+          git diff --exit-code -- electron/package-lock.json
+          if ($LASTEXITCODE -ne 0) { throw "ELECTRON_PACKAGE_LOCK_CHANGED" }
+          $meta = Get-Content "electron/package-lock.json" -Raw | ConvertFrom-Json
+          if ($meta.lockfileVersion -ne 3) { throw "ELECTRON_LOCKFILE_VERSION_INVALID" }
       - name: Build unsigned Windows NSIS with bundled Chromium
         working-directory: apps/desktop/electron
         env:
@@ -80,9 +82,24 @@ jobs:
           $root = Join-Path (Resolve-Path "electron/release/win-unpacked").Path "resources"
           node electron/tests/packaged-engine-smoke.cjs $root
           if ($LASTEXITCODE -ne 0) { throw "PACKAGED_SCIENTIFIC_ENGINE_SMOKE_FAILED" }
+      - name: Capture experimental installer provenance
+        shell: pwsh
+        run: |
+          $dir = "electron/release"
+          $exe = @(Get-ChildItem $dir -Filter "*SETUP.exe" -File)
+          if ($exe.Count -ne 1) { throw "ELECTRON_NSIS_PROVENANCE_MISSING" }
+          @(
+            "source_commit=$env:GITHUB_SHA",
+            "electron=45.2.3",
+            "sdk=tempora-framework@3.0.0",
+            "electron_lock_sha256=$((Get-FileHash 'electron/package-lock.json' -Algorithm SHA256).Hash.ToLowerInvariant())",
+            "nsis_sha256=$((Get-FileHash $exe[0].FullName -Algorithm SHA256).Hash.ToLowerInvariant())"
+          ) | Set-Content (Join-Path $dir "electron-provenance-sha256.txt")
       - uses: actions/upload-artifact@v4
         with:
           name: TEMPORA-Desktop-Electron-Windows-EXPERIMENTAL-NOT-RELEASE
-          path: apps/desktop/electron/release/*SETUP.exe
+          path: |
+            apps/desktop/electron/release/*SETUP.exe
+            apps/desktop/electron/release/electron-provenance-sha256.txt
           if-no-files-found: error
           retention-days: 7
