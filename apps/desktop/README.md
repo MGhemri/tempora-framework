@@ -254,3 +254,40 @@ files have actually been committed.** The black lettering is not
 legible on the app's dark sidebar without a light background or
 a distinct high-contrast variant. Treat final brand use and
 high-DPI screenshots as visual acceptance criteria.
+
+## Windows Sandbox: Evergreen installed manually but GUI still fails (Fixed Runtime experiment)
+
+A fresh Windows Sandbox continued to show "Could not find the WebView2
+Runtime" **even after manual installation of Microsoft Evergreen WebView2**.
+This disproves the hypothesis that merely changing the two installers'
+order resolves the problem. The two-stage installer in PR #29 is therefore
+**not** a sufficient release fix; do not merge it as a solution to this
+reproduction.
+
+The read-only `scripts/diagnose-webview2.ps1` has been fixed to use the
+official runtime client ID `{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}`
+in HKCU and HKLM. Run this inside the failing sandbox to distinguish
+missing registration from an otherwise unavailable runtime.
+
+**Next experiment: application-local Fixed Version WebView2**, which does
+not depend on Evergreen's registry registration. Microsoft and Tauri
+document the approach. A dedicated `desktop-fixed-runtime.yml` GitHub
+Actions workflow offers a **manual workflow_dispatch** with two required
+inputs: the **official Microsoft HTTPS URL** of the x64 Fixed Version CAB
+and an **independently verified SHA-256** for that exact CAB. It checks
+both, stages the complete runtime, builds a Cargo-locked NSIS with
+`tauri.windows.fixed.conf.json`, attempts an installed smoke test, and
+uploads an unsigned artifact plus provenance.
+
+The workflow becomes manually runnable from GitHub Actions once merged
+into the default branch. It cannot be run successfully without the
+actual official CAB and independent digest. A successful Windows runner
+does **not** prove the Sandbox GUI works: run it on the clean sandbox,
+visually inspect the interface, validate the two test corpora, then
+verify application shutdown and uninstallation.
+
+Fixed Version is intentionally **not automatically updated** by
+Microsoft. Any production adoption requires periodic refreshed
+runtime CABs, verification, Windows/Edge security review and a
+repeatable installer replacement process. No release until clean
+Sandbox acceptance is documented.
