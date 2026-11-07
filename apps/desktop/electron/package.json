@@ -51,6 +51,7 @@
       "perMachine": false,
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true
-    }
+    },
+    "afterPack": "./after-pack.cjs"
   }
 }
