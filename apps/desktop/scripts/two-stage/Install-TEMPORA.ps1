@@ -68,9 +68,9 @@ try {
   Write-Host 'TEMPORA / Etape 1 sur 2 : verification de Microsoft Edge WebView2 Runtime'
   $installed = Get-WebView2Version
   if ($installed) {
-    Write-Host "WEBVIEW2_READY: $installed"
+    Write-Output "WEBVIEW2_READY: $installed"
   } elseif ($CheckOnly) {
-    Write-Host 'WEBVIEW2_NOT_INSTALLED'
+    Write-Output 'WEBVIEW2_NOT_INSTALLED'
   } else {
     $runtimeExe = Resolve-LocalInstaller $WebView2InstallerPath 'MicrosoftEdgeWebView2RuntimeInstallerX64.exe' 'MICROSOFT_WEBVIEW2_INSTALLER'
     Assert-MicrosoftInstaller $runtimeExe
@@ -91,7 +91,7 @@ try {
     if (-not $installed) {
       throw 'WEBVIEW2_NOT_REGISTERED_AFTER_INSTALL: TEMPORA installation blocked'
     }
-    Write-Host "WEBVIEW2_READY_AFTER_INSTALL: $installed"
+    Write-Output "WEBVIEW2_READY_AFTER_INSTALL: $installed"
   }
   if ($CheckOnly) { return }
   Write-Host 'TEMPORA / Etape 2 sur 2 : installation de TEMPORA Desktop'
