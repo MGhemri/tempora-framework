@@ -63,7 +63,9 @@ test('Official TEMPORA hourglass branding is packaged in Windows icon resources'
  assert.equal(data.readUInt16LE(0),0,'ICO reserved signature');
  assert.equal(data.readUInt16LE(2),1,'ICO image type');
  const pkg=require('../package.json');
- assert.equal(pkg.build.win.icon,'build/icon.ico');
+ assert.equal(pkg.build.win.icon,'build/icon-256.png');
+ assert.match(pkg.scripts['dist:win'],/create-windows-icon\\.ps1/);
+ assert.match(src('electron/scripts/create-windows-icon.ps1'),/256, 256/);
  assert.ok(pkg.build.files.includes('build/icon.ico'));
  assert.match(src('electron/main.cjs'),/icon: join\(__dirname, 'build', 'icon\.ico'\)/);
 });
