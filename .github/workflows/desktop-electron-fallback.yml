@@ -40,6 +40,7 @@ jobs:
           node --check electron/main.cjs
           node --check electron/preload.cjs
           node --test electron/tests/host.test.cjs
+          node --test electron/tests/review-integrity.test.cjs
       - name: Stage official Node and pinned TEMPORA Engine 3.0.0
         run: npm run stage:windows-engine
       - name: Install exact-pinned Electron packaging toolchain
