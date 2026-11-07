@@ -99,6 +99,10 @@ test('Fixed Runtime CI requires verified official Microsoft CAB and application-
  assert.match(ci,/stage-fixed-webview\.ps1/);
  assert.match(ci,/tauri\.windows\.fixed\.conf\.json -- --locked/);
  assert.match(ci,/TEMPORA-Windows-x64-Fixed-WebView2-EXPERIMENTAL-NOT-RELEASE/);
+ assert.match(ci,/-RequireLocalFixedRuntime/);
+ const smoke=read("scripts/verify-windows-install.ps1");
+ assert.match(smoke,/FIXED_WEBVIEW2_NOT_APPLICATION_LOCAL/);
+ assert.match(smoke,/ExecutablePath\.StartsWith/);
  const config=JSON.parse(read('src-tauri/tauri.windows.fixed.conf.json'));
  assert.deepEqual(config.bundle.windows.webviewInstallMode,
    {type:'fixedRuntime',path:'./resources/webview2-fixed/'});
