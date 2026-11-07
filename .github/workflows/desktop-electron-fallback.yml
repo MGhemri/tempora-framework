@@ -23,8 +23,6 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22.16.0'
-          cache: npm
-          cache-dependency-path: apps/desktop/electron/package-lock.json
       - name: Install TEMPORA frontend dependencies
         run: npm install --ignore-scripts --no-audit --no-fund
       - name: Compile shared TEMPORA frontend
@@ -42,7 +40,7 @@ jobs:
         working-directory: apps/desktop/electron
         env:
           ELECTRON_SKIP_BINARY_DOWNLOAD: 'false'
-        run: npm ci --no-audit --no-fund
+        run: npm install --no-audit --no-fund
       - name: Build unsigned Windows NSIS with bundled Chromium
         working-directory: apps/desktop/electron
         env:
