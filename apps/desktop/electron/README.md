@@ -23,7 +23,7 @@ npm install --ignore-scripts --no-audit --no-fund
 npm run build
 npm run stage:windows-engine
 cd electron
-npm install --no-audit --no-fund
+npm ci --no-audit --no-fund
 npm run dist:win
 ```
 
@@ -32,9 +32,11 @@ The resulting **unsigned experimental** setup is under
 
 A dedicated GitHub Actions Windows workflow builds this automatically
 and uploads `TEMPORA-Desktop-Electron-Windows-EXPERIMENTAL-NOT-RELEASE`.
-The Electron binary and `electron-builder` dependencies are exact-pinned
-in `electron/package.json`; a lockfile is required before the project
-claims frozen Electron dependency resolution. This build is a trial,
+The Electron binary and `electron-builder` versions are exact-pinned in
+`electron/package.json` and a Windows-CI-generated npm v3
+`electron/package-lock.json` is committed. The Electron packaging toolchain
+is installed with `npm ci` and its lockfile digest is recorded in the
+experimental installer provenance. This build is a trial,
 not a replacement for the audited Tauri installer or a release.
 
 ## Security model
@@ -62,3 +64,29 @@ Test in a **new Windows Sandbox** with no WebView2:
 A passing installer build does not establish rendering success in the
 Sandbox. This experimental runtime has a larger installer footprint and
 must receive Chromium security updates.
+
+## Confirmed Windows Sandbox acceptance (Nov 7, 2026)
+
+The maintainer independently confirmed that the Electron/Chromium variant
+installed and launched on a fresh Windows Sandbox where Tauri/Evergreen
+had repeatedly failed. The exact two synthetic reference tests produced:
+
+- Canonical v3 valid: `valid=true`, **0 diagnostics**,
+  SHA-256 `869baa4aa744e886d38177e19962a619b95a4e72e435863e5ee21e91d16cd4d5`.
+- Canonical v3 deliberately invalid: `valid=false`, **1 diagnostic**
+  `CANONICAL_SCHEMA_INVALID` at `/events/0/schema_version`,
+  SHA-256 `21c088887e58e3a2d1c23b95d18afd524e937ff7fa6697708906001973ad82eb`.
+- Scientific engine version: `3.0.0`; structural preview: one event,
+  one source, one assertion. This is schema conformity, **not** an
+  assertion of historical fact.
+
+A separate Windows CI test executes the **packaged** `node.exe` and
+worker from `electron/release/win-unpacked/resources/engine/` with
+fresh synthetic valid/invalid corpora and verifies divergent digests.
+Those synthetic inputs are not the user's two independent reference
+files; do not compare their digests directly.
+
+Remaining beta gates: interactive navigation and clipboard review-draft
+test, clean-machine uninstall/reinstall, icon/branding binary delivery,
+signed Windows packages, security updates for bundled Chromium, and
+reproducible builds. **No public release is authorized yet.**
