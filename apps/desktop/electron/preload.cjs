@@ -6,5 +6,8 @@ contextBridge.exposeInMainWorld('temporaElectron', Object.freeze({
   selectDocument: () => ipcRenderer.invoke('tempora:select_document'),
   validateCorpus: () => ipcRenderer.invoke('tempora:validate_corpus_native'),
   copyReviewDraft: (draft) => ipcRenderer.invoke('tempora:copy_review_draft', draft),
-  openOfficialLink: (url) => ipcRenderer.invoke('tempora:open-official-link', url)
+  openOfficialLink: (url) => ipcRenderer.invoke('tempora:open-official-link', url),
+  openVisualProject: () => ipcRenderer.invoke('tempora:visualization:open'),
+  queryVisualProject: (module, offset, limit) => ipcRenderer.invoke('tempora:visualization:query', module, offset, limit),
+  closeVisualProject: () => ipcRenderer.invoke('tempora:visualization:close')
 }));
