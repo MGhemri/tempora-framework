@@ -124,7 +124,7 @@ jobs:
             if ($sdk.Count -ne 1) { throw 'STORE_SCIENTIFIC_ENGINE_MISSING_IN_APPX' }
             if ($node.Count -ne 1 -or $worker.Count -ne 1) { throw 'STORE_SCIENTIFIC_WORKER_MISSING_IN_APPX' }
           } finally { $archive.Dispose() }
-          $unpacked = 'electron/store-candidate/win-unpacked/resources'
+          $unpacked = Join-Path (Resolve-Path 'electron/store-candidate/win-unpacked').Path 'resources'
           if (Test-Path (Join-Path $unpacked 'engine/node.exe')) {
             node electron/tests/packaged-engine-smoke.cjs $unpacked
             if ($LASTEXITCODE -ne 0) { throw 'STORE_PACKAGED_ENGINE_TEST_FAILED' }
