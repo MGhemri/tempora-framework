@@ -73,7 +73,7 @@ jobs:
         run: |
           $exe = Get-ChildItem "src-tauri/target/release/bundle/nsis" -Filter "*setup.exe" | Select-Object -First 1
           if (-not $exe) { throw "FIXED_NSIS_MISSING" }
-          ./scripts/verify-windows-install.ps1 -Installer $exe.FullName -InstallDirectory "$env:RUNNER_TEMP/tempora-fixed-runtime-install"
+          ./scripts/verify-windows-install.ps1 -Installer $exe.FullName -InstallDirectory "$env:RUNNER_TEMP/tempora-fixed-runtime-install" -RequireLocalFixedRuntime
           if ($LASTEXITCODE -ne 0) { throw "FIXED_NSIS_SMOKE_FAILED" }
           git diff --exit-code -- src-tauri/Cargo.lock
           if ($LASTEXITCODE -ne 0) { throw "CARGO_LOCK_MODIFIED" }
