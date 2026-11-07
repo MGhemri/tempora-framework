@@ -15,24 +15,24 @@
         "source",
         "claim",
         "entity",
-        "spatial_assertion",
+        "spatial",
         "relation",
         "review",
         "assessment",
-        "corpus_release"
+        "release"
       ]
     },
     "namespace": {
       "type": "string",
       "minLength": 1,
       "maxLength": 200,
-      "pattern": "^[^\\\\u0000-\\\\u001f\\\\u007f]+$"
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
     },
     "id": {
       "type": "string",
       "minLength": 1,
       "maxLength": 200,
-      "pattern": "^[^\\\\u0000-\\\\u001f\\\\u007f]+$"
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
     }
   }
 }
