@@ -37,6 +37,7 @@ jobs:
         run: |
           npm run test:bridge
           npm run test:windows-engine
+          npm run test:visualization
           node --check electron/main.cjs
           node --check electron/preload.cjs
           node --test electron/tests/host.test.cjs
