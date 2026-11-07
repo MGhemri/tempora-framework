@@ -51,3 +51,19 @@ test('Electron packaging preserves complete scientific SDK, not just Node execut
  assert.match(hook,/sdk\.version !== '3\.0\.0'/);
  assert.match(hook,/TEMPORA_ELECTRON_PACKAGED_SDK_MISSING/);
 });
+
+
+test('Official TEMPORA hourglass branding is packaged in Windows icon resources',()=>{
+ const {existsSync,readFileSync}=require('node:fs');
+ const root=join(__dirname,'..');
+ const ico=join(root,'build','icon.ico');
+ assert.ok(existsSync(ico),'official hourglass icon must be committed');
+ const data=readFileSync(ico);
+ assert.ok(data.length>1000,'invalid/empty ICO');
+ assert.equal(data.readUInt16LE(0),0,'ICO reserved signature');
+ assert.equal(data.readUInt16LE(2),1,'ICO image type');
+ const pkg=require('../package.json');
+ assert.equal(pkg.build.win.icon,'build/icon.ico');
+ assert.ok(pkg.build.files.includes('build/icon.ico'));
+ assert.match(src('electron/main.cjs'),/icon: join\(__dirname, 'build', 'icon\.ico'\)/);
+});
