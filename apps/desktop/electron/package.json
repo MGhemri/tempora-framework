@@ -1,9 +1,9 @@
 {
   "name": "tempora-desktop-chromium-fallback",
-  "productName": "TEMPORA Desktop Chromium",
+  "productName": "TEMPORA Desktop",
   "version": "0.1.1-beta.2",
   "private": true,
-  "description": "Experimental WebView2-free TEMPORA Desktop Windows research client",
+  "description": "TEMPORA Desktop — local scientific research client",
   "main": "main.cjs",
   "license": "MIT",
   "scripts": {
@@ -15,7 +15,7 @@
   },
   "build": {
     "appId": "org.tempora.framework.desktop.chromium",
-    "productName": "TEMPORA Desktop Chromium",
+    "productName": "TEMPORA Desktop",
     "directories": {
       "output": "release"
     },
@@ -45,7 +45,7 @@
       "target": [
         "nsis"
       ],
-      "artifactName": "TEMPORA-Desktop-Chromium-${version}-${arch}-SETUP.exe",
+      "artifactName": "TEMPORA-Desktop-${version}-${arch}-SETUP.exe",
       "icon": "build/icon-256.png"
     },
     "nsis": {
