@@ -41,3 +41,13 @@ test('Electron native host sandbox and safe local-only picker', () => {
 test('Shared Vite assets remain local-file-compatible', () => {
   assert.match(src('vite.config.ts'), /base:\s*["']\.\/["']/);
 });
+
+test('Electron packaging preserves complete scientific SDK, not just Node executable',()=>{
+ const pkg=require('../package.json');
+ const hook=src('electron/after-pack.cjs');
+ assert.equal(pkg.build.afterPack,'./after-pack.cjs');
+ assert.match(hook,/TEMPORA_ELECTRON_STAGED_SDK_MISSING/);
+ assert.match(hook,/cpSync\(source, dest/);
+ assert.match(hook,/sdk\.version !== '3\.0\.0'/);
+ assert.match(hook,/TEMPORA_ELECTRON_PACKAGED_SDK_MISSING/);
+});
