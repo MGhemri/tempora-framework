@@ -79,6 +79,18 @@ class VisualService {
     if(typeof threshold!=='number'||threshold<0||threshold>1)throw Error('VISUAL_THRESHOLD_INVALID');
     return this.request('visualization.analysis.run',{project_id:this.projectId,module,limit,threshold});
   }
+  neighborhood(root,depth=1,direction='both',limit=50){
+    if(!this.projectId)throw Error('VISUAL_PROJECT_NOT_OPEN');
+    if(!root||typeof root!=='object'||Array.isArray(root))throw Error('GRAPH_INVALID_REF');
+    for(const k of ['kind','namespace','id']){
+      if(typeof root[k]!=='string'||root[k].length>200)throw Error('GRAPH_INVALID_REF');
+    }
+    if(!Number.isSafeInteger(depth)||depth<0||depth>5)throw Error('GRAPH_INVALID_DEPTH');
+    if(!['in','out','both'].includes(direction))throw Error('GRAPH_INVALID_DIRECTION');
+    if(!Number.isSafeInteger(limit)||limit<1||limit>100)throw Error('GRAPH_INVALID_LIMIT');
+    return this.request('visualization.graph.neighborhood',
+      {project_id:this.projectId,root,depth,direction,limit});
+  }
   prepareExport(module,format,offset=0,limit=50){
     if(!this.projectId)throw Error('VISUAL_PROJECT_NOT_OPEN');
     if(!MODULES.includes(module))throw Error('VISUAL_MODULE_INVALID');
