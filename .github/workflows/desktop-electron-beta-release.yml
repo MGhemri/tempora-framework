@@ -149,9 +149,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          sha256sum -c release/SHA256SUMS.txt --ignore-missing || (
-            cd release && sha256sum -c SHA256SUMS.txt
-          )
+          (cd release && sha256sum -c SHA256SUMS.txt)
           gh release create desktop-v0.1.0-beta.1 \
             release/*SETUP.exe release/SHA256SUMS.txt release/RELEASE-PROVENANCE.txt \
             --repo "$GITHUB_REPOSITORY" \
