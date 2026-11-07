@@ -32,7 +32,7 @@ function v2Respond(message){
   const op=message.operation,p=message.payload;
   if(!['visualization.capabilities','visualization.project.create',
     'visualization.project.query','visualization.project.release',
-    'visualization.analysis.run'].includes(op)){
+    'visualization.analysis.run','visualization.export.prepare'].includes(op)){
     return v2Reply(id,false,{error:{code:'UNSUPPORTED_OPERATION'}});
   }
   try {
@@ -50,6 +50,11 @@ function v2Respond(message){
         throw Object.assign(new Error('INVALID_PAYLOAD'),{code:'INVALID_PAYLOAD'});
       result=visualization.query(p.project_id,
         {module:p.module,offset:p.offset,limit:p.limit});
+    } else if(op==='visualization.export.prepare'){
+      if(Object.keys(p).some(k=>!['project_id','module','format','offset','limit'].includes(k)))
+        throw Object.assign(new Error('INVALID_PAYLOAD'),{code:'INVALID_PAYLOAD'});
+      result=visualization.export(p.project_id,
+        {module:p.module,format:p.format,offset:p.offset,limit:p.limit});
     } else if(op==='visualization.analysis.run'){
       if(Object.keys(p).some(k=>!['project_id','module','limit','threshold'].includes(k)))
         throw Object.assign(new Error('INVALID_PAYLOAD'),{code:'INVALID_PAYLOAD'});
