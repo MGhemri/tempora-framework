@@ -22,6 +22,7 @@
     "files": [
       "main.cjs",
       "preload.cjs",
+      "build/icon.ico",
       {
         "from": "../dist",
         "to": "dist",
@@ -44,7 +45,8 @@
       "target": [
         "nsis"
       ],
-      "artifactName": "TEMPORA-Desktop-Chromium-${version}-${arch}-SETUP.exe"
+      "artifactName": "TEMPORA-Desktop-Chromium-${version}-${arch}-SETUP.exe",
+      "icon": "build/icon.ico"
     },
     "nsis": {
       "oneClick": false,
