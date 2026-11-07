@@ -1,5 +1,6 @@
 import { invokeNative, isNative, copyNativeReviewDraft, openVisualProject, queryVisualProject, visualModules, type VisualModule, type VisualProjection, type VisualProjectInfo } from "./native";
 import "./style.css";
+import {renderScientificGraphic} from "./visualization/core/render-svg";
 
 type View = "overview" | "documents" | "research" | "models" | "about";
 type Language = "fr" | "en";
@@ -391,6 +392,7 @@ function renderVisual():void {
     b.setAttribute("aria-pressed",String(active));
     b.disabled=visualBusy||!info;
   });
+  renderScientificGraphic(byId("visual-graphic"),visualModule,visualProjection?.result??[]);
   const rows=byId("visual-rows");rows.replaceChildren();
   const result=visualProjection;
   if(result){
