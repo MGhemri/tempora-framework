@@ -116,6 +116,11 @@
               <span id="visual-page" aria-live="polite">—</span>
               <button id="visual-next" type="button" data-i18n="visualNext">Suivant</button>
             </div>
+            <div class="visual-pagination">
+              <label for="visual-export-format" data-i18n="visualExportFormat">Format d’export</label>
+              <select id="visual-export-format"><option value="json">JSON + manifest</option><option value="csv">CSV + manifest</option><option value="geojson">GeoJSON</option><option value="graphml">GraphML</option></select>
+              <button id="visual-export" type="button" data-i18n="visualExport">Exporter cette page</button>
+            </div>
             <button id="visual-analyze" type="button" class="primary" data-i18n="visualAnalyze">Exécuter une analyse déterministe</button>
             <p id="visual-analysis-note" class="subnote" role="status"></p>
             <div class="table-wrap"><table><thead><tr><th>Analysis result / Résultat</th></tr></thead><tbody id="visual-analysis-rows"></tbody></table></div>
