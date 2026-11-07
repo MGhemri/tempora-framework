@@ -39,7 +39,7 @@
       "type": "array",
       "maxItems": 256,
       "items": {
-        "$ref": "typed-ref.schema.json"
+        "$ref": "urn:tempora:visualization:typed-ref:1.0.0"
       }
     },
     "timeFilter": {
