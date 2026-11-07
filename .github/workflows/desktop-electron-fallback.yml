@@ -45,6 +45,13 @@ jobs:
         env:
           ELECTRON_SKIP_BINARY_DOWNLOAD: 'false'
         run: npm install --no-audit --no-fund
+      # Temporary bootstrap: export npm-generated lock through the CI log
+      # for an unprivileged, reviewed commit via the GitHub connector.
+      - name: Bootstrap Electron exact dependency lockfile
+        working-directory: apps/desktop/electron
+        shell: pwsh
+        run: |
+          node -e "const fs=require('fs');const t=fs.readFileSync('package-lock.json');const b=t.toString('base64');console.log('TEMPORA_LOCK_BEGIN');for(let i=0;i<b.length;i+=1024)console.log('TEMPORA_LOCK_CHUNK '+b.slice(i,i+1024));console.log('TEMPORA_LOCK_END');"
       - name: Build unsigned Windows NSIS with bundled Chromium
         working-directory: apps/desktop/electron
         env:
