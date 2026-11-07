@@ -378,6 +378,13 @@ byId("hero-open").addEventListener("click", () => void openDocument());
 byId("document-open").addEventListener("click", () => void openDocument());
 byId("validate-corpus").addEventListener("click", () => void validateCorpus());
 byId("draft-copy").addEventListener("click", () => void copyReviewDraft());
+for (const link of document.querySelectorAll<HTMLAnchorElement>("#view-about a")) {
+  link.addEventListener("click", event => {
+    if (!window.temporaElectron) return;
+    event.preventDefault();
+    void window.temporaElectron.openOfficialLink(link.href).catch(() => notify(text[language].failed));
+  });
+}
 localize();
 if (window.temporaElectron) {
   const version = window.temporaElectron.desktopVersion;
