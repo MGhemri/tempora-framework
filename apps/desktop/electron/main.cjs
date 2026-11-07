@@ -4,7 +4,8 @@
 // This is an experimental independent host for the existing scientific GUI.
 // Canonical validation is delegated exclusively to the pinned TEMPORA 3.0.0 worker.
 const {app, BrowserWindow, dialog, ipcMain, session, clipboard, shell} = require('electron');
-const {readFileSync, statSync, existsSync} = require('node:fs');
+const {readFileSync, statSync, existsSync, writeFileSync, renameSync, rmSync} = require('node:fs');
+const {randomBytes,createHash}=require('node:crypto');
 const {join, basename, extname, resolve} = require('node:path');
 const {spawn} = require('node:child_process');
 const {VisualService}=require('./visualization-service.cjs');
@@ -253,6 +254,42 @@ app.whenReady().then(async () => {
   ipcMain.handle('tempora:visualization:analyze', async(event,module,limit,threshold)=>{
     validSender(event);
     return visualService.analyze(module,limit,threshold);
+  });
+  ipcMain.handle('tempora:visualization:export', async(event,module,format,offset,limit)=>{
+    validSender(event);
+    const output=await visualService.prepareExport(module,format,offset,limit);
+    const choice=await dialog.showSaveDialog(mainWindow,{
+      title:'Export TEMPORA scientific view',
+      defaultPath:'TEMPORA-'+module+'.'+format,
+      filters:[{name:format.toUpperCase()+' scientific export',extensions:[format]}]
+    });
+    if(choice.canceled||!choice.filePath)return null;
+    const target=choice.filePath;
+    if(extname(target).toLowerCase()!=='.'+format)throw Error('VISUAL_EXPORT_EXTENSION_MISMATCH');
+    // Refuse replacement: an export must not overwrite user documents or a
+    // prior reproducibility manifest, even after the save picker returns.
+    const sidecar=output.manifestText?target+'.manifest.json':null;
+    if(existsSync(target)||(sidecar&&existsSync(sidecar)))throw Error('VISUAL_EXPORT_ALREADY_EXISTS');
+    const token=randomBytes(8).toString('hex');
+    const temp=target+'.'+token+'.tmp';
+    const tempManifest=sidecar?sidecar+'.'+token+'.tmp':null;
+    let installed=false;
+    try{
+      if(typeof output.data!=='string'||typeof output.sha256!=='string')throw Error('VISUAL_EXPORT_INVALID');
+      if(createHash('sha256').update(output.data).digest('hex')!==output.sha256)
+        throw Error('VISUAL_EXPORT_DIGEST_MISMATCH');
+      writeFileSync(temp,output.data,{flag:'wx'});
+      if(tempManifest)writeFileSync(tempManifest,output.manifestText,{flag:'wx'});
+      renameSync(temp,target);installed=true;
+      if(tempManifest)renameSync(tempManifest,sidecar);
+    }catch(error){
+      rmSync(temp,{force:true});
+      if(tempManifest)rmSync(tempManifest,{force:true});
+      if(installed)rmSync(target,{force:true});
+      throw error;
+    }
+    return {fileName:basename(target),sha256:output.sha256,
+      bytes:output.bytes,partial:Boolean(output.manifest?.partial)};
   });
   ipcMain.handle('tempora:visualization:close', async event=>{
     validSender(event);
