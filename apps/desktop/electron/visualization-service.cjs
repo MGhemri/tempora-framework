@@ -71,6 +71,13 @@ class VisualService {
       throw Error('VISUAL_PAGE_INVALID');
     return this.request('visualization.project.query',{project_id:this.projectId,module,offset,limit});
   }
+  analyze(module,limit=50,threshold=0.6){
+    if(!this.projectId)throw Error('VISUAL_PROJECT_NOT_OPEN');
+    if(!MODULES.includes(module))throw Error('VISUAL_MODULE_INVALID');
+    if(!Number.isSafeInteger(limit)||limit<1||limit>50)throw Error('VISUAL_ANALYSIS_LIMIT');
+    if(typeof threshold!=='number'||threshold<0||threshold>1)throw Error('VISUAL_THRESHOLD_INVALID');
+    return this.request('visualization.analysis.run',{project_id:this.projectId,module,limit,threshold});
+  }
   async release(){
     const id=this.projectId;this.projectId=null;
     if(id&&this.child)await this.request('visualization.project.release',{project_id:id});
