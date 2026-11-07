@@ -37,3 +37,6 @@ apps/desktop/src-tauri/resources/engine/
 
 # Locally staged proprietary Microsoft WebView2 Fixed Version runtime.
 apps/desktop/src-tauri/resources/webview2-fixed/
+
+# Separate Chromium/Electron Windows experimental builds.
+apps/desktop/electron/release/
