@@ -205,3 +205,19 @@ only for environments where Evergreen runtime registration cannot be
 relied upon. None of these removes the need for clean-Windows GUI
 rendering and install/uninstall acceptance tests. Don't conflate a
 green NSIS build with a verified WebView runtime on the target host.
+
+## Sandbox WebView2 failure after manual Evergreen installation
+
+The user reproduced the same WebView2 missing-runtime error after manually
+installing Evergreen in Windows Sandbox. Therefore a two-stage Evergreen
+installer is not sufficient for this environment. Previous diagnostics
+accidentally used a **non-WebView2 GUID**; the correct Microsoft runtime
+client GUID is `{F3017226-FE2A-4295-8BDF-00C3A9A7E4C5}`, now fixed.
+
+A manual `workflow_dispatch` build now supports the Tauri Fixed Version
+configuration using a SHA-256-pinned official Microsoft CAB. The Fixed
+Version approach avoids reliance on Evergreen's OS registry and
+updater, but introduces explicit runtime patch-management duties. The
+experimental NSIS is not a release and still requires **visual**
+clean-sandbox acceptance: a WebView2 descendant process alone is not
+conclusive evidence of a functioning research interface.
