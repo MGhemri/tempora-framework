@@ -79,6 +79,15 @@ class VisualService {
     if(typeof threshold!=='number'||threshold<0||threshold>1)throw Error('VISUAL_THRESHOLD_INVALID');
     return this.request('visualization.analysis.run',{project_id:this.projectId,module,limit,threshold});
   }
+  prepareExport(module,format,offset=0,limit=50){
+    if(!this.projectId)throw Error('VISUAL_PROJECT_NOT_OPEN');
+    if(!MODULES.includes(module))throw Error('VISUAL_MODULE_INVALID');
+    if(!['json','geojson','csv','graphml'].includes(format))throw Error('VISUAL_EXPORT_FORMAT');
+    if(!Number.isSafeInteger(offset)||offset<0||!Number.isSafeInteger(limit)||limit<1||limit>50)
+      throw Error('VISUAL_EXPORT_PAGE');
+    return this.request('visualization.export.prepare',
+      {project_id:this.projectId,module,format,offset,limit});
+  }
   async release(){
     const id=this.projectId;this.projectId=null;
     if(id&&this.child)await this.request('visualization.project.release',{project_id:id});

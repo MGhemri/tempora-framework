@@ -10,5 +10,6 @@ contextBridge.exposeInMainWorld('temporaElectron', Object.freeze({
   openVisualProject: () => ipcRenderer.invoke('tempora:visualization:open'),
   queryVisualProject: (module, offset, limit) => ipcRenderer.invoke('tempora:visualization:query', module, offset, limit),
   closeVisualProject: () => ipcRenderer.invoke('tempora:visualization:close'),
-  analyzeVisualProject: (module,limit,threshold) => ipcRenderer.invoke('tempora:visualization:analyze',module,limit,threshold)
+  analyzeVisualProject: (module,limit,threshold) => ipcRenderer.invoke('tempora:visualization:analyze',module,limit,threshold),
+  exportVisualProject: (module,format,offset,limit) => ipcRenderer.invoke('tempora:visualization:export',module,format,offset,limit)
 }));
