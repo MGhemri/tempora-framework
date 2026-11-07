@@ -12,6 +12,7 @@ declare global {
       queryVisualProject: (module: string, offset: number, limit: number) => Promise<unknown>;
       closeVisualProject: () => Promise<boolean>;
       analyzeVisualProject: (module: string,limit: number,threshold: number) => Promise<unknown>;
+      exportVisualProject: (module:string,format:string,offset:number,limit:number)=>Promise<unknown>;
     };
   }
 }
@@ -69,4 +70,12 @@ export async function closeVisualProject():Promise<void>{
 export async function analyzeVisualProject(module:VisualModule,limit=50,threshold=0.6):Promise<VisualProjection>{
   if(!window.temporaElectron)throw Error("VISUAL_ELECTRON_ONLY");
   return await window.temporaElectron.analyzeVisualProject(module,limit,threshold) as VisualProjection;
+}
+
+export type VisualExportFormat="json"|"geojson"|"csv"|"graphml";
+export type VisualExportReceipt={fileName:string;sha256:string;bytes:number;partial:boolean};
+export async function exportVisualProject(module:VisualModule,format:VisualExportFormat,offset=0,limit=50)
+  :Promise<VisualExportReceipt|null>{
+  if(!window.temporaElectron)throw Error("VISUAL_ELECTRON_ONLY");
+  return await window.temporaElectron.exportVisualProject(module,format,offset,limit) as VisualExportReceipt|null;
 }
