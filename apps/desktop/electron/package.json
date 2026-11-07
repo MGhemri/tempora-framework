@@ -7,7 +7,7 @@
   "main": "main.cjs",
   "license": "MIT",
   "scripts": {
-    "dist:win": "electron-builder --win nsis --x64"
+    "dist:win": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File ./scripts/create-windows-icon.ps1 && electron-builder --win nsis --x64"
   },
   "devDependencies": {
     "electron": "45.2.3",
@@ -22,6 +22,7 @@
     "files": [
       "main.cjs",
       "preload.cjs",
+      "build/icon.ico",
       {
         "from": "../dist",
         "to": "dist",
@@ -44,7 +45,8 @@
       "target": [
         "nsis"
       ],
-      "artifactName": "TEMPORA-Desktop-Chromium-${version}-${arch}-SETUP.exe"
+      "artifactName": "TEMPORA-Desktop-Chromium-${version}-${arch}-SETUP.exe",
+      "icon": "build/icon-256.png"
     },
     "nsis": {
       "oneClick": false,
