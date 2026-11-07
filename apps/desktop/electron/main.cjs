@@ -3,7 +3,7 @@
 // TEMPORA Desktop Windows fallback: Electron/Chromium; NO Edge WebView2 dependency.
 // This is an experimental independent host for the existing scientific GUI.
 // Canonical validation is delegated exclusively to the pinned TEMPORA 3.0.0 worker.
-const {app, BrowserWindow, dialog, ipcMain, session} = require('electron');
+const {app, BrowserWindow, dialog, ipcMain, session, clipboard} = require('electron');
 const {readFileSync, statSync, existsSync} = require('node:fs');
 const {join, basename, extname, resolve} = require('node:path');
 const {spawn} = require('node:child_process');
@@ -205,11 +205,42 @@ async function validateCorpus(event) {
   };
 }
 
+function copyReviewDraft(event, raw) {
+  validSender(event);
+  if (typeof raw !== 'string' || Buffer.byteLength(raw, 'utf8') > 16 * 1024) {
+    throw Error('REVIEW_DRAFT_LIMIT');
+  }
+  let draft;
+  try { draft = JSON.parse(raw); } catch { throw Error('REVIEW_DRAFT_JSON_INVALID'); }
+  if (!draft || Array.isArray(draft) || typeof draft !== 'object' ||
+      draft.document_type !== 'tempora.review_draft' ||
+      draft.draft_schema_version !== '1.0.0' ||
+      draft.status !== 'draft' || draft.approved !== false || draft.signed !== false ||
+      !draft.target || typeof draft.target.id !== 'string' ||
+      !/^[a-f0-9]{64}$/i.test(draft.target.corpus_sha256) ||
+      typeof draft.reviewer !== 'string' || !draft.reviewer.trim() ||
+      typeof draft.method !== 'string' || !draft.method.trim() ||
+      typeof draft.rationale !== 'string' || !draft.rationale.trim() ||
+      draft.reviewer.length > 200 || draft.method.length > 300 ||
+      draft.rationale.length > 10000 || draft.target.id.length > 200) {
+    throw Error('REVIEW_DRAFT_NOT_NONCANONICAL');
+  }
+  // Clipboard only: no filesystem, canonical review write, network or approval.
+  clipboard.writeText(raw);
+  return true;
+}
+
 app.whenReady().then(async () => {
   session.defaultSession.setPermissionRequestHandler((_contents, _permission, cb) => cb(false));
   session.defaultSession.setPermissionCheckHandler(() => false);
   ipcMain.handle('tempora:select_document', selectDocument);
   ipcMain.handle('tempora:validate_corpus_native', validateCorpus);
+  ipcMain.handle('tempora:copy_review_draft', copyReviewDraft);
+  // Research data never initiate network requests from the offline renderer.
+  session.defaultSession.webRequest.onBeforeRequest((details, callback) => {
+    const scheme = new URL(details.url).protocol;
+    callback({cancel: scheme !== 'file:' && scheme !== 'data:'});
+  });
   mainWindow = new BrowserWindow({
     width: 1330, height: 830, minWidth: 920, minHeight: 610,
     title: 'TEMPORA — Research Workspace (Chromium)',
