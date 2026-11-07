@@ -1,7 +1,7 @@
 {
   "name": "tempora-desktop-chromium-fallback",
   "productName": "TEMPORA Desktop Chromium",
-  "version": "0.1.0",
+  "version": "0.1.1-beta.2",
   "private": true,
   "description": "Experimental WebView2-free TEMPORA Desktop Windows research client",
   "main": "main.cjs",
