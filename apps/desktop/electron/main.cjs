@@ -4,7 +4,7 @@
 // This is an experimental independent host for the existing scientific GUI.
 // Canonical validation is delegated exclusively to the pinned TEMPORA 3.0.0 worker.
 const {app, BrowserWindow, dialog, ipcMain, session, clipboard, shell} = require('electron');
-const {readFileSync, statSync, existsSync, writeFileSync, linkSync, rmSync} = require('node:fs');
+const {readFileSync, statSync, existsSync, writeFileSync, copyFileSync, constants: fsConstants, rmSync} = require('node:fs');
 const {randomBytes,createHash}=require('node:crypto');
 const {join, basename, extname, resolve} = require('node:path');
 const {spawn} = require('node:child_process');
@@ -280,8 +280,8 @@ app.whenReady().then(async () => {
         throw Error('VISUAL_EXPORT_DIGEST_MISMATCH');
       writeFileSync(temp,output.data,{flag:'wx'});
       if(tempManifest)writeFileSync(tempManifest,output.manifestText,{flag:'wx'});
-      linkSync(temp,target);installed=true;
-      if(tempManifest)linkSync(tempManifest,sidecar);
+      copyFileSync(temp,target,fsConstants.COPYFILE_EXCL);installed=true;
+      if(tempManifest)copyFileSync(tempManifest,sidecar,fsConstants.COPYFILE_EXCL);
       rmSync(temp,{force:true});
       if(tempManifest)rmSync(tempManifest,{force:true});
     }catch(error){
