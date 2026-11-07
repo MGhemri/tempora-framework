@@ -62,6 +62,16 @@ test('V2 persistent Node IPC creates, pages and releases a local corpus; V1 heal
       {project_id,module:'observatory',limit:20});
     assert.equal(analyzed.ok,true);
     assert.equal(analyzed.result.result.length,9);
+    const graphReply=await send('2.0.0','visualization.graph.neighborhood',
+      {project_id,root:{kind:'event',namespace:'SYNTHETIC_HISTORY',id:'EVENT_001'},
+        depth:1,direction:'both',limit:10});
+    assert.equal(graphReply.ok,true);
+    assert.equal(graphReply.result.scope.total_matched,0);
+    const graphInvalid=await send('2.0.0','visualization.graph.neighborhood',
+      {project_id,root:{kind:'event',namespace:'SYNTHETIC_HISTORY',id:'EVENT_001'},
+        depth:20,direction:'both',limit:10});
+    assert.equal(graphInvalid.ok,false);
+    assert.equal(graphInvalid.error.code,'INVALID_DEPTH');
     const exportReply=await send('2.0.0','visualization.export.prepare',
       {project_id,module:'chronos',format:'json',offset:0,limit:1});
     assert.equal(exportReply.ok,true);
