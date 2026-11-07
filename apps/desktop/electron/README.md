@@ -165,13 +165,20 @@ de `Package/Identity/Name`, `Publisher` et nom d'éditeur depuis Microsoft.
 Ne jamais inventer de Publisher ou utiliser le CN du certificat HTTPS
 `connect-gm.com`.
 
-Configurer les variables GitHub repository :
+Les trois identifiants publics ont désormais été confirmés par le titulaire du
+compte et versionnés dans la configuration de packaging : `Name =
+GhemriM.TEMPORADesktop`, `Publisher =
+CN=C5BC3837-BBC8-425E-916B-4B6F77BD7455`,
+`PublisherDisplayName = Ghemri M`. Il ne s'agit **pas de secrets**.
 
-- `TEMPORA_STORE_IDENTITY_NAME` : identité de package réservée.
-- `TEMPORA_STORE_PUBLISHER` : sujet éditeur fourni par Partner Center.
-- `TEMPORA_STORE_PUBLISHER_DISPLAY_NAME` : nom d'éditeur validé par Microsoft.
+Aucune variable GitHub n'est nécessaire pour lancer la compilation
+candidat ; les valeurs sont vérifiées avant le build. Une éventuelle
+substitution via environnement est rejetée si elle ne correspond pas
+strictement à l'identité officielle. Si l'identité Partner Center
+change, procéder à une modification revue du fichier
+`store-appx.config.cjs` et du workflow.
 
-Le workflow **manuel** `desktop-electron-microsoft-store-candidate.yml`
+Le workflow **manuel ou déclenché en PR** `desktop-electron-microsoft-store-candidate.yml`
 produit un package AppX **non signé / candidat uniquement**, contrôle le
 manifest, la présence et le fonctionnement du moteur scientifique emballé,
 puis publie un artefact temporaire de CI (pas une GitHub Release).

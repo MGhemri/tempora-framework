@@ -1,6 +1,12 @@
-name: TEMPORA Desktop — Microsoft Store Candidate (AppX/MSIX family, unsigned)
+name: TEMPORA Desktop — Microsoft Store Candidate (AppX, not submitted)
 
 on:
+  pull_request:
+    paths:
+      - '.github/workflows/desktop-electron-microsoft-store-candidate.yml'
+      - 'apps/desktop/electron/**'
+      - 'apps/desktop/src/**'
+      - 'apps/desktop/bridge/**'
   workflow_dispatch:
 
 permissions:
@@ -12,34 +18,38 @@ concurrency:
 
 jobs:
   store-candidate:
-    name: Package Windows x64 candidate for Partner Center (NOT signed)
+    name: Build verified Windows x64 AppX for Partner Center
     runs-on: windows-latest
-    timeout-minutes: 65
+    timeout-minutes: 70
     defaults:
       run:
         working-directory: apps/desktop
     env:
-      TEMPORA_STORE_IDENTITY_NAME: ${{ vars.TEMPORA_STORE_IDENTITY_NAME }}
-      TEMPORA_STORE_PUBLISHER: ${{ vars.TEMPORA_STORE_PUBLISHER }}
-      TEMPORA_STORE_PUBLISHER_DISPLAY_NAME: ${{ vars.TEMPORA_STORE_PUBLISHER_DISPLAY_NAME }}
+      TEMPORA_STORE_IDENTITY_NAME: 'GhemriM.TEMPORADesktop'
+      TEMPORA_STORE_PUBLISHER: 'CN=C5BC3837-BBC8-425E-916B-4B6F77BD7455'
+      TEMPORA_STORE_PUBLISHER_DISPLAY_NAME: 'Ghemri M'
       CSC_IDENTITY_AUTO_DISCOVERY: 'false'
     steps:
-      - name: Require actual Partner Center identity
+      - uses: actions/checkout@v4
+      - name: Verify official Partner Center package identity
         shell: pwsh
         run: |
-          if ([string]::IsNullOrWhiteSpace($env:TEMPORA_STORE_IDENTITY_NAME) -or
-              [string]::IsNullOrWhiteSpace($env:TEMPORA_STORE_PUBLISHER) -or
-              [string]::IsNullOrWhiteSpace($env:TEMPORA_STORE_PUBLISHER_DISPLAY_NAME)) {
-            throw "MICROSOFT_STORE_PARTNER_CENTER_IDENTITY_REQUIRED: reserve TEMPORA Desktop in Partner Center and configure three repository variables"
+          $identity = @{
+            TEMPORA_STORE_IDENTITY_NAME = 'GhemriM.TEMPORADesktop'
+            TEMPORA_STORE_PUBLISHER = 'CN=C5BC3837-BBC8-425E-916B-4B6F77BD7455'
+            TEMPORA_STORE_PUBLISHER_DISPLAY_NAME = 'Ghemri M'
           }
-          Write-Host "Store identity configured (details redacted)"
-      - uses: actions/checkout@v4
+          foreach ($key in $identity.Keys) {
+            if ([Environment]::GetEnvironmentVariable($key) -cne $identity[$key]) {
+              throw "STORE_IDENTITY_MISMATCH: $key"
+            }
+          }
       - uses: actions/setup-node@v4
         with:
           node-version: '22.16.0'
           cache: npm
           cache-dependency-path: apps/desktop/electron/package-lock.json
-      - name: Compile shared desktop GUI and test scientific bridge
+      - name: Compile frontend and test canonical bridge
         run: |
           npm install --ignore-scripts --no-audit --no-fund
           npm run build
@@ -47,20 +57,20 @@ jobs:
           npm run test:windows-engine
           node --test electron/tests/host.test.cjs
           node --test electron/tests/review-integrity.test.cjs
-      - name: Stage offline pinned TEMPORA scientific engine
+      - name: Stage verified TEMPORA scientific engine
         run: npm run stage:windows-engine
-      - name: Install locked Electron packaging toolchain
+      - name: Install exact Electron packaging dependencies
         working-directory: apps/desktop/electron
         run: npm ci --no-audit --no-fund
-      - name: Create Store tile assets from official Windows icon
+      - name: Create Windows Store tile assets using official icon
         shell: pwsh
         run: |
           $ErrorActionPreference = 'Stop'
           Add-Type -AssemblyName System.Drawing
-          $source = (Resolve-Path 'electron/build/icon-white-256.png').Path
-          $out = Join-Path (Resolve-Path 'electron/build').Path 'appx'
-          New-Item -ItemType Directory -Path $out -Force | Out-Null
-          $image = [System.Drawing.Image]::FromFile($source)
+          $src = (Resolve-Path 'electron/build/icon-white-256.png').Path
+          $dest = Join-Path (Resolve-Path 'electron/build').Path 'appx'
+          New-Item -ItemType Directory -Path $dest -Force | Out-Null
+          $original = [System.Drawing.Image]::FromFile($src)
           try {
             $sizes = @(
               @('StoreLogo.png',50,50),
@@ -69,53 +79,60 @@ jobs:
               @('Wide310x150Logo.png',310,150)
             )
             foreach ($item in $sizes) {
-              $w=[int]$item[1]; $h=[int]$item[2]
-              $bmp=[System.Drawing.Bitmap]::new($w,$h)
-              $gfx=[System.Drawing.Graphics]::FromImage($bmp)
+              $width = [int]$item[1]
+              $height = [int]$item[2]
+              $img = [System.Drawing.Bitmap]::new($width,$height)
+              $g = [System.Drawing.Graphics]::FromImage($img)
               try {
-                $gfx.Clear([System.Drawing.Color]::White)
-                $gfx.InterpolationMode=[System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
-                $side=[Math]::Min($w,$h)
-                $gfx.DrawImage($image,[System.Drawing.Rectangle]::new([int](($w-$side)/2),[int](($h-$side)/2),$side,$side))
-                $bmp.Save((Join-Path $out $item[0]),[System.Drawing.Imaging.ImageFormat]::Png)
-              } finally { $gfx.Dispose(); $bmp.Dispose() }
+                $g.Clear([System.Drawing.Color]::White)
+                $g.InterpolationMode = [System.Drawing.Drawing2D.InterpolationMode]::HighQualityBicubic
+                $side = [Math]::Min($width,$height)
+                $g.DrawImage($original,[System.Drawing.Rectangle]::new([int](($width-$side)/2),[int](($height-$side)/2),$side,$side))
+                $img.Save((Join-Path $dest $item[0]),[System.Drawing.Imaging.ImageFormat]::Png)
+              } finally { $g.Dispose(); $img.Dispose() }
             }
-          } finally { $image.Dispose() }
-      - name: Package Store-compatible AppX (unsigned; Store will sign on certification)
+          } finally { $original.Dispose() }
+      - name: Package standalone Windows Store AppX (not signed locally)
         working-directory: apps/desktop/electron
         run: npx --no-install electron-builder --win appx --x64 --config ./store-appx.config.cjs
-      - name: Verify candidate, manifest identity, scientific resources and SHA256
+      - name: Verify actual AppX manifest, resources and hashes
         shell: pwsh
         run: |
-          $ErrorActionPreference='Stop'
-          $files=@(Get-ChildItem electron/store-candidate -File -Filter '*.appx')
-          if ($files.Count -ne 1) { throw "STORE_CANDIDATE_PACKAGE_NOT_UNIQUE" }
-          $appx=$files[0]
-          $sha=(Get-FileHash $appx.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
-          $output=Join-Path (Resolve-Path 'electron/store-candidate').Path 'SHA256SUMS.txt'
-          "$sha  $($appx.Name)" | Set-Content $output -Encoding ascii
+          $ErrorActionPreference = 'Stop'
+          $packages = @(Get-ChildItem electron/store-candidate -File -Filter '*.appx')
+          if ($packages.Count -ne 1) { throw 'STORE_APPX_NOT_UNIQUE' }
+          $appx = $packages[0]
           Add-Type -AssemblyName System.IO.Compression.FileSystem
-          $archive=[System.IO.Compression.ZipFile]::OpenRead($appx.FullName)
+          $archive = [System.IO.Compression.ZipFile]::OpenRead($appx.FullName)
           try {
-            $manifest=$archive.Entries | Where-Object {$_.FullName -eq 'AppxManifest.xml'} | Select-Object -First 1
-            if (-not $manifest) { throw 'STORE_MANIFEST_MISSING' }
-            $reader=[System.IO.StreamReader]::new($manifest.Open())
-            try { $xml=[xml]$reader.ReadToEnd() } finally { $reader.Dispose() }
-            $identity=$xml.Package.Identity
-            if ($identity.Name -ne $env:TEMPORA_STORE_IDENTITY_NAME -or
-                $identity.Publisher -ne $env:TEMPORA_STORE_PUBLISHER) {
+            $names = @($archive.Entries | ForEach-Object { $_.FullName -replace '\\','/' })
+            $manifestEntry = $archive.Entries | Where-Object { $_.FullName -eq 'AppxManifest.xml' } | Select-Object -First 1
+            if (-not $manifestEntry) { throw 'STORE_MANIFEST_MISSING' }
+            $reader = [System.IO.StreamReader]::new($manifestEntry.Open())
+            try { $xml = [xml]$reader.ReadToEnd() } finally { $reader.Dispose() }
+            if ($xml.Package.Identity.Name -cne $env:TEMPORA_STORE_IDENTITY_NAME -or
+                $xml.Package.Identity.Publisher -cne $env:TEMPORA_STORE_PUBLISHER) {
               throw 'STORE_MANIFEST_PARTNER_CENTER_IDENTITY_MISMATCH'
             }
-            if ($xml.Package.Properties.DisplayName -ne 'TEMPORA Desktop') {
-              throw 'STORE_DISPLAY_NAME_INCORRECT'
+            if ($xml.Package.Properties.DisplayName -cne 'TEMPORA Desktop' -or
+                $xml.Package.Properties.PublisherDisplayName -cne 'Ghemri M') {
+              throw 'STORE_MANIFEST_DISPLAY_NAME_MISMATCH'
             }
+            $sdk = @($names | Where-Object { $_.EndsWith('resources/engine/node_modules/tempora-framework/package.json') })
+            $node = @($names | Where-Object { $_.EndsWith('resources/engine/node.exe') })
+            $worker = @($names | Where-Object { $_.EndsWith('resources/engine/worker.cjs') })
+            if ($sdk.Count -ne 1) { throw 'STORE_SCIENTIFIC_ENGINE_MISSING_IN_APPX' }
+            if ($node.Count -ne 1 -or $worker.Count -ne 1) { throw 'STORE_SCIENTIFIC_WORKER_MISSING_IN_APPX' }
           } finally { $archive.Dispose() }
-          if (-not (Test-Path 'electron/store-candidate/win-unpacked/resources/engine/node_modules/tempora-framework/package.json')) {
-            throw 'STORE_SCIENTIFIC_ENGINE_MISSING'
+          $unpacked = Join-Path (Resolve-Path 'electron/store-candidate/win-unpacked').Path 'resources'
+          if (Test-Path (Join-Path $unpacked 'engine/node.exe')) {
+            node electron/tests/packaged-engine-smoke.cjs $unpacked
+            if ($LASTEXITCODE -ne 0) { throw 'STORE_PACKAGED_ENGINE_TEST_FAILED' }
           }
-          node electron/tests/packaged-engine-smoke.cjs 'electron/store-candidate/win-unpacked/resources'
-          if ($LASTEXITCODE -ne 0) { throw 'STORE_PACKAGED_ENGINE_TEST_FAILED' }
-          Write-Host "Unsigned Store candidate SHA256: $sha"
+          $hash = (Get-FileHash $appx.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+          "$hash  $($appx.Name)" | Set-Content 'electron/store-candidate/SHA256SUMS.txt' -Encoding ascii
+          Write-Host "Verified unsigned Store candidate: $($appx.Name)"
+          Write-Host "SHA256: $hash"
       - uses: actions/upload-artifact@v4
         with:
           name: TEMPORA-Desktop-Microsoft-Store-AppX-CANDIDATE-UNSIGNED-NOT-PUBLISHED

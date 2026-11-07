@@ -1,33 +1,43 @@
 'use strict';
-// Microsoft Store packaging for the currently pinned electron-builder 26.18.
-// AppX is an MSIX-family Store package. The Store signs it AFTER certification.
-// Never invent the Store identity. Never label this candidate "signed".
-const pkg=require('./package.json');
-const required=(name)=>{
-  const value=process.env[name];
-  if(typeof value!=='string' || value.length<3 || value.length>200) {
-    throw Error('MICROSOFT_STORE_PARTNER_CENTER_IDENTITY_REQUIRED: '+name);
+// Store identity values are *public* Partner Center package identifiers.
+// They are not credentials, publisher private keys, or signing certificates.
+// Fail closed if an environment override conflicts with the reserved product.
+const pkg = require('./package.json');
+const STORE_IDENTITY = Object.freeze({
+  identityName: 'GhemriM.TEMPORADesktop',
+  publisher: 'CN=C5BC3837-BBC8-425E-916B-4B6F77BD7455',
+  publisherDisplayName: 'Ghemri M'
+});
+for (const [key, envKey] of [
+  ['identityName', 'TEMPORA_STORE_IDENTITY_NAME'],
+  ['publisher', 'TEMPORA_STORE_PUBLISHER'],
+  ['publisherDisplayName', 'TEMPORA_STORE_PUBLISHER_DISPLAY_NAME']
+]) {
+  const supplied = process.env[envKey];
+  if (supplied !== undefined && supplied !== STORE_IDENTITY[key]) {
+    throw Error('MICROSOFT_STORE_PARTNER_CENTER_IDENTITY_MISMATCH: ' + envKey);
   }
-  return value;
-};
-const identityName=required('TEMPORA_STORE_IDENTITY_NAME');
-const publisher=required('TEMPORA_STORE_PUBLISHER');
-const publisherDisplayName=required('TEMPORA_STORE_PUBLISHER_DISPLAY_NAME');
-if(!/^[A-Za-z0-9][A-Za-z0-9.-]{2,49}$/.test(identityName) ||
-  !/^CN=/.test(publisher) || /[\r\n\0]/.test(publisher) ||
-  /[\r\n\0]/.test(publisherDisplayName)) {
-  throw Error('MICROSOFT_STORE_IDENTITY_INVALID');
 }
-module.exports={
+if (pkg.build.productName !== 'TEMPORA Desktop') {
+  throw Error('MICROSOFT_STORE_PRODUCT_NAME_MISMATCH');
+}
+// Do not inherit NSIS-specific filename "*SETUP.exe" into the AppX target.
+const {artifactName: _nsisArtifact, ...winWithoutNsisName} = pkg.build.win;
+module.exports = {
   ...pkg.build,
-  directories:{...pkg.build.directories,output:'store-candidate'},
-  win:{...pkg.build.win,target:['appx']},
-  appx:{
-    identityName,publisher,publisherDisplayName,
-    applicationId:'TEMPORA',
-    displayName:'TEMPORA Desktop',
-    backgroundColor:'#ffffff',
-    languages:['en-US','fr-FR'],
-    capabilities:['runFullTrust']
+  directories: {...pkg.build.directories, output: 'store-candidate'},
+  win: {
+    ...winWithoutNsisName,
+    target: ['appx'],
+    artifactName: 'TEMPORA-Desktop-${version}-${arch}.${ext}'
+  },
+  appx: {
+    ...STORE_IDENTITY,
+    applicationId: 'TEMPORA',
+    artifactName: 'TEMPORA-Desktop-${version}-${arch}.${ext}',
+    displayName: 'TEMPORA Desktop',
+    backgroundColor: '#ffffff',
+    languages: ['fr-FR', 'en-US'],
+    capabilities: ['runFullTrust']
   }
 };
