@@ -244,7 +244,7 @@ app.whenReady().then(async () => {
   mainWindow = new BrowserWindow({
     width: 1330, height: 830, minWidth: 920, minHeight: 610,
     title: 'TEMPORA Desktop',
-    icon: join(__dirname, 'build', 'icon.ico'),
+    icon: join(__dirname, 'build', 'icon-white-256.png'),
     show: false,
     webPreferences: {
       preload: join(__dirname, 'preload.cjs'), nodeIntegration: false,
