@@ -1,4 +1,4 @@
-import { invokeNative, isNative } from "./native";
+import { invokeNative, isNative, copyNativeReviewDraft } from "./native";
 import "./style.css";
 
 type View = "overview" | "documents" | "research" | "models";
@@ -314,7 +314,7 @@ async function copyReviewDraft(): Promise<void> {
   const draft = buildReviewDraft();
   if (!draft) { notify(text[language].draftMissing); return; }
   try {
-    await navigator.clipboard.writeText(JSON.stringify(draft, null, 2));
+    await copyNativeReviewDraft(JSON.stringify(draft, null, 2));
     notify(text[language].draftCopied);
   } catch {
     notify(text[language].draftCopyFailed);
