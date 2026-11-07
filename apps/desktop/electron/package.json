@@ -1,0 +1,56 @@
+{
+  "name": "tempora-desktop-chromium-fallback",
+  "productName": "TEMPORA Desktop Chromium",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Experimental WebView2-free TEMPORA Desktop Windows research client",
+  "main": "main.cjs",
+  "license": "MIT",
+  "scripts": {
+    "dist:win": "electron-builder --win nsis --x64"
+  },
+  "devDependencies": {
+    "electron": "45.2.3",
+    "electron-builder": "26.18.0"
+  },
+  "build": {
+    "appId": "org.tempora.framework.desktop.chromium",
+    "productName": "TEMPORA Desktop Chromium",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "main.cjs",
+      "preload.cjs",
+      {
+        "from": "../dist",
+        "to": "dist",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "extraResources": [
+      {
+        "from": "../src-tauri/resources/engine",
+        "to": "engine",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "asar": true,
+    "win": {
+      "target": [
+        "nsis"
+      ],
+      "artifactName": "TEMPORA-Desktop-Chromium-${version}-${arch}-SETUP.exe"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true
+    }
+  }
+}
