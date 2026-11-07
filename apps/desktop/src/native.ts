@@ -3,8 +3,10 @@ import {invoke as tauriInvoke, isTauri} from "@tauri-apps/api/core";
 declare global {
   interface Window {
     temporaElectron?: {
+      desktopVersion: string;
       selectDocument: () => Promise<unknown>;
       validateCorpus: () => Promise<unknown>;
+      copyReviewDraft: (draft: string) => Promise<boolean>;
     };
   }
 }
@@ -23,4 +25,13 @@ export async function invokeNative<T>(command: "select_document" | "validate_cor
     return response as T;
   }
   return tauriInvoke<T>(command);
+}
+
+/** Electron's sandbox clipboard uses an audited, bounded, noncanonical IPC bridge. */
+export async function copyNativeReviewDraft(draft: string): Promise<void> {
+  if (window.temporaElectron) {
+    await window.temporaElectron.copyReviewDraft(draft);
+    return;
+  }
+  await navigator.clipboard.writeText(draft);
 }

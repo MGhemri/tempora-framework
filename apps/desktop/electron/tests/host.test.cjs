@@ -69,3 +69,13 @@ test('Official TEMPORA hourglass branding is packaged in Windows icon resources'
  assert.ok(pkg.build.files.includes('build/icon.ico'));
  assert.match(src('electron/main.cjs'),/icon: join\(__dirname, 'build', 'icon\.ico'\)/);
 });
+
+test('Electron Beta version in the GUI matches the shipped package',()=>{
+ const pkg=require('../package.json');
+ const preload=src('electron/preload.cjs');
+ const view=src('src/main.ts');
+ assert.equal(pkg.version,'0.1.1-beta.2');
+ assert.match(preload,/desktopVersion: '0\.1\.1-beta\.2'/);
+ assert.match(view,/window\.temporaElectron\.desktopVersion/);
+ assert.match(view,/sidebarVersion\.textContent/);
+});

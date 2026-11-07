@@ -1,4 +1,4 @@
-import { invokeNative, isNative } from "./native";
+import { invokeNative, isNative, copyNativeReviewDraft } from "./native";
 import "./style.css";
 
 type View = "overview" | "documents" | "research" | "models";
@@ -314,7 +314,7 @@ async function copyReviewDraft(): Promise<void> {
   const draft = buildReviewDraft();
   if (!draft) { notify(text[language].draftMissing); return; }
   try {
-    await navigator.clipboard.writeText(JSON.stringify(draft, null, 2));
+    await copyNativeReviewDraft(JSON.stringify(draft, null, 2));
     notify(text[language].draftCopied);
   } catch {
     notify(text[language].draftCopyFailed);
@@ -371,4 +371,11 @@ byId("document-open").addEventListener("click", () => void openDocument());
 byId("validate-corpus").addEventListener("click", () => void validateCorpus());
 byId("draft-copy").addEventListener("click", () => void copyReviewDraft());
 localize();
+if (window.temporaElectron) {
+  const version = window.temporaElectron.desktopVersion;
+  const edition = document.querySelector(".edition");
+  const sidebarVersion = document.querySelector(".sidebar-bottom p b");
+  if (edition) edition.textContent = `${version} / BETA`;
+  if (sidebarVersion) sidebarVersion.textContent = `Desktop ${version}`;
+}
 showView("overview");

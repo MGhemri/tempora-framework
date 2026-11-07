@@ -111,7 +111,9 @@ test('Human review draft remains noncanonical, manual, and bound to validated co
   assert.match(ui,/approved: false/);
   assert.match(ui,/signed: false/);
   assert.match(ui,/corpus_sha256: result\.sha256/);
-  assert.match(ui,/navigator\.clipboard\.writeText/);
+  assert.match(ui,/copyNativeReviewDraft\(JSON\.stringify\(draft, null, 2\)\)/);
+  const native=readFileSync(new URL('../src/native.ts',import.meta.url),'utf8');
+  assert.match(native,/navigator\.clipboard\.writeText\(draft\)/);
   assert.doesNotMatch(ui,/invoke\([^)]*save.*review/i);
   for(const id of ['draft-reviewer','draft-subject','draft-method','draft-reason','draft-copy'])
     assert.ok(html.includes('id="'+id+'"'),id);
