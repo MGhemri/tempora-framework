@@ -53,3 +53,15 @@
   outline: 2px solid #8cbdff; outline-offset: 2px;
 }
 .draft-fields button { justify-self: start; }
+
+
+/* TEMPORA Desktop identity / bilingual About panel */
+.about-panel { max-width: 780px; padding: 30px; border: 1px solid #314148; border-radius: 14px; background: #101b20; }
+.about-logo { display: block; width: min(100%, 390px); max-height: 260px; object-fit: contain; object-position: center; padding: 8px; margin: 0 0 18px; background: #f8f7f2; border-radius: 12px; }
+.about-details { display: grid; gap: 0; margin: 16px 0 22px; }
+.about-details > div { display: grid; grid-template-columns: minmax(140px, 33%) 1fr; padding: 11px 0; border-bottom: 1px solid #25373d; gap: 14px; }
+.about-details dt { color: #99adb4; font-size: 12px; }
+.about-details dd { margin: 0; color: #f2f2eb; font-size: 13px; overflow-wrap: anywhere; }
+.about-details a { color: #e9bc76; text-decoration: underline; text-underline-offset: 3px; }
+.about-details a:focus-visible { outline: 2px solid #e9bc76; }
+@media (max-width: 900px) { .about-panel { padding: 17px; } .about-details > div { grid-template-columns: 1fr; gap: 4px; } }
