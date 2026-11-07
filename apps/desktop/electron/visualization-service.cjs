@@ -2,11 +2,12 @@
 // Electron-only native authority for TEMPORA's ephemeral scientific workspace.
 // The renderer NEVER gets the corpus, filesystem paths, Node process, or project ID.
 const {spawn}=require('node:child_process');
+const {StringDecoder}=require('node:string_decoder');
 const MODULES=Object.freeze(['geo','graph','chronos','evidence','pattern','observatory']);
 const MAX_FRAME=256*1024;
 const MAX_REQUEST=4*1024*1024;
 class VisualService {
-  constructor(getRuntime) {this.getRuntime=getRuntime;this.child=null;this.pending=new Map();this.serial=0;this.buffer='';this.projectId=null;}
+  constructor(getRuntime) {this.getRuntime=getRuntime;this.child=null;this.pending=new Map();this.serial=0;this.buffer='';this.decoder=new StringDecoder('utf8');this.projectId=null;}
   start(){
     if(this.child)return;
     const runtime=this.getRuntime();
@@ -15,7 +16,7 @@ class VisualService {
       env:Object.fromEntries(Object.entries(process.env).filter(([k])=>!['NODE_OPTIONS','NODE_PATH'].includes(k))),
       stdio:['pipe','pipe','ignore']
     });
-    this.child=child;this.buffer='';
+    this.child=child;this.buffer='';this.decoder=new StringDecoder('utf8');
     const die=(code)=>{
       for(const [,pending] of this.pending){clearTimeout(pending.timer);pending.reject(Error(code));}
       this.pending.clear();this.child=null;this.projectId=null;this.buffer='';
@@ -24,7 +25,7 @@ class VisualService {
     child.on('close',()=>die('VISUAL_WORKER_EXITED'));
     child.stdout.on('data',bytes=>{
       if(!this.child)return;
-      this.buffer+=bytes.toString('utf8');
+      this.buffer+=this.decoder.write(bytes);
       if(Buffer.byteLength(this.buffer,'utf8')>MAX_FRAME*2){this.stop();return;}
       let idx;
       while((idx=this.buffer.indexOf('\n'))!==-1){
