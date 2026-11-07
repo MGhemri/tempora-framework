@@ -255,6 +255,10 @@ app.whenReady().then(async () => {
     validSender(event);
     return visualService.analyze(module,limit,threshold);
   });
+  ipcMain.handle('tempora:visualization:neighborhood',async(event,root,depth,direction,limit)=>{
+    validSender(event);
+    return visualService.neighborhood(root,depth,direction,limit);
+  });
   ipcMain.handle('tempora:visualization:export', async(event,module,format,offset,limit)=>{
     validSender(event);
     const output=await visualService.prepareExport(module,format,offset,limit);
