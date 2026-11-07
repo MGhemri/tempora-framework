@@ -5,6 +5,7 @@ const {canonical}=require('tempora-framework');
 const {randomBytes}=require('node:crypto');
 const {build}=require('./projections.cjs');
 const {analyze}=require('./algorithms.cjs');
+const {buildExport}=require('./exporter.cjs');
 const MAX_CORPUS_BYTES=3*1024*1024;
 const TTL_MS=10*60*1000;
 function fail(code){const e=new Error(code);e.code=code;throw e;}
@@ -56,6 +57,14 @@ class ProjectManager {
       generatedAt:new Date(this.clock()).toISOString()});
     this.#renew(session);
     return result;
+  }
+  export(id,{module,format,offset=0,limit=50}={}){
+    const session=this.#get(id);
+    const result=build(session.corpus,{module,offset,limit,
+      generatedAt:new Date(this.clock()).toISOString()});
+    const exported=buildExport(result,{module,format});
+    this.#renew(session);
+    return exported;
   }
   release(id){
     if(id!==undefined&&this.#session && this.#session.project_id!==id)fail('PROJECT_NOT_FOUND');
