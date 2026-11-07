@@ -371,4 +371,11 @@ byId("document-open").addEventListener("click", () => void openDocument());
 byId("validate-corpus").addEventListener("click", () => void validateCorpus());
 byId("draft-copy").addEventListener("click", () => void copyReviewDraft());
 localize();
+if (window.temporaElectron) {
+  const version = window.temporaElectron.desktopVersion;
+  const edition = document.querySelector(".edition");
+  const sidebarVersion = document.querySelector(".sidebar-bottom p b");
+  if (edition) edition.textContent = `${version} / BETA`;
+  if (sidebarVersion) sidebarVersion.textContent = `Desktop ${version}`;
+}
 showView("overview");
