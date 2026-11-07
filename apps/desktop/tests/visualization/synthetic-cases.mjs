@@ -32,7 +32,7 @@ export function baseCorpus() {
   };
 }
 const date = (original,earliest,latest,precision) => ({
-  kind:'exact',calendar:'gregorian',original,earliest,latest,precision,certainty:'documented'
+  kind:precision==='year'?'year':precision==='month'?'month':'exact',calendar:'gregorian',original,earliest,latest,precision,certainty:'documented'
 });
 function spatial(c,geometry,role,precision=null){
   const ev=c.events[0], id='SPACE_001';
