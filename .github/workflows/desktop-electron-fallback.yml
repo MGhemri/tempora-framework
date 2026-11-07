@@ -1,0 +1,75 @@
+name: TEMPORA Desktop WebView2-Free Electron Experiment
+
+on:
+  pull_request:
+    paths:
+      - "apps/desktop/**"
+      - ".github/workflows/desktop-electron-fallback.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: electron-fallback-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  electron-windows:
+    name: Bundle standalone Chromium Windows desktop
+    runs-on: windows-latest
+    timeout-minutes: 55
+    defaults:
+      run:
+        working-directory: apps/desktop
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Install TEMPORA frontend dependencies
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Compile shared TEMPORA frontend
+        run: npm run build
+      - name: Run native bridge and packaging contracts
+        run: |
+          npm run test:bridge
+          npm run test:windows-engine
+          node --check electron/main.cjs
+          node --check electron/preload.cjs
+          node --test electron/tests/host.test.cjs
+      - name: Stage official Node and pinned TEMPORA Engine 3.0.0
+        run: npm run stage:windows-engine
+      - name: Install exact-pinned Electron packaging toolchain
+        working-directory: apps/desktop/electron
+        env:
+          ELECTRON_SKIP_BINARY_DOWNLOAD: 'false'
+        run: npm install --no-audit --no-fund
+      - name: Build unsigned Windows NSIS with bundled Chromium
+        working-directory: apps/desktop/electron
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+        run: npm run dist:win
+      - name: Check package and TEMPORA scientific worker inventory
+        shell: pwsh
+        run: |
+          $nsis = @(Get-ChildItem electron/release -Filter '*SETUP.exe' -Recurse -File)
+          if ($nsis.Count -ne 1) { throw "ELECTRON_NSIS_NOT_UNIQUE: $($nsis.Count)" }
+          $unpacked = Get-ChildItem electron/release -Directory -Filter '*unpacked' | Select-Object -First 1
+          if (-not $unpacked) { throw "ELECTRON_UNPACKED_DIR_MISSING" }
+          $node = Join-Path $unpacked.FullName 'resources/engine/node.exe'
+          $worker = Join-Path $unpacked.FullName 'resources/engine/worker.cjs'
+          $enginePkg = Join-Path $unpacked.FullName 'resources/engine/node_modules/tempora-framework/package.json'
+          foreach ($item in @($node,$worker,$enginePkg)) {
+            if (-not (Test-Path $item -PathType Leaf)) { throw "ELECTRON_ENGINE_BUNDLE_MISSING: $item" }
+          }
+          $sdk = Get-Content $enginePkg -Raw | ConvertFrom-Json
+          if ($sdk.version -ne '3.0.0') { throw "ELECTRON_SDK_VERSION_MISMATCH" }
+          Write-Host "Chromium bundled NSIS: $($nsis[0].Name)"
+          Write-Host "NSIS SHA256: $((Get-FileHash $nsis[0].FullName -Algorithm SHA256).Hash)"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TEMPORA-Desktop-Electron-Windows-EXPERIMENTAL-NOT-RELEASE
+          path: apps/desktop/electron/release/*SETUP.exe
+          if-no-files-found: error
+          retention-days: 7

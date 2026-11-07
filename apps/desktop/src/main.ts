@@ -1,4 +1,4 @@
-import { invoke, isTauri } from "@tauri-apps/api/core";
+import { invokeNative, isNative } from "./native";
 import "./style.css";
 
 type View = "overview" | "documents" | "research" | "models";
@@ -322,7 +322,7 @@ async function copyReviewDraft(): Promise<void> {
 }
 
 async function validateCorpus(): Promise<void> {
-  if (!isTauri()) { notify(text[language].nativeOnly); return; }
+  if (!isNative()) { notify(text[language].nativeOnly); return; }
   if (validationBusy) return;
   validationBusy = true;
   const button = byId("validate-corpus") as HTMLButtonElement;
@@ -333,7 +333,7 @@ async function validateCorpus(): Promise<void> {
   renderWorkbench();
   try {
     // Rust opens its own file picker; the WebView never supplies a path or raw bytes.
-    const result = await invoke<CanonicalResult | null>("validate_corpus_native");
+    const result = await invokeNative<CanonicalResult | null>("validate_corpus_native");
     if (!result) { notify(text[language].cancelled); return; }
     selectedValidation = result;
     renderValidation();
@@ -349,9 +349,9 @@ async function validateCorpus(): Promise<void> {
   }
 }
 async function openDocument(): Promise<void> {
-  if (!isTauri()) { notify(text[language].nativeOnly); return; }
+  if (!isNative()) { notify(text[language].nativeOnly); return; }
   try {
-    const result = await invoke<DocumentPreview | null>("select_document");
+    const result = await invokeNative<DocumentPreview | null>("select_document");
     if (!result) { notify(text[language].cancelled); return; }
     selectedPreview = result;
     renderPreview();
