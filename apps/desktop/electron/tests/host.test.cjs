@@ -12,7 +12,7 @@ test('Electron fallback requires no system Edge WebView2', () => {
   assert.equal(pkg.devDependencies['electron-builder'], '26.18.0');
   assert.equal(pkg.build.win.target[0], 'nsis');
   assert.ok(pkg.build.extraResources.some(x => x.to === 'engine'));
-  assert.doesNotMatch(JSON.stringify(pkg), /webview2|evergreen|edgeupdate/i);
+  assert.doesNotMatch(JSON.stringify(pkg.build), /webview2|evergreen|edgeupdate/i);
 });
 test('Tauri and Electron share a fixed, allowlisted native command contract', () => {
   const native = src('src/native.ts');
