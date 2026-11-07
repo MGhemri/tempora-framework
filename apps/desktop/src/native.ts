@@ -3,6 +3,7 @@ import {invoke as tauriInvoke, isTauri} from "@tauri-apps/api/core";
 declare global {
   interface Window {
     temporaElectron?: {
+      desktopVersion: string;
       selectDocument: () => Promise<unknown>;
       validateCorpus: () => Promise<unknown>;
       copyReviewDraft: (draft: string) => Promise<boolean>;
