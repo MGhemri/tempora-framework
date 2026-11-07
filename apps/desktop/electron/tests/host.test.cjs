@@ -53,23 +53,40 @@ test('Electron packaging preserves complete scientific SDK, not just Node execut
 });
 
 
-test('Official TEMPORA hourglass branding is packaged in Windows icon resources',()=>{
+test('TEMPORA Windows icon uses white-background official artwork and UI uses transparent branding',()=>{
  const {existsSync,readFileSync}=require('node:fs');
  const root=join(__dirname,'..');
- const ico=join(root,'build','icon.ico');
- assert.ok(existsSync(ico),'official hourglass icon must be committed');
- const data=readFileSync(ico);
- assert.ok(data.length>1000,'invalid/empty ICO');
- assert.equal(data.readUInt16LE(0),0,'ICO reserved signature');
- assert.equal(data.readUInt16LE(2),1,'ICO image type');
+ const icon=join(root,'build','icon-white-256.png');
+ const logo=join(base,'public','branding','tempora-logo-transparent.png');
+ assert.ok(existsSync(icon),'official white-background icon must be committed');
+ assert.ok(existsSync(logo),'transparent in-app logo must be committed');
+ const data=readFileSync(icon);
+ assert.equal(data.subarray(1,4).toString('ascii'),'PNG');
+ assert.equal(data.readUInt32BE(16),256);
+ assert.equal(data.readUInt32BE(20),256);
  const pkg=require('../package.json');
- assert.equal(pkg.build.win.icon,'build/icon-256.png');
- assert.match(pkg.scripts['dist:win'],/create-windows-icon\\.ps1/);
- assert.match(src('electron/scripts/create-windows-icon.ps1'),/256, 256/);
- assert.ok(pkg.build.files.includes('build/icon.ico'));
- assert.match(src('electron/main.cjs'),/icon: join\(__dirname, 'build', 'icon\.ico'\)/);
+ assert.equal(pkg.productName,'TEMPORA Desktop');
+ assert.equal(pkg.build.productName,'TEMPORA Desktop');
+ assert.equal(pkg.build.win.icon,'build/icon-white-256.png');
+ assert.ok(pkg.build.files.includes('build/icon-white-256.png'));
+ assert.doesNotMatch(pkg.build.win.artifactName,/Chromium/i);
+ assert.match(src('electron/main.cjs'),/title: 'TEMPORA Desktop'/);
+ assert.match(src('electron/main.cjs'),/icon: join\(__dirname, 'build', 'icon-white-256\.png'\)/);
+ const html=src('index.html');
+ assert.match(html,/branding\/tempora-logo-transparent\.png/);
 });
-
+test('About is bilingual and authorship attribution is confined to About view',()=>{
+ const html=src('index.html');
+ const main=src('src/main.ts');
+ assert.match(html,/id="view-about"/);
+ assert.match(html,/Ghemri M/);
+ assert.equal(html.split('Ghemri M').length-1,1);
+ assert.match(html,/https:\/\/connect-gm\.com/);
+ assert.match(main,/about: "À propos"/);
+ assert.match(main,/about: "About"/);
+ assert.match(main,/about-desktop-version/);
+ assert.match(src('electron/main.cjs'),/UNAPPROVED_EXTERNAL_URL/);
+});
 test('Electron Beta version in the GUI matches the shipped package',()=>{
  const pkg=require('../package.json');
  const preload=src('electron/preload.cjs');
