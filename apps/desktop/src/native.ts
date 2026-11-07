@@ -7,6 +7,7 @@ declare global {
       selectDocument: () => Promise<unknown>;
       validateCorpus: () => Promise<unknown>;
       copyReviewDraft: (draft: string) => Promise<boolean>;
+      openOfficialLink: (url: string) => Promise<boolean>;
     };
   }
 }
