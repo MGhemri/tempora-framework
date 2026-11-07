@@ -74,6 +74,12 @@ jobs:
           if ($sdk.version -ne '3.0.0') { throw "ELECTRON_SDK_VERSION_MISMATCH" }
           Write-Host "Chromium bundled NSIS: $($nsis[0].Name)"
           Write-Host "NSIS SHA256: $((Get-FileHash $nsis[0].FullName -Algorithm SHA256).Hash)"
+      - name: Execute canonical TEMPORA 3.0.0 in packaged Windows resources
+        shell: pwsh
+        run: |
+          $root = Join-Path (Resolve-Path "electron/release/win-unpacked").Path "resources"
+          node electron/tests/packaged-engine-smoke.cjs $root
+          if ($LASTEXITCODE -ne 0) { throw "PACKAGED_SCIENTIFIC_ENGINE_SMOKE_FAILED" }
       - uses: actions/upload-artifact@v4
         with:
           name: TEMPORA-Desktop-Electron-Windows-EXPERIMENTAL-NOT-RELEASE
