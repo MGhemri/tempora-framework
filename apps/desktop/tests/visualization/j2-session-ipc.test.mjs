@@ -58,6 +58,10 @@ test('V2 persistent Node IPC creates, pages and releases a local corpus; V1 heal
     const project_id=created.result.project_id;
     const queried=await send('2.0.0','visualization.project.query',{project_id,module:'chronos',offset:0,limit:1});
     assert.equal(queried.ok,true);assert.equal(queried.result.scope.returned,1);
+    const analyzed=await send('2.0.0','visualization.analysis.run',
+      {project_id,module:'observatory',limit:20});
+    assert.equal(analyzed.ok,true);
+    assert.equal(analyzed.result.result.length,9);
     const malicious=await send('2.0.0','visualization.project.query',
       {project_id,module:'chronos',offset:0,limit:1,path:'/private/file'});
     assert.equal(malicious.ok,false);assert.equal(malicious.error.code,'INVALID_PAYLOAD');

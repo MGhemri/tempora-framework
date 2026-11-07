@@ -4,12 +4,21 @@
 const {canonical}=require('tempora-framework');
 const {randomBytes}=require('node:crypto');
 const {build}=require('./projections.cjs');
+const {analyze}=require('./algorithms.cjs');
 const MAX_CORPUS_BYTES=3*1024*1024;
 const TTL_MS=10*60*1000;
 function fail(code){const e=new Error(code);e.code=code;throw e;}
 class ProjectManager {
   #session=null;
   constructor(clock=()=>Date.now()) {this.clock=clock;}
+  #renew(session){
+    if(session.timer)clearTimeout(session.timer);
+    session.expiry=this.clock()+TTL_MS;
+    session.timer=setTimeout(()=>{
+      if(this.#session===session)this.release();
+    },TTL_MS);
+    session.timer.unref?.();
+  }
   create(corpus){
     if(!corpus||typeof corpus!=='object'||Array.isArray(corpus))fail('INVALID_CORPUS');
     let json;
@@ -21,7 +30,8 @@ class ProjectManager {
     // Isolate caller-owned JSON; the source is never modified.
     const clone=JSON.parse(json);
     const project_id=randomBytes(24).toString('hex');
-    this.#session={project_id,corpus:clone,expiry:this.clock()+TTL_MS};
+    this.#session={project_id,corpus:clone,expiry:this.clock()+TTL_MS,timer:null};
+    this.#renew(this.#session);
     return {project_id,canonical_sha256:canonical.digest(clone),expires_in_ms:TTL_MS,
       profile_id:clone.profile.id,engine_version:'3.0.0'};
   }
@@ -37,11 +47,19 @@ class ProjectManager {
     const result=build(session.corpus,{module,offset,limit,
       generatedAt:new Date(this.clock()).toISOString()});
     // Renew only after a successful query.
-    session.expiry=this.clock()+TTL_MS;
+    this.#renew(session);
+    return result;
+  }
+  analyze(id,{module,limit=50,threshold=0.6}={}){
+    const session=this.#get(id);
+    const result=analyze(session.corpus,{module,limit,threshold,
+      generatedAt:new Date(this.clock()).toISOString()});
+    this.#renew(session);
     return result;
   }
   release(id){
     if(id!==undefined&&this.#session && this.#session.project_id!==id)fail('PROJECT_NOT_FOUND');
+    if(this.#session?.timer)clearTimeout(this.#session.timer);
     this.#session=null;
     return {released:true};
   }

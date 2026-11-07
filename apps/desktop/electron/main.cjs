@@ -250,6 +250,10 @@ app.whenReady().then(async () => {
     validSender(event);
     return visualService.query(module,offset,limit);
   });
+  ipcMain.handle('tempora:visualization:analyze', async(event,module,limit,threshold)=>{
+    validSender(event);
+    return visualService.analyze(module,limit,threshold);
+  });
   ipcMain.handle('tempora:visualization:close', async event=>{
     validSender(event);
     return visualService.release();

@@ -11,6 +11,7 @@ declare global {
       openVisualProject: () => Promise<unknown>;
       queryVisualProject: (module: string, offset: number, limit: number) => Promise<unknown>;
       closeVisualProject: () => Promise<boolean>;
+      analyzeVisualProject: (module: string,limit: number,threshold: number) => Promise<unknown>;
     };
   }
 }
@@ -63,4 +64,9 @@ export async function queryVisualProject(module:VisualModule,offset=0,limit=50):
 }
 export async function closeVisualProject():Promise<void>{
   if(window.temporaElectron)await window.temporaElectron.closeVisualProject();
+}
+
+export async function analyzeVisualProject(module:VisualModule,limit=50,threshold=0.6):Promise<VisualProjection>{
+  if(!window.temporaElectron)throw Error("VISUAL_ELECTRON_ONLY");
+  return await window.temporaElectron.analyzeVisualProject(module,limit,threshold) as VisualProjection;
 }

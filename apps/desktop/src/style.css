@@ -65,3 +65,18 @@
 .about-details a { color: #e9bc76; text-decoration: underline; text-underline-offset: 3px; }
 .about-details a:focus-visible { outline: 2px solid #e9bc76; }
 @media (max-width: 900px) { .about-panel { padding: 17px; } .about-details > div { grid-template-columns: 1fr; gap: 4px; } }
+
+/* TVRW — local scientific projection explorer; accessible table remains authoritative for navigation. */
+#tvrw-scientific-workbench{border:1px solid #33444b;border-radius:12px;padding:22px;background:#101b21}
+.visual-module-bar{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+.visual-module-bar button,.visual-pagination button{background:#1c3037;border:1px solid #486168;color:#dae6e7;padding:9px 13px;border-radius:7px;cursor:pointer}
+.visual-module-bar button.active{background:#335651;border-color:#d3ad6e;color:#fff}
+.visual-module-bar button:focus-visible,.visual-pagination button:focus-visible,#visual-analyze:focus-visible,#visual-open:focus-visible{outline:3px solid #e6c38d;outline-offset:2px}
+.visual-module-bar button:disabled,.visual-pagination button:disabled,#visual-analyze:disabled,#visual-open:disabled{opacity:.5;cursor:not-allowed}
+.visual-graphic{max-width:100%;overflow:hidden;margin-top:14px;min-height:0}
+.visual-graphic svg{max-width:100%;background:#12242b;border:1px solid #32484f;border-radius:10px}
+.visual-pagination{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0}
+#visual-rows code,#visual-analysis-rows code{white-space:pre-wrap;overflow-wrap:anywhere;font-size:11px;color:#dce0cf}
+#visual-rows td:first-child{min-width:130px;overflow-wrap:anywhere}
+#visual-analysis-rows{max-width:100%}
+@media(max-width:750px){#tvrw-scientific-workbench{padding:12px}.visual-module-bar button{flex:1 1 42%}.visual-pagination{flex-wrap:wrap}}
