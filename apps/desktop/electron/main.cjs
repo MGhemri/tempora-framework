@@ -222,6 +222,6 @@ app.whenReady().then(async () => {
   mainWindow.webContents.setWindowOpenHandler(() => ({action: 'deny'}));
   mainWindow.webContents.on('will-navigate', event => event.preventDefault());
   mainWindow.once('ready-to-show', () => mainWindow.show());
-  await mainWindow.loadFile(join(__dirname, '..', 'dist', 'index.html'));
+  await mainWindow.loadFile(join(__dirname, app.isPackaged ? 'dist' : '../dist', 'index.html'));
 });
 app.on('window-all-closed', () => app.quit());
