@@ -243,7 +243,7 @@ app.whenReady().then(async () => {
   });
   mainWindow = new BrowserWindow({
     width: 1330, height: 830, minWidth: 920, minHeight: 610,
-    title: 'TEMPORA — Research Workspace (Chromium)',
+    title: 'TEMPORA Desktop',
     icon: join(__dirname, 'build', 'icon.ico'),
     show: false,
     webPreferences: {
