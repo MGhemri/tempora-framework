@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:tempora:visualization:typed-ref:1.0.0",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "kind",
+    "namespace",
+    "id"
+  ],
+  "properties": {
+    "kind": {
+      "enum": [
+        "event",
+        "source",
+        "claim",
+        "entity",
+        "spatial",
+        "relation",
+        "review",
+        "assessment",
+        "release"
+      ]
+    },
+    "namespace": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+    },
+    "id": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_.:-]*$"
+    }
+  }
+}

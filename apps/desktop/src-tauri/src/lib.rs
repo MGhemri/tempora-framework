@@ -1,4 +1,6 @@
 mod engine_bridge;
+#[cfg(test)]
+mod visualization_contracts;
 use serde::Serialize;
 use serde_json::Value;
 use std::fs;
