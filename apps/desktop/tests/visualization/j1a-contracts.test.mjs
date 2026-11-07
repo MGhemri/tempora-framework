@@ -81,7 +81,7 @@ test('canonical reference key never conflates homonyms across namespaces and kin
   const one={kind:'event',namespace:'SYNTHETIC_HISTORY',id:'X'};
   const two={kind:'entity',namespace:'SYNTHETIC_HISTORY',id:'X'};
   const three={kind:'event',namespace:'ANOTHER',id:'X'};
-  const four={kind:'event',namespace:'SYNTHETIC_HISTORY',id:'X|Y'};
+  const four={kind:'event',namespace:'SYNTHETIC_HISTORY',id:'X.Y'};
   assert.notEqual(refKey(one),refKey(two));
   assert.notEqual(refKey(one),refKey(three));
   assert.notEqual(refKey(one),refKey(four));
