@@ -53,7 +53,7 @@ jobs:
         run: |
           git diff --exit-code -- electron/package-lock.json
           if ($LASTEXITCODE -ne 0) { throw "ELECTRON_PACKAGE_LOCK_CHANGED" }
-          $meta = Get-Content "electron/package-lock.json" -Raw | ConvertFrom-Json
+          $meta = Get-Content "electron/package-lock.json" -Raw | ConvertFrom-Json -AsHashtable
           if ($meta.lockfileVersion -ne 3) { throw "ELECTRON_LOCKFILE_VERSION_INVALID" }
       - name: Build unsigned Windows NSIS with bundled Chromium
         working-directory: apps/desktop/electron
