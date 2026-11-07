@@ -7,6 +7,7 @@ const {app, BrowserWindow, dialog, ipcMain, session, clipboard, shell} = require
 const {readFileSync, statSync, existsSync} = require('node:fs');
 const {join, basename, extname, resolve} = require('node:path');
 const {spawn} = require('node:child_process');
+const {VisualService}=require('./visualization-service.cjs');
 
 const MAX_PREVIEW_BYTES = 8 * 1024 * 1024;
 const MAX_CORPUS_BYTES = 3 * 1024 * 1024;
@@ -15,6 +16,7 @@ const MAX_RESPONSE_BYTES = 3 * 256 * 1024 + 4096;
 const ENGINE_TIMEOUT_MS = 12_000;
 const PREVIEW_LIMIT = 7;
 let mainWindow;
+const visualService=new VisualService(getRuntime);
 
 function getRuntime() {
   if (app.isPackaged) {
@@ -236,6 +238,22 @@ app.whenReady().then(async () => {
   ipcMain.handle('tempora:select_document', selectDocument);
   ipcMain.handle('tempora:validate_corpus_native', validateCorpus);
   ipcMain.handle('tempora:copy_review_draft', copyReviewDraft);
+  ipcMain.handle('tempora:visualization:open', async event=>{
+    validSender(event);
+    const path=await selectFile();
+    if(!path)return null;
+    const selected=limitedFile(path,MAX_CORPUS_BYTES,true);
+    const info=await visualService.create(selected.json);
+    return {fileName:selected.fileName,...info};
+  });
+  ipcMain.handle('tempora:visualization:query', async(event,module,offset,limit)=>{
+    validSender(event);
+    return visualService.query(module,offset,limit);
+  });
+  ipcMain.handle('tempora:visualization:close', async event=>{
+    validSender(event);
+    return visualService.release();
+  });
   ipcMain.handle('tempora:open-official-link', async (event, url) => {
     validSender(event);
     if (url !== 'https://connect-gm.com' &&
@@ -265,4 +283,4 @@ app.whenReady().then(async () => {
   mainWindow.once('ready-to-show', () => mainWindow.show());
   await mainWindow.loadFile(join(__dirname, app.isPackaged ? 'dist' : '../dist', 'index.html'));
 });
-app.on('window-all-closed', () => app.quit());
+app.on('window-all-closed', () => {visualService.stop();app.quit();});

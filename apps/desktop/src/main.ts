@@ -1,5 +1,6 @@
-import { invokeNative, isNative, copyNativeReviewDraft } from "./native";
+import { invokeNative, isNative, copyNativeReviewDraft, openVisualProject, queryVisualProject, visualModules, type VisualModule, type VisualProjection, type VisualProjectInfo } from "./native";
 import "./style.css";
+import {renderScientificGraphic} from "./visualization/core/render-svg";
 
 type View = "overview" | "documents" | "research" | "models" | "about";
 type Language = "fr" | "en";
@@ -27,6 +28,7 @@ type DocumentPreview = {
 
 const text = {
   fr: {
+    visualTitle:"Exploration scientifique · six laboratoires",visualIntro:"Projections de données déclarées uniquement, en lecture seule et sans conclusions historiques automatiques.",visualOpen:"Ouvrir un corpus pour les laboratoires",visualPrevious:"Précédent",visualNext:"Suivant",visualDisclaimer:"Les cartes, graphes avancés et inférences IA ne sont pas encore exécutés. Aucune vue ne certifie un fait historique.",
     workspace: "ESPACE DE TRAVAIL", overview: "Vue générale", documents: "Documents", research: "Analyses", models: "Modèles IA",
     about: "À propos", aboutIntro: "Un espace de recherche historique local, traçable et reproductible.",
     aboutProduct: "Application", aboutVersion: "Version Desktop", aboutEngine: "Moteur scientifique",
@@ -65,6 +67,7 @@ const text = {
     diagnostics: "diagnostics", sourceReviewNotice: "La conformité au schéma ne prouve pas la véracité des événements.",
   },
   en: {
+    visualTitle:"Scientific exploration · six labs",visualIntro:"Read-only projections of declared records only, without automatic historical conclusions.",visualOpen:"Open corpus for research laboratories",visualPrevious:"Previous",visualNext:"Next",visualDisclaimer:"Advanced maps, graph layouts and AI inference are not enabled. No view certifies historical facts.",
     workspace: "WORKSPACE", overview: "Overview", documents: "Documents", research: "Analysis", models: "AI models",
     about: "About", aboutIntro: "A local, traceable and reproducible historical research workspace.",
     aboutProduct: "Application", aboutVersion: "Desktop version", aboutEngine: "Scientific engine",
@@ -108,6 +111,12 @@ let language: Language = "fr";
 let selectedPreview: DocumentPreview | null = null;
 let selectedValidation: CanonicalResult | null = null;
 let validationBusy = false;
+let visualInfo:VisualProjectInfo|null=null;
+let visualModule:VisualModule="chronos";
+let visualOffset=0;
+let visualProjection:VisualProjection|null=null;
+let visualBusy=false;
+let visualSequence=0;
 
 function byId(id: string): HTMLElement {
   const found = document.getElementById(id);
@@ -133,6 +142,7 @@ function localize(): void {
   renderPreview();
   renderValidation();
   renderWorkbench();
+  renderVisual();
 }
 function showView(view: View): void {
   document.querySelectorAll<HTMLElement>(".view").forEach(el => el.classList.toggle("hidden", el.id !== "view-" + view));
@@ -370,6 +380,70 @@ async function openDocument(): Promise<void> {
     notify(text[language].failed + " : " + message);
   }
 }
+
+function renderVisual():void {
+  const info=visualInfo;
+  byId("visual-session").textContent=info
+    ? info.fileName+" · "+info.profile_id+" · SHA-256 "+info.canonical_sha256
+    : (language==="fr"?"Aucun projet de recherche ouvert.":"No research project open.");
+  document.querySelectorAll<HTMLButtonElement>("[data-visual-module]").forEach(b=>{
+    const active=b.dataset.visualModule===visualModule;
+    b.classList.toggle("active",active);
+    b.setAttribute("aria-pressed",String(active));
+    b.disabled=visualBusy||!info;
+  });
+  renderScientificGraphic(byId("visual-graphic"),visualModule,visualProjection?.result??[]);
+  const rows=byId("visual-rows");rows.replaceChildren();
+  const result=visualProjection;
+  if(result){
+    for(const item of result.result){
+      const tr=document.createElement("tr");
+      const identity=item.ref as {kind?:string;namespace?:string;id?:string}|null;
+      const ref=document.createElement("td");
+      ref.textContent=identity?JSON.stringify([identity.kind,identity.namespace,identity.id]):"—";
+      const details=document.createElement("td");
+      const json=document.createElement("code");
+      json.textContent=JSON.stringify(item);
+      details.append(json);tr.append(ref,details);rows.append(tr);
+    }
+  }
+  byId("visual-diagnostics").textContent=result
+    ? visualModule+" · "+result.scope.returned+"/"+result.scope.total_matched+
+      (result.scope.truncated?" · PARTIAL / PARTIEL":"")+" · "+result.scientific_sha256
+    : (language==="fr"?"Sélectionnez un corpus valide TEMPORA v3.":"Select a valid TEMPORA v3 corpus.");
+  byId("visual-page").textContent=result
+    ? String(visualOffset+1)+"–"+String(visualOffset+result.scope.returned)+" / "+String(result.scope.total_matched)
+    :"—";
+  (byId("visual-previous") as HTMLButtonElement).disabled=visualBusy||!info||visualOffset===0;
+  (byId("visual-next") as HTMLButtonElement).disabled=visualBusy||!info||!result||
+    visualOffset+result.scope.returned>=result.scope.total_matched||result.scope.returned===0;
+  (byId("visual-open") as HTMLButtonElement).disabled=visualBusy||!window.temporaElectron;
+}
+async function loadVisual():Promise<void> {
+  if(!visualInfo||visualBusy)return;
+  const seq=++visualSequence;visualBusy=true;renderVisual();
+  try{
+    const result=await queryVisualProject(visualModule,visualOffset,50);
+    if(seq!==visualSequence)return;
+    if(result.corpus.canonical_sha256!==visualInfo.canonical_sha256)throw Error("STALE_CORPUS");
+    visualProjection=result;
+  }catch(error){
+    visualProjection=null;
+    notify(error instanceof Error?error.message:String(error));
+  }finally{visualBusy=false;renderVisual();}
+}
+async function openVisual():Promise<void>{
+  if(visualBusy)return;
+  visualBusy=true;renderVisual();
+  try{
+    const info=await openVisualProject();
+    if(!info)return;
+    visualInfo=info;visualOffset=0;visualProjection=null;visualModule="chronos";
+  }catch(error){notify(error instanceof Error?error.message:String(error));}
+  finally{visualBusy=false;renderVisual();}
+  if(visualInfo)await loadVisual();
+}
+
 document.querySelectorAll<HTMLButtonElement>("[data-view]").forEach(button => {
   button.addEventListener("click", () => showView(button.dataset.view as View));
 });
@@ -378,6 +452,20 @@ byId("hero-open").addEventListener("click", () => void openDocument());
 byId("document-open").addEventListener("click", () => void openDocument());
 byId("validate-corpus").addEventListener("click", () => void validateCorpus());
 byId("draft-copy").addEventListener("click", () => void copyReviewDraft());
+byId("visual-open").addEventListener("click",()=>void openVisual());
+document.querySelectorAll<HTMLButtonElement>("[data-visual-module]").forEach(button=>button.addEventListener("click",()=>{
+  const module=button.dataset.visualModule as VisualModule;
+  if(!visualModules.includes(module)||!visualInfo||visualBusy)return;
+  visualModule=module;visualOffset=0;visualProjection=null;void loadVisual();
+}));
+byId("visual-previous").addEventListener("click",()=>{
+  if(visualBusy||visualOffset===0)return;
+  visualOffset=Math.max(0,visualOffset-50);void loadVisual();
+});
+byId("visual-next").addEventListener("click",()=>{
+  if(visualBusy||!visualProjection||visualOffset+visualProjection.scope.returned>=visualProjection.scope.total_matched)return;
+  visualOffset+=50;void loadVisual();
+});
 for (const link of document.querySelectorAll<HTMLAnchorElement>("#view-about a")) {
   link.addEventListener("click", event => {
     if (!window.temporaElectron) return;
@@ -395,4 +483,5 @@ if (window.temporaElectron) {
   const aboutVersion = document.getElementById("about-desktop-version");
   if (aboutVersion) aboutVersion.textContent = version;
 }
+renderVisual();
 showView("overview");

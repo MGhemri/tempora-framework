@@ -18,6 +18,7 @@ mkdirSync(out,{recursive:true});
 writeFileSync(join(out,'package.json'),JSON.stringify({name:'tempora-desktop-engine-runtime',version:'0.1.0',private:true,dependencies:{'tempora-framework':'3.0.0'}},null,2)+'\n');
 copyFileSync(process.execPath,join(out,'node.exe'));
 copyFileSync(join(root,'bridge','worker.cjs'),join(out,'worker.cjs'));
+cpSync(join(root,'bridge','visualization'),join(out,'visualization'),{recursive:true});
 const npm = process.env.npm_execpath;
 if (!npm) throw Error('Run via npm script for exact npm CLI path');
 const options = ['--workspaces=false','--ignore-scripts','--omit=dev','--no-audit','--no-fund','--package-lock=true'];
@@ -46,6 +47,9 @@ for (const entry of Object.keys(JSON.parse(readFileSync(join(out,'package-lock.j
 }
 const manifest={target:'windows-x64',engine:'tempora-framework@3.0.0',node:process.version,
  lock_sha256:digest('package-lock.json'),dependencies:inventory,
- node_sha256:digest('node.exe'),worker_sha256:digest('worker.cjs')};
+ node_sha256:digest('node.exe'),worker_sha256:digest('worker.cjs'),
+ visualization_contract_sha256:digest('visualization/contracts.cjs'),
+ visualization_session_sha256:digest('visualization/session.cjs'),
+ visualization_projection_sha256:digest('visualization/projections.cjs')};
 writeFileSync(join(out,'runtime-manifest.json'),JSON.stringify(manifest,null,2)+'\n');
 console.log(JSON.stringify(manifest,null,2));

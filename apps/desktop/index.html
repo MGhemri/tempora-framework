@@ -93,6 +93,31 @@
             <section id="workbench-evidence-detail" class="validation-errors" role="status" aria-live="polite"><p data-i18n="evidenceSelect">Sélectionnez une ligne pour examiner ses références.</p></section>
             <p class="subnote" data-i18n="sourceReviewNotice">La conformité au schéma ne prouve pas la véracité des événements.</p>
           </section>
+          <section id="tvrw-scientific-workbench" class="result-panel" aria-label="TEMPORA Visual Research Workbench">
+            <div class="result-heading"><div><div class="eyebrow">TEMPORA / VISUAL RESEARCH WORKBENCH</div>
+              <h2 data-i18n="visualTitle">Exploration scientifique · six laboratoires</h2></div></div>
+            <p class="subnote" data-i18n="visualIntro">Vues dérivées des enregistrements déclarés. Lecture seule, sans interprétation automatique des faits historiques.</p>
+            <button id="visual-open" type="button" class="primary" data-i18n="visualOpen">Ouvrir un corpus pour les laboratoires</button>
+            <p id="visual-session" class="subnote" role="status" aria-live="polite"></p>
+            <div class="visual-module-bar" role="group" aria-label="Scientific module">
+              <button type="button" data-visual-module="geo">GeoLab</button>
+              <button type="button" data-visual-module="graph">GraphLab</button>
+              <button type="button" data-visual-module="chronos">Chronos</button>
+              <button type="button" data-visual-module="evidence">EvidenceLab</button>
+              <button type="button" data-visual-module="pattern">PatternLab</button>
+              <button type="button" data-visual-module="observatory">Corpus Observatory</button>
+            </div>
+            <p id="visual-diagnostics" class="subnote"></p>
+            <div id="visual-graphic" class="visual-graphic" aria-label="Visual research preview"></div>
+            <div class="table-wrap"><table><thead><tr><th>Typed reference</th><th>Declared data / Données déclarées</th></tr></thead>
+              <tbody id="visual-rows"></tbody></table></div>
+            <div class="visual-pagination">
+              <button id="visual-previous" type="button" data-i18n="visualPrevious">Précédent</button>
+              <span id="visual-page" aria-live="polite">—</span>
+              <button id="visual-next" type="button" data-i18n="visualNext">Suivant</button>
+            </div>
+            <p class="subnote" data-i18n="visualDisclaimer">Les regroupements, cartes avancées et inférences IA ne sont pas encore exécutés. Aucun résultat affiché ne certifie un fait historique.</p>
+          </section>
         </section>
         <section id="view-models" class="view hidden"><div class="page-heading"><div><div class="eyebrow">TEMPORA / INTELLIGENCE ASSISTÉE</div><h1 data-i18n="models">Modèles IA</h1><p data-i18n="modelsIntro">Espace réservé aux futurs fournisseurs d'inférence, avec séparation stricte entre hypothèses machine et décisions humaines.</p></div></div><div class="placeholder"><span class="placeholder-symbol">✧</span><h2 data-i18n="modelsSoon">TensorFlow n'est pas encore activé</h2><p data-i18n="modelsLong">Les contrats d'inférence, la version des modèles, les jeux d'évaluation et les journaux de preuve seront développés avant tout téléchargement ou exécution de modèle.</p><span class="roadmap-tag">INFERENCE API / PHASE 2</span></div></section>
         <section id="view-about" class="view hidden" aria-labelledby="about-title">

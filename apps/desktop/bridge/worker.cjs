@@ -10,6 +10,56 @@ const MAX_FRAME = 4 * 1024 * 1024;
 const MAX_RESPONSE = 256 * 1024;
 const REQUEST_ID = /^[A-Za-z0-9_-]{1,64}$/;
 
+// TVRW protocol v2 is opt-in. Existing protocol 1.0.0 operations and
+// wire responses stay unchanged for already-distributed desktop packages.
+const {ProjectManager}=require('./visualization/session.cjs');
+const visualization=new ProjectManager();
+const V2='2.0.0';
+function v2Reply(id,ok,body){
+  let message=JSON.stringify({protocol_version:V2,request_id:id,ok,...body});
+  if(Buffer.byteLength(message,'utf8')>MAX_RESPONSE){
+    message=JSON.stringify({protocol_version:V2,request_id:id,ok:false,
+      error:{code:'RESPONSE_LIMIT',message:'Bounded response limit exceeded'}});
+  }
+  return message+'\n';
+}
+function v2Respond(message){
+  const id=message.request_id;
+  if(!REQUEST_ID.test(id??'') || !message.payload ||
+      typeof message.payload!=='object'||Array.isArray(message.payload)){
+    return v2Reply(null,false,{error:{code:'INVALID_ENVELOPE'}});
+  }
+  const op=message.operation,p=message.payload;
+  if(!['visualization.capabilities','visualization.project.create',
+    'visualization.project.query','visualization.project.release'].includes(op)){
+    return v2Reply(id,false,{error:{code:'UNSUPPORTED_OPERATION'}});
+  }
+  try {
+    let result;
+    if(op==='visualization.capabilities'){
+      if(Object.keys(p).length)throw Object.assign(new Error('INVALID_PAYLOAD'),{code:'INVALID_PAYLOAD'});
+      result={protocol_version:V2,engine_version:ENGINE,
+        modules:['geo','graph','chronos','evidence','pattern','observatory'],
+        max_page_size:100,session_ttl_ms:600000};
+    } else if(op==='visualization.project.create'){
+      if(Object.keys(p).some(k=>k!=='corpus'))throw Object.assign(new Error('INVALID_PAYLOAD'),{code:'INVALID_PAYLOAD'});
+      result=visualization.create(p.corpus);
+    } else if(op==='visualization.project.query'){
+      if(Object.keys(p).some(k=>!['project_id','module','offset','limit'].includes(k)))
+        throw Object.assign(new Error('INVALID_PAYLOAD'),{code:'INVALID_PAYLOAD'});
+      result=visualization.query(p.project_id,
+        {module:p.module,offset:p.offset,limit:p.limit});
+    } else {
+      if(Object.keys(p).some(k=>k!=='project_id'))throw Object.assign(new Error('INVALID_PAYLOAD'),{code:'INVALID_PAYLOAD'});
+      result=visualization.release(p.project_id);
+    }
+    return v2Reply(id,true,{result});
+  } catch(e){
+    return v2Reply(id,false,{error:{code:typeof e.code==='string'?e.code:'ENGINE_FAILURE'}});
+  }
+}
+
+
 function reply(requestId, ok, body) {
   const message = JSON.stringify({
     protocol_version: PROTOCOL,
@@ -33,6 +83,7 @@ function respond(raw) {
   } catch {
     return reply(null, false, { error: { code: 'INVALID_JSON', message: 'Malformed request envelope' } });
   }
+  if (message?.protocol_version === V2) return v2Respond(message);
   if (!message || typeof message !== 'object' || Array.isArray(message) ||
       !REQUEST_ID.test(message.request_id ?? '') || message.protocol_version !== PROTOCOL ||
       typeof message.operation !== 'string') {
