@@ -11,6 +11,14 @@ function fail(code){const e=new Error(code);e.code=code;throw e;}
 class ProjectManager {
   #session=null;
   constructor(clock=()=>Date.now()) {this.clock=clock;}
+  #renew(session){
+    if(session.timer)clearTimeout(session.timer);
+    this.#renew(session);
+    session.timer=setTimeout(()=>{
+      if(this.#session===session)this.release();
+    },TTL_MS);
+    session.timer.unref?.();
+  }
   create(corpus){
     if(!corpus||typeof corpus!=='object'||Array.isArray(corpus))fail('INVALID_CORPUS');
     let json;
@@ -22,7 +30,8 @@ class ProjectManager {
     // Isolate caller-owned JSON; the source is never modified.
     const clone=JSON.parse(json);
     const project_id=randomBytes(24).toString('hex');
-    this.#session={project_id,corpus:clone,expiry:this.clock()+TTL_MS};
+    this.#session={project_id,corpus:clone,expiry:this.clock()+TTL_MS,timer:null};
+    this.#renew(this.#session);
     return {project_id,canonical_sha256:canonical.digest(clone),expires_in_ms:TTL_MS,
       profile_id:clone.profile.id,engine_version:'3.0.0'};
   }
@@ -50,6 +59,7 @@ class ProjectManager {
   }
   release(id){
     if(id!==undefined&&this.#session && this.#session.project_id!==id)fail('PROJECT_NOT_FOUND');
+    if(this.#session?.timer)clearTimeout(this.#session.timer);
     this.#session=null;
     return {released:true};
   }
