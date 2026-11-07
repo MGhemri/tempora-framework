@@ -8,6 +8,9 @@ declare global {
       validateCorpus: () => Promise<unknown>;
       copyReviewDraft: (draft: string) => Promise<boolean>;
       openOfficialLink: (url: string) => Promise<boolean>;
+      openVisualProject: () => Promise<unknown>;
+      queryVisualProject: (module: string, offset: number, limit: number) => Promise<unknown>;
+      closeVisualProject: () => Promise<boolean>;
     };
   }
 }
@@ -35,4 +38,29 @@ export async function copyNativeReviewDraft(draft: string): Promise<void> {
     return;
   }
   await navigator.clipboard.writeText(draft);
+}
+
+/** Currently supported only on the qualified Electron Windows host.
+ * Tauri remains on the existing read-only workbench until its native
+ * project/session authority receives independent security qualification.
+ */
+export const visualModules = ["geo","graph","chronos","evidence","pattern","observatory"] as const;
+export type VisualModule = typeof visualModules[number];
+export type VisualProjectInfo = {fileName:string;canonical_sha256:string;profile_id:string;engine_version:string;expires_in_ms:number};
+export type VisualProjection = {
+  projection_schema_version:string;scientific_sha256:string;
+  scope:{total_matched:number;returned:number;truncated:boolean};
+  result:Array<Record<string,unknown>>;
+  corpus:{canonical_sha256:string;profile_id:string};
+};
+export async function openVisualProject():Promise<VisualProjectInfo|null>{
+  if(!window.temporaElectron)throw Error("VISUAL_ELECTRON_ONLY");
+  return await window.temporaElectron.openVisualProject() as VisualProjectInfo|null;
+}
+export async function queryVisualProject(module:VisualModule,offset=0,limit=50):Promise<VisualProjection>{
+  if(!window.temporaElectron)throw Error("VISUAL_ELECTRON_ONLY");
+  return await window.temporaElectron.queryVisualProject(module,offset,limit) as VisualProjection;
+}
+export async function closeVisualProject():Promise<void>{
+  if(window.temporaElectron)await window.temporaElectron.closeVisualProject();
 }
