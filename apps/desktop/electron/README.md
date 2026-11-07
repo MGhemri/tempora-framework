@@ -90,3 +90,53 @@ Remaining beta gates: interactive navigation and clipboard review-draft
 test, clean-machine uninstall/reinstall, icon/branding binary delivery,
 signed Windows packages, security updates for bundled Chromium, and
 reproducible builds. **No public release is authorized yet.**
+
+
+## TEMPORA Desktop identity and Windows signing readiness
+
+**Visible application name:** `TEMPORA Desktop` throughout NSIS, shortcuts,
+the native window and executable. The Electron/Chromium implementation
+remains an internal technical detail and does not form part of the user-facing
+product name.
+
+**Branding:** the Windows package uses the user's **white-background**
+hourglass artwork (`build/icon-white-256.png`); the in-app About view uses
+the **transparent** `public/branding/tempora-logo-transparent.png` asset.
+Both are checked-in graphics derived from the supplied originals, without
+replacing the originals. They are intentionally distinct assets.
+
+**About / À propos:** contains the author/project attribution **Ghemri M**
+(and only there), the project website `https://connect-gm.com`, TEMPORA
+Framework 3.0.0, desktop version, MIT licence and GitHub source URL.
+External site links open only on explicit user click in the system browser,
+via two precisely allowlisted URLs. No SSH, hosting or cPanel credentials
+are used by TEMPORA Desktop or its distribution workflows.
+
+### Real Windows Authenticode signing (NOT accomplished yet)
+
+The new **manual** workflow `desktop-electron-signed-candidate.yml` produces
+no artifact unless a valid Windows **code-signing certificate** is available.
+The **GitHub Environment** `windows-code-signing` must be configured,
+preferably with required approvals, and must have secrets:
+
+- `WIN_CSC_LINK`: certificate reference supported by electron-builder
+  (for example a compliant code-signing identity; exportable PFX only
+  when permitted by the issuing CA).
+- `WIN_CSC_KEY_PASSWORD`: certificate passphrase (when applicable).
+
+The pipeline enforces `forceCodeSigning=true`, verifies Authenticode
+`Valid` on both `TEMPORA Desktop.exe` and the NSIS installer, executes
+the packaged scientific worker, writes SHA-256 provenance and only then
+uploads a **signed candidate**. It does **not** create a public release.
+The final publisher identity must match the validated legal identity on
+the certificate, not an invented display name.
+
+**Important:** a website and its HTTPS/TLS certificate are **not Windows
+code-signing credentials**. Hosting/cPanel/SSH credentials must never be
+pasted into project code, Actions secrets intended for signing, or build
+logs; rotate any accidentally exposed hosting password and prefer SSH keys.
+For HSM or Azure cloud code-signing, configure the corresponding provider
+integration separately and maintain the same Authenticode validation gate.
+
+Do not label a release as signed until a genuine certificate has been
+configured and both installer and executable have passed verification.
