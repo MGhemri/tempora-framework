@@ -1,4 +1,4 @@
-import { invokeNative, isNative, copyNativeReviewDraft, openVisualProject, queryVisualProject, visualModules, type VisualModule, type VisualProjection, type VisualProjectInfo } from "./native";
+import { invokeNative, isNative, copyNativeReviewDraft, openVisualProject, queryVisualProject, visualModules, type VisualModule, type VisualProjection, type VisualProjectInfo, analyzeVisualProject } from "./native";
 import "./style.css";
 import {renderScientificGraphic} from "./visualization/core/render-svg";
 
@@ -28,6 +28,7 @@ type DocumentPreview = {
 
 const text = {
   fr: {
+    visualAnalyze:"Exécuter une analyse déterministe",
     visualTitle:"Exploration scientifique · six laboratoires",visualIntro:"Projections de données déclarées uniquement, en lecture seule et sans conclusions historiques automatiques.",visualOpen:"Ouvrir un corpus pour les laboratoires",visualPrevious:"Précédent",visualNext:"Suivant",visualDisclaimer:"Les cartes, graphes avancés et inférences IA ne sont pas encore exécutés. Aucune vue ne certifie un fait historique.",
     workspace: "ESPACE DE TRAVAIL", overview: "Vue générale", documents: "Documents", research: "Analyses", models: "Modèles IA",
     about: "À propos", aboutIntro: "Un espace de recherche historique local, traçable et reproductible.",
@@ -67,6 +68,7 @@ const text = {
     diagnostics: "diagnostics", sourceReviewNotice: "La conformité au schéma ne prouve pas la véracité des événements.",
   },
   en: {
+    visualAnalyze:"Run deterministic analysis",
     visualTitle:"Scientific exploration · six labs",visualIntro:"Read-only projections of declared records only, without automatic historical conclusions.",visualOpen:"Open corpus for research laboratories",visualPrevious:"Previous",visualNext:"Next",visualDisclaimer:"Advanced maps, graph layouts and AI inference are not enabled. No view certifies historical facts.",
     workspace: "WORKSPACE", overview: "Overview", documents: "Documents", research: "Analysis", models: "AI models",
     about: "About", aboutIntro: "A local, traceable and reproducible historical research workspace.",
@@ -115,6 +117,7 @@ let visualInfo:VisualProjectInfo|null=null;
 let visualModule:VisualModule="chronos";
 let visualOffset=0;
 let visualProjection:VisualProjection|null=null;
+let visualAnalysis:VisualProjection|null=null;
 let visualBusy=false;
 let visualSequence=0;
 
@@ -393,6 +396,23 @@ function renderVisual():void {
     b.disabled=visualBusy||!info;
   });
   renderScientificGraphic(byId("visual-graphic"),visualModule,visualProjection?.result??[]);
+  const analysisRows=byId("visual-analysis-rows");analysisRows.replaceChildren();
+  if(visualAnalysis){
+    for(const item of visualAnalysis.result){
+      const row=document.createElement("tr");
+      const cell=document.createElement("td");
+      const code=document.createElement("code");
+      code.textContent=JSON.stringify(item);cell.append(code);row.append(cell);
+      analysisRows.append(row);
+    }
+  }
+  byId("visual-analysis-note").textContent=visualAnalysis
+    ? (language==="fr"?"Analyse dérivée, non canonique":"Derived, noncanonical analysis")+
+      " · "+visualAnalysis.scope.returned+"/"+visualAnalysis.scope.total_matched+
+      (visualAnalysis.scope.truncated?" · PARTIAL":"")+
+      " · "+visualAnalysis.scientific_sha256
+    : "";
+  (byId("visual-analyze") as HTMLButtonElement).disabled=visualBusy||!visualInfo;
   const rows=byId("visual-rows");rows.replaceChildren();
   const result=visualProjection;
   if(result){
@@ -438,7 +458,7 @@ async function openVisual():Promise<void>{
   try{
     const info=await openVisualProject();
     if(!info)return;
-    visualInfo=info;visualOffset=0;visualProjection=null;visualModule="chronos";
+    visualInfo=info;visualOffset=0;visualProjection=null;visualAnalysis=null;visualModule="chronos";
   }catch(error){notify(error instanceof Error?error.message:String(error));}
   finally{visualBusy=false;renderVisual();}
   if(visualInfo)await loadVisual();
@@ -456,8 +476,18 @@ byId("visual-open").addEventListener("click",()=>void openVisual());
 document.querySelectorAll<HTMLButtonElement>("[data-visual-module]").forEach(button=>button.addEventListener("click",()=>{
   const module=button.dataset.visualModule as VisualModule;
   if(!visualModules.includes(module)||!visualInfo||visualBusy)return;
-  visualModule=module;visualOffset=0;visualProjection=null;void loadVisual();
+  visualModule=module;visualOffset=0;visualProjection=null;visualAnalysis=null;void loadVisual();
 }));
+byId("visual-analyze").addEventListener("click",async()=>{
+  if(visualBusy||!visualInfo)return;
+  visualBusy=true;visualAnalysis=null;renderVisual();
+  try{
+    const result=await analyzeVisualProject(visualModule,50,0.6);
+    if(result.corpus.canonical_sha256!==visualInfo.canonical_sha256)throw Error("STALE_CORPUS");
+    visualAnalysis=result;
+  }catch(error){notify(error instanceof Error?error.message:String(error));}
+  finally{visualBusy=false;renderVisual();}
+});
 byId("visual-previous").addEventListener("click",()=>{
   if(visualBusy||visualOffset===0)return;
   visualOffset=Math.max(0,visualOffset-50);void loadVisual();
