@@ -1,4 +1,4 @@
-import { invokeNative, isNative, copyNativeReviewDraft, openVisualProject, queryVisualProject, visualModules, type VisualModule, type VisualProjection, type VisualProjectInfo, analyzeVisualProject } from "./native";
+import { invokeNative, isNative, copyNativeReviewDraft, openVisualProject, queryVisualProject, visualModules, type VisualModule, type VisualProjection, type VisualProjectInfo, analyzeVisualProject, exportVisualProject, type VisualExportFormat } from "./native";
 import "./style.css";
 import {renderScientificGraphic} from "./visualization/core/render-svg";
 
@@ -28,6 +28,7 @@ type DocumentPreview = {
 
 const text = {
   fr: {
+    visualExportFormat:"Format d’export",visualExport:"Exporter cette page",
     visualAnalyze:"Exécuter une analyse déterministe",
     visualTitle:"Exploration scientifique · six laboratoires",visualIntro:"Projections de données déclarées uniquement, en lecture seule et sans conclusions historiques automatiques.",visualOpen:"Ouvrir un corpus pour les laboratoires",visualPrevious:"Précédent",visualNext:"Suivant",visualDisclaimer:"Les cartes, graphes avancés et inférences IA ne sont pas encore exécutés. Aucune vue ne certifie un fait historique.",
     workspace: "ESPACE DE TRAVAIL", overview: "Vue générale", documents: "Documents", research: "Analyses", models: "Modèles IA",
@@ -68,6 +69,7 @@ const text = {
     diagnostics: "diagnostics", sourceReviewNotice: "La conformité au schéma ne prouve pas la véracité des événements.",
   },
   en: {
+    visualExportFormat:"Export format",visualExport:"Export current page",
     visualAnalyze:"Run deterministic analysis",
     visualTitle:"Scientific exploration · six labs",visualIntro:"Read-only projections of declared records only, without automatic historical conclusions.",visualOpen:"Open corpus for research laboratories",visualPrevious:"Previous",visualNext:"Next",visualDisclaimer:"Advanced maps, graph layouts and AI inference are not enabled. No view certifies historical facts.",
     workspace: "WORKSPACE", overview: "Overview", documents: "Documents", research: "Analysis", models: "AI models",
@@ -413,6 +415,14 @@ function renderVisual():void {
       " · "+visualAnalysis.scientific_sha256
     : "";
   (byId("visual-analyze") as HTMLButtonElement).disabled=visualBusy||!visualInfo;
+  (byId("visual-export") as HTMLButtonElement).disabled=visualBusy||!visualProjection;
+  const exportSelect=byId("visual-export-format") as HTMLSelectElement;
+  exportSelect.disabled=visualBusy||!visualInfo;
+  for(const option of exportSelect.options){
+    option.disabled=(option.value==="geojson"&&visualModule!=="geo")||
+      (option.value==="graphml"&&visualModule!=="graph");
+  }
+  if(exportSelect.selectedOptions[0]?.disabled)exportSelect.value="json";
   const rows=byId("visual-rows");rows.replaceChildren();
   const result=visualProjection;
   if(result){
@@ -478,6 +488,17 @@ document.querySelectorAll<HTMLButtonElement>("[data-visual-module]").forEach(but
   if(!visualModules.includes(module)||!visualInfo||visualBusy)return;
   visualModule=module;visualOffset=0;visualProjection=null;visualAnalysis=null;void loadVisual();
 }));
+byId("visual-export").addEventListener("click",async()=>{
+  if(visualBusy||!visualInfo||!visualProjection)return;
+  const format=(byId("visual-export-format") as HTMLSelectElement).value as VisualExportFormat;
+  visualBusy=true;renderVisual();
+  try{
+    const receipt=await exportVisualProject(visualModule,format,visualOffset,50);
+    if(receipt)notify((language==="fr"?"Export enregistré : ":"Export saved: ")+receipt.fileName+
+      " · SHA-256 "+receipt.sha256+(receipt.partial?" · PARTIAL":""));
+  }catch(error){notify(error instanceof Error?error.message:String(error));}
+  finally{visualBusy=false;renderVisual();}
+});
 byId("visual-analyze").addEventListener("click",async()=>{
   if(visualBusy||!visualInfo)return;
   visualBusy=true;visualAnalysis=null;renderVisual();
