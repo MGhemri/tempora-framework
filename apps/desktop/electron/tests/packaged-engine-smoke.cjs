@@ -54,6 +54,7 @@ const base = {
 // ALNOP is a historical GeoJSON excerpt, NOT a canonical v3 corpus.
 const readExample = name => JSON.parse(readFileSync(join(resourceRoot,'examples',name),'utf8'));
 const installedCanonical = readExample('synthetic-canonical-v3.json');
+const installedAlnopCanonical = readExample('alnop-canonical-v3-demo.json');
 const installedAlnop = readExample('alnop-geographic-sample.geojson');
 assert.equal(installedCanonical.schema_version,'3.0.0');
 assert.equal(installedAlnop.type,'FeatureCollection');
@@ -92,6 +93,8 @@ assert.equal(invoke('health',undefined,'smoke_health').engine_version,'3.0.0');
 const exampleValidation=invoke('corpus.validate',installedCanonical,'smoke_example');
 assert.equal(exampleValidation.valid,true,'installed canonical example must validate');
 assert.equal(exampleValidation.errors.length,0);
+const alnopCanonicalValidation=invoke('corpus.validate',installedAlnopCanonical,'smoke_alnop_canonical_demo');
+assert.equal(alnopCanonicalValidation.valid,true,'installed ALNOP canonical demonstrator must validate');
 const yes=invoke('corpus.validate',base,'smoke_valid');
 assert.equal(yes.valid,true,'synthetic v3 corpus must validate');
 assert.equal(yes.errors.length,0);
