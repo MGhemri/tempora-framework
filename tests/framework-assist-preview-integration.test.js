@@ -13,6 +13,11 @@ const rowInput=[
  'ASSIST_SYN_INVALID;Événement fictif C;29/02/1701;fictional assembly'
 ].join('\r\n')+'\r\n';
 const confirmed=(source_column,target_field)=>({source_column,target_field,state:'confirmed_by_user'});
+const exampleAliases=profile=>({
+ alias_schema_version:'1.0.0',id:'fictional-operation-headers',
+ profile_id:profile.id,profile_version:profile.version,
+ aliases:[{header:'nom_operation',target:'title'},{header:'type_action',target:'event_type'}]
+});
 
 test('Assistant M1 CSV inspection -> explicit mapping -> canonical preview preserves source and quarantines invalid rows',()=>{
  const corpus=nativeCorpus(),before=structuredClone(corpus);
@@ -24,7 +29,7 @@ test('Assistant M1 CSV inspection -> explicit mapping -> canonical preview prese
  assert.ok(candidate);
  assert.deepEqual(candidate.header_issues,[]);
  const headers=candidate.header_values;
- const suggestions=suggestColumnMappings(headers,corpus.profile);
+ const suggestions=suggestColumnMappings(headers,corpus.profile,exampleAliases(corpus.profile));
  assert.equal(suggestions.mapping_confirmed,false);
  assert.equal(suggestions.confirmed_bindings.length,0);
  assert.deepEqual(suggestions.suggestions.map(x=>x.target_field),['id','title.en','start_date','event_type']);
@@ -55,7 +60,7 @@ test('Assistant M1 CSV inspection -> explicit mapping -> canonical preview prese
 test('Assistant does not compile unreviewed suggestions into a staging mapping',()=>{
  const c=nativeCorpus(),bytes=Buffer.from(rowInput);
  const report=inspectDelimitedSample(bytes);
- const suggestions=suggestColumnMappings(report.candidates[0].header_values,c.profile);
+ const suggestions=suggestColumnMappings(report.candidates[0].header_values,c.profile,exampleAliases(c.profile));
  const bindings=suggestions.suggestions.map(x=>({
   source_column:x.source_column,target_field:x.target_field,state:x.state
  }));
