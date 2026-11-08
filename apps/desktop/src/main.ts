@@ -33,6 +33,7 @@ const text = {
     visualExportFormat:"Format d’export",visualExport:"Exporter cette page",
     visualAnalyze:"Exécuter une analyse déterministe",
     visualCancel:"Arrêter les calculs et fermer le projet",
+    visualSelectionHeading:"Sélection scientifique commune :",visualClearSelection:"Effacer la sélection",
     visualTitle:"Exploration scientifique · six laboratoires",visualIntro:"Projections de données déclarées uniquement, en lecture seule et sans conclusions historiques automatiques.",visualOpen:"Ouvrir un corpus pour les laboratoires",visualPrevious:"Précédent",visualNext:"Suivant",visualDisclaimer:"Les cartes, graphes avancés et inférences IA ne sont pas encore exécutés. Aucune vue ne certifie un fait historique.",
     workspace: "ESPACE DE TRAVAIL", overview: "Vue générale", documents: "Documents", research: "Analyses", models: "Modèles IA",
     about: "À propos", aboutIntro: "Un espace de recherche historique local, traçable et reproductible.",
@@ -77,6 +78,7 @@ const text = {
     visualExportFormat:"Export format",visualExport:"Export current page",
     visualAnalyze:"Run deterministic analysis",
     visualCancel:"Stop calculations and close project",
+    visualSelectionHeading:"Shared scientific selection:",visualClearSelection:"Clear selection",
     visualTitle:"Scientific exploration · six labs",visualIntro:"Read-only projections of declared records only, without automatic historical conclusions.",visualOpen:"Open corpus for research laboratories",visualPrevious:"Previous",visualNext:"Next",visualDisclaimer:"Advanced maps, graph layouts and AI inference are not enabled. No view certifies historical facts.",
     workspace: "WORKSPACE", overview: "Overview", documents: "Documents", research: "Analysis", models: "AI models",
     about: "About", aboutIntro: "A local, traceable and reproducible historical research workspace.",
@@ -130,6 +132,22 @@ let graphNavigation:VisualProjection|null=null;
 let visualSnapshot:VisualSnapshotDiff|null=null;
 let visualBusy=false;
 let visualSequence=0;
+let selectedVisualRef:VisualTypedRef|null=null;
+const visualRefKinds=new Set(["event","source","claim","entity","spatial","relation","review","assessment","release"]);
+function validVisualRef(value:unknown):value is VisualTypedRef{
+  if(!value||typeof value!=="object"||Array.isArray(value))return false;
+  const input=value as Record<string,unknown>;
+  return Object.keys(input).length===3&&visualRefKinds.has(String(input.kind))&&
+    [input.namespace,input.id].every(x=>typeof x==="string"&&/^[A-Za-z0-9][A-Za-z0-9_.:-]{0,199}$/.test(x));
+}
+function visualRefKey(value:VisualTypedRef):string{
+  return JSON.stringify([value.kind,value.namespace,value.id]);
+}
+function selectVisualRef(value:unknown):void{
+  if(!validVisualRef(value)||!visualInfo)return;
+  selectedVisualRef={kind:value.kind,namespace:value.namespace,id:value.id};
+  renderVisual();
+}
 let visualCancelVersion=0;
 let visualCancelling=false;
 
@@ -398,6 +416,8 @@ async function openDocument(): Promise<void> {
 
 function renderVisual():void {
   const info=visualInfo;
+  byId("visual-typed-selection-value").textContent=selectedVisualRef?visualRefKey(selectedVisualRef):"—";
+  (byId("visual-clear-selection") as HTMLButtonElement).disabled=!selectedVisualRef;
   byId("visual-session").textContent=info
     ? info.fileName+" · "+info.profile_id+" · SHA-256 "+info.canonical_sha256
     : (language==="fr"?"Aucun projet de recherche ouvert.":"No research project open.");
@@ -480,7 +500,20 @@ function renderVisual():void {
       const details=document.createElement("td");
       const json=document.createElement("code");
       json.textContent=JSON.stringify(item);
-      details.append(json);tr.append(ref,details);rows.append(tr);
+      details.append(json);tr.append(ref,details);
+      const rowRef=item.ref;
+      if(validVisualRef(rowRef)){
+        tr.tabIndex=0;tr.setAttribute("role","button");
+        tr.setAttribute("aria-label",visualRefKey(rowRef));
+        tr.setAttribute("aria-pressed",String(selectedVisualRef!==null&&
+          visualRefKey(selectedVisualRef)===visualRefKey(rowRef)));
+        const choose=()=>selectVisualRef(rowRef);
+        tr.addEventListener("click",choose);
+        tr.addEventListener("keydown",event=>{
+          if(event.key==="Enter"||event.key===" "){event.preventDefault();choose();}
+        });
+      }
+      rows.append(tr);
     }
   }
   byId("visual-diagnostics").textContent=result
@@ -518,7 +551,7 @@ async function openVisual():Promise<void>{
   try{
     const info=await openVisualProject();
     if(!info||version!==visualCancelVersion)return;
-    visualInfo=info;visualOffset=0;visualProjection=null;visualAnalysis=null;graphNavigation=null;visualSnapshot=null;visualModule="chronos";
+    visualInfo=info;visualOffset=0;visualProjection=null;visualAnalysis=null;graphNavigation=null;visualSnapshot=null;selectedVisualRef=null;visualModule="chronos";
   }catch(error){if(version===visualCancelVersion)notify(error instanceof Error?error.message:String(error));}
   finally{if(version===visualCancelVersion){visualBusy=false;renderVisual();}}
   if(version===visualCancelVersion&&visualInfo)await loadVisual();
@@ -533,12 +566,13 @@ byId("document-open").addEventListener("click", () => void openDocument());
 byId("validate-corpus").addEventListener("click", () => void validateCorpus());
 byId("draft-copy").addEventListener("click", () => void copyReviewDraft());
 byId("visual-open").addEventListener("click",()=>void openVisual());
+byId("visual-clear-selection").addEventListener("click",()=>{selectedVisualRef=null;renderVisual();});
 byId("visual-cancel").addEventListener("click",async()=>{
   if(visualCancelling)return;
   ++visualCancelVersion;
   ++visualSequence;
   visualInfo=null;visualProjection=null;visualAnalysis=null;
-  graphNavigation=null;visualSnapshot=null;visualOffset=0;visualCancelling=true;visualBusy=true;
+  graphNavigation=null;visualSnapshot=null;selectedVisualRef=null;visualOffset=0;visualCancelling=true;visualBusy=true;
   renderVisual();
   try{
     await cancelVisualJob();
@@ -549,7 +583,13 @@ byId("visual-cancel").addEventListener("click",async()=>{
 document.querySelectorAll<HTMLButtonElement>("[data-visual-module]").forEach(button=>button.addEventListener("click",()=>{
   const module=button.dataset.visualModule as VisualModule;
   if(!visualModules.includes(module)||!visualInfo||visualBusy)return;
-  visualModule=module;visualOffset=0;visualProjection=null;visualAnalysis=null;graphNavigation=null;visualSnapshot=null;void loadVisual();
+  visualModule=module;
+  if(module==="graph"&&selectedVisualRef){
+    (byId("graph-kind") as HTMLInputElement).value=selectedVisualRef.kind;
+    (byId("graph-namespace") as HTMLInputElement).value=selectedVisualRef.namespace;
+    (byId("graph-id") as HTMLInputElement).value=selectedVisualRef.id;
+  }
+  visualOffset=0;visualProjection=null;visualAnalysis=null;graphNavigation=null;visualSnapshot=null;void loadVisual();
 }));
 byId("visual-snapshot-compare").addEventListener("click",async()=>{
   if(visualBusy||!visualInfo||visualModule!=="observatory")return;
