@@ -262,3 +262,4 @@ jobs:
           $setups = @(Get-ChildItem electron/release -File -Filter '*SETUP.exe')
           if ($setups.Count -ne 1) { throw 'ELECTRON_NSIS_INSTALLER_MISSING_OR_AMBIGUOUS' }
           Write-Host ('Unsigned experimental Electron NSIS: ' + $setups[0].Name)
+          ./electron/scripts/verify-installed-examples.ps1 -Installer $setups[0].FullName -InstallDirectory "$env:RUNNER_TEMP/tempora-electron-j8-examples"
