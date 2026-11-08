@@ -193,7 +193,8 @@ function coverage(events,claims,corpus,scope){
       groups.territory.set(entity.id,[]);
     }
   }
-  for(const type of corpus.taxonomies.event_types??[])groups.type.set(type,[]);
+  const typeTaxonomy=corpus.profile.rules.find(r=>r.type==='vocabulary'&&r.field==='event_type')?.taxonomy??'event_types';
+  for(const type of corpus.taxonomies[typeTaxonomy]??[])groups.type.set(type,[]);
   for(const language of corpus.profile.locales)groups.language.set(language,[]);
   for(const key of ['event_evidence','claim_evidence_only','no_recorded_evidence'])groups.sources.set(key,[]);
 
