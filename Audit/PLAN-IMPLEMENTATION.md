@@ -131,3 +131,14 @@ Un test d'intégration sur des données entièrement fictives relie **`inspectDe
 Les assertions vérifient : aucun mapping provenant uniquement de suggestions, aucun effet de bord sur les octets source ou le corpus, empreinte de fichier, lignes source, diagnostic de date invalide en quarantaine, état `proposed`, et prévisualisation reproductible. Le test prouve **l'intégration des noyaux**, pas l'existence d'un éditeur visuel : ce parcours requiert aujourd'hui un appel programmatique aux fonctions privées, sans déploiement d'un serveur web ou de GUI.
 
 **Statut :** test proposé, en attente de CI Linux/Windows et fusion.
+
+
+## ASSIST-M1.1b — Inventaire structurel XLSX borné (PR en cours)
+
+Un nouvel adaptateur privé `src/framework/assist-xlsx.js` examine **en mémoire** les octets d'un conteneur XLSX pour identifier les feuilles de calcul et leur état `visible`, `hidden` ou `veryHidden`, sans accéder aux cellules et sans évaluer de formules. Il expose l'empreinte brute SHA-256, les noms de feuilles, les références OPC internes, les limites et un indicateur explicite `selected_sheet:null` tant qu'aucun choix humain n'a eu lieu.
+
+Le lecteur ZIP est volontairement conservateur : plafond 16 Mio d'entrée et de taille totale annoncée après décompression, maximum 512 entrées, maximum 128 feuilles, 512 Kio par partie XML inspectée, rejet des archives chiffrées, ZIP64, data descriptors, chemins dangereux, doublons de parties, chevauchements, liens externes, macros, OLE, ActiveX et extensions exécutables. Les parties XML inspectées refusent DTD et déclarations d'entités ; elles ne sont pas chargées depuis le réseau. Tests adversariaux avec classeurs fictifs fabriqués en mémoire, CRC et décompression bornée.
+
+**Limites importantes :** il s'agit d'un **inventaire de classeur**, pas encore d'un lecteur de lignes et de cellules Excel, ni d'un parseur XML/OPC généraliste certifié ; certains XLSX valides utilisant d'autres caractéristiques ZIP seront rejetés. L'adaptateur n'importe rien, ne modifie aucun fichier et ne compile pas de mapping canonique. L'inspection ultérieure des cellules devra être confiée à un parseur XML/OPC audité avec des limites propres et une politique explicite pour les résultats de formules et les dates sérialisées Excel. Le contrôle automatique des tests Assistant a également été ajouté à `npm run test:core` afin de rendre les régressions visibles dans la CI Linux/Windows et le checkout standalone.
+
+**Statut :** implémentation proposée, soumise à CI et revue avant fusion.
