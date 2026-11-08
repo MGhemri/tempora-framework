@@ -231,3 +231,17 @@ test('Assistant initial GUI remains read-only and Electron-only',()=>{
  assert.doesNotMatch(ui,/innerHTML|writeFileSync|fetch\(/);
  assert.match(styles,/\.assistant-columns/);
 });
+
+test('Assistant suggestion command stays host-only and profile-scoped',()=>{
+ const main=src('electron/main.cjs');
+ const preload=src('electron/preload.cjs');
+ const session=src('electron/assistant-session.cjs');
+ const pkg=require('../package.json');
+ assert.match(main,/tempora:assistant:suggest/);
+ assert.match(preload,/assistantSuggest/);
+ assert.match(session,/suggestColumnMappings/);
+ assert.match(session,/ASSIST_PROFILE_NOT_REGISTERED/);
+ assert.match(session,/ASSIST_DELIMITER_CONFIRMATION_REQUIRED/);
+ assert.ok(pkg.build.extraResources.some(x=>x.to==='assistant/framework/assist-mapping.js'));
+ assert.ok(pkg.build.extraResources.some(x=>x.to==='assistant/profiles/synthetic-history/profile.json'));
+});
