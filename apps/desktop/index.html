@@ -16,6 +16,7 @@
         <button class="nav-item active" data-view="overview" aria-current="page"><span class="nav-symbol">◈</span><span data-i18n="overview">Vue générale</span></button>
         <button class="nav-item" data-view="documents"><span class="nav-symbol">▤</span><span data-i18n="documents">Documents</span></button>
         <button class="nav-item" data-view="research"><span class="nav-symbol">◇</span><span data-i18n="research">Analyses</span></button>
+        <button class="nav-item" data-view="assistant"><span class="nav-symbol">▦</span><span data-i18n="assistant">Assistant</span></button>
         <button class="nav-item" data-view="models"><span class="nav-symbol">✧</span><span data-i18n="models">Modèles IA</span><span class="tiny-chip">FUTURE</span></button>
         <button class="nav-item" data-view="about"><span class="nav-symbol">ⓘ</span><span data-i18n="about">À propos</span></button>
       </nav>
@@ -56,6 +57,18 @@
           <div class="page-heading"><div><div class="eyebrow">TEMPORA / DOCUMENTS</div><h1 data-i18n="documents">Documents</h1><p data-i18n="docDetail">Prévisualisation locale en lecture seule. Formats JSON et GeoJSON, maximum 8 Mio.</p></div></div>
           <div class="import-panel"><div class="import-symbol">▤</div><h2 data-i18n="selectTitle">Explorer une source locale</h2><p data-i18n="selectDetail">Le sélecteur natif ne lit que le fichier choisi. Aucun réseau, aucune modification, aucune indexation permanente.</p><button class="primary" id="document-open" data-i18n="open">Ouvrir un document ↗</button><button class="primary secondary-action" id="validate-corpus" type="button" data-i18n="validateCanonical">Valider un corpus TEMPORA</button><p class="subnote" data-i18n="caveat">L'aperçu ne valide pas le modèle canonique TEMPORA et ne certifie pas les faits historiques.</p></div>
           <section id="validation-panel" class="result-panel validation-panel hidden" aria-live="polite"><div class="result-heading"><div><div class="eyebrow" data-i18n="engineResult">RÉSULTAT DU MOTEUR TEMPORA</div><h2 id="validation-title">—</h2></div><span id="validation-badge" class="file-badge">—</span></div><p id="validation-summary" class="subnote"></p><p id="validation-digest" class="validation-digest"></p><div id="validation-errors" class="validation-errors"></div><p data-i18n="sourceReviewNotice" class="subnote">La conformité au schéma ne prouve pas la véracité des événements.</p></section><div id="result-panel" class="result-panel hidden" aria-live="polite"><div class="result-heading"><div><div class="eyebrow" data-i18n="opened">DOCUMENT SÉLECTIONNÉ</div><h2 id="document-name">—</h2></div><span id="document-format" class="file-badge">JSON</span></div><div class="metric-grid result-metrics"><article class="metric"><div class="metric-name" data-i18n="records">Notices identifiées</div><strong id="document-records">0</strong></article><article class="metric"><div class="metric-name" data-i18n="sources">Sources repérées</div><strong id="document-sources">0</strong></article><article class="metric"><div class="metric-name" data-i18n="assertions">Assertions repérées</div><strong id="document-claims">0</strong></article></div><div class="table-wrap"><table><thead><tr><th>ID</th><th data-i18n="title">Titre</th><th data-i18n="kind">Type</th></tr></thead><tbody id="document-rows"></tbody></table></div><p id="document-note" class="subnote"></p></div>
+        </section>
+        <section id="view-assistant" class="view hidden">
+          <div class="page-heading"><div><div class="eyebrow">TEMPORA / ASSISTANT · READ-ONLY</div><h1 data-i18n="assistant">Assistant</h1><p data-i18n="assistantDescription">Première étape : inspection de sources sans mapping confirmé ni écriture.</p></div></div>
+          <div class="import-panel"><button class="primary" id="assistant-open" type="button">Sélectionner un fichier</button>
+            <button type="button" id="assistant-close">Fermer la session</button>
+            <select id="assistant-sheet" aria-label="Feuille Excel" disabled></select>
+            <p class="subnote" id="assistant-status" role="status" aria-live="polite"></p>
+            <div id="assistant-details" class="subnote"></div>
+          </div>
+          <div class="assistant-columns"><section class="result-panel" id="assistant-columns" aria-label="Colonnes sources"></section>
+          <section class="result-panel" id="assistant-targets" aria-label="Champs canoniques"></section></div>
+          <section class="result-panel" id="assistant-preview" aria-label="Aperçu sans écriture"></section>
         </section>
         <section id="view-research" class="view hidden">
           <div class="page-heading"><div><div class="eyebrow">TEMPORA / SCIENCE</div><h1 data-i18n="research">Analyses</h1><p data-i18n="workbenchIntro">Aperçu structurel des preuves déclarées, sans certification historique.</p></div></div>
