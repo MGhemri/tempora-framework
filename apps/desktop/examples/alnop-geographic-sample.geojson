@@ -1,0 +1,185 @@
+{
+  "type": "FeatureCollection",
+  "properties": {
+    "title": "TEMPORA / ALNOP — extrait pédagogique géolocalisé",
+    "derived_from": "https://github.com/MGhemri/aln-historical-operations-dataset/blob/main/operations_fln_1954_1962.geojson",
+    "source_dataset_version": "1.0.0",
+    "attribution": "Ghemri M. (ALN Historical Operations Dataset)",
+    "license": "https://creativecommons.org/licenses/by/4.0/",
+    "subset": true,
+    "feature_count": 5,
+    "notice": "Points de représentation cartographique, pas nécessairement lieux exacts; sources historiques à réévaluer avant citation."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "OP_1954_001",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.1741,
+          35.5559
+        ]
+      },
+      "properties": {
+        "id": "OP_1954_001",
+        "nom_operation": "Déclenchement du 1er Novembre 1954 (« Toussaint rouge »)",
+        "date_debut": "1954-11-01",
+        "date_fin": "1954-11-01",
+        "wilaya_code": "W1",
+        "wilaya_label_fr": "Wilaya I (Aurès)",
+        "type_action": "Offensive coordonnée",
+        "region_ou_ville": "Ensemble du territoire algérien (épicentre dans les Aurès : Batna, Arris, Biskra, Tighanimine, ainsi qu'à Alger, Constantine et Oran)",
+        "geometry_role": "representative_point",
+        "source_ids": [],
+        "sources": [
+          {
+            "titre": "Toussaint rouge — Wikipédia",
+            "url": "https://fr.wikipedia.org/wiki/Toussaint_rouge",
+            "type_source": "Article"
+          },
+          {
+            "titre": "Note 108 : Les débuts de la guerre d'Algérie, les gendarmes face à la Toussaint rouge — Centre de Recherche de la Gendarmerie Nationale",
+            "url": "https://www.gendarmerie.interieur.gouv.fr/crgn/actus/note-108-les-debuts-de-la-guerre-d-algerie-les-gendarmes-face-a-la-toussaint-rouge",
+            "type_source": "Archive"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "OP_1954_007",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.3722,
+          36.7447
+        ]
+      },
+      "properties": {
+        "id": "OP_1954_007",
+        "nom_operation": "Attaques d'Azazga, Tigzirt, Bordj Menaïel et Draâ El Mizan au déclenchement en Kabylie",
+        "date_debut": "1954-11-01",
+        "date_fin": "1954-11-02",
+        "wilaya_code": "W3",
+        "wilaya_label_fr": "Wilaya III (Kabylie)",
+        "type_action": "Offensive coordonnée",
+        "region_ou_ville": "Azazga, Tigzirt, Draâ El Mizan et Bordj Menaïel (Wilayas de Tizi Ouzou et Boumerdès)",
+        "geometry_role": "representative_point",
+        "source_ids": [],
+        "sources": [
+          {
+            "titre": "Mohand Ameziane Yazourene (dit Vrirouche), un stratège de la guerre de libération dans la Wilaya III historique — Algérie Presse Service (APS)",
+            "url": "https://www.aps.dz/fr/algerie/societe/mk013dwo-mohand-ameziane-yazourene-un-stratege-de-la-guerre-de-liberation-dans-la-wilaya-iii-historique",
+            "type_source": "Article"
+          },
+          {
+            "titre": "Wilaya III historique — Wikipédia",
+            "url": "https://fr.wikipedia.org/wiki/Wilaya_III_historique",
+            "type_source": "Article"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "OP_1954_008",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.8277,
+          36.47
+        ]
+      },
+      "properties": {
+        "id": "OP_1954_008",
+        "nom_operation": "Attaques des casernes de Blida, Boufarik et incendie des dépôts de chêne-liège de la Mitidja",
+        "date_debut": "1954-11-01",
+        "date_fin": "1954-11-02",
+        "wilaya_code": "W4",
+        "wilaya_label_fr": "Wilaya IV (Algérois)",
+        "type_action": "Offensive coordonnée",
+        "region_ou_ville": "Blida, Boufarik, Soumaâ et contreforts de l'Atlas blidéen (Wilaya de Blida)",
+        "geometry_role": "representative_point",
+        "source_ids": [],
+        "sources": [
+          {
+            "titre": "Wilaya IV historique — Wikipédia",
+            "url": "https://fr.wikipedia.org/wiki/Wilaya_IV_historique",
+            "type_source": "Article"
+          },
+          {
+            "titre": "Wilaya IV : Les maquis de la dignité — El Moudjahid",
+            "url": "https://www.elmoudjahid.dz/fr/actualite/wilaya-iv-les-maquis-de-la-dignite-242798",
+            "type_source": "Article"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "OP_1954_010",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.42411,
+          34.78042
+        ]
+      },
+      "properties": {
+        "id": "OP_1954_010",
+        "nom_operation": "Incendie et sabotage du dépôt de liège de Hafir",
+        "date_debut": "1954-11-01",
+        "date_fin": null,
+        "wilaya_code": "W5",
+        "wilaya_label_fr": "Wilaya V (Oranie)",
+        "type_action": "Sabotage",
+        "region_ou_ville": "Forêt de Hafir / Tlemcen",
+        "geometry_role": "representative_point",
+        "source_ids": [],
+        "sources": [
+          {
+            "titre": "L'insurrection du 1er Novembre en Oranie (ASJP)",
+            "url": "https://asjp.cerist.dz/en/downArticle/144/11/1/115789",
+            "type_source": "Ouvrage académique"
+          }
+        ]
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "OP_1954_006",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.6667,
+          36.3167
+        ]
+      },
+      "properties": {
+        "id": "OP_1954_006",
+        "nom_operation": "Attaque de la mine de Nador (Hammam N'Baïls) et opérations de Guelma - Souk Ahras",
+        "date_debut": "1954-11-07",
+        "date_fin": "1954-11-08",
+        "wilaya_code": "W2",
+        "wilaya_label_fr": "Wilaya II (Nord-Constantinois)",
+        "type_action": "Sabotage",
+        "region_ou_ville": "Mine de zinc et de plomb du Nador, commune de Hammam N'Baïls, entre Guelma et Souk Ahras (Wilaya de Guelma)",
+        "geometry_role": "representative_point",
+        "source_ids": [],
+        "sources": [
+          {
+            "titre": "Trois offensives retentissantes annonçaient le déclenchement de la Révolution entre Guelma et Souk Ahras — Algérie Presse Service (APS)",
+            "url": "https://www.aps.dz/fr/algerie/actualite-nationale/mhf2azba-trois-offensives-retentissantes-annoncaient-le-declenchement-de-la-revolution-entre-guelma-et-souk-ahras",
+            "type_source": "Article"
+          },
+          {
+            "titre": "Guelma, la wilaya aux 5 000 martyrs — El Moudjahid",
+            "url": "https://www.elmoudjahid.dz/fr/l-evenement/guelma-la-wilaya-au-5-000-martyrs-195645",
+            "type_source": "Article"
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,165 @@
+{
+  "schema_version": "3.0.0",
+  "profile": {
+    "profile_schema_version": "1.0.0",
+    "version": "1.0.0",
+    "id": "synthetic-history",
+    "display_name": "Synthetic history — testing only",
+    "namespace": "SYNTHETIC_HISTORY",
+    "framework": ">=3.0.0 <4.0.0",
+    "default_locale": "en",
+    "locales": [
+      "en",
+      "es"
+    ],
+    "time": {
+      "calendar": "gregorian",
+      "coverage": {
+        "earliest": "1600-01-01",
+        "latest": "1899-12-31"
+      }
+    },
+    "spatial": {
+      "crs": "EPSG:4326"
+    },
+    "taxonomies": [
+      "event_types"
+    ],
+    "aliases": [
+      {
+        "taxonomy": "event_types",
+        "language": "es",
+        "value": "reunión ficticia",
+        "canonical": "fictional assembly"
+      }
+    ],
+    "parameters": {
+      "coverage": {
+        "from_year": 1600,
+        "to_year": 1899
+      }
+    },
+    "rules": [
+      {
+        "id": "event-id",
+        "type": "required",
+        "field": "id",
+        "severity": "error"
+      },
+      {
+        "id": "date-window",
+        "type": "date_range",
+        "field": "start_date",
+        "severity": "error"
+      },
+      {
+        "id": "event-type",
+        "type": "vocabulary",
+        "field": "event_type",
+        "taxonomy": "event_types",
+        "severity": "warning"
+      }
+    ],
+    "exports": [
+      "json",
+      "csv"
+    ]
+  },
+  "events": [
+    {
+      "schema_version": "3.0.0",
+      "id": "EVENT_001",
+      "namespace": "SYNTHETIC_HISTORY",
+      "editorial_status": "proposed",
+      "provenance": {
+        "evidence": [],
+        "transformations": []
+      },
+      "extensions": {},
+      "kind": "event",
+      "title": {
+        "en": "Fictional scientific assembly"
+      },
+      "description": {
+        "en": "Invented event strictly for the TEMPORA Desktop demonstration"
+      },
+      "start_date": {
+        "kind": "exact",
+        "calendar": "gregorian",
+        "original": "1784-06-12",
+        "earliest": "1784-06-12",
+        "latest": "1784-06-12",
+        "precision": "day",
+        "certainty": "documented"
+      },
+      "end_date": {
+        "kind": "exact",
+        "calendar": "gregorian",
+        "original": "1784-06-12",
+        "earliest": "1784-06-12",
+        "latest": "1784-06-12",
+        "precision": "day",
+        "certainty": "documented"
+      },
+      "event_type": [
+        "fictional assembly"
+      ],
+      "spatial_refs": [
+        {
+          "kind": "spatial",
+          "namespace": "SYNTHETIC_HISTORY",
+          "id": "SPACE_001"
+        }
+      ],
+      "territory_refs": [],
+      "participant_refs": [],
+      "review_refs": []
+    }
+  ],
+  "sources": [],
+  "claims": [],
+  "entities": [],
+  "spatial_assertions": [
+    {
+      "schema_version": "3.0.0",
+      "kind": "spatial",
+      "namespace": "SYNTHETIC_HISTORY",
+      "id": "SPACE_001",
+      "editorial_status": "proposed",
+      "provenance": {
+        "evidence": [],
+        "transformations": []
+      },
+      "extensions": {},
+      "subject": {
+        "kind": "event",
+        "namespace": "SYNTHETIC_HISTORY",
+        "id": "EVENT_001"
+      },
+      "label": null,
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.5,
+          35.1
+        ]
+      },
+      "crs": "EPSG:4326",
+      "geometry_role": "approximate_site",
+      "precision_meters": null,
+      "geocoding_method": null,
+      "reference_version": null,
+      "place": null
+    }
+  ],
+  "relations": [],
+  "reviews": [],
+  "assessments": [],
+  "releases": [],
+  "extensions": {},
+  "taxonomies": {
+    "event_types": [
+      "fictional assembly"
+    ]
+  }
+}
