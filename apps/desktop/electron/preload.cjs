@@ -8,7 +8,7 @@ contextBridge.exposeInMainWorld('temporaElectron', Object.freeze({
   copyReviewDraft: (draft) => ipcRenderer.invoke('tempora:copy_review_draft', draft),
   openOfficialLink: (url) => ipcRenderer.invoke('tempora:open-official-link', url),
   openVisualProject: () => ipcRenderer.invoke('tempora:visualization:open'),
-  queryVisualProject: (module, offset, limit) => ipcRenderer.invoke('tempora:visualization:query', module, offset, limit),
+  queryVisualProject: (module, offset, limit, facet) => ipcRenderer.invoke('tempora:visualization:query', module, offset, limit, facet),
   closeVisualProject: () => ipcRenderer.invoke('tempora:visualization:close'),
   analyzeVisualProject: (module,limit,threshold) => ipcRenderer.invoke('tempora:visualization:analyze',module,limit,threshold),
   exportVisualProject: (module,format,offset,limit) => ipcRenderer.invoke('tempora:visualization:export',module,format,offset,limit),
