@@ -46,11 +46,17 @@ function chronos(c){
   for(const ev of arr(c,'events')){
     const start=ev.start_date??null,end=ev.end_date??null;
     results.push({ref:ref(ev),start_earliest:start?.earliest??null,
-      end_latest:end?.latest??start?.latest??null,
+      // Explicitly unknown end remains unknown; fallback is only for absent end.
+      end_latest:end ? (end.latest??null) : (start?.latest??null),
       start_kind:start?.kind??null,end_kind:end?.kind??null,
       relation:'declared_bounds_only'});
   }
-  return {results,notes:{unknown_dates:results.filter(x=>x.start_earliest===null).length}};
+  return {results,notes:{
+    unknown_start_dates:results.filter(x=>x.start_earliest===null).length,
+    unknown_end_dates:results.filter(x=>x.end_latest===null).length,
+    // Backward-compatible field counts unknown starts only.
+    unknown_dates:results.filter(x=>x.start_earliest===null).length
+  }};
 }
 function evidence(c){
   const known=new Set(arr(c,'sources').map(s=>key(s)));
