@@ -56,7 +56,7 @@ function parseXml(xml){
     if(end<0)fail('ASSIST_XLSX_XML_UNSAFE');
     const token=xml.slice(at+1,end).trim();
     cursor=end+1;
-    if(/^\\?xml\s/i.test(token)&&!roots.length&&!stack.length&&at===0)
+    if(/^\?xml\s/i.test(token)&&!roots.length&&!stack.length&&at===0)
       continue;
     if(!token||token.startsWith('!')||token.startsWith('?'))
       fail('ASSIST_XLSX_XML_UNSAFE');
@@ -191,7 +191,7 @@ function extractXlsxCells(bytes,{sheet_name}={}){
       }else if(type==='inlineStr')value=richText(child(c,'is'));
       else if(type==='b'){
         if(raw!=='0'&&raw!=='1')fail('ASSIST_XLSX_CELL_TYPE');
-        value=raw==='1'?'false':'true';
+        value=raw==='1'?'true':'false';
       }else if(type==='n'||type==='str'||type==='d'||type==='e'){
         value=raw;
       }else fail('ASSIST_XLSX_CELL_TYPE');
