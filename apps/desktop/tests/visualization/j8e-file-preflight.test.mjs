@@ -2,6 +2,7 @@ import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {mkdtemp,writeFile,readFile,symlink,rm,stat} from 'node:fs/promises';
 import {join,resolve} from 'node:path';
+import {appendFileSync} from 'node:fs';
 import {tmpdir} from 'node:os';
 import {createHash} from 'node:crypto';
 import {createRequire} from 'node:module';
@@ -65,5 +66,22 @@ test('J8E refuses symlink redirection and never reports historical confidence',a
     const result=await preflightSelectedFile(data);
     assert.equal(Object.hasOwn(result,'historical_confidence'),false);
     assert.equal(Object.hasOwn(result,'canonical_sha256'),false);
+  });
+});
+
+test('J8E detects file size mutation during chunk streaming and never returns a misleading digest',async()=>{
+  await temporary(async dir=>{
+    const file=join(dir,'changed-during-read.json');
+    await writeFile(file,Buffer.from('{"safe":"synthetic"}'));
+    let polls=0;
+    const signal={
+      get aborted(){
+        if(++polls===3)appendFileSync(file,' ');
+        return false;
+      }
+    };
+    await assert.rejects(preflightSelectedFile(file,{signal,chunkBytes:2}),
+      /PREFLIGHT_FILE_CHANGED/);
+    assert.ok(polls>=3);
   });
 });
