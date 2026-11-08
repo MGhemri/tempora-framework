@@ -9,7 +9,7 @@ Facets: editorial status, one exact typed identity (kind + namespace + id), and 
 Time semantics:
 - `possible-overlap`: declared earliest/latest bounds may intersect requested window; *not* a claim an event certainly occurred in that window.
 - `certain-only`: the entire declared interval must be inside the window.
-- `declared-start`: only exact-day starts qualify; imprecise dates are excluded with explicit diagnostics.
+- `declared-start`: only exact-day starts qualify; imprecise dates are excluded with a separate `TEMPORAL_UNCERTAIN_EXCLUDED` diagnostic.
 - Unknown dates are never manufactured. They are excluded and counted in `TEMPORAL_UNKNOWN_EXCLUDED`.
 
 Sort the normalized status list and perform filtering *before* pagination. The selected facet is embedded in the algorithm parameters and the scientific digest, making changes reproducible. No-facet queries retain their previous output and signature.
