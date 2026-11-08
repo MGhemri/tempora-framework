@@ -553,9 +553,12 @@ function renderVisual():void {
       rows.append(tr);
     }
   }
+  const notes=result?.diagnostics?.map(d=>d.code+
+    (Number.isFinite(d.count)?": "+String(d.count):"")).join(" · ")??"";
   byId("visual-diagnostics").textContent=result
     ? visualModule+" · "+result.scope.returned+"/"+result.scope.total_matched+
-      (result.scope.truncated?" · PARTIAL / PARTIEL":"")+" · "+result.scientific_sha256
+      (result.scope.truncated?" · PARTIAL / PARTIEL":"")+
+      (notes?" · "+notes:"")+" · "+result.scientific_sha256
     : (language==="fr"?"Sélectionnez un corpus valide TEMPORA v3.":"Select a valid TEMPORA v3 corpus.");
   byId("visual-page").textContent=result
     ? String(visualOffset+1)+"–"+String(visualOffset+result.scope.returned)+" / "+String(result.scope.total_matched)
