@@ -88,3 +88,12 @@
 - Données originales non altérées, hachages et versions préservés, provenance visible.
 - Les sorties de l'assistant et les analyses restent `proposed` / candidates ; la décision humaine est documentée, la signature seulement si une authentification réelle existe.
 - Le dossier `Audit/` est mis à jour dans la même PR clôturant un constat (statut, version, références, résultats, limites).
+
+
+## ASSIST-M1.1a — Inspection CSV/TSV pure, sans import (PR en cours)
+
+Le module privé `src/framework/assist-inspection.js` lit **uniquement un échantillon d'octets déjà transmis**, de maximum 64 Kio. Il vérifie UTF-8/BOM et NUL, compare des candidats virgule/point-virgule/tabulation en respectant les champs entre guillemets et les retours à la ligne, puis produit une suggestion traçable ou signale une ambiguïté ; même en cas de suggestion unique, `selected_delimiter` demeure `null` en attendant l'utilisateur.
+
+Il ne lit pas de chemin, ne déduit aucun type historique, ne parse pas un classeur Excel, n'ajoute aucun mapping confirmé, ne modifie pas les octets originaux et ne crée aucune prévisualisation canonique. Il ne remplace pas le parseur d'ingestion ni le futur `tempora-format` autonome : ce jalon est un prototype pur et extractible, couvert par des tests de reproductibilité et d'entrées hostiles.
+
+**Statut :** implémentation proposée sur une branche, non considérée fusionnée ou certifiée jusqu'à CI verte.
