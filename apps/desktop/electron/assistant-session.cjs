@@ -27,11 +27,13 @@ function validShape(obj,keys){
 function loadInspector(root,filename){
   return require(join(root,filename));
 }
-function createAssistantSessions({sourceRoot,now=()=>Date.now(),read=readFileSync,stat=statSync}={}){
+function createAssistantSessions({sourceRoot,profileRoot,now=()=>Date.now(),read=readFileSync,stat=statSync}={}){
   if(typeof sourceRoot!=='string'||!sourceRoot)reject('ASSIST_HOST_CONFIGURATION');
   const root=resolve(sourceRoot);
+  const profilesRoot=resolve(profileRoot||join(root,'..','profiles'));
   const {inspectDelimitedSample}=loadInspector(root,'framework/assist-inspection.js');
   const {inspectXlsx}=loadInspector(root,'assist-io/xlsx-inventory.js');
+  const {suggestColumnMappings}=loadInspector(root,'framework/assist-mapping.js');
   const {extractXlsxCells}=loadInspector(root,'assist-io/xlsx-cells.js');
   const sessions=new Map();
   function clearExpired(){
@@ -100,12 +102,49 @@ function createAssistantSessions({sourceRoot,now=()=>Date.now(),read=readFileSyn
     const table=extractXlsxCells(bytes,{sheet_name});
     return bounded({handle_id,source_sha256:s.sha256,table});
   }
+  // The renderer never supplies a profile definition, alias bundle, or filesystem path.
+  // Stage 1 registers only one explicitly labelled fictional demonstration profile.
+  function trustedProfile(profile_id){
+    if(profile_id!=='synthetic-history')reject('ASSIST_PROFILE_NOT_REGISTERED');
+    let profile;
+    try{
+      profile=JSON.parse(readFileSync(join(profilesRoot,'synthetic-history','profile.json'),'utf8'));
+    }catch{reject('ASSIST_PROFILE_UNAVAILABLE');}
+    if(profile?.id!==profile_id||profile.version!=='1.0.0'||
+       !Array.isArray(profile.locales)||!profile.locales.includes(profile.default_locale))
+      reject('ASSIST_PROFILE_INVALID');
+    return profile;
+  }
+  function suggest(handle_id,profile_id,choice){
+    const s=requireSession(handle_id);
+    if(!validShape(choice,['delimiter','sheet_name']))reject('ASSIST_MAPPING_CHOICE_INVALID');
+    const bytes=verified(s),profile=trustedProfile(profile_id);
+    let headers;
+    if(s.format==='xlsx'){
+      if(typeof choice.sheet_name!=='string'||choice.delimiter!==undefined)
+        reject('ASSIST_SHEET_SELECTION_REQUIRED');
+      const table=extractXlsxCells(bytes,{sheet_name:choice.sheet_name});
+      headers=table.headers;
+    }else{
+      if(choice.sheet_name!==undefined||![',',';','\t'].includes(choice.delimiter))
+        reject('ASSIST_DELIMITER_CONFIRMATION_REQUIRED');
+      const report=inspectDelimitedSample(bytes.subarray(0,Math.min(bytes.length,MAX_SAMPLE_BYTES)));
+      const selected=report.candidates.find(x=>x.delimiter===choice.delimiter);
+      if(!selected||selected.header_issues.length||selected.csv_syntax_errors||
+         selected.header_columns<2)reject('ASSIST_MAPPING_HEADERS_UNSAFE');
+      headers=selected.header_values;
+    }
+    const mapping=suggestColumnMappings(headers,profile);
+    // Suggestions are never confirmed, even if the UI displays an exact header match.
+    return bounded({handle_id,source_sha256:s.sha256,profile_id:profile.id,
+      profile_version:profile.version,choice:{...choice},mapping});
+  }
   function close(handle_id){
     if(!safeHandle(handle_id))reject('ASSIST_HANDLE_INVALID');
     return sessions.delete(handle_id);
   }
   function clear(){sessions.clear();}
-  return Object.freeze({open,inspect,selectSheet,close,clear,
+  return Object.freeze({open,inspect,selectSheet,suggest,close,clear,
     // Shape enforcement is deliberately public to unit tests but not exposed by preload.
     validShape});
 }
