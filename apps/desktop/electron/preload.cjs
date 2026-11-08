@@ -14,5 +14,6 @@ contextBridge.exposeInMainWorld('temporaElectron', Object.freeze({
   exportVisualProject: (module,format,offset,limit) => ipcRenderer.invoke('tempora:visualization:export',module,format,offset,limit),
   queryGraphNeighborhood: (root,depth,direction,limit) => ipcRenderer.invoke('tempora:visualization:neighborhood',root,depth,direction,limit),
   compareVisualSnapshot: () => ipcRenderer.invoke('tempora:visualization:compare-snapshot'),
-  cancelVisualJob: () => ipcRenderer.invoke('tempora:visualization:cancel')
+  cancelVisualJob: () => ipcRenderer.invoke('tempora:visualization:cancel'),
+  queryChronosInterval: (earliest,latest,mode,offset,limit) => ipcRenderer.invoke('tempora:visualization:chronos-filter',earliest,latest,mode,offset,limit)
 }));
