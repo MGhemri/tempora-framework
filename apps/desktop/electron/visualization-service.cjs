@@ -66,12 +66,15 @@ class VisualService {
     const {project_id,...safe}=result;
     return safe;
   }
-  query(module,offset=0,limit=50){
+  query(module,offset=0,limit=50,facet=null){
     if(!this.projectId)throw Error('VISUAL_PROJECT_NOT_OPEN');
     if(!MODULES.includes(module))throw Error('VISUAL_MODULE_INVALID');
     if(!Number.isSafeInteger(offset)||offset<0||!Number.isSafeInteger(limit)||limit<1||limit>100)
       throw Error('VISUAL_PAGE_INVALID');
-    return this.request('visualization.project.query',{project_id:this.projectId,module,offset,limit});
+    if(facet!==null&&(!facet||typeof facet!=='object'||Array.isArray(facet)))
+      throw Error('VISUAL_FACET_INVALID');
+    return this.request('visualization.project.query',
+      {project_id:this.projectId,module,offset,limit,...(facet===null?{}:{facet})});
   }
   analyze(module,limit=50,threshold=0.6){
     if(!this.projectId)throw Error('VISUAL_PROJECT_NOT_OPEN');
