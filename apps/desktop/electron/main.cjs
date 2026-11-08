@@ -305,6 +305,10 @@ app.whenReady().then(async () => {
     return {fileName:basename(target),sha256:output.sha256,
       bytes:output.bytes,partial:Boolean(output.manifest?.partial)};
   });
+  ipcMain.handle('tempora:visualization:cancel', event=>{
+    validSender(event);
+    return visualService.cancel();
+  });
   ipcMain.handle('tempora:visualization:close', async event=>{
     validSender(event);
     return visualService.release();
