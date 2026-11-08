@@ -9,10 +9,16 @@ const MAX_SOURCE_BYTES=16*1024*1024;
 const MAX_SAMPLE_BYTES=64*1024;
 const SESSION_TTL_MS=10*60*1000;
 const MAX_SESSIONS=4;
+const MAX_IPC_RESPONSE_BYTES=256*1024;
 const HANDLE=/^[a-f0-9]{48}$/;
 const FORMATS=Object.freeze({'.csv':'csv','.tsv':'tsv','.xlsx':'xlsx'});
 function reject(code){const error=new Error(code);error.code=code;throw error;}
 function digest(bytes){return createHash('sha256').update(bytes).digest('hex');}
+function bounded(response){
+  if(Buffer.byteLength(JSON.stringify(response),'utf8')>MAX_IPC_RESPONSE_BYTES)
+    reject('ASSIST_IPC_RESPONSE_LIMIT');
+  return Object.freeze(response);
+}
 function safeHandle(id){return typeof id==='string'&&HANDLE.test(id);}
 function validShape(obj,keys){
   return obj&&typeof obj==='object'&&!Array.isArray(obj)&&
@@ -34,10 +40,12 @@ function createAssistantSessions({sourceRoot,now=()=>Date.now(),read=readFileSyn
   }
   function snapshot(path,format){
     if(typeof path!=='string'||!path)reject('ASSIST_SOURCE_INVALID');
-    const metadata=stat(path);
+    let metadata;
+    try{metadata=stat(path);}catch{reject('ASSIST_SOURCE_UNAVAILABLE');}
     if(!metadata.isFile()||metadata.size===0||metadata.size>MAX_SOURCE_BYTES)
       reject('ASSIST_SOURCE_LIMIT');
-    const bytes=read(path);
+    let bytes;
+    try{bytes=read(path);}catch{reject('ASSIST_SOURCE_UNAVAILABLE');}
     if(!(bytes instanceof Uint8Array)||!bytes.length||bytes.length>MAX_SOURCE_BYTES)
       reject('ASSIST_SOURCE_LIMIT');
     if(format==='xlsx'&&bytes.length<22)reject('ASSIST_XLSX_NOT_ZIP');
@@ -61,6 +69,7 @@ function createAssistantSessions({sourceRoot,now=()=>Date.now(),read=readFileSyn
   }
   function open(path){
     clearExpired();
+    if(typeof path!=='string'||!path)reject('ASSIST_SOURCE_INVALID');
     const format=FORMATS[extname(path).toLowerCase()];
     if(!format)reject('ASSIST_SOURCE_FORMAT');
     const bytes=snapshot(path,format);
@@ -72,13 +81,13 @@ function createAssistantSessions({sourceRoot,now=()=>Date.now(),read=readFileSyn
       expires_at:now()+SESSION_TTL_MS};
     if(sessions.size>=MAX_SESSIONS)sessions.delete(sessions.keys().next().value);
     sessions.set(handle_id,session);
-    return Object.freeze({handle_id,format,file_name:basename(path),source_sha256,
+    return bounded({handle_id,format,file_name:basename(path),source_sha256,
       size_bytes:bytes.length,expires_in_ms:SESSION_TTL_MS,
       selected_sheet:null,selected_delimiter:null,inspection});
   }
   function inspect(handle_id){
     const s=requireSession(handle_id),bytes=verified(s);
-    return Object.freeze({handle_id,format:s.format,source_sha256:s.sha256,
+    return bounded({handle_id,format:s.format,source_sha256:s.sha256,
       inspection:s.format==='xlsx'?inspectXlsx(bytes):
         inspectDelimitedSample(bytes.subarray(0,Math.min(bytes.length,MAX_SAMPLE_BYTES)))});
   }
@@ -89,7 +98,7 @@ function createAssistantSessions({sourceRoot,now=()=>Date.now(),read=readFileSyn
       reject('ASSIST_SHEET_INVALID');
     const bytes=verified(s);
     const table=extractXlsxCells(bytes,{sheet_name});
-    return Object.freeze({handle_id,source_sha256:s.sha256,table});
+    return bounded({handle_id,source_sha256:s.sha256,table});
   }
   function close(handle_id){
     if(!safeHandle(handle_id))reject('ASSIST_HANDLE_INVALID');
@@ -101,4 +110,4 @@ function createAssistantSessions({sourceRoot,now=()=>Date.now(),read=readFileSyn
     validShape});
 }
 module.exports=Object.freeze({createAssistantSessions,MAX_SOURCE_BYTES,
-  MAX_SAMPLE_BYTES,SESSION_TTL_MS,MAX_SESSIONS});
+  MAX_SAMPLE_BYTES,SESSION_TTL_MS,MAX_SESSIONS,MAX_IPC_RESPONSE_BYTES});
