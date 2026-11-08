@@ -63,6 +63,36 @@ fn summarize_record(value: &Value) -> PreviewRow {
     PreviewRow { id, title, kind }
 }
 
+// The structural preview is not canonical validation. Generic fields take
+// precedence; legacy ALNOP fields are explicit compatibility fallbacks.
+fn preview_text(value: &Value) -> Option<&str> {
+    if let Some(s) = value.as_str() {
+        return if s.trim().is_empty() { None } else { Some(s) };
+    }
+    value.as_object().and_then(|map| {
+        map.iter()
+            .filter_map(|(_, v)| v.as_str())
+            .find(|s| !s.trim().is_empty())
+    })
+}
+fn summarize_feature(feature: &Value) -> PreviewRow {
+    let properties = feature.get("properties").unwrap_or(&Value::Null);
+    let select = |keys: &[&str]| -> Option<&str> {
+        keys.iter().find_map(|key| properties.get(*key).and_then(preview_text))
+    };
+    let id = feature.get("id").and_then(Value::as_str)
+        .or_else(|| properties.get("id").and_then(Value::as_str))
+        .unwrap_or("—").chars().take(80).collect();
+    let title = select(&["title", "name", "nom_operation"])
+        .unwrap_or("Untitled / Sans titre").chars().take(140).collect();
+    let kind = select(&["kind", "event_type", "type", "type_action"])
+        .or_else(|| feature.get("geometry")
+            .and_then(|geometry| geometry.get("type"))
+            .and_then(Value::as_str))
+        .unwrap_or("record").chars().take(40).collect();
+    PreviewRow { id, title, kind }
+}
+
 fn parse_preview(file_name: String, bytes: &[u8]) -> Result<DocumentPreview, String> {
     if bytes.len() as u64 > MAX_BYTES {
         return Err("File exceeds the 8 MiB preview limit / Fichier trop volumineux".into());
@@ -75,11 +105,13 @@ fn parse_preview(file_name: String, bytes: &[u8]) -> Result<DocumentPreview, Str
     } else {
         json.as_array()
             .or_else(|| json.get("events").and_then(Value::as_array))
-            .or_else(|| json.get("operations").and_then(Value::as_array))
             .or_else(|| json.get("records").and_then(Value::as_array))
+            .or_else(|| json.get("operations").and_then(Value::as_array))
     };
     let rows = values
-        .map(|list| list.iter().take(PREVIEW_LIMIT).map(summarize_record).collect())
+        .map(|list| list.iter().take(PREVIEW_LIMIT).map(|item| {
+            if geo { summarize_feature(item) } else { summarize_record(item) }
+        }).collect())
         .unwrap_or_default();
     let count = values.map_or(0, Vec::len);
     let count_items = |key: &str| {
@@ -185,6 +217,35 @@ mod tests {
         assert!(parse_preview("broken.json".into(), b"{invalid").is_err());
         let oversized = vec![b' '; MAX_BYTES as usize + 1];
         assert!(parse_preview("huge.json".into(), &oversized).is_err());
+    }
+
+    #[test]
+    fn generic_geojson_properties_take_priority_over_alnop_compatibility() {
+        let source = br#"{"type":"FeatureCollection","features":[
+          {"type":"Feature","id":"GEN_1","properties":{
+            "title":{"en":"Synthetic event","es":"Evento sintetico"},
+            "kind":"archival_record","nom_operation":"Legacy name","type_action":"legacy_kind"
+          },"geometry":{"type":"Point","coordinates":[0,0]}},
+          {"type":"Feature","properties":{"id":"OP_ALNOP",
+            "nom_operation":"Operation fictive","type_action":"fictional_event"
+          },"geometry":{"type":"Point","coordinates":[0,0]}}
+        ]}"#;
+        let preview = parse_preview("generic.geojson".into(), source).unwrap();
+        assert_eq!(preview.records, 2);
+        assert_eq!(preview.rows[0].id, "GEN_1");
+        assert_eq!(preview.rows[0].title, "Synthetic event");
+        assert_eq!(preview.rows[0].kind, "archival_record");
+        assert_eq!(preview.rows[1].title, "Operation fictive");
+        assert_eq!(preview.rows[1].kind, "fictional_event");
+    }
+
+    #[test]
+    fn generic_record_collection_precedes_legacy_operations() {
+        let source = br#"{"records":[{"id":"R1","title":"Generic record"}],
+            "operations":[{"id":"O1","title":"Legacy operation"}]}"#;
+        let preview = parse_preview("mixed.json".into(), source).unwrap();
+        assert_eq!(preview.records, 1);
+        assert_eq!(preview.rows[0].id, "R1");
     }
 
     #[test]
