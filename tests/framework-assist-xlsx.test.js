@@ -123,3 +123,28 @@ test('XLSX: truncation, corrupt CRC, and oversized input never yield inventory',
  assert.throws(()=>inspectXlsx(Buffer.from('not an Excel file')),
    err('ASSIST_XLSX_NOT_ZIP'));
 });
+
+
+test('XLSX: external links in worksheet or root relationships cannot hide from inventory',()=>{
+ const extra='<Relationships><Relationship Id="hyperlink1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/hyperlink" Target="https://example.invalid" TargetMode="External"/></Relationships>';
+ assert.throws(()=>inspectXlsx(syntheticZip([...base(),['xl/worksheets/_rels/sheet1.xml.rels',extra]])),
+   err('ASSIST_XLSX_EXTERNAL_LINK'));
+ const changed=base();
+ changed[1]=[changed[1][0],rootRels.replace('Target="xl/workbook.xml"',
+   'Target="http://example.invalid/workbook.xml" TargetMode="External"')];
+ assert.throws(()=>inspectXlsx(syntheticZip(changed)),err('ASSIST_XLSX_EXTERNAL_LINK'));
+});
+test('XLSX: root relation and workbook content type are checked explicitly',()=>{
+ const wrongRoot=base();
+ wrongRoot[1]=[wrongRoot[1][0],rootRels.replace('xl/workbook.xml','other/workbook.xml')];
+ assert.throws(()=>inspectXlsx(syntheticZip(wrongRoot)),err('ASSIST_XLSX_ROOT_RELATION'));
+ const wrongType=base();
+ wrongType[0]=[wrongType[0][0],types.replace('spreadsheetml.sheet.main+xml','wordprocessingml.document.main+xml')];
+ assert.throws(()=>inspectXlsx(syntheticZip(wrongType)),err('ASSIST_XLSX_CONTENT_TYPE'));
+});
+test('XLSX: XML comments cannot inject fake worksheet definitions',()=>{
+ const malicious=base();
+ malicious[2]=[malicious[2][0],workbook.replace('<sheets>',
+   '<!-- <sheet name="fake" sheetId="3" r:id="rId1"/> --><sheets>')];
+ assert.throws(()=>inspectXlsx(syntheticZip(malicious)),err('ASSIST_XLSX_XML_UNSAFE'));
+});
