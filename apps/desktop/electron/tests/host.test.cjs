@@ -118,7 +118,12 @@ test('Microsoft Store distribution uses actual Partner Center identity and never
  assert.match(store,/CN=C5BC3837-BBC8-425E-916B-4B6F77BD7455/);
  assert.match(store,/publisherDisplayName: 'Ghemri M'/);
  assert.match(store,/artifactName: 'TEMPORA-Desktop-/);
- assert.doesNotMatch(store,/SETUP\.exe/);
+ const appxConfig=require('../store-appx.config.cjs');
+ const nsisConfig=require('../package.json').build.win;
+ assert.match(nsisConfig.artifactName,/SETUP\\.exe$/);
+ assert.equal(appxConfig.win.target[0],'appx');
+ assert.doesNotMatch(appxConfig.win.artifactName,/SETUP\\.exe/i);
+ assert.doesNotMatch(appxConfig.appx.artifactName,/SETUP\\.exe/i);
  assert.match(store,/displayName:'TEMPORA Desktop'/);
  assert.match(store,/capabilities:\['runFullTrust'\]/);
  assert.match(flow,/workflow_dispatch:/);
