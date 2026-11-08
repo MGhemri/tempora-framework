@@ -22,6 +22,8 @@ test('Chronos analysis does not impute unknown end from known beginning',()=>{
   assert.equal(a.result[0].start_earliest,'1784-06-12');
   assert.equal(a.result[0].end_latest,null);
   assert.equal(a.result[0].end_kind,'unknown');
+  assert.equal(a.algorithm.version,'1.0.1');
+  assert.equal(a.diagnostics.find(x=>x.code==='UNKNOWN_END_DATES')?.count,1);
   assert.equal(a.scientific_sha256,b.scientific_sha256);
   assert.equal(canonical.digest(corpus),before);
   const scoped=build(corpus,{module:'chronos',facet:{time:{
