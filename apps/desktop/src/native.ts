@@ -1,5 +1,5 @@
 import {invoke as tauriInvoke, isTauri} from "@tauri-apps/api/core";
-import type {AssistantHost} from "./assistant-view";
+import type {AssistantHost,AssistantSuggestionResult} from "./assistant-view";
 
 declare global {
   interface Window {
@@ -9,7 +9,7 @@ declare global {
       assistantSelectSheet:AssistantHost["assistantSelectSheet"];
       assistantClose:AssistantHost["assistantClose"];
       assistantInspect:(id:string)=>Promise<unknown>;
-      assistantSuggest:(id:string,profileId:string,choice:{sheet_name?:string;delimiter?:string})=>Promise<unknown>;
+      assistantSuggest:(id:string,profileId:string,choice:{sheet_name?:string;delimiter?:string})=>Promise<AssistantSuggestionResult>;
       selectDocument: () => Promise<unknown>;
       validateCorpus: () => Promise<unknown>;
       copyReviewDraft: (draft: string) => Promise<boolean>;
