@@ -15,6 +15,7 @@ declare global {
       exportVisualProject: (module:string,format:string,offset:number,limit:number)=>Promise<unknown>;
       queryGraphNeighborhood:(root:VisualTypedRef,depth:number,direction:string,limit:number)=>Promise<unknown>;
       compareVisualSnapshot:()=>Promise<unknown>;
+      cancelVisualJob:()=>Promise<{cancelled:boolean;session_closed:boolean}>;
     };
   }
 }
@@ -100,4 +101,10 @@ export type VisualSnapshotDiff={
 export async function compareVisualSnapshot():Promise<VisualSnapshotDiff|null>{
   if(!window.temporaElectron)throw Error("VISUAL_ELECTRON_ONLY");
   return await window.temporaElectron.compareVisualSnapshot() as VisualSnapshotDiff|null;
+}
+
+/** Preempt the isolated worker. Cancelling also closes its local corpus session. */
+export async function cancelVisualJob():Promise<{cancelled:boolean;session_closed:boolean}>{
+  if(!window.temporaElectron)throw Error("VISUAL_ELECTRON_ONLY");
+  return await window.temporaElectron.cancelVisualJob();
 }
