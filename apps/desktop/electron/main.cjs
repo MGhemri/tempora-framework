@@ -68,8 +68,12 @@ function preview(data) {
     bytes: data.bytes, records: items.length,
     sources: count('sources'), assertions: count('claims') + count('assertions'),
     rows: items.slice(0, PREVIEW_LIMIT).map(item => ({
-      id: label(item?.id, '—', 80), title: title(item),
-      kind: label(item?.kind ?? item?.type, 'record', 40)
+      id: label(item?.id ?? item?.properties?.id, '—', 80),
+      title: geo
+        ? label(item?.properties?.nom_operation ?? item?.properties?.title, 'Untitled / Sans titre')
+        : title(item),
+      kind: label(geo ? (item?.properties?.type_action ?? item?.geometry?.type)
+        : (item?.kind ?? item?.type), 'record', 40)
     })),
     note: 'Structural preview only. Not canonical validation or historical fact verification.'
   };
