@@ -39,7 +39,7 @@ export const canonical: {
 export const ingestion: {
   createCorpus(profile: JsonObject, taxonomies: {[key: string]: string[]}): Corpus;
   preview(options: {bytes: Uint8Array; mapping: JsonObject; corpus: Corpus; sourceName: string; observedAt?: string | null}): JsonObject;
-  accept(options: {corpus: Corpus; bundle: JsonObject; review: {ids: string[]; reviewer: string; reason: string; reviewed_at: string}}): JsonObject;
+  accept(options: {corpus: Corpus; bundle: JsonObject; review: {batch_id: string; ids: string[]; reviewer: string; reason: string; reviewed_at: string}}): JsonObject;
   Error: new (code: string, message: string) => FrameworkError;
 };
 export const analysis: {

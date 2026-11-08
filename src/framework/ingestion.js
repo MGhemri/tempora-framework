@@ -87,6 +87,10 @@ function acceptImport({corpus,bundle,review}){
  const bytes=Buffer.from(raw,'base64');if(bytes.toString('base64')!==raw)fail('BUNDLE_INVALID','Invalid staged input encoding');
  const expected=prepareImport({bytes,mapping:bundle.mapping,corpus,sourceName:bundle.report.source.name,observedAt:bundle.report.observed_at});
  let matches=false;try{matches=digest(expected)===digest(bundle);}catch{}if(!matches)fail('BUNDLE_CHANGED','Staged bundle differs from the reproducible preview');
+ // Bind the human decision to the *recomputed* preview identity, never a filename
+ // or a caller-supplied report. An ID-only review is not authorization.
+ if(!object(review)||typeof review.batch_id!=='string'||review.batch_id!==expected.report.batch_id)
+  fail('REVIEW_BATCH_MISMATCH','The human review must explicitly name the exact preview batch_id');
  if(!object(review)||!Array.isArray(review.ids)||!review.ids.length||review.ids.some(id=>typeof id!=='string'||!idPattern.test(id))||new Set(review.ids).size!==review.ids.length)fail('REVIEW_SELECTION','Explicit unique identifiers are required for local acceptance');
  for(const [value,label,max]of [[review.reviewer,'reviewer',120],[review.reason,'reason',2000]])if(typeof value!=='string'||!value.trim()||value.length>max)fail('REVIEW_REQUIRED',`A valid ${label} is required for local acceptance`);
  stamp(review.reviewed_at);if(expected.report.observed_at&&Date.parse(review.reviewed_at)<Date.parse(expected.report.observed_at))fail('REVIEW_TIMESTAMP','Acceptance cannot precede the preview');

@@ -4,7 +4,7 @@ const {prepareImport,acceptImport,createWorkingCorpus,renderMarkdown}=require('.
 const {digest,validateCorpus}=require('../src/framework/canonical');
 const {nativeCorpus}=require('./helpers/tempora');
 const time='2026-11-05T00:00:00Z',reviewed='2026-11-05T01:00:00Z';
-const review=(...ids)=>({ids,reviewer:'TEST only',reason:'Fictional local staging test',reviewed_at:reviewed});
+const review=(bundle,...ids)=>({batch_id:bundle.report.batch_id,ids,reviewer:'TEST only',reason:'Fictional local staging test',reviewed_at:reviewed});
 const code=expected=>e=>e.code===expected;
 const row=(id,extra={})=>({id,name:'Asamblea ficticia',date:'1701',type:'reunión ficticia',...extra});
 const bytes=value=>Buffer.from(JSON.stringify(value));
@@ -37,20 +37,20 @@ test('GeoJSON validates each feature before mapping and retains null or multiple
 test('Conflicting IDs are never replaced or resolved by file order; invalid peer blocks its matching ID',()=>{
  const c=nativeCorpus(),b=prepare(c,bytes([row('DUP'),row('DUP'),row('CONFLICT'),row('CONFLICT',{name:'Divergence'}),row('EXAMPLE_1'),row('DOCUMENT_1'),row('PEER'),row('PEER',{name:''}),row('OK')]));
  counts(b,{total:9,create:2,unchanged:1,conflict:5,quarantined:1});assert.deepEqual(b.candidates.map(r=>r.event.id),['DUP','OK']);assert.ok(b.report.rows[4].changed_fields.includes('title'));assert.equal(b.report.rows[5].diagnostics.at(-1).code,'BASE_ID_KIND_CONFLICT');assert.equal(b.report.rows[6].diagnostics.at(-1).code,'BATCH_ID_QUARANTINED_PEER');
- assert.throws(()=>acceptImport({corpus:c,bundle:b,review:review('CONFLICT')}),code('REVIEW_SELECTION'));
+ assert.throws(()=>acceptImport({corpus:c,bundle:b,review:review(b,'CONFLICT')}),code('REVIEW_SELECTION'));
 });
 test('Acceptance is explicit, local and idempotent; repeated input bytes keep the batch and produce no additions',()=>{
  const c=nativeCorpus(),body=bytes([row('REPEAT_1'),row('REPEAT_2')]),m=mapping(c),b=prepare(c,body,m),before=structuredClone(c);
- assert.deepEqual(prepare(c,body,m),b);assert.throws(()=>acceptImport({corpus:c,bundle:b,review:review()}),code('REVIEW_SELECTION'));
- const snapshot=acceptImport({corpus:c,bundle:b,review:review('REPEAT_1','REPEAT_2')});assert.deepEqual(c,before);assert.equal(validateCorpus(snapshot.corpus).valid,true);assert.equal(snapshot.journal.scientific_approval,false);assert.ok(snapshot.corpus.events.slice(-2).every(e=>e.editorial_status==='proposed'&&!e.review_refs.length));
+ assert.deepEqual(prepare(c,body,m),b);assert.throws(()=>acceptImport({corpus:c,bundle:b,review:review(b)}),code('REVIEW_SELECTION'));
+ const snapshot=acceptImport({corpus:c,bundle:b,review:review(b,'REPEAT_1','REPEAT_2')});assert.deepEqual(c,before);assert.equal(validateCorpus(snapshot.corpus).valid,true);assert.equal(snapshot.journal.scientific_approval,false);assert.ok(snapshot.corpus.events.slice(-2).every(e=>e.editorial_status==='proposed'&&!e.review_refs.length));
  const second=prepare(snapshot.corpus,body,m,{sourceName:'renamed.json',observedAt:reviewed});counts(second,{total:2,unchanged:2});assert.equal(second.report.batch_id,b.report.batch_id);assert.equal(second.report.base_sha256,snapshot.journal.output_sha256);assert.equal(digest(snapshot.corpus),snapshot.journal.output_sha256);
- assert.throws(()=>acceptImport({corpus:snapshot.corpus,bundle:b,review:review('REPEAT_1')}),code('BUNDLE_STALE'));
- const changed=structuredClone(b);changed.candidates[0].event.editorial_status='published';assert.throws(()=>acceptImport({corpus:c,bundle:changed,review:review('REPEAT_1')}),code('BUNDLE_CHANGED'));
- assert.throws(()=>acceptImport({corpus:c,bundle:b,review:{...review('REPEAT_1'),reviewed_at:'2026-11-04T01:00:00Z'}}),code('REVIEW_TIMESTAMP'));
+ assert.throws(()=>acceptImport({corpus:snapshot.corpus,bundle:b,review:review(b,'REPEAT_1')}),code('BUNDLE_STALE'));
+ const changed=structuredClone(b);changed.candidates[0].event.editorial_status='published';assert.throws(()=>acceptImport({corpus:c,bundle:changed,review:review(b,'REPEAT_1')}),code('BUNDLE_CHANGED'));
+ assert.throws(()=>acceptImport({corpus:c,bundle:b,review:{...review(b,'REPEAT_1'),reviewed_at:'2026-11-04T01:00:00Z'}}),code('REVIEW_TIMESTAMP'));
 });
 test('Selected rows can be accepted without accepting all valid rows or changing the base',()=>{
  const c=nativeCorpus(),b=prepare(c,bytes([row('SELECTED'),row('LEFT_OVER'),row('BAD',{date:'1900'})]));
- counts(b,{total:3,create:2,quarantined:1});const s=acceptImport({corpus:c,bundle:b,review:review('SELECTED')});assert.equal(s.corpus.events.at(-1).id,'SELECTED');assert.equal(s.corpus.events.some(e=>e.id==='LEFT_OVER'),false);assert.equal(c.events.length,1);
+ counts(b,{total:3,create:2,quarantined:1});const s=acceptImport({corpus:c,bundle:b,review:review(b,'SELECTED')});assert.equal(s.corpus.events.at(-1).id,'SELECTED');assert.equal(s.corpus.events.some(e=>e.id==='LEFT_OVER'),false);assert.equal(c.events.length,1);
  assert.ok(b.report.rows[2].diagnostics.some(d=>d.code==='DATE_OUTSIDE_PROFILE'));
 });
 test('Syntax and encoding failures are explicit and never produce a partially interpreted input file',()=>{
@@ -73,7 +73,7 @@ test('CLI defaults to no writes, saves one immutable package, requires explicit 
  const args=['import','--input',input,'--mapping',m,'--base',base],opts={rootDirectory:folder,clock:()=>time,writeLine:()=>{}};
  assert.equal(run(args,opts).local_output,null);assert.equal(fs.existsSync(path.join(folder,'work')),false);
  const stage=run([...args,'--write'],opts);assert.ok(stage.local_output.startsWith('work/tempora-v3/ingestion/batch-'));assert.throws(()=>run([...args,'--write'],opts),code('CLI_OUTPUT_EXISTS'));
- const accept=['accept','--batch',path.join(folder,stage.local_output),'--base',base,'--id','CLI_NEW','--reviewer','TEST','--reason','Fictional test','--write'];
+ const accept=['accept','--batch',path.join(folder,stage.local_output),'--base',base,'--id','CLI_NEW','--batch-id',stage.bundle.report.batch_id,'--reviewer','TEST','--reason','Fictional test','--write'];
  const accepted=run(accept,{...opts,clock:()=>reviewed});assert.equal(accepted.snapshot.corpus.events.at(-1).editorial_status,'proposed');
  assert.equal(run(['validate','--base',path.join(folder,accepted.local_output)],opts).exitCode,0);assert.deepEqual(JSON.parse(fs.readFileSync(base,'utf8')),c);
  assert.throws(()=>run(['publish','--base',base],opts),code('CLI_ARGUMENT'));
@@ -128,9 +128,9 @@ test('A mixed canonical batch stages six dependent record kinds as one explicit 
  counts(batch,{total:8,create:6,quarantined:2});
  assert.ok(batch.report.rows[7].diagnostics.some(d=>d.code==='CANONICAL_REFERENCE_MISSING'));
  assert.deepEqual(Buffer.from(batch.original_input_base64,'base64'),input);
- assert.throws(()=>acceptImport({corpus:base,bundle:batch,review:review(event.id)}),code('REVIEW_DEPENDENCY'));
+ assert.throws(()=>acceptImport({corpus:base,bundle:batch,review:review(batch,event.id)}),code('REVIEW_DEPENDENCY'));
  assert.equal(base.events.length,0);
- const output=acceptImport({corpus:base,bundle:batch,review:review(...records.map(record=>record.id))});
+ const output=acceptImport({corpus:base,bundle:batch,review:review(batch,...records.map(record=>record.id))});
  assert.equal(validateCorpus(output.corpus).valid,true);
  assert.equal(output.corpus.events[0].editorial_status,'proposed');
  assert.equal(output.corpus.events[0].extensions.ingestion.original.unmapped,'Texte original — العربية');
@@ -188,4 +188,19 @@ test('Renamed event_type vocabulary is used by ingestion aliases and observed co
  assert.ok(result.coverage.groups.type.some(group=>group.key==='fictional assembly'));
  assert.deepEqual(result.coverage.groups.type.find(group=>group.key==='CUSTOM_ONLY_RENAMED'),
    {key:'CUSTOM_ONLY_RENAMED',count:0,share:0,event_ids:[]});
+});
+
+
+test('Acceptance refuses missing or substituted human review batch IDs even with identical candidate IDs',()=>{
+ const corpus=nativeCorpus();
+ const first=prepare(corpus,bytes([row('REUSED_ID',{name:'First reviewed title'})]));
+ const second=prepare(corpus,bytes([row('REUSED_ID',{name:'Different unreviewed title'})]));
+ assert.notEqual(first.report.batch_id,second.report.batch_id);
+ assert.throws(()=>acceptImport({corpus,bundle:second,review:{...review(first,'REUSED_ID')}}),code('REVIEW_BATCH_MISMATCH'));
+ const missing=review(second,'REUSED_ID');delete missing.batch_id;
+ assert.throws(()=>acceptImport({corpus,bundle:second,review:missing}),code('REVIEW_BATCH_MISMATCH'));
+ assert.throws(()=>acceptImport({corpus,bundle:second,review:{...review(second,'REUSED_ID'),batch_id:'0'.repeat(64)}}),code('REVIEW_BATCH_MISMATCH'));
+ const accepted=acceptImport({corpus,bundle:second,review:review(second,'REUSED_ID')});
+ assert.equal(accepted.journal.batch_id,second.report.batch_id);
+ assert.equal(accepted.corpus.events.at(-1).title.es,'Different unreviewed title');
 });
