@@ -20,6 +20,6 @@ Limits: 16 MiB input (preflight on canonical serialization), 100,000 records in 
 
 ## Verification
 
-Run `npm run test:visualization` from `apps/desktop`. The J8 tests use only fictional synthetic canonical fixtures, including 1,000 entries, rejection of mutated data and page caps.
+Run `npm run test:visualization` from `apps/desktop`. The opt-in synthetic benchmark also includes a `derived_segment_catalog` operation for 100/1,000/10,000 fictional events, with explicit rejections if the 16 MiB catalog input cap is reached. It is not a streaming or desktop-session benchmark. The J8 tests use only fictional synthetic canonical fixtures, including 1,000 entries, rejection of mutated data and page caps.
 
 The module has no IPC wiring and is not advertised as an available Desktop feature. The eight permanent GitHub Actions workflows remain unchanged; the Microsoft Store submission is untouched.
