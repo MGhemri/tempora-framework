@@ -47,10 +47,10 @@ function v2Respond(message){
       if(Object.keys(p).some(k=>k!=='corpus'))throw Object.assign(new Error('INVALID_PAYLOAD'),{code:'INVALID_PAYLOAD'});
       result=visualization.create(p.corpus);
     } else if(op==='visualization.project.query'){
-      if(Object.keys(p).some(k=>!['project_id','module','offset','limit'].includes(k)))
+      if(Object.keys(p).some(k=>!['project_id','module','offset','limit','facet'].includes(k)))
         throw Object.assign(new Error('INVALID_PAYLOAD'),{code:'INVALID_PAYLOAD'});
       result=visualization.query(p.project_id,
-        {module:p.module,offset:p.offset,limit:p.limit});
+        {module:p.module,offset:p.offset,limit:p.limit,facet:p.facet??null});
     } else if(op==='visualization.snapshot.compare'){
       if(Object.keys(p).some(k=>!['project_id','corpus'].includes(k)))
         throw Object.assign(new Error('INVALID_PAYLOAD'),{code:'INVALID_PAYLOAD'});

@@ -1,4 +1,4 @@
-import { invokeNative, isNative, copyNativeReviewDraft, openVisualProject, queryVisualProject, visualModules, type VisualModule, type VisualProjection, type VisualProjectInfo, analyzeVisualProject, exportVisualProject, type VisualExportFormat, queryGraphNeighborhood, type VisualTypedRef, type GraphDirection, compareVisualSnapshot, type VisualSnapshotDiff, cancelVisualJob } from "./native";
+import { invokeNative, isNative, copyNativeReviewDraft, openVisualProject, queryVisualProject, visualModules, type VisualModule, type VisualProjection, type VisualProjectInfo, analyzeVisualProject, exportVisualProject, type VisualExportFormat, queryGraphNeighborhood, type VisualTypedRef, type GraphDirection, compareVisualSnapshot, type VisualSnapshotDiff, cancelVisualJob, type VisualFacet } from "./native";
 import "./style.css";
 import {renderScientificGraphic} from "./visualization/core/render-svg";
 
@@ -34,6 +34,7 @@ const text = {
     visualAnalyze:"Exécuter une analyse déterministe",
     visualCancel:"Arrêter les calculs et fermer le projet",
     visualSelectionHeading:"Sélection scientifique commune :",visualClearSelection:"Effacer la sélection",
+    facetTitle:"Filtres scientifiques documentaires",facetStatus:"Statut éditorial",facetTemporalMode:"Interprétation temporelle",facetStart:"À partir du",facetEnd:"Jusqu’au",facetApply:"Appliquer les filtres",facetReset:"Effacer les filtres",facetSelected:"Limiter à la référence sélectionnée (identité exacte, sans inférence)",
     visualTitle:"Exploration scientifique · six laboratoires",visualIntro:"Projections de données déclarées uniquement, en lecture seule et sans conclusions historiques automatiques.",visualOpen:"Ouvrir un corpus pour les laboratoires",visualPrevious:"Précédent",visualNext:"Suivant",visualDisclaimer:"Les cartes, graphes avancés et inférences IA ne sont pas encore exécutés. Aucune vue ne certifie un fait historique.",
     workspace: "ESPACE DE TRAVAIL", overview: "Vue générale", documents: "Documents", research: "Analyses", models: "Modèles IA",
     about: "À propos", aboutIntro: "Un espace de recherche historique local, traçable et reproductible.",
@@ -79,6 +80,7 @@ const text = {
     visualAnalyze:"Run deterministic analysis",
     visualCancel:"Stop calculations and close project",
     visualSelectionHeading:"Shared scientific selection:",visualClearSelection:"Clear selection",
+    facetTitle:"Scientific documentary filters",facetStatus:"Editorial status",facetTemporalMode:"Temporal interpretation",facetStart:"From",facetEnd:"Until",facetApply:"Apply filters",facetReset:"Clear filters",facetSelected:"Filter by selected reference (exact identity, no inference)",
     visualTitle:"Scientific exploration · six labs",visualIntro:"Read-only projections of declared records only, without automatic historical conclusions.",visualOpen:"Open corpus for research laboratories",visualPrevious:"Previous",visualNext:"Next",visualDisclaimer:"Advanced maps, graph layouts and AI inference are not enabled. No view certifies historical facts.",
     workspace: "WORKSPACE", overview: "Overview", documents: "Documents", research: "Analysis", models: "AI models",
     about: "About", aboutIntro: "A local, traceable and reproducible historical research workspace.",
@@ -148,6 +150,28 @@ function selectVisualRef(value:unknown):void{
 }
 let visualCancelVersion=0;
 let visualCancelling=false;
+type FacetMode="possible-overlap"|"certain-only"|"declared-start";
+type FacetStatus="proposed"|"under_review"|"published"|"withdrawn"|"unspecified";
+let activeFacetForm:{status:FacetStatus|null;mode:FacetMode;earliest:string;latest:string;selectedRef:VisualTypedRef|null}|null=null;
+function effectiveFacets(module:VisualModule):VisualFacet|null{
+  if(!activeFacetForm)return null;
+  const f:VisualFacet={};
+  if(activeFacetForm.status)f.statuses=[activeFacetForm.status];
+  if(activeFacetForm.selectedRef)f.selectedRef=activeFacetForm.selectedRef;
+  if(activeFacetForm.earliest&&activeFacetForm.latest&&(module==="chronos"||module==="graph"))
+    f.time={mode:activeFacetForm.mode,earliest:activeFacetForm.earliest,latest:activeFacetForm.latest};
+  return Object.keys(f).length?f:null;
+}
+function clearFacetInputs():void{
+  (byId("visual-facet-status") as HTMLSelectElement).value="";
+  (byId("visual-facet-mode") as HTMLSelectElement).value="possible-overlap";
+  (byId("visual-facet-from") as HTMLInputElement).value="";
+  (byId("visual-facet-to") as HTMLInputElement).value="";
+  (byId("visual-facet-selected") as HTMLInputElement).checked=false;
+}
+
+
+
 
 function byId(id: string): HTMLElement {
   const found = document.getElementById(id);
@@ -414,6 +438,21 @@ async function openDocument(): Promise<void> {
 
 function renderVisual():void {
   const info=visualInfo;
+  const filtered=activeFacetForm!==null;
+  const datesIgnored=filtered&&Boolean(activeFacetForm?.earliest)&&
+    visualModule!=="chronos"&&visualModule!=="graph";
+  byId("visual-facet-note").textContent=filtered
+    ? datesIgnored
+      ? (language==="fr"
+        ?"Filtre temporel conservé mais non appliqué ici (uniquement Chronos et GraphLab). Analyses, exports et comparaison désactivés pendant le filtrage."
+        :"Time filter retained but not applied here (Chronos and GraphLab only). Analyses, exports and comparison disabled while filtering.")
+      : (language==="fr"
+        ?"Vue filtrée, paramètres présents dans le SHA scientifique. Analyses et exports désactivés jusqu'à leur prise en charge explicite."
+        :"Filtered view: parameters included in scientific SHA. Analysis and export disabled until explicitly supported.")
+    : (language==="fr"?"Aucun filtre actif.":"No active filters.");
+  for(const id of ["visual-facet-apply","visual-facet-reset"]){
+    (byId(id) as HTMLButtonElement).disabled=visualBusy||!info;
+  }
   byId("visual-typed-selection-value").textContent=selectedVisualRef?visualRefKey(selectedVisualRef):"—";
   (byId("visual-clear-selection") as HTMLButtonElement).disabled=!selectedVisualRef;
   byId("visual-session").textContent=info
@@ -442,7 +481,7 @@ function renderVisual():void {
     ? visualSnapshot.fileName+" · "+visualSnapshot.previous.canonical_sha256+" / "+
       visualSnapshot.current.canonical_sha256+" · SCI SHA-256 "+visualSnapshot.scientific_sha256+
       " · historical completeness: unknown":"";
-  (byId("visual-snapshot-compare") as HTMLButtonElement).disabled=visualBusy||!visualInfo;
+  (byId("visual-snapshot-compare") as HTMLButtonElement).disabled=visualBusy||!visualInfo||filtered;
   const graphPanel=byId("visual-graph-navigation");
   graphPanel.classList.toggle("hidden",visualModule!=="graph");
   const graphRows=byId("graph-nav-rows");graphRows.replaceChildren();
@@ -461,7 +500,7 @@ function renderVisual():void {
     ?"BFS · "+graphNavigation.scope.returned+"/"+graphNavigation.scope.total_matched+
       (graphNavigation.scope.truncated?" · PARTIAL":"")+
       " · SHA-256 "+graphNavigation.scientific_sha256:"";
-  (byId("graph-navigate") as HTMLButtonElement).disabled=visualBusy||!visualInfo;
+  (byId("graph-navigate") as HTMLButtonElement).disabled=visualBusy||!visualInfo||filtered;
   const analysisRows=byId("visual-analysis-rows");analysisRows.replaceChildren();
   if(visualAnalysis){
     for(const item of visualAnalysis.result){
@@ -478,10 +517,10 @@ function renderVisual():void {
       (visualAnalysis.scope.truncated?" · PARTIAL":"")+
       " · "+visualAnalysis.scientific_sha256
     : "";
-  (byId("visual-analyze") as HTMLButtonElement).disabled=visualBusy||!visualInfo;
-  (byId("visual-export") as HTMLButtonElement).disabled=visualBusy||!visualProjection;
+  (byId("visual-analyze") as HTMLButtonElement).disabled=visualBusy||!visualInfo||filtered;
+  (byId("visual-export") as HTMLButtonElement).disabled=visualBusy||!visualProjection||filtered;
   const exportSelect=byId("visual-export-format") as HTMLSelectElement;
-  exportSelect.disabled=visualBusy||!visualInfo;
+  exportSelect.disabled=visualBusy||!visualInfo||filtered;
   for(const option of exportSelect.options){
     option.disabled=(option.value==="geojson"&&visualModule!=="geo")||
       (option.value==="graphml"&&visualModule!=="graph");
@@ -531,7 +570,7 @@ async function loadVisual():Promise<void> {
   if(!visualInfo||visualBusy)return;
   const seq=++visualSequence,version=visualCancelVersion;visualBusy=true;renderVisual();
   try{
-    const result=await queryVisualProject(visualModule,visualOffset,50);
+    const result=await queryVisualProject(visualModule,visualOffset,50,effectiveFacets(visualModule));
     if(seq!==visualSequence||version!==visualCancelVersion)return;
     if(result.corpus.canonical_sha256!==visualInfo.canonical_sha256)throw Error("STALE_CORPUS");
     visualProjection=result;
@@ -549,7 +588,7 @@ async function openVisual():Promise<void>{
   try{
     const info=await openVisualProject();
     if(!info||version!==visualCancelVersion)return;
-    visualInfo=info;visualOffset=0;visualProjection=null;visualAnalysis=null;graphNavigation=null;visualSnapshot=null;selectedVisualRef=null;visualModule="chronos";
+    visualInfo=info;visualOffset=0;visualProjection=null;visualAnalysis=null;graphNavigation=null;visualSnapshot=null;selectedVisualRef=null;activeFacetForm=null;clearFacetInputs();visualModule="chronos";
   }catch(error){if(version===visualCancelVersion)notify(error instanceof Error?error.message:String(error));}
   finally{if(version===visualCancelVersion){visualBusy=false;renderVisual();}}
   if(version===visualCancelVersion&&visualInfo)await loadVisual();
@@ -564,13 +603,41 @@ byId("document-open").addEventListener("click", () => void openDocument());
 byId("validate-corpus").addEventListener("click", () => void validateCorpus());
 byId("draft-copy").addEventListener("click", () => void copyReviewDraft());
 byId("visual-open").addEventListener("click",()=>void openVisual());
+byId("visual-facet-apply").addEventListener("click",()=>{
+  if(visualBusy||!visualInfo)return;
+  const status=(byId("visual-facet-status") as HTMLSelectElement).value as FacetStatus|"";
+  const mode=(byId("visual-facet-mode") as HTMLSelectElement).value as FacetMode;
+  const earliest=(byId("visual-facet-from") as HTMLInputElement).value;
+  const latest=(byId("visual-facet-to") as HTMLInputElement).value;
+  if(Boolean(earliest)!==Boolean(latest)||Boolean(earliest&&latest&&earliest>latest)){
+    notify(language==="fr"?"Intervalle de dates incomplet ou inversé.":"Date interval incomplete or inverted.");
+    return;
+  }
+  const selected=(byId("visual-facet-selected") as HTMLInputElement).checked;
+  if(selected&&!selectedVisualRef){
+    notify(language==="fr"?"Sélectionnez d’abord une référence dans un tableau.":"Select a reference from a result table first.");
+    return;
+  }
+  const selectedRef=selected&&selectedVisualRef
+    ? {...selectedVisualRef}:null;
+  if(!status&&!earliest&&!selectedRef){activeFacetForm=null;}
+  else activeFacetForm={status:status||null,mode,earliest,latest,selectedRef};
+  visualOffset=0;visualProjection=null;visualAnalysis=null;graphNavigation=null;visualSnapshot=null;
+  void loadVisual();
+});
+byId("visual-facet-reset").addEventListener("click",()=>{
+  if(visualBusy||!visualInfo)return;
+  activeFacetForm=null;clearFacetInputs();visualOffset=0;visualProjection=null;
+  visualAnalysis=null;graphNavigation=null;visualSnapshot=null;
+  void loadVisual();
+});
 byId("visual-clear-selection").addEventListener("click",()=>{selectedVisualRef=null;renderVisual();});
 byId("visual-cancel").addEventListener("click",async()=>{
   if(visualCancelling)return;
   ++visualCancelVersion;
   ++visualSequence;
   visualInfo=null;visualProjection=null;visualAnalysis=null;
-  graphNavigation=null;visualSnapshot=null;selectedVisualRef=null;visualOffset=0;visualCancelling=true;visualBusy=true;
+  graphNavigation=null;visualSnapshot=null;selectedVisualRef=null;activeFacetForm=null;clearFacetInputs();visualOffset=0;visualCancelling=true;visualBusy=true;
   renderVisual();
   try{
     await cancelVisualJob();
