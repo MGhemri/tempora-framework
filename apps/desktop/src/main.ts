@@ -34,7 +34,7 @@ const text = {
     visualAnalyze:"Exécuter une analyse déterministe",
     visualCancel:"Arrêter les calculs et fermer le projet",
     visualSelectionHeading:"Sélection scientifique commune :",visualClearSelection:"Effacer la sélection",
-    facetTitle:"Filtres scientifiques documentaires",facetStatus:"Statut éditorial",facetTemporalMode:"Interprétation temporelle",facetStart:"À partir du",facetEnd:"Jusqu’au",facetApply:"Appliquer les filtres",facetReset:"Effacer les filtres",
+    facetTitle:"Filtres scientifiques documentaires",facetStatus:"Statut éditorial",facetTemporalMode:"Interprétation temporelle",facetStart:"À partir du",facetEnd:"Jusqu’au",facetApply:"Appliquer les filtres",facetReset:"Effacer les filtres",facetSelected:"Limiter à la référence sélectionnée (identité exacte, sans inférence)",
     visualTitle:"Exploration scientifique · six laboratoires",visualIntro:"Projections de données déclarées uniquement, en lecture seule et sans conclusions historiques automatiques.",visualOpen:"Ouvrir un corpus pour les laboratoires",visualPrevious:"Précédent",visualNext:"Suivant",visualDisclaimer:"Les cartes, graphes avancés et inférences IA ne sont pas encore exécutés. Aucune vue ne certifie un fait historique.",
     workspace: "ESPACE DE TRAVAIL", overview: "Vue générale", documents: "Documents", research: "Analyses", models: "Modèles IA",
     about: "À propos", aboutIntro: "Un espace de recherche historique local, traçable et reproductible.",
@@ -80,7 +80,7 @@ const text = {
     visualAnalyze:"Run deterministic analysis",
     visualCancel:"Stop calculations and close project",
     visualSelectionHeading:"Shared scientific selection:",visualClearSelection:"Clear selection",
-    facetTitle:"Scientific documentary filters",facetStatus:"Editorial status",facetTemporalMode:"Temporal interpretation",facetStart:"From",facetEnd:"Until",facetApply:"Apply filters",facetReset:"Clear filters",
+    facetTitle:"Scientific documentary filters",facetStatus:"Editorial status",facetTemporalMode:"Temporal interpretation",facetStart:"From",facetEnd:"Until",facetApply:"Apply filters",facetReset:"Clear filters",facetSelected:"Filter by selected reference (exact identity, no inference)",
     visualTitle:"Scientific exploration · six labs",visualIntro:"Read-only projections of declared records only, without automatic historical conclusions.",visualOpen:"Open corpus for research laboratories",visualPrevious:"Previous",visualNext:"Next",visualDisclaimer:"Advanced maps, graph layouts and AI inference are not enabled. No view certifies historical facts.",
     workspace: "WORKSPACE", overview: "Overview", documents: "Documents", research: "Analysis", models: "AI models",
     about: "About", aboutIntro: "A local, traceable and reproducible historical research workspace.",
@@ -152,11 +152,12 @@ let visualCancelVersion=0;
 let visualCancelling=false;
 type FacetMode="possible-overlap"|"certain-only"|"declared-start";
 type FacetStatus="proposed"|"under_review"|"published"|"withdrawn"|"unspecified";
-let activeFacetForm:{status:FacetStatus|null;mode:FacetMode;earliest:string;latest:string}|null=null;
+let activeFacetForm:{status:FacetStatus|null;mode:FacetMode;earliest:string;latest:string;selectedRef:VisualTypedRef|null}|null=null;
 function effectiveFacets(module:VisualModule):VisualFacet|null{
   if(!activeFacetForm)return null;
   const f:VisualFacet={};
   if(activeFacetForm.status)f.statuses=[activeFacetForm.status];
+  if(activeFacetForm.selectedRef)f.selectedRef=activeFacetForm.selectedRef;
   if(activeFacetForm.earliest&&activeFacetForm.latest&&(module==="chronos"||module==="graph"))
     f.time={mode:activeFacetForm.mode,earliest:activeFacetForm.earliest,latest:activeFacetForm.latest};
   return Object.keys(f).length?f:null;
@@ -166,6 +167,7 @@ function clearFacetInputs():void{
   (byId("visual-facet-mode") as HTMLSelectElement).value="possible-overlap";
   (byId("visual-facet-from") as HTMLInputElement).value="";
   (byId("visual-facet-to") as HTMLInputElement).value="";
+  (byId("visual-facet-selected") as HTMLInputElement).checked=false;
 }
 
 
@@ -611,8 +613,15 @@ byId("visual-facet-apply").addEventListener("click",()=>{
     notify(language==="fr"?"Intervalle de dates incomplet ou inversé.":"Date interval incomplete or inverted.");
     return;
   }
-  if(!status&&!earliest){activeFacetForm=null;}
-  else activeFacetForm={status:status||null,mode,earliest,latest};
+  const selected=(byId("visual-facet-selected") as HTMLInputElement).checked;
+  if(selected&&!selectedVisualRef){
+    notify(language==="fr"?"Sélectionnez d’abord une référence dans un tableau.":"Select a reference from a result table first.");
+    return;
+  }
+  const selectedRef=selected&&selectedVisualRef
+    ? {...selectedVisualRef}:null;
+  if(!status&&!earliest&&!selectedRef){activeFacetForm=null;}
+  else activeFacetForm={status:status||null,mode,earliest,latest,selectedRef};
   visualOffset=0;visualProjection=null;visualAnalysis=null;graphNavigation=null;visualSnapshot=null;
   void loadVisual();
 });
