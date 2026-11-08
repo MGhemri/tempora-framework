@@ -8,6 +8,7 @@ const {analyze}=require('./algorithms.cjs');
 const {buildExport}=require('./exporter.cjs');
 const {compare}=require('./snapshots.cjs');
 const {walk}=require('./graph-navigation.cjs');
+const {filter:filterChronos}=require('./chronos-filter.cjs');
 const MAX_CORPUS_BYTES=3*1024*1024;
 const TTL_MS=10*60*1000;
 function fail(code){const e=new Error(code);e.code=code;throw e;}
@@ -50,6 +51,13 @@ class ProjectManager {
     const result=build(session.corpus,{module,offset,limit,
       generatedAt:new Date(this.clock()).toISOString()});
     // Renew only after a successful query.
+    this.#renew(session);
+    return result;
+  }
+  chronosFilter(id,{earliest,latest,mode='possible-overlap',offset=0,limit=50}={}){
+    const session=this.#get(id);
+    const result=filterChronos(session.corpus,{earliest,latest,mode,offset,limit,
+      generatedAt:new Date(this.clock()).toISOString()});
     this.#renew(session);
     return result;
   }
