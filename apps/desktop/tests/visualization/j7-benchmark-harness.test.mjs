@@ -22,6 +22,8 @@ test('Synthetic performance harness emits machine-readable, explicit one-run mea
   assert.equal(result.sizes[0].digest.status,'ok');
   assert.equal(result.sizes[0].chronos_page.status,'ok');
   assert.equal(result.sizes[0].observatory_analysis.status,'ok');
+  assert.equal(result.sizes[0].chronos_scoped_page.status,'ok');
+  assert.equal(result.sizes[0].chronos_filtered_json_export.status,'ok');
   assert.ok(result.sizes[0].notes.some(n=>n.includes('NOT p95')));
 });
 test('Benchmark iterations are bounded, deterministic in shape and explicit',()=>{
