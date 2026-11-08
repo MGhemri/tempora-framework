@@ -4,6 +4,7 @@
 // This is an INTERNAL Desktop module: no new public SDK API or IPC.
 const {canonical}=require('tempora-framework');
 const {projection,refKey}=require('./contracts.cjs');
+const {applyFacets}=require('./facets.cjs');
 
 const COLLECTIONS=Object.freeze({
   geo:'spatial_assertions',graph:'relations',chronos:'events',
@@ -83,7 +84,7 @@ function deriveRow(module,item,c){
 }
 function build(corpus,options={}){
   if(!options || typeof options!=='object'||Array.isArray(options))bad('INVALID_OPTIONS');
-  const {module,offset=0,limit=50,generatedAt='2026-01-01T00:00:00Z'}=options;
+  const {module,offset=0,limit=50,facet=null,generatedAt='2026-01-01T00:00:00Z'}=options;
   if(!Object.hasOwn(COLLECTIONS,module))bad('UNSUPPORTED_MODULE');
   if(!Number.isSafeInteger(offset)||offset<0||!Number.isSafeInteger(limit)||limit<1||limit>PAGE_LIMIT)bad('INVALID_PAGE');
   if(!corpus || typeof corpus!=='object'||Array.isArray(corpus))bad('INVALID_CORPUS');
@@ -92,20 +93,26 @@ function build(corpus,options={}){
   const collection=COLLECTIONS[module];
   const raw=items(corpus,collection);
   if(raw.length>MAX_SCAN)bad('LIMIT_EXCEEDED');
-  const ordered=sortRecords(raw);
+  const scoped=facet===null?{records:raw,facets:null,unknownDatesExcluded:0}:applyFacets(raw,module,facet);
+  const ordered=sortRecords(scoped.records);
   const selected=ordered.slice(offset,offset+limit);
   const rows=selected.map(item=>deriveRow(module,item,corpus));
-  const overview=summaryCounts(corpus);
   // Offset is part of the scientific parameters; the caller can page
   // deterministically, without pretending a page contains an entire corpus.
   return projection({
     corpus,algorithm:{id:'tvrw.'+module+'.declared-records',
-      version:'1.0.0',parameters:{collection,offset,limit}},
-    mode:'validated',filters:{module,collection,offset,limit},
+      version:'1.0.0',parameters:{collection,offset,limit,
+        ...(scoped.facets!==null?{facet:scoped.facets}:{})}},
+    mode:'validated',filters:{module,collection,offset,limit,
+      ...(scoped.facets!==null?{facet:scoped.facets}:{})},
     totalMatched:ordered.length,
     result:rows,
-    diagnostics:offset+limit<ordered.length
-      ?[{code:'PARTIAL_PAGE',severity:'warning',count:ordered.length-selected.length}]:[],
+    diagnostics:[
+      ...(offset+limit<ordered.length?
+        [{code:'PARTIAL_PAGE',severity:'warning',count:ordered.length-selected.length}]:[]),
+      ...(scoped.unknownDatesExcluded?
+        [{code:'TEMPORAL_UNKNOWN_EXCLUDED',severity:'info',count:scoped.unknownDatesExcluded}]:[])
+    ],
     generatedAt
   });
 }
