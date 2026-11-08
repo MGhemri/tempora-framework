@@ -16,6 +16,7 @@ declare global {
       queryGraphNeighborhood:(root:VisualTypedRef,depth:number,direction:string,limit:number)=>Promise<unknown>;
       compareVisualSnapshot:()=>Promise<unknown>;
       cancelVisualJob:()=>Promise<{cancelled:boolean;session_closed:boolean}>;
+      queryChronosInterval:(earliest:string,latest:string,mode:string,offset:number,limit:number)=>Promise<unknown>;
     };
   }
 }
@@ -107,4 +108,11 @@ export async function compareVisualSnapshot():Promise<VisualSnapshotDiff|null>{
 export async function cancelVisualJob():Promise<{cancelled:boolean;session_closed:boolean}>{
   if(!window.temporaElectron)throw Error("VISUAL_ELECTRON_ONLY");
   return await window.temporaElectron.cancelVisualJob();
+}
+
+export type ChronosTimeMode="possible-overlap"|"certain-only"|"declared-start";
+export async function queryChronosInterval(earliest:string,latest:string,
+  mode:ChronosTimeMode="possible-overlap",offset=0,limit=50):Promise<VisualProjection>{
+  if(!window.temporaElectron)throw Error("VISUAL_ELECTRON_ONLY");
+  return await window.temporaElectron.queryChronosInterval(earliest,latest,mode,offset,limit) as VisualProjection;
 }
