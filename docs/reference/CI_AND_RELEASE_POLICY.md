@@ -22,7 +22,9 @@ Beta 1 and Beta 2 release pipelines and the WebView2-free Electron fallback expe
 
 ## GitHub maintenance
 
-Pull requests are immutable review records: close superseded PRs with links to the successor instead of attempting to erase history. Delete only truly unreferenced, unprotected branches after auditing open PRs, release tags and unique commits. Cleaning branches does not delete the PR record.
+Pull requests are immutable review records: close superseded PRs with links to the successor instead of attempting to erase history.
+
+TEMPORA Framework includes a tiny `branch-hygiene` job: it performs a dry-run on ordinary PRs, and after a same-repository PR is successfully **merged**, it verifies that the source ref is unchanged, unprotected, not under `release/`, and not referenced by another open PR before deleting the branch. It never deletes a branch on PR closure without merge or a fork source, and retains the PR audit record. This is a job in the existing Framework workflow, **not** an additional workflow. The one-time `[branch-hygiene-setup]` merge marker also removes two fully integrated maintenance branches after rechecking their `ahead_by === 0`. Delete only truly unreferenced, unprotected branches after auditing open PRs, release tags and unique commits. Cleaning branches does not delete the PR record.
 
 ## Store protection
 
