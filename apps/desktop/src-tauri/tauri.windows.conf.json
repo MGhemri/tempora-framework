@@ -5,7 +5,8 @@
       "nsis"
     ],
     "resources": {
-      "resources/engine/": "engine/"
+      "resources/engine/": "engine/",
+      "../examples/": "examples/"
     },
     "windows": {
       "nsis": {

@@ -30,6 +30,23 @@ try {
       }
     }
   }
+  # Verify educational sample files originate from the installed NSIS payload.
+  $examplesDir = Join-Path $InstallDirectory "examples"
+  $exampleReadme = Join-Path $examplesDir "README.md"
+  $exampleCanonical = Join-Path $examplesDir "synthetic-canonical-v3.json"
+  $exampleGeo = Join-Path $examplesDir "alnop-geographic-sample.geojson"
+  foreach ($file in @($exampleReadme, $exampleCanonical, $exampleGeo)) {
+    if (-not (Test-Path $file -PathType Leaf)) { throw "INSTALLED_EXAMPLE_MISSING: $file" }
+  }
+  $canonicalSample = Get-Content -LiteralPath $exampleCanonical -Raw -Encoding UTF8 | ConvertFrom-Json
+  $geoSample = Get-Content -LiteralPath $exampleGeo -Raw -Encoding UTF8 | ConvertFrom-Json
+  if ($canonicalSample.schema_version -ne "3.0.0" -or $canonicalSample.events.Count -lt 1) { throw "INSTALLED_CANONICAL_EXAMPLE_INVALID" }
+  if ($geoSample.type -ne "FeatureCollection" -or $geoSample.features.Count -ne 5) { throw "INSTALLED_ALNOP_GEO_EXAMPLE_INVALID" }
+  foreach ($feature in $geoSample.features) {
+    if ($feature.geometry.type -ne "Point" -or $feature.geometry.coordinates.Count -ne 2 -or
+        -not $feature.properties.geometry_role) { throw "INSTALLED_GEO_FEATURE_INVALID" }
+  }
+  Write-Host "Installed canonical and ALNOP GeoJSON examples present and structurally valid."
   $runtimeDir = Join-Path $InstallDirectory "engine"
   $node = Join-Path $runtimeDir "node.exe"
   $worker = Join-Path $runtimeDir "worker.cjs"
@@ -118,6 +135,14 @@ try {
     if (-not $answers[2].ok -or $answers[2].result.sha256 -notmatch "^[a-f0-9]{64}$") {
       throw "INSTALLED_DIGEST_FAILED"
     }
+  # Validate the bundled canonical example using the installed, pinned scientific engine.
+  $corpusJson = Get-Content -LiteralPath $exampleCanonical -Raw -Encoding UTF8 | ConvertFrom-Json | ConvertTo-Json -Compress -Depth 100
+  $canonicalRequest = '{"protocol_version":"1.0.0","request_id":"installed_sample_validate","operation":"corpus.validate","payload":{"corpus":' + $corpusJson + '}}'
+  $sampleAnswer = ($canonicalRequest | & $node $worker) | ConvertFrom-Json
+  if ($LASTEXITCODE -ne 0 -or -not $sampleAnswer.ok -or -not $sampleAnswer.result.valid) {
+    throw "INSTALLED_CANONICAL_SAMPLE_VALIDATION_FAILED"
+  }
+  Write-Host "Installed example passed canonical v3 validation with bundled TEMPORA Engine."
     Write-Host "Installed TEMPORA Engine works with no system Node in PATH."
     Write-Host "Installed Node SHA256: $($manifest.node_sha256)"
     Write-Host "Installed worker SHA256: $($manifest.worker_sha256)"
