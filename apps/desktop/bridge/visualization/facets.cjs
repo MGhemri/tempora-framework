@@ -58,12 +58,12 @@ function timePass(record,module,t){
   const certain=start.kind==='exact'&&start.precision==='day'&&
     start.earliest===start.latest;
   return {pass:certain&&start.earliest>=t.earliest&&start.latest<=t.latest,
-    unknown:!certain};
+    unknown:false,uncertain:!certain};
 }
 function applyFacets(records,module,facet){
   const f=normalizeFacets(facet,module);
   const selected=f.selectedRef?refKey(f.selectedRef):null;
-  let unknownDatesExcluded=0;
+  let unknownDatesExcluded=0,uncertainStartsExcluded=0;
   const out=records.filter(item=>{
     if(f.statuses&&(!f.statuses.length||!f.statuses.includes(item.editorial_status)))return false;
     // Direct typed record identity only, no unreviewed neighboring relation.
@@ -71,10 +71,11 @@ function applyFacets(records,module,facet){
     if(f.time){
       const verdict=timePass(item,module,f.time);
       if(verdict.unknown)unknownDatesExcluded++;
+      if(verdict.uncertain)uncertainStartsExcluded++;
       return verdict.pass;
     }
     return true;
   });
-  return {records:out,facets:f,unknownDatesExcluded};
+  return {records:out,facets:f,unknownDatesExcluded,uncertainStartsExcluded};
 }
 module.exports=Object.freeze({normalizeFacets,applyFacets,realDate});
