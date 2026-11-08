@@ -33,7 +33,7 @@ function v2Respond(message){
   if(!['visualization.capabilities','visualization.project.create',
     'visualization.project.query','visualization.project.release',
     'visualization.analysis.run','visualization.export.prepare',
-    'visualization.graph.neighborhood','visualization.snapshot.compare'].includes(op)){
+    'visualization.graph.neighborhood','visualization.snapshot.compare','visualization.chronos.filter'].includes(op)){
     return v2Reply(id,false,{error:{code:'UNSUPPORTED_OPERATION'}});
   }
   try {
@@ -51,6 +51,12 @@ function v2Respond(message){
         throw Object.assign(new Error('INVALID_PAYLOAD'),{code:'INVALID_PAYLOAD'});
       result=visualization.query(p.project_id,
         {module:p.module,offset:p.offset,limit:p.limit});
+    } else if(op==='visualization.chronos.filter'){
+      if(Object.keys(p).some(k=>!['project_id','earliest','latest','mode','offset','limit'].includes(k)))
+        throw Object.assign(new Error('INVALID_PAYLOAD'),{code:'INVALID_PAYLOAD'});
+      result=visualization.chronosFilter(p.project_id,{
+        earliest:p.earliest,latest:p.latest,mode:p.mode,offset:p.offset,limit:p.limit
+      });
     } else if(op==='visualization.snapshot.compare'){
       if(Object.keys(p).some(k=>!['project_id','corpus'].includes(k)))
         throw Object.assign(new Error('INVALID_PAYLOAD'),{code:'INVALID_PAYLOAD'});
