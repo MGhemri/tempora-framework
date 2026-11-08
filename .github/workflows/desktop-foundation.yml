@@ -252,7 +252,7 @@ jobs:
         run: |
           $ErrorActionPreference = 'Stop'
           $resourceRoot = 'electron/release/win-unpacked/resources'
-          foreach ($name in @('README.md','synthetic-canonical-v3.json','alnop-geographic-sample.geojson')) {
+          foreach ($name in @('README.md','synthetic-canonical-v3.json','alnop-geographic-sample.geojson','alnop-canonical-v3-demo.json')) {
             if (-not (Test-Path (Join-Path $resourceRoot ('examples/' + $name)))) {
               throw ('ELECTRON_EXAMPLE_MISSING: ' + $name)
             }

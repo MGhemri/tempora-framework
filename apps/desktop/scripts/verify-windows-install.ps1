@@ -35,7 +35,8 @@ try {
   $exampleReadme = Join-Path $examplesDir "README.md"
   $exampleCanonical = Join-Path $examplesDir "synthetic-canonical-v3.json"
   $exampleGeo = Join-Path $examplesDir "alnop-geographic-sample.geojson"
-  foreach ($file in @($exampleReadme, $exampleCanonical, $exampleGeo)) {
+  $exampleAlnopCanonical = Join-Path $examplesDir "alnop-canonical-v3-demo.json"
+  foreach ($file in @($exampleReadme, $exampleCanonical, $exampleGeo, $exampleAlnopCanonical)) {
     if (-not (Test-Path $file -PathType Leaf)) { throw "INSTALLED_EXAMPLE_MISSING: $file" }
   }
   $canonicalSample = Get-Content -LiteralPath $exampleCanonical -Raw -Encoding UTF8 | ConvertFrom-Json
