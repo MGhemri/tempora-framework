@@ -46,6 +46,20 @@ const base = {
   reviews:[],assessments:[],releases:[],extensions:{},
   taxonomies:{event_types:['fictional assembly']}
 };
+// The Windows package must carry usable offline educational examples.
+// ALNOP is a historical GeoJSON excerpt, NOT a canonical v3 corpus.
+const readExample = name => JSON.parse(readFileSync(join(resourceRoot,'examples',name),'utf8'));
+const installedCanonical = readExample('synthetic-canonical-v3.json');
+const installedAlnop = readExample('alnop-geographic-sample.geojson');
+assert.equal(installedCanonical.schema_version,'3.0.0');
+assert.equal(installedAlnop.type,'FeatureCollection');
+assert.equal(installedAlnop.features.length,5);
+assert.equal(installedAlnop.properties.source_commit,'2428a693393a4a635d5eeac3e3c8542498b8b9d6');
+assert.equal(installedAlnop.properties.license,'https://creativecommons.org/licenses/by/4.0/');
+assert.deepEqual([...new Set(installedAlnop.features.map(f => f.properties.wilaya_code))].sort(),
+  ['W1','W2','W3','W4','W5']);
+assert.match(readFileSync(join(resourceRoot,'examples','README.md'),'utf8'),/CC BY 4\.0/);
+
 const invalid = structuredClone(base);
 invalid.events[0].schema_version = '2.0.0';
 
@@ -71,6 +85,9 @@ function invoke(operation,corpus,requestId) {
   return result.result;
 }
 assert.equal(invoke('health',undefined,'smoke_health').engine_version,'3.0.0');
+const exampleValidation=invoke('corpus.validate',installedCanonical,'smoke_example');
+assert.equal(exampleValidation.valid,true,'installed canonical example must validate');
+assert.equal(exampleValidation.errors.length,0);
 const yes=invoke('corpus.validate',base,'smoke_valid');
 assert.equal(yes.valid,true,'synthetic v3 corpus must validate');
 assert.equal(yes.errors.length,0);
@@ -84,5 +101,6 @@ assert.match(digestYes,/^[a-f0-9]{64}$/);
 assert.match(digestNo,/^[a-f0-9]{64}$/);
 assert.notEqual(digestYes,digestNo);
 console.log('PACKAGED_TEMPORA_ENGINE_3_0_0_VALIDATION_OK');
+console.log('PACKAGED_OFFLINE_EXAMPLES_VALIDATED');
 console.log('SYNTHETIC_VALID_SHA256='+digestYes);
 console.log('SYNTHETIC_INVALID_SHA256='+digestNo);
