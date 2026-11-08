@@ -194,3 +194,23 @@ test('packaged worker smoke uses absolute paths despite changing cwd',()=>{
   assert.match(smoke,/isAbsolute\(node\) && isAbsolute\(worker\)/);
   assert.match(smoke,/cwd:join\(resourceRoot,'engine'\)/);
 });
+
+test('Assistant IPC is fixed, host-authorized and packaged without renderer paths',()=>{
+ const main=src('electron/main.cjs');
+ const preload=src('electron/preload.cjs');
+ const pkg=require('../package.json');
+ assert.match(main,/createAssistantSessions/);
+ assert.match(main,/tempora:assistant:open/);
+ assert.match(main,/tempora:assistant:inspect/);
+ assert.match(main,/tempora:assistant:sheet/);
+ assert.match(main,/tempora:assistant:close/);
+ assert.match(main,/validSender\(event\)/);
+ assert.match(preload,/assistantOpen: \(\) => ipcRenderer\.invoke\('tempora:assistant:open'\)/);
+ assert.doesNotMatch(preload,/require\(['"]node:fs['"]\)|readFileSync/);
+ assert.ok(pkg.build.files.includes('assistant-session.cjs'));
+ const extra=pkg.build.extraResources;
+ assert.ok(extra.some(x=>x.to==='assistant/framework/assist-inspection.js'));
+ assert.ok(extra.some(x=>x.to==='assistant/assist-io'));
+ const hostFile=require('../assistant-session.cjs');
+ assert.equal(typeof hostFile.createAssistantSessions,'function');
+});

@@ -10,6 +10,10 @@ const {join, basename, extname, resolve} = require('node:path');
 const {spawn} = require('node:child_process');
 const {VisualService}=require('./visualization-service.cjs');
 const {preview}=require('./preview-core.cjs');
+const {createAssistantSessions}=require('./assistant-session.cjs');
+const assistantSessions=createAssistantSessions({
+  sourceRoot:app.isPackaged?join(process.resourcesPath,'assistant'):resolve(__dirname,'../../..','src')
+});
 
 const MAX_PREVIEW_BYTES = 8 * 1024 * 1024;
 const MAX_CORPUS_BYTES = 3 * 1024 * 1024;
@@ -212,6 +216,24 @@ function copyReviewDraft(event, raw) {
 app.whenReady().then(async () => {
   session.defaultSession.setPermissionRequestHandler((_contents, _permission, cb) => cb(false));
   session.defaultSession.setPermissionCheckHandler(() => false);
+  // Dedicated read-only Assistant session IPC. Only the host supplies paths.
+  // The renderer sees random handles and bounded data-only inspection reports.
+  ipcMain.handle('tempora:assistant:open',async event=>{
+    validSender(event);
+    const selection=await dialog.showOpenDialog(mainWindow,{
+      properties:['openFile'],filters:[{name:'Source tabulaire',extensions:['csv','tsv','xlsx']}]
+    });
+    return selection.canceled?null:assistantSessions.open(selection.filePaths[0]);
+  });
+  ipcMain.handle('tempora:assistant:inspect',(event,handle_id)=>{
+    validSender(event);return assistantSessions.inspect(handle_id);
+  });
+  ipcMain.handle('tempora:assistant:sheet',(event,handle_id,sheet_name)=>{
+    validSender(event);return assistantSessions.selectSheet(handle_id,sheet_name);
+  });
+  ipcMain.handle('tempora:assistant:close',(event,handle_id)=>{
+    validSender(event);return assistantSessions.close(handle_id);
+  });
   ipcMain.handle('tempora:select_document', selectDocument);
   ipcMain.handle('tempora:validate_corpus_native', validateCorpus);
   ipcMain.handle('tempora:copy_review_draft', copyReviewDraft);
@@ -318,4 +340,4 @@ app.whenReady().then(async () => {
   mainWindow.once('ready-to-show', () => mainWindow.show());
   await mainWindow.loadFile(join(__dirname, app.isPackaged ? 'dist' : '../dist', 'index.html'));
 });
-app.on('window-all-closed', () => {visualService.stop();app.quit();});
+app.on('window-all-closed', () => {assistantSessions.clear();visualService.stop();app.quit();});

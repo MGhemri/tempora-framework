@@ -52,6 +52,7 @@ jobs:
       - run: npm install --ignore-scripts --no-audit --no-fund
       - run: npm run build
       - run: npm run test:bridge
+      - run: node --test electron/tests/assistant-session.test.cjs
       - run: npm run test:visualization
       - run: npm run test:windows-engine
 
@@ -236,6 +237,7 @@ jobs:
           npm run test:bridge
           npm run test:visualization
           node --test electron/tests/host.test.cjs
+          node --test electron/tests/assistant-session.test.cjs
           node --test electron/tests/review-integrity.test.cjs
       - name: Stage pinned scientific runtime
         run: npm run stage:windows-engine
@@ -255,6 +257,11 @@ jobs:
           foreach ($name in @('README.md','synthetic-canonical-v3.json','alnop-geographic-sample.geojson','alnop-canonical-v3-demo.json')) {
             if (-not (Test-Path (Join-Path $resourceRoot ('examples/' + $name)))) {
               throw ('ELECTRON_EXAMPLE_MISSING: ' + $name)
+            }
+          }
+          foreach ($name in @('framework/assist-inspection.js','assist-io/xlsx-inventory.js','assist-io/xlsx-cells.js')) {
+            if (-not (Test-Path (Join-Path $resourceRoot ('assistant/' + $name)))) {
+              throw ('ELECTRON_ASSISTANT_INSPECTOR_MISSING: ' + $name)
             }
           }
           node electron/tests/packaged-engine-smoke.cjs $resourceRoot

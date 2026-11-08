@@ -4,6 +4,10 @@ const {contextBridge, ipcRenderer} = require('electron');
 contextBridge.exposeInMainWorld('temporaElectron', Object.freeze({
   desktopVersion: '0.1.2-beta.3',
   selectDocument: () => ipcRenderer.invoke('tempora:select_document'),
+  assistantOpen: () => ipcRenderer.invoke('tempora:assistant:open'),
+  assistantInspect: handleId => ipcRenderer.invoke('tempora:assistant:inspect',handleId),
+  assistantSelectSheet: (handleId,sheetName) => ipcRenderer.invoke('tempora:assistant:sheet',handleId,sheetName),
+  assistantClose: handleId => ipcRenderer.invoke('tempora:assistant:close',handleId),
   validateCorpus: () => ipcRenderer.invoke('tempora:validate_corpus_native'),
   copyReviewDraft: (draft) => ipcRenderer.invoke('tempora:copy_review_draft', draft),
   openOfficialLink: (url) => ipcRenderer.invoke('tempora:open-official-link', url),

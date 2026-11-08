@@ -1,0 +1,117 @@
+'use strict';
+const {test}=require('node:test');
+const assert=require('node:assert/strict');
+const {resolve}=require('node:path');
+const {createHash}=require('node:crypto');
+const {deflateRawSync}=require('node:zlib');
+const {createAssistantSessions,SESSION_TTL_MS,MAX_SOURCE_BYTES}=require('../assistant-session.cjs');
+const sourceRoot=resolve(__dirname,'../../../..','src');
+function host(initial,ending='.csv'){
+  let content=Buffer.from(initial),clock=1000,readCount=0;
+  const path='/native-choice/records'+ending;
+  const service=createAssistantSessions({sourceRoot,now:()=>clock,
+    stat:p=>{assert.equal(p,path);return {isFile:()=>true,size:content.length};},
+    read:p=>{assert.equal(p,path);readCount++;return Buffer.from(content);}
+  });
+  return {path,service,setData:x=>{content=Buffer.from(x);},tick:x=>{clock+=x;},getReads:()=>readCount};
+}
+const throws=code=>e=>e.code===code;
+const csv='id,title\n1,Title\n2,Second\n';
+test('Assistant: native-selected CSV gets only an opaque handle, no paths through IPC',()=>{
+  const f=host(csv),opened=f.service.open(f.path);
+  assert.match(opened.handle_id,/^[a-f0-9]{48}$/);
+  assert.equal(opened.format,'csv');
+  assert.equal(opened.file_name,'records.csv');
+  assert.equal(opened.source_sha256,createHash('sha256').update(csv).digest('hex'));
+  assert.equal(opened.inspection.selected_delimiter,null);
+  assert.equal(opened.inspection.suggested_delimiter,',');
+  assert.doesNotMatch(JSON.stringify(opened),/native-choice/);
+  assert.ok(Object.isFrozen(opened));
+  const inspected=f.service.inspect(opened.handle_id);
+  assert.equal(inspected.source_sha256,opened.source_sha256);
+  assert.equal(inspected.inspection.candidates[0].header_values[0],'id');
+  assert.ok(f.getReads()>=2,'re-read and hash each operation');
+  assert.equal(f.service.close(opened.handle_id),true);
+  assert.throws(()=>f.service.inspect(opened.handle_id),throws('ASSIST_SESSION_MISSING_OR_EXPIRED'));
+});
+test('Assistant: re-reading file prevents stale source or replayed handle',()=>{
+ const f=host(csv),session=f.service.open(f.path);
+ f.setData('id,title\n1,Tampered\n');
+ assert.throws(()=>f.service.inspect(session.handle_id),throws('ASSIST_SOURCE_CHANGED'));
+ assert.throws(()=>f.service.inspect(session.handle_id),throws('ASSIST_SESSION_MISSING_OR_EXPIRED'));
+ assert.throws(()=>f.service.close('__proto__'),throws('ASSIST_HANDLE_INVALID'));
+ assert.throws(()=>f.service.selectSheet(session.handle_id,'sheet1'),throws('ASSIST_SESSION_MISSING_OR_EXPIRED'));
+});
+test('Assistant: TTL and new sessions are bounded, and reset clears all handles',()=>{
+ const f=host(csv);
+ const first=f.service.open(f.path);
+ f.tick(SESSION_TTL_MS);
+ assert.throws(()=>f.service.inspect(first.handle_id),throws('ASSIST_SESSION_MISSING_OR_EXPIRED'));
+ const b=f.service.open(f.path);
+ f.service.clear();
+ assert.throws(()=>f.service.inspect(b.handle_id),throws('ASSIST_SESSION_MISSING_OR_EXPIRED'));
+});
+test('Assistant: only three file extensions, and source size is bounded',()=>{
+ const f=host('id,title\n1,Hello\n','.exe');
+ assert.throws(()=>f.service.open(f.path),throws('ASSIST_SOURCE_FORMAT'));
+ const larger=host(Buffer.alloc(MAX_SOURCE_BYTES+1,65));
+ assert.throws(()=>larger.service.open(larger.path),throws('ASSIST_SOURCE_LIMIT'));
+ const invalid=host(Buffer.from([0xff,0xfe,0x0a]));
+ assert.throws(()=>invalid.service.open(invalid.path),throws('ASSIST_UTF8_INVALID'));
+});
+function crc32(buf){
+ let n=0xffffffff;
+ for(const b of buf){n^=b;for(let i=0;i<8;i++)n=(n>>>1)^((n&1)?0xedb88320:0);}
+ return (n^0xffffffff)>>>0;
+}
+function zip(entries){
+ const locals=[],centers=[];let offset=0;
+ for(const [name,value] of entries){
+   const nameBytes=Buffer.from(name),raw=Buffer.from(value);
+   const packed=deflateRawSync(raw),crc=crc32(raw);
+   const local=Buffer.alloc(30),central=Buffer.alloc(46);
+   local.writeUInt32LE(0x04034b50,0);local.writeUInt16LE(20,4);
+   local.writeUInt16LE(0x800,6);local.writeUInt16LE(8,8);
+   local.writeUInt32LE(crc,14);local.writeUInt32LE(packed.length,18);
+   local.writeUInt32LE(raw.length,22);local.writeUInt16LE(nameBytes.length,26);
+   central.writeUInt32LE(0x02014b50,0);central.writeUInt16LE(20,4);
+   central.writeUInt16LE(20,6);central.writeUInt16LE(0x800,8);
+   central.writeUInt16LE(8,10);central.writeUInt32LE(crc,16);
+   central.writeUInt32LE(packed.length,20);central.writeUInt32LE(raw.length,24);
+   central.writeUInt16LE(nameBytes.length,28);central.writeUInt32LE(offset,42);
+   locals.push(local,nameBytes,packed);centers.push(central,nameBytes);
+   offset+=local.length+nameBytes.length+packed.length;
+ }
+ const directory=Buffer.concat(centers),eocd=Buffer.alloc(22);
+ eocd.writeUInt32LE(0x06054b50,0);
+ eocd.writeUInt16LE(entries.length,8);eocd.writeUInt16LE(entries.length,10);
+ eocd.writeUInt32LE(directory.length,12);eocd.writeUInt32LE(offset,16);
+ return Buffer.concat([...locals,directory,eocd]);
+}
+const workbook='<workbook><sheets><sheet name="Fictive" sheetId="1" r:id="rId1"/></sheets></workbook>';
+const types='<Types><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/></Types>';
+const root='<Relationships><Relationship Id="rId0" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>';
+const relationships='<Relationships><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/></Relationships>';
+const worksheet='<worksheet><sheetData><row r="1"><c r="A1" t="inlineStr"><is><t>id</t></is></c></row><row r="2"><c r="A2" t="inlineStr"><is><t>R1</t></is></c></row></sheetData></worksheet>';
+const xlsx=zip([['[Content_Types].xml',types],['_rels/.rels',root],
+ ['xl/workbook.xml',workbook],['xl/_rels/workbook.xml.rels',relationships],
+ ['xl/worksheets/sheet1.xml',worksheet]]);
+test('Assistant: XLSX requires explicit sheet, only selected cells are returned',()=>{
+ const f=host(xlsx,'.xlsx');
+ const opened=f.service.open(f.path);
+ assert.equal(opened.inspection.selected_sheet,null);
+ assert.equal(opened.inspection.sheets[0].name,'Fictive');
+ assert.throws(()=>f.service.selectSheet(opened.handle_id,'No such sheet'),throws('ASSIST_XLSX_SHEET_SELECTION_INVALID'));
+ const result=f.service.selectSheet(opened.handle_id,'Fictive');
+ assert.deepEqual(result.table.headers,['id']);
+ assert.deepEqual(result.table.sample_rows[0].values,['R1']);
+ assert.equal(result.source_sha256,opened.source_sha256);
+ assert.equal(result.table.formula_evaluation,'disabled');
+});
+test('Assistant: corrupt or external-link XLSX cannot create a session',()=>{
+ const malicious=zip([['[Content_Types].xml',types],['_rels/.rels',root],
+ ['xl/workbook.xml',workbook],['xl/_rels/workbook.xml.rels',relationships],
+ ['xl/worksheets/sheet1.xml',worksheet],['xl/vbaProject.bin','malicious']]);
+ const f=host(malicious,'.xlsx');
+ assert.throws(()=>f.service.open(f.path),throws('ASSIST_XLSX_ACTIVE_CONTENT'));
+});

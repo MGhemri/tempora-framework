@@ -183,3 +183,12 @@ L'extension de l'inventaire existant relit une copie figée et contrôlée des o
 La [PR #99](https://github.com/MGhemri/tempora-framework/pull/99) a été fusionnée dans `main` au commit `30ce4f65701debb7e77118c88135afced5df37d9`, après succès CI Framework Ubuntu Node 20/22, Windows Node 20, navigateur, ALNOP minimal, hygiène Git et Snyk. [Issue #98](https://github.com/MGhemri/tempora-framework/issues/98) close. Le lecteur `src/assist-io/xlsx-cells.js` demeure privé : absence de GUI et d'import automatique. Les limites du parseur XLSX restent délibérément strictes ; la certification sécurité ou Microsoft Store n'est pas acquise.
 
 **Nouvelle priorité :** [issue #100](https://github.com/MGhemri/tempora-framework/issues/100), contrats IPC et éditeur visuel Assistant en PR séparées, puis intégration du pipeline complet avant bêta 4.
+
+
+## ASSIST-M1.2b — Autorité IPC Electron, étape préparatoire (PR en cours)
+
+**Issue :** [#100](https://github.com/MGhemri/tempora-framework/issues/100).
+
+Première tranche limitée à Electron : sessions de sources choisies uniquement via le sélecteur natif, `handle_id` aléatoire, TTL 10 min, maximum quatre sessions, empreinte SHA-256 recalculée à chaque inspection/extraction, rejet immédiat si le contenu change ; aucun chemin n'est renvoyé au renderer. Formats CSV/TSV (inspection bornée 64 Kio) et XLSX (lecture sélectionnée avec plafonds de M1.1d). Aucun mapping confirmé, GUI ou import n'est livré par ce lot.
+
+Les modules privés d'inspection sont copiés dans les ressources NSIS/AppX et soumis à des tests de packaging. Le pont Tauri n'est **pas** revendiqué comme implémenté ; ses commandes devront être conçues et testées séparément. Les méthodes du preload restent une liste blanche de quatre opérations Assistant. Les API Desktop historiques demeurent inchangées. CI Desktop, Windows NSIS, CI Framework et tests Electron requis avant fusion.
