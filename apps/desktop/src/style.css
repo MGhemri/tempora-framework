@@ -80,3 +80,10 @@
 #visual-rows td:first-child{min-width:130px;overflow-wrap:anywhere}
 #visual-analysis-rows{max-width:100%}
 @media(max-width:750px){#tvrw-scientific-workbench{padding:12px}.visual-module-bar button{flex:1 1 42%}.visual-pagination{flex-wrap:wrap}}
+
+/* Shared typed selection: user navigation only, never a historical assertion. */
+#visual-typed-selection{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:12px 0}
+#visual-typed-selection-value{overflow-wrap:anywhere}
+#visual-rows tr[role="button"]{cursor:pointer}
+#visual-rows tr[aria-pressed="true"]{outline:2px solid #e6c38d;outline-offset:-2px}
+#visual-rows tr[role="button"]:focus-visible,#visual-clear-selection:focus-visible{outline:3px solid #e6c38d;outline-offset:2px}
