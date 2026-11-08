@@ -72,3 +72,17 @@ test('J8 1000 fictional events span deterministic, bounded catalog segments',()=
   assert.equal(idx.manifest.segments[3].count,232);
   assert.equal(readSegment(idx,corpus,{segment:3,offset:0,limit:1}).rows[0].ref.id,'EVENT_000769');
 });
+
+test('J8 experimental catalog indexes 10000 fictional events without opening a Desktop session',()=>{
+  const corpus=corpusOf(10000);
+  assert.ok(Buffer.byteLength(canonical.stringify(corpus),'utf8')>3*1024*1024);
+  const idx=buildSegmentIndex(corpus);
+  assert.equal(idx.manifest.total_records,10000);
+  assert.equal(idx.manifest.segment_count,40);
+  const final=readSegment(idx,corpus,{segment:39,offset:0,limit:100});
+  assert.equal(final.segment_total,16);
+  assert.equal(final.returned,16);
+  assert.equal(final.rows[0].ref.id,'EVENT_009985');
+  assert.equal(final.rows.at(-1).ref.id,'EVENT_010000');
+  // The production Desktop session limit is intentionally not lifted.
+});
