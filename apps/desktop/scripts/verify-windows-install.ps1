@@ -136,7 +136,7 @@ try {
       throw "INSTALLED_DIGEST_FAILED"
     }
   # Validate the bundled canonical example using the installed, pinned scientific engine.
-  $corpusJson = Get-Content -LiteralPath $exampleCanonical -Raw -Encoding UTF8
+  $corpusJson = Get-Content -LiteralPath $exampleCanonical -Raw -Encoding UTF8 | ConvertFrom-Json | ConvertTo-Json -Compress -Depth 100
   $canonicalRequest = '{"protocol_version":"1.0.0","request_id":"installed_sample_validate","operation":"corpus.validate","payload":{"corpus":' + $corpusJson + '}}'
   $sampleAnswer = ($canonicalRequest | & $node $worker) | ConvertFrom-Json
   if ($LASTEXITCODE -ne 0 -or -not $sampleAnswer.ok -or -not $sampleAnswer.result.valid) {
