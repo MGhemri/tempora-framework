@@ -13,5 +13,6 @@ contextBridge.exposeInMainWorld('temporaElectron', Object.freeze({
   analyzeVisualProject: (module,limit,threshold) => ipcRenderer.invoke('tempora:visualization:analyze',module,limit,threshold),
   exportVisualProject: (module,format,offset,limit) => ipcRenderer.invoke('tempora:visualization:export',module,format,offset,limit),
   queryGraphNeighborhood: (root,depth,direction,limit) => ipcRenderer.invoke('tempora:visualization:neighborhood',root,depth,direction,limit),
-  compareVisualSnapshot: () => ipcRenderer.invoke('tempora:visualization:compare-snapshot')
+  compareVisualSnapshot: () => ipcRenderer.invoke('tempora:visualization:compare-snapshot'),
+  cancelVisualJob: () => ipcRenderer.invoke('tempora:visualization:cancel')
 }));

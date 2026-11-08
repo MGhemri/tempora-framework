@@ -1,4 +1,4 @@
-import { invokeNative, isNative, copyNativeReviewDraft, openVisualProject, queryVisualProject, visualModules, type VisualModule, type VisualProjection, type VisualProjectInfo, analyzeVisualProject, exportVisualProject, type VisualExportFormat, queryGraphNeighborhood, type VisualTypedRef, type GraphDirection, compareVisualSnapshot, type VisualSnapshotDiff } from "./native";
+import { invokeNative, isNative, copyNativeReviewDraft, openVisualProject, queryVisualProject, visualModules, type VisualModule, type VisualProjection, type VisualProjectInfo, analyzeVisualProject, exportVisualProject, type VisualExportFormat, queryGraphNeighborhood, type VisualTypedRef, type GraphDirection, compareVisualSnapshot, type VisualSnapshotDiff, cancelVisualJob } from "./native";
 import "./style.css";
 import {renderScientificGraphic} from "./visualization/core/render-svg";
 
@@ -32,6 +32,7 @@ const text = {
     graphNavTitle:"Voisinage des relations déclarées",graphNavHelp:"Parcours d’arêtes explicitement déclarées ; aucune relation historique ajoutée.",graphNavRun:"Explorer le voisinage",
     visualExportFormat:"Format d’export",visualExport:"Exporter cette page",
     visualAnalyze:"Exécuter une analyse déterministe",
+    visualCancel:"Arrêter les calculs et fermer le projet",
     visualTitle:"Exploration scientifique · six laboratoires",visualIntro:"Projections de données déclarées uniquement, en lecture seule et sans conclusions historiques automatiques.",visualOpen:"Ouvrir un corpus pour les laboratoires",visualPrevious:"Précédent",visualNext:"Suivant",visualDisclaimer:"Les cartes, graphes avancés et inférences IA ne sont pas encore exécutés. Aucune vue ne certifie un fait historique.",
     workspace: "ESPACE DE TRAVAIL", overview: "Vue générale", documents: "Documents", research: "Analyses", models: "Modèles IA",
     about: "À propos", aboutIntro: "Un espace de recherche historique local, traçable et reproductible.",
@@ -75,6 +76,7 @@ const text = {
     graphNavTitle:"Declared-relation neighborhood",graphNavHelp:"Traverses explicitly declared edges; no historical relationship is inferred.",graphNavRun:"Explore neighborhood",
     visualExportFormat:"Export format",visualExport:"Export current page",
     visualAnalyze:"Run deterministic analysis",
+    visualCancel:"Stop calculations and close project",
     visualTitle:"Scientific exploration · six labs",visualIntro:"Read-only projections of declared records only, without automatic historical conclusions.",visualOpen:"Open corpus for research laboratories",visualPrevious:"Previous",visualNext:"Next",visualDisclaimer:"Advanced maps, graph layouts and AI inference are not enabled. No view certifies historical facts.",
     workspace: "WORKSPACE", overview: "Overview", documents: "Documents", research: "Analysis", models: "AI models",
     about: "About", aboutIntro: "A local, traceable and reproducible historical research workspace.",
@@ -128,6 +130,8 @@ let graphNavigation:VisualProjection|null=null;
 let visualSnapshot:VisualSnapshotDiff|null=null;
 let visualBusy=false;
 let visualSequence=0;
+let visualCancelVersion=0;
+let visualCancelling=false;
 
 function byId(id: string): HTMLElement {
   const found = document.getElementById(id);
@@ -490,30 +494,34 @@ function renderVisual():void {
   (byId("visual-next") as HTMLButtonElement).disabled=visualBusy||!info||!result||
     visualOffset+result.scope.returned>=result.scope.total_matched||result.scope.returned===0;
   (byId("visual-open") as HTMLButtonElement).disabled=visualBusy||!window.temporaElectron;
+  (byId("visual-cancel") as HTMLButtonElement).disabled=visualCancelling||(!visualBusy&&!info)||!window.temporaElectron;
 }
 async function loadVisual():Promise<void> {
   if(!visualInfo||visualBusy)return;
-  const seq=++visualSequence;visualBusy=true;renderVisual();
+  const seq=++visualSequence,version=visualCancelVersion;visualBusy=true;renderVisual();
   try{
     const result=await queryVisualProject(visualModule,visualOffset,50);
-    if(seq!==visualSequence)return;
+    if(seq!==visualSequence||version!==visualCancelVersion)return;
     if(result.corpus.canonical_sha256!==visualInfo.canonical_sha256)throw Error("STALE_CORPUS");
     visualProjection=result;
   }catch(error){
-    visualProjection=null;
-    notify(error instanceof Error?error.message:String(error));
-  }finally{visualBusy=false;renderVisual();}
+    if(version===visualCancelVersion){
+      visualProjection=null;
+      notify(error instanceof Error?error.message:String(error));
+    }
+  }finally{if(version===visualCancelVersion){visualBusy=false;renderVisual();}}
 }
 async function openVisual():Promise<void>{
   if(visualBusy)return;
+  const version=visualCancelVersion;
   visualBusy=true;renderVisual();
   try{
     const info=await openVisualProject();
-    if(!info)return;
+    if(!info||version!==visualCancelVersion)return;
     visualInfo=info;visualOffset=0;visualProjection=null;visualAnalysis=null;graphNavigation=null;visualSnapshot=null;visualModule="chronos";
-  }catch(error){notify(error instanceof Error?error.message:String(error));}
-  finally{visualBusy=false;renderVisual();}
-  if(visualInfo)await loadVisual();
+  }catch(error){if(version===visualCancelVersion)notify(error instanceof Error?error.message:String(error));}
+  finally{if(version===visualCancelVersion){visualBusy=false;renderVisual();}}
+  if(version===visualCancelVersion&&visualInfo)await loadVisual();
 }
 
 document.querySelectorAll<HTMLButtonElement>("[data-view]").forEach(button => {
@@ -525,6 +533,19 @@ byId("document-open").addEventListener("click", () => void openDocument());
 byId("validate-corpus").addEventListener("click", () => void validateCorpus());
 byId("draft-copy").addEventListener("click", () => void copyReviewDraft());
 byId("visual-open").addEventListener("click",()=>void openVisual());
+byId("visual-cancel").addEventListener("click",async()=>{
+  if(visualCancelling)return;
+  ++visualCancelVersion;
+  ++visualSequence;
+  visualInfo=null;visualProjection=null;visualAnalysis=null;
+  graphNavigation=null;visualSnapshot=null;visualOffset=0;visualCancelling=true;visualBusy=true;
+  renderVisual();
+  try{
+    await cancelVisualJob();
+    notify(language==="fr"?"Calcul interrompu. Session locale fermée.":"Calculation stopped. Local session closed.");
+  }catch(error){notify(error instanceof Error?error.message:String(error));}
+  finally{visualCancelling=false;visualBusy=false;renderVisual();}
+});
 document.querySelectorAll<HTMLButtonElement>("[data-visual-module]").forEach(button=>button.addEventListener("click",()=>{
   const module=button.dataset.visualModule as VisualModule;
   if(!visualModules.includes(module)||!visualInfo||visualBusy)return;
