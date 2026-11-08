@@ -2,7 +2,7 @@ const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const {deflateRawSync}=require('node:zlib');
 const {createHash}=require('node:crypto');
-const {inspectXlsx,MAX_ARCHIVE_BYTES}=require('../src/framework/assist-xlsx');
+const {inspectXlsx,MAX_ARCHIVE_BYTES}=require('../src/assist-io/xlsx-inventory');
 function crc32(bytes){
   let n=0xffffffff;
   for(const b of bytes){n^=b;for(let i=0;i<8;i++)n=(n>>>1)^((n&1)?0xedb88320:0);}
