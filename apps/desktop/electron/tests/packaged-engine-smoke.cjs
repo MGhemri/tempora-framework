@@ -2,14 +2,18 @@
 // Executed on Windows CI against the *packaged* Node.js and TEMPORA Engine.
 // Synthetic test fixtures only: no historical truth and no canonical writes.
 const {readFileSync} = require('node:fs');
-const {join} = require('node:path');
+const {join, resolve, isAbsolute} = require('node:path');
 const {spawnSync} = require('node:child_process');
 const assert = require('node:assert/strict');
 
-const resourceRoot = process.argv[2];
-if (!resourceRoot) throw Error('PACKAGED_RESOURCE_DIR_REQUIRED');
+const suppliedResourceRoot = process.argv[2];
+if (!suppliedResourceRoot) throw Error('PACKAGED_RESOURCE_DIR_REQUIRED');
+// Resolve before specifying cwd to spawnSync. Relative executable paths would
+// otherwise be interpreted relative to cwd (engine/), causing ENOENT on Windows.
+const resourceRoot = resolve(suppliedResourceRoot);
 const node = join(resourceRoot, 'engine', 'node.exe');
 const worker = join(resourceRoot, 'engine', 'worker.cjs');
+assert.ok(isAbsolute(node) && isAbsolute(worker), 'packaged worker paths must be absolute');
 const manifest = JSON.parse(readFileSync(join(resourceRoot, 'engine', 'runtime-manifest.json'), 'utf8'));
 assert.equal(manifest.engine, 'tempora-framework@3.0.0');
 const pkg = JSON.parse(readFileSync(join(resourceRoot, 'engine', 'node_modules', 'tempora-framework', 'package.json'),'utf8'));
