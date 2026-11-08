@@ -34,4 +34,4 @@ Lorsqu'une PR modifie un comportement : consigner le commit, les tests de non-r�
 
 ## Audit Antigravity — 2026-11-08
 
-Le rapport externe portant sur le commit `a07f2ec` est intégré sous forme d'un [registre vérifié et plan de correction](AUDIT-ANTIGRAVITY-2026-11-08.md). AG-01 (quarantaine CR/LF) et AG-02 (tests Assistant oubliés dans CI) sont déjà corrigés par la PR #91 ; AG-05 (version Electron preload) est corrigé dans une PR dédiée ; AG-04 puis AG-03 et AG-06 sont planifiés, avec tests et migration de compatibilité. Les jugements positifs sur la sécurité rapportés par l'auditeur ne valent pas qualification indépendante.
+Le rapport externe portant sur le commit `a07f2ec` est intégré sous forme d'un [registre vérifié et plan de correction](ANTIGRAVITY-2026-11-08.md). AG-01 (quarantaine CR/LF) et AG-02 (tests Assistant oubliés dans CI) sont déjà corrigés par la PR #91 ; AG-05 (version Electron preload) est corrigé dans une PR dédiée ; AG-04 puis AG-03 et AG-06 sont planifiés, avec tests et migration de compatibilité. Les jugements positifs sur la sécurité rapportés par l'auditeur ne valent pas qualification indépendante.
