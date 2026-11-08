@@ -150,3 +150,18 @@ Le contrôle XLSX examine désormais **toutes** les parties `.rels` internes pr�
 L'absence d'exécution de formules et le refus des liens externes restent des garanties de **l'inspection structurelle uniquement**. Il faudra un parseur XML/OPC validé et des budgets par cellule avant de promettre la lecture des données Excel. Tests adversariaux intégrés dans la suite Framework permanente.
 
 **Statut :** correctif proposé, non finalisé avant CI et fusion.
+
+## Priorisation issue de l'audit Antigravity (2026-11-08)
+
+**Source et détails :** [ANTIGRAVITY-2026-11-08.md](ANTIGRAVITY-2026-11-08.md) — audit d'un ancien commit `a07f2ec` ; ne pas considérer les anciennes observations comme l'état actuel sans recontrôle.
+
+| Lot | Priorité | Travail et dépendances | Définition du terminé |
+|---|---|---|---|
+| AG-01/02 | **fait** | Quarantaine des listes multilignes avant `trim()` et branchement des tests Assistant dans `test:core` — PR #91 | Régressions vertes Linux/Windows et checkout standalone |
+| AG-05 | **P1, immédiat** | Version preload Electron 0.1.2-beta.3, assertion test dynamique ; cette PR documentaire et corrective | CI + tests Electron verts, fusion ; nouvelle release requise pour mettre à jour le binaire déjà distribué |
+| AG-04 | **P2, prochaine PR** | Supprimer le repli régional `['fr','ar']` de `compareClaims`, tests multi-profil | Contrat explicitement neutre pour appels directs ; appels avec profil inchangés |
+| AG-03 | **P2, après AG-04** | Déplacer alias contextuels ALNOP hors du noyau générique vers configuration versionnée et contrôlée | Tests multi-profils et compatibilité explicite des fixtures/mappings existants |
+| AG-06 | **P3, avec Desktop** | Généraliser les fallbacks de prévisualisation Electron/Tauri sans casser ALNOP | Tests UI/IPC sur ALNOP et corpus synthétiques non algériens |
+| AG-07 | **surveillance** | Conserver barrières IPC, lien `batch_id`, aucune validation scientifique automatique | Recettes de sûreté spécifiques ; ne pas traiter un avis externe favorable comme certification |
+
+**Ordre recommandé :** AG-05 → AG-04 → AG-03 → AG-06, en parallèle du chantier de lecture des cellules Excel. Toute PR de correction met à jour le registre et attend les contrôles Linux/Windows requis. Pas de publication Microsoft Store ni npm automatique.

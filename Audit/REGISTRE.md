@@ -39,3 +39,7 @@ La [PR #78](https://github.com/MGhemri/tempora-framework/pull/78) a été fusion
 ## AUD-03 — garde-fou de diagnostic (en cours)
 
 La branche `fix/aud-03-publication-lock-diagnostics` ajoute un code d'erreur `STORE_LOCKED` lors de la présence de `.promotion-lock`, sans modifier ni effacer le verrou trouvé. Un test de contention vérifie ce fail-closed et la possibilité de réutiliser le store après nettoyage **explicite par le propriétaire de la fixture**. Ce n'est **pas** une récupération automatique après crash ; celle-ci nécessite un protocole multi-processus séparé et des essais Windows/macOS avant clôture de AUD-03.
+
+## Rapport Antigravity complémentaire (commit a07f2ec)
+
+Un second audit externe a été fourni le 2026-11-08 : voir [ANTIGRAVITY-2026-11-08.md](ANTIGRAVITY-2026-11-08.md) pour les constats **AG-01 à AG-07**, leur confrontation avec le `main` réel et les travaux programmés. Le défaut de quarantaine CR/LF et les suites Assistant absentes de `test:core` ont **déjà été corrigés dans la PR #91**. L'écart `desktopVersion` du preload est traité dans une nouvelle PR et **ne modifie pas rétroactivement l'installateur bêta 3 déjà publié**. Les alias ALNOP du noyau, les locales par défaut et les fallbacks Desktop restent à traiter en lots distincts.
