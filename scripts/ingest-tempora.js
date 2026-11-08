@@ -7,7 +7,7 @@ const {strictJson,MAX_BYTES}=require('../src/framework/ingestion-formats');
 const {createWorkingCorpus,prepareImport,acceptImport,renderMarkdown}=require('../src/framework/ingestion');
 const {fail}=require('../src/framework/ingestion-error');
 const root=path.join(__dirname,'..'),MAX_SNAPSHOT_BYTES=128*1024*1024;
-const spec=Object.fromEntries(['input','mapping','base','profile','taxonomies','batch','reviewer','reason','report'].map(key=>[key,{type:'string'}]));
+const spec=Object.fromEntries(['input','mapping','base','profile','taxonomies','batch','batch-id','reviewer','reason','report'].map(key=>[key,{type:'string'}]));
 spec.id={type:'string',multiple:true};spec.write={type:'boolean'};
 function read(file,limit){
  if(typeof file!=='string'||!file.trim())fail('CLI_FILE_REQUIRED','An explicit input path is required');
@@ -40,7 +40,7 @@ function save(document,name,rootDirectory){
 }
 function run(args=process.argv.slice(2),{rootDirectory=root,clock=()=>new Date().toISOString(),writeLine=value=>console.log(value)}={}){
  let options,positionals;try{({values:options,positionals}=parseArgs({args,options:spec,allowPositionals:true,strict:true}));}catch(e){fail('CLI_ARGUMENT',e.message);}
- const [command]=positionals,common=['base','profile','taxonomies'],allowed={import:[...common,'input','mapping','report','write'],validate:common,accept:[...common,'batch','id','reviewer','reason','write']};
+ const [command]=positionals,common=['base','profile','taxonomies'],allowed={import:[...common,'input','mapping','report','write'],validate:common,accept:[...common,'batch','batch-id','id','reviewer','reason','write']};
  if(positionals.length!==1||!Object.hasOwn(allowed,command)||Object.keys(options).some(key=>!allowed[command].includes(key)))fail('CLI_ARGUMENT','Expected import, validate or accept; see the ingestion guide');
  const corpus=getBase(options);
  if(command==='validate'){
@@ -59,7 +59,9 @@ function run(args=process.argv.slice(2),{rootDirectory=root,clock=()=>new Date()
  }
  const staged=json(options.batch,MAX_SNAPSHOT_BYTES);
  if(staged?.kind!=='tempora-ingestion-package'||!staged.bundle)fail('CLI_BUNDLE_INVALID','Expected an ingestion package created with import --write');
- const snapshot=acceptImport({corpus,bundle:staged.bundle,review:{ids:options.id,reviewer:options.reviewer,reason:options.reason,reviewed_at:clock()}});
+ if(typeof options['batch-id']!=='string'||options['batch-id']!==staged.bundle.report?.batch_id)
+  fail('REVIEW_BATCH_MISMATCH','Supply --batch-id with the exact batch ID from the preview you reviewed');
+ const snapshot=acceptImport({corpus,bundle:staged.bundle,review:{batch_id:options['batch-id'],ids:options.id,reviewer:options.reviewer,reason:options.reason,reviewed_at:clock()}});
  if(staged.markdown!==renderMarkdown(staged.bundle.report))fail('CLI_BUNDLE_INVALID','Staged Markdown no longer matches its JSON report');
  const local_output=options.write?save(snapshot,`working-${snapshot.journal.output_sha256}.json`,rootDirectory):null;
  writeLine(JSON.stringify({mode:options.write?'local_acceptance':'dry_run',journal:snapshot.journal,local_output},null,2));return {exitCode:0,snapshot,local_output};
