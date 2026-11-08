@@ -87,6 +87,19 @@ test('V2 persistent Node IPC creates, pages and releases a local corpus; V1 heal
       {project_id,module:'chronos',format:'json',offset:0,limit:1});
     assert.equal(exportReply.ok,true);
     assert.equal(JSON.parse(exportReply.result.data).manifest.module,'chronos');
+    const filteredExport=await send('2.0.0','visualization.export.prepare',{
+      project_id,module:'chronos',format:'json',offset:0,limit:1,
+      facet:{statuses:['proposed']}});
+    assert.equal(filteredExport.ok,true);
+    const filteredDocument=JSON.parse(filteredExport.result.data);
+    assert.deepEqual(filteredDocument.manifest.filters.facet.statuses,['proposed']);
+    assert.notEqual(filteredDocument.manifest.scientific_sha256,
+      JSON.parse(exportReply.result.data).manifest.scientific_sha256);
+    const invalidExport=await send('2.0.0','visualization.export.prepare',{
+      project_id,module:'chronos',format:'json',offset:0,limit:1,
+      facet:{untrusted:'javascript'}});
+    assert.equal(invalidExport.ok,false);
+    assert.equal(invalidExport.error.code,'INVALID_FACET');
     const scoped=await send('2.0.0','visualization.project.query',{
       project_id,module:'chronos',offset:0,limit:1,
       facet:{time:{mode:'possible-overlap',earliest:'1784-06-01',latest:'1784-06-30'}}});
