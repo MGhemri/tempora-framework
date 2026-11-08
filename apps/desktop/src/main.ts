@@ -1,4 +1,4 @@
-import { invokeNative, isNative, copyNativeReviewDraft, openVisualProject, queryVisualProject, visualModules, type VisualModule, type VisualProjection, type VisualProjectInfo, analyzeVisualProject, exportVisualProject, type VisualExportFormat, queryGraphNeighborhood, type VisualTypedRef, type GraphDirection } from "./native";
+import { invokeNative, isNative, copyNativeReviewDraft, openVisualProject, queryVisualProject, visualModules, type VisualModule, type VisualProjection, type VisualProjectInfo, analyzeVisualProject, exportVisualProject, type VisualExportFormat, queryGraphNeighborhood, type VisualTypedRef, type GraphDirection, compareVisualSnapshot, type VisualSnapshotDiff } from "./native";
 import "./style.css";
 import {renderScientificGraphic} from "./visualization/core/render-svg";
 
@@ -28,6 +28,7 @@ type DocumentPreview = {
 
 const text = {
   fr: {
+    snapshotTitle:"Comparer deux corpus canoniques",snapshotHelp:"Le second corpus est sélectionné localement. Les chiffres mesurent des données documentées, pas l’exhaustivité historique.",snapshotCompare:"Comparer avec un autre corpus",snapshotCollection:"Collection",snapshotPrevious:"Avant",snapshotCurrent:"Après",snapshotAdded:"Ajouts",snapshotRemoved:"Suppressions",
     graphNavTitle:"Voisinage des relations déclarées",graphNavHelp:"Parcours d’arêtes explicitement déclarées ; aucune relation historique ajoutée.",graphNavRun:"Explorer le voisinage",
     visualExportFormat:"Format d’export",visualExport:"Exporter cette page",
     visualAnalyze:"Exécuter une analyse déterministe",
@@ -70,6 +71,7 @@ const text = {
     diagnostics: "diagnostics", sourceReviewNotice: "La conformité au schéma ne prouve pas la véracité des événements.",
   },
   en: {
+    snapshotTitle:"Compare canonical corpus snapshots",snapshotHelp:"Select a second local corpus. Counts measure documented data, not historical completeness.",snapshotCompare:"Compare with another corpus",snapshotCollection:"Collection",snapshotPrevious:"Before",snapshotCurrent:"After",snapshotAdded:"Added",snapshotRemoved:"Removed",
     graphNavTitle:"Declared-relation neighborhood",graphNavHelp:"Traverses explicitly declared edges; no historical relationship is inferred.",graphNavRun:"Explore neighborhood",
     visualExportFormat:"Export format",visualExport:"Export current page",
     visualAnalyze:"Run deterministic analysis",
@@ -123,6 +125,7 @@ let visualOffset=0;
 let visualProjection:VisualProjection|null=null;
 let visualAnalysis:VisualProjection|null=null;
 let graphNavigation:VisualProjection|null=null;
+let visualSnapshot:VisualSnapshotDiff|null=null;
 let visualBusy=false;
 let visualSequence=0;
 
@@ -401,6 +404,23 @@ function renderVisual():void {
     b.disabled=visualBusy||!info;
   });
   renderScientificGraphic(byId("visual-graphic"),visualModule,visualProjection?.result??[]);
+  const snapshotPanel=byId("visual-snapshot-panel");
+  snapshotPanel.classList.toggle("hidden",visualModule!=="observatory");
+  const snapshotRows=byId("visual-snapshot-rows");snapshotRows.replaceChildren();
+  if(visualSnapshot&&visualModule==="observatory"){
+    for(const item of visualSnapshot.rows){
+      const tr=document.createElement("tr");
+      for(const value of [item.collection,item.previous,item.current,item.delta,item.added_ids,item.removed_ids]){
+        const td=document.createElement("td");td.textContent=String(value);tr.append(td);
+      }
+      snapshotRows.append(tr);
+    }
+  }
+  byId("visual-snapshot-status").textContent=visualSnapshot&&visualModule==="observatory"
+    ? visualSnapshot.fileName+" · "+visualSnapshot.previous.canonical_sha256+" / "+
+      visualSnapshot.current.canonical_sha256+" · SCI SHA-256 "+visualSnapshot.scientific_sha256+
+      " · historical completeness: unknown":"";
+  (byId("visual-snapshot-compare") as HTMLButtonElement).disabled=visualBusy||!visualInfo;
   const graphPanel=byId("visual-graph-navigation");
   graphPanel.classList.toggle("hidden",visualModule!=="graph");
   const graphRows=byId("graph-nav-rows");graphRows.replaceChildren();
@@ -490,7 +510,7 @@ async function openVisual():Promise<void>{
   try{
     const info=await openVisualProject();
     if(!info)return;
-    visualInfo=info;visualOffset=0;visualProjection=null;visualAnalysis=null;graphNavigation=null;visualModule="chronos";
+    visualInfo=info;visualOffset=0;visualProjection=null;visualAnalysis=null;graphNavigation=null;visualSnapshot=null;visualModule="chronos";
   }catch(error){notify(error instanceof Error?error.message:String(error));}
   finally{visualBusy=false;renderVisual();}
   if(visualInfo)await loadVisual();
@@ -508,8 +528,21 @@ byId("visual-open").addEventListener("click",()=>void openVisual());
 document.querySelectorAll<HTMLButtonElement>("[data-visual-module]").forEach(button=>button.addEventListener("click",()=>{
   const module=button.dataset.visualModule as VisualModule;
   if(!visualModules.includes(module)||!visualInfo||visualBusy)return;
-  visualModule=module;visualOffset=0;visualProjection=null;visualAnalysis=null;graphNavigation=null;void loadVisual();
+  visualModule=module;visualOffset=0;visualProjection=null;visualAnalysis=null;graphNavigation=null;visualSnapshot=null;void loadVisual();
 }));
+byId("visual-snapshot-compare").addEventListener("click",async()=>{
+  if(visualBusy||!visualInfo||visualModule!=="observatory")return;
+  const baseline=visualInfo.canonical_sha256;
+  visualBusy=true;visualSnapshot=null;renderVisual();
+  try{
+    const result=await compareVisualSnapshot();
+    if(result){
+      if(result.previous.canonical_sha256!==baseline)throw Error("STALE_CORPUS");
+      visualSnapshot=result;
+    }
+  }catch(error){notify(error instanceof Error?error.message:String(error));}
+  finally{visualBusy=false;renderVisual();}
+});
 byId("graph-navigate").addEventListener("click",async()=>{
   if(visualBusy||!visualInfo||visualModule!=="graph")return;
   const value=(id:string)=>(byId(id) as HTMLInputElement).value.trim();
