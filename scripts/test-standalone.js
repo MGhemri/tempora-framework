@@ -6,7 +6,7 @@ const root = path.resolve(__dirname, '..');
 const inputs = [
   'package.json','package-lock.json','distribution','LICENSE','README.md','CITATION.cff','CHANGELOG.md',
   'docs/reference','SECURITY.md',
-  'src/framework','src/sdk','src/cli','schemas/tempora',
+  'src/framework','src/assist-io','src/sdk','src/cli','schemas/tempora',
   'schemas/tempora.profile.schema.json','schemas/tempora.ingestion-mapping.schema.json',
   'docs/.nojekyll','docs/index.html','docs/guides','docs/site-src','docs/openapi',
   'docs/assets/site.css','docs/assets/site.js',

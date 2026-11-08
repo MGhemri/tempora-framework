@@ -83,6 +83,8 @@ function normalizeCell(raw,rule){
     return quarantine(source,rule,'ASSIST_DATE_UNRECOGNIZED');
   }
   // Separator means list syntax *within* a decoded CSV or XLSX cell, not a CSV delimiter.
+  if(source.includes('\r')||source.includes('\n'))
+    return quarantine(source,rule,'ASSIST_LIST_AMBIGUOUS');
   const items=source.split(rule.list_separator).map(v=>v.trim());
   if(items.some(x=>!x||x.includes('\r')||x.includes('\n')))
     return quarantine(source,rule,'ASSIST_LIST_AMBIGUOUS');
