@@ -498,7 +498,7 @@ function renderVisual():void {
   (byId("visual-analyze") as HTMLButtonElement).disabled=visualBusy||!visualInfo||filtered;
   (byId("visual-export") as HTMLButtonElement).disabled=visualBusy||!visualProjection||filtered;
   const exportSelect=byId("visual-export-format") as HTMLSelectElement;
-  exportSelect.disabled=visualBusy||!visualInfo;
+  exportSelect.disabled=visualBusy||!visualInfo||filtered;
   for(const option of exportSelect.options){
     option.disabled=(option.value==="geojson"&&visualModule!=="geo")||
       (option.value==="graphml"&&visualModule!=="graph");
