@@ -126,7 +126,7 @@ jobs:
                 if(cmp.ahead_by!==0){
                   decisions.push({name,status:'preserve-unique-commits'});continue;
                 }
-              }else if(!closing && !dryRun){
+              }else if(!closing && !dryRun && target.kind!=='merged-pr'){
                 decisions.push({name,status:'preserve-unmerged-pr'});continue;
               }
               if(dryRun){
