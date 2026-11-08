@@ -247,9 +247,9 @@ app.whenReady().then(async () => {
     const info=await visualService.create(selected.json);
     return {fileName:selected.fileName,...info};
   });
-  ipcMain.handle('tempora:visualization:query', async(event,module,offset,limit)=>{
+  ipcMain.handle('tempora:visualization:query', async(event,module,offset,limit,facet)=>{
     validSender(event);
-    return visualService.query(module,offset,limit);
+    return visualService.query(module,offset,limit,facet??null);
   });
   ipcMain.handle('tempora:visualization:analyze', async(event,module,limit,threshold)=>{
     validSender(event);
