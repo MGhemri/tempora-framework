@@ -61,3 +61,29 @@ test('invalid facets fail closed, including unsupported cross-laboratory tempora
   assert.throws(()=>build(c,{module:'chronos',facet:{unsafeExpression:'eval(...)'}}),/INVALID_FACET/);
   assert.throws(()=>normalizeFacets({selectedRef:{kind:'event',namespace:'SYNTHETIC_HISTORY',id:'EVENT_001',extra:'x'}},'chronos'),/INVALID_ENVELOPE/);
 });
+
+test('unknown end date never becomes an invented exact event end',()=>{
+  const c=fixture('SYN-01');
+  c.events[0].end_date={kind:'unknown',calendar:'gregorian',original:null,
+    earliest:null,latest:null,precision:'unknown',certainty:'unknown'};
+  assert.equal(canonical.validateCorpus(c).valid,true);
+  const query=period('possible-overlap','1784-06-01','1784-06-30');
+  const p=build(c,{module:'chronos',facet:query});
+  assert.equal(p.scope.total_matched,0);
+  assert.equal(p.diagnostics.find(d=>d.code==='TEMPORAL_UNKNOWN_EXCLUDED')?.count,1);
+  const start=build(c,{module:'chronos',facet:period('declared-start','1784-06-01','1784-06-30')});
+  assert.equal(start.scope.total_matched,0);
+  assert.equal(start.diagnostics.find(d=>d.code==='TEMPORAL_UNKNOWN_EXCLUDED')?.count,1);
+});
+test('facet filters are applied before paging and affect scientific checksum',()=>{
+  const c=fixture('SYN-01');
+  const second=structuredClone(c.events[0]);
+  second.id='EVENT_002';second.editorial_status='withdrawn';
+  c.events.push(second);
+  assert.equal(canonical.validateCorpus(c).valid,true);
+  const all=build(c,{module:'chronos',limit:1});
+  const filtered=build(c,{module:'chronos',limit:1,facet:{statuses:['proposed']}});
+  assert.equal(all.scope.total_matched,2);
+  assert.equal(filtered.scope.total_matched,1);
+  assert.notEqual(all.scientific_sha256,filtered.scientific_sha256);
+});
