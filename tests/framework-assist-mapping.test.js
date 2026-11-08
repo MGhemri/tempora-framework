@@ -106,7 +106,15 @@ test('AG-03: generic mapping stays independent of historical operation vocabular
  assert.deepEqual(configured.confirmed_bindings,[]);
  assert.equal(configured.mapping_confirmed,false);
 });
-test('AG-03: ALNOP compatibility aliases are explicit profile-scoped test data',()=>{
+test('AG-03: ALNOP compatibility aliases are explicit profile-scoped test data',(t)=>{
+ // The standalone scientific package deliberately excludes compatibility/alnop.
+ // Keep the root-repository ALNOP compatibility check without making it a
+ // runtime or test dependency of generic standalone installations.
+ const fs=require('node:fs'),path=require('node:path');
+ if(!fs.existsSync(path.join(__dirname,'../compatibility/alnop/profile/profile.json'))){
+  t.skip('ALNOP compatibility fixture not present in standalone framework distribution');
+  return;
+ }
  const alnopProfile=resolveProfile(require('../compatibility/alnop/profile/profile.json'));
  const alnopBundle=require('../compatibility/alnop/profile/assistant-aliases.json');
  assert.equal(alnopBundle.profile_id,'alnop');
