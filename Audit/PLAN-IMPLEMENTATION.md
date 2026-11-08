@@ -10,14 +10,14 @@
 | TVRW J8D — démonstrateur ALNOP v3 | **fusionné** | [PR #74](https://github.com/MGhemri/tempora-framework/pull/74) | Conservation explicite du statut non certifié |
 | TVRW J8E — précontrôle de fichiers | **fusionné** | [PR #75](https://github.com/MGhemri/tempora-framework/pull/75) | Validation incrémentale future et analyse de races filesystem |
 | AUD-05 — alias `event_type` | **fusionné** | [PR #76](https://github.com/MGhemri/tempora-framework/pull/76) | Aucun autre changement nécessaire sans nouveau cas |
-| AUD-02 — revue `batch_id` | **spécifié / prioritaire** | [REGISTRE.md](REGISTRE.md) | PR fonctionnelle + tests de substitutions A/B + CLI |
+| AUD-02 — revue `batch_id` | **fusionné / CI verte** | [PR #78](https://github.com/MGhemri/tempora-framework/pull/78) | Conserver la revue explicite dans TEMPORA Assistant M2 |
 | AUD-03 — verrou publication | **à implémenter** | [ANALYSE-PATCH-CLAUDE.md](ANALYSE-PATCH-CLAUDE.md) | Choix d'un protocole récupérable sûr |
 | AUD-04 — authenticité/revue | **à concevoir** | [REGISTRE.md](REGISTRE.md) | Threat model + trust roots + signatures |
 | ASSIST-M1 — CSV/XLSX détecter à prévisualiser | **CDC rédigé ; non codé** | [TEMPORA-ASSISTANT-CDC.md](TEMPORA-ASSISTANT-CDC.md) | Architecture + contrats/fixtures puis modules purs |
 
 ## ORDRE DES LIVRAISONS
 
-### AUD-FIX-01 — Lier la revue au bon lot (P0)
+### AUD-FIX-01 — Lier la revue au bon lot (P0 — terminé, PR #78)
 
 **Dépendances :** `src/framework/ingestion.js`, `scripts/ingest-tempora.js`, `tests/framework-ingestion.test.js`, documentation CLI.  
 **Actions :**
@@ -26,7 +26,7 @@
 3. Préserver `base_sha256`, empreintes du mapping et du contenu, journal `proposed` et caractère explicite de `--write`. Étudier si la réutilisation du `batch_id` à base différente doit être redéfinie : **ne pas modifier silencieusement les digests existants**.
 4. Tests : refus A vs B à identifiants identiques, champ manquant, base stale, mapping modifié, sélection falsifiée ; compatibilité et CLI sur Linux + Windows.
 
-**Terminé lorsque :** tous les tests + la CI sont verts et les décisions de revue ne sont plus réutilisables d'un lot vers un autre dans l'interface/CLI. Une identité déclarée ne vaut pas authentification cryptographique.
+**Résultat :** tests Linux/Windows réussis et correction fusionnée dans `main`. Terminé lorsque : tous les tests + la CI sont verts et les décisions de revue ne sont plus réutilisables d'un lot vers un autre dans l'interface/CLI. Une identité déclarée ne vaut pas authentification cryptographique.
 
 ### ASSIST-00 — Architecture, tests et formats
 
