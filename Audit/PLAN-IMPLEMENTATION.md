@@ -192,3 +192,8 @@ La [PR #99](https://github.com/MGhemri/tempora-framework/pull/99) a été fusion
 Première tranche limitée à Electron : sessions de sources choisies uniquement via le sélecteur natif, `handle_id` aléatoire, TTL 10 min, maximum quatre sessions, empreinte SHA-256 recalculée à chaque inspection/extraction, rejet immédiat si le contenu change ; aucun chemin n'est renvoyé au renderer. Formats CSV/TSV (inspection bornée 64 Kio) et XLSX (lecture sélectionnée avec plafonds de M1.1d). Aucun mapping confirmé, GUI ou import n'est livré par ce lot.
 
 Les modules privés d'inspection sont copiés dans les ressources NSIS/AppX et soumis à des tests de packaging. Le pont Tauri n'est **pas** revendiqué comme implémenté ; ses commandes devront être conçues et testées séparément. Les méthodes du preload restent une liste blanche de quatre opérations Assistant. Les API Desktop historiques demeurent inchangées. CI Desktop, Windows NSIS, CI Framework et tests Electron requis avant fusion.
+
+
+## ASSIST-M1.2b — Vue Desktop en lecture seule (lot graphique en validation)
+
+La première interface Assistant présente des colonnes sources détectées et les noms des champs génériques dans deux panneaux, sans activer d'association. Le sélecteur de feuille XLSX exige une action humaine explicite. Les échantillons sont rendus avec `textContent` et restent en lecture seule. L'interface utilise exclusivement les poignées Electron de la PR #102 ; le pont Assistant Tauri, les propositions contextuelles versionnées, les confirmations côté hôte et le parcours `prepareImport` sont **encore à développer**. Ne pas confondre cette première vue avec un importateur fonctionnel. La compilation, les tests Desktop et les qualifications Windows sont requis avant fusion.

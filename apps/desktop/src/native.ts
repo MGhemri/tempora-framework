@@ -1,9 +1,14 @@
 import {invoke as tauriInvoke, isTauri} from "@tauri-apps/api/core";
+import type {AssistantHost} from "./assistant-view";
 
 declare global {
   interface Window {
     temporaElectron?: {
       desktopVersion: string;
+      assistantOpen:AssistantHost["assistantOpen"];
+      assistantSelectSheet:AssistantHost["assistantSelectSheet"];
+      assistantClose:AssistantHost["assistantClose"];
+      assistantInspect:(id:string)=>Promise<unknown>;
       selectDocument: () => Promise<unknown>;
       validateCorpus: () => Promise<unknown>;
       copyReviewDraft: (draft: string) => Promise<boolean>;
