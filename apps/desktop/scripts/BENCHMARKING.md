@@ -9,3 +9,9 @@ The script generates **fictional** canonical TEMPORA v3 events and measures sing
 Each result records corpus byte size, RSS before/after, elapsed time and either success or an explicit rejection (including a 3 MiB local project cap). Do not call these results p95, FPS, Windows performance, or claims of handling corpus sizes that exceed the engine's validated limits. Re-run several times on documented Windows x64 hardware for confidence intervals, CPU/RAM and UI interactivity profiling.
 
 Acceptance gates for increased corpus limits: explicit performance budget, application E2E tests, quota review, cancellable jobs and an independent security review. SQLite FTS5/RTree remains optional and **not installed or persisted by this harness**. The public v3 model and Store submission are untouched.
+
+## Automated, opt-in artifact (existing CI workflow)
+
+In GitHub Actions, select **TEMPORA Desktop Foundation → Run workflow**, enable **synthetic_benchmark**, and choose 100/1000 or 100/1000/10000 events. The benchmark runs on Ubuntu Node 22 (not Windows) and uploads `TEMPORA-TVRW-SYNTHETIC-PERFORMANCE-NOT-CERTIFIED` with the JSON output and runtime metadata. The manual benchmark-only dispatch skips the three regular packaging / Rust / frontend jobs to avoid duplicated Windows builds. Ordinary PR checks, branch protection and Microsoft Store workflows are unchanged.
+
+The artifact is diagnostic, generated from **fictional events**, and retained only 14 days. It does not mean that a real 10k-event corpus can be opened by the current 3 MiB project-session IPC limit. A rejected native-project creation must be reported rather than hidden. No job submits any package or updates npm.
