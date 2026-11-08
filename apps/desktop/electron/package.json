@@ -60,6 +60,14 @@
           "xlsx-inventory.js",
           "xlsx-cells.js"
         ]
+      },
+      {
+        "from": "../../../src/framework/assist-mapping.js",
+        "to": "assistant/framework/assist-mapping.js"
+      },
+      {
+        "from": "../../../profiles/synthetic-history/profile.json",
+        "to": "assistant/profiles/synthetic-history/profile.json"
       }
     ],
     "asar": true,
