@@ -56,6 +56,7 @@ export type VisualProjectInfo = {fileName:string;canonical_sha256:string;profile
 export type VisualProjection = {
   projection_schema_version:string;scientific_sha256:string;
   scope:{total_matched:number;returned:number;truncated:boolean};
+  diagnostics?:Array<{code:string;severity:string;count?:number}>;
   result:Array<Record<string,unknown>>;
   corpus:{canonical_sha256:string;profile_id:string};
 };
