@@ -141,4 +141,12 @@ Le lecteur ZIP est volontairement conservateur : plafond 16 Mio d'entrée et de 
 
 **Limites importantes :** il s'agit d'un **inventaire de classeur**, pas encore d'un lecteur de lignes et de cellules Excel, ni d'un parseur XML/OPC généraliste certifié ; certains XLSX valides utilisant d'autres caractéristiques ZIP seront rejetés. L'adaptateur n'importe rien, ne modifie aucun fichier et ne compile pas de mapping canonique. L'inspection ultérieure des cellules devra être confiée à un parseur XML/OPC audité avec des limites propres et une politique explicite pour les résultats de formules et les dates sérialisées Excel. Le contrôle automatique des tests Assistant a également été ajouté à `npm run test:core` afin de rendre les régressions visibles dans la CI Linux/Windows et le checkout standalone.
 
-**Statut :** implémentation proposée, soumise à CI et revue avant fusion.
+**Statut :** inventaire XLSX borné fusionné après tests Windows/Linux — [PR #91](https://github.com/MGhemri/tempora-framework/pull/91). Les tests Assistant sont désormais inclus dans `npm run test:core`. Les valeurs des cellules ne sont toujours pas lues.
+
+## ASSIST-M1.1c — Relations OPC XLSX et contrôle des parties (PR en cours)
+
+Le contrôle XLSX examine désormais **toutes** les parties `.rels` internes présentes dans le fichier, y compris les relations de feuilles, et refuse les cibles externes, les identifiants dupliqués et les chemins suspects. Il confirme aussi que le document racine désigne réellement `xl/workbook.xml` et que le type MIME de cette partie est celui d'un classeur XLSX non macro. Le parseur XML volontairement restreint refuse également les commentaires susceptibles de masquer des éléments qui ressemblent à des feuilles.
+
+L'absence d'exécution de formules et le refus des liens externes restent des garanties de **l'inspection structurelle uniquement**. Il faudra un parseur XML/OPC validé et des budgets par cellule avant de promettre la lecture des données Excel. Tests adversariaux intégrés dans la suite Framework permanente.
+
+**Statut :** correctif proposé, non finalisé avant CI et fusion.

@@ -107,7 +107,7 @@ function zipEntries(bytes){
   return {entries,readPart};
 }
 function xmlSafe(value){
-  if(/<!DOCTYPE|<!ENTITY|<!\[CDATA|<\?xml-stylesheet/i.test(value)||
+  if(/<!DOCTYPE|<!ENTITY|<!\[CDATA|<!--|<\?xml-stylesheet/i.test(value)||
      value.includes('\0')||value.length>MAX_XML_BYTES)fail('ASSIST_XLSX_XML_UNSAFE');
 }
 function unescapeXML(v){
@@ -151,20 +151,36 @@ function inspectXlsx(bytes){
   for(const xml of [types,workbook,rels,rootRels])xmlSafe(xml);
   if(/macroEnabled|vbaProject|externalLink|externalConnection|ActiveX/i.test(types+workbook+rels+rootRels))
     fail('ASSIST_XLSX_ACTIVE_CONTENT');
+  if(!types.includes('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml'))
+    fail('ASSIST_XLSX_CONTENT_TYPE');
+  // Reject *all* external relationships, including links attached to worksheets,
+  // not only workbook relationships. These XML parts are bounded and read-only.
+  const allLinks=new Map();
+  for(const name of zip.entries.keys()){
+    if(!(name==='_rels/.rels'||name.endsWith('.rels')))continue;
+    const xml=zip.readPart(name);xmlSafe(xml);
+    const relationships=tags(xml,'Relationship'),ids=new Set();
+    for(const rel of relationships){
+      if(!rel.Id||!rel.Target||!rel.Type||ids.has(rel.Id))
+        fail('ASSIST_XLSX_XML_UNSAFE');
+      ids.add(rel.Id);
+      if(rel.TargetMode==='External'||rel.TargetMode&&rel.TargetMode!=='Internal'||
+         rel.Target.includes('..')||/^(?:https?:|file:|data:|\\|\/)/i.test(rel.Target))
+        fail('ASSIST_XLSX_EXTERNAL_LINK');
+    }
+    allLinks.set(name,relationships);
+  }
+  const rootTargets=allLinks.get('_rels/.rels')??[];
+  if(!rootTargets.some(x=>x.Type.endsWith('/officeDocument')&&
+     x.Target==='xl/workbook.xml'))fail('ASSIST_XLSX_ROOT_RELATION');
   const found=tags(workbook,'sheet');
   if(!found.length||found.length>MAX_SHEETS)fail('ASSIST_XLSX_SHEET_LIMIT');
-  const links=new Map();
-  for(const rel of tags(rels,'Relationship')){
-    if(rel.TargetMode==='External'||rel.Target?.includes('..')||
-       rel.Target?.startsWith('http:')||rel.Target?.startsWith('https:'))
-      fail('ASSIST_XLSX_EXTERNAL_LINK');
-    if(!rel.Id||links.has(rel.Id))fail('ASSIST_XLSX_XML_UNSAFE');
-    links.set(rel.Id,rel);
-  }
+  const links=new Map((allLinks.get('xl/_rels/workbook.xml.rels')??[])
+    .map(rel=>[rel.Id,rel]));
   const seen=new Set(),ids=new Set();
   const sheets=found.map(sheet=>{
     const name=sheet.name,id=sheet.sheetId,rid=sheet['r:id'];
-    if(!name||name.length>31||/[\[\]:*?\\/]/.test(name)||seen.has(name.toLowerCase())||
+    if(!name||name.length>31||/[\x00-\x1f\[\]:*?\\/]/.test(name)||seen.has(name.toLowerCase())||
        !/^[1-9]\d*$/.test(id??'')||ids.has(id)||!rid)
       fail('ASSIST_XLSX_SHEET_INVALID');
     seen.add(name.toLowerCase());ids.add(id);
