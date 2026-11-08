@@ -10,6 +10,7 @@ const {build}=require('../bridge/visualization/projections.cjs');
 const {analyze}=require('../bridge/visualization/algorithms.cjs');
 const {buildExport}=require('../bridge/visualization/exporter.cjs');
 const {ProjectManager}=require('../bridge/visualization/session.cjs');
+const {buildSegmentIndex}=require('../bridge/visualization/segment-index.cjs');
 
 function makeSynthetic(size){
   if(!Number.isSafeInteger(size)||size<1||size>100000)throw Error('INVALID_BENCHMARK_SIZE');
@@ -71,6 +72,7 @@ for(const count of sizes){
     validation:timed(()=>{if(!canonical.validateCorpus(corpus).valid)throw Error('INVALID');}),
     digest:timed(()=>canonical.digest(corpus)),
     chronos_page:timed(()=>build(corpus,{module:'chronos',limit:50})),
+    derived_segment_catalog:timed(()=>buildSegmentIndex(corpus,{collection:'events'})),
     chronos_scoped_page:timed(()=>build(corpus,{module:'chronos',limit:50,
       facet:{statuses:['proposed'],time:{mode:'possible-overlap',
         earliest:'1784-01-01',latest:'1784-12-31'}}})),
