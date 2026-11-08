@@ -197,3 +197,10 @@ Les modules privés d'inspection sont copiés dans les ressources NSIS/AppX et s
 ## ASSIST-M1.2b — Vue Desktop en lecture seule (lot graphique en validation)
 
 La première interface Assistant présente des colonnes sources détectées et les noms des champs génériques dans deux panneaux, sans activer d'association. Le sélecteur de feuille XLSX exige une action humaine explicite. Les échantillons sont rendus avec `textContent` et restent en lecture seule. L'interface utilise exclusivement les poignées Electron de la PR #102 ; le pont Assistant Tauri, les propositions contextuelles versionnées, les confirmations côté hôte et le parcours `prepareImport` sont **encore à développer**. Ne pas confondre cette première vue avec un importateur fonctionnel. La compilation, les tests Desktop et les qualifications Windows sont requis avant fusion.
+
+
+## ASSIST-M1.2c — Suggestions déterministes à profil explicitement sélectionné (en validation)
+
+Seule l'identité de profil de démonstration `synthetic-history@1.0.0` est enregistrée dans cette première tranche GUI (données et vocabulaire fictifs). Les alias historiques ne sont ni chargés ni introduits dans le cœur générique. La source doit avoir été sélectionnée par le dialogue natif ; pour CSV/TSV, séparateur explicitement choisi ; pour XLSX, feuille explicitement choisie. Le processus Electron principal revalide l'empreinte avant de calculer les suggestions `suggestColumnMappings` à partir du module purement déterministe existant. Le renderer n'envoie ni définition arbitraire de profil ni chemin ni bundle d'alias. Retour non confirmant : `mapping_confirmed=false`, `confirmed_bindings=[]`, explications et algorithme/version affichés. Le champ cible est toujours une suggestion, jamais une validation du chercheur.
+
+**Périmètre non livré :** éditeur interactif avec confirmation côté hôte, mapping compilé, normalisation, ingestion, profils multiples et pont Tauri. Cette interface n'active aucun `prepareImport`, aucune écriture ni publication. Qualification CI et paquet NSIS obligatoire avant intégration.
