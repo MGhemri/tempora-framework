@@ -46,11 +46,17 @@ function chronos(c){
   for(const ev of arr(c,'events')){
     const start=ev.start_date??null,end=ev.end_date??null;
     results.push({ref:ref(ev),start_earliest:start?.earliest??null,
-      end_latest:end?.latest??start?.latest??null,
+      // Explicitly unknown end remains unknown; fallback is only for absent end.
+      end_latest:end ? (end.latest??null) : (start?.latest??null),
       start_kind:start?.kind??null,end_kind:end?.kind??null,
       relation:'declared_bounds_only'});
   }
-  return {results,notes:{unknown_dates:results.filter(x=>x.start_earliest===null).length}};
+  return {results,notes:{
+    unknown_start_dates:results.filter(x=>x.start_earliest===null).length,
+    unknown_end_dates:results.filter(x=>x.end_latest===null).length,
+    // Backward-compatible field counts unknown starts only.
+    unknown_dates:results.filter(x=>x.start_earliest===null).length
+  }};
 }
 function evidence(c){
   const known=new Set(arr(c,'sources').map(s=>key(s)));
@@ -104,11 +110,18 @@ function analyze(corpus,{module,limit=LIMIT,threshold=0.6,generatedAt='2026-01-0
   const calculation=module==='pattern'?pattern(corpus,threshold):HANDLERS[module](corpus);
   const rows=sort(calculation.results);
   return projection({
-    corpus,algorithm:{id:'tvrw.'+module+'.deterministic',version:'1.0.0',
+    corpus,algorithm:{id:'tvrw.'+module+'.deterministic',
+      version:module==='chronos'?'1.0.1':'1.0.0',
       parameters:{limit,...(module==='pattern'?{threshold}:{})}},
     mode:'validated',filters:{module,method:'deterministic'},
     totalMatched:rows.length,result:rows.slice(0,limit),
-    diagnostics:rows.length>limit?[{code:'TRUNCATED',severity:'warning',count:rows.length-limit}]:[],
+    diagnostics:[
+      ...(rows.length>limit?[{code:'TRUNCATED',severity:'warning',
+        count:rows.length-limit}]:[]),
+      ...(module==='chronos'&&calculation.notes.unknown_end_dates>0?
+        [{code:'UNKNOWN_END_DATES',severity:'info',
+          count:calculation.notes.unknown_end_dates}]:[])
+    ],
     generatedAt
   });
 }
