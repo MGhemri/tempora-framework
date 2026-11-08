@@ -58,3 +58,14 @@ Un second audit externe a été fourni le 2026-11-08 : voir [ANTIGRAVITY-2026-11
 ## Suivi ASSIST-IPC-01 — Sessions natives sans privilèges renderer
 
 [Issue #100](https://github.com/MGhemri/tempora-framework/issues/100) : première PR IPC Electron à qualifier. Risques contrôlés : fuite de chemins, réutilisation de sessions expirées, modification du fichier entre ouverture et sélection de feuille, archive XLSX hostile, introduction involontaire de nouvelles entrées IPC. Tests sur fichiers synthétiques, sélection native et ressources empaquetées obligatoires avant clôture. **Le travail GUI et le pont Tauri restent ouverts.**
+
+ 
+## Git hygiene — one-shot cleanup (2026-11-08)
+
+Suite à la fusion de la PR #103, audit explicite des anciennes branches documentaires. Trois branches sont des reliquats de PRs déjà fusionnées via *squash* (les différences de commit ne prouvent pas du travail encore absent) :
+
+- `docs/audit-assistant-m1-status` : PR #88 fusionnée, SHA `25540e55cc45f656c240eae9daa9db72d8f4d3ae`.
+- `docs/audit-close-ag03-ag04-ag06` : PR #97 fusionnée, SHA `919bcb407d3f3826a2dea0f54eae216bd8ae3588`.
+- `docs/audit-close-assist-m11d` : PR #101 fusionnée, SHA `fa79ba179da321f03568b877e57cfb2c502c0218`.
+
+**Suppression conditionnelle, non encore acquise au moment de la rédaction :** réutiliser `validate-framework.yml` plutôt que créer un workflow permanent, après intégration de la PR de nettoyage sur `main` déclenchée par le marqueur `[branch-hygiene-setup]`. Le script exige PR effectivement fusionnée, propriétaire du dépôt, identité de branche et SHA de tête exact, aucun usage par une PR ouverte, branche non protégée, relecture atomique du SHA avant suppression. Préserver `release/enable-npm-publishing` (travail distinct) et `main`. Confirmer les résultats du workflow avant d'annoncer la suppression.
