@@ -177,7 +177,7 @@ test('Renamed event_type vocabulary is used by ingestion aliases and observed co
  c.profile.rules=c.profile.rules.map(rule=>rule.type==='vocabulary'&&rule.field==='event_type'
    ? {...rule,taxonomy:'types_evenement'}:rule);
  c.profile.aliases=c.profile.aliases.map(a=>a.taxonomy==='event_types'?{...a,taxonomy:'types_evenement'}:a);
- c.taxonomies.types_evenement=c.taxonomies.event_types;
+ c.taxonomies.types_evenement=[...c.taxonomies.event_types,'CUSTOM_ONLY_RENAMED'];
  delete c.taxonomies.event_types;
  assert.equal(validateCorpus(c).valid,true);
  const b=prepare(c,bytes([row('RENAMED_VOCAB')]));
@@ -186,5 +186,6 @@ test('Renamed event_type vocabulary is used by ingestion aliases and observed co
  const {analyze}=require('../src/framework/analysis');
  const result=analyze(c,{scope:'working'});
  assert.ok(result.coverage.groups.type.some(group=>group.key==='fictional assembly'));
- assert.ok(!result.coverage.groups.type.some(group=>group.key==='reunión ficticia'));
+ assert.deepEqual(result.coverage.groups.type.find(group=>group.key==='CUSTOM_ONLY_RENAMED'),
+   {key:'CUSTOM_ONLY_RENAMED',count:0,share:0,event_ids:[]});
 });
