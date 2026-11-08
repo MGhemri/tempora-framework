@@ -220,8 +220,9 @@ sous `resources/examples/`, et ouvrir l'un des deux documents depuis
 TEMPORA Desktop via le sélecteur natif. L'application ne copie pas les fichiers
 dans le profil utilisateur et ne modifie pas les exemples d'origine.
 
-La CI du package Electron contrôle la présence réelle des ressources dans
-`win-unpacked/resources/examples/` et exige la réussite du validateur canonique
-bundlé sur le fichier synthétique. Les chemins Store sont aussi vérifiés par le
+La CI du package Electron contrôle la présence des ressources dans
+`win-unpacked/resources/examples/`, puis installe réellement le NSIS dans un
+répertoire Windows isolé, vérifie les exemples installés et exécute le
+validateur canonique avec le Node embarqué (sans Node système dans `PATH`). Les chemins Store sont aussi vérifiés par le
 test de contrat; ce contrôle n'est **pas** une qualification E2E d'installation
 Store et ne remplace pas les essais manuels sur Windows Sandbox propre.
