@@ -51,6 +51,7 @@ jobs:
           npm run test:bridge
           npm run test:windows-engine
           node --test electron/tests/host.test.cjs
+          node --test electron/tests/assistant-session.test.cjs
           node --test electron/tests/review-integrity.test.cjs
       - name: Stage verified TEMPORA scientific engine
         run: npm run stage:windows-engine
@@ -119,6 +120,10 @@ jobs:
             foreach ($example in @('README.md','synthetic-canonical-v3.json','alnop-geographic-sample.geojson','alnop-canonical-v3-demo.json')) {
               $matches = @($names | Where-Object { $_.EndsWith('resources/examples/' + $example) })
               if ($matches.Count -ne 1) { throw ('STORE_BUNDLED_EXAMPLE_MISSING_OR_AMBIGUOUS: ' + $example) }
+            }
+            foreach ($name in @('framework/assist-inspection.js','assist-io/xlsx-inventory.js','assist-io/xlsx-cells.js')) {
+              $matches = @($names | Where-Object { $_.EndsWith('resources/assistant/' + $name) })
+              if ($matches.Count -ne 1) { throw ('STORE_ASSISTANT_RESOURCE_MISSING_OR_AMBIGUOUS: ' + $name) }
             }
             if ($sdk.Count -ne 1) { throw 'STORE_SCIENTIFIC_ENGINE_MISSING_IN_APPX' }
             if ($node.Count -ne 1 -or $worker.Count -ne 1) { throw 'STORE_SCIENTIFIC_WORKER_MISSING_IN_APPX' }
