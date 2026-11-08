@@ -61,7 +61,8 @@ function mapRecord(row,mapping,context){
  const title=localized('title');if(!Object.values(title).some(Boolean))fail('ROW_TITLE','A nonempty title in a mapped language is required');
  const start_date=date(get('start_date'),'start_date'),end_date=date(get('end_date'),'end_date');
  if(start_date.earliest&&end_date.latest&&start_date.earliest>end_date.latest)fail('ROW_DATE_ORDER','Event ends before its start');
- const event_type=list(get('event_type'),'event_type').map(value=>profile.aliases?.find(a=>a.taxonomy==='event_types'&&a.value===value)?.canonical??value);
+ const eventTaxonomy=profile.rules.find(r=>r.type==='vocabulary'&&r.field==='event_type')?.taxonomy??'event_types';
+ const event_type=list(get('event_type'),'event_type').map(value=>profile.aliases?.find(a=>a.taxonomy===eventTaxonomy&&a.value===value)?.canonical??value);
  const ids=list(get('territory_ids'),'territory_ids');for(const id of ids)if(!territoryIds.has(id))fail('ROW_TERRITORY_UNKNOWN','Territory must exist in the working corpus');
  const evidenceField=fields.evidence?'evidence':'source_ids',evidence=evidenceFor(get(evidenceField),evidenceField,sourceIds,namespace);
  const transformations=[{method:'tempora-ingestion',version,input_sha256:inputSha,source_path:row.source_path}];
