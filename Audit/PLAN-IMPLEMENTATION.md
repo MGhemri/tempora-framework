@@ -135,7 +135,7 @@ Les assertions vérifient : aucun mapping provenant uniquement de suggestions, a
 
 ## ASSIST-M1.1b — Inventaire structurel XLSX borné (PR en cours)
 
-Un nouvel adaptateur privé `src/framework/assist-xlsx.js` examine **en mémoire** les octets d'un conteneur XLSX pour identifier les feuilles de calcul et leur état `visible`, `hidden` ou `veryHidden`, sans accéder aux cellules et sans évaluer de formules. Il expose l'empreinte brute SHA-256, les noms de feuilles, les références OPC internes, les limites et un indicateur explicite `selected_sheet:null` tant qu'aucun choix humain n'a eu lieu.
+Un nouvel adaptateur privé `src/assist-io/xlsx-inventory.js` examine **en mémoire** les octets d'un conteneur XLSX pour identifier les feuilles de calcul et leur état `visible`, `hidden` ou `veryHidden`, sans accéder aux cellules et sans évaluer de formules. Il expose l'empreinte brute SHA-256, les noms de feuilles, les références OPC internes, les limites et un indicateur explicite `selected_sheet:null` tant qu'aucun choix humain n'a eu lieu.
 
 Le lecteur ZIP est volontairement conservateur : plafond 16 Mio d'entrée et de taille totale annoncée après décompression, maximum 512 entrées, maximum 128 feuilles, 512 Kio par partie XML inspectée, rejet des archives chiffrées, ZIP64, data descriptors, chemins dangereux, doublons de parties, chevauchements, liens externes, macros, OLE, ActiveX et extensions exécutables. Les parties XML inspectées refusent DTD et déclarations d'entités ; elles ne sont pas chargées depuis le réseau. Tests adversariaux avec classeurs fictifs fabriqués en mémoire, CRC et décompression bornée.
 
