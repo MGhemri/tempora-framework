@@ -95,14 +95,14 @@ class VisualService {
     return this.request('visualization.graph.neighborhood',
       {project_id:this.projectId,root,depth,direction,limit});
   }
-  prepareExport(module,format,offset=0,limit=50){
+  prepareExport(module,format,offset=0,limit=50,facet=null){
     if(!this.projectId)throw Error('VISUAL_PROJECT_NOT_OPEN');
     if(!MODULES.includes(module))throw Error('VISUAL_MODULE_INVALID');
     if(!['json','geojson','csv','graphml'].includes(format))throw Error('VISUAL_EXPORT_FORMAT');
     if(!Number.isSafeInteger(offset)||offset<0||!Number.isSafeInteger(limit)||limit<1||limit>50)
       throw Error('VISUAL_EXPORT_PAGE');
     return this.request('visualization.export.prepare',
-      {project_id:this.projectId,module,format,offset,limit});
+      {project_id:this.projectId,module,format,offset,limit,facet});
   }
   compareSnapshot(corpus){
     if(!this.projectId)throw Error('VISUAL_PROJECT_NOT_OPEN');
