@@ -147,3 +147,10 @@ test('Electron NSIS and Store package the same fully offline sample corpora',()=
   assert.match(smoke,/installedAlnop/);
   assert.match(smoke,/smoke_example/);
 });
+
+test('Electron GeoJSON preview renders ALNOP operation title and type from feature properties',()=>{
+  const host=src('electron/main.cjs');
+  assert.match(host,/item\?\.properties\?\.nom_operation/);
+  assert.match(host,/item\?\.properties\?\.type_action/);
+  assert.match(host,/item\?\.geometry\?\.type/);
+});
