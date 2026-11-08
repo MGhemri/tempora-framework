@@ -80,6 +80,18 @@ class VisualService {
     if(typeof threshold!=='number'||threshold<0||threshold>1)throw Error('VISUAL_THRESHOLD_INVALID');
     return this.request('visualization.analysis.run',{project_id:this.projectId,module,limit,threshold});
   }
+  filterChronos(earliest,latest,mode='possible-overlap',offset=0,limit=50){
+    if(!this.projectId)throw Error('VISUAL_PROJECT_NOT_OPEN');
+    if(!/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(earliest??'')||
+       !/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(latest??'')||earliest>latest)
+      throw Error('INVALID_DATE');
+    if(!['possible-overlap','certain-only','declared-start'].includes(mode))
+      throw Error('INVALID_TIME_MODE');
+    if(!Number.isSafeInteger(offset)||offset<0||!Number.isSafeInteger(limit)||limit<1||limit>100)
+      throw Error('INVALID_PAGE');
+    return this.request('visualization.chronos.filter',
+      {project_id:this.projectId,earliest,latest,mode,offset,limit});
+  }
   neighborhood(root,depth=1,direction='both',limit=50){
     if(!this.projectId)throw Error('VISUAL_PROJECT_NOT_OPEN');
     if(!root||typeof root!=='object'||Array.isArray(root))throw Error('GRAPH_INVALID_REF');
