@@ -6,13 +6,18 @@ const {suggestColumnMappings,compileConfirmedCsvMapping,VERSION}=require('../src
 const manifest=require('../profiles/synthetic-history/profile.json');
 const profile=resolveProfile(manifest);
 const headers=['identifiant','nom_operation','date_debut','type_action'];
+const contextual={
+ alias_schema_version:'1.0.0',id:'fictional-operation-aliases',
+ profile_id:profile.id,profile_version:profile.version,
+ aliases:[{header:'nom_operation',target:'title'},{header:'type_action',target:'event_type'}]
+};
 const bind=(source_column,target_field)=>({source_column,target_field,state:'confirmed_by_user'});
 const data=()=>({headers,profile,bindings:[bind('identifiant','id'),bind('nom_operation','title.en'),
   bind('date_debut','start_date'),bind('type_action','event_type')],id:'csv-assistant-demo',version:'1.0.0',delimiter:';'});
 const code=x=>e=>e.code===x;
 
 test('M1.2a suggestions are deterministic, explanatory, frozen and never self-confirm',()=>{
- const a=suggestColumnMappings(headers,profile),b=suggestColumnMappings(headers,profile);
+ const a=suggestColumnMappings(headers,profile,contextual),b=suggestColumnMappings(headers,profile,contextual);
  assert.deepEqual(a,b);
  assert.equal(VERSION,'0.1.0');
  assert.equal(a.mapping_confirmed,false);
@@ -85,4 +90,58 @@ test('M1.2a is locale-sensitive and refuses records or undeclared canonical fiel
  const esProfile=resolveProfile({...manifest,default_locale:'es'});
  assert.deepEqual(suggestColumnMappings(['nom','identifiant'],esProfile)
    .suggestions.map(s=>s.target_field),['title.es','id']);
+});
+
+
+test('AG-03: generic mapping stays independent of historical operation vocabulary',()=>{
+ const unconfigured=suggestColumnMappings(headers,profile);
+ assert.deepEqual(unconfigured.suggestions.map(x=>[x.source_column,x.target_field]),[
+  ['identifiant','id'],['date_debut','start_date']]);
+ const configured=suggestColumnMappings(headers,profile,contextual);
+ assert.deepEqual(configured.suggestions.map(x=>x.target_field),['id','title.en','start_date','event_type']);
+ const custom=configured.suggestions.filter(x=>x.algorithm_id==='profile-contextual-aliases');
+ assert.deepEqual(custom.map(x=>x.reason_codes),[
+  ['PROFILE_CONTEXTUAL_ALIAS'],['PROFILE_CONTEXTUAL_ALIAS']]);
+ assert.ok(configured.suggestions.every(x=>x.state==='suggested'));
+ assert.deepEqual(configured.confirmed_bindings,[]);
+ assert.equal(configured.mapping_confirmed,false);
+});
+test('AG-03: ALNOP compatibility aliases are explicit profile-scoped test data',()=>{
+ const alnopProfile=resolveProfile(require('../compatibility/alnop/profile/profile.json'));
+ const alnopBundle=require('../compatibility/alnop/profile/assistant-aliases.json');
+ assert.equal(alnopBundle.profile_id,'alnop');
+ const configured=suggestColumnMappings([
+  'identifiant_operation','nom_operation','date_operation','type_action'
+ ],alnopProfile,alnopBundle);
+ assert.deepEqual(configured.suggestions.map(x=>x.target_field),[
+  'id','title.fr','start_date','event_type'
+ ]);
+ assert.deepEqual(suggestColumnMappings([
+  'identifiant_operation','nom_operation','date_operation','type_action'
+ ],alnopProfile).suggestions,[]);
+ assert.equal(configured.mapping_confirmed,false);
+});
+test('AG-03: alias bundle rejects cross-profile reuse, normalization collision and unsafe keys',()=>{
+ const make=(overrides={})=>({...contextual,...overrides});
+ assert.throws(()=>suggestColumnMappings(headers,profile,make({profile_id:'alnop'})),
+  code('ASSIST_MAPPING_ALIAS_BUNDLE'));
+ assert.throws(()=>suggestColumnMappings(headers,profile,make({profile_version:'3.0.0'})),
+  code('ASSIST_MAPPING_ALIAS_BUNDLE'));
+ assert.throws(()=>suggestColumnMappings(headers,profile,make({alias_schema_version:'2.0.0'})),
+  code('ASSIST_MAPPING_ALIAS_BUNDLE'));
+ assert.throws(()=>suggestColumnMappings(headers,profile,make({aliases:[
+  {header:'NOM-OPERATION',target:'title'},{header:'nom_operation',target:'description'}
+ ]})),code('ASSIST_MAPPING_ALIAS_CONFLICT'));
+ assert.throws(()=>suggestColumnMappings(headers,profile,make({aliases:[
+  {header:'__proto__',target:'title'}
+ ]})),code('ASSIST_MAPPING_ALIAS_CONFLICT'));
+ assert.throws(()=>suggestColumnMappings(headers,profile,make({aliases:[
+  {header:'titre',target:'description'}
+ ]})),code('ASSIST_MAPPING_ALIAS_CONFLICT'));
+ assert.throws(()=>suggestColumnMappings(headers,profile,make({aliases:[
+  {header:'nom_operation',target:'unknown'}
+ ]})),code('ASSIST_MAPPING_ALIAS_BUNDLE'));
+ assert.throws(()=>suggestColumnMappings(headers,profile,make({aliases:[
+  {header:'nom_operation',target:'title',extra:'unsafe'}
+ ]})),code('ASSIST_MAPPING_ALIAS_BUNDLE'));
 });
