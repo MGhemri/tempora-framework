@@ -87,6 +87,22 @@ test('V2 persistent Node IPC creates, pages and releases a local corpus; V1 heal
       {project_id,module:'chronos',format:'json',offset:0,limit:1});
     assert.equal(exportReply.ok,true);
     assert.equal(JSON.parse(exportReply.result.data).manifest.module,'chronos');
+    const scoped=await send('2.0.0','visualization.project.query',{
+      project_id,module:'chronos',offset:0,limit:1,
+      facet:{time:{mode:'possible-overlap',earliest:'1784-06-01',latest:'1784-06-30'}}});
+    assert.equal(scoped.ok,true);
+    assert.equal(scoped.result.scope.returned,1);
+    assert.notEqual(scoped.result.scientific_sha256,queried.result.scientific_sha256);
+    const invalidFacet=await send('2.0.0','visualization.project.query',{
+      project_id,module:'chronos',offset:0,limit:1,
+      facet:{arbitrary_js:'process.exit(1)'}});
+    assert.equal(invalidFacet.ok,false);
+    assert.equal(invalidFacet.error.code,'INVALID_FACET');
+    const unsupported=await send('2.0.0','visualization.project.query',{
+      project_id,module:'geo',offset:0,limit:1,
+      facet:{time:{mode:'possible-overlap',earliest:'1784-01-01',latest:'1784-12-31'}}});
+    assert.equal(unsupported.ok,false);
+    assert.equal(unsupported.error.code,'TEMPORAL_FILTER_UNSUPPORTED');
     const malicious=await send('2.0.0','visualization.project.query',
       {project_id,module:'chronos',offset:0,limit:1,path:'/private/file'});
     assert.equal(malicious.ok,false);assert.equal(malicious.error.code,'INVALID_PAYLOAD');
