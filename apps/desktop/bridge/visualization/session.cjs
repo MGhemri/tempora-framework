@@ -67,9 +67,9 @@ class ProjectManager {
     this.#renew(session);
     return result;
   }
-  export(id,{module,format,offset=0,limit=50}={}){
+  export(id,{module,format,offset=0,limit=50,facet=null}={}){
     const session=this.#get(id);
-    const result=build(session.corpus,{module,offset,limit,
+    const result=build(session.corpus,{module,offset,limit,facet,
       generatedAt:new Date(this.clock()).toISOString()});
     const exported=buildExport(result,{module,format});
     this.#renew(session);

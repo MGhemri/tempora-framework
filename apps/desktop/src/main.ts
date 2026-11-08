@@ -444,11 +444,11 @@ function renderVisual():void {
   byId("visual-facet-note").textContent=filtered
     ? datesIgnored
       ? (language==="fr"
-        ?"Filtre temporel conservé mais non appliqué ici (uniquement Chronos et GraphLab). Analyses, exports et comparaison désactivés pendant le filtrage."
-        :"Time filter retained but not applied here (Chronos and GraphLab only). Analyses, exports and comparison disabled while filtering.")
+        ?"Filtre temporel conservé mais non appliqué ici (uniquement Chronos et GraphLab). Analyses et comparaisons désactivées pendant le filtrage ; l’export conserve les paramètres des filtres dans son manifeste."
+        :"Time filter retained but not applied here (Chronos and GraphLab only). Analyses and comparisons disabled while filtering; exports include the filter in their manifest.")
       : (language==="fr"
-        ?"Vue filtrée, paramètres présents dans le SHA scientifique. Analyses et exports désactivés jusqu'à leur prise en charge explicite."
-        :"Filtered view: parameters included in scientific SHA. Analysis and export disabled until explicitly supported.")
+        ?"Vue filtrée, paramètres présents dans le SHA scientifique. Analyses désactivées ; les exports incluent le filtre appliqué dans leur manifeste."
+        :"Filtered view: parameters included in scientific SHA. Analysis disabled; exports preserve the selected filter in their manifest.")
     : (language==="fr"?"Aucun filtre actif.":"No active filters.");
   for(const id of ["visual-facet-apply","visual-facet-reset"]){
     (byId(id) as HTMLButtonElement).disabled=visualBusy||!info;
@@ -518,9 +518,9 @@ function renderVisual():void {
       " · "+visualAnalysis.scientific_sha256
     : "";
   (byId("visual-analyze") as HTMLButtonElement).disabled=visualBusy||!visualInfo||filtered;
-  (byId("visual-export") as HTMLButtonElement).disabled=visualBusy||!visualProjection||filtered;
+  (byId("visual-export") as HTMLButtonElement).disabled=visualBusy||!visualProjection;
   const exportSelect=byId("visual-export-format") as HTMLSelectElement;
-  exportSelect.disabled=visualBusy||!visualInfo||filtered;
+  exportSelect.disabled=visualBusy||!visualInfo;
   for(const option of exportSelect.options){
     option.disabled=(option.value==="geojson"&&visualModule!=="geo")||
       (option.value==="graphml"&&visualModule!=="graph");
@@ -553,9 +553,12 @@ function renderVisual():void {
       rows.append(tr);
     }
   }
+  const notes=result?.diagnostics?.map(d=>d.code+
+    (Number.isFinite(d.count)?": "+String(d.count):"")).join(" · ")??"";
   byId("visual-diagnostics").textContent=result
     ? visualModule+" · "+result.scope.returned+"/"+result.scope.total_matched+
-      (result.scope.truncated?" · PARTIAL / PARTIEL":"")+" · "+result.scientific_sha256
+      (result.scope.truncated?" · PARTIAL / PARTIEL":"")+
+      (notes?" · "+notes:"")+" · "+result.scientific_sha256
     : (language==="fr"?"Sélectionnez un corpus valide TEMPORA v3.":"Select a valid TEMPORA v3 corpus.");
   byId("visual-page").textContent=result
     ? String(visualOffset+1)+"–"+String(visualOffset+result.scope.returned)+" / "+String(result.scope.total_matched)
@@ -688,7 +691,7 @@ byId("visual-export").addEventListener("click",async()=>{
   const format=(byId("visual-export-format") as HTMLSelectElement).value as VisualExportFormat;
   visualBusy=true;renderVisual();
   try{
-    const receipt=await exportVisualProject(visualModule,format,visualOffset,50);
+    const receipt=await exportVisualProject(visualModule,format,visualOffset,50,effectiveFacets(visualModule));
     if(receipt)notify((language==="fr"?"Export enregistré : ":"Export saved: ")+receipt.fileName+
       " · SHA-256 "+receipt.sha256+(receipt.partial?" · PARTIAL":""));
   }catch(error){notify(error instanceof Error?error.message:String(error));}
