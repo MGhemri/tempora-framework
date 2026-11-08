@@ -160,7 +160,7 @@ L'absence d'exécution de formules et le refus des liens externes restent des ga
 | AG-01/02 | **fait** | Quarantaine des listes multilignes avant `trim()` et branchement des tests Assistant dans `test:core` — PR #91 | Régressions vertes Linux/Windows et checkout standalone |
 | AG-05 | **P1, immédiat** | Version preload Electron 0.1.2-beta.3, assertion test dynamique ; cette PR documentaire et corrective | CI + tests Electron verts, fusion ; nouvelle release requise pour mettre à jour le binaire déjà distribué |
 | AG-04 | **P2, en cours de correction** | Repli neutre `[]` de `compareClaims` ; tests directs et profilés sur PR dédiée | CI Linux/Windows et fusion ; les appels avec profil restent inchangés |
-| AG-03 | **P2, après AG-04** | Déplacer alias contextuels ALNOP hors du noyau générique vers configuration versionnée et contrôlée | Tests multi-profils et compatibilité explicite des fixtures/mappings existants |
+| AG-03 | **P2, en cours de correction** | Alias ALNOP externalisés dans un manifeste versionné lié au profil et testés sur corpus ALNOP/synthétique | CI Windows/Linux, mapping 1.0.0 inchangé et fusion |
 | AG-06 | **P3, avec Desktop** | Généraliser les fallbacks de prévisualisation Electron/Tauri sans casser ALNOP | Tests UI/IPC sur ALNOP et corpus synthétiques non algériens |
 | AG-07 | **surveillance** | Conserver barrières IPC, lien `batch_id`, aucune validation scientifique automatique | Recettes de sûreté spécifiques ; ne pas traiter un avis externe favorable comme certification |
 

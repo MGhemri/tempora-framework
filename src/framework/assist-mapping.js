@@ -9,12 +9,12 @@ const TARGETS=Object.freeze([
   'location_label','precision_meters'
 ]);
 const SYNONYMS=Object.freeze({
-  id:['id','identifiant','identifier','event_id','identifiant_evenement','identifiant_operation'],
-  title:['title','titre','name','nom','nom_operation','nom_evenement'],
+  id:['id','identifiant','identifier','event_id','identifiant_evenement'],
+  title:['title','titre','name','nom','nom_evenement'],
   description:['description','details','resume','summary','commentaire'],
-  start_date:['start_date','date_debut','date','date_operation','date_evenement','debut'],
+  start_date:['start_date','date_debut','date','date_evenement','debut'],
   end_date:['end_date','date_fin','fin'],
-  event_type:['event_type','type','type_action','type_evenement','categorie'],
+  event_type:['event_type','type','type_evenement','categorie'],
   source_ids:['source_ids','sources','ids_sources'],
   territory_ids:['territory_ids','territoires','territoire_ids'],
   longitude:['longitude','lon','lng'],
@@ -57,19 +57,58 @@ function targetParts(field,profile){
     fail('ASSIST_MAPPING_TARGET');
   return {base:field};
 }
-function suggestColumnMappings(headers,profile){
+// Aliases tied to a historical corpus live outside the generic vocabulary.
+// The bundle is an Assistant-side option (not a canonical profile property).
+// It can only suggest fields; it never confirms or imports any mapping.
+function validateAliasBundle(bundle,profile){
+  if(bundle===undefined||bundle===null)return new Map();
+  if(!plain(bundle)||Object.keys(bundle).some(k=>![
+    'alias_schema_version','id','profile_id','profile_version','aliases'].includes(k))||
+    bundle.alias_schema_version!=='1.0.0'||
+    typeof bundle.id!=='string'||!/^[a-z][a-z0-9-]{0,79}$/.test(bundle.id)||
+    bundle.profile_id!==profile.id||bundle.profile_version!==profile.version||
+    !Array.isArray(bundle.aliases)||bundle.aliases.length>128)
+    fail('ASSIST_MAPPING_ALIAS_BUNDLE');
+  const normalizedAliases=new Map();
+  const defaultTargets=new Map();
+  for(const field of TARGETS)for(const alias of SYNONYMS[field]){
+    const key=normalized(alias);
+    if(defaultTargets.has(key)&&defaultTargets.get(key)!==field)
+      fail('ASSIST_MAPPING_ALIAS_CONFLICT');
+    defaultTargets.set(key,field);
+  }
+  for(const entry of bundle.aliases){
+    if(!plain(entry)||Object.keys(entry).some(k=>!['header','target'].includes(k))||
+       typeof entry.header!=='string'||!entry.header||entry.header.length>256||
+       /[\x00-\x1f]/.test(entry.header)||typeof entry.target!=='string'||
+       !TARGETS.includes(entry.target))
+      fail('ASSIST_MAPPING_ALIAS_BUNDLE');
+    const key=normalized(entry.header);
+    if(!key||RESERVED.has(key)||normalizedAliases.has(key)||
+       defaultTargets.has(key))
+      fail('ASSIST_MAPPING_ALIAS_CONFLICT');
+    normalizedAliases.set(key,entry.target);
+  }
+  return normalizedAliases;
+}
+function suggestColumnMappings(headers,profile,aliasBundle){
   checkHeaders(headers);checkProfile(profile);
+  const contextualAliases=validateAliasBundle(aliasBundle,profile);
   const suggestions=[];
   for(const source_column of headers){
     const key=normalized(source_column);
     if(!key)continue;
     for(const base of TARGETS){
-      if(!SYNONYMS[base].includes(key))continue;
+      const isGeneric=SYNONYMS[base].includes(key);
+      const isContextual=contextualAliases.get(key)===base;
+      if(!isGeneric&&!isContextual)continue;
       const target_field=['title','description','location_label'].includes(base)
         ?base+'.'+profile.default_locale:base;
       suggestions.push(Object.freeze({
-        source_column,target_field,algorithm_id:'header-exact-synonyms',
-        algorithm_version:VERSION,reason_codes:Object.freeze(['EXACT_NORMALIZED_HEADER']),
+        source_column,target_field,
+        algorithm_id:isGeneric?'header-exact-synonyms':'profile-contextual-aliases',
+        algorithm_version:VERSION,
+        reason_codes:Object.freeze([isGeneric?'EXACT_NORMALIZED_HEADER':'PROFILE_CONTEXTUAL_ALIAS']),
         confidence_kind:'heuristic',state:'suggested'
       }));
     }

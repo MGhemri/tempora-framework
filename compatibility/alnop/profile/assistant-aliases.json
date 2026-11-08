@@ -1,0 +1,24 @@
+{
+  "alias_schema_version": "1.0.0",
+  "id": "alnop-operation-headers",
+  "profile_id": "alnop",
+  "profile_version": "1.0.0",
+  "aliases": [
+    {
+      "header": "identifiant_operation",
+      "target": "id"
+    },
+    {
+      "header": "nom_operation",
+      "target": "title"
+    },
+    {
+      "header": "date_operation",
+      "target": "start_date"
+    },
+    {
+      "header": "type_action",
+      "target": "event_type"
+    }
+  ]
+}
