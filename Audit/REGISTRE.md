@@ -43,3 +43,8 @@ La branche `fix/aud-03-publication-lock-diagnostics` ajoute un code d'erreur `ST
 ## Rapport Antigravity complémentaire (commit a07f2ec)
 
 Un second audit externe a été fourni le 2026-11-08 : voir [ANTIGRAVITY-2026-11-08.md](ANTIGRAVITY-2026-11-08.md) pour les constats **AG-01 à AG-07**, leur confrontation avec le `main` réel et les travaux programmés. Le défaut de quarantaine CR/LF et les suites Assistant absentes de `test:core` ont **déjà été corrigés dans la PR #91**. L'écart `desktopVersion` du preload est traité dans une nouvelle PR et **ne modifie pas rétroactivement l'installateur bêta 3 déjà publié**. Les alias ALNOP du noyau, les locales par défaut et les fallbacks Desktop restent à traiter en lots distincts.
+
+
+## ASSIST-M1.1d — Contrôle du lecteur de cellules XLSX
+
+[Issue #98](https://github.com/MGhemri/tempora-framework/issues/98) : chantier P1 en cours, non assimilé à une certification de sécurité. Les plafonds XML de 512 Kio de la PR #91 restent en vigueur malgré la proposition Antigravity à 16 Mio par XML. Contrôles obligatoires : formules jamais exécutées, caches non vérifiés, dates candidates, sélection explicite de feuille, contenu original immuable, erreurs contrôlées, CI Linux/Windows. Statut : **branche de développement ; fusion et qualification à confirmer**.
