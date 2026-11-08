@@ -22,6 +22,7 @@
     "files": [
       "main.cjs",
       "preview-core.cjs",
+      "assistant-session.cjs",
       "preload.cjs",
       "visualization-service.cjs",
       "build/icon-white-256.png",
@@ -46,6 +47,18 @@
         "to": "examples",
         "filter": [
           "**/*"
+        ]
+      },
+      {
+        "from": "../../../src/framework/assist-inspection.js",
+        "to": "assistant/framework/assist-inspection.js"
+      },
+      {
+        "from": "../../../src/assist-io",
+        "to": "assistant/assist-io",
+        "filter": [
+          "xlsx-inventory.js",
+          "xlsx-cells.js"
         ]
       }
     ],
