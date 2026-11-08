@@ -18,13 +18,14 @@ class VisualService {
     });
     this.child=child;this.buffer='';this.decoder=new StringDecoder('utf8');
     const die=(code)=>{
+      if(this.child!==child)return; // Stale worker events cannot revoke the next project.
       for(const [,pending] of this.pending){clearTimeout(pending.timer);pending.reject(Error(code));}
       this.pending.clear();this.child=null;this.projectId=null;this.buffer='';
     };
     child.on('error',()=>die('VISUAL_WORKER_START_FAILED'));
     child.on('close',()=>die('VISUAL_WORKER_EXITED'));
     child.stdout.on('data',bytes=>{
-      if(!this.child)return;
+      if(this.child!==child)return;
       this.buffer+=this.decoder.write(bytes);
       if(Buffer.byteLength(this.buffer,'utf8')>MAX_FRAME*2){this.stop();return;}
       let idx;
@@ -109,6 +110,13 @@ class VisualService {
     const id=this.projectId;this.projectId=null;
     if(id&&this.child)await this.request('visualization.project.release',{project_id:id});
     return true;
+  }
+  cancel(){
+    const cancelled=Boolean(this.child && this.pending.size);
+    // Preempt a synchronous scientific worker by terminating its subprocess.
+    // This intentionally closes the ephemeral corpus session as well.
+    this.stop();
+    return {cancelled,session_closed:true};
   }
   stop(){
     const child=this.child;this.child=null;this.projectId=null;
