@@ -34,6 +34,17 @@ test('Unknown dates remain excluded and are quantified as uncertainty',()=>{
   assert.equal(result.scope.filters.unknown_count,1);
   assert.deepEqual(result.diagnostics,[{code:'UNKNOWN_TEMPORAL_BOUNDS',severity:'warning',count:1}]);
 });
+test('Explicitly unknown end cannot be replaced by a known start',()=>{
+  const c=SYNTHETIC_CASES[0].make();
+  c.events[0].end_date={kind:'unknown',calendar:'gregorian',original:null,
+    earliest:null,latest:null,precision:'unknown',certainty:'unknown'};
+  assert.equal(canonical.validateCorpus(c).valid,true);
+  const possible=filter(c,{...window,mode:'possible-overlap'});
+  assert.equal(possible.scope.total_matched,0);
+  assert.equal(possible.scope.filters.unknown_count,1);
+  const startOnly=filter(c,{...window,mode:'declared-start'});
+  assert.equal(startOnly.scope.total_matched,1);
+});
 test('Impossible, reversed and missing filter dates fail closed',()=>{
   const c=SYNTHETIC_CASES[0].make();
   for(const params of [{earliest:'1784-02-30',latest:'1784-06-30'},
