@@ -43,7 +43,7 @@ test('The distributable tarball installs and executes a synthetic project outsid
       fields:{id:'/id',title:{en:'/title'},start_date:'/date',event_type:'/type',evidence:'/evidence'}};
     const bundle=sdk.ingestion.preview({corpus,mapping,sourceName:'synthetic.json',
       bytes:Buffer.from(JSON.stringify([{id:'EVENT_1',title:'A fictional event',date:'1700',type:'fictional assembly',evidence:[{source_id:'SOURCE_1',locator:'p. 1'}]}]))});
-    const output=sdk.ingestion.accept({corpus,bundle,review:{ids:['EVENT_1'],reviewer:'test',reason:'Fictional',reviewed_at:'2026-11-01T00:00:00Z'}});
+    const output=sdk.ingestion.accept({corpus,bundle,review:{batch_id:bundle.report.batch_id,ids:['EVENT_1'],reviewer:'test',reason:'Fictional',reviewed_at:'2026-11-01T00:00:00Z'}});
     assert.equal(sdk.canonical.validateCorpus(output.corpus).valid,true);
     assert.equal(sdk.analysis.analyze(output.corpus,{scope:'working'}).coverage.denominator,1);
     const policy=sdk.review.policy(profile,{reviewers:['reviewer','publisher'],minimum_approvals:1,
