@@ -9,13 +9,13 @@ const {randomBytes,createHash}=require('node:crypto');
 const {join, basename, extname, resolve} = require('node:path');
 const {spawn} = require('node:child_process');
 const {VisualService}=require('./visualization-service.cjs');
+const {preview}=require('./preview-core.cjs');
 
 const MAX_PREVIEW_BYTES = 8 * 1024 * 1024;
 const MAX_CORPUS_BYTES = 3 * 1024 * 1024;
 const MAX_REQUEST_BYTES = 4 * 1024 * 1024;
 const MAX_RESPONSE_BYTES = 3 * 256 * 1024 + 4096;
 const ENGINE_TIMEOUT_MS = 12_000;
-const PREVIEW_LIMIT = 7;
 let mainWindow;
 const visualService=new VisualService(getRuntime);
 
@@ -49,34 +49,6 @@ function limitedFile(path, limit, requireObject) {
 }
 function label(value, fallback = '—', n = 140) {
   return typeof value === 'string' ? Array.from(value).slice(0, n).join('') : fallback;
-}
-function title(item) {
-  const value = item && (item.title ?? item.name);
-  const named = typeof value === 'string' ? value :
-    value && typeof value === 'object' ? Object.values(value).find(v => typeof v === 'string') : undefined;
-  return label(named, 'Untitled / Sans titre');
-}
-function preview(data) {
-  const json = data.json;
-  const geo = json?.type === 'FeatureCollection';
-  const records = geo ? json.features :
-    (Array.isArray(json) ? json : json?.events ?? json?.operations ?? json?.records);
-  const items = Array.isArray(records) ? records : [];
-  const count = key => Array.isArray(json?.[key]) ? json[key].length : 0;
-  return {
-    fileName: data.fileName, format: geo ? 'GeoJSON' : 'JSON',
-    bytes: data.bytes, records: items.length,
-    sources: count('sources'), assertions: count('claims') + count('assertions'),
-    rows: items.slice(0, PREVIEW_LIMIT).map(item => ({
-      id: label(item?.id ?? item?.properties?.id, '—', 80),
-      title: geo
-        ? label(item?.properties?.nom_operation ?? item?.properties?.title, 'Untitled / Sans titre')
-        : title(item),
-      kind: label(geo ? (item?.properties?.type_action ?? item?.geometry?.type)
-        : (item?.kind ?? item?.type), 'record', 40)
-    })),
-    note: 'Structural preview only. Not canonical validation or historical fact verification.'
-  };
 }
 function inventoryRows(corpus, name) {
   const records = Array.isArray(corpus[name]) ? corpus[name] : [];

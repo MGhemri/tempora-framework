@@ -21,6 +21,7 @@
     },
     "files": [
       "main.cjs",
+      "preview-core.cjs",
       "preload.cjs",
       "visualization-service.cjs",
       "build/icon-white-256.png",
