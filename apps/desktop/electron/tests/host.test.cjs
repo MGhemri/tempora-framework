@@ -154,3 +154,11 @@ test('Electron GeoJSON preview renders ALNOP operation title and type from featu
   assert.match(host,/item\?\.properties\?\.type_action/);
   assert.match(host,/item\?\.geometry\?\.type/);
 });
+
+
+test('packaged worker smoke uses absolute paths despite changing cwd',()=>{
+  const smoke=src('electron/tests/packaged-engine-smoke.cjs');
+  assert.match(smoke,/const resourceRoot = resolve\(suppliedResourceRoot\)/);
+  assert.match(smoke,/isAbsolute\(node\) && isAbsolute\(worker\)/);
+  assert.match(smoke,/cwd:join\(resourceRoot,'engine'\)/);
+});
