@@ -47,3 +47,7 @@ are neither read by the test nor modified.
 This is a preparatory research milestone only. Existing SDK/IPC protocols,
 canonical v3, quotas, workflows, Store packaging and release policy are
 unchanged.
+
+## J8E Windows correction (bêta 3 release gate)
+
+Le test de release Windows a révélé que les métadonnées renvoyées par `lstat(path)` et `fstat(handle)` peuvent différer pour un même fichier sous Windows, produisant un faux `PREFLIGHT_FILE_CHANGED` à l'ouverture. La politique corrigée compare **chemin à chemin** (avant, à l'ouverture, après lecture), **descripteur à descripteur** (avant/après) et la taille entre chemin et descripteur ; sous POSIX, l'égalité chemin/descripteur complète reste requise. Elle rejette toujours les changements détectables, les liens symboliques en entrée et les lectures incomplètes. Un test mutateur synthétique couvre le changement pendant la lecture. Cette correction ne remplace pas la revue future des reparse points, partages réseau et attaques TOCTOU Windows.

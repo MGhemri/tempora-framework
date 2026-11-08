@@ -48,7 +48,14 @@ async function preflightSelectedFile(selectedPath,options={}){
   const fd=await open(selectedPath,constants.O_RDONLY|noFollow);
   try{
     const initial=await fd.stat({bigint:true});
-    if(!initial.isFile()||!sameIdentity(pathStat,initial))
+    // On Windows Node/NTFS can report path and handle device/file IDs
+    // differently. Compare like-with-like metadata while retaining independent
+    // regular-file, byte-count and open-descriptor checks. On POSIX the two
+    // identities must also agree across lstat and fstat.
+    const openedPath=await lstat(selectedPath,{bigint:true});
+    if(!initial.isFile()||!sameIdentity(pathStat,openedPath)||
+       initial.size!==pathStat.size||
+       (process.platform!=='win32'&&!sameIdentity(pathStat,initial)))
       fail('PREFLIGHT_FILE_CHANGED');
     const hash=createHash('sha256');
     const buffer=Buffer.allocUnsafe(chunkBytes);
@@ -63,7 +70,9 @@ async function preflightSelectedFile(selectedPath,options={}){
     }
     checkAborted(signal);
     const final=await fd.stat({bigint:true});
-    if(!sameIdentity(initial,final)||BigInt(readBytes)!==initial.size)
+    const finalPath=await lstat(selectedPath,{bigint:true});
+    if(!sameIdentity(initial,final)||!sameIdentity(pathStat,finalPath)||
+       BigInt(readBytes)!==initial.size)
       fail('PREFLIGHT_FILE_CHANGED');
     return Object.freeze({
       preflight_schema_version:'1.0.0',format:format.slice(1),
