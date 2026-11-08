@@ -1,0 +1,94 @@
+name: TEMPORA one-time safe branch cleanup
+
+# Temporary, single-use workflow. Remove after the audited push run.
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/one-time-safe-branch-prune.yml"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/one-time-safe-branch-prune.yml"
+
+permissions:
+  contents: write
+  pull-requests: read
+
+concurrency:
+  group: tempora-one-time-branch-prune
+  cancel-in-progress: false
+
+jobs:
+  prune:
+    if: github.repository == 'MGhemri/tempora-framework'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Audit and prune fully integrated obsolete branches
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const {owner, repo} = context.repo;
+            const ownRepo = owner + '/' + repo;
+            const dryRun = context.eventName !== 'push';
+            const active = await github.paginate(github.rest.pulls.list,{
+              owner,repo,state:'open',per_page:100
+            });
+            const protectedRefs = new Set(['main']);
+            for (const pr of active) {
+              protectedRefs.add(pr.base.ref);
+              if(pr.head.repo?.full_name === ownRepo) protectedRefs.add(pr.head.ref);
+            }
+            const all = await github.paginate(github.rest.repos.listBranches,{
+              owner,repo,per_page:100
+            });
+            const safe = [], skipped = [];
+            for (const branch of all) {
+              const name = branch.name;
+              if(branch.protected || protectedRefs.has(name) ||
+                 name.startsWith('release/') ||
+                 !/^(feature|feat|fix|test|experiment|chore)\//.test(name)){
+                skipped.push({name,reason:'protected, open PR, release or non-maintenance'});
+                continue;
+              }
+              let ahead;
+              try {
+                const comparison = await github.rest.repos.compareCommitsWithBasehead({
+                  owner,repo,basehead:'main...'+name
+                });
+                ahead = comparison.data.ahead_by;
+              } catch(error) {
+                skipped.push({name,reason:'compare API failure; preserve'});
+                core.warning(name + ': compare failed: ' + error.message);
+                continue;
+              }
+              if(ahead !== 0){
+                skipped.push({name,reason:'unique commits not in main'});
+                continue;
+              }
+              safe.push(name);
+            }
+            core.info('Dry run: '+dryRun);
+            core.info('Eligible fully merged branches: '+JSON.stringify(safe));
+            core.info('Preserved branches: '+JSON.stringify(skipped));
+            if(dryRun)return;
+            if(safe.length > 40)throw new Error('Safety limit: more than 40 candidate branches');
+            for(const name of safe){
+              // Re-validate open PRs and ahead-by count immediately before deletion.
+              const current = await github.paginate(github.rest.pulls.list,{
+                owner,repo,state:'open',per_page:100
+              });
+              if(current.some(pr=>pr.base.ref===name ||
+                 (pr.head.repo?.full_name===ownRepo && pr.head.ref===name))){
+                core.warning('Preserving now-active branch: '+name);
+                continue;
+              }
+              const check = await github.rest.repos.compareCommitsWithBasehead({
+                owner,repo,basehead:'main...'+name
+              });
+              if(check.data.ahead_by !== 0){
+                core.warning('Preserving changed branch: '+name);
+                continue;
+              }
+              await github.rest.git.deleteRef({owner,repo,ref:'heads/'+name});
+              core.info('Deleted fully merged, unprotected branch: '+name);
+            }
