@@ -267,9 +267,9 @@ app.whenReady().then(async () => {
     validSender(event);
     return visualService.neighborhood(root,depth,direction,limit);
   });
-  ipcMain.handle('tempora:visualization:export', async(event,module,format,offset,limit)=>{
+  ipcMain.handle('tempora:visualization:export', async(event,module,format,offset,limit,facet)=>{
     validSender(event);
-    const output=await visualService.prepareExport(module,format,offset,limit);
+    const output=await visualService.prepareExport(module,format,offset,limit,facet??null);
     const choice=await dialog.showSaveDialog(mainWindow,{
       title:'Export TEMPORA scientific view',
       defaultPath:'TEMPORA-'+module+'.'+format,
