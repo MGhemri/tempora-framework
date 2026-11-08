@@ -53,3 +53,8 @@ Un second audit externe a été fourni le 2026-11-08 : voir [ANTIGRAVITY-2026-11
 ## Clôture ASSIST-M1.1d — 2026-11-08
 
 [PR #99](https://github.com/MGhemri/tempora-framework/pull/99) fusionnée en `main` (`30ce4f65701debb7e77118c88135afced5df37d9`). Les contrôles Linux/Windows, navigateur, ALNOP minimal, hygiène Git et Snyk ont réussi. [Issue #98](https://github.com/MGhemri/tempora-framework/issues/98) close. Inspection de cellules XLSX uniquement, sans importer ni évaluer de formules ; suivi du GUI dans [issue #100](https://github.com/MGhemri/tempora-framework/issues/100). Les mentions précédentes « en cours » sont historiques et remplacées par ce statut de clôture.
+
+
+## Suivi ASSIST-IPC-01 — Sessions natives sans privilèges renderer
+
+[Issue #100](https://github.com/MGhemri/tempora-framework/issues/100) : première PR IPC Electron à qualifier. Risques contrôlés : fuite de chemins, réutilisation de sessions expirées, modification du fichier entre ouverture et sélection de feuille, archive XLSX hostile, introduction involontaire de nouvelles entrées IPC. Tests sur fichiers synthétiques, sélection native et ressources empaquetées obligatoires avant clôture. **Le travail GUI et le pont Tauri restent ouverts.**
