@@ -61,8 +61,10 @@ Pour conserver une prévisualisation, ajouter `--write` à `import`. La commande
 Relire le rapport, puis sélectionner les identifiants à accepter. Remplacer les chemins et valeurs ci-dessous par ceux du lot local :
 
 ```sh
-npm run ingest:tempora -- accept --base work/tempora-v3/corpus-v3.json --batch CHEMIN_DU_LOT --id IDENTIFIANT --reviewer REVUE_LOCALE --reason "Motif de la sélection" --write
+npm run ingest:tempora -- accept --base work/tempora-v3/corpus-v3.json --batch CHEMIN_DU_LOT --batch-id SHA256_DU_LOT_VERIFIE --id IDENTIFIANT --reviewer REVUE_LOCALE --reason "Motif de la sélection" --write
 ```
+
+**Contrôle obligatoire du lot :** recopier explicitement la valeur `batch_id` du rapport effectivement relu dans `--batch-id`. L'acceptation échoue avec `REVIEW_BATCH_MISMATCH` si cette valeur est absente ou différente, même lorsque les identifiants sélectionnés sont identiques. Le moteur recalcule la prévisualisation sur les octets et le mapping du lot ; le nom du fichier n'est pas une preuve d'examen.
 
 `--id` peut être répété. Seules les lignes `create` sont sélectionnables. La commande recalcule le lot avant de l’appliquer et refuse une base modifiée depuis la prévisualisation. Elle crée une **nouvelle copie** et inscrit une décision d’acceptation locale ; les événements restent `proposed`. Le libellé de revue est déclaré par la personne qui exécute la commande ; ce n’est ni une authentification ni une approbation scientifique.
 
