@@ -165,3 +165,14 @@ L'absence d'exécution de formules et le refus des liens externes restent des ga
 | AG-07 | **surveillance** | Conserver barrières IPC, lien `batch_id`, aucune validation scientifique automatique | Recettes de sûreté spécifiques ; ne pas traiter un avis externe favorable comme certification |
 
 **Ordre AG-03/04/05/06 exécuté :** PR #93–#96 fusionnées avec CI verte ; ces corrections restent à distribuer dans une future release Desktop. **Priorités ouvertes :** lecture sécurisée des cellules Excel et interface Assistant, puis AUD-03 (récupération sûre du verrou) et AUD-04 (authenticité cryptographique). Toute PR de correction met à jour le registre et attend les contrôles Linux/Windows requis. Pas de publication Microsoft Store ni npm automatique.
+
+
+## ASSIST-M1.1d — Lecteur de cellules XLSX borné (chantier en revue)
+
+**Suivi :** [issue #98](https://github.com/MGhemri/tempora-framework/issues/98). Branche `feat/assist-xlsx-cells-m11d`; **non fusionnée** tant que la CI et les tests adversariaux ne sont pas vérifiés.
+
+L'extension de l'inventaire existant relit une copie figée et contrôlée des octets XLSX, puis extrait seulement la feuille sélectionnée explicitement. Éléments couverts : chaînes partagées, texte enrichi, valeurs typées, cellules clairsemées, métadonnées de formules en cache non fiables, provenance des coordonnées, système de dates Excel 1900/1904. Les nombres source restent inchangés et les dates de style reconnu ne sont que des candidates ; le jour fictif 1900-02-29 est signalé.
+
+**Plafonds conservés :** archive et expansion totale 16 Mio ; 512 entrées ; 128 feuilles ; 512 Kio par partie XML. **Plafonds additionnels :** 10 000 lignes, 256 colonnes, 20 000 cellules, 10 000 chaînes partagées, 16 384 caractères par cellule et 2 Mio de caractères de sortie. Dépassement = échec fermé, pas de tableau tronqué présenté comme complet.
+
+**À valider avant fusion :** tests adversariaux et compatibilité Windows/Linux, couverture du parseur XML strict, vérification que les dates restent candidates, et absence de modifications des données sources. Pas de GUI, pas d'ingestion automatique ni de changement du modèle canonique v3. Aucune release créée.
