@@ -7,7 +7,7 @@ Deux fichiers petits et **en lecture seule** destinés à tester l'inspecteur et
 
 ## Attribution et traçabilité ALNOP
 
-Source : https://github.com/MGhemri/aln-historical-operations-dataset/blob/main/operations_fln_1954_1962.geojson
+Source figée : https://github.com/MGhemri/aln-historical-operations-dataset/blob/2428a693393a4a635d5eeac3e3c8542498b8b9d6/operations_fln_1954_1962.geojson (commit 2428a693393a4a635d5eeac3e3c8542498b8b9d6).
 Dataset : ALN Historical Operations Dataset, Ghemri M. Licence annoncée par l'export géographique : **CC BY 4.0** https://creativecommons.org/licenses/by/4.0/. Conserver cette attribution et l'URL source lors de redistribution. Les sources primaires ou secondaires associées à chaque notice sont conservées dans `properties.sources` (jusqu'à deux pour préserver la taille). Un changement de sélection, une omission de champs et l'ajout de `geometry_role` sont des modifications explicites du présent extrait.
 
 **Attention scientifique :** les points peuvent être des coordonnées représentatives et non des localisations exactes d'événements. Les notices ne sont ni certifiées ni exhaustives, et ne prouvent pas les assertions historiques. Ne pas considérer une coordonnée cartographique comme une certitude géodésique ou l'extrait comme les 263 notices du jeu complet.
