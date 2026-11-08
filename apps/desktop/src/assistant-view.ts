@@ -42,6 +42,7 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
  const closeBtn=el('assistant-close') as HTMLButtonElement;
  const sheetSelect=el('assistant-sheet') as HTMLSelectElement;
  let source:AssistantOpen|null=null,table:AssistantTable|null=null,busy=false,serial=0;
+ let uiError:string|null=null;
  const status=el('assistant-status'),details=el('assistant-details');
  const columns=el('assistant-columns'),targets=el('assistant-targets');
  const sample=el('assistant-preview');
@@ -54,7 +55,7 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
    openBtn.textContent=t.open;openBtn.disabled=!host||busy;
    closeBtn.textContent=t.close;closeBtn.disabled=!source||busy;
    sheetSelect.disabled=!source||source.format!=='xlsx'||busy;
-   status.textContent=!host?t.unsupported:(source?source.file_name+' · '+source.format.toUpperCase():t.empty);
+   status.textContent=uiError??(!host?t.unsupported:(source?source.file_name+' · '+source.format.toUpperCase():t.empty));
    safeText(details,source?[source.file_name,'SHA-256: '+source.source_sha256,t.readonly]:[t.readonly]);
    const headers=table?.headers??(source?.format==='xlsx'?[]:
      source?.inspection.candidates?.[0]?.header_values??[]);
@@ -81,12 +82,12 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
    }
  };
  async function release():Promise<void>{
-   const prior=source;serial++;source=null;table=null;sheetSelect.replaceChildren();render();
+   const prior=source;serial++;source=null;table=null;uiError=null;sheetSelect.replaceChildren();render();
    if(prior&&host){try{await host.assistantClose(prior.handle_id);}catch{/* expired */}}
  }
  openBtn.addEventListener('click',async()=>{
    if(!host||busy)return;
-   busy=true;const ticket=++serial;const old=source;source=null;table=null;
+   busy=true;const ticket=++serial;const old=source;source=null;table=null;uiError=null;
    sheetSelect.replaceChildren();render();
    try{
      if(old)await host.assistantClose(old.handle_id);
@@ -105,18 +106,18 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
        sheetSelect.value='';
      }
    }catch(error){
-     if(ticket===serial)status.textContent=dictionary[lang()].invalid+': '+String((error as Error)?.message??error);
+     if(ticket===serial)uiError=dictionary[lang()].invalid+': '+String((error as Error)?.message??error);
    }finally{busy=false;render();}
  });
  sheetSelect.addEventListener('change',async()=>{
    if(!host||!source||source.format!=='xlsx'||busy)return;
-   const name=sheetSelect.value;table=null;if(!name){render();return;}
+   const name=sheetSelect.value;table=null;uiError=null;if(!name){render();return;}
    busy=true;const ticket=++serial,active=source;render();
    try{
      const result=await host.assistantSelectSheet(active.handle_id,name);
      if(ticket===serial&&result.source_sha256===active.source_sha256)table=result.table;
    }catch(error){
-     if(ticket===serial)status.textContent=dictionary[lang()].invalid+': '+String((error as Error)?.message??error);
+     if(ticket===serial)uiError=dictionary[lang()].invalid+': '+String((error as Error)?.message??error);
    }finally{busy=false;render();}
  });
  closeBtn.addEventListener('click',()=>{if(!busy)void release();});
