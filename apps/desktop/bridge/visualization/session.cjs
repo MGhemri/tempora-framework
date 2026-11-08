@@ -6,6 +6,7 @@ const {randomBytes}=require('node:crypto');
 const {build}=require('./projections.cjs');
 const {analyze}=require('./algorithms.cjs');
 const {buildExport}=require('./exporter.cjs');
+const {walk}=require('./graph-navigation.cjs');
 const MAX_CORPUS_BYTES=3*1024*1024;
 const TTL_MS=10*60*1000;
 function fail(code){const e=new Error(code);e.code=code;throw e;}
@@ -54,6 +55,13 @@ class ProjectManager {
   analyze(id,{module,limit=50,threshold=0.6}={}){
     const session=this.#get(id);
     const result=analyze(session.corpus,{module,limit,threshold,
+      generatedAt:new Date(this.clock()).toISOString()});
+    this.#renew(session);
+    return result;
+  }
+  graphNeighborhood(id,{root,depth=1,direction='both',limit=50}={}){
+    const session=this.#get(id);
+    const result=walk(session.corpus,{root,depth,direction,limit,
       generatedAt:new Date(this.clock()).toISOString()});
     this.#renew(session);
     return result;

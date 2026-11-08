@@ -13,6 +13,7 @@ declare global {
       closeVisualProject: () => Promise<boolean>;
       analyzeVisualProject: (module: string,limit: number,threshold: number) => Promise<unknown>;
       exportVisualProject: (module:string,format:string,offset:number,limit:number)=>Promise<unknown>;
+      queryGraphNeighborhood:(root:VisualTypedRef,depth:number,direction:string,limit:number)=>Promise<unknown>;
     };
   }
 }
@@ -78,4 +79,12 @@ export async function exportVisualProject(module:VisualModule,format:VisualExpor
   :Promise<VisualExportReceipt|null>{
   if(!window.temporaElectron)throw Error("VISUAL_ELECTRON_ONLY");
   return await window.temporaElectron.exportVisualProject(module,format,offset,limit) as VisualExportReceipt|null;
+}
+
+export type VisualTypedRef={kind:string;namespace:string;id:string};
+export type GraphDirection="in"|"out"|"both";
+export async function queryGraphNeighborhood(root:VisualTypedRef,depth=1,direction:GraphDirection="both",limit=50)
+  :Promise<VisualProjection>{
+  if(!window.temporaElectron)throw Error("VISUAL_ELECTRON_ONLY");
+  return await window.temporaElectron.queryGraphNeighborhood(root,depth,direction,limit) as VisualProjection;
 }

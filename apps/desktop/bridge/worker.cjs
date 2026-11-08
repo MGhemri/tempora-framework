@@ -32,7 +32,8 @@ function v2Respond(message){
   const op=message.operation,p=message.payload;
   if(!['visualization.capabilities','visualization.project.create',
     'visualization.project.query','visualization.project.release',
-    'visualization.analysis.run','visualization.export.prepare'].includes(op)){
+    'visualization.analysis.run','visualization.export.prepare',
+    'visualization.graph.neighborhood'].includes(op)){
     return v2Reply(id,false,{error:{code:'UNSUPPORTED_OPERATION'}});
   }
   try {
@@ -50,6 +51,11 @@ function v2Respond(message){
         throw Object.assign(new Error('INVALID_PAYLOAD'),{code:'INVALID_PAYLOAD'});
       result=visualization.query(p.project_id,
         {module:p.module,offset:p.offset,limit:p.limit});
+    } else if(op==='visualization.graph.neighborhood'){
+      if(Object.keys(p).some(k=>!['project_id','root','depth','direction','limit'].includes(k)))
+        throw Object.assign(new Error('INVALID_PAYLOAD'),{code:'INVALID_PAYLOAD'});
+      result=visualization.graphNeighborhood(p.project_id,
+        {root:p.root,depth:p.depth,direction:p.direction,limit:p.limit});
     } else if(op==='visualization.export.prepare'){
       if(Object.keys(p).some(k=>!['project_id','module','format','offset','limit'].includes(k)))
         throw Object.assign(new Error('INVALID_PAYLOAD'),{code:'INVALID_PAYLOAD'});

@@ -107,6 +107,20 @@
               <button type="button" data-visual-module="pattern">PatternLab</button>
               <button type="button" data-visual-module="observatory">Corpus Observatory</button>
             </div>
+            <section id="visual-graph-navigation" class="result-panel hidden" aria-label="GraphLab neighborhood">
+              <h3 data-i18n="graphNavTitle">Voisinage des relations déclarées</h3>
+              <p class="subnote" data-i18n="graphNavHelp">Référence canonique typée (kind, namespace, id). Aucun lien historique n'est inféré.</p>
+              <div class="visual-module-bar">
+                <label for="graph-kind">Kind <input id="graph-kind" type="text" maxlength="20" value="event" autocomplete="off"/></label>
+                <label for="graph-namespace">Namespace <input id="graph-namespace" type="text" maxlength="200" autocomplete="off"/></label>
+                <label for="graph-id">ID <input id="graph-id" type="text" maxlength="200" autocomplete="off"/></label>
+                <label for="graph-depth">Depth <select id="graph-depth"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">5</option></select></label>
+                <label for="graph-direction">Direction <select id="graph-direction"><option value="both">Both</option><option value="out">Out</option><option value="in">In</option></select></label>
+              </div>
+              <button type="button" id="graph-navigate" data-i18n="graphNavRun">Explorer le voisinage</button>
+              <p id="graph-nav-summary" class="subnote" role="status"></p>
+              <div class="table-wrap"><table><thead><tr><th>Declared relation / Relation déclarée</th><th>Traversal / Parcours</th></tr></thead><tbody id="graph-nav-rows"></tbody></table></div>
+            </section>
             <p id="visual-diagnostics" class="subnote"></p>
             <div id="visual-graphic" class="visual-graphic" aria-label="Visual research preview"></div>
             <div class="table-wrap"><table><thead><tr><th>Typed reference</th><th>Declared data / Données déclarées</th></tr></thead>
