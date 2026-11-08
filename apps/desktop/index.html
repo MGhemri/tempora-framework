@@ -121,6 +121,16 @@
               <p id="graph-nav-summary" class="subnote" role="status"></p>
               <div class="table-wrap"><table><thead><tr><th>Declared relation / Relation déclarée</th><th>Traversal / Parcours</th></tr></thead><tbody id="graph-nav-rows"></tbody></table></div>
             </section>
+            <section id="visual-snapshot-panel" class="result-panel hidden" aria-label="Corpus Observatory snapshot comparison">
+              <h3 data-i18n="snapshotTitle">Comparaison de deux corpus canoniques</h3>
+              <p class="subnote" data-i18n="snapshotHelp">Sélectionnez un second corpus local. Les changements mesurent les documents enregistrés, jamais l'exhaustivité historique.</p>
+              <button id="visual-snapshot-compare" type="button" data-i18n="snapshotCompare">Comparer avec un autre corpus</button>
+              <p id="visual-snapshot-status" class="subnote" role="status" aria-live="polite"></p>
+              <div class="table-wrap"><table><thead><tr>
+                <th data-i18n="snapshotCollection">Collection</th><th data-i18n="snapshotPrevious">Avant</th>
+                <th data-i18n="snapshotCurrent">Après</th><th>Δ</th><th data-i18n="snapshotAdded">Ajouts</th><th data-i18n="snapshotRemoved">Suppressions</th>
+              </tr></thead><tbody id="visual-snapshot-rows"></tbody></table></div>
+            </section>
             <p id="visual-diagnostics" class="subnote"></p>
             <div id="visual-graphic" class="visual-graphic" aria-label="Visual research preview"></div>
             <div class="table-wrap"><table><thead><tr><th>Typed reference</th><th>Declared data / Données déclarées</th></tr></thead>
