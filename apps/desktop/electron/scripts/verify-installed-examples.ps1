@@ -14,7 +14,7 @@ try {
   $process=Start-Process -FilePath $installerPath -ArgumentList $arguments -Wait -PassThru
   if ($process.ExitCode -ne 0) { throw ('ELECTRON_NSIS_INSTALL_FAILED: '+$process.ExitCode) }
   $resources=Join-Path $destination 'resources'
-  foreach ($name in @('README.md','synthetic-canonical-v3.json','alnop-geographic-sample.geojson')) {
+  foreach ($name in @('README.md','synthetic-canonical-v3.json','alnop-geographic-sample.geojson','alnop-canonical-v3-demo.json')) {
     $path=Join-Path $resources ('examples/'+$name)
     if (-not (Test-Path -LiteralPath $path -PathType Leaf)) {
       throw ('ELECTRON_INSTALLED_EXAMPLE_MISSING: '+$name)
