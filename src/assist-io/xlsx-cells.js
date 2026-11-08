@@ -162,8 +162,7 @@ function extractXlsxCells(bytes,{sheet_name}={}){
   const root=parseXml(open.readXmlPart(sheet.worksheet_part));
   if(root.name!=='worksheet')fail('ASSIST_XLSX_XML_UNSAFE');
   const data=child(root,'sheetData');
-  if(!data)fail('ASSIST_XLSX_SHEET_DATA');
-  const rawRows=children(data,'row');
+  const rawRows=data?children(data,'row'):[];
   if(rawRows.length>LIMITS.rows)fail('ASSIST_XLSX_PREVIEW_LIMIT');
   let lastRow=0,cellCount=0,maxColumns=0,output=0,hasFormulas=false;
   const diagnostics=[],cell_provenance=Object.create(null);
