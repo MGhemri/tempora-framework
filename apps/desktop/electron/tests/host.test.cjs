@@ -91,7 +91,7 @@ test('Electron Beta version in the GUI matches the shipped package',()=>{
  const pkg=require('../package.json');
  const preload=src('electron/preload.cjs');
  const view=src('src/main.ts');
- assert.equal(pkg.version,'0.1.1-beta.2');
+ assert.equal(pkg.version,'0.1.2-beta.3');
  assert.match(preload,/desktopVersion: '0\.1\.1-beta\.2'/);
  assert.match(view,/window\.temporaElectron\.desktopVersion/);
  assert.match(view,/sidebarVersion\.textContent/);
