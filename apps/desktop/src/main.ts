@@ -131,6 +131,7 @@ let visualSnapshot:VisualSnapshotDiff|null=null;
 let visualBusy=false;
 let visualSequence=0;
 let visualCancelVersion=0;
+let visualCancelling=false;
 
 function byId(id: string): HTMLElement {
   const found = document.getElementById(id);
@@ -493,7 +494,7 @@ function renderVisual():void {
   (byId("visual-next") as HTMLButtonElement).disabled=visualBusy||!info||!result||
     visualOffset+result.scope.returned>=result.scope.total_matched||result.scope.returned===0;
   (byId("visual-open") as HTMLButtonElement).disabled=visualBusy||!window.temporaElectron;
-  (byId("visual-cancel") as HTMLButtonElement).disabled=(!visualBusy&&!info)||!window.temporaElectron;
+  (byId("visual-cancel") as HTMLButtonElement).disabled=visualCancelling||(!visualBusy&&!info)||!window.temporaElectron;
 }
 async function loadVisual():Promise<void> {
   if(!visualInfo||visualBusy)return;
@@ -533,15 +534,17 @@ byId("validate-corpus").addEventListener("click", () => void validateCorpus());
 byId("draft-copy").addEventListener("click", () => void copyReviewDraft());
 byId("visual-open").addEventListener("click",()=>void openVisual());
 byId("visual-cancel").addEventListener("click",async()=>{
+  if(visualCancelling)return;
   ++visualCancelVersion;
   ++visualSequence;
   visualInfo=null;visualProjection=null;visualAnalysis=null;
-  graphNavigation=null;visualSnapshot=null;visualOffset=0;visualBusy=false;
+  graphNavigation=null;visualSnapshot=null;visualOffset=0;visualCancelling=true;visualBusy=true;
   renderVisual();
   try{
     await cancelVisualJob();
     notify(language==="fr"?"Calcul interrompu. Session locale fermée.":"Calculation stopped. Local session closed.");
   }catch(error){notify(error instanceof Error?error.message:String(error));}
+  finally{visualCancelling=false;visualBusy=false;renderVisual();}
 });
 document.querySelectorAll<HTMLButtonElement>("[data-visual-module]").forEach(button=>button.addEventListener("click",()=>{
   const module=button.dataset.visualModule as VisualModule;
