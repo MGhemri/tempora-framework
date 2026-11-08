@@ -194,3 +194,35 @@ qu'**après certification et publication par Microsoft**.
 Les variantes NSIS et Store doivent être testées séparément, notamment
 le stockage local, la sélection native de fichiers, le lancement du
 worker Node embarqué, la lecture de corpus synthétiques et la désinstallation.
+
+
+## Exemples scientifiques inclus / Bundled research examples (J8B)
+
+Les installateurs **Electron NSIS et Microsoft Store AppX candidat** embarquent maintenant
+un dossier `resources/examples/` local et hors ligne, identique à celui livré par Tauri NSIS :
+
+- `synthetic-canonical-v3.json` : corpus de test **fictif**, compatible avec la
+  validation TEMPORA v3, utilisable dans le sélecteur de documents et les modules TVRW.
+- `alnop-geographic-sample.geojson` : extrait de **cinq notices** issues du
+  dataset ALNOP, une par wilaya historique W1 à W5, pour inspection géographique.
+  **GeoJSON ≠ corpus canonique TEMPORA v3**. Ce jeu peut être lu par l'inspecteur
+  GeoJSON mais n'est pas validable directement comme corpus canonique.
+- `README.md` : attribution, licence, limites historiques et mode d'emploi.
+
+La source géographique est figée à la révision ALNOP
+`2428a693393a4a635d5eeac3e3c8542498b8b9d6`.
+Licence annoncée par l'export GeoJSON : **CC BY 4.0**, attribution Ghemri M.
+Les coordonnées représentatives ne doivent jamais être présentées comme
+des positions historiques exactes. Aucun fonds ou géocodage distant n'est téléchargé.
+
+**Pour essayer :** après installation, naviguer dans le dossier d'installation,
+sous `resources/examples/`, et ouvrir l'un des deux documents depuis
+TEMPORA Desktop via le sélecteur natif. L'application ne copie pas les fichiers
+dans le profil utilisateur et ne modifie pas les exemples d'origine.
+
+La CI du package Electron contrôle la présence des ressources dans
+`win-unpacked/resources/examples/`, puis installe réellement le NSIS dans un
+répertoire Windows isolé, vérifie les exemples installés et exécute le
+validateur canonique avec le Node embarqué (sans Node système dans `PATH`). Les chemins Store sont aussi vérifiés par le
+test de contrat; ce contrôle n'est **pas** une qualification E2E d'installation
+Store et ne remplace pas les essais manuels sur Windows Sandbox propre.

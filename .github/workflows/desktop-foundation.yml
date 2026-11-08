@@ -213,3 +213,53 @@ jobs:
           path: work/benchmarks/tvrw-synthetic-report.json
           if-no-files-found: error
           retention-days: 14
+
+  electron-windows-examples:
+    name: Electron Windows x64 NSIS and bundled examples
+    runs-on: windows-latest
+    timeout-minutes: 45
+    if: ${{ github.event_name != 'workflow_dispatch' || inputs.synthetic_benchmark != true }}
+    defaults:
+      run:
+        working-directory: apps/desktop
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+          cache: npm
+          cache-dependency-path: apps/desktop/electron/package-lock.json
+      - name: Build shared Desktop GUI and contract tests
+        run: |
+          npm install --ignore-scripts --no-audit --no-fund
+          npm run build
+          npm run test:bridge
+          npm run test:visualization
+          node --test electron/tests/host.test.cjs
+          node --test electron/tests/review-integrity.test.cjs
+      - name: Stage pinned scientific runtime
+        run: npm run stage:windows-engine
+      - name: Restore exact Electron packaging toolchain
+        working-directory: apps/desktop/electron
+        run: npm ci --no-audit --no-fund
+      - name: Package unsigned experimental Electron NSIS
+        working-directory: apps/desktop/electron
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+        run: npm run dist:win
+      - name: Test packaged resources and canonical sample with embedded engine
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $resourceRoot = 'electron/release/win-unpacked/resources'
+          foreach ($name in @('README.md','synthetic-canonical-v3.json','alnop-geographic-sample.geojson')) {
+            if (-not (Test-Path (Join-Path $resourceRoot ('examples/' + $name)))) {
+              throw ('ELECTRON_EXAMPLE_MISSING: ' + $name)
+            }
+          }
+          node electron/tests/packaged-engine-smoke.cjs $resourceRoot
+          if ($LASTEXITCODE -ne 0) { throw 'ELECTRON_EXAMPLE_SMOKE_FAILED' }
+          $setups = @(Get-ChildItem electron/release -File -Filter '*SETUP.exe')
+          if ($setups.Count -ne 1) { throw 'ELECTRON_NSIS_INSTALLER_MISSING_OR_AMBIGUOUS' }
+          Write-Host ('Unsigned experimental Electron NSIS: ' + $setups[0].Name)
+          ./electron/scripts/verify-installed-examples.ps1 -Installer $setups[0].FullName -InstallDirectory "$env:RUNNER_TEMP/tempora-electron-j8-examples"

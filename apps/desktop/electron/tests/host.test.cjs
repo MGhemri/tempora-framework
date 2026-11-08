@@ -132,3 +132,33 @@ test('Microsoft Store distribution uses actual Partner Center identity and never
  assert.match(flow,/UNSIGNED-NOT-PUBLISHED/);
  assert.doesNotMatch(flow,/gh release create|store publish|partnercenter.*upload/i);
 });
+
+
+test('Electron NSIS and Store package the same fully offline sample corpora',()=>{
+  const pkg=require('../package.json');
+  const examples=pkg.build.extraResources.find(x=>x.to==='examples');
+  assert.ok(examples,'examples must be electron-builder extraResources');
+  assert.equal(examples.from,'../examples');
+  assert.deepEqual(examples.filter,['**/*']);
+  const store=require('../store-appx.config.cjs');
+  assert.ok(store.extraResources.some(x=>x.to==='examples'),'Store must also include examples');
+  const smoke=src('electron/tests/packaged-engine-smoke.cjs');
+  assert.match(smoke,/installedCanonical/);
+  assert.match(smoke,/installedAlnop/);
+  assert.match(smoke,/smoke_example/);
+});
+
+test('Electron GeoJSON preview renders ALNOP operation title and type from feature properties',()=>{
+  const host=src('electron/main.cjs');
+  assert.match(host,/item\?\.properties\?\.nom_operation/);
+  assert.match(host,/item\?\.properties\?\.type_action/);
+  assert.match(host,/item\?\.geometry\?\.type/);
+});
+
+
+test('packaged worker smoke uses absolute paths despite changing cwd',()=>{
+  const smoke=src('electron/tests/packaged-engine-smoke.cjs');
+  assert.match(smoke,/const resourceRoot = resolve\(suppliedResourceRoot\)/);
+  assert.match(smoke,/isAbsolute\(node\) && isAbsolute\(worker\)/);
+  assert.match(smoke,/cwd:join\(resourceRoot,'engine'\)/);
+});
