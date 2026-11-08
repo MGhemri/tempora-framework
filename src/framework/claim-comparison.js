@@ -2,7 +2,10 @@ function canonical(v){if(Array.isArray(v))return v.map(canonical);if(v&&typeof v
 const exact=v=>JSON.stringify(canonical(v));
 function overlap(a,b){return a?.earliest&&a.latest&&b?.earliest&&b.latest?!(a.latest<b.earliest||b.latest<a.earliest):null;}
 function contextKnown(c){return c&&c.scope?.trim()&&c.population?.trim()&&['entire_event','specific_period'].includes(c.time_scope);}
-function compareClaims(a,b,{languages:locales=['fr','ar']}={}){
+// Direct callers have no implicit regional language policy. The canonical
+// analyzer supplies corpus.profile.locales explicitly; absent languages must
+// never be interpreted as evidence of equality across text translations.
+function compareClaims(a,b,{languages:locales=[]}={}){
   const base={claim_ids:[a.id,b.id].sort(),subject:a.subject,predicate:a.predicate,requires_human_review:true,
     values:[{claim_id:a.id,value:a.value,unit:a.unit||null,evidence:a.evidence},{claim_id:b.id,value:b.value,unit:b.unit||null,evidence:b.evidence}]};
   let reason;
