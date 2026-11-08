@@ -112,3 +112,14 @@ Les mois français exacts conservent la précision `month` et les années bissex
 - **ASSIST-M1.1a** : [PR #84](https://github.com/MGhemri/tempora-framework/pull/84) fusionnée — inspection bornée CSV/TSV, sans inférence et sans écriture.
 - **ASSIST-M1.3a** : [PR #87](https://github.com/MGhemri/tempora-framework/pull/87) fusionnée — dates explicites, précision mensuelle, année approximative sous politique de rayon confirmée, listes à séparateur confirmé et quarantaine.
 - **Étapes encore nécessaires pour M1** : adaptateur Excel non exécutant, éditeur de mapping et contrats versionnés, prévisualisation réutilisant `prepareImport`, tests de parcours complet local. **Aucun assistant graphique complet n'est livré à ce stade.**
+
+
+## ASSIST-M1.2a — Suggestions de mapping et compilation confirmée (PR en cours)
+
+Le module privé `src/framework/assist-mapping.js` propose des correspondances entre **en-têtes explicitement fournis** et champs TEMPORA via une table de synonymes Unicode versionnée. Chaque proposition est étiquetée `suggested`, explique sa règle et reste **non sélectionnée** ; même une correspondance exacte ne vaut pas validation.
+
+L'utilisateur doit fournir une liaison `confirmed_by_user` pour chaque champ retenu, avec le séparateur CSV également confirmé. Le compilateur produit un **`mapping.json` strictement conforme au contrat ingestion 1.0.0** (id, version, profil, champs avec JSON pointers échappés), sans introduire de clés incompatibles. Les titres localisés respectent les langues déclarées par le profil. Les en-têtes dangereux ou dupliqués, colonnes inconnues, champs hors schéma, conflits et validations manquantes sont rejetés par des codes stables. Des tests comparent la sortie à `checkMapping`, le validateur en place.
+
+**Limites :** ceci n'est pas encore l'éditeur visuel à deux colonnes, ne lie pas automatiquement une inspection à une confirmation, ne traite pas XLSX, ne convertit pas dates/listes et ne valide pas un corpus ni sa provenance historique. Pas de réseau, fichier écrit, nouvelle API SDK ou modification du schéma canonique v3.
+
+**Statut :** code proposé sur branche, non finalisé tant que la CI n'est pas verte et la PR fusionnée.
