@@ -110,11 +110,18 @@ function analyze(corpus,{module,limit=LIMIT,threshold=0.6,generatedAt='2026-01-0
   const calculation=module==='pattern'?pattern(corpus,threshold):HANDLERS[module](corpus);
   const rows=sort(calculation.results);
   return projection({
-    corpus,algorithm:{id:'tvrw.'+module+'.deterministic',version:'1.0.0',
+    corpus,algorithm:{id:'tvrw.'+module+'.deterministic',
+      version:module==='chronos'?'1.0.1':'1.0.0',
       parameters:{limit,...(module==='pattern'?{threshold}:{})}},
     mode:'validated',filters:{module,method:'deterministic'},
     totalMatched:rows.length,result:rows.slice(0,limit),
-    diagnostics:rows.length>limit?[{code:'TRUNCATED',severity:'warning',count:rows.length-limit}]:[],
+    diagnostics:[
+      ...(rows.length>limit?[{code:'TRUNCATED',severity:'warning',
+        count:rows.length-limit}]:[]),
+      ...(module==='chronos'&&calculation.notes.unknown_end_dates>0?
+        [{code:'UNKNOWN_END_DATES',severity:'info',
+          count:calculation.notes.unknown_end_dates}]:[])
+    ],
     generatedAt
   });
 }
