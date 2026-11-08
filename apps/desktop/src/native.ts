@@ -9,7 +9,7 @@ declare global {
       copyReviewDraft: (draft: string) => Promise<boolean>;
       openOfficialLink: (url: string) => Promise<boolean>;
       openVisualProject: () => Promise<unknown>;
-      queryVisualProject: (module: string, offset: number, limit: number) => Promise<unknown>;
+      queryVisualProject: (module: string, offset: number, limit: number, facet?:VisualFacet|null) => Promise<unknown>;
       closeVisualProject: () => Promise<boolean>;
       analyzeVisualProject: (module: string,limit: number,threshold: number) => Promise<unknown>;
       exportVisualProject: (module:string,format:string,offset:number,limit:number)=>Promise<unknown>;
@@ -62,9 +62,9 @@ export async function openVisualProject():Promise<VisualProjectInfo|null>{
   if(!window.temporaElectron)throw Error("VISUAL_ELECTRON_ONLY");
   return await window.temporaElectron.openVisualProject() as VisualProjectInfo|null;
 }
-export async function queryVisualProject(module:VisualModule,offset=0,limit=50):Promise<VisualProjection>{
+export async function queryVisualProject(module:VisualModule,offset=0,limit=50,facet:VisualFacet|null=null):Promise<VisualProjection>{
   if(!window.temporaElectron)throw Error("VISUAL_ELECTRON_ONLY");
-  return await window.temporaElectron.queryVisualProject(module,offset,limit) as VisualProjection;
+  return await window.temporaElectron.queryVisualProject(module,offset,limit,facet) as VisualProjection;
 }
 export async function closeVisualProject():Promise<void>{
   if(window.temporaElectron)await window.temporaElectron.closeVisualProject();
@@ -108,3 +108,10 @@ export async function cancelVisualJob():Promise<{cancelled:boolean;session_close
   if(!window.temporaElectron)throw Error("VISUAL_ELECTRON_ONLY");
   return await window.temporaElectron.cancelVisualJob();
 }
+
+/** Strict, data-only facets. No expression language, arbitrary operations, or inferred links. */
+export type VisualFacet={
+  time?:{mode:"possible-overlap"|"certain-only"|"declared-start";earliest:string;latest:string}|null;
+  statuses?:Array<"proposed"|"under_review"|"published"|"withdrawn"|"unspecified">|null;
+  selectedRef?:VisualTypedRef|null;
+};
