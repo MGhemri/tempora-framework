@@ -29,7 +29,8 @@ function filter(corpus,{earliest,latest,mode='possible-overlap',offset=0,limit=5
   for(const ev of events){
     const start=ev.start_date,end=ev.end_date;
     const lo=start?.earliest??null;
-    const hi=mode==='declared-start'?(start?.latest??null):(end?.latest??start?.latest??null);
+    const hi=mode==='declared-start'?(start?.latest??null):
+      (end ? (end.latest??null) : (start?.latest??null));
     // One missing bound is not evidence of a day, even for before/after.
     if(!lo||!hi){unknown++;continue;}
     const matches=mode==='certain-only'?
