@@ -1,0 +1,717 @@
+{
+  "schema_version": "3.0.0",
+  "profile": {
+    "profile_schema_version": "1.0.0",
+    "version": "1.0.0",
+    "id": "alnop",
+    "display_name": "ALNOP",
+    "namespace": "ALNOP",
+    "framework": ">=3.0.0 <4.0.0",
+    "default_locale": "fr",
+    "locales": [
+      "fr",
+      "ar"
+    ],
+    "time": {
+      "calendar": "gregorian",
+      "coverage": {
+        "earliest": "1954-01-01",
+        "latest": "1962-12-31"
+      }
+    },
+    "spatial": {
+      "crs": "EPSG:4326"
+    },
+    "taxonomies": [
+      "event_types",
+      "territorial_units"
+    ],
+    "aliases": [],
+    "parameters": {
+      "coverage": {
+        "from_year": 1954,
+        "to_year": 1962
+      }
+    },
+    "rules": [
+      {
+        "id": "event-id",
+        "type": "required",
+        "field": "id",
+        "severity": "error"
+      },
+      {
+        "id": "start-window",
+        "type": "date_range",
+        "field": "start_date",
+        "severity": "error"
+      },
+      {
+        "id": "end-window",
+        "type": "date_range",
+        "field": "end_date",
+        "severity": "error"
+      },
+      {
+        "id": "event-type",
+        "type": "vocabulary",
+        "field": "event_type",
+        "taxonomy": "event_types",
+        "severity": "error"
+      },
+      {
+        "id": "territory",
+        "type": "vocabulary",
+        "field": "territory_ids",
+        "taxonomy": "territorial_units",
+        "severity": "error"
+      }
+    ],
+    "exports": [
+      "json",
+      "geojson",
+      "csv"
+    ]
+  },
+  "taxonomies": {
+    "event_types": [
+      "Offensive coordonnée",
+      "Sabotage"
+    ],
+    "territorial_units": []
+  },
+  "events": [
+    {
+      "schema_version": "3.0.0",
+      "namespace": "ALNOP",
+      "editorial_status": "unspecified",
+      "provenance": {
+        "evidence": [],
+        "transformations": []
+      },
+      "kind": "event",
+      "id": "OP_1954_001",
+      "title": {
+        "fr": "Déclenchement du 1er Novembre 1954 (« Toussaint rouge »)"
+      },
+      "description": {
+        "fr": "Ensemble du territoire algérien (épicentre dans les Aurès : Batna, Arris, Biskra, Tighanimine, ainsi qu'à Alger, Constantine et Oran)"
+      },
+      "start_date": {
+        "kind": "exact",
+        "calendar": "gregorian",
+        "original": "1954-11-01",
+        "earliest": "1954-11-01",
+        "latest": "1954-11-01",
+        "precision": "day",
+        "certainty": "unknown"
+      },
+      "end_date": {
+        "kind": "exact",
+        "calendar": "gregorian",
+        "original": "1954-11-01",
+        "earliest": "1954-11-01",
+        "latest": "1954-11-01",
+        "precision": "day",
+        "certainty": "unknown"
+      },
+      "event_type": [
+        "Offensive coordonnée"
+      ],
+      "spatial_refs": [
+        {
+          "kind": "spatial",
+          "namespace": "ALNOP",
+          "id": "SPACE_OP_1954_001"
+        }
+      ],
+      "territory_refs": [],
+      "participant_refs": [],
+      "review_refs": [],
+      "extensions": {
+        "alnop_geo_demo": {
+          "source_commit": "2428a693393a4a635d5eeac3e3c8542498b8b9d6",
+          "source_path": "/features/0",
+          "source_feature_id": "OP_1954_001",
+          "geometry_role": "representative_point",
+          "warning": "External GeoJSON documentation is not imported as canonical evidence; independent historical review required.",
+          "original_properties": {
+            "id": "OP_1954_001",
+            "nom_operation": "Déclenchement du 1er Novembre 1954 (« Toussaint rouge »)",
+            "date_debut": "1954-11-01",
+            "date_fin": "1954-11-01",
+            "wilaya_code": "W1",
+            "wilaya_label_fr": "Wilaya I (Aurès)",
+            "type_action": "Offensive coordonnée",
+            "region_ou_ville": "Ensemble du territoire algérien (épicentre dans les Aurès : Batna, Arris, Biskra, Tighanimine, ainsi qu'à Alger, Constantine et Oran)",
+            "geometry_role": "representative_point",
+            "source_ids": [],
+            "sources": [
+              {
+                "titre": "Toussaint rouge — Wikipédia",
+                "url": "https://fr.wikipedia.org/wiki/Toussaint_rouge",
+                "type_source": "Article"
+              },
+              {
+                "titre": "Note 108 : Les débuts de la guerre d'Algérie, les gendarmes face à la Toussaint rouge — Centre de Recherche de la Gendarmerie Nationale",
+                "url": "https://www.gendarmerie.interieur.gouv.fr/crgn/actus/note-108-les-debuts-de-la-guerre-d-algerie-les-gendarmes-face-a-la-toussaint-rouge",
+                "type_source": "Archive"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "schema_version": "3.0.0",
+      "namespace": "ALNOP",
+      "editorial_status": "unspecified",
+      "provenance": {
+        "evidence": [],
+        "transformations": []
+      },
+      "kind": "event",
+      "id": "OP_1954_007",
+      "title": {
+        "fr": "Attaques d'Azazga, Tigzirt, Bordj Menaïel et Draâ El Mizan au déclenchement en Kabylie"
+      },
+      "description": {
+        "fr": "Azazga, Tigzirt, Draâ El Mizan et Bordj Menaïel (Wilayas de Tizi Ouzou et Boumerdès)"
+      },
+      "start_date": {
+        "kind": "exact",
+        "calendar": "gregorian",
+        "original": "1954-11-01",
+        "earliest": "1954-11-01",
+        "latest": "1954-11-01",
+        "precision": "day",
+        "certainty": "unknown"
+      },
+      "end_date": {
+        "kind": "exact",
+        "calendar": "gregorian",
+        "original": "1954-11-02",
+        "earliest": "1954-11-02",
+        "latest": "1954-11-02",
+        "precision": "day",
+        "certainty": "unknown"
+      },
+      "event_type": [
+        "Offensive coordonnée"
+      ],
+      "spatial_refs": [
+        {
+          "kind": "spatial",
+          "namespace": "ALNOP",
+          "id": "SPACE_OP_1954_007"
+        }
+      ],
+      "territory_refs": [],
+      "participant_refs": [],
+      "review_refs": [],
+      "extensions": {
+        "alnop_geo_demo": {
+          "source_commit": "2428a693393a4a635d5eeac3e3c8542498b8b9d6",
+          "source_path": "/features/1",
+          "source_feature_id": "OP_1954_007",
+          "geometry_role": "representative_point",
+          "warning": "External GeoJSON documentation is not imported as canonical evidence; independent historical review required.",
+          "original_properties": {
+            "id": "OP_1954_007",
+            "nom_operation": "Attaques d'Azazga, Tigzirt, Bordj Menaïel et Draâ El Mizan au déclenchement en Kabylie",
+            "date_debut": "1954-11-01",
+            "date_fin": "1954-11-02",
+            "wilaya_code": "W3",
+            "wilaya_label_fr": "Wilaya III (Kabylie)",
+            "type_action": "Offensive coordonnée",
+            "region_ou_ville": "Azazga, Tigzirt, Draâ El Mizan et Bordj Menaïel (Wilayas de Tizi Ouzou et Boumerdès)",
+            "geometry_role": "representative_point",
+            "source_ids": [],
+            "sources": [
+              {
+                "titre": "Mohand Ameziane Yazourene (dit Vrirouche), un stratège de la guerre de libération dans la Wilaya III historique — Algérie Presse Service (APS)",
+                "url": "https://www.aps.dz/fr/algerie/societe/mk013dwo-mohand-ameziane-yazourene-un-stratege-de-la-guerre-de-liberation-dans-la-wilaya-iii-historique",
+                "type_source": "Article"
+              },
+              {
+                "titre": "Wilaya III historique — Wikipédia",
+                "url": "https://fr.wikipedia.org/wiki/Wilaya_III_historique",
+                "type_source": "Article"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "schema_version": "3.0.0",
+      "namespace": "ALNOP",
+      "editorial_status": "unspecified",
+      "provenance": {
+        "evidence": [],
+        "transformations": []
+      },
+      "kind": "event",
+      "id": "OP_1954_008",
+      "title": {
+        "fr": "Attaques des casernes de Blida, Boufarik et incendie des dépôts de chêne-liège de la Mitidja"
+      },
+      "description": {
+        "fr": "Blida, Boufarik, Soumaâ et contreforts de l'Atlas blidéen (Wilaya de Blida)"
+      },
+      "start_date": {
+        "kind": "exact",
+        "calendar": "gregorian",
+        "original": "1954-11-01",
+        "earliest": "1954-11-01",
+        "latest": "1954-11-01",
+        "precision": "day",
+        "certainty": "unknown"
+      },
+      "end_date": {
+        "kind": "exact",
+        "calendar": "gregorian",
+        "original": "1954-11-02",
+        "earliest": "1954-11-02",
+        "latest": "1954-11-02",
+        "precision": "day",
+        "certainty": "unknown"
+      },
+      "event_type": [
+        "Offensive coordonnée"
+      ],
+      "spatial_refs": [
+        {
+          "kind": "spatial",
+          "namespace": "ALNOP",
+          "id": "SPACE_OP_1954_008"
+        }
+      ],
+      "territory_refs": [],
+      "participant_refs": [],
+      "review_refs": [],
+      "extensions": {
+        "alnop_geo_demo": {
+          "source_commit": "2428a693393a4a635d5eeac3e3c8542498b8b9d6",
+          "source_path": "/features/2",
+          "source_feature_id": "OP_1954_008",
+          "geometry_role": "representative_point",
+          "warning": "External GeoJSON documentation is not imported as canonical evidence; independent historical review required.",
+          "original_properties": {
+            "id": "OP_1954_008",
+            "nom_operation": "Attaques des casernes de Blida, Boufarik et incendie des dépôts de chêne-liège de la Mitidja",
+            "date_debut": "1954-11-01",
+            "date_fin": "1954-11-02",
+            "wilaya_code": "W4",
+            "wilaya_label_fr": "Wilaya IV (Algérois)",
+            "type_action": "Offensive coordonnée",
+            "region_ou_ville": "Blida, Boufarik, Soumaâ et contreforts de l'Atlas blidéen (Wilaya de Blida)",
+            "geometry_role": "representative_point",
+            "source_ids": [],
+            "sources": [
+              {
+                "titre": "Wilaya IV historique — Wikipédia",
+                "url": "https://fr.wikipedia.org/wiki/Wilaya_IV_historique",
+                "type_source": "Article"
+              },
+              {
+                "titre": "Wilaya IV : Les maquis de la dignité — El Moudjahid",
+                "url": "https://www.elmoudjahid.dz/fr/actualite/wilaya-iv-les-maquis-de-la-dignite-242798",
+                "type_source": "Article"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "schema_version": "3.0.0",
+      "namespace": "ALNOP",
+      "editorial_status": "unspecified",
+      "provenance": {
+        "evidence": [],
+        "transformations": []
+      },
+      "kind": "event",
+      "id": "OP_1954_010",
+      "title": {
+        "fr": "Incendie et sabotage du dépôt de liège de Hafir"
+      },
+      "description": {
+        "fr": "Forêt de Hafir / Tlemcen"
+      },
+      "start_date": {
+        "kind": "exact",
+        "calendar": "gregorian",
+        "original": "1954-11-01",
+        "earliest": "1954-11-01",
+        "latest": "1954-11-01",
+        "precision": "day",
+        "certainty": "unknown"
+      },
+      "end_date": {
+        "kind": "unknown",
+        "calendar": "gregorian",
+        "original": null,
+        "earliest": null,
+        "latest": null,
+        "precision": "unknown",
+        "certainty": "unknown"
+      },
+      "event_type": [
+        "Sabotage"
+      ],
+      "spatial_refs": [
+        {
+          "kind": "spatial",
+          "namespace": "ALNOP",
+          "id": "SPACE_OP_1954_010"
+        }
+      ],
+      "territory_refs": [],
+      "participant_refs": [],
+      "review_refs": [],
+      "extensions": {
+        "alnop_geo_demo": {
+          "source_commit": "2428a693393a4a635d5eeac3e3c8542498b8b9d6",
+          "source_path": "/features/3",
+          "source_feature_id": "OP_1954_010",
+          "geometry_role": "representative_point",
+          "warning": "External GeoJSON documentation is not imported as canonical evidence; independent historical review required.",
+          "original_properties": {
+            "id": "OP_1954_010",
+            "nom_operation": "Incendie et sabotage du dépôt de liège de Hafir",
+            "date_debut": "1954-11-01",
+            "date_fin": null,
+            "wilaya_code": "W5",
+            "wilaya_label_fr": "Wilaya V (Oranie)",
+            "type_action": "Sabotage",
+            "region_ou_ville": "Forêt de Hafir / Tlemcen",
+            "geometry_role": "representative_point",
+            "source_ids": [],
+            "sources": [
+              {
+                "titre": "L'insurrection du 1er Novembre en Oranie (ASJP)",
+                "url": "https://asjp.cerist.dz/en/downArticle/144/11/1/115789",
+                "type_source": "Ouvrage académique"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "schema_version": "3.0.0",
+      "namespace": "ALNOP",
+      "editorial_status": "unspecified",
+      "provenance": {
+        "evidence": [],
+        "transformations": []
+      },
+      "kind": "event",
+      "id": "OP_1954_006",
+      "title": {
+        "fr": "Attaque de la mine de Nador (Hammam N'Baïls) et opérations de Guelma - Souk Ahras"
+      },
+      "description": {
+        "fr": "Mine de zinc et de plomb du Nador, commune de Hammam N'Baïls, entre Guelma et Souk Ahras (Wilaya de Guelma)"
+      },
+      "start_date": {
+        "kind": "exact",
+        "calendar": "gregorian",
+        "original": "1954-11-07",
+        "earliest": "1954-11-07",
+        "latest": "1954-11-07",
+        "precision": "day",
+        "certainty": "unknown"
+      },
+      "end_date": {
+        "kind": "exact",
+        "calendar": "gregorian",
+        "original": "1954-11-08",
+        "earliest": "1954-11-08",
+        "latest": "1954-11-08",
+        "precision": "day",
+        "certainty": "unknown"
+      },
+      "event_type": [
+        "Sabotage"
+      ],
+      "spatial_refs": [
+        {
+          "kind": "spatial",
+          "namespace": "ALNOP",
+          "id": "SPACE_OP_1954_006"
+        }
+      ],
+      "territory_refs": [],
+      "participant_refs": [],
+      "review_refs": [],
+      "extensions": {
+        "alnop_geo_demo": {
+          "source_commit": "2428a693393a4a635d5eeac3e3c8542498b8b9d6",
+          "source_path": "/features/4",
+          "source_feature_id": "OP_1954_006",
+          "geometry_role": "representative_point",
+          "warning": "External GeoJSON documentation is not imported as canonical evidence; independent historical review required.",
+          "original_properties": {
+            "id": "OP_1954_006",
+            "nom_operation": "Attaque de la mine de Nador (Hammam N'Baïls) et opérations de Guelma - Souk Ahras",
+            "date_debut": "1954-11-07",
+            "date_fin": "1954-11-08",
+            "wilaya_code": "W2",
+            "wilaya_label_fr": "Wilaya II (Nord-Constantinois)",
+            "type_action": "Sabotage",
+            "region_ou_ville": "Mine de zinc et de plomb du Nador, commune de Hammam N'Baïls, entre Guelma et Souk Ahras (Wilaya de Guelma)",
+            "geometry_role": "representative_point",
+            "source_ids": [],
+            "sources": [
+              {
+                "titre": "Trois offensives retentissantes annonçaient le déclenchement de la Révolution entre Guelma et Souk Ahras — Algérie Presse Service (APS)",
+                "url": "https://www.aps.dz/fr/algerie/actualite-nationale/mhf2azba-trois-offensives-retentissantes-annoncaient-le-declenchement-de-la-revolution-entre-guelma-et-souk-ahras",
+                "type_source": "Article"
+              },
+              {
+                "titre": "Guelma, la wilaya aux 5 000 martyrs — El Moudjahid",
+                "url": "https://www.elmoudjahid.dz/fr/l-evenement/guelma-la-wilaya-au-5-000-martyrs-195645",
+                "type_source": "Article"
+              }
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "sources": [],
+  "claims": [],
+  "entities": [],
+  "spatial_assertions": [
+    {
+      "schema_version": "3.0.0",
+      "namespace": "ALNOP",
+      "editorial_status": "unspecified",
+      "provenance": {
+        "evidence": [],
+        "transformations": []
+      },
+      "kind": "spatial",
+      "id": "SPACE_OP_1954_001",
+      "subject": {
+        "kind": "event",
+        "namespace": "ALNOP",
+        "id": "OP_1954_001"
+      },
+      "label": {
+        "fr": "Ensemble du territoire algérien (épicentre dans les Aurès : Batna, Arris, Biskra, Tighanimine, ainsi qu'à Alger, Constantine et Oran)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          6.1741,
+          35.5559
+        ]
+      },
+      "crs": "EPSG:4326",
+      "geometry_role": "representative_point",
+      "precision_meters": null,
+      "geocoding_method": null,
+      "reference_version": null,
+      "place": null,
+      "extensions": {
+        "alnop_geo_demo": {
+          "source_commit": "2428a693393a4a635d5eeac3e3c8542498b8b9d6",
+          "source_path": "/features/0",
+          "source_feature_id": "OP_1954_001",
+          "geometry_role": "representative_point",
+          "warning": "External GeoJSON documentation is not imported as canonical evidence; independent historical review required."
+        }
+      }
+    },
+    {
+      "schema_version": "3.0.0",
+      "namespace": "ALNOP",
+      "editorial_status": "unspecified",
+      "provenance": {
+        "evidence": [],
+        "transformations": []
+      },
+      "kind": "spatial",
+      "id": "SPACE_OP_1954_007",
+      "subject": {
+        "kind": "event",
+        "namespace": "ALNOP",
+        "id": "OP_1954_007"
+      },
+      "label": {
+        "fr": "Azazga, Tigzirt, Draâ El Mizan et Bordj Menaïel (Wilayas de Tizi Ouzou et Boumerdès)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          4.3722,
+          36.7447
+        ]
+      },
+      "crs": "EPSG:4326",
+      "geometry_role": "representative_point",
+      "precision_meters": null,
+      "geocoding_method": null,
+      "reference_version": null,
+      "place": null,
+      "extensions": {
+        "alnop_geo_demo": {
+          "source_commit": "2428a693393a4a635d5eeac3e3c8542498b8b9d6",
+          "source_path": "/features/1",
+          "source_feature_id": "OP_1954_007",
+          "geometry_role": "representative_point",
+          "warning": "External GeoJSON documentation is not imported as canonical evidence; independent historical review required."
+        }
+      }
+    },
+    {
+      "schema_version": "3.0.0",
+      "namespace": "ALNOP",
+      "editorial_status": "unspecified",
+      "provenance": {
+        "evidence": [],
+        "transformations": []
+      },
+      "kind": "spatial",
+      "id": "SPACE_OP_1954_008",
+      "subject": {
+        "kind": "event",
+        "namespace": "ALNOP",
+        "id": "OP_1954_008"
+      },
+      "label": {
+        "fr": "Blida, Boufarik, Soumaâ et contreforts de l'Atlas blidéen (Wilaya de Blida)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          2.8277,
+          36.47
+        ]
+      },
+      "crs": "EPSG:4326",
+      "geometry_role": "representative_point",
+      "precision_meters": null,
+      "geocoding_method": null,
+      "reference_version": null,
+      "place": null,
+      "extensions": {
+        "alnop_geo_demo": {
+          "source_commit": "2428a693393a4a635d5eeac3e3c8542498b8b9d6",
+          "source_path": "/features/2",
+          "source_feature_id": "OP_1954_008",
+          "geometry_role": "representative_point",
+          "warning": "External GeoJSON documentation is not imported as canonical evidence; independent historical review required."
+        }
+      }
+    },
+    {
+      "schema_version": "3.0.0",
+      "namespace": "ALNOP",
+      "editorial_status": "unspecified",
+      "provenance": {
+        "evidence": [],
+        "transformations": []
+      },
+      "kind": "spatial",
+      "id": "SPACE_OP_1954_010",
+      "subject": {
+        "kind": "event",
+        "namespace": "ALNOP",
+        "id": "OP_1954_010"
+      },
+      "label": {
+        "fr": "Forêt de Hafir / Tlemcen"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -1.42411,
+          34.78042
+        ]
+      },
+      "crs": "EPSG:4326",
+      "geometry_role": "representative_point",
+      "precision_meters": null,
+      "geocoding_method": null,
+      "reference_version": null,
+      "place": null,
+      "extensions": {
+        "alnop_geo_demo": {
+          "source_commit": "2428a693393a4a635d5eeac3e3c8542498b8b9d6",
+          "source_path": "/features/3",
+          "source_feature_id": "OP_1954_010",
+          "geometry_role": "representative_point",
+          "warning": "External GeoJSON documentation is not imported as canonical evidence; independent historical review required."
+        }
+      }
+    },
+    {
+      "schema_version": "3.0.0",
+      "namespace": "ALNOP",
+      "editorial_status": "unspecified",
+      "provenance": {
+        "evidence": [],
+        "transformations": []
+      },
+      "kind": "spatial",
+      "id": "SPACE_OP_1954_006",
+      "subject": {
+        "kind": "event",
+        "namespace": "ALNOP",
+        "id": "OP_1954_006"
+      },
+      "label": {
+        "fr": "Mine de zinc et de plomb du Nador, commune de Hammam N'Baïls, entre Guelma et Souk Ahras (Wilaya de Guelma)"
+      },
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          7.6667,
+          36.3167
+        ]
+      },
+      "crs": "EPSG:4326",
+      "geometry_role": "representative_point",
+      "precision_meters": null,
+      "geocoding_method": null,
+      "reference_version": null,
+      "place": null,
+      "extensions": {
+        "alnop_geo_demo": {
+          "source_commit": "2428a693393a4a635d5eeac3e3c8542498b8b9d6",
+          "source_path": "/features/4",
+          "source_feature_id": "OP_1954_006",
+          "geometry_role": "representative_point",
+          "warning": "External GeoJSON documentation is not imported as canonical evidence; independent historical review required."
+        }
+      }
+    }
+  ],
+  "relations": [],
+  "reviews": [],
+  "assessments": [],
+  "releases": [],
+  "extensions": {
+    "alnop_geo_demo": {
+      "source_commit": "2428a693393a4a635d5eeac3e3c8542498b8b9d6",
+      "source_dataset_version": "1.0.0",
+      "derived_from": "https://github.com/MGhemri/aln-historical-operations-dataset/blob/2428a693393a4a635d5eeac3e3c8542498b8b9d6/operations_fln_1954_1962.geojson",
+      "license": "https://creativecommons.org/licenses/by/4.0/",
+      "attribution": "Ghemri M. (ALN Historical Operations Dataset)",
+      "feature_ids": [
+        "OP_1954_001",
+        "OP_1954_007",
+        "OP_1954_008",
+        "OP_1954_010",
+        "OP_1954_006"
+      ],
+      "conversion_scope": "demo subset only; original ALNOP v2 migration remains independent",
+      "no_canonical_evidence_imported": true
+    }
+  }
+}
