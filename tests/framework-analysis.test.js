@@ -100,3 +100,46 @@ test('Analysis blocks zero-similarity pairs and fails explicitly when dense buck
  corpus.events.forEach(event=>{event.title={en:'Fictional assembly'};});
  assert.throws(()=>analyze(corpus,{scope:'working',max_pairs:1}),/candidate pairs.*budget/);
 });
+
+
+test('AG-04: direct claim comparisons never assume French or Arabic when locales are absent',()=>{
+ const {compareClaims}=require('../src/framework/claim-comparison');
+ const base={
+   subject:'event:FICTIONAL_TEST',predicate:'documented_label',
+   context:{scope:'documentary',population:'fictitious events',time_scope:'entire_event'},
+   contradicts:[],unit:null,evidence:[]
+ };
+ const first={...base,id:'CLAIM_A',value:{fr:'identique',ar:'متطابق',en:'first',es:'primero'}};
+ const second={...base,id:'CLAIM_B',value:{fr:'identique',ar:'متطابق',en:'second',es:'segundo'}};
+ const noContext=compareClaims(first,second);
+ assert.equal(noContext.reason,'no_shared_language');
+ assert.equal(noContext.is_candidate,true);
+ assert.equal(noContext.requires_human_review,true);
+ assert.equal(compareClaims(first,second,{languages:[]}).reason,'no_shared_language');
+ assert.equal(compareClaims(first,second,{languages:['fr','ar']}).reason,'same_value');
+ assert.equal(compareClaims(first,second,{languages:['en']}).reason,'text_difference_to_review');
+ assert.equal(compareClaims(first,second,{languages:['es','fr']}).reason,'text_difference_to_review');
+ assert.equal(compareClaims(first,second,{languages:['fr','es']}).reason,'text_difference_to_review');
+ assert.equal(compareClaims(first,second,{languages:['de']}).reason,'no_shared_language');
+ assert.equal(compareClaims(first,second,{languages:['fr']}).reason,'same_value');
+ assert.deepEqual(first.value,{fr:'identique',ar:'متطابق',en:'first',es:'primero'});
+});
+
+test('AG-04: analyzed claims continue to follow profile locales explicitly',()=>{
+ const {compareClaims}=require('../src/framework/claim-comparison');
+ const corpus=referenceCorpus();
+ // Existing multi-locale corpus analysis explicitly passes corpus.profile.locales.
+ assert.ok(corpus.profile.locales.includes('es'));
+ const first={id:'A',subject:'event:fiction',predicate:'name',context:{
+  scope:'documentary',population:'synthetic',time_scope:'entire_event'
+ },contradicts:[],evidence:[],unit:null,value:{es:'texto uno',en:'label'}};
+ const second={...first,id:'B',value:{es:'texto dos',en:'label'}};
+ const lang=[...corpus.profile.locales];
+ assert.equal(compareClaims(first,second,{languages:lang}).reason,'text_difference_to_review');
+ assert.equal(compareClaims(first,second,{languages:['en']}).reason,'same_value');
+ const original=referenceCorpus();
+ original.claims[0].value={es:'consta'};
+ original.claims[1].value={es:'ausente'};
+ const row=analyze(original,{scope:'working'}).claims.find(x=>x.claim_ids.join()==='COUNT_A,COUNT_B');
+ assert.equal(row.reason,'text_difference_to_review');
+});
