@@ -82,7 +82,7 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
    safeText(columns,[t.unconfirmed,...headers.slice(0,256)]);
    safeText(targets,[t.target,...fields,t.intro]);
    suggestionPanel.replaceChildren();
-   const heading=document.createElement('p');heading.textContent=t.suggestTitle;suggestionPanel.append(heading);
+   const suggestionHeading=document.createElement('p');suggestionHeading.textContent=t.suggestTitle;suggestionPanel.append(suggestionHeading);
    if(suggestion){
      if(suggestion.mapping.mapping_confirmed||suggestion.mapping.confirmed_bindings.length)
        throw Error('ASSIST_UI_CONFIRMED_SUGGESTIONS_UNEXPECTED');
