@@ -79,14 +79,22 @@ jobs:
             }else if(setup){
               targets=[
                 {name:'chore/tvrw-j7-safe-branch-cleanup',kind:'fully-integrated'},
-                {name:'chore/tvrw-j7-finalize-benchmark-audit',kind:'fully-integrated'}
+                {name:'chore/tvrw-j7-finalize-benchmark-audit',kind:'fully-integrated'},
+                // One-time cleanup: exact merged PR head, not an arbitrary docs branch.
+                {name:'docs/audit-assistant-m1-status',kind:'merged-pr',pr:88,
+                 expected:'25540e55cc45f656c240eae9daa9db72d8f4d3ae'},
+                {name:'docs/audit-close-ag03-ag04-ag06',kind:'merged-pr',pr:97,
+                 expected:'919bcb407d3f3826a2dea0f54eae216bd8ae3588'},
+                {name:'docs/audit-close-assist-m11d',kind:'merged-pr',pr:101,
+                 expected:'fa79ba179da321f03568b877e57cfb2c502c0218'}
               ];
             }else return;
             const decisions=[];
             for(const target of targets){
               const name=target.name;
               if(name==='main'||name.startsWith('release/')||
-                !/^(chore|feature|feat|fix|test|experiment)\//.test(name)){
+                !(/^(chore|feature|feat|fix|test|experiment)\//.test(name)||
+                  (setup&&target.kind==='merged-pr'&&name.startsWith('docs/')))){
                 decisions.push({name,status:'preserve-protected-name'});continue;
               }
               let branch;
@@ -100,6 +108,16 @@ jobs:
               }
               if(target.expected && branch.commit.sha!==target.expected){
                 decisions.push({name,status:'preserve-updated-since-pr'});continue;
+              }
+              if(target.kind==='merged-pr'){
+                if(!setup||!target.expected||!target.pr){
+                  decisions.push({name,status:'preserve-unapproved-setup'});continue;
+                }
+                const merged=(await github.rest.pulls.get({owner,repo,pull_number:target.pr})).data;
+                if(!merged.merged_at||merged.head.repo?.full_name!==own||
+                   merged.head.ref!==name||merged.head.sha!==target.expected){
+                  decisions.push({name,status:'preserve-pr-not-verified'});continue;
+                }
               }
               if(target.kind==='fully-integrated'){
                 const cmp=(await github.rest.repos.compareCommitsWithBasehead({
