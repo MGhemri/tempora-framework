@@ -116,7 +116,7 @@ jobs:
             $sdk = @($names | Where-Object { $_.EndsWith('resources/engine/node_modules/tempora-framework/package.json') })
             $node = @($names | Where-Object { $_.EndsWith('resources/engine/node.exe') })
             $worker = @($names | Where-Object { $_.EndsWith('resources/engine/worker.cjs') })
-            foreach ($example in @('README.md','synthetic-canonical-v3.json','alnop-geographic-sample.geojson')) {
+            foreach ($example in @('README.md','synthetic-canonical-v3.json','alnop-geographic-sample.geojson','alnop-canonical-v3-demo.json')) {
               $matches = @($names | Where-Object { $_.EndsWith('resources/examples/' + $example) })
               if ($matches.Count -ne 1) { throw ('STORE_BUNDLED_EXAMPLE_MISSING_OR_AMBIGUOUS: ' + $example) }
             }
