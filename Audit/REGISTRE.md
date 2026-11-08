@@ -48,3 +48,8 @@ Un second audit externe a été fourni le 2026-11-08 : voir [ANTIGRAVITY-2026-11
 ## ASSIST-M1.1d — Contrôle du lecteur de cellules XLSX
 
 [Issue #98](https://github.com/MGhemri/tempora-framework/issues/98) : chantier P1 en cours, non assimilé à une certification de sécurité. Les plafonds XML de 512 Kio de la PR #91 restent en vigueur malgré la proposition Antigravity à 16 Mio par XML. Contrôles obligatoires : formules jamais exécutées, caches non vérifiés, dates candidates, sélection explicite de feuille, contenu original immuable, erreurs contrôlées, CI Linux/Windows. Statut : **branche de développement ; fusion et qualification à confirmer**.
+
+
+## Clôture ASSIST-M1.1d — 2026-11-08
+
+[PR #99](https://github.com/MGhemri/tempora-framework/pull/99) fusionnée en `main` (`30ce4f65701debb7e77118c88135afced5df37d9`). Les contrôles Linux/Windows, navigateur, ALNOP minimal, hygiène Git et Snyk ont réussi. [Issue #98](https://github.com/MGhemri/tempora-framework/issues/98) close. Inspection de cellules XLSX uniquement, sans importer ni évaluer de formules ; suivi du GUI dans [issue #100](https://github.com/MGhemri/tempora-framework/issues/100). Les mentions précédentes « en cours » sont historiques et remplacées par ce statut de clôture.

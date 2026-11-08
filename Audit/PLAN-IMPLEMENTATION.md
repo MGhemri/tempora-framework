@@ -176,3 +176,10 @@ L'extension de l'inventaire existant relit une copie figée et contrôlée des o
 **Plafonds conservés :** archive et expansion totale 16 Mio ; 512 entrées ; 128 feuilles ; 512 Kio par partie XML. **Plafonds additionnels :** 10 000 lignes, 256 colonnes, 20 000 cellules, 10 000 chaînes partagées, 16 384 caractères par cellule et 2 Mio de caractères de sortie. Dépassement = échec fermé, pas de tableau tronqué présenté comme complet.
 
 **À valider avant fusion :** tests adversariaux et compatibilité Windows/Linux, couverture du parseur XML strict, vérification que les dates restent candidates, et absence de modifications des données sources. Pas de GUI, pas d'ingestion automatique ni de changement du modèle canonique v3. Aucune release créée.
+
+
+### Clôture vérifiée ASSIST-M1.1d — 2026-11-08
+
+La [PR #99](https://github.com/MGhemri/tempora-framework/pull/99) a été fusionnée dans `main` au commit `30ce4f65701debb7e77118c88135afced5df37d9`, après succès CI Framework Ubuntu Node 20/22, Windows Node 20, navigateur, ALNOP minimal, hygiène Git et Snyk. [Issue #98](https://github.com/MGhemri/tempora-framework/issues/98) close. Le lecteur `src/assist-io/xlsx-cells.js` demeure privé : absence de GUI et d'import automatique. Les limites du parseur XLSX restent délibérément strictes ; la certification sécurité ou Microsoft Store n'est pas acquise.
+
+**Nouvelle priorité :** [issue #100](https://github.com/MGhemri/tempora-framework/issues/100), contrats IPC et éditeur visuel Assistant en PR séparées, puis intégration du pipeline complet avant bêta 4.
