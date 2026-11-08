@@ -111,21 +111,21 @@ test('Windows signing is fail-closed and never mislabels an unsigned build',()=>
 });
 
 test('Microsoft Store distribution uses actual Partner Center identity and never claims local signing',()=>{
- const store=src('electron/store-appx.config.cjs');
+ const storeSource=src('electron/store-appx.config.cjs');
  const flow=src('../../.github/workflows/desktop-electron-microsoft-store-candidate.yml');
- assert.match(store,/MICROSOFT_STORE_PARTNER_CENTER_IDENTITY_MISMATCH/);
- assert.match(store,/GhemriM\.TEMPORADesktop/);
- assert.match(store,/CN=C5BC3837-BBC8-425E-916B-4B6F77BD7455/);
- assert.match(store,/publisherDisplayName: 'Ghemri M'/);
- assert.match(store,/artifactName: 'TEMPORA-Desktop-/);
  const appxConfig=require('../store-appx.config.cjs');
  const nsisConfig=require('../package.json').build.win;
+ assert.match(storeSource,/MICROSOFT_STORE_PARTNER_CENTER_IDENTITY_MISMATCH/);
+ assert.equal(appxConfig.appx.identityName,'GhemriM.TEMPORADesktop');
+ assert.equal(appxConfig.appx.publisher,'CN=C5BC3837-BBC8-425E-916B-4B6F77BD7455');
+ assert.equal(appxConfig.appx.publisherDisplayName,'Ghemri M');
+ assert.equal(appxConfig.appx.displayName,'TEMPORA Desktop');
+ assert.deepEqual(appxConfig.appx.capabilities,['runFullTrust']);
+ assert.match(appxConfig.appx.artifactName,/^TEMPORA-Desktop-/);
  assert.match(nsisConfig.artifactName,/SETUP\.exe$/);
- assert.equal(appxConfig.win.target[0],'appx');
+ assert.deepEqual(appxConfig.win.target,['appx']);
  assert.doesNotMatch(appxConfig.win.artifactName,/SETUP\.exe/i);
  assert.doesNotMatch(appxConfig.appx.artifactName,/SETUP\.exe/i);
- assert.match(store,/displayName:'TEMPORA Desktop'/);
- assert.match(store,/capabilities:\['runFullTrust'\]/);
  assert.match(flow,/workflow_dispatch:/);
  assert.match(flow,/TEMPORA_STORE_IDENTITY_NAME/);
  assert.match(flow,/TEMPORA_STORE_PUBLISHER/);
