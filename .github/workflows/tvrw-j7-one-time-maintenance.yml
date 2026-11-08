@@ -1,0 +1,112 @@
+name: TEMPORA J7 one-time housekeeping and benchmark
+
+# One-time workflow. Remove this file immediately after the audited push run.
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/tvrw-j7-one-time-maintenance.yml'
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/tvrw-j7-one-time-maintenance.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  prune-integrated-branches:
+    if: github.repository == 'MGhemri/tempora-framework'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: read
+    timeout-minutes: 10
+    steps:
+      - name: Dry-run in PR, delete only five known fully integrated branches on main
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const {owner,repo}=context.repo;
+            const dryRun=context.eventName!=='push';
+            const candidates=[
+              'chore/remove-one-time-prune-workflow',
+              'feature/tvrw-j6-consolidated-current-main',
+              'feature/tvrw-j6-filtered-export',
+              'feature/tvrw-j7-manual-benchmark-report',
+              'fix/tvrw-chronos-unknown-end-and-bench'
+            ];
+            const open=await github.paginate(github.rest.pulls.list,{owner,repo,state:'open',per_page:100});
+            const report=[];
+            for(const name of candidates){
+              if(open.some(pr=>pr.base.ref===name||
+                (pr.head.repo?.full_name===owner+'/'+repo && pr.head.ref===name))){
+                report.push({name,decision:'preserve-open-pr'});continue;
+              }
+              let branch;
+              try{
+                branch=(await github.rest.repos.getBranch({owner,repo,branch:name})).data;
+              }catch(err){
+                if(err.status===404){report.push({name,decision:'already-absent'});continue;}
+                throw err;
+              }
+              if(branch.protected){report.push({name,decision:'preserve-protected'});continue;}
+              const compare=(await github.rest.repos.compareCommitsWithBasehead({
+                owner,repo,basehead:'main...'+name
+              })).data;
+              if(compare.ahead_by!==0){
+                report.push({name,decision:'preserve-unique-commits',ahead:compare.ahead_by});
+                continue;
+              }
+              if(dryRun){report.push({name,decision:'eligible-dry-run'});continue;}
+              const freshOpen=await github.paginate(github.rest.pulls.list,{owner,repo,state:'open',per_page:100});
+              if(freshOpen.some(pr=>pr.base.ref===name||
+                  (pr.head.repo?.full_name===owner+'/'+repo && pr.head.ref===name))){
+                report.push({name,decision:'preserve-new-pr'});continue;
+              }
+              const fresh=(await github.rest.repos.compareCommitsWithBasehead({
+                owner,repo,basehead:'main...'+name
+              })).data;
+              if(fresh.ahead_by!==0){
+                report.push({name,decision:'preserve-recent-commit'});continue;
+              }
+              await github.rest.git.deleteRef({owner,repo,ref:'heads/'+name});
+              report.push({name,decision:'deleted'});
+            }
+            core.info('TEMPORA J7 one-time branch audit: '+JSON.stringify({dryRun,report}));
+
+  synthetic-j7-report:
+    if: github.repository == 'MGhemri/tempora-framework' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Install exact Desktop research dependencies
+        working-directory: apps/desktop
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Measure separate, wholly fictional 100, 1000, and 10000 event workloads
+        working-directory: apps/desktop
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ../../work/benchmarks
+          for n in 100 1000 10000; do
+            set +e
+            node scripts/bench-visualization.mjs --sizes="$n" --iterations=3 \
+              > ../../work/benchmarks/synthetic-${n}.json \
+              2> ../../work/benchmarks/synthetic-${n}.stderr
+            result=$?
+            set -e
+            echo "Synthetic size $n: exit $result"
+            echo "$result" > "../../work/benchmarks/synthetic-${n}.exit"
+          done
+          node -e "const fs=require('fs');const root='../../work/benchmarks/';const sizes=[100,1000,10000];const summary=sizes.map(n=>{const code=Number(fs.readFileSync(root+'synthetic-'+n+'.exit','utf8'));let data=null;try{data=JSON.parse(fs.readFileSync(root+'synthetic-'+n+'.json','utf8'))}catch{};return {size:n,exit:code,bytes:data?.sizes?.[0]?.bytes??null,validation:data?.sizes?.[0]?.validation??null,chronos_scoped_page:data?.sizes?.[0]?.chronos_scoped_page??null,filtered_json_export:data?.sizes?.[0]?.chronos_filtered_json_export??null,project_open:data?.sizes?.[0]?.native_project_create??null,stderr:code===0?null:fs.readFileSync(root+'synthetic-'+n+'.stderr','utf8').slice(-1000)}});fs.writeFileSync(root+'summary.json',JSON.stringify({synthetic:true,platform:process.platform,node:process.version,runner:'github-actions-ubuntu-latest',summary},null,2));console.log(JSON.stringify(summary))"
+      - name: Upload transparent performance report, no certification claim
+        uses: actions/upload-artifact@v4
+        with:
+          name: TEMPORA-J7-ONE-TIME-SYNTHETIC-BASELINE
+          path: work/benchmarks/
+          if-no-files-found: error
+          retention-days: 14
