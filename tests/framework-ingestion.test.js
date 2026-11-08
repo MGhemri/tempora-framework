@@ -165,3 +165,24 @@ test('Input limits and malformed CSV headers fail before a preview can be staged
  assert.throws(()=>prepare(corpus,Buffer.from('id;name;name\nA;B;C'),csv),code('INPUT_CSV_HEADER'));
  assert.throws(()=>prepare(corpus,Buffer.from('id;name\nA;"B"x'),csv),code('INPUT_CSV_SYNTAX'));
 });
+
+
+test('Renamed event_type vocabulary is used by ingestion aliases and observed coverage',()=>{
+ const c=nativeCorpus();
+ const alias=c.profile.aliases.find(a=>a.taxonomy==='event_types' && a.value==='reunión ficticia');
+ assert.ok(alias,'synthetic fixture has a declared event-type alias');
+ c.profile.taxonomies=c.profile.taxonomies.map(name=>name==='event_types'?'types_evenement':name);
+ c.profile.rules=c.profile.rules.map(rule=>rule.type==='vocabulary'&&rule.field==='event_type'
+   ? {...rule,taxonomy:'types_evenement'}:rule);
+ c.profile.aliases=c.profile.aliases.map(a=>a.taxonomy==='event_types'?{...a,taxonomy:'types_evenement'}:a);
+ c.taxonomies.types_evenement=c.taxonomies.event_types;
+ delete c.taxonomies.event_types;
+ assert.equal(validateCorpus(c).valid,true);
+ const b=prepare(c,bytes([row('RENAMED_VOCAB')]));
+ assert.deepEqual(b.report.summary,{total:1,create:1,unchanged:0,conflict:0,quarantined:0});
+ assert.deepEqual(b.candidates[0].event.event_type,['fictional assembly']);
+ const {analyze}=require('../src/framework/analysis');
+ const result=analyze(c,{scope:'working'});
+ assert.ok(result.coverage.groups.type.some(group=>group.key==='fictional assembly'));
+ assert.ok(!result.coverage.groups.type.some(group=>group.key==='reunión ficticia'));
+});
