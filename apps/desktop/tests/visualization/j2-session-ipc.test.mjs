@@ -73,6 +73,17 @@ test('V2 persistent Node IPC creates, pages and releases a local corpus; V1 heal
       {project_id,corpus:SYNTHETIC_CASES[9].make()});
     assert.equal(invalidSnapshot.ok,false);
     assert.equal(invalidSnapshot.error.code,'CORPUS_NOT_VALIDATED');
+    const timeReply=await send('2.0.0','visualization.chronos.filter',
+      {project_id,earliest:'1784-06-01',latest:'1784-06-30',
+        mode:'possible-overlap',offset:0,limit:10});
+    assert.equal(timeReply.ok,true);
+    assert.equal(timeReply.result.scope.total_matched,1);
+    assert.equal(timeReply.result.result[0].start_date.kind,'exact');
+    const unknownTime=await send('2.0.0','visualization.chronos.filter',
+      {project_id,earliest:'1784-02-30',latest:'1784-06-30',
+        mode:'possible-overlap',offset:0,limit:10});
+    assert.equal(unknownTime.ok,false);
+    assert.equal(unknownTime.error.code,'INVALID_DATE');
     const graphReply=await send('2.0.0','visualization.graph.neighborhood',
       {project_id,root:{kind:'event',namespace:'SYNTHETIC_HISTORY',id:'EVENT_001'},
         depth:1,direction:'both',limit:10});
