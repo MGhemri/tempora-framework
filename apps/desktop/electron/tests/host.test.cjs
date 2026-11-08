@@ -214,3 +214,20 @@ test('Assistant IPC is fixed, host-authorized and packaged without renderer path
  const hostFile=require('../assistant-session.cjs');
  assert.equal(typeof hostFile.createAssistantSessions,'function');
 });
+
+test('Assistant initial GUI remains read-only and Electron-only',()=>{
+ const ui=src('src/assistant-view.ts');
+ const html=src('index.html');
+ const main=src('src/main.ts');
+ const styles=src('src/style.css');
+ assert.match(main,/initAssistantView\(window\.temporaElectron/);
+ assert.match(html,/id="view-assistant"/);
+ assert.match(html,/id="assistant-sheet"/);
+ assert.match(html,/id="assistant-columns"/);
+ assert.match(html,/id="assistant-targets"/);
+ assert.match(ui,/assistantSelectSheet/);
+ assert.match(ui,/assistantClose/);
+ assert.match(ui,/textContent/);
+ assert.doesNotMatch(ui,/innerHTML|writeFileSync|fetch\(/);
+ assert.match(styles,/\.assistant-columns/);
+});
