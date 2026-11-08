@@ -37,6 +37,16 @@ test('J8 segment catalog is reproducible and never modifies canonical events',()
   assert.ok(Object.isFrozen(a.manifest));
   assert.ok(Object.isFrozen(a.entries));
 });
+test('J8 catalog hash detects canonical array reordering while sorted refs stay stable',()=>{
+  const a=corpusOf(64),b=structuredClone(a);
+  b.events.reverse();
+  const first=buildSegmentIndex(a,{segmentSize:32});
+  const second=buildSegmentIndex(b,{segmentSize:32});
+  assert.notEqual(first.manifest.corpus_sha256,second.manifest.corpus_sha256);
+  assert.notEqual(first.manifest.scientific_sha256,second.manifest.scientific_sha256);
+  assert.deepEqual(first.entries.map(x=>x.key),second.entries.map(x=>x.key));
+  assert.notEqual(first.entries[0].position,second.entries[0].position);
+});
 test('J8 pages never cross a segment or synthesize missing records',()=>{
   const corpus=corpusOf(289),idx=buildSegmentIndex(corpus,{segmentSize:256});
   const last=readSegment(idx,corpus,{segment:1,offset:20,limit:50});
