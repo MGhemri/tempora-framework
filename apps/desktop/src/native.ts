@@ -14,6 +14,7 @@ declare global {
       analyzeVisualProject: (module: string,limit: number,threshold: number) => Promise<unknown>;
       exportVisualProject: (module:string,format:string,offset:number,limit:number)=>Promise<unknown>;
       queryGraphNeighborhood:(root:VisualTypedRef,depth:number,direction:string,limit:number)=>Promise<unknown>;
+      compareVisualSnapshot:()=>Promise<unknown>;
     };
   }
 }
@@ -87,4 +88,16 @@ export async function queryGraphNeighborhood(root:VisualTypedRef,depth=1,directi
   :Promise<VisualProjection>{
   if(!window.temporaElectron)throw Error("VISUAL_ELECTRON_ONLY");
   return await window.temporaElectron.queryGraphNeighborhood(root,depth,direction,limit) as VisualProjection;
+}
+
+export type VisualSnapshotDiff={
+  fileName:string;
+  previous:{canonical_sha256:string;profile_id:string};
+  current:{canonical_sha256:string;profile_id:string};
+  measurement:string;scientific_sha256:string;
+  rows:Array<{collection:string;previous:number;current:number;delta:number;added_ids:number;removed_ids:number;historical_completeness:string}>;
+};
+export async function compareVisualSnapshot():Promise<VisualSnapshotDiff|null>{
+  if(!window.temporaElectron)throw Error("VISUAL_ELECTRON_ONLY");
+  return await window.temporaElectron.compareVisualSnapshot() as VisualSnapshotDiff|null;
 }

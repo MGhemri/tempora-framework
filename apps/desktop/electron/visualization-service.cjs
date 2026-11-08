@@ -100,6 +100,11 @@ class VisualService {
     return this.request('visualization.export.prepare',
       {project_id:this.projectId,module,format,offset,limit});
   }
+  compareSnapshot(corpus){
+    if(!this.projectId)throw Error('VISUAL_PROJECT_NOT_OPEN');
+    if(!corpus||typeof corpus!=='object'||Array.isArray(corpus))throw Error('VISUAL_SNAPSHOT_INVALID');
+    return this.request('visualization.snapshot.compare',{project_id:this.projectId,corpus});
+  }
   async release(){
     const id=this.projectId;this.projectId=null;
     if(id&&this.child)await this.request('visualization.project.release',{project_id:id});

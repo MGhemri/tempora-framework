@@ -62,6 +62,17 @@ test('V2 persistent Node IPC creates, pages and releases a local corpus; V1 heal
       {project_id,module:'observatory',limit:20});
     assert.equal(analyzed.ok,true);
     assert.equal(analyzed.result.result.length,9);
+    const second=SYNTHETIC_CASES[0].make();
+    const snapshotReply=await send('2.0.0','visualization.snapshot.compare',
+      {project_id,corpus:second});
+    assert.equal(snapshotReply.ok,true);
+    assert.equal(snapshotReply.result.rows.find(x=>x.collection==='events').delta,0);
+    assert.equal(snapshotReply.result.previous.canonical_sha256,
+      snapshotReply.result.current.canonical_sha256);
+    const invalidSnapshot=await send('2.0.0','visualization.snapshot.compare',
+      {project_id,corpus:SYNTHETIC_CASES[9].make()});
+    assert.equal(invalidSnapshot.ok,false);
+    assert.equal(invalidSnapshot.error.code,'CORPUS_NOT_VALIDATED');
     const graphReply=await send('2.0.0','visualization.graph.neighborhood',
       {project_id,root:{kind:'event',namespace:'SYNTHETIC_HISTORY',id:'EVENT_001'},
         depth:1,direction:'both',limit:10});

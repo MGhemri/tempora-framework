@@ -33,7 +33,7 @@ function v2Respond(message){
   if(!['visualization.capabilities','visualization.project.create',
     'visualization.project.query','visualization.project.release',
     'visualization.analysis.run','visualization.export.prepare',
-    'visualization.graph.neighborhood'].includes(op)){
+    'visualization.graph.neighborhood','visualization.snapshot.compare'].includes(op)){
     return v2Reply(id,false,{error:{code:'UNSUPPORTED_OPERATION'}});
   }
   try {
@@ -51,6 +51,10 @@ function v2Respond(message){
         throw Object.assign(new Error('INVALID_PAYLOAD'),{code:'INVALID_PAYLOAD'});
       result=visualization.query(p.project_id,
         {module:p.module,offset:p.offset,limit:p.limit});
+    } else if(op==='visualization.snapshot.compare'){
+      if(Object.keys(p).some(k=>!['project_id','corpus'].includes(k)))
+        throw Object.assign(new Error('INVALID_PAYLOAD'),{code:'INVALID_PAYLOAD'});
+      result=visualization.compareSnapshot(p.project_id,p.corpus);
     } else if(op==='visualization.graph.neighborhood'){
       if(Object.keys(p).some(k=>!['project_id','root','depth','direction','limit'].includes(k)))
         throw Object.assign(new Error('INVALID_PAYLOAD'),{code:'INVALID_PAYLOAD'});

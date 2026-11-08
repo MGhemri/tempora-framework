@@ -53,6 +53,7 @@ const manifest={target:'windows-x64',engine:'tempora-framework@3.0.0',node:proce
  visualization_projection_sha256:digest('visualization/projections.cjs'),
  visualization_algorithms_sha256:digest('visualization/algorithms.cjs'),
  visualization_exporter_sha256:digest('visualization/exporter.cjs'),
- visualization_graph_navigation_sha256:digest('visualization/graph-navigation.cjs')};
+ visualization_graph_navigation_sha256:digest('visualization/graph-navigation.cjs'),
+ visualization_snapshots_sha256:digest('visualization/snapshots.cjs')};
 writeFileSync(join(out,'runtime-manifest.json'),JSON.stringify(manifest,null,2)+'\n');
 console.log(JSON.stringify(manifest,null,2));

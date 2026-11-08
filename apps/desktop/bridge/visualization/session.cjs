@@ -6,6 +6,7 @@ const {randomBytes}=require('node:crypto');
 const {build}=require('./projections.cjs');
 const {analyze}=require('./algorithms.cjs');
 const {buildExport}=require('./exporter.cjs');
+const {compare}=require('./snapshots.cjs');
 const {walk}=require('./graph-navigation.cjs');
 const MAX_CORPUS_BYTES=3*1024*1024;
 const TTL_MS=10*60*1000;
@@ -73,6 +74,17 @@ class ProjectManager {
     const exported=buildExport(result,{module,format});
     this.#renew(session);
     return exported;
+  }
+  compareSnapshot(id,other){
+    const session=this.#get(id);
+    if(!other||typeof other!=='object'||Array.isArray(other))fail('INVALID_CORPUS');
+    let encoded;
+    try{encoded=canonical.stringify(other);}catch{fail('INVALID_CORPUS');}
+    if(Buffer.byteLength(encoded,'utf8')>MAX_CORPUS_BYTES)fail('LIMIT_EXCEEDED');
+    // A secondary snapshot is a single-use immutable copy, never persisted.
+    const result=compare(session.corpus,JSON.parse(encoded));
+    this.#renew(session);
+    return result;
   }
   release(id){
     if(id!==undefined&&this.#session && this.#session.project_id!==id)fail('PROJECT_NOT_FOUND');
