@@ -22,7 +22,7 @@ jobs:
       pull-requests: read
     timeout-minutes: 10
     steps:
-      - name: Dry-run in PR, delete only five known fully integrated branches on main
+      - name: Dry-run in PR, prune five integrated and sixteen archived superseded branches on main
         uses: actions/github-script@v8
         with:
           script: |
@@ -34,6 +34,24 @@ jobs:
               'feature/tvrw-j6-filtered-export',
               'feature/tvrw-j7-manual-benchmark-report',
               'fix/tvrw-chronos-unknown-end-and-bench'
+            ];
+            const retired=[
+              {name:'feat/tempora-studio-foundation',old:14,replacement:13},
+              {name:'test/desktop-installed-runtime-hardening',old:20,replacement:31},
+              {name:'feature/desktop-two-stage-webview2-setup',old:29,replacement:31},
+              {name:'fix/desktop-webview2-fixed-runtime-qualification',old:30,replacement:31},
+              {name:'feature/tvrw-j1a-projection-contracts',old:37,replacement:41},
+              {name:'feature/tvrw-j1b-synthetic-repro',old:40,replacement:41},
+              {name:'feature/tvrw-j5-observatory-snapshots',old:47,replacement:48},
+              {name:'feature/tvrw-j7-benchmark-harness',old:50,replacement:51},
+              {name:'feature/tvrw-j3-shared-typed-selection',old:52,replacement:53},
+              {name:'feature/tvrw-j3-selection-main-reconciled',old:54,replacement:53},
+              {name:'feature/tvrw-chronos-uncertain-filters',old:55,replacement:64},
+              {name:'feature/tvrw-j6-typed-facet-filter-core',old:56,replacement:64},
+              {name:'feature/tvrw-chronos-filter-ipc-ui',old:57,replacement:64},
+              {name:'feature/tvrw-j6-facet-ipc-v2',old:58,replacement:64},
+              {name:'feature/tvrw-j6c-facet-desktop-ui',old:59,replacement:64},
+              {name:'feature/tvrw-j6-unified-main-integration',old:60,replacement:64}
             ];
             const open=await github.paginate(github.rest.pulls.list,{owner,repo,state:'open',per_page:100});
             const report=[];
@@ -71,6 +89,59 @@ jobs:
               }
               await github.rest.git.deleteRef({owner,repo,ref:'heads/'+name});
               report.push({name,decision:'deleted'});
+            }
+            // Retire only unchanged head branches of closed, superseded PRs.
+            // Preserve their code SHA and audit history through their PRs.
+            for(const item of retired){
+              const name=item.name;
+              if(open.some(pr=>pr.base.ref===name||
+                (pr.head.repo?.full_name===owner+'/'+repo && pr.head.ref===name))){
+                report.push({name,decision:'preserve-open-pr'});continue;
+              }
+              let branch;
+              try{
+                branch=(await github.rest.repos.getBranch({owner,repo,branch:name})).data;
+              }catch(err){
+                if(err.status===404){report.push({name,decision:'already-absent'});continue;}
+                throw err;
+              }
+              if(branch.protected || name.startsWith('release/')){
+                report.push({name,decision:'preserve-protected-or-release'});continue;
+              }
+              const old=(await github.rest.pulls.get({
+                owner,repo,pull_number:item.old
+              })).data;
+              const replacement=(await github.rest.pulls.get({
+                owner,repo,pull_number:item.replacement
+              })).data;
+              if(old.state!=='closed'||old.merged_at!==null ||
+                old.head.ref!==name||old.head.sha!==branch.commit.sha ||
+                replacement.merged_at===null){
+                report.push({name,decision:'preserve-unverified-archive'});continue;
+              }
+              if(dryRun){
+                report.push({name,decision:'eligible-closed-superseded-pr',
+                  archived_in_pr:item.old,integrated_replacement:item.replacement,
+                  original_sha:branch.commit.sha});
+                continue;
+              }
+              const freshOpen=await github.paginate(github.rest.pulls.list,{
+                owner,repo,state:'open',per_page:100
+              });
+              if(freshOpen.some(pr=>pr.base.ref===name ||
+                (pr.head.repo?.full_name===owner+'/'+repo && pr.head.ref===name))){
+                report.push({name,decision:'preserve-new-pr'});continue;
+              }
+              const current=(await github.rest.repos.getBranch({
+                owner,repo,branch:name
+              })).data;
+              if(current.protected||current.commit.sha!==old.head.sha){
+                report.push({name,decision:'preserve-changed-branch'});continue;
+              }
+              await github.rest.git.deleteRef({owner,repo,ref:'heads/'+name});
+              report.push({name,decision:'deleted-closed-superseded',
+                archived_in_pr:item.old,integrated_replacement:item.replacement,
+                original_sha:old.head.sha});
             }
             core.info('TEMPORA J7 one-time branch audit: '+JSON.stringify({dryRun,report}));
 
