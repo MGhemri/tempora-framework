@@ -208,4 +208,17 @@ function inspectXlsx(bytes){
     formulas_executed:false,external_data_loaded:false,input_modified:false
   });
 }
-module.exports=Object.freeze({inspectXlsx,MAX_ARCHIVE_BYTES,MAX_ENTRIES,MAX_XML_BYTES});
+function openValidatedXlsx(bytes){
+  if(!(bytes instanceof Uint8Array))fail('ASSIST_XLSX_SIZE');
+  const snapshot=Buffer.from(bytes);
+  const inspection=inspectXlsx(snapshot);
+  const zip=zipEntries(snapshot);
+  return Object.freeze({inspection,hasPart:name=>zip.entries.has(name),
+    readXmlPart(name){
+      if(!/^(?:xl\/[A-Za-z0-9_./-]+|\[Content_Types\]\.xml)$/.test(name)||!name.endsWith('.xml'))
+        fail('ASSIST_XLSX_ENTRY_PATH');
+      const xml=zip.readPart(name);xmlSafe(xml);return xml;
+    }
+  });
+}
+module.exports=Object.freeze({inspectXlsx,openValidatedXlsx,MAX_ARCHIVE_BYTES,MAX_ENTRIES,MAX_XML_BYTES});
