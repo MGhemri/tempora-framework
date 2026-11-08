@@ -127,3 +127,161 @@ jobs:
             core.info('TEMPORA branch hygiene: '+JSON.stringify({
               event:context.eventName,closing,setup,dryRun,decisions
             }));
+
+  desktop-beta3-release:
+    # Explicitly approved, one-shot prerelease on protected main; not Store or npm.
+    name: Publish qualified unsigned Electron beta3
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[desktop-beta3-release]') }}
+    needs: framework
+    runs-on: windows-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    defaults:
+      run:
+        working-directory: apps/desktop
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+          cache: npm
+          cache-dependency-path: apps/desktop/electron/package-lock.json
+      - name: Verify release version and published engine pin
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $app = Get-Content electron/package.json -Raw | ConvertFrom-Json
+          $desktop = Get-Content package.json -Raw | ConvertFrom-Json
+          if ($app.version -ne '0.1.2-beta.3' -or $desktop.dependencies.'tempora-framework' -ne '3.0.0') {
+            throw 'UNEXPECTED_RELEASE_VERSION_OR_ENGINE'
+          }
+      - name: Install Desktop dependencies
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - run: npm run build
+      - run: npm run test:bridge
+      - run: npm run test:visualization
+      - run: node --test electron/tests/host.test.cjs
+      - run: node --test electron/tests/review-integrity.test.cjs
+      - name: Stage pinned Windows Node engine
+        run: npm run stage:windows-engine
+      - name: Install Electron packager
+        working-directory: apps/desktop/electron
+        run: npm ci --no-audit --no-fund
+      - name: Create unsigned NSIS package
+        working-directory: apps/desktop/electron
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+        run: npm run dist:win
+      - name: Smoke packaged engine and real NSIS installation
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $resources = 'electron/release/win-unpacked/resources'
+          foreach ($name in @('README.md','synthetic-canonical-v3.json','alnop-geographic-sample.geojson','alnop-canonical-v3-demo.json')) {
+            if (-not (Test-Path (Join-Path $resources ('examples/' + $name)))) {
+              throw ('MISSING_RELEASE_EXAMPLE: ' + $name)
+            }
+          }
+          node electron/tests/packaged-engine-smoke.cjs $resources
+          if ($LASTEXITCODE -ne 0) { throw 'RELEASE_PACKAGED_ENGINE_FAILED' }
+          $setups = @(Get-ChildItem electron/release -File -Filter '*SETUP.exe')
+          if ($setups.Count -ne 1 -or $setups[0].Name -ne 'TEMPORA-Desktop-0.1.2-beta.3-x64-SETUP.exe') {
+            throw 'RELEASE_WRONG_INSTALLER_VERSION'
+          }
+          ./electron/scripts/verify-installed-examples.ps1 -Installer $setups[0].FullName -InstallDirectory "$env:RUNNER_TEMP/tempora-beta3-installed"
+      - name: Generate checksums and provenance
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $dir = Join-Path (Get-Location).Path 'electron/release'
+          $installer = Get-Item (Join-Path $dir 'TEMPORA-Desktop-0.1.2-beta.3-x64-SETUP.exe')
+          $manifest = Get-Content src-tauri/resources/engine/runtime-manifest.json -Raw | ConvertFrom-Json
+          if ($manifest.engine -ne 'tempora-framework@3.0.0') { throw 'WRONG_ENGINE' }
+          $hash = (Get-FileHash $installer.FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+          $lines = @($hash + '  ' + $installer.Name)
+          [IO.File]::WriteAllLines((Join-Path $dir 'SHA256SUMS.txt'),$lines)
+          $provenance = @(
+            ('release=desktop-v0.1.2-beta.3')
+            ('source_commit=' + $env:GITHUB_SHA)
+            'platform=windows-x64'
+            'artifact_status=unsigned-prerelease'
+            ('installer_sha256=' + $hash)
+            ('embedded_engine=' + $manifest.engine)
+            ('embedded_node=' + $manifest.node)
+            ('node_sha256=' + $manifest.node_sha256)
+            ('worker_sha256=' + $manifest.worker_sha256)
+            ('lock_sha256=' + $manifest.lock_sha256)
+            'microsoft_store_submission=false'
+            'manual_windows_sandbox_qualification=pending'
+          )
+          [IO.File]::WriteAllLines((Join-Path $dir 'RELEASE-PROVENANCE.txt'),$provenance)
+      - name: Create GitHub prerelease (never Store or npm submission)
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $tag = 'desktop-v0.1.2-beta.3'
+          $repo = $env:GITHUB_REPOSITORY
+          gh release view $tag --repo $repo --json tagName --jq .tagName *> $null
+          if ($LASTEXITCODE -eq 0) {
+            $sha = gh api "repos/$repo/git/ref/tags/$tag" --jq .object.sha
+            if ($LASTEXITCODE -ne 0 -or $sha.Trim() -ne $env:GITHUB_SHA) {
+              throw 'RELEASE_TAG_ALREADY_POINTS_TO_OTHER_COMMIT'
+            }
+            Write-Host 'Exact prerelease already exists: preserving existing artifacts.'
+          } else {
+            $dir = Join-Path (Get-Location).Path 'electron/release'
+            gh release create $tag (Join-Path $dir 'TEMPORA-Desktop-0.1.2-beta.3-x64-SETUP.exe') (Join-Path $dir 'SHA256SUMS.txt') (Join-Path $dir 'RELEASE-PROVENANCE.txt') --repo $repo --target $env:GITHUB_SHA --title 'TEMPORA Desktop 0.1.2 - Beta 3 (Windows x64)' --notes-file '../../docs/releases/desktop-v0.1.2-beta.3.md' --prerelease
+            if ($LASTEXITCODE -ne 0) { throw 'GITHUB_PRERELEASE_FAILED' }
+          }
+
+  desktop-beta3-branch-cleanup:
+    name: Safe branch cleanup after beta3 GitHub publication
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && contains(github.event.head_commit.message, '[desktop-beta3-release]') }}
+    needs: desktop-beta3-release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: read
+    steps:
+      - uses: actions/github-script@v8
+        with:
+          script: |
+            const {owner,repo}=context.repo;
+            if(owner+'/'+repo!=='MGhemri/tempora-framework') throw Error('Repository mismatch');
+            const open=await github.paginate(github.rest.pulls.list,{owner,repo,state:'open',per_page:100});
+            const candidates=[
+              {name:'docs/audit-register-tempora-assistant',pr:77,expected:'fe3dd1ecba02a2b84b96b3cbe4f9c33020211c97'},
+              {name:'release/desktop-electron-beta-1',fullyIntegrated:true}
+            ];
+            for(const c of candidates){
+              let branch;
+              try{branch=(await github.rest.repos.getBranch({owner,repo,branch:c.name})).data;}
+              catch(e){if(e.status===404){core.info(c.name+': absent');continue;}throw e;}
+              if(branch.protected||open.some(p=>p.base.ref===c.name||
+                (p.head.repo?.full_name===owner+'/'+repo&&p.head.ref===c.name))){
+                core.info(c.name+': preserved (protected or in use)');continue;
+              }
+              if(c.pr){
+                const pr=(await github.rest.pulls.get({owner,repo,pull_number:c.pr})).data;
+                if(!pr.merged_at||pr.head.ref!==c.name||pr.head.sha!==c.expected||
+                  branch.commit.sha!==c.expected){
+                  core.info(c.name+': preserved (PR/SHA mismatch)');continue;
+                }
+              }
+              if(c.fullyIntegrated){
+                const diff=(await github.rest.repos.compareCommitsWithBasehead({
+                  owner,repo,basehead:'main...'+c.name
+                })).data;
+                if(diff.ahead_by!==0){core.info(c.name+': preserved (unique commits)');continue;}
+              }
+              const fresh=(await github.rest.repos.getBranch({owner,repo,branch:c.name})).data;
+              if(fresh.protected||fresh.commit.sha!==branch.commit.sha){
+                core.info(c.name+': preserved (branch moved)');continue;
+              }
+              await github.rest.git.deleteRef({owner,repo,ref:'heads/'+c.name});
+              core.info(c.name+': safely deleted');
+            }
+            core.info('release/enable-npm-publishing preserved: unique unmerged commit');
