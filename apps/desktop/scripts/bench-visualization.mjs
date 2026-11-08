@@ -8,6 +8,7 @@ const require=createRequire(import.meta.url);
 const {canonical}=require('tempora-framework');
 const {build}=require('../bridge/visualization/projections.cjs');
 const {analyze}=require('../bridge/visualization/algorithms.cjs');
+const {buildExport}=require('../bridge/visualization/exporter.cjs');
 const {ProjectManager}=require('../bridge/visualization/session.cjs');
 
 function makeSynthetic(size){
@@ -70,6 +71,15 @@ for(const count of sizes){
     validation:timed(()=>{if(!canonical.validateCorpus(corpus).valid)throw Error('INVALID');}),
     digest:timed(()=>canonical.digest(corpus)),
     chronos_page:timed(()=>build(corpus,{module:'chronos',limit:50})),
+    chronos_scoped_page:timed(()=>build(corpus,{module:'chronos',limit:50,
+      facet:{statuses:['proposed'],time:{mode:'possible-overlap',
+        earliest:'1784-01-01',latest:'1784-12-31'}}})),
+    chronos_filtered_json_export:timed(()=>{
+      const filtered=build(corpus,{module:'chronos',limit:50,
+        facet:{statuses:['proposed'],time:{mode:'possible-overlap',
+          earliest:'1784-01-01',latest:'1784-12-31'}}});
+      buildExport(filtered,{module:'chronos',format:'json'});
+    }),
     observatory_analysis:timed(()=>analyze(corpus,{module:'observatory',limit:50})),
     native_project_create:timed(()=>{
       const projects=new ProjectManager();
