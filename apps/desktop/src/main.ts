@@ -1,4 +1,4 @@
-import { invokeNative, isNative, copyNativeReviewDraft, openVisualProject, queryVisualProject, visualModules, type VisualModule, type VisualProjection, type VisualProjectInfo, analyzeVisualProject, exportVisualProject, type VisualExportFormat, queryGraphNeighborhood, type VisualTypedRef, type GraphDirection, compareVisualSnapshot, type VisualSnapshotDiff, cancelVisualJob } from "./native";
+import { invokeNative, isNative, copyNativeReviewDraft, openVisualProject, queryVisualProject, visualModules, type VisualModule, type VisualProjection, type VisualProjectInfo, analyzeVisualProject, exportVisualProject, type VisualExportFormat, queryGraphNeighborhood, type VisualTypedRef, type GraphDirection, compareVisualSnapshot, type VisualSnapshotDiff, cancelVisualJob, queryChronosInterval, type ChronosTimeMode } from "./native";
 import "./style.css";
 import {renderScientificGraphic} from "./visualization/core/render-svg";
 
@@ -33,6 +33,7 @@ const text = {
     visualExportFormat:"Format d’export",visualExport:"Exporter cette page",
     visualAnalyze:"Exécuter une analyse déterministe",
     visualCancel:"Arrêter les calculs et fermer le projet",
+    chronosFilterTitle:"Chronos — filtrage temporel scientifique",chronosFilterHelp:"Les bornes sont déclarées par le chercheur. Les dates inconnues restent inconnues.",chronosRunFilter:"Appliquer le filtre",
     visualTitle:"Exploration scientifique · six laboratoires",visualIntro:"Projections de données déclarées uniquement, en lecture seule et sans conclusions historiques automatiques.",visualOpen:"Ouvrir un corpus pour les laboratoires",visualPrevious:"Précédent",visualNext:"Suivant",visualDisclaimer:"Les cartes, graphes avancés et inférences IA ne sont pas encore exécutés. Aucune vue ne certifie un fait historique.",
     workspace: "ESPACE DE TRAVAIL", overview: "Vue générale", documents: "Documents", research: "Analyses", models: "Modèles IA",
     about: "À propos", aboutIntro: "Un espace de recherche historique local, traçable et reproductible.",
@@ -77,6 +78,7 @@ const text = {
     visualExportFormat:"Export format",visualExport:"Export current page",
     visualAnalyze:"Run deterministic analysis",
     visualCancel:"Stop calculations and close project",
+    chronosFilterTitle:"Chronos — scientific temporal filter",chronosFilterHelp:"Date bounds are researcher-defined. Unknown dates remain unknown.",chronosRunFilter:"Apply filter",
     visualTitle:"Scientific exploration · six labs",visualIntro:"Read-only projections of declared records only, without automatic historical conclusions.",visualOpen:"Open corpus for research laboratories",visualPrevious:"Previous",visualNext:"Next",visualDisclaimer:"Advanced maps, graph layouts and AI inference are not enabled. No view certifies historical facts.",
     workspace: "WORKSPACE", overview: "Overview", documents: "Documents", research: "Analysis", models: "AI models",
     about: "About", aboutIntro: "A local, traceable and reproducible historical research workspace.",
@@ -126,6 +128,7 @@ let visualModule:VisualModule="chronos";
 let visualOffset=0;
 let visualProjection:VisualProjection|null=null;
 let visualAnalysis:VisualProjection|null=null;
+let chronosFilterResult:VisualProjection|null=null;
 let graphNavigation:VisualProjection|null=null;
 let visualSnapshot:VisualSnapshotDiff|null=null;
 let visualBusy=false;
@@ -425,6 +428,26 @@ function renderVisual():void {
       visualSnapshot.current.canonical_sha256+" · SCI SHA-256 "+visualSnapshot.scientific_sha256+
       " · historical completeness: unknown":"";
   (byId("visual-snapshot-compare") as HTMLButtonElement).disabled=visualBusy||!visualInfo;
+  const chronosPanel=byId("visual-chronos-filter");
+  chronosPanel.classList.toggle("hidden",visualModule!=="chronos");
+  (byId("chronos-run-filter") as HTMLButtonElement).disabled=visualBusy||!visualInfo;
+  const chronosRows=byId("chronos-filter-rows");chronosRows.replaceChildren();
+  if(chronosFilterResult&&visualModule==="chronos"){
+    for(const item of chronosFilterResult.result){
+      const tr=document.createElement("tr");
+      const identity=document.createElement("td");
+      const time=document.createElement("td");
+      identity.textContent=JSON.stringify(item.ref??null);
+      time.textContent=JSON.stringify({start:item.start_date,end:item.end_date,
+        match:item.matched_by});
+      tr.append(identity,time);chronosRows.append(tr);
+    }
+  }
+  byId("chronos-filter-status").textContent=chronosFilterResult&&visualModule==="chronos"
+    ? "SHA-256 "+chronosFilterResult.scientific_sha256+
+      " · "+chronosFilterResult.scope.returned+"/"+chronosFilterResult.scope.total_matched+
+      (chronosFilterResult.scope.truncated?" · PARTIAL":"")+
+      " · "+JSON.stringify(chronosFilterResult.diagnostics??[]):"";
   const graphPanel=byId("visual-graph-navigation");
   graphPanel.classList.toggle("hidden",visualModule!=="graph");
   const graphRows=byId("graph-nav-rows");graphRows.replaceChildren();
@@ -518,7 +541,7 @@ async function openVisual():Promise<void>{
   try{
     const info=await openVisualProject();
     if(!info||version!==visualCancelVersion)return;
-    visualInfo=info;visualOffset=0;visualProjection=null;visualAnalysis=null;graphNavigation=null;visualSnapshot=null;visualModule="chronos";
+    visualInfo=info;visualOffset=0;visualProjection=null;visualAnalysis=null;graphNavigation=null;visualSnapshot=null;chronosFilterResult=null;visualModule="chronos";
   }catch(error){if(version===visualCancelVersion)notify(error instanceof Error?error.message:String(error));}
   finally{if(version===visualCancelVersion){visualBusy=false;renderVisual();}}
   if(version===visualCancelVersion&&visualInfo)await loadVisual();
@@ -538,7 +561,7 @@ byId("visual-cancel").addEventListener("click",async()=>{
   ++visualCancelVersion;
   ++visualSequence;
   visualInfo=null;visualProjection=null;visualAnalysis=null;
-  graphNavigation=null;visualSnapshot=null;visualOffset=0;visualCancelling=true;visualBusy=true;
+  graphNavigation=null;visualSnapshot=null;chronosFilterResult=null;visualOffset=0;visualCancelling=true;visualBusy=true;
   renderVisual();
   try{
     await cancelVisualJob();
@@ -549,7 +572,7 @@ byId("visual-cancel").addEventListener("click",async()=>{
 document.querySelectorAll<HTMLButtonElement>("[data-visual-module]").forEach(button=>button.addEventListener("click",()=>{
   const module=button.dataset.visualModule as VisualModule;
   if(!visualModules.includes(module)||!visualInfo||visualBusy)return;
-  visualModule=module;visualOffset=0;visualProjection=null;visualAnalysis=null;graphNavigation=null;visualSnapshot=null;void loadVisual();
+  visualModule=module;visualOffset=0;visualProjection=null;visualAnalysis=null;graphNavigation=null;visualSnapshot=null;chronosFilterResult=null;void loadVisual();
 }));
 byId("visual-snapshot-compare").addEventListener("click",async()=>{
   if(visualBusy||!visualInfo||visualModule!=="observatory")return;
@@ -561,6 +584,19 @@ byId("visual-snapshot-compare").addEventListener("click",async()=>{
       if(result.previous.canonical_sha256!==baseline)throw Error("STALE_CORPUS");
       visualSnapshot=result;
     }
+  }catch(error){notify(error instanceof Error?error.message:String(error));}
+  finally{visualBusy=false;renderVisual();}
+});
+byId("chronos-run-filter").addEventListener("click",async()=>{
+  if(visualBusy||!visualInfo||visualModule!=="chronos")return;
+  const earliest=(byId("chronos-earliest") as HTMLInputElement).value;
+  const latest=(byId("chronos-latest") as HTMLInputElement).value;
+  const mode=(byId("chronos-mode") as HTMLSelectElement).value as ChronosTimeMode;
+  visualBusy=true;chronosFilterResult=null;renderVisual();
+  try{
+    const result=await queryChronosInterval(earliest,latest,mode,0,50);
+    if(result.corpus.canonical_sha256!==visualInfo.canonical_sha256)throw Error("STALE_CORPUS");
+    chronosFilterResult=result;
   }catch(error){notify(error instanceof Error?error.message:String(error));}
   finally{visualBusy=false;renderVisual();}
 });
