@@ -2,6 +2,23 @@ name: Publish TEMPORA GitHub Pages
 on:
   push:
     branches: [main]
+    paths:
+      - "docs/**"
+      - "src/**"
+      - "schemas/**"
+      - "profiles/**"
+      - "distribution/**"
+      - "scripts/build-framework-site.js"
+      - "tests/framework-site.test.js"
+      - "README.md"
+      - "CHANGELOG.md"
+      - "CONTRIBUTING.md"
+      - "SECURITY.md"
+      - "CITATION.cff"
+      - "LICENSE"
+      - "package.json"
+      - "package-lock.json"
+      - ".github/workflows/pages-framework.yml"
   workflow_dispatch:
 permissions:
   contents: read

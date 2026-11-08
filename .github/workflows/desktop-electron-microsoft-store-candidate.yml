@@ -1,12 +1,7 @@
 name: TEMPORA Desktop — Microsoft Store Candidate (AppX, not submitted)
 
+# Candidate package only by an explicit manual action; never uploads to Partner Center.
 on:
-  pull_request:
-    paths:
-      - '.github/workflows/desktop-electron-microsoft-store-candidate.yml'
-      - 'apps/desktop/electron/**'
-      - 'apps/desktop/src/**'
-      - 'apps/desktop/bridge/**'
   workflow_dispatch:
 
 permissions:
