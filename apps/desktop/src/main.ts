@@ -1,8 +1,9 @@
+import {initAssistantView} from "./assistant-view";
 import { invokeNative, isNative, copyNativeReviewDraft, openVisualProject, queryVisualProject, visualModules, type VisualModule, type VisualProjection, type VisualProjectInfo, analyzeVisualProject, exportVisualProject, type VisualExportFormat, queryGraphNeighborhood, type VisualTypedRef, type GraphDirection, compareVisualSnapshot, type VisualSnapshotDiff, cancelVisualJob, type VisualFacet } from "./native";
 import "./style.css";
 import {renderScientificGraphic} from "./visualization/core/render-svg";
 
-type View = "overview" | "documents" | "research" | "models" | "about";
+type View = "overview" | "documents" | "assistant" | "research" | "models" | "about";
 type Language = "fr" | "en";
 type PreviewRow = { id: string; title: string; kind: string };
 type EngineDiagnostic = { code?: string; message?: string; path?: string; id?: string };
@@ -36,7 +37,7 @@ const text = {
     visualSelectionHeading:"Sélection scientifique commune :",visualClearSelection:"Effacer la sélection",
     facetTitle:"Filtres scientifiques documentaires",facetStatus:"Statut éditorial",facetTemporalMode:"Interprétation temporelle",facetStart:"À partir du",facetEnd:"Jusqu’au",facetApply:"Appliquer les filtres",facetReset:"Effacer les filtres",facetSelected:"Limiter à la référence sélectionnée (identité exacte, sans inférence)",
     visualTitle:"Exploration scientifique · six laboratoires",visualIntro:"Projections de données déclarées uniquement, en lecture seule et sans conclusions historiques automatiques.",visualOpen:"Ouvrir un corpus pour les laboratoires",visualPrevious:"Précédent",visualNext:"Suivant",visualDisclaimer:"Les cartes, graphes avancés et inférences IA ne sont pas encore exécutés. Aucune vue ne certifie un fait historique.",
-    workspace: "ESPACE DE TRAVAIL", overview: "Vue générale", documents: "Documents", research: "Analyses", models: "Modèles IA",
+    workspace: "ESPACE DE TRAVAIL", overview: "Vue générale", documents: "Documents", assistant:"Assistant", assistantDescription:"Première étape : inspection de sources sans mapping confirmé ni écriture.", research: "Analyses", models: "Modèles IA",
     about: "À propos", aboutIntro: "Un espace de recherche historique local, traçable et reproductible.",
     aboutProduct: "Application", aboutVersion: "Version Desktop", aboutEngine: "Moteur scientifique",
     aboutAuthor: "Auteur / Projet", aboutWebsite: "Site", aboutLicense: "Licence", aboutRepository: "Code source",
@@ -82,7 +83,7 @@ const text = {
     visualSelectionHeading:"Shared scientific selection:",visualClearSelection:"Clear selection",
     facetTitle:"Scientific documentary filters",facetStatus:"Editorial status",facetTemporalMode:"Temporal interpretation",facetStart:"From",facetEnd:"Until",facetApply:"Apply filters",facetReset:"Clear filters",facetSelected:"Filter by selected reference (exact identity, no inference)",
     visualTitle:"Scientific exploration · six labs",visualIntro:"Read-only projections of declared records only, without automatic historical conclusions.",visualOpen:"Open corpus for research laboratories",visualPrevious:"Previous",visualNext:"Next",visualDisclaimer:"Advanced maps, graph layouts and AI inference are not enabled. No view certifies historical facts.",
-    workspace: "WORKSPACE", overview: "Overview", documents: "Documents", research: "Analysis", models: "AI models",
+    workspace: "WORKSPACE", overview: "Overview", documents: "Documents", assistant:"Assistant", assistantDescription:"First stage: read-only source inspection, without confirmed mapping.", research: "Analysis", models: "AI models",
     about: "About", aboutIntro: "A local, traceable and reproducible historical research workspace.",
     aboutProduct: "Application", aboutVersion: "Desktop version", aboutEngine: "Scientific engine",
     aboutAuthor: "Author / Project", aboutWebsite: "Website", aboutLicense: "License", aboutRepository: "Source code",
@@ -600,7 +601,7 @@ async function openVisual():Promise<void>{
 document.querySelectorAll<HTMLButtonElement>("[data-view]").forEach(button => {
   button.addEventListener("click", () => showView(button.dataset.view as View));
 });
-byId("language").addEventListener("click", () => { language = language === "fr" ? "en" : "fr"; localize(); });
+byId("language").addEventListener("click", () => { language = language === "fr" ? "en" : "fr"; localize(); document.dispatchEvent(new Event("tempora-language-change")); });
 byId("hero-open").addEventListener("click", () => void openDocument());
 byId("document-open").addEventListener("click", () => void openDocument());
 byId("validate-corpus").addEventListener("click", () => void validateCorpus());
@@ -732,5 +733,6 @@ if (window.temporaElectron) {
   const aboutVersion = document.getElementById("about-desktop-version");
   if (aboutVersion) aboutVersion.textContent = version;
 }
+initAssistantView(window.temporaElectron,()=>language);
 renderVisual();
 showView("overview");
