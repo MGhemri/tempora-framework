@@ -96,4 +96,12 @@ Le module privé `src/framework/assist-inspection.js` lit **uniquement un échan
 
 Il ne lit pas de chemin, ne déduit aucun type historique, ne parse pas un classeur Excel, n'ajoute aucun mapping confirmé, ne modifie pas les octets originaux et ne crée aucune prévisualisation canonique. Il ne remplace pas le parseur d'ingestion ni le futur `tempora-format` autonome : ce jalon est un prototype pur et extractible, couvert par des tests de reproductibilité et d'entrées hostiles.
 
-**Statut :** implémentation proposée sur une branche, non considérée fusionnée ou certifiée jusqu'à CI verte.
+**Statut :** prototype pur M1.1a fusionné et CI Linux/Windows verte — [PR #84](https://github.com/MGhemri/tempora-framework/pull/84). Il ne constitue toujours pas une fonctionnalité de l'interface.
+
+## ASSIST-M1.3a — Règles pures de dates et de listes (PR en cours)
+
+Le module privé `src/framework/assist-normalization.js` traite des **cellules préalablement décodées**, sans I/O ni effet de bord. L'utilisateur doit fournir une règle versionnée (`DD/MM/YYYY`, `FR_MONTH_YEAR`, `CIRCA_YEAR` avec `year_radius` explicite, ou séparateur de liste `;`, `,`, `|`). La sortie contient les octets textuels originaux, une proposition de bornes calendaires ou un tableau de chaînes ; aucune date ou liste n'est validée tacitement par ingestion v3.
+
+Les mois français exacts conservent la précision `month` et les années bissextiles ; `vers 1950` reste en quarantaine sans politique d'approximation explicite. Un rayon d'années défini par l'utilisateur produit une **plage qualifiée d'approximative**, jamais une date exacte. Formats incompatibles, cellules vides, chaînes ambiguës et valeurs invalides demeurent en quarantaine avec code stable. Tests sur des données fictives ; **prototype non relié au mapping, à `prepareImport`, au Desktop ni à une acceptation humaine**.
+
+**Statut :** code proposé ; ne pas déclarer le jalon finalisé sans CI verte et fusion. Aucune élévation de capacité des corpus et aucun changement du modèle canonique v3.
