@@ -169,6 +169,8 @@ test('Input limits and malformed CSV headers fail before a preview can be staged
 
 test('Renamed event_type vocabulary is used by ingestion aliases and observed coverage',()=>{
  const c=nativeCorpus();
+ // Profile fixtures may be deeply frozen; clone before changing the vocabulary binding.
+ c.profile=structuredClone(c.profile);
  const alias=c.profile.aliases.find(a=>a.taxonomy==='event_types' && a.value==='reunión ficticia');
  assert.ok(alias,'synthetic fixture has a declared event-type alias');
  c.profile.taxonomies=c.profile.taxonomies.map(name=>name==='event_types'?'types_evenement':name);
