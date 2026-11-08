@@ -251,6 +251,10 @@ app.whenReady().then(async () => {
     validSender(event);
     return visualService.query(module,offset,limit);
   });
+  ipcMain.handle('tempora:visualization:chronos-filter',async(event,earliest,latest,mode,offset,limit)=>{
+    validSender(event);
+    return visualService.filterChronos(earliest,latest,mode,offset,limit);
+  });
   ipcMain.handle('tempora:visualization:analyze', async(event,module,limit,threshold)=>{
     validSender(event);
     return visualService.analyze(module,limit,threshold);
