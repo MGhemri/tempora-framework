@@ -153,7 +153,7 @@ L'absence d'exécution de formules et le refus des liens externes restent des ga
 
 ## Priorisation issue de l'audit Antigravity (2026-11-08)
 
-**Source et détails :** [AUDIT-ANTIGRAVITY-2026-11-08.md](AUDIT-ANTIGRAVITY-2026-11-08.md) — audit d'un ancien commit `a07f2ec` ; ne pas considérer les anciennes observations comme l'état actuel sans recontrôle.
+**Source et détails :** [ANTIGRAVITY-2026-11-08.md](ANTIGRAVITY-2026-11-08.md) — audit d'un ancien commit `a07f2ec` ; ne pas considérer les anciennes observations comme l'état actuel sans recontrôle.
 
 | Lot | Priorité | Travail et dépendances | Définition du terminé |
 |---|---|---|---|
