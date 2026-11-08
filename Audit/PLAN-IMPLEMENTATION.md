@@ -122,4 +122,12 @@ L'utilisateur doit fournir une liaison `confirmed_by_user` pour chaque champ ret
 
 **Limites :** ceci n'est pas encore l'éditeur visuel à deux colonnes, ne lie pas automatiquement une inspection à une confirmation, ne traite pas XLSX, ne convertit pas dates/listes et ne valide pas un corpus ni sa provenance historique. Pas de réseau, fichier écrit, nouvelle API SDK ou modification du schéma canonique v3.
 
-**Statut :** code proposé sur branche, non finalisé tant que la CI n'est pas verte et la PR fusionnée.
+**Statut :** jalon M1.2a fusionné, CI Linux/Windows verte — [PR #89](https://github.com/MGhemri/tempora-framework/pull/89). Le mapping reste un noyau privé sans interface utilisateur.
+
+## ASSIST-M1.4a — Parcours CSV de prévisualisation reproductible (PR en cours)
+
+Un test d'intégration sur des données entièrement fictives relie **`inspectDelimitedSample` → `suggestColumnMappings` → confirmation humaine simulée par un choix explicite `confirmed_by_user` → `compileConfirmedCsvMapping` → `checkMapping` → `prepareImport`**.
+
+Les assertions vérifient : aucun mapping provenant uniquement de suggestions, aucun effet de bord sur les octets source ou le corpus, empreinte de fichier, lignes source, diagnostic de date invalide en quarantaine, état `proposed`, et prévisualisation reproductible. Le test prouve **l'intégration des noyaux**, pas l'existence d'un éditeur visuel : ce parcours requiert aujourd'hui un appel programmatique aux fonctions privées, sans déploiement d'un serveur web ou de GUI.
+
+**Statut :** test proposé, en attente de CI Linux/Windows et fusion.
