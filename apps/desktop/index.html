@@ -108,6 +108,25 @@
               <button type="button" data-visual-module="pattern">PatternLab</button>
               <button type="button" data-visual-module="observatory">Corpus Observatory</button>
             </div>
+            <section id="visual-chronos-filter" class="result-panel hidden" aria-label="Chronos interval filter">
+              <h3 data-i18n="chronosFilterTitle">Chronos — filtre temporel scientifique</h3>
+              <p class="subnote" data-i18n="chronosFilterHelp">Choisissez les bornes ; les dates inconnues seront comptabilisées, jamais estimées.</p>
+              <div class="visual-module-bar">
+                <label for="chronos-earliest">From / Depuis <input id="chronos-earliest" type="date" value="1784-01-01"/></label>
+                <label for="chronos-latest">To / Jusqu'à <input id="chronos-latest" type="date" value="1784-12-31"/></label>
+                <label for="chronos-mode">Mode
+                  <select id="chronos-mode">
+                    <option value="possible-overlap">Possible overlap / Recouvrement possible</option>
+                    <option value="certain-only">Certain-only / Intervalle entièrement compris</option>
+                    <option value="declared-start">Declared start / Début déclaré</option>
+                  </select>
+                </label>
+              </div>
+              <button id="chronos-run-filter" type="button" data-i18n="chronosRunFilter">Appliquer le filtre</button>
+              <p class="subnote" id="chronos-filter-status" role="status" aria-live="polite"></p>
+              <div class="table-wrap"><table><thead><tr><th>Event / Événement</th><th>Temporal expression / Expression temporelle</th></tr></thead>
+                <tbody id="chronos-filter-rows"></tbody></table></div>
+            </section>
             <section id="visual-graph-navigation" class="result-panel hidden" aria-label="GraphLab neighborhood">
               <h3 data-i18n="graphNavTitle">Voisinage des relations déclarées</h3>
               <p class="subnote" data-i18n="graphNavHelp">Référence canonique typée (kind, namespace, id). Aucun lien historique n'est inféré.</p>
