@@ -137,6 +137,22 @@
                 <th data-i18n="snapshotCurrent">Après</th><th>Δ</th><th data-i18n="snapshotAdded">Ajouts</th><th data-i18n="snapshotRemoved">Suppressions</th>
               </tr></thead><tbody id="visual-snapshot-rows"></tbody></table></div>
             </section>
+            <section id="visual-facets" class="result-panel" aria-label="Scientific filters">
+              <h3 data-i18n="facetTitle">Filtres scientifiques documentaires</h3>
+              <div class="visual-module-bar">
+                <label for="visual-facet-status"><span data-i18n="facetStatus">Statut éditorial</span>
+                  <select id="visual-facet-status"><option value="">Tous</option><option value="proposed">Proposed</option><option value="under_review">Under review</option><option value="published">Published</option><option value="withdrawn">Withdrawn</option><option value="unspecified">Unspecified</option></select></label>
+                <label for="visual-facet-mode"><span data-i18n="facetTemporalMode">Interprétation temporelle</span>
+                  <select id="visual-facet-mode"><option value="possible-overlap">Possible overlap</option><option value="certain-only">Entirely within</option><option value="declared-start">Exact declared start</option></select></label>
+                <label for="visual-facet-from"><span data-i18n="facetStart">À partir du</span><input id="visual-facet-from" type="date" /></label>
+                <label for="visual-facet-to"><span data-i18n="facetEnd">Jusqu'au</span><input id="visual-facet-to" type="date" /></label>
+              </div>
+              <div class="visual-module-bar">
+                <button type="button" id="visual-facet-apply" data-i18n="facetApply">Appliquer les filtres</button>
+                <button type="button" id="visual-facet-reset" data-i18n="facetReset">Effacer les filtres</button>
+              </div>
+              <p id="visual-facet-note" class="subnote" role="status" aria-live="polite"></p>
+            </section>
             <p id="visual-diagnostics" class="subnote"></p>
             <div id="visual-graphic" class="visual-graphic" aria-label="Visual research preview"></div>
             <div class="table-wrap"><table><thead><tr><th>Typed reference</th><th>Declared data / Données déclarées</th></tr></thead>
