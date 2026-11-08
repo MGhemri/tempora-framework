@@ -14,6 +14,20 @@ on:
       - "docs/reference/DESKTOP_ARCHITECTURE.md"
       - ".github/workflows/desktop-foundation.yml"
   workflow_dispatch:
+    inputs:
+      synthetic_benchmark:
+        description: 'Run an opt-in fictional corpus benchmark, without real research data'
+        type: boolean
+        required: false
+        default: false
+      synthetic_sizes:
+        description: 'Synthetic event counts (100k excluded from CI)'
+        type: choice
+        required: false
+        default: '100,1000'
+        options:
+          - '100,1000'
+          - '100,1000,10000'
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
@@ -162,3 +176,37 @@ jobs:
             apps/desktop/src-tauri/target/release/bundle/nsis/engine-inventory.json
           if-no-files-found: error
           retention-days: 7
+
+  synthetic-benchmark:
+    # Opt-in only, never a required PR status; no new workflow files.
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.synthetic_benchmark == true }}
+    name: Optional synthetic TVRW performance baseline
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: apps/desktop
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22.16.0'
+      - name: Install research desktop test dependencies
+        run: npm install --ignore-scripts --no-audit --no-fund
+      - name: Measure fictional scientific workload
+        env:
+          SYNTHETIC_SIZES: ${{ inputs.synthetic_sizes }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p ../../work/benchmarks
+          node scripts/bench-visualization.mjs --sizes="$SYNTHETIC_SIZES" --iterations=3 \
+            > ../../work/benchmarks/tvrw-synthetic-report.json
+          node -e "const fs=require('fs');const p=JSON.parse(fs.readFileSync('../../work/benchmarks/tvrw-synthetic-report.json','utf8'));if(!p.synthetic||p.sizes.length<2)process.exit(1);console.log('Synthetic counts:',p.sizes.map(x=>x.size).join(', '))"
+      - name: Store audit report, not a performance certification
+        uses: actions/upload-artifact@v4
+        with:
+          name: TEMPORA-TVRW-SYNTHETIC-PERFORMANCE-NOT-CERTIFIED
+          path: work/benchmarks/tvrw-synthetic-report.json
+          if-no-files-found: error
+          retention-days: 14
