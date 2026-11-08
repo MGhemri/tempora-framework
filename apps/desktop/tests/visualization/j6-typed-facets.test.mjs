@@ -26,7 +26,7 @@ test('possible overlap does not manufacture a certain day from a year',()=>{
   assert.equal(certain.scope.total_matched,0);
   const start=build(c,{module:'chronos',facet:period('declared-start','1784-01-01','1784-01-01')});
   assert.equal(start.scope.total_matched,0);
-  assert.equal(start.diagnostics[0]?.code,'TEMPORAL_UNKNOWN_EXCLUDED');
+  assert.equal(start.diagnostics[0]?.code,'TEMPORAL_UNCERTAIN_EXCLUDED');
   assert.equal(canonical.digest(c),before);
 });
 test('unknown temporal bounds are explicitly counted and never assigned dates',()=>{
