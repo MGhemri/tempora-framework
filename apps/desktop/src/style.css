@@ -87,3 +87,13 @@
 #visual-rows tr[role="button"]{cursor:pointer}
 #visual-rows tr[aria-pressed="true"]{outline:2px solid #e6c38d;outline-offset:-2px}
 #visual-rows tr[role="button"]:focus-visible,#visual-clear-selection:focus-visible{outline:3px solid #e6c38d;outline-offset:2px}
+
+/* TEMPORA Assistant initial read-only source/model inspector */
+.assistant-columns{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:18px 0}
+.assistant-columns .result-panel{min-width:0;overflow-wrap:anywhere;max-height:440px;overflow:auto}
+#assistant-details{overflow-wrap:anywhere}
+#assistant-sheet{max-width:100%;margin:8px 12px;padding:10px;border-radius:8px}
+#assistant-preview{overflow:auto;max-height:480px}
+#assistant-preview table{width:100%;border-collapse:collapse}
+#assistant-preview td,#assistant-preview th{padding:8px;border-bottom:1px solid var(--border, #444);white-space:pre-wrap;overflow-wrap:anywhere}
+@media(max-width:780px){.assistant-columns{grid-template-columns:1fr}}
