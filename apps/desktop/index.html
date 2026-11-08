@@ -63,11 +63,22 @@
           <div class="import-panel"><button class="primary" id="assistant-open" type="button">Sélectionner un fichier</button>
             <button type="button" id="assistant-close">Fermer la session</button>
             <select id="assistant-sheet" aria-label="Feuille Excel" disabled></select>
+            <label for="assistant-delimiter">Séparateur CSV / TSV
+              <select id="assistant-delimiter" disabled><option value="">Choisir explicitement</option>
+                <option value=",">Virgule (,)</option><option value=";">Point-virgule (;)</option>
+                <option value="tab">Tabulation (TAB)</option></select>
+            </label>
+            <label for="assistant-profile">Profil de recherche (démo)
+              <select id="assistant-profile" disabled><option value="">Choisir explicitement</option>
+                <option value="synthetic-history">Synthetic history — données fictives uniquement</option></select>
+            </label>
+            <button id="assistant-suggest" type="button" disabled>Proposer des correspondances (sans confirmation)</button>
             <p class="subnote" id="assistant-status" role="status" aria-live="polite"></p>
             <div id="assistant-details" class="subnote"></div>
           </div>
           <div class="assistant-columns"><section class="result-panel" id="assistant-columns" aria-label="Colonnes sources"></section>
           <section class="result-panel" id="assistant-targets" aria-label="Champs canoniques"></section></div>
+          <section class="result-panel" id="assistant-suggestions" aria-label="Suggestions non confirmées"></section>
           <section class="result-panel" id="assistant-preview" aria-label="Aperçu sans écriture"></section>
         </section>
         <section id="view-research" class="view hidden">
