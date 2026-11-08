@@ -40,6 +40,17 @@ test('Benchmark iterations are bounded, deterministic in shape and explicit',()=
     assert.match(rejected.stderr,/INVALID_BENCHMARK_ITERATIONS/);
   }
 });
+test('Representative 100-record synthetic benchmark executes without data access',()=>{
+  const r=spawnSync(process.execPath,[script,'--sizes=100','--iterations=1'],{
+    encoding:'utf8',timeout:30000,maxBuffer:2*1024*1024});
+  assert.equal(r.status,0,r.stderr);
+  const sample=JSON.parse(r.stdout).sizes[0];
+  assert.equal(sample.size,100);
+  assert.equal(sample.validation.status,'ok');
+  assert.equal(sample.chronos_scoped_page.status,'ok');
+  assert.equal(sample.chronos_filtered_json_export.status,'ok');
+  assert.equal(sample.native_project_create.status,'ok');
+});
 test('Large synthetic loads require explicit opt-in and malformed sizes fail closed',()=>{
   for(const sizes of ['100000','0','not-a-number']){
     const r=spawnSync(process.execPath,[script,'--sizes='+sizes],{
