@@ -12,7 +12,7 @@ declare global {
       queryVisualProject: (module: string, offset: number, limit: number, facet?:VisualFacet|null) => Promise<unknown>;
       closeVisualProject: () => Promise<boolean>;
       analyzeVisualProject: (module: string,limit: number,threshold: number) => Promise<unknown>;
-      exportVisualProject: (module:string,format:string,offset:number,limit:number)=>Promise<unknown>;
+      exportVisualProject: (module:string,format:string,offset:number,limit:number,facet?:VisualFacet|null)=>Promise<unknown>;
       queryGraphNeighborhood:(root:VisualTypedRef,depth:number,direction:string,limit:number)=>Promise<unknown>;
       compareVisualSnapshot:()=>Promise<unknown>;
       cancelVisualJob:()=>Promise<{cancelled:boolean;session_closed:boolean}>;
@@ -77,10 +77,10 @@ export async function analyzeVisualProject(module:VisualModule,limit=50,threshol
 
 export type VisualExportFormat="json"|"geojson"|"csv"|"graphml";
 export type VisualExportReceipt={fileName:string;sha256:string;bytes:number;partial:boolean};
-export async function exportVisualProject(module:VisualModule,format:VisualExportFormat,offset=0,limit=50)
+export async function exportVisualProject(module:VisualModule,format:VisualExportFormat,offset=0,limit=50,facet:VisualFacet|null=null)
   :Promise<VisualExportReceipt|null>{
   if(!window.temporaElectron)throw Error("VISUAL_ELECTRON_ONLY");
-  return await window.temporaElectron.exportVisualProject(module,format,offset,limit) as VisualExportReceipt|null;
+  return await window.temporaElectron.exportVisualProject(module,format,offset,limit,facet) as VisualExportReceipt|null;
 }
 
 export type VisualTypedRef={kind:string;namespace:string;id:string};
