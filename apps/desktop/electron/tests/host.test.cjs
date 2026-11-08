@@ -154,11 +154,37 @@ test('Electron NSIS and Store package the same fully offline sample corpora',()=
   assert.match(smoke,/smoke_example/);
 });
 
-test('Electron GeoJSON preview renders ALNOP operation title and type from feature properties',()=>{
-  const host=src('electron/main.cjs');
-  assert.match(host,/item\?\.properties\?\.nom_operation/);
-  assert.match(host,/item\?\.properties\?\.type_action/);
-  assert.match(host,/item\?\.geometry\?\.type/);
+test('AG-06: Electron previews prefer generic GeoJSON labels and preserve ALNOP fallback',()=>{
+ const {preview}=require('../preview-core.cjs');
+ const p=(features)=>preview({fileName:'fixture.geojson',json:{type:'FeatureCollection',features},bytes:100});
+ const generic=p([{type:'Feature',id:'GEN_1',properties:{
+  title:{es:'Evento sintético',en:'Synthetic event'},name:'Secondary label',
+  kind:'archival_record',type:'wrong_fallback',nom_operation:'Legacy label',
+  type_action:'legacy_kind'
+ },geometry:{type:'Point',coordinates:[0,0]}}]);
+ assert.deepEqual(generic.rows,[{id:'GEN_1',title:'Synthetic event',kind:'archival_record'}]);
+ assert.equal(generic.note,'Structural preview only. Not canonical validation or historical fact verification.');
+ const aln=p([{type:'Feature',properties:{
+  id:'OP_ALNOP',nom_operation:'Opération de démonstration',type_action:'fictional_event'
+ },geometry:{type:'Point',coordinates:[0,0]}}]);
+ assert.deepEqual(aln.rows,[{id:'OP_ALNOP',title:'Opération de démonstration',kind:'fictional_event'}]);
+ const anonymous=p([{type:'Feature',geometry:{type:'LineString',coordinates:[]}}]);
+ assert.equal(anonymous.rows[0].kind,'LineString');
+ assert.equal(anonymous.rows[0].title,'Untitled / Sans titre');
+ const mixed=preview({fileName:'synthetic.json',bytes:55,json:{
+  events:[{id:'E1',title:{es:'Uno',en:'One'},kind:'event'}],
+  records:[{id:'R1'}],operations:[{id:'O1'}]
+ }});
+ assert.equal(mixed.rows[0].title,'One');
+ assert.equal(mixed.records,1);
+ assert.equal(preview({fileName:'records.json',bytes:1,json:{
+  records:[{id:'R1',title:'Synthetic record'}],operations:[{id:'O1'}]
+ }}).rows[0].id,'R1');
+ const packaged=require('../package.json').build.files;
+ assert.ok(packaged.includes('preview-core.cjs'));
+ const host=src('electron/main.cjs');
+ assert.match(host,/require\('\.\/preview-core\.cjs'\)/);
+ assert.doesNotMatch(host,/properties\?\.nom_operation/);
 });
 
 
