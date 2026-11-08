@@ -168,3 +168,25 @@ test('A second synthetic profile independently promotes a byte-identical public 
   assert.deepEqual(store.readCurrent(profile.id),first);
   assert.equal(verifyPublicationArtifacts(first).profile.namespace,profile.namespace);
 });
+
+
+test('Publication lock contention produces a stable code and does not steal or delete an existing lock', t=>{
+  const dir=temporary(t),{request}=fixture();
+  const bundle=buildPublicationArtifacts(request);
+  const store=createPublicationStore(dir);
+  store.stage(bundle);
+  const root=path.join(dir,request.corpus.profile.id);
+  const lock=path.join(root,'.promotion-lock');
+  const original=Buffer.from('owner: synthetic process still responsible');
+  fs.writeFileSync(lock,original,{flag:'wx'});
+  assert.throws(()=>store.export(bundle),e=>e.code==='STORE_LOCKED');
+  assert.deepEqual(fs.readFileSync(lock),original);
+  const digest=store.readCurrent(request.corpus.profile.id);
+  assert.equal(digest,null);
+  // Test-only, explicit owner-authorized cleanup of the synthetic fixture.
+  fs.unlinkSync(lock);
+  const published=store.export(bundle);
+  assert.equal(verifyPublicationArtifacts(require('../src/framework/publication-store').verifyPublicationDirectory(published)).profile.id,
+    request.corpus.profile.id);
+  assert.equal(fs.existsSync(lock),false);
+});

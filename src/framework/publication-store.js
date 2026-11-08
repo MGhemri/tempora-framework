@@ -89,7 +89,18 @@ function createPublicationStore(root,{replacePointer=atomicWrite}={}) {
   }
   function locked(dir, action) {
     const lock = path.join(dir,'.promotion-lock');
-    const fd = fs.openSync(lock,'wx');
+    let fd;
+    try { fd = fs.openSync(lock,'wx'); }
+    catch (error) {
+      // Never break or unlink a lock based on age or process ID. Both are
+      // insufficient ownership evidence and can race with a live publisher.
+      if (error.code === 'EEXIST') {
+        const conflict = Error('Publication store is locked; verify the owner before explicit recovery');
+        conflict.code = 'STORE_LOCKED';
+        throw conflict;
+      }
+      throw error;
+    }
     try { return action(); }
     finally {
       fs.closeSync(fd);
