@@ -115,3 +115,36 @@ test('Assistant: corrupt or external-link XLSX cannot create a session',()=>{
  const f=host(malicious,'.xlsx');
  assert.throws(()=>f.service.open(f.path),throws('ASSIST_XLSX_ACTIVE_CONTENT'));
 });
+
+test('Assistant: suggestions require explicit trusted profile and delimiter, never confirm',()=>{
+ const f=host(csv),session=f.service.open(f.path);
+ assert.throws(()=>f.service.suggest(session.handle_id,'synthetic-history',{}),throws('ASSIST_DELIMITER_CONFIRMATION_REQUIRED'));
+ assert.throws(()=>f.service.suggest(session.handle_id,'other-profile',{delimiter:','}),throws('ASSIST_PROFILE_NOT_REGISTERED'));
+ const result=f.service.suggest(session.handle_id,'synthetic-history',{delimiter:','});
+ assert.equal(result.source_sha256,session.source_sha256);
+ assert.equal(result.profile_id,'synthetic-history');
+ assert.equal(result.mapping.mapping_confirmed,false);
+ assert.deepEqual(result.mapping.confirmed_bindings,[]);
+ assert.deepEqual(result.mapping.suggestions.map(x=>[x.source_column,x.target_field]),[
+  ['id','id'],['title','title.en']]);
+ assert.ok(result.mapping.suggestions.every(x=>x.state==='suggested'&&x.confidence_kind==='heuristic'));
+ assert.equal(JSON.stringify(result).includes(f.path),false);
+ assert.throws(()=>f.service.suggest(session.handle_id,'synthetic-history',{delimiter:'|'}),throws('ASSIST_DELIMITER_CONFIRMATION_REQUIRED'));
+ assert.throws(()=>f.service.suggest(session.handle_id,'synthetic-history',{delimiter:',',__proto__:'invisible',bad:2}),throws('ASSIST_MAPPING_CHOICE_INVALID'));
+});
+test('Assistant: untrusted header and changed file invalidate suggestion request',()=>{
+ const unsafe=host('id,__proto__\n1,unsafe\n');
+ const open=unsafe.service.open(unsafe.path);
+ assert.throws(()=>unsafe.service.suggest(open.handle_id,'synthetic-history',{delimiter:','}),throws('ASSIST_MAPPING_HEADERS_UNSAFE'));
+ const f=host(csv),s=f.service.open(f.path);
+ f.setData('id,title\n9,Modified\n');
+ assert.throws(()=>f.service.suggest(s.handle_id,'synthetic-history',{delimiter:','}),throws('ASSIST_SOURCE_CHANGED'));
+});
+test('Assistant: worksheet suggestions require explicit sheet and return no confirmation',()=>{
+ const f=host(xlsx,'.xlsx'),open=f.service.open(f.path);
+ assert.throws(()=>f.service.suggest(open.handle_id,'synthetic-history',{}),throws('ASSIST_SHEET_SELECTION_REQUIRED'));
+ const result=f.service.suggest(open.handle_id,'synthetic-history',{sheet_name:'Fictive'});
+ assert.equal(result.mapping.mapping_confirmed,false);
+ assert.equal(result.mapping.suggestions[0].target_field,'id');
+ assert.deepEqual(result.mapping.confirmed_bindings,[]);
+});

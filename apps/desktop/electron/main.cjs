@@ -12,7 +12,8 @@ const {VisualService}=require('./visualization-service.cjs');
 const {preview}=require('./preview-core.cjs');
 const {createAssistantSessions}=require('./assistant-session.cjs');
 const assistantSessions=createAssistantSessions({
-  sourceRoot:app.isPackaged?join(process.resourcesPath,'assistant'):resolve(__dirname,'../../..','src')
+  sourceRoot:app.isPackaged?join(process.resourcesPath,'assistant'):resolve(__dirname,'../../..','src'),
+  profileRoot:app.isPackaged?join(process.resourcesPath,'assistant','profiles'):resolve(__dirname,'../../..','profiles')
 });
 
 const MAX_PREVIEW_BYTES = 8 * 1024 * 1024;
@@ -230,6 +231,9 @@ app.whenReady().then(async () => {
   });
   ipcMain.handle('tempora:assistant:sheet',(event,handle_id,sheet_name)=>{
     validSender(event);return assistantSessions.selectSheet(handle_id,sheet_name);
+  });
+  ipcMain.handle('tempora:assistant:suggest',(event,handle_id,profile_id,choice)=>{
+    validSender(event);return assistantSessions.suggest(handle_id,profile_id,choice);
   });
   ipcMain.handle('tempora:assistant:close',(event,handle_id)=>{
     validSender(event);return assistantSessions.close(handle_id);
