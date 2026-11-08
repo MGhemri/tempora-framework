@@ -61,10 +61,10 @@ function v2Respond(message){
       result=visualization.graphNeighborhood(p.project_id,
         {root:p.root,depth:p.depth,direction:p.direction,limit:p.limit});
     } else if(op==='visualization.export.prepare'){
-      if(Object.keys(p).some(k=>!['project_id','module','format','offset','limit'].includes(k)))
+      if(Object.keys(p).some(k=>!['project_id','module','format','offset','limit','facet'].includes(k)))
         throw Object.assign(new Error('INVALID_PAYLOAD'),{code:'INVALID_PAYLOAD'});
       result=visualization.export(p.project_id,
-        {module:p.module,format:p.format,offset:p.offset,limit:p.limit});
+        {module:p.module,format:p.format,offset:p.offset,limit:p.limit,facet:p.facet??null});
     } else if(op==='visualization.analysis.run'){
       if(Object.keys(p).some(k=>!['project_id','module','limit','threshold'].includes(k)))
         throw Object.assign(new Error('INVALID_PAYLOAD'),{code:'INVALID_PAYLOAD'});
