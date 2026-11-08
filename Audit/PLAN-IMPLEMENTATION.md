@@ -104,4 +104,11 @@ Le module privé `src/framework/assist-normalization.js` traite des **cellules p
 
 Les mois français exacts conservent la précision `month` et les années bissextiles ; `vers 1950` reste en quarantaine sans politique d'approximation explicite. Un rayon d'années défini par l'utilisateur produit une **plage qualifiée d'approximative**, jamais une date exacte. Formats incompatibles, cellules vides, chaînes ambiguës et valeurs invalides demeurent en quarantaine avec code stable. Tests sur des données fictives ; **prototype non relié au mapping, à `prepareImport`, au Desktop ni à une acceptation humaine**.
 
-**Statut :** code proposé ; ne pas déclarer le jalon finalisé sans CI verte et fusion. Aucune élévation de capacité des corpus et aucun changement du modèle canonique v3.
+**Statut :** prototype pur M1.3a fusionné, CI Linux/Windows verte — [PR #87](https://github.com/MGhemri/tempora-framework/pull/87). La fonction reste privée, sans GUI ni import automatisé. Aucune élévation de capacité des corpus et aucun changement du modèle canonique v3.
+
+## Bilan des intégrations du 2026-11-08
+
+- **Desktop** : [release `desktop-v0.1.2-beta.3`](https://github.com/MGhemri/tempora-framework/releases/tag/desktop-v0.1.2-beta.3) publiée après construction Electron NSIS, validation des exemples hors ligne et installation réelle en CI. Moteur npm embarqué `tempora-framework@3.0.0` ; pas de signature Windows ni certification Microsoft Store.
+- **ASSIST-M1.1a** : [PR #84](https://github.com/MGhemri/tempora-framework/pull/84) fusionnée — inspection bornée CSV/TSV, sans inférence et sans écriture.
+- **ASSIST-M1.3a** : [PR #87](https://github.com/MGhemri/tempora-framework/pull/87) fusionnée — dates explicites, précision mensuelle, année approximative sous politique de rayon confirmée, listes à séparateur confirmé et quarantaine.
+- **Étapes encore nécessaires pour M1** : adaptateur Excel non exécutant, éditeur de mapping et contrats versionnés, prévisualisation réutilisant `prepareImport`, tests de parcours complet local. **Aucun assistant graphique complet n'est livré à ce stade.**
