@@ -93,7 +93,7 @@ function build(corpus,options={}){
   const collection=COLLECTIONS[module];
   const raw=items(corpus,collection);
   if(raw.length>MAX_SCAN)bad('LIMIT_EXCEEDED');
-  const scoped=facet===null?{records:raw,facets:null,unknownDatesExcluded:0}:applyFacets(raw,module,facet);
+  const scoped=facet===null?{records:raw,facets:null,unknownDatesExcluded:0,uncertainStartsExcluded:0}:applyFacets(raw,module,facet);
   const ordered=sortRecords(scoped.records);
   const selected=ordered.slice(offset,offset+limit);
   const rows=selected.map(item=>deriveRow(module,item,corpus));
@@ -111,7 +111,9 @@ function build(corpus,options={}){
       ...(offset+limit<ordered.length?
         [{code:'PARTIAL_PAGE',severity:'warning',count:ordered.length-selected.length}]:[]),
       ...(scoped.unknownDatesExcluded?
-        [{code:'TEMPORAL_UNKNOWN_EXCLUDED',severity:'info',count:scoped.unknownDatesExcluded}]:[])
+        [{code:'TEMPORAL_UNKNOWN_EXCLUDED',severity:'info',count:scoped.unknownDatesExcluded}]:[]),
+      ...(scoped.uncertainStartsExcluded?
+        [{code:'TEMPORAL_UNCERTAIN_EXCLUDED',severity:'info',count:scoped.uncertainStartsExcluded}]:[])
     ],
     generatedAt
   });
