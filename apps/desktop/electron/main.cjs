@@ -255,6 +255,14 @@ app.whenReady().then(async () => {
     validSender(event);
     return visualService.analyze(module,limit,threshold);
   });
+  ipcMain.handle('tempora:visualization:compare-snapshot',async event=>{
+    validSender(event);
+    const path=await selectFile();
+    if(!path)return null;
+    const selected=limitedFile(path,MAX_CORPUS_BYTES,true);
+    const comparison=await visualService.compareSnapshot(selected.json);
+    return {fileName:selected.fileName,...comparison};
+  });
   ipcMain.handle('tempora:visualization:neighborhood',async(event,root,depth,direction,limit)=>{
     validSender(event);
     return visualService.neighborhood(root,depth,direction,limit);
