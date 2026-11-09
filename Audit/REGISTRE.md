@@ -69,3 +69,8 @@ Suite à la fusion de la PR #103, audit explicite des anciennes branches documen
 - `docs/audit-close-assist-m11d` : PR #101 fusionnée, SHA `fa79ba179da321f03568b877e57cfb2c502c0218`.
 
 **Suppression conditionnelle, non encore acquise au moment de la rédaction :** réutiliser `validate-framework.yml` plutôt que créer un workflow permanent, après intégration de la PR de nettoyage sur `main` déclenchée par le marqueur `[branch-hygiene-setup]`. Le script exige PR effectivement fusionnée, propriétaire du dépôt, identité de branche et SHA de tête exact, aucun usage par une PR ouverte, branche non protégée, relecture atomique du SHA avant suppression. Préserver `release/enable-npm-publishing` (travail distinct) et `main`. Confirmer les résultats du workflow avant d'annoncer la suppression.
+
+
+### ASSIST-M1.2d — Garde-fous confirmation CSV (suivi en PR)
+
+Vérifier jeton éphémère, absence d'auto-acceptation, contrôle des associations dans le processus principal, invalidation si source/profil/choix change, compilation uniquement CSV, blocage Excel, erreurs stables et absence d'écriture. La conformité au mapping d'ingestion ne constitue pas une validation scientifique. **Statut : en validation, pas de release.**

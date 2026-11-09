@@ -235,6 +235,9 @@ app.whenReady().then(async () => {
   ipcMain.handle('tempora:assistant:suggest',(event,handle_id,profile_id,choice)=>{
     validSender(event);return assistantSessions.suggest(handle_id,profile_id,choice);
   });
+  ipcMain.handle('tempora:assistant:confirm',(event,handle_id,proposal_token,bindings)=>{
+    validSender(event);return assistantSessions.confirm(handle_id,proposal_token,bindings);
+  });
   ipcMain.handle('tempora:assistant:close',(event,handle_id)=>{
     validSender(event);return assistantSessions.close(handle_id);
   });

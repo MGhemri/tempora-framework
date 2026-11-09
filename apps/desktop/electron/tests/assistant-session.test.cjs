@@ -148,3 +148,46 @@ test('Assistant: worksheet suggestions require explicit sheet and return no conf
  assert.equal(result.mapping.suggestions[0].target_field,'id');
  assert.deepEqual(result.mapping.confirmed_bindings,[]);
 });
+
+test('Assistant: explicit user-selected CSV mappings compile once without reading or writing source',()=>{
+ const input='id,title,description\n1,A,B\n';
+ const f=host(input),session=f.service.open(f.path);
+ const proposal=f.service.suggest(session.handle_id,'synthetic-history',{delimiter:','});
+ const bindings=[{source_column:'id',target_field:'id',state:'confirmed_by_user'},
+  {source_column:'title',target_field:'title.en',state:'confirmed_by_user'}];
+ assert.equal(proposal.mapping.mapping_confirmed,false);
+ assert.deepEqual(proposal.mapping.confirmed_bindings,[]);
+ const receipt=f.service.confirm(session.handle_id,proposal.proposal_token,bindings);
+ assert.equal(receipt.mapping_confirmed,true);
+ assert.equal(receipt.import_performed,false);
+ assert.equal(receipt.canonical_validated,false);
+ assert.equal(receipt.source_modified,false);
+ assert.equal(receipt.mapping.format,'csv');
+ assert.deepEqual(receipt.mapping.fields,{id:'/id',title:{en:'/title'}});
+ assert.match(receipt.confirmation_sha256,/^[a-f0-9]{64}$/);
+ assert.throws(()=>f.service.confirm(session.handle_id,proposal.proposal_token,bindings),throws('ASSIST_PROPOSAL_EXPIRED'));
+ const next=f.service.suggest(session.handle_id,'synthetic-history',{delimiter:','});
+ assert.notEqual(next.proposal_token,proposal.proposal_token);
+});
+test('Assistant: rejects fake confirmation, unissued fields, expired and stale proposal tokens',()=>{
+ const f=host(csv),s=f.service.open(f.path);
+ const p=f.service.suggest(s.handle_id,'synthetic-history',{delimiter:','});
+ const yes=(a,b)=>({source_column:a,target_field:b,state:'confirmed_by_user'});
+ const valid=[yes('id','id'),yes('title','title.en')];
+ assert.throws(()=>f.service.confirm(s.handle_id,'b'.repeat(48),valid),throws('ASSIST_PROPOSAL_EXPIRED'));
+ assert.throws(()=>f.service.confirm(s.handle_id,p.proposal_token,[yes('id','id'),yes('title','title.es')]),throws('ASSIST_MAPPING_UNSUGGESTED_BINDING'));
+ assert.throws(()=>f.service.confirm(s.handle_id,p.proposal_token,[yes('id','id'),
+  {source_column:'title',target_field:'title.en',state:'suggested'}]),throws('ASSIST_MAPPING_CONFIRMATION_REQUIRED'));
+ assert.throws(()=>f.service.confirm(s.handle_id,p.proposal_token,[yes('id','id'),yes('id','id')]),throws('ASSIST_MAPPING_CONFIRMATION_REQUIRED'));
+ const newer=f.service.suggest(s.handle_id,'synthetic-history',{delimiter:','});
+ assert.throws(()=>f.service.confirm(s.handle_id,p.proposal_token,valid),throws('ASSIST_PROPOSAL_EXPIRED'));
+ assert.throws(()=>f.service.confirm(s.handle_id,newer.proposal_token,[yes('id','id'),yes('title','title.es')]),throws('ASSIST_MAPPING_UNSUGGESTED_BINDING'));
+ const p2=f.service.suggest(s.handle_id,'synthetic-history',{delimiter:','});
+ f.setData('id,title\n1,changed\n');
+ assert.throws(()=>f.service.confirm(s.handle_id,p2.proposal_token,valid),throws('ASSIST_SOURCE_CHANGED'));
+});
+test('Assistant: Excel inspection cannot be compiled through CSV mapping contract',()=>{
+ const f=host(xlsx,'.xlsx'),s=f.service.open(f.path);
+ const p=f.service.suggest(s.handle_id,'synthetic-history',{sheet_name:'Fictive'});
+ assert.throws(()=>f.service.confirm(s.handle_id,p.proposal_token,[]),throws('ASSIST_XLSX_MAPPING_COMPILATION_UNSUPPORTED'));
+});

@@ -245,3 +245,16 @@ test('Assistant suggestion command stays host-only and profile-scoped',()=>{
  assert.ok(pkg.build.extraResources.some(x=>x.to==='assistant/framework/assist-mapping.js'));
  assert.ok(pkg.build.extraResources.some(x=>x.to==='assistant/profiles/synthetic-history/profile.json'));
 });
+
+test('Assistant confirmation remains in trusted Electron process',()=>{
+ const main=src('electron/main.cjs'),preload=src('electron/preload.cjs');
+ const view=src('src/assistant-view.ts'),html=src('index.html');
+ assert.match(main,/tempora:assistant:confirm/);
+ assert.match(preload,/assistantConfirm/);
+ assert.match(view,/confirmed_by_user/);
+ assert.match(view,/checkbox.checked=selections.has/);
+ assert.match(view,/compiled=response/);
+ assert.match(html,/assistant-bindings/);
+ assert.match(html,/assistant-confirm-result/);
+ assert.doesNotMatch(view,/writeFile|innerHTML|fetch\(/);
+});
