@@ -89,3 +89,10 @@ Décision de sécurité : preview canonique calculé par le seul moteur TEMPORA 
 ### ASSIST-M1.4b — Revue humaine provisoire, aucune persistance
 
 Vérifications obligatoires : sélection individuelle non précochée, identité + motif + date UTC, jeton de revue non rejouable, relecture empreintes source et corpus, refus des conflits/quarantaines, refus des aperçus tronqués, SDK `ingestion.accept` isolé en mémoire, aucune écriture réseau/disque, journal et résultat clairement étiquetés comme **simulation**. Tests réels sur worker Windows empaqueté exigés. Pas de release.
+
+
+### CI Windows Electron — blocage externe HTTP 504 lors de l'assemblage (2026-11-09)
+
+La PR #110 a subi deux exécutions de packaging Electron NSIS interrompues par `Response code 504 (Gateway Time-out)` après le téléchargement d'Electron, avant l'étape de smoke-test du worker empaqueté. Une reprise automatique strictement limitée aux erreurs réseau transitoires (3 tentatives) a confirmé un **blocage réseau persistant**. Ne pas déclarer le packaging qualifié ni fusionner la PR tant que cette étape est rouge. Ne pas désactiver `signAndEditExecutable`, les vérifications d'intégrité ou les validations de ressources pour forcer la réussite.
+
+**Mesure compensatoire de diagnostic :** exécuter les tests du worker TEMPORA et la simulation de revue sur le runtime Node 3.0.0 effectivement préparé pour l'installateur, **avant** `electron-builder`. Cela distingue une erreur scientifique/IPC du téléchargement d'outillage Windows, mais ne remplace pas la recette de l'installateur complet. Préserver la branche tant que la PR n'est pas fusionnée.
