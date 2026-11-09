@@ -278,3 +278,46 @@ test('a distinct reviewed output for the same batch is not mistaken for a replay
  assert.deepEqual(inspectTransactions(f.root,adapter),
    {complete:[first.transaction_id,second.transaction_id].sort(),invalid:[],pending:[]});
 });
+
+test('failed directory commit preserves complete pending evidence without publishing',t=>{
+ const f=fixture(t),originalRename=fs.renameSync;
+ fs.renameSync=function(from,to){
+   if(from.includes(path.sep+'.pending'+path.sep)&&to.includes(path.sep+'transactions'+path.sep)){
+     const e=Object.assign(new Error('simulated commit failure'),{code:'EIO'});
+     throw e;
+   }
+   return originalRename.call(fs,from,to);
+ };
+ try {
+   assert.throws(()=>createTransaction(f.root,f,canonical),{code:'EIO'});
+ } finally {fs.renameSync=originalRename;}
+ const state=inspectTransactions(f.root,canonical);
+ assert.deepEqual(state.complete,[]);
+ assert.deepEqual(state.invalid,[]);
+ assert.equal(state.pending.length,1);
+ const pending=path.join(f.root,'.pending',state.pending[0]);
+ assert.deepEqual(fs.readdirSync(pending).sort(),
+  ['corpus.json','journal.json','manifest.json']);
+ assert.deepEqual(inspectWriterReservation(f.root),{status:'absent'});
+ assert.equal(fs.existsSync(path.join(f.root,'transactions',state.pending[0])),false);
+});
+test('a failed later commit does not modify a previously completed corpus',t=>{
+ const f=fixture(t),first=createTransaction(f.root,f,canonical);
+ const saved=path.join(f.root,'transactions',first.transaction_id,'corpus.json');
+ const before=fs.readFileSync(saved);
+ const alternative={...f,identity:{...f.identity,batch_id:'b'.repeat(64)},
+   journal:{...f.journal,batch_id:'b'.repeat(64)}};
+ const originalRename=fs.renameSync;
+ fs.renameSync=function(from,to){
+   if(from.includes(path.sep+'.pending'+path.sep)){
+     throw Object.assign(new Error('simulated interrupted commit'),{code:'EIO'});
+   }
+   return originalRename.call(fs,from,to);
+ };
+ try {assert.throws(()=>createTransaction(f.root,alternative,canonical),{code:'EIO'});}
+ finally {fs.renameSync=originalRename;}
+ assert.deepEqual(fs.readFileSync(saved),before);
+ const state=inspectTransactions(f.root,canonical);
+ assert.deepEqual(state.complete,[first.transaction_id]);
+ assert.equal(state.pending.length,1);
+});
