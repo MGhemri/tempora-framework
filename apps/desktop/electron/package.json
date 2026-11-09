@@ -1,5 +1,5 @@
 {
-  "name": "tempora-desktop-chromium",
+  "name": "tempora-desktop-chromium-fallback",
   "productName": "TEMPORA Desktop",
   "version": "0.1.2-beta.3",
   "private": true,
