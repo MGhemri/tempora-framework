@@ -226,3 +226,52 @@ test('read-only reservation inspection distinguishes absent, reserved and unsafe
  assert.deepEqual(inspectWriterReservation(f.root),{status:'unsafe'});
  assert.equal(fs.existsSync(path.join(lock,'extra.txt')),true);
 });
+
+test('a live reservation owner is valid JSON and observable without mutation',t=>{
+ const f=fixture(t);
+ const originalRename=fs.renameSync;
+ let checked=false;
+ fs.renameSync=function(from,to){
+   assert.deepEqual(inspectWriterReservation(f.root),{status:'reserved'});
+   const owner=fs.readFileSync(path.join(f.root,'.writer-lock','owner.json'),'utf8');
+   assert.equal(JSON.parse(owner).schema_version,'1.0.0');
+   checked=true;
+   return originalRename.call(fs,from,to);
+ };
+ try {
+   const receipt=createTransaction(f.root,f,canonical);
+   assert.equal(receipt.saved_to_disk,true);
+ } finally {
+   fs.renameSync=originalRename;
+ }
+ assert.equal(checked,true);
+ assert.deepEqual(inspectWriterReservation(f.root),{status:'absent'});
+});
+test('repeated identical staging is rejected without a second committed directory',t=>{
+ const f=fixture(t),first=createTransaction(f.root,f,canonical);
+ assert.throws(()=>createTransaction(f.root,f,canonical),
+  {code:'TRANSACTION_ALREADY_COMMITTED'});
+ assert.deepEqual(inspectTransactions(f.root,canonical),
+  {complete:[first.transaction_id],invalid:[],pending:[]});
+ assert.deepEqual(inspectWriterReservation(f.root),{status:'absent'});
+});
+test('a preexisting damaged transaction blocks new writes without hiding corruption',t=>{
+ const f=fixture(t),first=createTransaction(f.root,f,canonical);
+ fs.writeFileSync(path.join(f.root,'transactions',first.transaction_id,'journal.json'),'{}');
+ assert.throws(()=>createTransaction(f.root,f,canonical),
+  {code:'TRANSACTION_PREEXISTING_INVALID'});
+ assert.deepEqual(inspectTransactions(f.root,canonical),
+  {complete:[],invalid:[first.transaction_id],pending:[]});
+ assert.deepEqual(inspectWriterReservation(f.root),{status:'absent'});
+});
+test('a distinct reviewed output for the same batch is not mistaken for a replay',t=>{
+ const f=fixture(t),first=createTransaction(f.root,f,canonical);
+ // The stubbed adapter preserves the same canonical digest in this focused
+ // envelope test; the real SDK recomputation is tested separately.
+ const alternative={...f,identity:{...f.identity,output_sha256:'b'.repeat(64)},
+   journal:{...f.journal,output_sha256:'b'.repeat(64)}};
+ const alternateAdapter={validateCorpus:canonical.validateCorpus,digest:()=>('b'.repeat(64))};
+ const second=createTransaction(f.root,alternative,alternateAdapter);
+ assert.notEqual(first.transaction_id,second.transaction_id);
+ assert.equal(inspectTransactions(f.root,canonical).invalid.length,1);
+});
