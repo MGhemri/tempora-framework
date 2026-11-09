@@ -143,3 +143,33 @@ test('a failed privileged reread releases the in-process save guard',async t=>{
  assert.equal(receipt.saved_to_disk,true);
  assert.equal(f.writes,1);
 });
+
+test('closing the session during an async reread cancels before disk commit',async t=>{
+ const f=fixture(t);let release,entered;
+ const enteredPromise=new Promise(resolve=>entered=resolve);
+ const blocked=new Promise(resolve=>release=resolve);
+ const intent=f.coordinator.offer({handle:HANDLE,stage:f.stage,reread:async()=>{
+  entered();await blocked;return f.reread();
+ }});
+ const work=f.coordinator.commit({handle:HANDLE,token:intent.token,confirmed:true});
+ await enteredPromise;
+ f.coordinator.revoke(HANDLE);
+ release();
+ await assert.rejects(work,{code:'PERSIST_COORDINATOR_CANCELLED'});
+ assert.equal(f.writes,0);
+ assert.deepEqual(fs.readdirSync(f.root),[]);
+});
+test('clearing host sessions cancels an outstanding reread',async t=>{
+ const f=fixture(t);let release,entered;
+ const enteredPromise=new Promise(resolve=>entered=resolve);
+ const blocked=new Promise(resolve=>release=resolve);
+ const intent=f.coordinator.offer({handle:HANDLE,stage:f.stage,reread:async()=>{
+  entered();await blocked;return f.reread();
+ }});
+ const work=f.coordinator.commit({handle:HANDLE,token:intent.token,confirmed:true});
+ await enteredPromise;
+ f.coordinator.clear();
+ release();
+ await assert.rejects(work,{code:'PERSIST_COORDINATOR_CANCELLED'});
+ assert.equal(f.writes,0);
+});
