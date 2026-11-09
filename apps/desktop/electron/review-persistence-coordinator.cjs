@@ -18,6 +18,7 @@ function createReviewPersistenceCoordinator({persist,now}={}){
  // Serialize saves within this trusted host instance. This is NOT an
  // interprocess filesystem lock; cross-process coordination remains a gate.
  let committing=false;
+ let active=null;
 
  function offer({handle,stage,reread}){
   if(typeof handle!=='string'||!HANDLE.test(handle)||typeof reread!=='function')
@@ -55,23 +56,31 @@ function createReviewPersistenceCoordinator({persist,now}={}){
   // A second async save must not overlap this read/verify/commit cycle.
   // Acquire synchronously before the first await; release even on rejection.
   committing=true;
+  const operation={handle,cancelled:false};
+  active=operation;
   try {
     // Native host callback must reopen/re-hash original selected source and
     // corpus. No data, free path, or journal arrives from renderer.
     const input=await saved.reread();
     if(!input||typeof input!=='object')fail('PERSIST_COORDINATOR_REREAD_INVALID');
+    if(operation.cancelled)fail('PERSIST_COORDINATOR_CANCELLED');
     const verified=preparePersistence({...input,review:saved.review,authorization});
+    // Cancellation is honored until handoff to the atomic commit callback.
+    // Once persist() starts, the host must report its actual outcome.
+    if(operation.cancelled)fail('PERSIST_COORDINATOR_CANCELLED');
     return await persist(verified);
   } finally {
+    active=null;
     committing=false;
   }
  }
  function revoke(handle){
   if(typeof handle!=='string'||!HANDLE.test(handle))fail('PERSIST_COORDINATOR_HANDLE_INVALID');
+  if(active&&active.handle===handle)active.cancelled=true;
   for(const [token,entry] of pending)if(entry.handle===handle)pending.delete(token);
   gate.revokeHandle(handle);
  }
- function clear(){pending.clear();gate.clear();}
+ function clear(){if(active)active.cancelled=true;pending.clear();gate.clear();}
  return Object.freeze({offer,commit,revoke,clear});
 }
 module.exports=Object.freeze({createReviewPersistenceCoordinator});
