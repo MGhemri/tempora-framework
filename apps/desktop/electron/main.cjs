@@ -112,10 +112,13 @@ function inventory(corpus) {
 // Exactly one JSON line per operation; do not let the renderer select worker,
 // Node executable, command, raw file contents, or arbitrary filesystem paths.
 function engine(operation, corpus, requestId) {
+  return enginePayload(operation,corpus===undefined?{}:{corpus},requestId);
+}
+function enginePayload(operation, payload, requestId) {
   const runtime = getRuntime();
   const request = Buffer.from(JSON.stringify({
     protocol_version: '1.0.0', request_id: requestId, operation,
-    payload: corpus === undefined ? {} : {corpus}
+    payload
   }) + '\n');
   if (request.length > MAX_REQUEST_BYTES) throw Error('FRAME_LIMIT');
   return new Promise((resolveResult, reject) => {
@@ -240,6 +243,29 @@ app.whenReady().then(async () => {
   });
   ipcMain.handle('tempora:assistant:dryrun',(event,handle_id,rules)=>{
     validSender(event);return assistantSessions.normalizePreview(handle_id,rules);
+  });
+  ipcMain.handle('tempora:assistant:canonical-preview',async(event,handle_id)=>{
+    validSender(event);
+    // Source paths and bytes, corpus paths, mapping and worker payload never cross renderer IPC.
+    const input=assistantSessions.canonicalInput(handle_id);
+    const selected=await dialog.showOpenDialog(mainWindow,{
+      title:'Choose existing TEMPORA canonical v3 corpus (read-only)',
+      properties:['openFile'],filters:[{name:'TEMPORA canonical corpus',extensions:['json']}]
+    });
+    if(selected.canceled||!selected.filePaths[0])return null;
+    const corpusFile=limitedFile(selected.filePaths[0],2*1024*1024,true);
+    if(corpusFile.json.schema_version!=='3.0.0'||!corpusFile.json.profile||
+       corpusFile.json.profile.id!==input.profile_id)
+      throw Error('ASSIST_CORPUS_PROFILE_MISMATCH');
+    // Enforce the 4 MiB worker frame BEFORE spawning the pinned Node runtime.
+    const payload={corpus:corpusFile.json,mapping:input.mapping,
+      source_name:input.sourceName,input_base64:input.bytes.toString('base64'),
+      source_sha256:input.sourceSha256};
+    if(Buffer.byteLength(JSON.stringify(payload),'utf8')>3*1024*1024)
+      throw Error('ASSIST_CANONICAL_REQUEST_LIMIT');
+    const report=await enginePayload('ingestion.preview',payload,randomBytes(12).toString('hex'));
+    // No bundle or acceptance token ever leaves the host.
+    return {corpus_name:corpusFile.fileName,source_sha256:input.sourceSha256,...report};
   });
   ipcMain.handle('tempora:assistant:close',(event,handle_id)=>{
     validSender(event);return assistantSessions.close(handle_id);
