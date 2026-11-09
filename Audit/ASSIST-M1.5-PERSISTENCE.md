@@ -119,3 +119,28 @@ Tests unitaires (commit/rollback/reprise), adversariaux, Electron IPC, Windows N
 6. Qualification complète ; seulement ensuite PR fusionnable vers `main`. Mise à jour du registre Audit dans chaque lot.
 
 **Interdit pendant ce chantier :** publication Store automatique, changement d'identité MSIX, nouvelle release npm, import automatique ALNOP, mise à niveau silencieuse du schéma canonique ou suppression des sources Tauri archivées.
+
+
+## 9. Qualification incrémentale — verrou hôte (2026-11-09)
+
+Le module `review-persistence-coordinator.cjs` contient désormais un indicateur
+`committing` acquis de façon synchrone avant tout `await` et libéré dans un
+`finally`. Il refuse une nouvelle simulation et un second commit pendant
+l'exécution de la relecture, du recalcul SDK et de la persistance, y compris
+si un callback lance une exception. Les tests reproduisent une relecture native
+suspendue et un échec de lecture, pour vérifier l'absence d'écriture concurrente
+et la réutilisabilité ultérieure du coordinateur.
+
+**Limitation essentielle :** ce garde ne concerne qu'**une instance d'un seul
+processus Node**. Il n'interdit pas une écriture dans une autre instance de
+TEMPORA Desktop, ni un autre processus ou une copie de l'application, ni
+l'altération malveillante du répertoire de destination. La sécurité
+interprocessus du point 5 et le verrou de cible restent **bloquants** pour le
+raccordement Electron ; aucune promesse de transaction globalement sérialisée
+n'est faite. De plus, un second enregistrement d'un lot inchangé après la fin
+d'un premier commit doit être traité par une politique de déduplication/index
+explicite avant disponibilité GUI.
+
+La CI doit prouver ce lot sur Ubuntu et Windows. Les tests ne constituent pas
+des essais de crash physique, de systèmes de fichiers réseau ou de reparse
+points Windows. Aucun nouveau point d'entrée IPC n'est autorisé à ce stade.
