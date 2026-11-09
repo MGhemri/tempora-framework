@@ -10,6 +10,7 @@ declare global {
       assistantClose:AssistantHost["assistantClose"];
       assistantInspect:(id:string)=>Promise<unknown>;
       assistantSuggest:(id:string,profileId:string,choice:{sheet_name?:string;delimiter?:string})=>Promise<AssistantSuggestionResult>;
+      assistantConfirm:AssistantHost["assistantConfirm"];
       selectDocument: () => Promise<unknown>;
       validateCorpus: () => Promise<unknown>;
       copyReviewDraft: (draft: string) => Promise<boolean>;
