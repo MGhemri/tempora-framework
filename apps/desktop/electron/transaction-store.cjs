@@ -42,14 +42,14 @@ function jsonBytes(value) {
 function validateInput({corpus,journal,identity}, canonical) {
   if (!canonical || typeof canonical.validateCorpus !== 'function' ||
       typeof canonical.digest !== 'function') throw ERR('TRANSACTION_CANONICAL_ADAPTER_REQUIRED');
-  const validation=canonical.validateCorpus(corpus);
-  if (!validation || validation.valid !== true) throw ERR('TRANSACTION_CORPUS_INVALID');
-  if (canonical.digest(corpus) !== identity.output_sha256)
-    throw ERR('TRANSACTION_CANONICAL_DIGEST_MISMATCH');
   if (!plain(identity) || !plain(corpus) || !plain(journal)) throw ERR('TRANSACTION_INPUT_INVALID');
   if (!REQUIRED.every(k => typeof identity[k]==='string' && HASH.test(identity[k])))
     throw ERR('TRANSACTION_DIGEST_INVALID');
   if (Object.keys(identity).some(k=>!REQUIRED.includes(k))) throw ERR('TRANSACTION_IDENTITY_EXTRA');
+  const validation=canonical.validateCorpus(corpus);
+  if (!validation || validation.valid !== true) throw ERR('TRANSACTION_CORPUS_INVALID');
+  if (canonical.digest(corpus) !== identity.output_sha256)
+    throw ERR('TRANSACTION_CANONICAL_DIGEST_MISMATCH');
   if (journal.output_sha256 !== identity.output_sha256 ||
       journal.base_sha256 !== identity.base_sha256 ||
       journal.decision !== 'accepted_for_local_staging' ||
