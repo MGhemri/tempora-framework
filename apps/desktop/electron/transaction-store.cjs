@@ -157,6 +157,17 @@ function createTransaction(root, {corpus,journal,identity}, canonical) {
   safeRoot(root);
   const {corpusBytes,journalBytes}=validateInput({corpus,journal,identity}, canonical);
   return withWriterReservation(root,()=>{
+  // Reject an exact replay while holding the cross-process reservation.
+  // A different reviewed selection may legitimately yield a different
+  // output for the same source batch, so compare all identity digests.
+  const prior=inspectTransactions(root,canonical);
+  if(prior.invalid.length)throw ERR('TRANSACTION_PREEXISTING_INVALID');
+  for(const id of prior.complete) {
+    const file=path.join(root,'transactions',id,'manifest.json');
+    const existing=JSON.parse(readBounded(file).toString('utf8'));
+    if(REQUIRED.every(k=>existing[k]===identity[k]))
+      throw ERR('TRANSACTION_ALREADY_COMMITTED');
+  }
   const pendingRoot=safeSubdir(root,'.pending');
   const transactions=safeSubdir(root,'transactions');
   const transaction_id=randomBytes(16).toString('hex');
