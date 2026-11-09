@@ -7,15 +7,23 @@ export type AssistantHost={
  assistantConfirm:(id:string,token:string,bindings:Array<{source_column:string;target_field:string;state:'confirmed_by_user'}>)=>Promise<AssistantConfirmed>;
  assistantDryRun:(id:string,rules:Array<{source_column:string;rule:{id:string;kind:string;format?:string;list_separator?:string}}>)=>Promise<{preview:AssistantDryRun}>;
  assistantCanonicalPreview:(id:string)=>Promise<AssistantCanonicalPreview|null>;
+ assistantReviewStage:(id:string,token:string,review:{ids:string[];reviewer:string;reason:string;reviewed_at:string})=>Promise<AssistantReviewReceipt>;
 };
 export type AssistantOpen={
  handle_id:string;file_name:string;format:string;size_bytes:number;source_sha256:string;
  inspection:{sheets?:Array<{name:string;state:string}>;candidates?:Array<{header_values:string[]}>;
  suggested_delimiter?:string|null};
 };
+export type AssistantReviewReceipt={
+  scope:'in_memory_staging_only';batch_id:string;source_sha256:string;
+  snapshot_sha256:string;canonical_validated:true;scientific_approval:false;
+  saved_to_disk:false;published:false;import_performed:false;persistence_required:true;
+  journal:{selected_ids:string[];reviewer:string;reason:string;reviewed_at:string};
+};
 export type AssistantCanonicalPreview={
  scope:'canonical_technical_preview';preview_schema_version:'1.0.0';corpus_name:string;
  source_sha256:string;batch_id:string;base_sha256:string;
+ review_token?:string|null;staging_review_enabled?:boolean;
  total_rows:number;rows_truncated:boolean;import_performed:false;acceptance_enabled:false;
  summary:{total:number;create:number;unchanged:number;conflict:number;quarantined:number};
  rows:Array<{source_path:string;id:string|null;status:string;diagnostic_codes:string[];changed_fields:string[]}>;
@@ -86,11 +94,20 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
  const normalizeOutput=el('assistant-normalization-preview');
  const canonicalButton=el('assistant-canonical-button') as HTMLButtonElement;
  const canonicalOutput=el('assistant-canonical-result');
+ const reviewControls=el('assistant-review-controls');
+ const reviewSelections=el('assistant-review-selections');
+ const reviewerInput=el('assistant-reviewer') as HTMLInputElement;
+ const reasonInput=el('assistant-review-reason') as HTMLTextAreaElement;
+ const reviewedAtInput=el('assistant-reviewed-at') as HTMLInputElement;
+ const reviewStageButton=el('assistant-review-stage') as HTMLButtonElement;
+ const reviewReceiptOutput=el('assistant-review-receipt');
  let source:AssistantOpen|null=null,table:AssistantTable|null=null,busy=false,serial=0;
  let suggestion:AssistantSuggestionResult|null=null;
  let compiled:AssistantConfirmed|null=null;
  let dryRun:AssistantDryRun|null=null;
  let canonical:AssistantCanonicalPreview|null=null;
+ let receipt:AssistantReviewReceipt|null=null;
+ const reviewIds=new Set<string>();
  const selections=new Set<string>();
  let uiError:string|null=null;
  const status=el('assistant-status'),details=el('assistant-details');
@@ -117,6 +134,28 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
    safeText(columns,[t.unconfirmed,...headers.slice(0,256)]);
    safeText(targets,[t.target,...fields,t.intro]);
    canonicalButton.disabled=busy||!compiled||!source||source.format==='xlsx';
+   reviewControls.hidden=!canonical?.staging_review_enabled||Boolean(receipt);
+   reviewStageButton.disabled=busy||!canonical?.review_token||!canonical?.staging_review_enabled||
+     Boolean(receipt)||reviewIds.size===0||!reviewerInput.value.trim()||
+     !reasonInput.value.trim()||!reviewedAtInput.value.trim();
+   reviewReceiptOutput.textContent=receipt
+     ?'SIMULATION SEULEMENT · '+receipt.scope+' · '+receipt.snapshot_sha256+
+       ' · '+receipt.journal.selected_ids.join(', ')+' · NON ENREGISTRÉ':'';
+   reviewSelections.replaceChildren();
+   if(canonical?.staging_review_enabled&&!receipt){
+     for(const row of canonical.rows.filter(r=>r.status==='create'&&r.id)){
+       const label=document.createElement('label');
+       const checkbox=document.createElement('input');checkbox.type='checkbox';
+       checkbox.checked=reviewIds.has(row.id!);checkbox.disabled=busy;
+       checkbox.addEventListener('change',()=>{
+         if(checkbox.checked)reviewIds.add(row.id!);else reviewIds.delete(row.id!);
+         reviewStageButton.disabled=busy||reviewIds.size===0||!reviewerInput.value.trim()||
+           !reasonInput.value.trim()||!reviewedAtInput.value.trim();
+       });
+       label.append(checkbox,document.createTextNode(' '+row.id+' · '+row.source_path+' (création)'));
+       reviewSelections.append(label,document.createElement('br'));
+     }
+   }
    canonicalOutput.replaceChildren();
    if(canonical){
      const summary=document.createElement('p');
@@ -215,13 +254,13 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
    }
  };
  async function release():Promise<void>{
-   const prior=source;serial++;source=null;table=null;suggestion=null;compiled=null;dryRun=null;canonical=null;selections.clear();uiError=null;
+   const prior=source;serial++;source=null;table=null;suggestion=null;compiled=null;dryRun=null;canonical=null;receipt=null;reviewIds.clear();selections.clear();uiError=null;
    sheetSelect.replaceChildren();delimiterSelect.value='';profileSelect.value='';render();
    if(prior&&host){try{await host.assistantClose(prior.handle_id);}catch{/* expired */}}
  }
  openBtn.addEventListener('click',async()=>{
    if(!host||busy)return;
-   busy=true;const ticket=++serial;const old=source;source=null;table=null;suggestion=null;compiled=null;dryRun=null;canonical=null;selections.clear();uiError=null;
+   busy=true;const ticket=++serial;const old=source;source=null;table=null;suggestion=null;compiled=null;dryRun=null;canonical=null;receipt=null;reviewIds.clear();selections.clear();uiError=null;
    delimiterSelect.value='';profileSelect.value='';
    sheetSelect.replaceChildren();render();
    try{
@@ -246,7 +285,7 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
  });
  sheetSelect.addEventListener('change',async()=>{
    if(!host||!source||source.format!=='xlsx'||busy)return;
-   const name=sheetSelect.value;table=null;suggestion=null;compiled=null;dryRun=null;canonical=null;selections.clear();uiError=null;if(!name){render();return;}
+   const name=sheetSelect.value;table=null;suggestion=null;compiled=null;dryRun=null;canonical=null;receipt=null;reviewIds.clear();selections.clear();uiError=null;if(!name){render();return;}
    busy=true;const ticket=++serial,active=source;render();
    try{
      const result=await host.assistantSelectSheet(active.handle_id,name);
@@ -255,14 +294,14 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
      if(ticket===serial)uiError=dictionary[lang()].invalid+': '+String((error as Error)?.message??error);
    }finally{busy=false;render();}
  });
- profileSelect.addEventListener('change',()=>{suggestion=null;compiled=null;dryRun=null;canonical=null;selections.clear();render();});
- delimiterSelect.addEventListener('change',()=>{suggestion=null;compiled=null;dryRun=null;canonical=null;selections.clear();render();});
+ profileSelect.addEventListener('change',()=>{suggestion=null;compiled=null;dryRun=null;canonical=null;receipt=null;reviewIds.clear();selections.clear();render();});
+ delimiterSelect.addEventListener('change',()=>{suggestion=null;compiled=null;dryRun=null;canonical=null;receipt=null;reviewIds.clear();selections.clear();render();});
  suggestBtn.addEventListener('click',async()=>{
    if(!host||!source||busy||!profileSelect.value)return;
    const selected=source,choice=selected.format==='xlsx'
      ?{sheet_name:sheetSelect.value}:{delimiter:delimiterSelect.value==='tab'?'\t':delimiterSelect.value};
    if(!Object.values(choice)[0])return;
-   busy=true;uiError=null;suggestion=null;compiled=null;dryRun=null;canonical=null;selections.clear();const ticket=++serial;render();
+   busy=true;uiError=null;suggestion=null;compiled=null;dryRun=null;canonical=null;receipt=null;reviewIds.clear();selections.clear();const ticket=++serial;render();
    try{
      const result=await host.assistantSuggest(selected.handle_id,profileSelect.value,choice);
      if(ticket===serial&&result.handle_id===selected.handle_id&&
@@ -303,11 +342,34 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
  });
  canonicalButton.addEventListener('click',async()=>{
    if(!host||!compiled||!source||busy||source.format==='xlsx')return;
-   busy=true;uiError=null;canonical=null;const ticket=++serial,active=source;render();
+   busy=true;uiError=null;canonical=null;receipt=null;reviewIds.clear();const ticket=++serial,active=source;render();
    try{
      const result=await host.assistantCanonicalPreview(active.handle_id);
      if(ticket===serial&&result&&result.source_sha256===active.source_sha256&&
        !result.import_performed&&!result.acceptance_enabled)canonical=result;
+   }catch(error){
+     if(ticket===serial)uiError=dictionary[lang()].invalid+': '+String((error as Error)?.message??error);
+   }finally{busy=false;render();}
+ });
+ for(const field of [reviewerInput,reasonInput,reviewedAtInput]){
+   field.addEventListener('input',()=>{
+     reviewStageButton.disabled=busy||!canonical?.review_token||reviewIds.size===0||
+       !reviewerInput.value.trim()||!reasonInput.value.trim()||!reviewedAtInput.value.trim();
+   });
+ }
+ reviewStageButton.addEventListener('click',async()=>{
+   if(!host||!source||!canonical?.review_token||!canonical.staging_review_enabled||
+      !reviewIds.size||busy)return;
+   const active=source,token=canonical.review_token,ticket=++serial;
+   const review={ids:Array.from(reviewIds),reviewer:reviewerInput.value,
+     reason:reasonInput.value,reviewed_at:reviewedAtInput.value};
+   busy=true;uiError=null;render();
+   try{
+     const response=await host.assistantReviewStage(active.handle_id,token,review);
+     if(ticket===serial&&response.source_sha256===active.source_sha256&&
+       response.scope==='in_memory_staging_only'&&response.saved_to_disk===false&&
+       response.scientific_approval===false&&!response.published)
+       receipt=response;
    }catch(error){
      if(ticket===serial)uiError=dictionary[lang()].invalid+': '+String((error as Error)?.message??error);
    }finally{busy=false;render();}

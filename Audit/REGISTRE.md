@@ -84,3 +84,22 @@ La nouvelle prévisualisation est uniquement technique, plafonnée à 64 lignes,
 ### ASSIST-M1.4a — Source et corpus existant, sans acceptation
 
 Décision de sécurité : preview canonique calculé par le seul moteur TEMPORA 3.0.0. Le renderer ne reçoit que le rapport résumé et les premiers diagnostics ; pas de candidate, pas de bundle, pas de jeton d'acceptation. Limites worker 4 Mio / réponse 256 Kio, source 128 Kio, corpus 2 Mio. Tous les fichiers sont sélectionnés dans des dialogues natifs et l'entrée source est revérifiée. Le résultat reste un aperçu technique, non une décision historique. Tests adversariaux (protocole strict, profil, replay, digest, absence de mutation) et empaquetage requis avant fusion.
+
+
+### ASSIST-M1.4b — Revue humaine provisoire, aucune persistance
+
+Vérifications obligatoires : sélection individuelle non précochée, identité + motif + date UTC, jeton de revue non rejouable, relecture empreintes source et corpus, refus des conflits/quarantaines, refus des aperçus tronqués, SDK `ingestion.accept` isolé en mémoire, aucune écriture réseau/disque, journal et résultat clairement étiquetés comme **simulation**. Tests réels sur worker Windows empaqueté exigés. Pas de release.
+
+
+### CI Windows Electron — blocage externe HTTP 504 lors de l'assemblage (2026-11-09)
+
+La PR #110 a subi deux exécutions de packaging Electron NSIS interrompues par `Response code 504 (Gateway Time-out)` après le téléchargement d'Electron, avant l'étape de smoke-test du worker empaqueté. Une reprise automatique strictement limitée aux erreurs réseau transitoires (3 tentatives) a confirmé un **blocage réseau persistant**. Ne pas déclarer le packaging qualifié ni fusionner la PR tant que cette étape est rouge. Ne pas désactiver `signAndEditExecutable`, les vérifications d'intégrité ou les validations de ressources pour forcer la réussite.
+
+**Mesure compensatoire de diagnostic :** exécuter les tests du worker TEMPORA et la simulation de revue sur le runtime Node 3.0.0 effectivement préparé pour l'installateur, **avant** `electron-builder`. Cela distingue une erreur scientifique/IPC du téléchargement d'outillage Windows, mais ne remplace pas la recette de l'installateur complet. Préserver la branche tant que la PR n'est pas fusionnée.
+
+
+### Qualification Windows — incident externe GitHub Releases HTTP 504 (2026-11-09)
+
+Lors de la nouvelle campagne de tests M1.4b (PR #110), **Tauri NSIS** a échoué sur `https://github.com/tauri-apps/binary-releases/releases/download/nsis-3.13/nsis-3.13.zip` avec `http status: 504` après compilation réussie de l'exécutable Rust. Le packaging **Electron NSIS** rencontre simultanément des `Response code 504 (Gateway Time-out)` lors du téléchargement des outils de traitement des exécutables. Il s'agit de dépendances externes de construction ; aucune erreur propre au code Assistant n'a été établie par ces échecs.
+
+Le smoke-test séparé ajouté au job Electron exécute avec succès les tests de revue humaine sur le **runtime Node 3.0.0 Windows réellement mis en place** avant le packaging. Cette réussite ne remplace pas le contrôle des ressources du **paquet Electron final**, encore inaccessible tant que le téléchargement échoue. **Décision : PR ouverte, pas de fusion, branche conservée, pas de release**, et relance de CI lorsque la disponibilité des releases GitHub est rétablie. Éviter tout miroir non vérifié et toute désactivation des protections de packaging.

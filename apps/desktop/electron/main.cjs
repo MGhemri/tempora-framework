@@ -264,8 +264,55 @@ app.whenReady().then(async () => {
     if(Buffer.byteLength(JSON.stringify(payload),'utf8')>3*1024*1024)
       throw Error('ASSIST_CANONICAL_REQUEST_LIMIT');
     const report=await enginePayload('ingestion.preview',payload,randomBytes(12).toString('hex'));
-    // No bundle or acceptance token ever leaves the host.
-    return {corpus_name:corpusFile.fileName,source_sha256:input.sourceSha256,...report};
+    // Only complete, bounded previews are eligible for a later human decision.
+    // An opaque review token is NOT a bundle or approval; it is scoped to
+    // this exact source, corpus, mapping and displayed creation set.
+    let reviewGate={staging_review_enabled:false,review_token:null};
+    if(report.scope==='canonical_technical_preview'&&
+       report.source?.sha256===input.sourceSha256&&
+       !report.rows_truncated&&report.rows?.length===report.total_rows&&
+       report.summary?.total===report.total_rows&&
+       report.mapping?.sha256&&report.base_sha256&&report.batch_id){
+      const create_ids=report.rows.filter(r=>r.status==='create').map(r=>r.id);
+      reviewGate=assistantSessions.saveCanonicalPreview(handle_id,{
+        corpus_path:selected.filePaths[0],
+        corpus_raw_sha256:createHash('sha256').update(readFileSync(selected.filePaths[0])).digest('hex'),
+        base_sha256:report.base_sha256,batch_id:report.batch_id,
+        mapping_sha256:report.mapping.sha256,source_sha256:input.sourceSha256,
+        create_ids
+      });
+    }
+    return {corpus_name:corpusFile.fileName,source_sha256:input.sourceSha256,
+      ...report,...reviewGate};
+  });
+  ipcMain.handle('tempora:assistant:review-stage',async(event,handle_id,review_token,review)=>{
+    validSender(event);
+    const claimed=assistantSessions.claimCanonicalReview(handle_id,review_token,review);
+    const {input,preview}=claimed;
+    // Reopen the SAME corpus selected for the preview. A changed corpus,
+    // even if it has the same filename, forces a fresh technical review.
+    const corpusFile=limitedFile(preview.corpus_path,2*1024*1024,true);
+    const rawHash=createHash('sha256').update(readFileSync(preview.corpus_path)).digest('hex');
+    if(rawHash!==preview.corpus_raw_sha256)
+      throw Error('ASSIST_REVIEW_CORPUS_CHANGED');
+    if(corpusFile.json.schema_version!=='3.0.0'||corpusFile.json.profile?.id!==input.profile_id)
+      throw Error('ASSIST_REVIEW_CORPUS_PROFILE_MISMATCH');
+    const payload={corpus:corpusFile.json,mapping:input.mapping,
+      source_name:input.sourceName,input_base64:input.bytes.toString('base64'),
+      source_sha256:input.sourceSha256,expected_batch_id:preview.batch_id,
+      expected_base_sha256:preview.base_sha256,
+      review:claimed.review};
+    if(Buffer.byteLength(JSON.stringify(payload),'utf8')>3*1024*1024)
+      throw Error('ASSIST_REVIEW_REQUEST_LIMIT');
+    const result=await enginePayload('ingestion.stage-review',payload,randomBytes(12).toString('hex'));
+    if(result.scope!=='in_memory_staging_only'||result.saved_to_disk!==false||
+       result.published!==false||result.scientific_approval!==false||
+       result.batch_id!==preview.batch_id||
+       result.source_sha256!==input.sourceSha256)
+      throw Error('ASSIST_REVIEW_RESULT_INVALID');
+    // The full corpus is not returned and is not written. This receipt
+    // documents a *simulation of local staging*, NOT an imported corpus.
+    return result;
   });
   ipcMain.handle('tempora:assistant:close',(event,handle_id)=>{
     validSender(event);return assistantSessions.close(handle_id);

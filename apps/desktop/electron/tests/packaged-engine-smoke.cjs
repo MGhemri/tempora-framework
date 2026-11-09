@@ -157,6 +157,45 @@ assert.equal(changed.error.code,'SOURCE_DIGEST_MISMATCH');
 const fakeApproval=invokePreview({...payload,review:{ids:['EVENT_002']}});
 assert.equal(fakeApproval.ok,false);
 assert.equal(fakeApproval.error.code,'INVALID_PAYLOAD');
+
+function invokeReview(payload){
+ const input=JSON.stringify({protocol_version:'1.0.0',request_id:'human_stage_smoke',
+   operation:'ingestion.stage-review',payload})+'\n';
+ const env={...process.env};delete env.NODE_OPTIONS;delete env.NODE_PATH;
+ const proc=spawnSync(node,[worker],{cwd:join(resourceRoot,'engine'),input,
+   encoding:'utf8',timeout:15000,windowsHide:true,shell:false,env});
+ assert.ifError(proc.error);assert.equal(proc.status,0,proc.stderr);
+ const lines=proc.stdout.trim().split('\n');assert.equal(lines.length,1);
+ return JSON.parse(lines[0]);
+}
+const validReview={ids:['EVENT_002'],reviewer:'Synthetic researcher',
+ reason:'Controlled fictional local staging exercise',reviewed_at:'2026-11-09T05:00:00Z'};
+const stagePayload={...payload,expected_base_sha256:report.base_sha256,
+ expected_batch_id:report.batch_id,review:validReview};
+const stage=invokeReview(stagePayload);
+assert.equal(stage.ok,true,JSON.stringify(stage.error));
+assert.equal(stage.result.scope,'in_memory_staging_only');
+assert.equal(stage.result.canonical_validated,true);
+assert.equal(stage.result.saved_to_disk,false);
+assert.equal(stage.result.published,false);
+assert.equal(stage.result.import_performed,false);
+assert.equal(stage.result.scientific_approval,false);
+assert.deepEqual(stage.result.journal.selected_ids,['EVENT_002']);
+assert.match(stage.result.snapshot_sha256,/^[a-f0-9]{64}$/);
+assert.ok(!Object.hasOwn(stage.result,'corpus'),'No unsaved corpus may leave the worker');
+assert.deepEqual(stage,invokeReview(stagePayload),'staging receipt must be deterministic with explicit UTC time');
+const wrongBase=invokeReview({...stagePayload,expected_base_sha256:'0'.repeat(64)});
+assert.equal(wrongBase.ok,false);assert.equal(wrongBase.error.code,'REVIEW_PREVIEW_STALE');
+const unauthorized=invokeReview({...stagePayload,review:{...validReview,ids:['EVENT_001']}});
+assert.equal(unauthorized.ok,false);assert.equal(unauthorized.error.code,'REVIEW_SELECTION');
+const quarantined=invokeReview({...stagePayload,review:{...validReview,ids:['EVENT_003']}});
+assert.equal(quarantined.ok,false);assert.equal(quarantined.error.code,'REVIEW_SELECTION');
+const insufficient=invokeReview({...stagePayload,review:{...validReview,reason:' '}});
+assert.equal(insufficient.ok,false);assert.equal(insufficient.error.code,'REVIEW_REQUIRED');
+const invalidEnvelope=invokeReview({...stagePayload,review:{...validReview,approved:true}});
+assert.equal(invalidEnvelope.ok,false);assert.equal(invalidEnvelope.error.code,'REVIEW_PAYLOAD_INVALID');
+console.log('PACKAGED_TEMPORA_IN_MEMORY_STAGING_REVIEW_OK');
+
 console.log('PACKAGED_TEMPORA_CANONICAL_PREVIEW_NO_ACCEPTANCE_OK');
 
 console.log('PACKAGED_TEMPORA_ENGINE_3_0_0_VALIDATION_OK');

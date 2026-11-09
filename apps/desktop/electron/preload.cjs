@@ -12,6 +12,7 @@ contextBridge.exposeInMainWorld('temporaElectron', Object.freeze({
   assistantConfirm: (handleId,token,bindings)=>ipcRenderer.invoke('tempora:assistant:confirm',handleId,token,bindings),
   assistantDryRun: (handleId,rules)=>ipcRenderer.invoke('tempora:assistant:dryrun',handleId,rules),
   assistantCanonicalPreview: handleId=>ipcRenderer.invoke('tempora:assistant:canonical-preview',handleId),
+  assistantReviewStage: (handleId,token,review)=>ipcRenderer.invoke('tempora:assistant:review-stage',handleId,token,review),
   validateCorpus: () => ipcRenderer.invoke('tempora:validate_corpus_native'),
   copyReviewDraft: (draft) => ipcRenderer.invoke('tempora:copy_review_draft', draft),
   openOfficialLink: (url) => ipcRenderer.invoke('tempora:open-official-link', url),

@@ -264,3 +264,59 @@ test('Assistant canonical preview rejects stale, oversized and XLSX sources with
  const x=host(xlsx,'.xlsx'),xo=x.service.open(x.path);
  assert.throws(()=>x.service.canonicalInput(xo.handle_id),throws('ASSIST_CANONICAL_XLSX_NOT_SUPPORTED'));
 });
+
+test('Assistant in-memory staging requires a preview token bound to an unchanged source',()=>{
+ const source='id,title\nEVENT_001,Test\n';
+ const f=host(source),s=f.service.open(f.path);
+ const proposal=f.service.suggest(s.handle_id,'synthetic-history',{delimiter:','});
+ f.service.confirm(s.handle_id,proposal.proposal_token,[
+  {source_column:'id',target_field:'id',state:'confirmed_by_user'},
+  {source_column:'title',target_field:'title.en',state:'confirmed_by_user'}]);
+ const hex='a'.repeat(64);
+ const record={corpus_path:'/native-choice/base.json',corpus_raw_sha256:hex,
+   base_sha256:hex,batch_id:hex,mapping_sha256:hex,
+   source_sha256:s.source_sha256,create_ids:['EVENT_001']};
+ const gate=f.service.saveCanonicalPreview(s.handle_id,record);
+ assert.match(gate.review_token,/^[0-9a-f]{48}$/);
+ assert.equal(gate.staging_review_enabled,true);
+ const review={ids:['EVENT_001'],reviewer:'Researcher',reason:'Fictional fixture',
+   reviewed_at:'2026-11-09T05:00:00Z'};
+ assert.throws(()=>f.service.claimCanonicalReview(s.handle_id,'f'.repeat(48),review),
+   throws('ASSIST_REVIEW_PREVIEW_EXPIRED'));
+ assert.throws(()=>f.service.claimCanonicalReview(s.handle_id,gate.review_token,
+   {...review,ids:['EVENT_999']}),throws('ASSIST_REVIEW_REQUIRED'));
+ assert.throws(()=>f.service.claimCanonicalReview(s.handle_id,gate.review_token,
+   {...review,ids:['EVENT_001','EVENT_001']}),throws('ASSIST_REVIEW_REQUIRED'));
+ assert.throws(()=>f.service.claimCanonicalReview(s.handle_id,gate.review_token,
+   {...review,reason:' '}),throws('ASSIST_REVIEW_REQUIRED'));
+ const claimed=f.service.claimCanonicalReview(s.handle_id,gate.review_token,review);
+ assert.equal(claimed.preview.corpus_path,record.corpus_path);
+ assert.equal(claimed.input.bytes.toString(),source);
+ assert.equal(claimed.review.ids[0],'EVENT_001');
+ assert.throws(()=>f.service.claimCanonicalReview(s.handle_id,gate.review_token,review),
+   throws('ASSIST_REVIEW_PREVIEW_EXPIRED'));
+});
+test('Assistant new suggestion revokes old canonical staging and source changes revoke review',()=>{
+ const f=host('id,title\nEVENT_001,Test\n'),s=f.service.open(f.path);
+ const p=f.service.suggest(s.handle_id,'synthetic-history',{delimiter:','});
+ f.service.confirm(s.handle_id,p.proposal_token,[
+  {source_column:'id',target_field:'id',state:'confirmed_by_user'},
+  {source_column:'title',target_field:'title.en',state:'confirmed_by_user'}]);
+ const digest='b'.repeat(64),record={corpus_path:'/native-choice/target.json',
+   corpus_raw_sha256:digest,base_sha256:digest,batch_id:digest,
+   mapping_sha256:digest,source_sha256:s.source_sha256,create_ids:['EVENT_001']};
+ const a=f.service.saveCanonicalPreview(s.handle_id,record);
+ const review={ids:['EVENT_001'],reviewer:'Researcher',reason:'Synthetic',
+   reviewed_at:'2026-11-09T05:00:00Z'};
+ f.service.suggest(s.handle_id,'synthetic-history',{delimiter:','});
+ assert.throws(()=>f.service.claimCanonicalReview(s.handle_id,a.review_token,review),
+   throws('ASSIST_REVIEW_PREVIEW_EXPIRED'));
+ const confirm=f.service.suggest(s.handle_id,'synthetic-history',{delimiter:','});
+ f.service.confirm(s.handle_id,confirm.proposal_token,[
+  {source_column:'id',target_field:'id',state:'confirmed_by_user'},
+  {source_column:'title',target_field:'title.en',state:'confirmed_by_user'}]);
+ const b=f.service.saveCanonicalPreview(s.handle_id,record);
+ f.setData('id,title\nEVENT_001,Modified\n');
+ assert.throws(()=>f.service.claimCanonicalReview(s.handle_id,b.review_token,review),
+   throws('ASSIST_SOURCE_CHANGED'));
+});

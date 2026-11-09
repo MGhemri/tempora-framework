@@ -13,6 +13,7 @@ declare global {
       assistantConfirm:AssistantHost["assistantConfirm"];
       assistantDryRun:AssistantHost["assistantDryRun"];
       assistantCanonicalPreview:AssistantHost["assistantCanonicalPreview"];
+      assistantReviewStage:AssistantHost["assistantReviewStage"];
       selectDocument: () => Promise<unknown>;
       validateCorpus: () => Promise<unknown>;
       copyReviewDraft: (draft: string) => Promise<boolean>;

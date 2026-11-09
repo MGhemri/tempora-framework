@@ -241,14 +241,38 @@ jobs:
           node --test electron/tests/review-integrity.test.cjs
       - name: Stage pinned scientific runtime
         run: npm run stage:windows-engine
+      - name: Test pinned Node worker and human staging before Electron packaging
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $sandbox = Join-Path $env:RUNNER_TEMP 'tempora-pinned-worker-smoke'
+          New-Item -ItemType Directory -Force (Join-Path $sandbox 'engine') | Out-Null
+          New-Item -ItemType Directory -Force (Join-Path $sandbox 'examples') | Out-Null
+          Copy-Item -Recurse -Force './src-tauri/resources/engine/*' (Join-Path $sandbox 'engine')
+          Copy-Item -Recurse -Force './examples/*' (Join-Path $sandbox 'examples')
+          node electron/tests/packaged-engine-smoke.cjs $sandbox
+          if ($LASTEXITCODE -ne 0) { throw 'PINNED_WORKER_SMOKE_FAILED' }
       - name: Restore exact Electron packaging toolchain
         working-directory: apps/desktop/electron
         run: npm ci --no-audit --no-fund
       - name: Package unsigned experimental Electron NSIS
         working-directory: apps/desktop/electron
+        shell: pwsh
         env:
           CSC_IDENTITY_AUTO_DISCOVERY: 'false'
-        run: npm run dist:win
+        run: |
+          $ErrorActionPreference = 'Stop'
+          for ($attempt = 1; $attempt -le 3; $attempt++) {
+            $log = (npm run dist:win 2>&1 | Out-String)
+            $code = $LASTEXITCODE
+            Write-Host $log
+            if ($code -eq 0) { break }
+            if ($attempt -eq 3 -or $log -notmatch 'Response code 50[234]|Gateway Time-out|ETIMEDOUT|ECONNRESET') {
+              throw ('ELECTRON_NSIS_BUILD_FAILED: attempt ' + $attempt + ', exit code ' + $code)
+            }
+            Write-Warning ('Transient packaging download failure; retry ' + ($attempt + 1) + '/3')
+            Start-Sleep -Seconds (15 * $attempt)
+          }
       - name: Test packaged resources and canonical sample with embedded engine
         shell: pwsh
         run: |

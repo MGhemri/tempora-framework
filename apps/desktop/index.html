@@ -104,6 +104,21 @@
             <p>Prévisualisation canonique distincte : choisissez un corpus v3 valide. Aucune importation ni acceptation.</p>
             <button type="button" id="assistant-canonical-button" disabled>Prévisualiser sur corpus v3 existant (lecture seule)</button>
             <div id="assistant-canonical-result" role="status" aria-live="polite"></div>
+            <div id="assistant-review-controls" hidden>
+              <p>Simulation de mise en attente — aucune écriture. Sélectionnez les lignes créables.</p>
+              <div id="assistant-review-selections"></div>
+              <label for="assistant-reviewer">Réviseur
+                <input type="text" id="assistant-reviewer" maxlength="120" autocomplete="off"/>
+              </label>
+              <label for="assistant-review-reason">Justification
+                <textarea id="assistant-review-reason" maxlength="2000" rows="3"></textarea>
+              </label>
+              <label for="assistant-reviewed-at">Date UTC explicite (AAAA-MM-JJTHH:MM:SSZ)
+                <input type="text" id="assistant-reviewed-at" placeholder="2026-11-09T05:00:00Z" autocomplete="off"/>
+              </label>
+              <button type="button" id="assistant-review-stage" disabled>Simuler la mise en attente en mémoire — sans sauvegarde</button>
+              <div id="assistant-review-receipt" role="status" aria-live="polite"></div>
+            </div>
           </section>
           <section class="result-panel" id="assistant-preview" aria-label="Aperçu sans écriture"></section>
         </section>
