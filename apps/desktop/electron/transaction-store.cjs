@@ -66,10 +66,26 @@ function writeExclusive(dir,name,bytes) {
   try { let offset=0; while(offset<bytes.length) offset+=fs.writeSync(fd,bytes,offset,bytes.length-offset); fs.fsyncSync(fd); }
   finally { fs.closeSync(fd); }
 }
+function readBounded(file) {
+  // O_NOFOLLOW is available on Unix; on Windows we also inspect both the
+  // path (lstat) and the opened handle (fstat). This reduces but cannot
+  // eliminate all Windows filesystem races without a native handle API.
+  const before=fs.lstatSync(file);
+  if(!before.isFile()||before.isSymbolicLink()||before.size>MAX_DOCUMENT_BYTES)
+    throw ERR('TRANSACTION_FILE_UNSAFE');
+  const fd=fs.openSync(file,fs.constants.O_RDONLY|(fs.constants.O_NOFOLLOW||0));
+  try {
+    const opened=fs.fstatSync(fd);
+    if(!opened.isFile()||opened.size>MAX_DOCUMENT_BYTES||
+       (typeof before.ino==='number' && typeof opened.ino==='number' &&
+        before.ino!==opened.ino))throw ERR('TRANSACTION_FILE_UNSAFE');
+    const bytes=fs.readFileSync(fd);
+    if(bytes.length>MAX_DOCUMENT_BYTES)throw ERR('TRANSACTION_DOCUMENT_LIMIT');
+    return bytes;
+  } finally {fs.closeSync(fd);}
+}
 function readVerified(dir,name,expected) {
-  const file=path.join(dir,name),st=fs.lstatSync(file);
-  if(!st.isFile()||st.isSymbolicLink()||st.size>MAX_DOCUMENT_BYTES)throw ERR('TRANSACTION_FILE_UNSAFE');
-  const bytes=fs.readFileSync(file);
+  const bytes=readBounded(path.join(dir,name));
   if(sha(bytes)!==expected)throw ERR('TRANSACTION_INTEGRITY_MISMATCH');
   return JSON.parse(bytes.toString('utf8'));
 }
@@ -133,11 +149,7 @@ function inspectTransactions(root, canonical) {
       if(actualFiles.length!==expectedFiles.length||
          actualFiles.some((name,i)=>name!==expectedFiles[i]))
         throw ERR('TRANSACTION_UNEXPECTED_CONTENTS');
-      const manifestFile=path.join(dir,'manifest.json');
-      const manifestStat=fs.lstatSync(manifestFile);
-      if(!manifestStat.isFile()||manifestStat.isSymbolicLink())throw ERR('TRANSACTION_MANIFEST_UNSAFE');
-      const mf=fs.readFileSync(manifestFile);
-      if(mf.length>MAX_DOCUMENT_BYTES)throw ERR('TRANSACTION_DOCUMENT_LIMIT');
+      const mf=readBounded(path.join(dir,'manifest.json'));
       const manifest=JSON.parse(mf.toString('utf8'));
       if(!plain(manifest)||manifest.transaction_id!==id||!HASH.test(manifest.corpus_file_sha256)||
          !HASH.test(manifest.journal_sha256)||manifest.published!==false||
