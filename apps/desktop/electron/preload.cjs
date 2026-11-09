@@ -11,6 +11,7 @@ contextBridge.exposeInMainWorld('temporaElectron', Object.freeze({
   assistantSuggest: (handleId,profileId,choice)=>ipcRenderer.invoke('tempora:assistant:suggest',handleId,profileId,choice),
   assistantConfirm: (handleId,token,bindings)=>ipcRenderer.invoke('tempora:assistant:confirm',handleId,token,bindings),
   assistantDryRun: (handleId,rules)=>ipcRenderer.invoke('tempora:assistant:dryrun',handleId,rules),
+  assistantCanonicalPreview: handleId=>ipcRenderer.invoke('tempora:assistant:canonical-preview',handleId),
   validateCorpus: () => ipcRenderer.invoke('tempora:validate_corpus_native'),
   copyReviewDraft: (draft) => ipcRenderer.invoke('tempora:copy_review_draft', draft),
   openOfficialLink: (url) => ipcRenderer.invoke('tempora:open-official-link', url),

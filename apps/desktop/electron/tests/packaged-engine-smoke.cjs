@@ -107,6 +107,58 @@ const digestNo=invoke('corpus.digest',invalid,'smoke_digest_invalid').sha256;
 assert.match(digestYes,/^[a-f0-9]{64}$/);
 assert.match(digestNo,/^[a-f0-9]{64}$/);
 assert.notEqual(digestYes,digestNo);
+
+// The actual packaged worker must calculate authoritative canonical statuses.
+// No user-supplied acceptance or normalization receipt is sent to the worker.
+function invokePreview(payload){
+  const input=JSON.stringify({protocol_version:'1.0.0',request_id:'canonical_smoke',
+    operation:'ingestion.preview',payload})+'\n';
+  const env={...process.env};delete env.NODE_OPTIONS;delete env.NODE_PATH;
+  const proc=spawnSync(node,[worker],{cwd:join(resourceRoot,'engine'),input,
+    encoding:'utf8',timeout:15000,windowsHide:true,shell:false,env});
+  assert.ifError(proc.error);
+  assert.equal(proc.status,0,proc.stderr);
+  const frames=proc.stdout.trim().split('\n');
+  assert.equal(frames.length,1);
+  return JSON.parse(frames[0]);
+}
+const csvBytes=Buffer.from([
+  'id,title,date,type',
+  'EVENT_001,Changed fiction,1701,fictional assembly',
+  'EVENT_002,New fiction,1702,fictional assembly',
+  'EVENT_003,Bad date,29/02/1701,fictional assembly'
+].join('\n')+'\n');
+const mapping={mapping_schema_version:'1.0.0',id:'canonical-preview-smoke',version:'1.0.0',
+  profile_id:profile.id,profile_version:profile.version,format:'csv',delimiter:',',
+  fields:{id:'/id',title:{en:'/title'},start_date:'/date',event_type:'/type'}};
+const payload={corpus:base,mapping,source_name:'fictional-preview.csv',
+  input_base64:csvBytes.toString('base64'),
+  source_sha256:require('node:crypto').createHash('sha256').update(csvBytes).digest('hex')};
+const first=invokePreview(payload),second=invokePreview(payload);
+assert.equal(first.ok,true,JSON.stringify(first.error));
+assert.deepEqual(first,second,'repeated canonical preview must be deterministic');
+const report=first.result;
+assert.equal(report.scope,'canonical_technical_preview');
+assert.equal(report.import_performed,false);
+assert.equal(report.acceptance_enabled,false);
+assert.equal(report.scientific_approval,false);
+assert.match(report.batch_id,/^[a-f0-9]{64}$/);
+assert.match(report.base_sha256,/^[a-f0-9]{64}$/);
+assert.deepEqual(report.summary,{total:3,create:1,unchanged:0,conflict:1,quarantined:1});
+assert.deepEqual(report.rows.map(r=>r.status),['conflict','create','quarantined']);
+assert.equal(report.rows[2].id,'EVENT_003');
+assert.ok(report.rows[2].diagnostic_codes.includes('ROW_DATE'));
+assert.equal(report.rows_truncated,false);
+assert.ok(!Object.hasOwn(report,'candidates')&&!Object.hasOwn(report,'original_input_base64'));
+assert.deepEqual(base.events[0].id,'EVENT_001');
+const changed=invokePreview({...payload,source_sha256:'0'.repeat(64)});
+assert.equal(changed.ok,false);
+assert.equal(changed.error.code,'SOURCE_DIGEST_MISMATCH');
+const fakeApproval=invokePreview({...payload,review:{ids:['EVENT_002']}});
+assert.equal(fakeApproval.ok,false);
+assert.equal(fakeApproval.error.code,'INVALID_PAYLOAD');
+console.log('PACKAGED_TEMPORA_CANONICAL_PREVIEW_NO_ACCEPTANCE_OK');
+
 console.log('PACKAGED_TEMPORA_ENGINE_3_0_0_VALIDATION_OK');
 console.log('PACKAGED_OFFLINE_EXAMPLES_VALIDATED');
 console.log('SYNTHETIC_VALID_SHA256='+digestYes);

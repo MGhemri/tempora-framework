@@ -271,3 +271,20 @@ test('Assistant dry-run is host-owned, read-only and bundled in Electron',()=>{
  assert.ok(pkg.build.extraResources.some(r=>r.to==='assistant/framework/assist-normalization.js'));
  assert.doesNotMatch(view,/writeFileSync|innerHTML/);
 });
+
+test('Assistant canonical preview is a read-only host/worker operation and never an acceptance',()=>{
+ const main=src('electron/main.cjs'),preload=src('electron/preload.cjs');
+ const worker=src('bridge/worker.cjs'),ui=src('src/assistant-view.ts');
+ const smoke=src('electron/tests/packaged-engine-smoke.cjs');
+ assert.match(main,/tempora:assistant:canonical-preview/);
+ assert.match(main,/assistantSessions\.canonicalInput/);
+ assert.match(main,/dialog\.showOpenDialog/);
+ assert.match(main,/enginePayload\('ingestion\.preview'/);
+ assert.match(preload,/assistantCanonicalPreview/);
+ assert.match(worker,/ingestion\.preview\(/);
+ assert.match(worker,/acceptance_enabled:false/);
+ assert.doesNotMatch(worker,/ingestion\.accept\(/);
+ assert.match(smoke,/PACKAGED_TEMPORA_CANONICAL_PREVIEW_NO_ACCEPTANCE_OK/);
+ assert.match(ui,/canonical\.summary\.conflict/);
+ assert.doesNotMatch(ui,/acceptImport|writeFileSync|innerHTML/);
+});

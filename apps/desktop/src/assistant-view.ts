@@ -6,11 +6,19 @@ export type AssistantHost={
  assistantSuggest:(id:string,profileId:string,choice:{sheet_name?:string;delimiter?:string})=>Promise<AssistantSuggestionResult>;
  assistantConfirm:(id:string,token:string,bindings:Array<{source_column:string;target_field:string;state:'confirmed_by_user'}>)=>Promise<AssistantConfirmed>;
  assistantDryRun:(id:string,rules:Array<{source_column:string;rule:{id:string;kind:string;format?:string;list_separator?:string}}>)=>Promise<{preview:AssistantDryRun}>;
+ assistantCanonicalPreview:(id:string)=>Promise<AssistantCanonicalPreview|null>;
 };
 export type AssistantOpen={
  handle_id:string;file_name:string;format:string;size_bytes:number;source_sha256:string;
  inspection:{sheets?:Array<{name:string;state:string}>;candidates?:Array<{header_values:string[]}>;
  suggested_delimiter?:string|null};
+};
+export type AssistantCanonicalPreview={
+ scope:'canonical_technical_preview';preview_schema_version:'1.0.0';corpus_name:string;
+ source_sha256:string;batch_id:string;base_sha256:string;
+ total_rows:number;rows_truncated:boolean;import_performed:false;acceptance_enabled:false;
+ summary:{total:number;create:number;unchanged:number;conflict:number;quarantined:number};
+ rows:Array<{source_path:string;id:string|null;status:string;diagnostic_codes:string[];changed_fields:string[]}>;
 };
 export type AssistantDryRun={
   scope:string;source_sha256:string;preview_complete:boolean;
@@ -76,10 +84,13 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
  const normalizeRule=el('assistant-normalize-rule') as HTMLSelectElement;
  const normalizeButton=el('assistant-normalize') as HTMLButtonElement;
  const normalizeOutput=el('assistant-normalization-preview');
+ const canonicalButton=el('assistant-canonical-button') as HTMLButtonElement;
+ const canonicalOutput=el('assistant-canonical-result');
  let source:AssistantOpen|null=null,table:AssistantTable|null=null,busy=false,serial=0;
  let suggestion:AssistantSuggestionResult|null=null;
  let compiled:AssistantConfirmed|null=null;
  let dryRun:AssistantDryRun|null=null;
+ let canonical:AssistantCanonicalPreview|null=null;
  const selections=new Set<string>();
  let uiError:string|null=null;
  const status=el('assistant-status'),details=el('assistant-details');
@@ -105,6 +116,25 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
      source?.inspection.candidates?.[0]?.header_values??[]);
    safeText(columns,[t.unconfirmed,...headers.slice(0,256)]);
    safeText(targets,[t.target,...fields,t.intro]);
+   canonicalButton.disabled=busy||!compiled||!source||source.format==='xlsx';
+   canonicalOutput.replaceChildren();
+   if(canonical){
+     const summary=document.createElement('p');
+     summary.textContent='Canonical preview · '+canonical.corpus_name+' · '+canonical.batch_id+
+       ' · create='+canonical.summary.create+' · unchanged='+canonical.summary.unchanged+
+       ' · conflict='+canonical.summary.conflict+' · quarantined='+canonical.summary.quarantined+
+       ' · NO IMPORT';
+     canonicalOutput.append(summary);
+     for(const row of canonical.rows.slice(0,50)){
+       const p=document.createElement('p');p.textContent=row.source_path+' · '+(row.id??'—')+
+         ' · '+row.status+' · '+row.diagnostic_codes.join(', ');
+       canonicalOutput.append(p);
+     }
+     if(canonical.rows_truncated){
+       const note=document.createElement('p');note.textContent='Affichage partiel, aperçu non accepté';
+       canonicalOutput.append(note);
+     }
+   }
    normalizeControls.hidden=!compiled;
    const previousColumn=normalizeColumn.value;
    normalizeColumn.replaceChildren();
@@ -185,13 +215,13 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
    }
  };
  async function release():Promise<void>{
-   const prior=source;serial++;source=null;table=null;suggestion=null;compiled=null;dryRun=null;selections.clear();uiError=null;
+   const prior=source;serial++;source=null;table=null;suggestion=null;compiled=null;dryRun=null;canonical=null;selections.clear();uiError=null;
    sheetSelect.replaceChildren();delimiterSelect.value='';profileSelect.value='';render();
    if(prior&&host){try{await host.assistantClose(prior.handle_id);}catch{/* expired */}}
  }
  openBtn.addEventListener('click',async()=>{
    if(!host||busy)return;
-   busy=true;const ticket=++serial;const old=source;source=null;table=null;suggestion=null;compiled=null;dryRun=null;selections.clear();uiError=null;
+   busy=true;const ticket=++serial;const old=source;source=null;table=null;suggestion=null;compiled=null;dryRun=null;canonical=null;selections.clear();uiError=null;
    delimiterSelect.value='';profileSelect.value='';
    sheetSelect.replaceChildren();render();
    try{
@@ -216,7 +246,7 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
  });
  sheetSelect.addEventListener('change',async()=>{
    if(!host||!source||source.format!=='xlsx'||busy)return;
-   const name=sheetSelect.value;table=null;suggestion=null;compiled=null;dryRun=null;selections.clear();uiError=null;if(!name){render();return;}
+   const name=sheetSelect.value;table=null;suggestion=null;compiled=null;dryRun=null;canonical=null;selections.clear();uiError=null;if(!name){render();return;}
    busy=true;const ticket=++serial,active=source;render();
    try{
      const result=await host.assistantSelectSheet(active.handle_id,name);
@@ -225,14 +255,14 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
      if(ticket===serial)uiError=dictionary[lang()].invalid+': '+String((error as Error)?.message??error);
    }finally{busy=false;render();}
  });
- profileSelect.addEventListener('change',()=>{suggestion=null;compiled=null;dryRun=null;selections.clear();render();});
- delimiterSelect.addEventListener('change',()=>{suggestion=null;compiled=null;dryRun=null;selections.clear();render();});
+ profileSelect.addEventListener('change',()=>{suggestion=null;compiled=null;dryRun=null;canonical=null;selections.clear();render();});
+ delimiterSelect.addEventListener('change',()=>{suggestion=null;compiled=null;dryRun=null;canonical=null;selections.clear();render();});
  suggestBtn.addEventListener('click',async()=>{
    if(!host||!source||busy||!profileSelect.value)return;
    const selected=source,choice=selected.format==='xlsx'
      ?{sheet_name:sheetSelect.value}:{delimiter:delimiterSelect.value==='tab'?'\t':delimiterSelect.value};
    if(!Object.values(choice)[0])return;
-   busy=true;uiError=null;suggestion=null;compiled=null;dryRun=null;selections.clear();const ticket=++serial;render();
+   busy=true;uiError=null;suggestion=null;compiled=null;dryRun=null;canonical=null;selections.clear();const ticket=++serial;render();
    try{
      const result=await host.assistantSuggest(selected.handle_id,profileSelect.value,choice);
      if(ticket===serial&&result.handle_id===selected.handle_id&&
@@ -267,6 +297,17 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
      const result=await host.assistantDryRun(active.handle_id,[{source_column:column,rule}]);
      if(ticket===serial&&result.preview.source_sha256===active.source_sha256)
        dryRun=result.preview;
+   }catch(error){
+     if(ticket===serial)uiError=dictionary[lang()].invalid+': '+String((error as Error)?.message??error);
+   }finally{busy=false;render();}
+ });
+ canonicalButton.addEventListener('click',async()=>{
+   if(!host||!compiled||!source||busy||source.format==='xlsx')return;
+   busy=true;uiError=null;canonical=null;const ticket=++serial,active=source;render();
+   try{
+     const result=await host.assistantCanonicalPreview(active.handle_id);
+     if(ticket===serial&&result&&result.source_sha256===active.source_sha256&&
+       !result.import_performed&&!result.acceptance_enabled)canonical=result;
    }catch(error){
      if(ticket===serial)uiError=dictionary[lang()].invalid+': '+String((error as Error)?.message??error);
    }finally{busy=false;render();}

@@ -224,3 +224,43 @@ test('Assistant: file changes invalidate dry-run and XLSX remains out of scope',
  const excel=host(xlsx,'.xlsx'),opened=excel.service.open(excel.path);
  assert.throws(()=>excel.service.normalizePreview(opened.handle_id,[]),throws('ASSIST_PREVIEW_XLSX_UNSUPPORTED'));
 });
+
+test('Assistant canonical preview snapshots verified original bytes only after explicit CSV mapping confirmation',()=>{
+ const source='id,title,date,type\nFICTIVE_101,Demo,1701,fictional assembly\n';
+ const f=host(source),opened=f.service.open(f.path);
+ assert.throws(()=>f.service.canonicalInput(opened.handle_id),throws('ASSIST_PREVIEW_CONFIRMATION_REQUIRED'));
+ const p=f.service.suggest(opened.handle_id,'synthetic-history',{delimiter:','});
+ f.service.confirm(opened.handle_id,p.proposal_token,[
+  {source_column:'id',target_field:'id',state:'confirmed_by_user'},
+  {source_column:'title',target_field:'title.en',state:'confirmed_by_user'}]);
+ const input=f.service.canonicalInput(opened.handle_id);
+ assert.equal(input.sourceSha256,opened.source_sha256);
+ assert.equal(input.bytes.toString('utf8'),source);
+ assert.equal(input.sourceName,'records.csv');
+ assert.equal(input.mapping.format,'csv');
+ assert.equal(input.profile_id,'synthetic-history');
+ assert.ok(!Object.hasOwn(input,'path'));
+ input.bytes[0]=0;
+ assert.equal(f.service.canonicalInput(opened.handle_id).bytes.toString('utf8'),source,
+  'snapshot mutation must not mutate the source or authorized session');
+ f.service.suggest(opened.handle_id,'synthetic-history',{delimiter:','});
+ assert.throws(()=>f.service.canonicalInput(opened.handle_id),throws('ASSIST_PREVIEW_CONFIRMATION_REQUIRED'));
+});
+test('Assistant canonical preview rejects stale, oversized and XLSX sources without fallback',()=>{
+ const csvInput=host('id,title\n1,First\n'),open=csvInput.service.open(csvInput.path);
+ const p=csvInput.service.suggest(open.handle_id,'synthetic-history',{delimiter:','});
+ csvInput.service.confirm(open.handle_id,p.proposal_token,[
+  {source_column:'id',target_field:'id',state:'confirmed_by_user'},
+  {source_column:'title',target_field:'title.en',state:'confirmed_by_user'}]);
+ csvInput.setData('id,title\n1,Changed\n');
+ assert.throws(()=>csvInput.service.canonicalInput(open.handle_id),throws('ASSIST_SOURCE_CHANGED'));
+ const big=host('id,title\n1,'+'A'.repeat(128*1024)+'\n');
+ const bigOpen=big.service.open(big.path);
+ const bigP=big.service.suggest(bigOpen.handle_id,'synthetic-history',{delimiter:','});
+ big.service.confirm(bigOpen.handle_id,bigP.proposal_token,[
+  {source_column:'id',target_field:'id',state:'confirmed_by_user'},
+  {source_column:'title',target_field:'title.en',state:'confirmed_by_user'}]);
+ assert.throws(()=>big.service.canonicalInput(bigOpen.handle_id),throws('ASSIST_CANONICAL_SOURCE_LIMIT'));
+ const x=host(xlsx,'.xlsx'),xo=x.service.open(x.path);
+ assert.throws(()=>x.service.canonicalInput(xo.handle_id),throws('ASSIST_CANONICAL_XLSX_NOT_SUPPORTED'));
+});

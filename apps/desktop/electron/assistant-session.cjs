@@ -197,12 +197,28 @@ function createAssistantSessions({sourceRoot,profileRoot,now=()=>Date.now(),read
       bindings:s.confirmation.bindings,rules,source_sha256:s.sha256});
     return bounded({handle_id,preview:result});
   }
+  // Privileged host-to-worker input. This is NEVER returned across renderer IPC.
+  // The selected source is re-hashed, and the mapping was independently confirmed.
+  function canonicalInput(handle_id){
+    const s=requireSession(handle_id);
+    if(s.format==='xlsx')reject('ASSIST_CANONICAL_XLSX_NOT_SUPPORTED');
+    if(!s.confirmation||!s.confirmation.mapping)
+      reject('ASSIST_PREVIEW_CONFIRMATION_REQUIRED');
+    const bytes=verified(s);
+    // Worker protocol 1.0.0 is 4 MiB; use a strict budget to keep bounded
+    // base64 input and canonical corpus inside the same audited frame.
+    if(bytes.length>128*1024)reject('ASSIST_CANONICAL_SOURCE_LIMIT');
+    const mapping=structuredClone(s.confirmation.mapping);
+    return Object.freeze({bytes:Buffer.from(bytes),mapping,
+      sourceName:basename(s.path),sourceSha256:s.sha256,
+      profile_id:s.confirmation.profile_id});
+  }
   function close(handle_id){
     if(!safeHandle(handle_id))reject('ASSIST_HANDLE_INVALID');
     return sessions.delete(handle_id);
   }
   function clear(){sessions.clear();}
-  return Object.freeze({open,inspect,selectSheet,suggest,confirm,normalizePreview,close,clear,
+  return Object.freeze({open,inspect,selectSheet,suggest,confirm,normalizePreview,canonicalInput,close,clear,
     // Shape enforcement is deliberately public to unit tests but not exposed by preload.
     validShape});
 }
