@@ -137,6 +137,7 @@ function createAssistantSessions({sourceRoot,profileRoot,now=()=>Date.now(),read
     }
     const mapping=suggestColumnMappings(headers,profile);
     // Every new proposal invalidates earlier user decisions, including across profiles/choices.
+    s.confirmation=null; // New proposal revokes prior confirmation and normalization authority.
     s.proposal={token:randomBytes(24).toString('hex'),headers:[...headers],
       profile_id:profile.id,profile_version:profile.version,choice:{...choice},
       suggestions:mapping.suggestions.map(x=>({source_column:x.source_column,target_field:x.target_field}))};
