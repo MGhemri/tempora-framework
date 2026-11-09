@@ -99,3 +99,47 @@ test('review identity is snapshotted before the UI can modify an old receipt',as
  const receipt=await f.coordinator.commit({handle:HANDLE,token:intent.token,confirmed:true});
  assert.equal(receipt.saved_to_disk,true);assert.equal(f.writes,1);
 });
+
+test('a second save is refused while the first privileged read is in flight',async t=>{
+ const f=fixture(t);
+ let release,entered;
+ const enteredPromise=new Promise(resolve=>entered=resolve);
+ const block=new Promise(resolve=>release=resolve);
+ const first=f.coordinator.offer({handle:HANDLE,stage:f.stage,reread:async()=>{
+  entered();
+  await block;
+  return f.reread();
+ }});
+ const secondHandle='b'.repeat(48);
+ const second=f.coordinator.offer({handle:secondHandle,stage:f.stage,reread:f.reread});
+ const work=f.coordinator.commit({handle:HANDLE,token:first.token,confirmed:true});
+ await enteredPromise;
+ try {
+  await assert.rejects(()=>f.coordinator.commit({
+   handle:secondHandle,token:second.token,confirmed:true
+  }),{code:'PERSIST_COORDINATOR_BUSY'});
+  assert.throws(()=>f.coordinator.offer({handle:HANDLE,stage:f.stage,reread:f.reread}),
+   {code:'PERSIST_COORDINATOR_BUSY'});
+  assert.equal(f.writes,0);
+ } finally {release();}
+ const receipt=await work;
+ assert.equal(receipt.saved_to_disk,true);
+ assert.equal(f.writes,1);
+ // A rejected concurrent attempt did not consume another session's consent.
+ f.coordinator.revoke(secondHandle);
+});
+test('a failed privileged reread releases the in-process save guard',async t=>{
+ const f=fixture(t);
+ const bad=f.coordinator.offer({handle:HANDLE,stage:f.stage,reread:async()=>{
+  throw Object.assign(new Error('TEST_DISK_READ_FAILED'),{code:'TEST_DISK_READ_FAILED'});
+ }});
+ await assert.rejects(()=>f.coordinator.commit({
+  handle:HANDLE,token:bad.token,confirmed:true
+ }),{code:'TEST_DISK_READ_FAILED'});
+ const next=f.coordinator.offer({handle:HANDLE,stage:f.stage,reread:f.reread});
+ const receipt=await f.coordinator.commit({
+  handle:HANDLE,token:next.token,confirmed:true
+ });
+ assert.equal(receipt.saved_to_disk,true);
+ assert.equal(f.writes,1);
+});
