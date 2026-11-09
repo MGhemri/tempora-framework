@@ -126,6 +126,33 @@ function withWriterReservation(root,work) {
   }
 }
 
+// Inspection only: never delete, rename or reclaim a reservation.
+function inspectWriterReservation(root) {
+  safeRoot(root);
+  const lock=path.join(root,LOCK_NAME);
+  try {fs.lstatSync(lock);}
+  catch(e) {
+    if(e.code==='ENOENT')return Object.freeze({status:'absent'});
+    throw e;
+  }
+  try {
+    const stat=fs.lstatSync(lock);
+    if(!stat.isDirectory()||stat.isSymbolicLink()||
+       fs.realpathSync(lock)!==path.resolve(lock))
+      return Object.freeze({status:'unsafe'});
+    const names=fs.readdirSync(lock);
+    if(names.length!==1||names[0]!=='owner.json')
+      return Object.freeze({status:'unsafe'});
+    const bytes=readBounded(path.join(lock,'owner.json'));
+    if(bytes.length>1024)return Object.freeze({status:'unsafe'});
+    const owner=JSON.parse(bytes.toString('utf8'));
+    if(!plain(owner)||owner.schema_version!=='1.0.0'||
+       typeof owner.nonce!=='string'||!ID.test(owner.nonce))
+      return Object.freeze({status:'unsafe'});
+    return Object.freeze({status:'reserved'});
+  } catch {return Object.freeze({status:'unsafe'});}
+}
+
 function createTransaction(root, {corpus,journal,identity}, canonical) {
   safeRoot(root);
   const {corpusBytes,journalBytes}=validateInput({corpus,journal,identity}, canonical);
@@ -211,4 +238,4 @@ function inspectTransactions(root, canonical) {
   for(const id of (pendingRoot?fs.readdirSync(pendingRoot):[]).sort())pending.push(id);
   return Object.freeze({complete,invalid,pending});
 }
-module.exports={createTransaction,inspectTransactions};
+module.exports={createTransaction,inspectTransactions,inspectWriterReservation};
