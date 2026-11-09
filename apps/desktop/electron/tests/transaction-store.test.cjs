@@ -358,3 +358,28 @@ test('a second real Node process cannot write while first process owns reservati
  assert.deepEqual(inspectWriterReservation(f.root),{status:'absent'});
  assert.equal(inspectTransactions(f.root,canonical).complete.length,1);
 });
+
+test('orphaned pending transaction blocks new writers without deleting evidence',t=>{
+ const f=fixture(t),pending=path.join(f.root,'.pending','b'.repeat(32));
+ fs.mkdirSync(path.dirname(pending));fs.mkdirSync(pending);
+ fs.writeFileSync(path.join(pending,'corpus.json'),'incomplete');
+ assert.throws(()=>createTransaction(f.root,f,canonical),
+  {code:'TRANSACTION_PENDING_RECOVERY_REQUIRED'});
+ assert.equal(fs.readFileSync(path.join(pending,'corpus.json'),'utf8'),'incomplete');
+ assert.deepEqual(inspectTransactions(f.root,canonical),
+  {complete:[],invalid:[],pending:['b'.repeat(32)]});
+ assert.deepEqual(inspectWriterReservation(f.root),{status:'absent'});
+});
+test('pending recovery gate also protects previously committed corpus',t=>{
+ const f=fixture(t),first=createTransaction(f.root,f,canonical);
+ const original=path.join(f.root,'transactions',first.transaction_id,'corpus.json');
+ const before=fs.readFileSync(original);
+ const pending=path.join(f.root,'.pending','e'.repeat(32));
+ fs.mkdirSync(pending);
+ const other={...f,identity:{...f.identity,batch_id:'f'.repeat(64)},
+  journal:{...f.journal,batch_id:'f'.repeat(64)}};
+ assert.throws(()=>createTransaction(f.root,other,canonical),
+  {code:'TRANSACTION_PENDING_RECOVERY_REQUIRED'});
+ assert.deepEqual(fs.readFileSync(original),before);
+ assert.equal(fs.existsSync(pending),true);
+});
