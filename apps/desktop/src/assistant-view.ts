@@ -4,14 +4,21 @@ export type AssistantHost={
  assistantSelectSheet:(id:string,name:string)=>Promise<{source_sha256:string;table:AssistantTable}>;
  assistantClose:(id:string)=>Promise<boolean>;
  assistantSuggest:(id:string,profileId:string,choice:{sheet_name?:string;delimiter?:string})=>Promise<AssistantSuggestionResult>;
+ assistantConfirm:(id:string,token:string,bindings:Array<{source_column:string;target_field:string;state:'confirmed_by_user'}>)=>Promise<AssistantConfirmed>;
 };
 export type AssistantOpen={
  handle_id:string;file_name:string;format:string;size_bytes:number;source_sha256:string;
  inspection:{sheets?:Array<{name:string;state:string}>;candidates?:Array<{header_values:string[]}>;
  suggested_delimiter?:string|null};
 };
+export type AssistantConfirmed={
+ mapping_confirmed:true;confirmation_scope:string;confirmation_sha256:string;
+ mapping:{mapping_schema_version:string;format:'csv';fields:Record<string,unknown>};
+ source_sha256:string;import_performed:false;canonical_validated:false;source_modified:false;
+};
 export type AssistantSuggestionResult={
   handle_id:string;source_sha256:string;profile_id:string;profile_version:string;
+  proposal_token:string;
   mapping:{mapping_confirmed:false;confirmed_bindings:[];suggestions:Array<{
    source_column:string;target_field:string;algorithm_id:string;algorithm_version:string;
    reason_codes:string[];confidence_kind:string;state:'suggested';
@@ -31,7 +38,7 @@ const dictionary={
  target:'Champs canoniques possibles — aucune association active',
  intro:'Mapping, normalisation et import ne sont pas encore reliés à cette vue.',
  sample:'Aperçu des cellules brutes',invalid:'Inspection refusée',
- suggest:'Proposer (sans confirmer)',suggestEmpty:'Aucune suggestion : les colonnes restent non associées.',suggestTitle:'Suggestions heuristiques — confirmation humaine non disponible dans ce lot.'},
+ suggest:'Proposer (sans confirmer)',suggestEmpty:'Aucune suggestion : les colonnes restent non associées.',suggestTitle:'Suggestions heuristiques — aucune case précochée.',confirm:'Confirmer les choix (sans import)',confirmed:'Mapping compilé localement et confirmé par le chercheur. Aucun import.'},
  en:{open:'Select file',close:'Close session',choose:'Explicitly select worksheet',
  unsupported:'Available in TEMPORA Electron only (Tauri not qualified).',
  empty:'No source. No confirmed associations.',
@@ -40,7 +47,7 @@ const dictionary={
  target:'Possible canonical fields — none actively mapped',
  intro:'Mapping, normalization and import are not yet connected to this view.',
  sample:'Raw cell preview',invalid:'Inspection rejected',
- suggest:'Suggest (never confirm)',suggestEmpty:'No suggestions: fields remain unmapped.',suggestTitle:'Heuristic suggestions — human approval is not available in this stage.'}
+ suggest:'Suggest (never confirm)',suggestEmpty:'No suggestions: fields remain unmapped.',suggestTitle:'Heuristic suggestions — nothing preselected.',confirm:'Confirm selections (no import)',confirmed:'Mapping compiled locally and confirmed by researcher. No import.'}
 };
 const fields=['id','title','description','start_date','end_date','event_type','source_ids',
  'territory_ids','longitude','latitude','location_label'];
@@ -55,8 +62,13 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
  const profileSelect=el('assistant-profile') as HTMLSelectElement;
  const suggestBtn=el('assistant-suggest') as HTMLButtonElement;
  const suggestionPanel=el('assistant-suggestions');
+ const bindingsPanel=el('assistant-bindings');
+ const confirmButton=el('assistant-confirm') as HTMLButtonElement;
+ const confirmationResult=el('assistant-confirm-result');
  let source:AssistantOpen|null=null,table:AssistantTable|null=null,busy=false,serial=0;
  let suggestion:AssistantSuggestionResult|null=null;
+ let compiled:AssistantConfirmed|null=null;
+ const selections=new Set<string>();
  let uiError:string|null=null;
  const status=el('assistant-status'),details=el('assistant-details');
  const columns=el('assistant-columns'),targets=el('assistant-targets');
@@ -81,6 +93,25 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
      source?.inspection.candidates?.[0]?.header_values??[]);
    safeText(columns,[t.unconfirmed,...headers.slice(0,256)]);
    safeText(targets,[t.target,...fields,t.intro]);
+   confirmButton.textContent=t.confirm;
+   confirmButton.disabled=busy||!source||source.format==='xlsx'||!suggestion||compiled!==null||selections.size<2;
+   confirmationResult.textContent=compiled
+     ?t.confirmed+' SHA-256: '+compiled.confirmation_sha256+' · '+JSON.stringify(compiled.mapping):'';
+   bindingsPanel.replaceChildren();
+   if(suggestion&&!compiled&&source?.format!=='xlsx'){
+     for(const entry of suggestion.mapping.suggestions){
+       const key=JSON.stringify([entry.source_column,entry.target_field]);
+       const label=document.createElement('label');
+       const checkbox=document.createElement('input');checkbox.type='checkbox';
+       checkbox.checked=selections.has(key);checkbox.disabled=busy;
+       checkbox.addEventListener('change',()=>{
+         if(checkbox.checked)selections.add(key);else selections.delete(key);
+         confirmButton.disabled=busy||selections.size<2;
+       });
+       label.append(checkbox,document.createTextNode(' '+entry.source_column+' → '+entry.target_field+' (proposé)'));
+       bindingsPanel.append(label,document.createElement('br'));
+     }
+   }
    suggestionPanel.replaceChildren();
    const suggestionHeading=document.createElement('p');suggestionHeading.textContent=t.suggestTitle;suggestionPanel.append(suggestionHeading);
    if(suggestion){
@@ -115,13 +146,13 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
    }
  };
  async function release():Promise<void>{
-   const prior=source;serial++;source=null;table=null;suggestion=null;uiError=null;
+   const prior=source;serial++;source=null;table=null;suggestion=null;compiled=null;selections.clear();uiError=null;
    sheetSelect.replaceChildren();delimiterSelect.value='';profileSelect.value='';render();
    if(prior&&host){try{await host.assistantClose(prior.handle_id);}catch{/* expired */}}
  }
  openBtn.addEventListener('click',async()=>{
    if(!host||busy)return;
-   busy=true;const ticket=++serial;const old=source;source=null;table=null;suggestion=null;uiError=null;
+   busy=true;const ticket=++serial;const old=source;source=null;table=null;suggestion=null;compiled=null;selections.clear();uiError=null;
    delimiterSelect.value='';profileSelect.value='';
    sheetSelect.replaceChildren();render();
    try{
@@ -146,7 +177,7 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
  });
  sheetSelect.addEventListener('change',async()=>{
    if(!host||!source||source.format!=='xlsx'||busy)return;
-   const name=sheetSelect.value;table=null;suggestion=null;uiError=null;if(!name){render();return;}
+   const name=sheetSelect.value;table=null;suggestion=null;compiled=null;selections.clear();uiError=null;if(!name){render();return;}
    busy=true;const ticket=++serial,active=source;render();
    try{
      const result=await host.assistantSelectSheet(active.handle_id,name);
@@ -155,19 +186,32 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
      if(ticket===serial)uiError=dictionary[lang()].invalid+': '+String((error as Error)?.message??error);
    }finally{busy=false;render();}
  });
- profileSelect.addEventListener('change',()=>{suggestion=null;render();});
- delimiterSelect.addEventListener('change',()=>{suggestion=null;render();});
+ profileSelect.addEventListener('change',()=>{suggestion=null;compiled=null;selections.clear();render();});
+ delimiterSelect.addEventListener('change',()=>{suggestion=null;compiled=null;selections.clear();render();});
  suggestBtn.addEventListener('click',async()=>{
    if(!host||!source||busy||!profileSelect.value)return;
    const selected=source,choice=selected.format==='xlsx'
      ?{sheet_name:sheetSelect.value}:{delimiter:delimiterSelect.value==='tab'?'\t':delimiterSelect.value};
    if(!Object.values(choice)[0])return;
-   busy=true;uiError=null;suggestion=null;const ticket=++serial;render();
+   busy=true;uiError=null;suggestion=null;compiled=null;selections.clear();const ticket=++serial;render();
    try{
      const result=await host.assistantSuggest(selected.handle_id,profileSelect.value,choice);
      if(ticket===serial&&result.handle_id===selected.handle_id&&
        result.source_sha256===selected.source_sha256&&!result.mapping.mapping_confirmed)
        suggestion=result;
+   }catch(error){
+     if(ticket===serial)uiError=dictionary[lang()].invalid+': '+String((error as Error)?.message??error);
+   }finally{busy=false;render();}
+ });
+ confirmButton.addEventListener('click',async()=>{
+   if(!host||!source||!suggestion||busy||source.format==='xlsx'||selections.size<2)return;
+   const chosen=suggestion.mapping.suggestions.filter(x=>selections.has(JSON.stringify([x.source_column,x.target_field])))
+     .map(x=>({source_column:x.source_column,target_field:x.target_field,state:'confirmed_by_user' as const}));
+   busy=true;uiError=null;const ticket=++serial,active=source,token=suggestion.proposal_token;render();
+   try{
+     const response=await host.assistantConfirm(active.handle_id,token,chosen);
+     if(ticket===serial&&response.source_sha256===active.source_sha256&&response.mapping_confirmed)
+       compiled=response;
    }catch(error){
      if(ticket===serial)uiError=dictionary[lang()].invalid+': '+String((error as Error)?.message??error);
    }finally{busy=false;render();}
