@@ -68,9 +68,9 @@ npm run test:standalone
 
 The repository root remains **`private: true`** to prevent accidental publishing. Its separate, audited distribution manifest is configured for **public npm publishing**; public availability is **not claimed until an authenticated npm publish succeeds**. Follow the [npm publishing guide](docs/reference/NPM_PUBLISHING.md). Use the [SDK and CLI guide](https://mghemri.github.io/tempora-framework/guides/sdk-cli.html) for local packaging and usage.
 
-### Desktop application (Tauri 2)
+### Desktop application (Chromium/Electron — official Windows runtime)
 
-The new [TEMPORA Desktop alpha](apps/desktop/README.md) provides a native FR/EN research workspace with **read-only local JSON/GeoJSON preview**. Scientific engine integration and TensorFlow are planned but **not yet implemented**. See the [desktop architecture and AI roadmap](docs/reference/DESKTOP_ARCHITECTURE.md).
+The [TEMPORA Desktop](apps/desktop/README.md) uses bundled Chromium/Electron on Windows and the pinned TEMPORA 3.0.0 scientific engine. It does not require WebView2. Its assistant supports human-gated previews and in-memory staging; no automatic import or publication is permitted. See the [desktop architecture and AI roadmap](docs/reference/DESKTOP_ARCHITECTURE.md).
 
 ### Architecture and documentation
 
@@ -180,9 +180,9 @@ npm run test:standalone
 
 Le dépôt racine reste marqué **`private: true`** pour empêcher toute publication accidentelle. Un manifeste de distribution séparé est préparé pour npm public ; **la disponibilité sur le registre ne sera annoncée qu'après une publication authentifiée réussie**. Voir le [guide npm](docs/reference/NPM_PUBLISHING.md). Consulter le [guide SDK/CLI](https://mghemri.github.io/tempora-framework/guides/sdk-cli.html).
 
-### Application desktop native (Tauri 2)
+### Application desktop (Chromium/Electron — version Windows officielle)
 
-La nouvelle [application TEMPORA Desktop alpha](apps/desktop/README.md) propose un espace de recherche FR/EN et un **aperçu local JSON/GeoJSON en lecture seule**. La connexion au moteur scientifique et TensorFlow sont **encore à développer**. Voir l'[architecture desktop et la feuille de route IA](docs/reference/DESKTOP_ARCHITECTURE.md).
+L'[application TEMPORA Desktop](apps/desktop/README.md) repose officiellement sur Chromium/Electron embarqué sous Windows, sans dépendance WebView2, avec moteur scientifique TEMPORA 3.0.0 et Assistant à décisions humaines. Aucune importation ou publication automatique n'est autorisée. Voir l'[architecture desktop et la feuille de route IA](docs/reference/DESKTOP_ARCHITECTURE.md).
 
 ### Organisation et documentation
 
