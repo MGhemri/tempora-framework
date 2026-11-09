@@ -238,6 +238,9 @@ app.whenReady().then(async () => {
   ipcMain.handle('tempora:assistant:confirm',(event,handle_id,proposal_token,bindings)=>{
     validSender(event);return assistantSessions.confirm(handle_id,proposal_token,bindings);
   });
+  ipcMain.handle('tempora:assistant:dryrun',(event,handle_id,rules)=>{
+    validSender(event);return assistantSessions.normalizePreview(handle_id,rules);
+  });
   ipcMain.handle('tempora:assistant:close',(event,handle_id)=>{
     validSender(event);return assistantSessions.close(handle_id);
   });
