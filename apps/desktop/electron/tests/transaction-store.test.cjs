@@ -152,3 +152,24 @@ test('committed transaction inspection never mutates source files',t=>{
    fs.readFileSync(path.join(dir,name)));
  assert.deepEqual(after,before);
 });
+
+test('unexpected files inside an immutable transaction invalidate inspection',t=>{
+ const f=fixture(t),receipt=createTransaction(f.root,f,canonical);
+ const dir=path.join(f.root,'transactions',receipt.transaction_id);
+ fs.writeFileSync(path.join(dir,'untracked.txt'),'untracked payload');
+ assert.deepEqual(inspectTransactions(f.root,canonical),
+   {complete:[],invalid:[receipt.transaction_id],pending:[]});
+});
+test('transaction directory symbolic links are never traversed by the verifier',t=>{
+ const f=fixture(t),receipt=createTransaction(f.root,f,canonical);
+ const actual=path.join(f.root,'transactions',receipt.transaction_id);
+ const target=path.join(f.root,'retained-original');
+ fs.renameSync(actual,target);
+ try { fs.symlinkSync(target,actual,'dir'); }
+ catch(e) {
+   if(process.platform==='win32' && (e.code==='EPERM'||e.code==='EACCES')) return;
+   throw e;
+ }
+ assert.deepEqual(inspectTransactions(f.root,canonical),
+   {complete:[],invalid:[receipt.transaction_id],pending:[]});
+});
