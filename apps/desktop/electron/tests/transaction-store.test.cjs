@@ -189,3 +189,26 @@ test('symlinked journal is rejected without following its external target',t=>{
    {complete:[],invalid:[receipt.transaction_id],pending:[]});
  assert.ok(fs.existsSync(outside));
 });
+
+test('a pre-existing cross-process reservation refuses all writes and is never reclaimed',t=>{
+ const f=fixture(t),lock=path.join(f.root,'.writer-lock');
+ fs.mkdirSync(lock);
+ fs.writeFileSync(path.join(lock,'owner.json'),'{"nonce":"external"}\n');
+ assert.throws(()=>createTransaction(f.root,f,canonical),
+   {code:'TRANSACTION_WRITER_BUSY'});
+ assert.deepEqual(fs.readdirSync(f.root),['.writer-lock']);
+ assert.ok(fs.existsSync(path.join(lock,'owner.json')));
+});
+test('a completed commit releases only its owned writer reservation',t=>{
+ const f=fixture(t),receipt=createTransaction(f.root,f,canonical);
+ assert.equal(receipt.saved_to_disk,true);
+ assert.equal(fs.existsSync(path.join(f.root,'.writer-lock')),false);
+ assert.deepEqual(inspectTransactions(f.root,canonical),
+  {complete:[receipt.transaction_id],invalid:[],pending:[]});
+});
+test('failing validation does not create or touch the cross-process reservation',t=>{
+ const f=fixture(t);f.journal.output_sha256='b'.repeat(64);
+ assert.throws(()=>createTransaction(f.root,f,canonical),
+  {code:'TRANSACTION_JOURNAL_MISMATCH'});
+ assert.deepEqual(fs.readdirSync(f.root),[]);
+});
