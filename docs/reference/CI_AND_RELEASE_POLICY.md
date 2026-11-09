@@ -4,10 +4,16 @@
 
 - TEMPORA Framework: Node 20/22 on Linux and Node 20 on Windows; these checks are required by the `main` ruleset.
 - TEMPORA Documentation UI: Chromium/Playwright browser test; `browser` is required by the `main` ruleset.
-- TEMPORA Desktop Foundation: TypeScript/Vite, isolated Node bridge/scientific tests, Rust native checks, and one Windows NSIS integration build, when Desktop files change.
+- TEMPORA Desktop Foundation: TypeScript/Vite, isolated Node bridge/scientific tests, and **one Chromium/Electron Windows NSIS integration build**, when Desktop files change.
 - Optional ALNOP compatibility: targeted changes only; full historical reference validation is manual or release-branch scoped.
 
 The required branch-protection statuses must remain available on pull requests. Never remove/rename a required job before safely updating the ruleset. Pull-request pipelines cancel superseded runs; branch pushes no longer duplicate the same checks except on `main`.
+
+## Official Windows desktop runtime
+
+**Chromium/Electron is the only supported Windows distribution host.** `src-tauri/` and WebView2 scripts are retained for source history only; the foundation workflow no longer runs Tauri/Rust installer jobs. Never present or upload WebView2 packages as current releases. Test a genuinely clean Windows 10/11 VM with no WebView2/Node before release.
+
+The existing Partner Center product has Store ID `9P4MN0S3823T`, package identity `GhemriM.TEMPORADesktop`, publisher `CN=C5BC3837-BBC8-425E-916B-4B6F77BD7455`, and PFN `GhemriM.TEMPORADesktop_y8h1gbsk7napw`. The maintainer reports **certified, held for manual publication**. Do not click `Publish now` unless the actual certified package has been inspected and confirmed Chromium, tested on a clean VM and approved. If it is WebView2, obtain a new Chromium package-specific certification under the same Store product before publishing. CI never submits.
 
 ## Manual artifact/release operations
 
@@ -28,4 +34,4 @@ TEMPORA Framework includes a tiny `branch-hygiene` job: it performs a dry-run on
 
 ## Store protection
 
-The Partner Center submission currently in certification and its official package identity are intentionally untouched. No CI workflow performs an automatic Store submission or publication.
+The Partner Center submission reportedly certified and held at Ready to publish and its official package identity are intentionally untouched. No CI workflow performs an automatic Store submission or publication.

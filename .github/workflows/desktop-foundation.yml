@@ -13,6 +13,7 @@ on:
       - "apps/desktop/**"
       - "docs/reference/DESKTOP_ARCHITECTURE.md"
       - ".github/workflows/desktop-foundation.yml"
+      - "apps/desktop/electron/**"
   workflow_dispatch:
     inputs:
       synthetic_benchmark:
@@ -56,131 +57,6 @@ jobs:
       - run: npm run test:visualization
       - run: npm run test:windows-engine
 
-  rust:
-    if: ${{ github.event_name != 'workflow_dispatch' || inputs.synthetic_benchmark != true }}
-    name: Desktop Rust native tests
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: apps/desktop
-    steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: Swatinem/rust-cache@v2
-        with:
-          workspaces: apps/desktop/src-tauri
-      - name: Install Tauri Linux dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libwebkit2gtk-4.1-dev libgtk-3-dev libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev patchelf
-      - name: Check committed Cargo.lock provenance
-        shell: bash
-        run: |
-          echo "14200f525820cd8b8303938af6ee77426fae64a4d78df8d0472f59b302e726f9  src-tauri/Cargo.lock" | sha256sum --check
-      - run: cargo test --locked --manifest-path src-tauri/Cargo.toml
-
-  windows-installer:
-    if: ${{ github.event_name != 'workflow_dispatch' || inputs.synthetic_benchmark != true }}
-    name: Desktop Windows x64 standalone NSIS
-    runs-on: windows-latest
-    timeout-minutes: 35
-    defaults:
-      run:
-        working-directory: apps/desktop
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: '22.16.0'
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: Swatinem/rust-cache@v2
-        with:
-          workspaces: apps/desktop/src-tauri
-      - name: Install Desktop dependencies
-        run: npm install --ignore-scripts --no-audit --no-fund
-      - name: Verify bridge
-        run: npm run test:bridge
-      - name: Verify packager contracts
-        run: npm run test:windows-engine
-      - name: Verify Fixed WebView2 staging rejects tampered and non-CAB files
-        shell: pwsh
-        run: |
-          $dummy = Join-Path $env:RUNNER_TEMP "tempora-invalid-webview2.cab"
-          [IO.File]::WriteAllText($dummy, "not an authentic Microsoft CAB")
-          $realHash = (Get-FileHash $dummy -Algorithm SHA256).Hash.ToLowerInvariant()
-          $stager = (Resolve-Path "./scripts/stage-fixed-webview.ps1").Path
-          try {
-            & $stager -CabPath $dummy -ExpectedSha256 ('0' * 64)
-            throw "TAMPERED_CAB_WAS_ACCEPTED"
-          } catch {
-            if ($_.Exception.Message -notmatch "WEBVIEW_CAB_SHA256_MISMATCH") { throw }
-          }
-          try {
-            & $stager -CabPath $dummy -ExpectedSha256 $realHash
-            throw "MALFORMED_CAB_WAS_ACCEPTED"
-          } catch {
-            if ($_.Exception.Message -notmatch "WEBVIEW_CAB_EXPANSION_FAILED") { throw }
-          }
-          if (Test-Path "./src-tauri/resources/webview2-fixed/msedgewebview2.exe") {
-            throw "INVALID_CAB_LEFT_EXECUTABLE"
-          }
-      - name: Stage pinned Node and scientific engine
-        run: npm run stage:windows-engine
-      - name: Verify locked Cargo dependency metadata on Windows
-        run: cargo metadata --locked --manifest-path src-tauri/Cargo.toml --no-deps --format-version 1
-      - name: Build native NSIS installer (unsigned CI artifact only)
-        run: npm run build:windows
-      - name: Verify installer did not alter committed Cargo.lock
-        shell: pwsh
-        run: |
-          git diff --exit-code -- src-tauri/Cargo.lock
-          if ($LASTEXITCODE -ne 0) { throw "Cargo.lock was modified by the Windows installer build" }
-      - name: Smoke-test installed NSIS package without system Node on PATH
-        shell: pwsh
-        run: |
-          $binary = Get-ChildItem "src-tauri/target/release/bundle/nsis" -Filter "*setup.exe" -ErrorAction Stop | Select-Object -First 1
-          if (-not $binary) { throw "NSIS installer missing" }
-          ./scripts/verify-windows-install.ps1 -Installer $binary.FullName -InstallDirectory "$env:RUNNER_TEMP/tempora-desktop-install"
-      - name: Write installer and runtime checksums for provenance
-        shell: pwsh
-        run: |
-          $install = Get-ChildItem "src-tauri/target/release/bundle/nsis" -Filter "*setup.exe" | Select-Object -First 1
-          if (-not $install) { throw "No installer" }
-          $manifest = Get-Content "src-tauri/resources/engine/runtime-manifest.json" -Raw | ConvertFrom-Json
-          $rows = @(
-            ("installer_sha256=" + (Get-FileHash $install.FullName -Algorithm SHA256).Hash.ToLowerInvariant()),
-            ("node_sha256=" + $manifest.node_sha256),
-            ("worker_sha256=" + $manifest.worker_sha256),
-            ("lock_sha256=" + $manifest.lock_sha256),
-            ("source_sha=" + "$env:GITHUB_SHA")
-          )
-          $rows | Set-Content "src-tauri/target/release/bundle/nsis/provenance-sha256.txt"
-          $manifest | ConvertTo-Json -Depth 10 | Set-Content "src-tauri/target/release/bundle/nsis/engine-inventory.json"
-      - name: Check NSIS artifact and embedded engine
-        shell: pwsh
-        run: |
-          $binary = Get-ChildItem "src-tauri/target/release/bundle/nsis" -Filter "*setup.exe" -ErrorAction Stop | Select-Object -First 1
-          if (-not $binary) { throw "NSIS installer not created" }
-          $node = "src-tauri/resources/engine/node.exe"
-          $worker = "src-tauri/resources/engine/worker.cjs"
-          if (-not (Test-Path $node) -or -not (Test-Path $worker)) { throw "Embedded runtime resources absent" }
-          Get-FileHash $binary.FullName -Algorithm SHA256 | Format-List
-          Get-FileHash $node -Algorithm SHA256 | Format-List
-      - uses: actions/upload-artifact@v4
-        with:
-          name: TEMPORA-Desktop-Windows-x64-UNSIGNED-NOT-A-RELEASE
-          path: apps/desktop/src-tauri/target/release/bundle/nsis/*setup.exe
-          if-no-files-found: error
-          retention-days: 7
-      - uses: actions/upload-artifact@v4
-        with:
-          name: TEMPORA-Desktop-Windows-x64-Provenance-SHA256
-          path: |
-            apps/desktop/src-tauri/target/release/bundle/nsis/provenance-sha256.txt
-            apps/desktop/src-tauri/target/release/bundle/nsis/engine-inventory.json
-          if-no-files-found: error
-          retention-days: 7
-
   synthetic-benchmark:
     # Opt-in only, never a required PR status; no new workflow files.
     if: ${{ github.event_name == 'workflow_dispatch' && inputs.synthetic_benchmark == true }}
@@ -216,7 +92,7 @@ jobs:
           retention-days: 14
 
   electron-windows-examples:
-    name: Electron Windows x64 NSIS and bundled examples
+    name: TEMPORA Desktop Chromium Windows x64 NSIS and bundled examples
     runs-on: windows-latest
     timeout-minutes: 45
     if: ${{ github.event_name != 'workflow_dispatch' || inputs.synthetic_benchmark != true }}

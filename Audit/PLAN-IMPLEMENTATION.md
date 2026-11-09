@@ -241,3 +241,14 @@ Après prévisualisation canonique **complète et non tronquée** (50 lignes max
 ### Qualification M1.4b : séparation stricte moteur / packaging
 
 Le smoke-test scientifique doit s'exécuter une première fois sur l'environnement Node Windows 3.0.0 déjà mis en place, avant les téléchargements `electron-builder`; il s'exécute à nouveau sur les ressources réelles de l'installateur une fois celui-ci assemblé. Les deux vérifications sont nécessaires. Un échec réseau de l'assemblage ne justifie ni fusion, ni suppression de branche, ni modification des paramètres de sécurité de l'exécutable.
+
+
+## Windows officiel Chromium-only — décision approuvée, 2026-11-09
+
+1. Arrêter définitivement les builds Tauri/WebView2 des parcours officiels Windows; archiver le code existant sans réécrire l'historique.
+2. Conserver et qualifier Electron Chromium NSIS (GitHub signé séparément) et Store AppX/MSIX (signature Microsoft sur distribution Store).
+3. Tester sur machine vierge sans Edge WebView2, sans Node, réseau déconnecté; vérifier l'interface et le moteur embarqué, et la désinstallation.
+4. Vérifier **l'artefact réellement certifié** dans Partner Center avant de publier. La certification existante n'autorise pas une substitution silencieuse de runtime. Garder Store ID et identité de package, soumettre une révision Chromium si nécessaire.
+5. Ne pas publier tant que l'acceptation scientifique, les ressources d'exemple, l'IPC sécurisé et la version Chromium embarquée ne sont pas qualifiés.
+
+Le statut `Ready to publish` est attesté par la capture textuelle communiquée par le titulaire et **ne signifie pas Published**. Aucune manipulation du tableau de bord ni clic Publish now n'est autorisée par cette décision.

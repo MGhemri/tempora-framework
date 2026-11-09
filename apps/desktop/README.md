@@ -1,3 +1,15 @@
+# TEMPORA Desktop — Chromium/Electron (official Windows runtime)
+
+The **only supported Windows Desktop runtime is bundled Chromium/Electron**. It does not depend on Microsoft Edge WebView2 or its Evergreen distribution. Windows NSIS and Microsoft Store AppX/MSIX candidates use the same Electron host and the pinned TEMPORA 3.0.0 worker.
+
+**Tauri/WebView2 is retired from supported Windows distributions.** Its source is preserved for audit under `src-tauri/`, but its installer is not built, published, or submitted. Historical instructions below are obsolete and must not be used for releases.
+
+For current build and packaging guidance, see [Electron Desktop](electron/README.md). Use a genuinely clean Windows 10/11 environment without Node or WebView2 for acceptance testing. No public Store publication is authorized solely by a previous certification.
+
+---
+
+## Archived Tauri engineering notes — historical, not operational
+
 # TEMPORA Desktop — Native Research Workspace
 
 **Phase 0 / Alpha 0.1.0** · Tauri 2 · Rust · TypeScript · Vite · FR/EN

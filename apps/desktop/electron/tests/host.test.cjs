@@ -265,7 +265,7 @@ test('Assistant dry-run is host-owned, read-only and bundled in Electron',()=>{
  const pkg=require('../package.json');
  assert.match(main,/tempora:assistant:dryrun/);
  assert.match(preload,/assistantDryRun/);
- assert.match(view,/batch_accepted/);
+ assert.match(src('../../src/framework/assist-preview.js'),/batch_accepted:false/);
  assert.match(html,/assistant-normalization-preview/);
  assert.ok(pkg.build.extraResources.some(r=>r.to==='assistant/framework/assist-preview.js'));
  assert.ok(pkg.build.extraResources.some(r=>r.to==='assistant/framework/assist-normalization.js'));
@@ -283,7 +283,9 @@ test('Assistant canonical preview is a read-only host/worker operation and never
  assert.match(preload,/assistantCanonicalPreview/);
  assert.match(worker,/ingestion\.preview\(/);
  assert.match(worker,/acceptance_enabled:false/);
- assert.doesNotMatch(worker,/ingestion\.accept\(/);
+ // The review-only operation may call ingestion.accept in memory; no disk writes are permitted.
+ assert.match(worker,/scope:'in_memory_staging_only'/);
+ assert.doesNotMatch(worker,/writeFileSync|appendFileSync|renameSync/);
  assert.match(smoke,/PACKAGED_TEMPORA_CANONICAL_PREVIEW_NO_ACCEPTANCE_OK/);
  assert.match(ui,/canonical\.summary\.conflict/);
  assert.doesNotMatch(ui,/acceptImport|writeFileSync|innerHTML/);
@@ -304,4 +306,20 @@ test('Assistant staging review is host-controlled, one-shot and never a filesyst
  assert.match(html,/id="assistant-reviewer"/);
  assert.match(html,/id="assistant-reviewed-at"/);
  assert.match(smoke,/PACKAGED_TEMPORA_IN_MEMORY_STAGING_REVIEW_OK/);
+});
+
+test('Official Windows Desktop packaging is Chromium/Electron only, no WebView2 distribution',()=>{
+ const workflow=src('../../.github/workflows/desktop-foundation.yml');
+ const desktopPkg=require('../../package.json');
+ const pkg=require('../package.json');
+ const store=src('electron/store-appx.config.cjs');
+ const policy=src('../../docs/reference/CI_AND_RELEASE_POLICY.md');
+ assert.match(workflow,/name: TEMPORA Desktop Chromium Windows x64 NSIS/);
+ assert.doesNotMatch(workflow,/^\s{2}(rust|windows-installer):/m);
+ assert.doesNotMatch(workflow,/Build native NSIS installer|Verify Fixed WebView2 staging/);
+ assert.equal(desktopPkg.scripts['build:windows'],undefined);
+ assert.equal(desktopPkg.scripts.tauri,undefined);
+ assert.equal(pkg.build.productName,'TEMPORA Desktop');
+ assert.match(store,/GhemriM\.TEMPORADesktop/);
+ assert.match(policy,/Chromium\/Electron is the only supported Windows distribution host/);
 });
