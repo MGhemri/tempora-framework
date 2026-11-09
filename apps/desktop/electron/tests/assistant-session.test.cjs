@@ -179,9 +179,9 @@ test('Assistant: rejects fake confirmation, unissued fields, expired and stale p
  assert.throws(()=>f.service.confirm(s.handle_id,p.proposal_token,[yes('id','id'),
   {source_column:'title',target_field:'title.en',state:'suggested'}]),throws('ASSIST_MAPPING_CONFIRMATION_REQUIRED'));
  assert.throws(()=>f.service.confirm(s.handle_id,p.proposal_token,[yes('id','id'),yes('id','id')]),throws('ASSIST_MAPPING_CONFIRMATION_REQUIRED'));
- const newer=f.service.suggest(s.handle_id,'synthetic-history',{delimiter:';'});
+ const newer=f.service.suggest(s.handle_id,'synthetic-history',{delimiter:','});
  assert.throws(()=>f.service.confirm(s.handle_id,p.proposal_token,valid),throws('ASSIST_PROPOSAL_EXPIRED'));
- assert.throws(()=>f.service.confirm(s.handle_id,newer.proposal_token,valid),throws('ASSIST_MAPPING_UNSUGGESTED_BINDING'));
+ assert.throws(()=>f.service.confirm(s.handle_id,newer.proposal_token,[yes('id','id'),yes('title','title.es')]),throws('ASSIST_MAPPING_UNSUGGESTED_BINDING'));
  const p2=f.service.suggest(s.handle_id,'synthetic-history',{delimiter:','});
  f.setData('id,title\n1,changed\n');
  assert.throws(()=>f.service.confirm(s.handle_id,p2.proposal_token,valid),throws('ASSIST_SOURCE_CHANGED'));
