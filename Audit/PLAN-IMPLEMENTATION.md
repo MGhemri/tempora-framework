@@ -236,3 +236,8 @@ Après prévisualisation canonique **complète et non tronquée** (50 lignes max
 **Invariants :** aucune écriture, aucun corpus entier transmis à l'interface, aucune publication, aucune approbation scientifique. Le reçu `scope: in_memory_staging_only` indique `saved_to_disk=false` et `persistence_required=true`. **Ce n'est PAS une importation effectivement sauvegardée** et aucune entrée du journal n'est persistée.
 
 **Suite :** définir un export atomique local non destructif, avec revue finale séparée, sélection du fichier de sortie, `wx`, journal et preuve de reproductibilité ; puis qualifier les profils supplémentaires et le pont Tauri. La mise en production Bêta 4 reste bloquée par la recette Windows complète.
+
+
+### Qualification M1.4b : séparation stricte moteur / packaging
+
+Le smoke-test scientifique doit s'exécuter une première fois sur l'environnement Node Windows 3.0.0 déjà mis en place, avant les téléchargements `electron-builder`; il s'exécute à nouveau sur les ressources réelles de l'installateur une fois celui-ci assemblé. Les deux vérifications sont nécessaires. Un échec réseau de l'assemblage ne justifie ni fusion, ni suppression de branche, ni modification des paramètres de sécurité de l'exécutable.
