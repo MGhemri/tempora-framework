@@ -241,6 +241,17 @@ jobs:
           node --test electron/tests/review-integrity.test.cjs
       - name: Stage pinned scientific runtime
         run: npm run stage:windows-engine
+      - name: Test pinned Node worker and human staging before Electron packaging
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $sandbox = Join-Path $env:RUNNER_TEMP 'tempora-pinned-worker-smoke'
+          New-Item -ItemType Directory -Force (Join-Path $sandbox 'engine') | Out-Null
+          New-Item -ItemType Directory -Force (Join-Path $sandbox 'examples') | Out-Null
+          Copy-Item -Recurse -Force './src-tauri/resources/engine/*' (Join-Path $sandbox 'engine')
+          Copy-Item -Recurse -Force './examples/*' (Join-Path $sandbox 'examples')
+          node electron/tests/packaged-engine-smoke.cjs $sandbox
+          if ($LASTEXITCODE -ne 0) { throw 'PINNED_WORKER_SMOKE_FAILED' }
       - name: Restore exact Electron packaging toolchain
         working-directory: apps/desktop/electron
         run: npm ci --no-audit --no-fund
