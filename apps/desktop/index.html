@@ -100,6 +100,11 @@
             </div>
           </section>
           <section class="result-panel" id="assistant-normalization-preview" aria-label="Prévisualisation technique sans import"></section>
+          <section class="result-panel" id="assistant-canonical-preview" aria-label="Prévisualisation canonique sans acceptation">
+            <p>Prévisualisation canonique distincte : choisissez un corpus v3 valide. Aucune importation ni acceptation.</p>
+            <button type="button" id="assistant-canonical-button" disabled>Prévisualiser sur corpus v3 existant (lecture seule)</button>
+            <div id="assistant-canonical-result" role="status" aria-live="polite"></div>
+          </section>
           <section class="result-panel" id="assistant-preview" aria-label="Aperçu sans écriture"></section>
         </section>
         <section id="view-research" class="view hidden">
