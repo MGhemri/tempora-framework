@@ -101,7 +101,7 @@ function withWriterReservation(root,work) {
     throw e;
   }
   const ownerFile=path.join(lock,'owner.json');
-  const owner=Buffer.from(JSON.stringify({schema_version:'1.0.0',nonce})+'\\n');
+  const owner=Buffer.from(JSON.stringify({schema_version:'1.0.0',nonce})+'\n');
   let owned=false;
   try {
     writeExclusive(lock,'owner.json',owner);
