@@ -204,3 +204,20 @@ Ces garanties sont locales au répertoire choisi, à l'état de son inventaire
 et à la robustesse du verrou : elles ne constituent ni une preuve d'authenticité
 du chercheur ni une durabilité en cas de panne électrique. Les tests CI et les
 reparse points Windows restent des gates de qualification.
+
+
+### Qualification des interruptions (simulation contrôlée, hors coupure électrique)
+
+Deux tests instrumentent `fs.renameSync` pour provoquer un échec `EIO` au
+moment précis de rendre visible une transaction. Ils contrôlent qu'aucune
+transaction partiellement écrite n'apparaît dans `transactions/`, que les
+trois fichiers restent présents dans `.pending/`, qu'une transaction
+antérieure demeure intacte, et que la réservation appartenant au processus
+est libérée en cas d'échec normal.
+
+**Important :** simuler une exception Node n'est pas simuler un crash du
+processus, un reset Windows ni une panne électrique. Le test valide le chemin
+d'erreur avant renommage, pas la durabilité des écritures déjà validées.
+Le moteur laisse les `.pending` pour inspection, sans promotion ni suppression
+automatique. Une qualification de journalisation et des essais de reprise sur
+NTFS/Windows restent nécessaires avant activation de l'interface.
