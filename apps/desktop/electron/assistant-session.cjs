@@ -33,7 +33,7 @@ function createAssistantSessions({sourceRoot,profileRoot,now=()=>Date.now(),read
   const profilesRoot=resolve(profileRoot||join(root,'..','profiles'));
   const {inspectDelimitedSample}=loadInspector(root,'framework/assist-inspection.js');
   const {inspectXlsx}=loadInspector(root,'assist-io/xlsx-inventory.js');
-  const {suggestColumnMappings}=loadInspector(root,'framework/assist-mapping.js');
+  const {suggestColumnMappings,compileConfirmedCsvMapping}=loadInspector(root,'framework/assist-mapping.js');
   const {extractXlsxCells}=loadInspector(root,'assist-io/xlsx-cells.js');
   const sessions=new Map();
   function clearExpired(){
@@ -135,16 +135,59 @@ function createAssistantSessions({sourceRoot,profileRoot,now=()=>Date.now(),read
       headers=selected.header_values;
     }
     const mapping=suggestColumnMappings(headers,profile);
+    // Every new proposal invalidates earlier user decisions, including across profiles/choices.
+    s.proposal={token:randomBytes(24).toString('hex'),headers:[...headers],
+      profile_id:profile.id,profile_version:profile.version,choice:{...choice},
+      suggestions:mapping.suggestions.map(x=>({source_column:x.source_column,target_field:x.target_field}))};
     // Suggestions are never confirmed, even if the UI displays an exact header match.
     return bounded({handle_id,source_sha256:s.sha256,profile_id:profile.id,
-      profile_version:profile.version,choice:{...choice},mapping});
+      profile_version:profile.version,choice:{...choice},proposal_token:s.proposal.token,mapping});
+  }
+  function confirm(handle_id,proposal_token,bindings){
+    const s=requireSession(handle_id);
+    // Confirming is a host-side operation, never an authorization flag from the renderer.
+    // This stage compiles ONLY CSV/TSV, never an Excel preview reinterpreted as CSV.
+    if(s.format==='xlsx')reject('ASSIST_XLSX_MAPPING_COMPILATION_UNSUPPORTED');
+    if(typeof proposal_token!=='string'||!HANDLE.test(proposal_token)||
+       !s.proposal||proposal_token!==s.proposal.token)
+      reject('ASSIST_PROPOSAL_EXPIRED');
+    const bytes=verified(s),proposal=s.proposal;
+    if(!Array.isArray(bindings)||bindings.length<2||bindings.length>proposal.headers.length||
+       bindings.some(b=>!validShape(b,['source_column','target_field','state'])||
+         Object.keys(b).length!==3||b.state!=='confirmed_by_user'||
+         typeof b.source_column!=='string'||typeof b.target_field!=='string'))
+      reject('ASSIST_MAPPING_CONFIRMATION_REQUIRED');
+    const allowed=new Set(proposal.suggestions.map(x=>JSON.stringify([x.source_column,x.target_field])));
+    for(const binding of bindings){
+      if(!allowed.has(JSON.stringify([binding.source_column,binding.target_field])))
+        reject('ASSIST_MAPPING_UNSUGGESTED_BINDING');
+    }
+    const profile=trustedProfile(proposal.profile_id);
+    if(profile.version!==proposal.profile_version)reject('ASSIST_PROFILE_CHANGED');
+    const selected=inspectDelimitedSample(bytes.subarray(0,Math.min(bytes.length,MAX_SAMPLE_BYTES)))
+      .candidates.find(x=>x.delimiter===proposal.choice.delimiter);
+    if(!selected||selected.header_issues.length||selected.csv_syntax_errors||
+       JSON.stringify(selected.header_values)!==JSON.stringify(proposal.headers))
+      reject('ASSIST_SOURCE_HEADERS_CHANGED');
+    // A user must explicitly select at least ID and localized TITLE.
+    const mapping=compileConfirmedCsvMapping({headers:proposal.headers,profile,
+      bindings,id:'assistant-csv-review',version:'1.0.0',delimiter:proposal.choice.delimiter});
+    // A successful compilation consumes the proposal. Source remains untouched.
+    s.proposal=null;
+    const digestInput=JSON.stringify({source_sha256:s.sha256,profile_id:profile.id,
+      profile_version:profile.version,bindings,mapping});
+    return bounded({handle_id,source_sha256:s.sha256,profile_id:profile.id,
+      profile_version:profile.version,confirmation_scope:'read_only_mapping_compilation',
+      mapping_confirmed:true,confirmed_bindings:bindings.map(x=>({...x})),
+      mapping,confirmation_sha256:digest(Buffer.from(digestInput)),source_modified:false,
+      canonical_validated:false,import_performed:false});
   }
   function close(handle_id){
     if(!safeHandle(handle_id))reject('ASSIST_HANDLE_INVALID');
     return sessions.delete(handle_id);
   }
   function clear(){sessions.clear();}
-  return Object.freeze({open,inspect,selectSheet,suggest,close,clear,
+  return Object.freeze({open,inspect,selectSheet,suggest,confirm,close,clear,
     // Shape enforcement is deliberately public to unit tests but not exposed by preload.
     validShape});
 }
