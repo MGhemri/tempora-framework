@@ -7,10 +7,8 @@
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
-    "tauri": "tauri",
     "test:bridge": "node --test tests/engine-bridge.test.mjs",
     "stage:windows-engine": "node scripts/stage-windows-engine.mjs",
-    "build:windows": "npm run stage:windows-engine && tauri build --config src-tauri/tauri.windows.conf.json -- --locked",
     "test:windows-engine": "node --test tests/windows-engine.test.mjs",
     "test:visualization": "node --test tests/visualization/*.test.mjs"
   },
