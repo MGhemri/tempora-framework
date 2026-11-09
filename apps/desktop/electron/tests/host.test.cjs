@@ -305,3 +305,19 @@ test('Assistant staging review is host-controlled, one-shot and never a filesyst
  assert.match(html,/id="assistant-reviewed-at"/);
  assert.match(smoke,/PACKAGED_TEMPORA_IN_MEMORY_STAGING_REVIEW_OK/);
 });
+
+test('Official Windows Desktop packaging is Chromium/Electron only, no WebView2 distribution',()=>{
+ const workflow=src('../../.github/workflows/desktop-foundation.yml');
+ const desktopPkg=require('../../package.json');
+ const pkg=require('../package.json');
+ const store=src('electron/store-appx.config.cjs');
+ const policy=src('../../docs/reference/CI_AND_RELEASE_POLICY.md');
+ assert.match(workflow,/name: TEMPORA Desktop Chromium Windows x64 NSIS/);
+ assert.doesNotMatch(workflow,/^\s{2}(rust|windows-installer):/m);
+ assert.doesNotMatch(workflow,/Build native NSIS installer|Verify Fixed WebView2 staging/);
+ assert.equal(desktopPkg.scripts['build:windows'],undefined);
+ assert.equal(desktopPkg.scripts.tauri,undefined);
+ assert.equal(pkg.build.productName,'TEMPORA Desktop');
+ assert.match(store,/GhemriM\.TEMPORADesktop/);
+ assert.match(policy,/Chromium\/Electron is the only supported Windows distribution host/);
+});
