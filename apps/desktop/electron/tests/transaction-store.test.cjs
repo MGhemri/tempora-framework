@@ -90,3 +90,33 @@ test('real canonical hash rejects content changed after the claimed digest',t=>{
    {code:'TRANSACTION_CANONICAL_DIGEST_MISMATCH'});
  assert.deepEqual(fs.readdirSync(root),[]);
 });
+
+test('real SDK preview/accept roundtrip is persisted without changing the working base',t=>{
+ const root=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-accept-persist-'));
+ t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
+ const base=JSON.parse(fs.readFileSync(path.join(__dirname,'../../examples/synthetic-canonical-v3.json'),'utf8'));
+ assert.equal(sdk.canonical.validateCorpus(base).valid,true);
+ const mapping={mapping_schema_version:'1.0.0',id:'synthetic-transaction',
+   version:'1.0.0',profile_id:base.profile.id,profile_version:base.profile.version,
+   format:'json',fields:{id:'/id',title:{en:'/name'},start_date:'/date',event_type:'/type'}};
+ const bytes=Buffer.from(JSON.stringify([{id:'PERSIST_TEST_1',
+   name:'Fictional event',date:'1701',type:'fictional assembly'}]));
+ const preview=sdk.ingestion.preview({corpus:base,mapping,bytes,
+   sourceName:'fictional.json',observedAt:null});
+ assert.equal(preview.report.summary.create,1);
+ const review={batch_id:preview.report.batch_id,ids:['PERSIST_TEST_1'],
+   reviewer:'Test researcher',reason:'Synthetic transaction integration test',
+   reviewed_at:'2026-11-09T00:00:00Z'};
+ const accepted=sdk.ingestion.accept({corpus:base,bundle:preview,review});
+ assert.equal(accepted.journal.decision,'accepted_for_local_staging');
+ assert.equal(sdk.canonical.validateCorpus(accepted.corpus).valid,true);
+ const identity={batch_id:preview.report.batch_id,source_sha256:preview.report.source.sha256,
+   base_sha256:preview.report.base_sha256,mapping_sha256:preview.report.mapping.sha256,
+   output_sha256:accepted.journal.output_sha256};
+ const receipt=createTransaction(root,{corpus:accepted.corpus,journal:accepted.journal,identity},sdk.canonical);
+ assert.equal(receipt.saved_to_disk,true);
+ assert.equal(receipt.output_sha256,sdk.canonical.digest(accepted.corpus));
+ assert.equal(base.events.some(e=>e.id==='PERSIST_TEST_1'),false);
+ assert.deepEqual(inspectTransactions(root,sdk.canonical),
+   {complete:[receipt.transaction_id],invalid:[],pending:[]});
+});
