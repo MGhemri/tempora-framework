@@ -84,3 +84,8 @@ La nouvelle prévisualisation est uniquement technique, plafonnée à 64 lignes,
 ### ASSIST-M1.4a — Source et corpus existant, sans acceptation
 
 Décision de sécurité : preview canonique calculé par le seul moteur TEMPORA 3.0.0. Le renderer ne reçoit que le rapport résumé et les premiers diagnostics ; pas de candidate, pas de bundle, pas de jeton d'acceptation. Limites worker 4 Mio / réponse 256 Kio, source 128 Kio, corpus 2 Mio. Tous les fichiers sont sélectionnés dans des dialogues natifs et l'entrée source est revérifiée. Le résultat reste un aperçu technique, non une décision historique. Tests adversariaux (protocole strict, profil, replay, digest, absence de mutation) et empaquetage requis avant fusion.
+
+
+### ASSIST-M1.4b — Revue humaine provisoire, aucune persistance
+
+Vérifications obligatoires : sélection individuelle non précochée, identité + motif + date UTC, jeton de revue non rejouable, relecture empreintes source et corpus, refus des conflits/quarantaines, refus des aperçus tronqués, SDK `ingestion.accept` isolé en mémoire, aucune écriture réseau/disque, journal et résultat clairement étiquetés comme **simulation**. Tests réels sur worker Windows empaqueté exigés. Pas de release.
