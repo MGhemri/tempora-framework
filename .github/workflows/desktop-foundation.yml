@@ -54,6 +54,7 @@ jobs:
       - run: npm run build
       - run: npm run test:bridge
       - run: node --test electron/tests/assistant-session.test.cjs
+      - run: npm run test:transaction
       - run: npm run test:visualization
       - run: npm run test:windows-engine
 
@@ -115,6 +116,7 @@ jobs:
           node --test electron/tests/host.test.cjs
           node --test electron/tests/assistant-session.test.cjs
           node --test electron/tests/review-integrity.test.cjs
+          npm run test:transaction
       - name: Stage pinned scientific runtime
         run: npm run stage:windows-engine
       - name: Test pinned Node worker and human staging before Electron packaging
