@@ -120,3 +120,35 @@ test('real SDK preview/accept roundtrip is persisted without changing the workin
  assert.deepEqual(inspectTransactions(root,sdk.canonical),
    {complete:[receipt.transaction_id],invalid:[],pending:[]});
 });
+
+test('modified committed corpus is rejected even when journal remains intact',t=>{
+ const f=fixture(t),receipt=createTransaction(f.root,f,canonical);
+ const corpusPath=path.join(f.root,'transactions',receipt.transaction_id,'corpus.json');
+ fs.writeFileSync(corpusPath,JSON.stringify({schema_version:'3.0.0',events:[{id:'FORGED'}]})+'\n');
+ assert.deepEqual(inspectTransactions(f.root,canonical),
+   {complete:[],invalid:[receipt.transaction_id],pending:[]});
+});
+test('modified transaction manifest is detected on inspection',t=>{
+ const f=fixture(t),receipt=createTransaction(f.root,f,canonical);
+ const dir=path.join(f.root,'transactions',receipt.transaction_id);
+ const manifest=JSON.parse(fs.readFileSync(path.join(dir,'manifest.json'),'utf8'));
+ manifest.output_sha256='f'.repeat(64);
+ fs.writeFileSync(path.join(dir,'manifest.json'),JSON.stringify(manifest)+'\n');
+ assert.deepEqual(inspectTransactions(f.root,canonical),
+   {complete:[],invalid:[receipt.transaction_id],pending:[]});
+});
+test('the scientific journal cannot claim published status or omit local staging decision',t=>{
+ const f=fixture(t);f.journal.decision='published';
+ assert.throws(()=>createTransaction(f.root,f,canonical),{code:'TRANSACTION_JOURNAL_MISMATCH'});
+ assert.deepEqual(fs.readdirSync(f.root),[]);
+});
+test('committed transaction inspection never mutates source files',t=>{
+ const f=fixture(t),receipt=createTransaction(f.root,f,canonical);
+ const dir=path.join(f.root,'transactions',receipt.transaction_id);
+ const before=['corpus.json','journal.json','manifest.json'].map(name=>
+   fs.readFileSync(path.join(dir,name)));
+ assert.equal(inspectTransactions(f.root,canonical).complete.length,1);
+ const after=['corpus.json','journal.json','manifest.json'].map(name=>
+   fs.readFileSync(path.join(dir,name)));
+ assert.deepEqual(after,before);
+});
