@@ -256,12 +256,13 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
  normalizeRule.addEventListener('change',()=>{dryRun=null;render();});
  normalizeButton.addEventListener('click',async()=>{
    if(!host||!compiled||!source||busy||!normalizeRule.value)return;
+   const column=normalizeColumn.value;
    const ruleName=normalizeRule.value,rule=ruleName==='LIST_SEMICOLON'
      ?{id:'human-list-1',kind:'list',list_separator:';'}
      :{id:'human-date-1',kind:'date',format:ruleName};
    busy=true;uiError=null;dryRun=null;const ticket=++serial,active=source;render();
    try{
-     const result=await host.assistantDryRun(active.handle_id,[{source_column:normalizeColumn.value,rule}]);
+     const result=await host.assistantDryRun(active.handle_id,[{source_column:column,rule}]);
      if(ticket===serial&&result.preview.source_sha256===active.source_sha256)
        dryRun=result.preview;
    }catch(error){
