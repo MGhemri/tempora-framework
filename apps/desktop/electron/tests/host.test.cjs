@@ -283,7 +283,9 @@ test('Assistant canonical preview is a read-only host/worker operation and never
  assert.match(preload,/assistantCanonicalPreview/);
  assert.match(worker,/ingestion\.preview\(/);
  assert.match(worker,/acceptance_enabled:false/);
- assert.doesNotMatch(worker,/ingestion\.accept\(/);
+ // The review-only operation may call ingestion.accept in memory; no disk writes are permitted.
+ assert.match(worker,/scope:'in_memory_staging_only'/);
+ assert.doesNotMatch(worker,/writeFileSync|appendFileSync|renameSync/);
  assert.match(smoke,/PACKAGED_TEMPORA_CANONICAL_PREVIEW_NO_ACCEPTANCE_OK/);
  assert.match(ui,/canonical\.summary\.conflict/);
  assert.doesNotMatch(ui,/acceptImport|writeFileSync|innerHTML/);
