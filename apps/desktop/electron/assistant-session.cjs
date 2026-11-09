@@ -232,7 +232,7 @@ function createAssistantSessions({sourceRoot,profileRoot,now=()=>Date.now(),read
       reject('ASSIST_REVIEW_PREVIEW_INVALID');
     const token=randomBytes(24).toString('hex');
     s.canonical_preview={...record,token,confirmation:s.confirmation};
-    return {review_token:token,acceptance_enabled:true};
+    return {review_token:token,staging_review_enabled:true};
   }
   function claimCanonicalReview(handle_id,review_token,review){
     const s=requireSession(handle_id),p=s.canonical_preview;
