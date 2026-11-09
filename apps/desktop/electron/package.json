@@ -68,6 +68,14 @@
       {
         "from": "../../../profiles/synthetic-history/profile.json",
         "to": "assistant/profiles/synthetic-history/profile.json"
+      },
+      {
+        "from": "../../../src/framework/assist-preview.js",
+        "to": "assistant/framework/assist-preview.js"
+      },
+      {
+        "from": "../../../src/framework/assist-normalization.js",
+        "to": "assistant/framework/assist-normalization.js"
       }
     ],
     "asar": true,

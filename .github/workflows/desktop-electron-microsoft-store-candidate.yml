@@ -121,7 +121,7 @@ jobs:
               $matches = @($names | Where-Object { $_.EndsWith('resources/examples/' + $example) })
               if ($matches.Count -ne 1) { throw ('STORE_BUNDLED_EXAMPLE_MISSING_OR_AMBIGUOUS: ' + $example) }
             }
-            foreach ($name in @('framework/assist-inspection.js','assist-io/xlsx-inventory.js','assist-io/xlsx-cells.js','framework/assist-mapping.js','profiles/synthetic-history/profile.json')) {
+            foreach ($name in @('framework/assist-inspection.js','assist-io/xlsx-inventory.js','assist-io/xlsx-cells.js','framework/assist-mapping.js','framework/assist-preview.js','framework/assist-normalization.js','profiles/synthetic-history/profile.json')) {
               $matches = @($names | Where-Object { $_.EndsWith('resources/assistant/' + $name) })
               if ($matches.Count -ne 1) { throw ('STORE_ASSISTANT_RESOURCE_MISSING_OR_AMBIGUOUS: ' + $name) }
             }

@@ -84,7 +84,22 @@
             <div id="assistant-bindings"></div>
             <button type="button" id="assistant-confirm" disabled>Confirmer les associations sélectionnées (sans import)</button>
             <div id="assistant-confirm-result" role="status" aria-live="polite"></div>
+            <div id="assistant-normalization-controls" hidden>
+              <label for="assistant-normalize-column">Colonne à normaliser
+                <select id="assistant-normalize-column"></select>
+              </label>
+              <label for="assistant-normalize-rule">Règle explicite
+                <select id="assistant-normalize-rule">
+                  <option value="">Aucune</option>
+                  <option value="DD/MM/YYYY">Date : JJ/MM/AAAA</option>
+                  <option value="FR_MONTH_YEAR">Date : mois français AAAA</option>
+                  <option value="LIST_SEMICOLON">Liste : point-virgule</option>
+                </select>
+              </label>
+              <button id="assistant-normalize" type="button">Prévisualiser la normalisation (sans import)</button>
+            </div>
           </section>
+          <section class="result-panel" id="assistant-normalization-preview" aria-label="Prévisualisation technique sans import"></section>
           <section class="result-panel" id="assistant-preview" aria-label="Aperçu sans écriture"></section>
         </section>
         <section id="view-research" class="view hidden">
