@@ -228,3 +228,20 @@ dans la même racine et doit recevoir `TRANSACTION_WRITER_BUSY`, sans
 affecter la transaction du processus parent. L'essai doit passer dans les
 jobs CI Windows et Ubuntu. Il ne prouve pas le comportement en présence
 d'un partage SMB, d'une jonction NTFS malveillante ou d'un crash du système.
+
+
+### Blocage après une interruption non résolue
+
+Avant chaque nouveau commit, et pendant que la réservation exclusive est
+détenue, le store inspecte maintenant aussi `.pending/`. La présence d'au
+moins une entrée orpheline déclenche
+`TRANSACTION_PENDING_RECOVERY_REQUIRED`, sans création d'une nouvelle
+transaction ni suppression, déplacement ou promotion automatique de l'orphelin.
+Une transaction finalisée antérieure doit rester byte-for-byte intacte.
+
+Cette politique privilégie la conservation des preuves : une interruption
+peut bloquer les sauvegardes suivantes jusqu'à une procédure de reprise
+manuelle encore à implémenter et qualifier. Les deux tests ajoutés contrôlent
+la présence d'un orphelin partiel et la protection d'une transaction déjà
+validée. Le comportement sous crash complet et redémarrage Windows reste à
+tester avec des processus réels et des essais sur le volume cible.
