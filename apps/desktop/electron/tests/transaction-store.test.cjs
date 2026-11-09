@@ -173,3 +173,19 @@ test('transaction directory symbolic links are never traversed by the verifier',
  assert.deepEqual(inspectTransactions(f.root,canonical),
    {complete:[],invalid:[receipt.transaction_id],pending:[]});
 });
+
+test('symlinked journal is rejected without following its external target',t=>{
+ const f=fixture(t),receipt=createTransaction(f.root,f,canonical);
+ const dir=path.join(f.root,'transactions',receipt.transaction_id);
+ const journalPath=path.join(dir,'journal.json');
+ const outside=path.join(f.root,'outside-journal.json');
+ fs.renameSync(journalPath,outside);
+ try {fs.symlinkSync(outside,journalPath,'file');}
+ catch(e) {
+   if(process.platform==='win32' && (e.code==='EPERM'||e.code==='EACCES'))return;
+   throw e;
+ }
+ assert.deepEqual(inspectTransactions(f.root,canonical),
+   {complete:[],invalid:[receipt.transaction_id],pending:[]});
+ assert.ok(fs.existsSync(outside));
+});
