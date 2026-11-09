@@ -321,3 +321,40 @@ test('a failed later commit does not modify a previously completed corpus',t=>{
  assert.deepEqual(state.complete,[first.transaction_id]);
  assert.equal(state.pending.length,1);
 });
+
+test('a second real Node process cannot write while first process owns reservation',t=>{
+ const f=fixture(t),originalRename=fs.renameSync;
+ const {spawnSync}=require('node:child_process');
+ let childChecked=false;
+ fs.renameSync=function(from,to){
+   const source=String(from),target=String(to);
+   if(source.includes(path.sep+'.pending'+path.sep)&&
+      target.includes(path.sep+'transactions'+path.sep)){
+     const script=[
+       "'use strict';",
+       "const {createTransaction}=require(process.argv[1]);",
+       "const H='a'.repeat(64);",
+       "const canonical={validateCorpus:()=>({valid:true}),digest:()=>H};",
+       "const identity={batch_id:H,source_sha256:H,base_sha256:H,mapping_sha256:H,output_sha256:H};",
+       "try {createTransaction(process.argv[2],{identity,corpus:{schema_version:'3.0.0',events:[]},",
+       "journal:{decision:'accepted_for_local_staging',batch_id:H,base_sha256:H,output_sha256:H,scientific_approval:false}},canonical);",
+       "process.exit(2);}catch(e){process.stdout.write(String(e.code));process.exit(e.code==='TRANSACTION_WRITER_BUSY'?0:3);}"
+     ].join('\n');
+     const child=spawnSync(process.execPath,['-e',script,
+       path.resolve(__dirname,'../transaction-store.cjs'),f.root],
+       {encoding:'utf8',timeout:10000});
+     assert.equal(child.error,undefined);
+     assert.equal(child.status,0,child.stderr);
+     assert.equal(child.stdout,'TRANSACTION_WRITER_BUSY');
+     childChecked=true;
+   }
+   return originalRename.call(fs,from,to);
+ };
+ try {
+   const receipt=createTransaction(f.root,f,canonical);
+   assert.equal(receipt.saved_to_disk,true);
+ } finally {fs.renameSync=originalRename;}
+ assert.equal(childChecked,true);
+ assert.deepEqual(inspectWriterReservation(f.root),{status:'absent'});
+ assert.equal(inspectTransactions(f.root,canonical).complete.length,1);
+});
