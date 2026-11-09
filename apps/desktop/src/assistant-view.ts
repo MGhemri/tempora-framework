@@ -5,11 +5,17 @@ export type AssistantHost={
  assistantClose:(id:string)=>Promise<boolean>;
  assistantSuggest:(id:string,profileId:string,choice:{sheet_name?:string;delimiter?:string})=>Promise<AssistantSuggestionResult>;
  assistantConfirm:(id:string,token:string,bindings:Array<{source_column:string;target_field:string;state:'confirmed_by_user'}>)=>Promise<AssistantConfirmed>;
+ assistantDryRun:(id:string,rules:Array<{source_column:string;rule:{id:string;kind:string;format?:string;list_separator?:string}}>)=>Promise<{preview:AssistantDryRun}>;
 };
 export type AssistantOpen={
  handle_id:string;file_name:string;format:string;size_bytes:number;source_sha256:string;
  inspection:{sheets?:Array<{name:string;state:string}>;candidates?:Array<{header_values:string[]}>;
  suggested_delimiter?:string|null};
+};
+export type AssistantDryRun={
+  scope:string;source_sha256:string;preview_complete:boolean;
+  total_rows:number;displayed_rows:number;summary:{normalized:number;quarantined:number;unconfigured:number};
+  rows:Array<{source_path:string;entries:Array<{source_column?:string;source_text?:string;status:string;normalized?:unknown;diagnostic_code?:string|null}>}>;
 };
 export type AssistantConfirmed={
  mapping_confirmed:true;confirmation_scope:string;confirmation_sha256:string;
@@ -65,9 +71,15 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
  const bindingsPanel=el('assistant-bindings');
  const confirmButton=el('assistant-confirm') as HTMLButtonElement;
  const confirmationResult=el('assistant-confirm-result');
+ const normalizeControls=el('assistant-normalization-controls');
+ const normalizeColumn=el('assistant-normalize-column') as HTMLSelectElement;
+ const normalizeRule=el('assistant-normalize-rule') as HTMLSelectElement;
+ const normalizeButton=el('assistant-normalize') as HTMLButtonElement;
+ const normalizeOutput=el('assistant-normalization-preview');
  let source:AssistantOpen|null=null,table:AssistantTable|null=null,busy=false,serial=0;
  let suggestion:AssistantSuggestionResult|null=null;
  let compiled:AssistantConfirmed|null=null;
+ let dryRun:AssistantDryRun|null=null;
  const selections=new Set<string>();
  let uiError:string|null=null;
  const status=el('assistant-status'),details=el('assistant-details');
@@ -93,6 +105,31 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
      source?.inspection.candidates?.[0]?.header_values??[]);
    safeText(columns,[t.unconfirmed,...headers.slice(0,256)]);
    safeText(targets,[t.target,...fields,t.intro]);
+   normalizeControls.hidden=!compiled;
+   normalizeColumn.replaceChildren();
+   if(compiled){
+     for(const sourceColumn of selections){
+       const [column]=JSON.parse(sourceColumn) as [string,string];
+       const item=document.createElement('option');item.value=column;item.textContent=column;
+       normalizeColumn.append(item);
+     }
+   }
+   normalizeButton.disabled=busy||!compiled||!normalizeRule.value;
+   normalizeOutput.replaceChildren();
+   if(dryRun){
+     const summary=document.createElement('p');
+     summary.textContent='Dry-run · '+dryRun.displayed_rows+'/'+dryRun.total_rows+
+       ' · Normalized: '+dryRun.summary.normalized+' · Quarantined: '+dryRun.summary.quarantined+
+       ' · Unconfigured: '+dryRun.summary.unconfigured+
+       (dryRun.preview_complete?'':' · TRUNCATED');
+     normalizeOutput.append(summary);
+     for(const row of dryRun.rows.slice(0,12)){
+       const p=document.createElement('p');
+       p.textContent=row.source_path+' · '+row.entries.map(e=>e.source_column+': '+e.status+
+         (e.diagnostic_code?' ('+e.diagnostic_code+')':'')).join(' | ');
+       normalizeOutput.append(p);
+     }
+   }
    confirmButton.textContent=t.confirm;
    confirmButton.disabled=busy||!source||source.format==='xlsx'||!suggestion||compiled!==null||selections.size<2;
    confirmationResult.textContent=compiled
@@ -146,13 +183,13 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
    }
  };
  async function release():Promise<void>{
-   const prior=source;serial++;source=null;table=null;suggestion=null;compiled=null;selections.clear();uiError=null;
+   const prior=source;serial++;source=null;table=null;suggestion=null;compiled=null;dryRun=null;selections.clear();uiError=null;
    sheetSelect.replaceChildren();delimiterSelect.value='';profileSelect.value='';render();
    if(prior&&host){try{await host.assistantClose(prior.handle_id);}catch{/* expired */}}
  }
  openBtn.addEventListener('click',async()=>{
    if(!host||busy)return;
-   busy=true;const ticket=++serial;const old=source;source=null;table=null;suggestion=null;compiled=null;selections.clear();uiError=null;
+   busy=true;const ticket=++serial;const old=source;source=null;table=null;suggestion=null;compiled=null;dryRun=null;selections.clear();uiError=null;
    delimiterSelect.value='';profileSelect.value='';
    sheetSelect.replaceChildren();render();
    try{
@@ -177,7 +214,7 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
  });
  sheetSelect.addEventListener('change',async()=>{
    if(!host||!source||source.format!=='xlsx'||busy)return;
-   const name=sheetSelect.value;table=null;suggestion=null;compiled=null;selections.clear();uiError=null;if(!name){render();return;}
+   const name=sheetSelect.value;table=null;suggestion=null;compiled=null;dryRun=null;selections.clear();uiError=null;if(!name){render();return;}
    busy=true;const ticket=++serial,active=source;render();
    try{
      const result=await host.assistantSelectSheet(active.handle_id,name);
@@ -186,14 +223,14 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
      if(ticket===serial)uiError=dictionary[lang()].invalid+': '+String((error as Error)?.message??error);
    }finally{busy=false;render();}
  });
- profileSelect.addEventListener('change',()=>{suggestion=null;compiled=null;selections.clear();render();});
- delimiterSelect.addEventListener('change',()=>{suggestion=null;compiled=null;selections.clear();render();});
+ profileSelect.addEventListener('change',()=>{suggestion=null;compiled=null;dryRun=null;selections.clear();render();});
+ delimiterSelect.addEventListener('change',()=>{suggestion=null;compiled=null;dryRun=null;selections.clear();render();});
  suggestBtn.addEventListener('click',async()=>{
    if(!host||!source||busy||!profileSelect.value)return;
    const selected=source,choice=selected.format==='xlsx'
      ?{sheet_name:sheetSelect.value}:{delimiter:delimiterSelect.value==='tab'?'\t':delimiterSelect.value};
    if(!Object.values(choice)[0])return;
-   busy=true;uiError=null;suggestion=null;compiled=null;selections.clear();const ticket=++serial;render();
+   busy=true;uiError=null;suggestion=null;compiled=null;dryRun=null;selections.clear();const ticket=++serial;render();
    try{
      const result=await host.assistantSuggest(selected.handle_id,profileSelect.value,choice);
      if(ticket===serial&&result.handle_id===selected.handle_id&&
@@ -212,6 +249,21 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
      const response=await host.assistantConfirm(active.handle_id,token,chosen);
      if(ticket===serial&&response.source_sha256===active.source_sha256&&response.mapping_confirmed)
        compiled=response;
+   }catch(error){
+     if(ticket===serial)uiError=dictionary[lang()].invalid+': '+String((error as Error)?.message??error);
+   }finally{busy=false;render();}
+ });
+ normalizeRule.addEventListener('change',()=>{dryRun=null;render();});
+ normalizeButton.addEventListener('click',async()=>{
+   if(!host||!compiled||!source||busy||!normalizeRule.value)return;
+   const ruleName=normalizeRule.value,rule=ruleName==='LIST_SEMICOLON'
+     ?{id:'human-list-1',kind:'list',list_separator:';'}
+     :{id:'human-date-1',kind:'date',format:ruleName};
+   busy=true;uiError=null;dryRun=null;const ticket=++serial,active=source;render();
+   try{
+     const result=await host.assistantDryRun(active.handle_id,[{source_column:normalizeColumn.value,rule}]);
+     if(ticket===serial&&result.preview.source_sha256===active.source_sha256)
+       dryRun=result.preview;
    }catch(error){
      if(ticket===serial)uiError=dictionary[lang()].invalid+': '+String((error as Error)?.message??error);
    }finally{busy=false;render();}
