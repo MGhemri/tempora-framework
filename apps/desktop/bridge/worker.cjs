@@ -2,7 +2,7 @@
 
 // TEMPORA Studio protocol experiment: Node-only, no filesystem or network operations.
 // This is NOT yet bundled as a native Tauri sidecar.
-const { canonical } = require('tempora-framework');
+const { canonical, ingestion } = require('tempora-framework');
 
 const PROTOCOL = '1.0.0';
 const ENGINE = '3.0.0';
@@ -81,6 +81,48 @@ function v2Respond(message){
 }
 
 
+// Canonical TEMPORA Engine 3.0.0 is the ONLY source of scientific preview
+// status. No acceptance operation is exposed in this IPC protocol.
+function assistantPreview(payload){
+  const keys=['corpus','mapping','source_name','input_base64','source_sha256'];
+  if(!payload||typeof payload!=='object'||Array.isArray(payload)||
+     Object.keys(payload).some(k=>!keys.includes(k))||Object.keys(payload).length!==keys.length)
+    throw Object.assign(Error('INVALID_PAYLOAD'),{code:'INVALID_PAYLOAD'});
+  if(!payload.corpus||typeof payload.corpus!=='object'||Array.isArray(payload.corpus)||
+     !payload.mapping||typeof payload.mapping!=='object'||Array.isArray(payload.mapping)||
+     typeof payload.source_name!=='string'||!payload.source_name||
+     payload.source_name.length>256||
+     typeof payload.source_sha256!=='string'||!/^[0-9a-f]{64}$/.test(payload.source_sha256)||
+     typeof payload.input_base64!=='string'||payload.input_base64.length>175000||
+     !/^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/.test(payload.input_base64))
+    throw Object.assign(Error('INVALID_PAYLOAD'),{code:'INVALID_PAYLOAD'});
+  const bytes=Buffer.from(payload.input_base64,'base64');
+  if(!bytes.length||bytes.length>128*1024||bytes.toString('base64')!==payload.input_base64)
+    throw Object.assign(Error('INPUT_LIMIT'),{code:'INPUT_LIMIT'});
+  if(require('node:crypto').createHash('sha256').update(bytes).digest('hex')!==payload.source_sha256)
+    throw Object.assign(Error('SOURCE_DIGEST_MISMATCH'),{code:'SOURCE_DIGEST_MISMATCH'});
+  const bundle=ingestion.preview({bytes,mapping:payload.mapping,corpus:payload.corpus,
+    sourceName:payload.source_name,observedAt:null});
+  const report=bundle.report;
+  const statuses=new Set(['create','unchanged','conflict','quarantined']);
+  if(!report||!report.summary||!Array.isArray(report.rows)||
+     report.rows.some(row=>!statuses.has(row.status)))
+    throw Object.assign(Error('ENGINE_PREVIEW_INVALID'),{code:'ENGINE_PREVIEW_INVALID'});
+  const fields=['batch_id','base_sha256','profile','mapping','source','summary'];
+  const result={preview_schema_version:'1.0.0',scope:'canonical_technical_preview',
+    import_performed:false,acceptance_enabled:false,scientific_approval:false,
+    ...Object.fromEntries(fields.map(k=>[k,report[k]])),
+    total_rows:report.rows.length,
+    rows:report.rows.slice(0,50).map(row=>({
+      index:row.index,line:row.line,source_path:row.source_path,
+      id:row.id,status:row.status,
+      diagnostic_codes:row.diagnostics.slice(0,10).map(d=>String(d.code).slice(0,100)),
+      changed_fields:row.changed_fields.slice(0,20)
+    })),
+    rows_truncated:report.rows.length>50};
+  return result;
+}
+
 function reply(requestId, ok, body) {
   const message = JSON.stringify({
     protocol_version: PROTOCOL,
@@ -113,6 +155,17 @@ function respond(raw) {
   const id = message.request_id;
   if (message.operation === 'health') {
     return reply(id, true, { result: { engine_version: ENGINE, protocol_version: PROTOCOL, capabilities: ['health', 'corpus.validate', 'corpus.digest'] } });
+  }
+  if(message.operation==='ingestion.preview'){
+    try{
+      return reply(id,true,{result:assistantPreview(message.payload)});
+    }catch(error){
+      return reply(id,false,{error:{
+        code:typeof error.code==='string'&&/^[A-Z0-9_]{1,100}$/.test(error.code)
+          ?error.code:'ENGINE_PREVIEW_REJECTED',
+        message:'TEMPORA rejected the canonical preview'
+      }});
+    }
   }
   if (!['corpus.validate', 'corpus.digest'].includes(message.operation)) {
     return reply(id, false, { error: { code: 'UNSUPPORTED_OPERATION', message: 'Operation is not allowlisted' } });
