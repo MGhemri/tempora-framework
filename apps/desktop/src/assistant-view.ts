@@ -106,6 +106,7 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
    safeText(columns,[t.unconfirmed,...headers.slice(0,256)]);
    safeText(targets,[t.target,...fields,t.intro]);
    normalizeControls.hidden=!compiled;
+   const previousColumn=normalizeColumn.value;
    normalizeColumn.replaceChildren();
    if(compiled){
      for(const sourceColumn of selections){
@@ -113,6 +114,7 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
        const item=document.createElement('option');item.value=column;item.textContent=column;
        normalizeColumn.append(item);
      }
+     if(Array.from(normalizeColumn.options).some(o=>o.value===previousColumn))normalizeColumn.value=previousColumn;
    }
    normalizeButton.disabled=busy||!compiled||!normalizeRule.value;
    normalizeOutput.replaceChildren();
