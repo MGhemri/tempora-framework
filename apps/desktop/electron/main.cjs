@@ -267,7 +267,7 @@ app.whenReady().then(async () => {
     // Only complete, bounded previews are eligible for a later human decision.
     // An opaque review token is NOT a bundle or approval; it is scoped to
     // this exact source, corpus, mapping and displayed creation set.
-    let reviewGate={acceptance_enabled:false,review_token:null};
+    let reviewGate={staging_review_enabled:false,review_token:null};
     if(report.scope==='canonical_technical_preview'&&
        report.source?.sha256===input.sourceSha256&&
        !report.rows_truncated&&report.rows?.length===report.total_rows&&
