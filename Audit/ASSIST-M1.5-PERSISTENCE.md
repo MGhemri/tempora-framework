@@ -144,3 +144,16 @@ explicite avant disponibilité GUI.
 La CI doit prouver ce lot sur Ubuntu et Windows. Les tests ne constituent pas
 des essais de crash physique, de systèmes de fichiers réseau ou de reparse
 points Windows. Aucun nouveau point d'entrée IPC n'est autorisé à ce stade.
+
+### Annulation de session pendant relecture asynchrone
+
+La fermeture de session (`revoke(handle)`) et l'arrêt hôte (`clear()`)
+marquent désormais l'opération active comme annulée. Après la résolution de
+la relecture asynchrone, le coordinateur refuse toute écriture si l'opération
+est annulée. Deux tests simulent une lecture suspendue pendant la fermeture ou
+l'arrêt, puis vérifient qu'aucune transaction n'est produite.
+
+**Frontière d'atomicité :** une annulation reçue une fois que `persist()` a
+commencé ne peut pas promettre de rollback. Le code appelant devra communiquer
+le reçu réel de l'écriture, qu'elle ait réussi ou échoué. La fermeture de
+l'interface ne doit jamais effacer une transaction déjà validée.
