@@ -3,6 +3,7 @@ const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs'),os=require('node:os'),path=require('node:path');
 const {createTransaction,inspectTransactions}=require('../transaction-store.cjs');
+const sdk = require('tempora-framework');
 const H='a'.repeat(64);
 const canonical={validateCorpus:corpus=>({valid:corpus && corpus.schema_version==='3.0.0'}),digest:()=>H};
 function fixture(t){
@@ -31,7 +32,7 @@ test('tampering with a committed journal is detected',t=>{
 });
 test('an abandoned pending directory is reported, never removed',t=>{
  const f=fixture(t);const dir=path.join(f.root,'.pending','b'.repeat(32));
- fs.mkdirSync(path.dirname(dir));fs.mkdirSync(dir);
+ fs.mkdirSync(path.dirname(dir));fs.mkdirSync(path.join(f.root,'transactions'));fs.mkdirSync(dir);
  assert.deepEqual(inspectTransactions(f.root,canonical),{complete:[],invalid:[],pending:['b'.repeat(32)]});
  assert.equal(fs.existsSync(dir),true);
 });
@@ -40,7 +41,7 @@ test('root symlink is refused',t=>{
  try {fs.symlinkSync(f.root,link,'dir');}
  catch(e){if(process.platform==='win32'&&e.code==='EPERM')return;throw e;}
  t.after(()=>fs.rmSync(link,{force:true}));
- assert.throws(()=>createTransaction(link,f),{code:'TRANSACTION_ROOT_UNSAFE'});
+ assert.throws(()=>createTransaction(link,f,canonical),{code:'TRANSACTION_ROOT_UNSAFE'});
 });
 
 test('canonical SDK adapter is mandatory and its digest must match',t=>{
@@ -52,11 +53,40 @@ test('canonical SDK adapter is mandatory and its digest must match',t=>{
 });
 test('inspection of an empty root does not create any directory',t=>{
  const f=fixture(t);
- assert.throws(()=>inspectTransactions(f.root,canonical));
+ assert.deepEqual(inspectTransactions(f.root,canonical),{complete:[],invalid:[],pending:[]});
  assert.deepEqual(fs.readdirSync(f.root),[]);
 });
 test('mismatched base hash in journal is rejected before any mutation',t=>{
  const f=fixture(t);f.journal.base_sha256='b'.repeat(64);
  assert.throws(()=>createTransaction(f.root,f,canonical),{code:'TRANSACTION_JOURNAL_MISMATCH'});
  assert.deepEqual(fs.readdirSync(f.root),[]);
+});
+
+test('real TEMPORA SDK canonical validates and digests a persisted corpus',t=>{
+ const root=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-sdk-persist-'));
+ t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
+ const corpus=JSON.parse(fs.readFileSync(path.join(__dirname,'../../examples/synthetic-canonical-v3.json'),'utf8'));
+ assert.equal(sdk.canonical.validateCorpus(corpus).valid,true);
+ const resultHash=sdk.canonical.digest(corpus),base='b'.repeat(64),batch='c'.repeat(64);
+ const input={corpus,identity:{batch_id:batch,source_sha256:'d'.repeat(64),
+   base_sha256:base,mapping_sha256:'e'.repeat(64),output_sha256:resultHash},
+   journal:{decision:'accepted_for_local_staging',batch_id:batch,base_sha256:base,
+     output_sha256:resultHash,scientific_approval:false}};
+ const receipt=createTransaction(root,input,sdk.canonical);
+ assert.equal(receipt.output_sha256,resultHash);
+ assert.deepEqual(inspectTransactions(root,sdk.canonical),
+   {complete:[receipt.transaction_id],invalid:[],pending:[]});
+});
+test('real canonical hash rejects content changed after the claimed digest',t=>{
+ const root=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-sdk-mismatch-'));
+ t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
+ const corpus=JSON.parse(fs.readFileSync(path.join(__dirname,'../../examples/synthetic-canonical-v3.json'),'utf8'));
+ const hash=sdk.canonical.digest(corpus);
+ const identity={batch_id:H,source_sha256:H,base_sha256:H,mapping_sha256:H,output_sha256:hash};
+ const journal={decision:'accepted_for_local_staging',batch_id:H,base_sha256:H,
+   output_sha256:hash,scientific_approval:false};
+ corpus.extensions={...corpus.extensions,unapproved_change:true};
+ assert.throws(()=>createTransaction(root,{corpus,journal,identity},sdk.canonical),
+   {code:'TRANSACTION_CANONICAL_DIGEST_MISMATCH'});
+ assert.deepEqual(fs.readdirSync(root),[]);
 });
