@@ -288,3 +288,20 @@ test('Assistant canonical preview is a read-only host/worker operation and never
  assert.match(ui,/canonical\.summary\.conflict/);
  assert.doesNotMatch(ui,/acceptImport|writeFileSync|innerHTML/);
 });
+
+test('Assistant staging review is host-controlled, one-shot and never a filesystem write',()=>{
+ const main=src('electron/main.cjs'),preload=src('electron/preload.cjs');
+ const worker=src('bridge/worker.cjs'),view=src('src/assistant-view.ts');
+ const html=src('index.html'),smoke=src('electron/tests/packaged-engine-smoke.cjs');
+ assert.match(main,/tempora:assistant:review-stage/);
+ assert.match(main,/claimCanonicalReview/);
+ assert.match(main,/ASSIST_REVIEW_CORPUS_CHANGED/);
+ assert.match(worker,/ingestion\.accept\(/);
+ assert.match(worker,/saved_to_disk:false/);
+ assert.doesNotMatch(worker,/writeFileSync|copyFileSync|appendFileSync|renameSync/);
+ assert.match(preload,/assistantReviewStage/);
+ assert.match(view,/reviewIds\.add/);
+ assert.match(html,/id="assistant-reviewer"/);
+ assert.match(html,/id="assistant-reviewed-at"/);
+ assert.match(smoke,/PACKAGED_TEMPORA_IN_MEMORY_STAGING_REVIEW_OK/);
+});
