@@ -89,9 +89,47 @@ function readVerified(dir,name,expected) {
   if(sha(bytes)!==expected)throw ERR('TRANSACTION_INTEGRITY_MISMATCH');
   return JSON.parse(bytes.toString('utf8'));
 }
+// Exclusive filesystem reservation shared by independent TEMPORA processes.
+// The directory is never deleted on startup. After a crash, an operator must
+// inspect and recover it explicitly; a PID or age is not proof of ownership.
+const LOCK_NAME='.writer-lock';
+function withWriterReservation(root,work) {
+  const lock=path.join(root,LOCK_NAME),nonce=randomBytes(16).toString('hex');
+  try {fs.mkdirSync(lock,{mode:0o700});}
+  catch(e) {
+    if(e.code==='EEXIST')throw ERR('TRANSACTION_WRITER_BUSY');
+    throw e;
+  }
+  const ownerFile=path.join(lock,'owner.json');
+  const owner=Buffer.from(JSON.stringify({schema_version:'1.0.0',nonce})+'\\n');
+  let owned=false;
+  try {
+    writeExclusive(lock,'owner.json',owner);
+    owned=true;
+    return work();
+  } finally {
+    // If an adversary replaced the lock or changed ownership, leave it as
+    // evidence and fail closed. No blind recursive removal.
+    if(owned) {
+      const lockStat=fs.lstatSync(lock);
+      if(!lockStat.isDirectory()||lockStat.isSymbolicLink()||
+         fs.realpathSync(lock)!==path.resolve(lock))
+        throw ERR('TRANSACTION_WRITER_OWNERSHIP_LOST');
+      const files=fs.readdirSync(lock);
+      if(files.length!==1||files[0]!=='owner.json'||
+         !readBounded(ownerFile).equals(owner))
+        throw ERR('TRANSACTION_WRITER_OWNERSHIP_LOST');
+      fs.unlinkSync(ownerFile);
+      fs.rmdirSync(lock);
+    }
+    // If owner writing failed, leave a reservation for manual recovery.
+  }
+}
+
 function createTransaction(root, {corpus,journal,identity}, canonical) {
   safeRoot(root);
   const {corpusBytes,journalBytes}=validateInput({corpus,journal,identity}, canonical);
+  return withWriterReservation(root,()=>{
   const pendingRoot=safeSubdir(root,'.pending');
   const transactions=safeSubdir(root,'transactions');
   const transaction_id=randomBytes(16).toString('hex');
@@ -127,6 +165,7 @@ function createTransaction(root, {corpus,journal,identity}, canonical) {
     // Never delete a partially written transaction automatically.
     if (!committed) { /* preserve evidence */ }
   }
+  });
 }
 function inspectTransactions(root, canonical) {
   if (!canonical || typeof canonical.validateCorpus !== 'function' ||
