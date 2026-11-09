@@ -157,3 +157,23 @@ l'arrêt, puis vérifient qu'aucune transaction n'est produite.
 commencé ne peut pas promettre de rollback. Le code appelant devra communiquer
 le reçu réel de l'écriture, qu'elle ait réussi ou échoué. La fermeture de
 l'interface ne doit jamais effacer une transaction déjà validée.
+
+
+### Réservation exclusive entre processus (prototype)
+
+La création d'une transaction acquiert désormais, via `mkdir` exclusif,
+un dossier `.writer-lock/` dans la racine de destination. Un marqueur
+`owner.json` aléatoire appartient à l'instance ayant acquis la réservation.
+Une nouvelle instance refuse l'écriture si le dossier existe ; **aucun PID ni
+horodatage n'est utilisé pour prétendre qu'un verrou est périmé**. En sortie
+normale, le marqueur est relu, comparé et libéré seulement si l'identité
+attendue est inchangée. En cas de crash, l'orphelin reste en place pour
+inspection et récupération humaine explicite.
+
+**Cette protection n'est pas encore une preuve de sûreté Windows complète** :
+la substitution du répertoire entre deux contrôles, les reparse points et
+jonctions, les ACL, les volumes partagés et la durabilité du marqueur au crash
+nécessitent une qualification spécifique. La restauration manuelle d'un
+verrou doit commencer par une inspection contradictoire et un arrêt attesté
+de tous les writers, jamais par une suppression automatique. La déduplication
+des lots déjà enregistrés est un sujet séparé, encore ouvert.
