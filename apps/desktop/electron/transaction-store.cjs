@@ -22,10 +22,12 @@ function safeRoot(root) {
   if (fs.realpathSync(root) !== path.resolve(root)) throw ERR('TRANSACTION_ROOT_UNSAFE');
   return root;
 }
-function safeSubdir(parent, name) {
+function safeSubdir(parent, name, create=true) {
   const dir = path.join(parent, name);
-  try { fs.mkdirSync(dir, {mode:0o700}); }
-  catch(e) { if(e.code!=='EEXIST') throw e; }
+  if (create) {
+    try { fs.mkdirSync(dir, {mode:0o700}); }
+    catch(e) { if(e.code!=='EEXIST') throw e; }
+  }
   const st=fs.lstatSync(dir);
   if(!st.isDirectory() || st.isSymbolicLink() || fs.realpathSync(dir)!==path.resolve(dir))
     throw ERR('TRANSACTION_DIRECTORY_UNSAFE');
@@ -37,12 +39,21 @@ function jsonBytes(value) {
   if (bytes.length > MAX_DOCUMENT_BYTES) throw ERR('TRANSACTION_DOCUMENT_LIMIT');
   return bytes;
 }
-function validateInput({corpus,journal,identity}) {
+function validateInput({corpus,journal,identity}, canonical) {
+  if (!canonical || typeof canonical.validateCorpus !== 'function' ||
+      typeof canonical.digest !== 'function') throw ERR('TRANSACTION_CANONICAL_ADAPTER_REQUIRED');
+  const validation=canonical.validateCorpus(corpus);
+  if (!validation || validation.valid !== true) throw ERR('TRANSACTION_CORPUS_INVALID');
+  if (canonical.digest(corpus) !== identity.output_sha256)
+    throw ERR('TRANSACTION_CANONICAL_DIGEST_MISMATCH');
   if (!plain(identity) || !plain(corpus) || !plain(journal)) throw ERR('TRANSACTION_INPUT_INVALID');
   if (!REQUIRED.every(k => typeof identity[k]==='string' && HASH.test(identity[k])))
     throw ERR('TRANSACTION_DIGEST_INVALID');
   if (Object.keys(identity).some(k=>!REQUIRED.includes(k))) throw ERR('TRANSACTION_IDENTITY_EXTRA');
   if (journal.output_sha256 !== identity.output_sha256 ||
+      journal.base_sha256 !== identity.base_sha256 ||
+      journal.decision !== 'accepted_for_local_staging' ||
+      journal.scientific_approval !== false ||
       journal.batch_id !== identity.batch_id)
     throw ERR('TRANSACTION_JOURNAL_MISMATCH');
   // This layer checks byte identity and envelope. Full canonical validation
@@ -62,9 +73,9 @@ function readVerified(dir,name,expected) {
   if(sha(bytes)!==expected)throw ERR('TRANSACTION_INTEGRITY_MISMATCH');
   return JSON.parse(bytes.toString('utf8'));
 }
-function createTransaction(root, {corpus,journal,identity}) {
+function createTransaction(root, {corpus,journal,identity}, canonical) {
   safeRoot(root);
-  const {corpusBytes,journalBytes}=validateInput({corpus,journal,identity});
+  const {corpusBytes,journalBytes}=validateInput({corpus,journal,identity}, canonical);
   const pendingRoot=safeSubdir(root,'.pending');
   const transactions=safeSubdir(root,'transactions');
   const transaction_id=randomBytes(16).toString('hex');
@@ -101,25 +112,39 @@ function createTransaction(root, {corpus,journal,identity}) {
     if (!committed) { /* preserve evidence */ }
   }
 }
-function inspectTransactions(root) {
+function inspectTransactions(root, canonical) {
+  if (!canonical || typeof canonical.validateCorpus !== 'function' ||
+      typeof canonical.digest !== 'function') throw ERR('TRANSACTION_CANONICAL_ADAPTER_REQUIRED');
   safeRoot(root);
-  const transactions=safeSubdir(root,'transactions');
-  const pendingRoot=safeSubdir(root,'.pending');
+  const transactions=safeSubdir(root,'transactions',false);
+  const pendingRoot=safeSubdir(root,'.pending',false);
   const complete=[],invalid=[],pending=[];
   for(const id of fs.readdirSync(transactions).sort()) {
     if(!ID.test(id)){ invalid.push(id);continue; }
     try {
       const dir=path.join(transactions,id),st=fs.lstatSync(dir);
       if(!st.isDirectory()||st.isSymbolicLink())throw ERR('TRANSACTION_DIRECTORY_UNSAFE');
-      const mf=fs.readFileSync(path.join(dir,'manifest.json'));
+      const manifestFile=path.join(dir,'manifest.json');
+      const manifestStat=fs.lstatSync(manifestFile);
+      if(!manifestStat.isFile()||manifestStat.isSymbolicLink())throw ERR('TRANSACTION_MANIFEST_UNSAFE');
+      const mf=fs.readFileSync(manifestFile);
       if(mf.length>MAX_DOCUMENT_BYTES)throw ERR('TRANSACTION_DOCUMENT_LIMIT');
       const manifest=JSON.parse(mf.toString('utf8'));
       if(!plain(manifest)||manifest.transaction_id!==id||!HASH.test(manifest.corpus_file_sha256)||
-         !HASH.test(manifest.journal_sha256)||manifest.published!==false)throw ERR('TRANSACTION_MANIFEST_INVALID');
+         !HASH.test(manifest.journal_sha256)||manifest.published!==false||
+         manifest.scientific_approval!==false||
+         !REQUIRED.every(k=>typeof manifest[k]==='string'&&HASH.test(manifest[k])))
+        throw ERR('TRANSACTION_MANIFEST_INVALID');
       const corpus=readVerified(dir,'corpus.json',manifest.corpus_file_sha256);
       const journal=readVerified(dir,'journal.json',manifest.journal_sha256);
       if(!plain(corpus)||!plain(journal)||journal.batch_id!==manifest.batch_id||
+        journal.base_sha256!==manifest.base_sha256||
+        journal.decision!=='accepted_for_local_staging'||
+        journal.scientific_approval!==false||
         journal.output_sha256!==manifest.output_sha256)throw ERR('TRANSACTION_JOURNAL_MISMATCH');
+      const validation=canonical.validateCorpus(corpus);
+      if(!validation||validation.valid!==true||canonical.digest(corpus)!==manifest.output_sha256)
+        throw ERR('TRANSACTION_CANONICAL_DIGEST_MISMATCH');
       complete.push(id);
     } catch {invalid.push(id);}
   }
