@@ -74,3 +74,8 @@ Suite à la fusion de la PR #103, audit explicite des anciennes branches documen
 ### ASSIST-M1.2d — Garde-fous confirmation CSV (suivi en PR)
 
 Vérifier jeton éphémère, absence d'auto-acceptation, contrôle des associations dans le processus principal, invalidation si source/profil/choix change, compilation uniquement CSV, blocage Excel, erreurs stables et absence d'écriture. La conformité au mapping d'ingestion ne constitue pas une validation scientifique. **Statut : en validation, pas de release.**
+
+
+### ASSIST-M1.3b — Normalization dry-run, risque de confusion avec la validation scientifique
+
+La nouvelle prévisualisation est uniquement technique, plafonnée à 64 lignes, avec résultats `normalized/quarantined/unconfigured`. Aucun `acceptImport` ni `prepareImport` n'est appelé : ne pas présenter ces statuts comme les statuts canoniques de l'ingestion. Les transformations non explicitement choisies restent `unconfigured`. Invalidation obligatoire des confirmations et du dry-run lors de toute nouvelle proposition, modification de source ou expiration de session. **À qualifier par CI ; pas de release.**
