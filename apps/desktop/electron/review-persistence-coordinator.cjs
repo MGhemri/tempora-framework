@@ -15,10 +15,14 @@ function createReviewPersistenceCoordinator({persist,now}={}){
  if(typeof persist!=='function')fail('PERSIST_COORDINATOR_CONFIGURATION');
  const gate=createPersistenceGate({now});
  const pending=new Map();
+ // Serialize saves within this trusted host instance. This is NOT an
+ // interprocess filesystem lock; cross-process coordination remains a gate.
+ let committing=false;
 
  function offer({handle,stage,reread}){
   if(typeof handle!=='string'||!HANDLE.test(handle)||typeof reread!=='function')
    fail('PERSIST_COORDINATOR_INPUT_INVALID');
+  if(committing)fail('PERSIST_COORDINATOR_BUSY');
   // The staging receipt must come from the trusted worker, not renderer IPC.
   // Snapshot it now; later mutation by the caller cannot modify consent.
   let copy;
@@ -42,17 +46,25 @@ function createReviewPersistenceCoordinator({persist,now}={}){
   if(typeof handle!=='string'||!HANDLE.test(handle)||
      typeof token!=='string'||!TOKEN.test(token))
    fail('PERSIST_COORDINATOR_TOKEN_INVALID');
+  if(committing)fail('PERSIST_COORDINATOR_BUSY');
   const saved=pending.get(token);
   // Burn intent before any operation, even on error, await or cancellation.
   pending.delete(token);
   const authorization=gate.claim(handle,token,confirmed,saved?.expected);
   if(!saved||saved.handle!==handle)fail('PERSIST_COORDINATOR_STALE');
-  // Native host callback must reopen/re-hash original selected source and
-  // corpus. No data, free path, or journal arrives from renderer.
-  const input=await saved.reread();
-  if(!input||typeof input!=='object')fail('PERSIST_COORDINATOR_REREAD_INVALID');
-  const verified=preparePersistence({...input,review:saved.review,authorization});
-  return persist(verified);
+  // A second async save must not overlap this read/verify/commit cycle.
+  // Acquire synchronously before the first await; release even on rejection.
+  committing=true;
+  try {
+    // Native host callback must reopen/re-hash original selected source and
+    // corpus. No data, free path, or journal arrives from renderer.
+    const input=await saved.reread();
+    if(!input||typeof input!=='object')fail('PERSIST_COORDINATOR_REREAD_INVALID');
+    const verified=preparePersistence({...input,review:saved.review,authorization});
+    return await persist(verified);
+  } finally {
+    committing=false;
+  }
  }
  function revoke(handle){
   if(typeof handle!=='string'||!HANDLE.test(handle))fail('PERSIST_COORDINATOR_HANDLE_INVALID');
