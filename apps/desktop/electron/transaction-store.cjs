@@ -126,7 +126,13 @@ function inspectTransactions(root, canonical) {
     if(!ID.test(id)){ invalid.push(id);continue; }
     try {
       const dir=path.join(transactions,id),st=fs.lstatSync(dir);
-      if(!st.isDirectory()||st.isSymbolicLink())throw ERR('TRANSACTION_DIRECTORY_UNSAFE');
+      if(!st.isDirectory()||st.isSymbolicLink()||
+        fs.realpathSync(dir)!==path.resolve(dir))throw ERR('TRANSACTION_DIRECTORY_UNSAFE');
+      const expectedFiles=['corpus.json','journal.json','manifest.json'];
+      const actualFiles=fs.readdirSync(dir).sort();
+      if(actualFiles.length!==expectedFiles.length||
+         actualFiles.some((name,i)=>name!==expectedFiles[i]))
+        throw ERR('TRANSACTION_UNEXPECTED_CONTENTS');
       const manifestFile=path.join(dir,'manifest.json');
       const manifestStat=fs.lstatSync(manifestFile);
       if(!manifestStat.isFile()||manifestStat.isSymbolicLink())throw ERR('TRANSACTION_MANIFEST_UNSAFE');
