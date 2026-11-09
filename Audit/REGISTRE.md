@@ -79,3 +79,8 @@ Vérifier jeton éphémère, absence d'auto-acceptation, contrôle des associati
 ### ASSIST-M1.3b — Normalization dry-run, risque de confusion avec la validation scientifique
 
 La nouvelle prévisualisation est uniquement technique, plafonnée à 64 lignes, avec résultats `normalized/quarantined/unconfigured`. Aucun `acceptImport` ni `prepareImport` n'est appelé : ne pas présenter ces statuts comme les statuts canoniques de l'ingestion. Les transformations non explicitement choisies restent `unconfigured`. Invalidation obligatoire des confirmations et du dry-run lors de toute nouvelle proposition, modification de source ou expiration de session. **À qualifier par CI ; pas de release.**
+
+
+### ASSIST-M1.4a — Source et corpus existant, sans acceptation
+
+Décision de sécurité : preview canonique calculé par le seul moteur TEMPORA 3.0.0. Le renderer ne reçoit que le rapport résumé et les premiers diagnostics ; pas de candidate, pas de bundle, pas de jeton d'acceptation. Limites worker 4 Mio / réponse 256 Kio, source 128 Kio, corpus 2 Mio. Tous les fichiers sont sélectionnés dans des dialogues natifs et l'entrée source est revérifiée. Le résultat reste un aperçu technique, non une décision historique. Tests adversariaux (protocole strict, profil, replay, digest, absence de mutation) et empaquetage requis avant fusion.
