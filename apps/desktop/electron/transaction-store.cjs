@@ -116,10 +116,13 @@ function inspectTransactions(root, canonical) {
   if (!canonical || typeof canonical.validateCorpus !== 'function' ||
       typeof canonical.digest !== 'function') throw ERR('TRANSACTION_CANONICAL_ADAPTER_REQUIRED');
   safeRoot(root);
-  const transactions=safeSubdir(root,'transactions',false);
-  const pendingRoot=safeSubdir(root,'.pending',false);
+  const transactionsPath=path.join(root,'transactions'),pendingPath=path.join(root,'.pending');
+  const hasTransactions=fs.existsSync(transactionsPath),hasPending=fs.existsSync(pendingPath);
+  if(!hasTransactions && !hasPending)return Object.freeze({complete:[],invalid:[],pending:[]});
+  const transactions=hasTransactions?safeSubdir(root,'transactions',false):null;
+  const pendingRoot=hasPending?safeSubdir(root,'.pending',false):null;
   const complete=[],invalid=[],pending=[];
-  for(const id of fs.readdirSync(transactions).sort()) {
+  for(const id of (transactions?fs.readdirSync(transactions):[]).sort()) {
     if(!ID.test(id)){ invalid.push(id);continue; }
     try {
       const dir=path.join(transactions,id),st=fs.lstatSync(dir);
@@ -148,7 +151,7 @@ function inspectTransactions(root, canonical) {
       complete.push(id);
     } catch {invalid.push(id);}
   }
-  for(const id of fs.readdirSync(pendingRoot).sort())pending.push(id);
+  for(const id of (pendingRoot?fs.readdirSync(pendingRoot):[]).sort())pending.push(id);
   return Object.freeze({complete,invalid,pending});
 }
 module.exports={createTransaction,inspectTransactions};
