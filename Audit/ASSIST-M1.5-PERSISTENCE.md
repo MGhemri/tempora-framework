@@ -179,3 +179,28 @@ de tous les writers, jamais par une suppression automatique. La déduplication
 des lots déjà enregistrés est un sujet séparé, encore ouvert.
 
 La fonction `inspectWriterReservation(root)` permet désormais de constater, **en lecture seule**, une réservation absente, conforme ou suspecte (`absent`, `reserved`, `unsafe`). Elle ne renvoie ni propriétaire prétendument actif ni recommandation de suppression automatique. Les tests vérifient aussi l'absence de mutation et la conservation d'un verrou malformé.
+
+
+### Déduplication exacte, intégrité du passé et test du propriétaire (lot suivant)
+
+Sous réservation exclusive `.writer-lock`, `createTransaction` inspecte
+l'inventaire canonique existant avant de créer un dossier `.pending`.
+Il refuse tout rejeu ayant **les cinq mêmes empreintes d'identité**
+(`batch_id`, `source_sha256`, `base_sha256`,
+`mapping_sha256`, `output_sha256`) par
+`TRANSACTION_ALREADY_COMMITTED`. Deux acceptations d'une même source et
+d'une même base produisant des **sorties différentes** restent autorisées :
+ne pas confondre un `batch_id` partagé avec une décision humaine identique.
+
+Si une ancienne transaction est invalide, tout nouvel enregistrement est refusé
+(`TRANSACTION_PREEXISTING_INVALID`) : la corruption ne doit pas être
+masquée par une nouvelle création. Ce choix privilégie l'intégrité à la
+disponibilité et exigera une procédure documentée de résolution manuelle.
+Le marqueur du verrou a été corrigé pour produire une ligne JSON parseable,
+et un test inspecte **le propriétaire réel pendant le commit**, avant la
+libération du verrou.
+
+Ces garanties sont locales au répertoire choisi, à l'état de son inventaire
+et à la robustesse du verrou : elles ne constituent ni une preuve d'authenticité
+du chercheur ni une durabilité en cas de panne électrique. Les tests CI et les
+reparse points Windows restent des gates de qualification.
