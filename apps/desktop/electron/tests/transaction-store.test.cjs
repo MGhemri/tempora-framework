@@ -265,13 +265,16 @@ test('a preexisting damaged transaction blocks new writes without hiding corrupt
  assert.deepEqual(inspectWriterReservation(f.root),{status:'absent'});
 });
 test('a distinct reviewed output for the same batch is not mistaken for a replay',t=>{
- const f=fixture(t),first=createTransaction(f.root,f,canonical);
- // The stubbed adapter preserves the same canonical digest in this focused
- // envelope test; the real SDK recomputation is tested separately.
- const alternative={...f,identity:{...f.identity,output_sha256:'b'.repeat(64)},
+ const f=fixture(t);
+ const adapter={validateCorpus:canonical.validateCorpus,
+   digest:corpus=>corpus.events.length?'b'.repeat(64):H};
+ const first=createTransaction(f.root,f,adapter);
+ const alternative={...f,
+   corpus:{schema_version:'3.0.0',events:[{id:'NEW_PROPOSAL'}]},
+   identity:{...f.identity,output_sha256:'b'.repeat(64)},
    journal:{...f.journal,output_sha256:'b'.repeat(64)}};
- const alternateAdapter={validateCorpus:canonical.validateCorpus,digest:()=>('b'.repeat(64))};
- const second=createTransaction(f.root,alternative,alternateAdapter);
+ const second=createTransaction(f.root,alternative,adapter);
  assert.notEqual(first.transaction_id,second.transaction_id);
- assert.equal(inspectTransactions(f.root,canonical).invalid.length,1);
+ assert.deepEqual(inspectTransactions(f.root,adapter),
+   {complete:[first.transaction_id,second.transaction_id].sort(),invalid:[],pending:[]});
 });
