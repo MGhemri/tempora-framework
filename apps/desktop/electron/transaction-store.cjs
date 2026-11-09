@@ -1,0 +1,129 @@
+'use strict';
+
+// ASSIST-M1.5 isolated transaction-store prototype. NOT connected to Electron
+// or the scientific worker; the caller must supply a validated SDK result.
+// Directory rename is one logical visibility point, not a power-loss guarantee.
+const fs = require('node:fs');
+const path = require('node:path');
+const {createHash, randomBytes} = require('node:crypto');
+
+const HASH = /^[a-f0-9]{64}$/;
+const ID = /^[a-f0-9]{32}$/;
+const MAX_DOCUMENT_BYTES = 16 * 1024 * 1024;
+const REQUIRED = ['batch_id','source_sha256','base_sha256','mapping_sha256','output_sha256'];
+const ERR = code => Object.assign(new Error(code), {code});
+const sha = bytes => createHash('sha256').update(bytes).digest('hex');
+const plain = obj => obj && typeof obj === 'object' && !Array.isArray(obj)
+  && (Object.getPrototypeOf(obj) === Object.prototype || Object.getPrototypeOf(obj) === null);
+function safeRoot(root) {
+  if (typeof root !== 'string' || !path.isAbsolute(root)) throw ERR('TRANSACTION_ROOT_INVALID');
+  const info = fs.lstatSync(root);
+  if (!info.isDirectory() || info.isSymbolicLink()) throw ERR('TRANSACTION_ROOT_UNSAFE');
+  if (fs.realpathSync(root) !== path.resolve(root)) throw ERR('TRANSACTION_ROOT_UNSAFE');
+  return root;
+}
+function safeSubdir(parent, name) {
+  const dir = path.join(parent, name);
+  try { fs.mkdirSync(dir, {mode:0o700}); }
+  catch(e) { if(e.code!=='EEXIST') throw e; }
+  const st=fs.lstatSync(dir);
+  if(!st.isDirectory() || st.isSymbolicLink() || fs.realpathSync(dir)!==path.resolve(dir))
+    throw ERR('TRANSACTION_DIRECTORY_UNSAFE');
+  return dir;
+}
+function jsonBytes(value) {
+  if (!plain(value)) throw ERR('TRANSACTION_DOCUMENT_INVALID');
+  const bytes = Buffer.from(JSON.stringify(value)+'\n','utf8');
+  if (bytes.length > MAX_DOCUMENT_BYTES) throw ERR('TRANSACTION_DOCUMENT_LIMIT');
+  return bytes;
+}
+function validateInput({corpus,journal,identity}) {
+  if (!plain(identity) || !plain(corpus) || !plain(journal)) throw ERR('TRANSACTION_INPUT_INVALID');
+  if (!REQUIRED.every(k => typeof identity[k]==='string' && HASH.test(identity[k])))
+    throw ERR('TRANSACTION_DIGEST_INVALID');
+  if (Object.keys(identity).some(k=>!REQUIRED.includes(k))) throw ERR('TRANSACTION_IDENTITY_EXTRA');
+  if (journal.output_sha256 !== identity.output_sha256 ||
+      journal.batch_id !== identity.batch_id)
+    throw ERR('TRANSACTION_JOURNAL_MISMATCH');
+  // This layer checks byte identity and envelope. Full canonical validation
+  // remains the mandatory responsibility of the trusted SDK adapter.
+  return {corpusBytes:jsonBytes(corpus),journalBytes:jsonBytes(journal)};
+}
+function writeExclusive(dir,name,bytes) {
+  const file=path.join(dir,name);
+  const fd=fs.openSync(file,fs.constants.O_CREAT|fs.constants.O_EXCL|fs.constants.O_WRONLY,0o600);
+  try { let offset=0; while(offset<bytes.length) offset+=fs.writeSync(fd,bytes,offset,bytes.length-offset); fs.fsyncSync(fd); }
+  finally { fs.closeSync(fd); }
+}
+function readVerified(dir,name,expected) {
+  const file=path.join(dir,name),st=fs.lstatSync(file);
+  if(!st.isFile()||st.isSymbolicLink()||st.size>MAX_DOCUMENT_BYTES)throw ERR('TRANSACTION_FILE_UNSAFE');
+  const bytes=fs.readFileSync(file);
+  if(sha(bytes)!==expected)throw ERR('TRANSACTION_INTEGRITY_MISMATCH');
+  return JSON.parse(bytes.toString('utf8'));
+}
+function createTransaction(root, {corpus,journal,identity}) {
+  safeRoot(root);
+  const {corpusBytes,journalBytes}=validateInput({corpus,journal,identity});
+  const pendingRoot=safeSubdir(root,'.pending');
+  const transactions=safeSubdir(root,'transactions');
+  const transaction_id=randomBytes(16).toString('hex');
+  const pending=path.join(pendingRoot,transaction_id);
+  fs.mkdirSync(pending,{mode:0o700});
+  let committed=false;
+  try {
+    const manifest={
+      schema_version:'1.0.0',transaction_id,
+      ...identity,engine_version:'3.0.0',
+      corpus_file_sha256:sha(corpusBytes),journal_sha256:sha(journalBytes),
+      published:false,scientific_approval:false
+    };
+    const manifestBytes=jsonBytes(manifest);
+    writeExclusive(pending,'corpus.json',corpusBytes);
+    writeExclusive(pending,'journal.json',journalBytes);
+    writeExclusive(pending,'manifest.json',manifestBytes);
+    readVerified(pending,'corpus.json',manifest.corpus_file_sha256);
+    readVerified(pending,'journal.json',manifest.journal_sha256);
+    readVerified(pending,'manifest.json',sha(manifestBytes));
+    // A non-existing directory is the single logical commit marker.
+    const destination=path.join(transactions,transaction_id);
+    if(fs.existsSync(destination))throw ERR('TRANSACTION_COLLISION');
+    fs.renameSync(pending,destination);
+    committed=true;
+    return Object.freeze({schema_version:'1.0.0',scope:'local_canonical_import',
+      transaction_id,batch_id:identity.batch_id,
+      source_sha256:identity.source_sha256,base_sha256:identity.base_sha256,
+      output_sha256:identity.output_sha256,journal_sha256:manifest.journal_sha256,
+      saved_to_disk:true,integrity_verified:true,published:false,scientific_approval:false});
+  } finally {
+    // Deliberately leave failed .pending directories for explicit recovery.
+    // Never delete a partially written transaction automatically.
+    if (!committed) { /* preserve evidence */ }
+  }
+}
+function inspectTransactions(root) {
+  safeRoot(root);
+  const transactions=safeSubdir(root,'transactions');
+  const pendingRoot=safeSubdir(root,'.pending');
+  const complete=[],invalid=[],pending=[];
+  for(const id of fs.readdirSync(transactions).sort()) {
+    if(!ID.test(id)){ invalid.push(id);continue; }
+    try {
+      const dir=path.join(transactions,id),st=fs.lstatSync(dir);
+      if(!st.isDirectory()||st.isSymbolicLink())throw ERR('TRANSACTION_DIRECTORY_UNSAFE');
+      const mf=fs.readFileSync(path.join(dir,'manifest.json'));
+      if(mf.length>MAX_DOCUMENT_BYTES)throw ERR('TRANSACTION_DOCUMENT_LIMIT');
+      const manifest=JSON.parse(mf.toString('utf8'));
+      if(!plain(manifest)||manifest.transaction_id!==id||!HASH.test(manifest.corpus_file_sha256)||
+         !HASH.test(manifest.journal_sha256)||manifest.published!==false)throw ERR('TRANSACTION_MANIFEST_INVALID');
+      const corpus=readVerified(dir,'corpus.json',manifest.corpus_file_sha256);
+      const journal=readVerified(dir,'journal.json',manifest.journal_sha256);
+      if(!plain(corpus)||!plain(journal)||journal.batch_id!==manifest.batch_id||
+        journal.output_sha256!==manifest.output_sha256)throw ERR('TRANSACTION_JOURNAL_MISMATCH');
+      complete.push(id);
+    } catch {invalid.push(id);}
+  }
+  for(const id of fs.readdirSync(pendingRoot).sort())pending.push(id);
+  return Object.freeze({complete,invalid,pending});
+}
+module.exports={createTransaction,inspectTransactions};
