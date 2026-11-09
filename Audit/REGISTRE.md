@@ -103,3 +103,14 @@ La PR #110 a subi deux exécutions de packaging Electron NSIS interrompues par `
 Lors de la nouvelle campagne de tests M1.4b (PR #110), **Tauri NSIS** a échoué sur `https://github.com/tauri-apps/binary-releases/releases/download/nsis-3.13/nsis-3.13.zip` avec `http status: 504` après compilation réussie de l'exécutable Rust. Le packaging **Electron NSIS** rencontre simultanément des `Response code 504 (Gateway Time-out)` lors du téléchargement des outils de traitement des exécutables. Il s'agit de dépendances externes de construction ; aucune erreur propre au code Assistant n'a été établie par ces échecs.
 
 Le smoke-test séparé ajouté au job Electron exécute avec succès les tests de revue humaine sur le **runtime Node 3.0.0 Windows réellement mis en place** avant le packaging. Cette réussite ne remplace pas le contrôle des ressources du **paquet Electron final**, encore inaccessible tant que le téléchargement échoue. **Décision : PR ouverte, pas de fusion, branche conservée, pas de release**, et relance de CI lorsque la disponibilité des releases GitHub est rétablie. Éviter tout miroir non vérifié et toute désactivation des protections de packaging.
+
+
+## AUD-WIN-CHROMIUM — décision de distribution officielle (2026-11-09)
+
+**Constat mainteneur :** la variante WebView2 ne fonctionne pas sur des installations Windows vierges. La variante Chromium/Electron a été validée en Windows Sandbox sur des corpus synthétiques (voir `apps/desktop/electron/README.md`), mais une qualification complète de release reste nécessaire.
+
+**Décision irréversible pour cette gamme Windows :** le runtime Chromium/Electron intégré est le **seul Desktop officiel** pour le NSIS, les candidats Microsoft Store et les releases futures. Tauri/WebView2 reste en archives de code, sans build ni publication dans la CI officielle. Ne pas effacer les anciennes preuves/artefacts historiques. Ne pas introduire de fallback ou de téléchargement silencieux WebView2.
+
+**Microsoft Partner Center, déclaration du titulaire :** Store ID `9P4MN0S3823T`, PFN `GhemriM.TEMPORADesktop_y8h1gbsk7napw`, Name `GhemriM.TEMPORADesktop`, Publisher `CN=C5BC3837-BBC8-425E-916B-4B6F77BD7455`, Publisher display `Ghemri M`. La soumission est **certifiée et en attente de clic Publish now** au 2026-11-09. Le type effectif de l'ancien paquet certifié n'est pas prouvé ici : **publication gelée** jusqu'à identification du paquet et validation Chromium propre à cette version. Si l'ancien package est WebView2, préparer un remplacement Chromium dans la même fiche Store et refaire la certification. Ne pas déclencher automatiquement de soumission.
+
+**Gates :** vérification ciblée du package AppX Chromium, Windows x64 sans Node ni WebView2, offline, dialogue natif, extraction ressources worker, désinstallation, tests signatures/chromium lifecycle/SDK et provenance. Préserver les statuts CI Framework/Browser requis et éviter les workflows additionnels.
