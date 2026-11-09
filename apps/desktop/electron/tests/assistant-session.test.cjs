@@ -191,3 +191,36 @@ test('Assistant: Excel inspection cannot be compiled through CSV mapping contrac
  const p=f.service.suggest(s.handle_id,'synthetic-history',{sheet_name:'Fictive'});
  assert.throws(()=>f.service.confirm(s.handle_id,p.proposal_token,[]),throws('ASSIST_XLSX_MAPPING_COMPILATION_UNSUPPORTED'));
 });
+
+test('Assistant: normalization dry-run requires confirmed CSV mapping and never accepts a batch',()=>{
+ const source='id,title,date\n1,Example,12/03/1956\n2,Invalid,31/02/1956\n';
+ const f=host(source),s=f.service.open(f.path);
+ const rule=[{source_column:'date',rule:{id:'human-date',kind:'date',format:'DD/MM/YYYY'}}];
+ assert.throws(()=>f.service.normalizePreview(s.handle_id,rule),throws('ASSIST_PREVIEW_CONFIRMATION_REQUIRED'));
+ const p=f.service.suggest(s.handle_id,'synthetic-history',{delimiter:','});
+ f.service.confirm(s.handle_id,p.proposal_token,[
+  {source_column:'id',target_field:'id',state:'confirmed_by_user'},
+  {source_column:'title',target_field:'title.en',state:'confirmed_by_user'},
+  {source_column:'date',target_field:'start_date',state:'confirmed_by_user'}]);
+ const dry=f.service.normalizePreview(s.handle_id,rule);
+ assert.equal(dry.preview.summary.normalized,1);
+ assert.equal(dry.preview.summary.quarantined,1);
+ assert.equal(dry.preview.canonical_validated,false);
+ assert.equal(dry.preview.batch_accepted,false);
+ assert.equal(dry.preview.import_performed,false);
+ assert.equal(dry.preview.source_sha256,s.source_sha256);
+ assert.throws(()=>f.service.normalizePreview(s.handle_id,[{source_column:'absent',rule:rule[0].rule}]),throws('ASSIST_PREVIEW_RULE'));
+ f.service.suggest(s.handle_id,'synthetic-history',{delimiter:','});
+ assert.throws(()=>f.service.normalizePreview(s.handle_id,rule),throws('ASSIST_PREVIEW_CONFIRMATION_REQUIRED'));
+});
+test('Assistant: file changes invalidate dry-run and XLSX remains out of scope',()=>{
+ const f=host('id,title\n1,A\n'),s=f.service.open(f.path);
+ const p=f.service.suggest(s.handle_id,'synthetic-history',{delimiter:','});
+ f.service.confirm(s.handle_id,p.proposal_token,[
+  {source_column:'id',target_field:'id',state:'confirmed_by_user'},
+  {source_column:'title',target_field:'title.en',state:'confirmed_by_user'}]);
+ f.setData('id,title\n2,B\n');
+ assert.throws(()=>f.service.normalizePreview(s.handle_id,[]),throws('ASSIST_SOURCE_CHANGED'));
+ const excel=host(xlsx,'.xlsx'),opened=excel.service.open(excel.path);
+ assert.throws(()=>excel.service.normalizePreview(opened.handle_id,[]),throws('ASSIST_PREVIEW_XLSX_UNSUPPORTED'));
+});
