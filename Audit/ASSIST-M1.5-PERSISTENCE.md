@@ -221,3 +221,10 @@ d'erreur avant renommage, pas la durabilité des écritures déjà validées.
 Le moteur laisse les `.pending` pour inspection, sans promotion ni suppression
 automatique. Une qualification de journalisation et des essais de reprise sur
 NTFS/Windows restent nécessaires avant activation de l'interface.
+
+Un test supplémentaire lance un **second vrai processus Node** pendant que le
+premier conserve sa réservation exclusive. Le processus fils tente d'écrire
+dans la même racine et doit recevoir `TRANSACTION_WRITER_BUSY`, sans
+affecter la transaction du processus parent. L'essai doit passer dans les
+jobs CI Windows et Ubuntu. Il ne prouve pas le comportement en présence
+d'un partage SMB, d'une jonction NTFS malveillante ou d'un crash du système.
