@@ -177,3 +177,5 @@ nécessitent une qualification spécifique. La restauration manuelle d'un
 verrou doit commencer par une inspection contradictoire et un arrêt attesté
 de tous les writers, jamais par une suppression automatique. La déduplication
 des lots déjà enregistrés est un sujet séparé, encore ouvert.
+
+La fonction `inspectWriterReservation(root)` permet désormais de constater, **en lecture seule**, une réservation absente, conforme ou suspecte (`absent`, `reserved`, `unsafe`). Elle ne renvoie ni propriétaire prétendument actif ni recommandation de suppression automatique. Les tests vérifient aussi l'absence de mutation et la conservation d'un verrou malformé.
