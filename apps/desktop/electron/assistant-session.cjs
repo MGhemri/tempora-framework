@@ -35,6 +35,7 @@ function createAssistantSessions({sourceRoot,profileRoot,now=()=>Date.now(),read
   const {inspectXlsx}=loadInspector(root,'assist-io/xlsx-inventory.js');
   const {suggestColumnMappings,compileConfirmedCsvMapping}=loadInspector(root,'framework/assist-mapping.js');
   const {extractXlsxCells}=loadInspector(root,'assist-io/xlsx-cells.js');
+  const {previewNormalization}=loadInspector(root,'framework/assist-preview.js');
   const sessions=new Map();
   function clearExpired(){
     const time=now();
@@ -174,6 +175,7 @@ function createAssistantSessions({sourceRoot,profileRoot,now=()=>Date.now(),read
       bindings,id:'assistant-csv-review',version:'1.0.0',delimiter:proposal.choice.delimiter});
     // A successful compilation consumes the proposal. Source remains untouched.
     s.proposal=null;
+    s.confirmation={mapping,bindings:bindings.map(x=>({...x})),profile_id:profile.id};
     const digestInput=JSON.stringify({source_sha256:s.sha256,profile_id:profile.id,
       profile_version:profile.version,bindings,mapping});
     return bounded({handle_id,source_sha256:s.sha256,profile_id:profile.id,
@@ -182,12 +184,24 @@ function createAssistantSessions({sourceRoot,profileRoot,now=()=>Date.now(),read
       mapping,confirmation_sha256:digest(Buffer.from(digestInput)),source_modified:false,
       canonical_validated:false,import_performed:false});
   }
+  function normalizePreview(handle_id,rules){
+    const s=requireSession(handle_id);
+    if(s.format==='xlsx')reject('ASSIST_PREVIEW_XLSX_UNSUPPORTED');
+    if(!s.confirmation)reject('ASSIST_PREVIEW_CONFIRMATION_REQUIRED');
+    if(!Array.isArray(rules)||rules.length>32||
+       rules.some(x=>!validShape(x,['source_column','rule'])))
+      reject('ASSIST_PREVIEW_RULE');
+    const bytes=verified(s);
+    const result=previewNormalization({bytes,mapping:s.confirmation.mapping,
+      bindings:s.confirmation.bindings,rules,source_sha256:s.sha256});
+    return bounded({handle_id,preview:result});
+  }
   function close(handle_id){
     if(!safeHandle(handle_id))reject('ASSIST_HANDLE_INVALID');
     return sessions.delete(handle_id);
   }
   function clear(){sessions.clear();}
-  return Object.freeze({open,inspect,selectSheet,suggest,confirm,close,clear,
+  return Object.freeze({open,inspect,selectSheet,suggest,confirm,normalizePreview,close,clear,
     // Shape enforcement is deliberately public to unit tests but not exposed by preload.
     validShape});
 }
