@@ -137,7 +137,7 @@ function createAssistantSessions({sourceRoot,profileRoot,now=()=>Date.now(),read
     }
     const mapping=suggestColumnMappings(headers,profile);
     // Every new proposal invalidates earlier user decisions, including across profiles/choices.
-    s.confirmation=null; // New proposal revokes prior confirmation and normalization authority.
+    s.confirmation=null; s.canonical_preview=null; // New proposal revokes all prior decisions.
     s.proposal={token:randomBytes(24).toString('hex'),headers:[...headers],
       profile_id:profile.id,profile_version:profile.version,choice:{...choice},
       suggestions:mapping.suggestions.map(x=>({source_column:x.source_column,target_field:x.target_field}))};
@@ -177,6 +177,7 @@ function createAssistantSessions({sourceRoot,profileRoot,now=()=>Date.now(),read
     // A successful compilation consumes the proposal. Source remains untouched.
     s.proposal=null;
     s.confirmation={mapping,bindings:bindings.map(x=>({...x})),profile_id:profile.id};
+    s.canonical_preview=null;
     const digestInput=JSON.stringify({source_sha256:s.sha256,profile_id:profile.id,
       profile_version:profile.version,bindings,mapping});
     return bounded({handle_id,source_sha256:s.sha256,profile_id:profile.id,
@@ -213,12 +214,58 @@ function createAssistantSessions({sourceRoot,profileRoot,now=()=>Date.now(),read
       sourceName:basename(s.path),sourceSha256:s.sha256,
       profile_id:s.confirmation.profile_id});
   }
+  // Privileged host stores a short-lived, exact canonical preview identity.
+  // No corpus paths, candidates, or preview tokens are supplied by the renderer.
+  function saveCanonicalPreview(handle_id,record){
+    const s=requireSession(handle_id);
+    if(!s.confirmation)reject('ASSIST_REVIEW_CONFIRMATION_REQUIRED');
+    const bytes=verified(s);
+    const keys=['corpus_path','corpus_raw_sha256','base_sha256','batch_id','mapping_sha256','source_sha256','create_ids'];
+    if(!validShape(record,keys)||Object.keys(record).length!==keys.length||
+       typeof record.corpus_path!=='string'||!record.corpus_path||
+       ![record.corpus_raw_sha256,record.base_sha256,record.batch_id,record.mapping_sha256,
+         record.source_sha256].every(x=>typeof x==='string'&&/^[a-f0-9]{64}$/.test(x))||
+       record.source_sha256!==digest(bytes)||
+       !Array.isArray(record.create_ids)||record.create_ids.length>50||
+       new Set(record.create_ids).size!==record.create_ids.length||
+       record.create_ids.some(x=>typeof x!=='string'||x.length>200||!/^[A-Za-z0-9_:-]+$/.test(x)))
+      reject('ASSIST_REVIEW_PREVIEW_INVALID');
+    const token=randomBytes(24).toString('hex');
+    s.canonical_preview={...record,token,confirmation:s.confirmation};
+    return {review_token:token,acceptance_enabled:true};
+  }
+  function claimCanonicalReview(handle_id,review_token,review){
+    const s=requireSession(handle_id),p=s.canonical_preview;
+    if(!safeHandle(review_token)||!p||p.token!==review_token||
+       p.confirmation!==s.confirmation)
+      reject('ASSIST_REVIEW_PREVIEW_EXPIRED');
+    // Validation is duplicated inside the canonical worker. The host never
+    // converts an arbitrary renderer ID into an authorized ingestion candidate.
+    if(!validShape(review,['ids','reviewer','reason','reviewed_at'])||
+       Object.keys(review).length!==4||!Array.isArray(review.ids)||
+       review.ids.length<1||review.ids.length>50||
+       review.ids.some(id=>typeof id!=='string'||!p.create_ids.includes(id))||
+       new Set(review.ids).size!==review.ids.length||
+       typeof review.reviewer!=='string'||!review.reviewer.trim()||
+       review.reviewer.length>120||
+       typeof review.reason!=='string'||!review.reason.trim()||
+       review.reason.length>2000||
+       typeof review.reviewed_at!=='string'||
+       !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z$/.test(review.reviewed_at))
+      reject('ASSIST_REVIEW_REQUIRED');
+    const input=canonicalInput(handle_id);
+    // One-shot claim; failed staging requires a fresh preview and renewed
+    // human decision. No acceptance is persisted by this operation.
+    s.canonical_preview=null;
+    return {input,preview:{...p,confirmation:undefined,token:undefined},
+      review:{...review,ids:[...review.ids]}};
+  }
   function close(handle_id){
     if(!safeHandle(handle_id))reject('ASSIST_HANDLE_INVALID');
     return sessions.delete(handle_id);
   }
   function clear(){sessions.clear();}
-  return Object.freeze({open,inspect,selectSheet,suggest,confirm,normalizePreview,canonicalInput,close,clear,
+  return Object.freeze({open,inspect,selectSheet,suggest,confirm,normalizePreview,canonicalInput,saveCanonicalPreview,claimCanonicalReview,close,clear,
     // Shape enforcement is deliberately public to unit tests but not exposed by preload.
     validShape});
 }
