@@ -258,3 +258,16 @@ test('Assistant confirmation remains in trusted Electron process',()=>{
  assert.match(html,/assistant-confirm-result/);
  assert.doesNotMatch(view,/writeFile|innerHTML|fetch\(/);
 });
+
+test('Assistant dry-run is host-owned, read-only and bundled in Electron',()=>{
+ const main=src('electron/main.cjs'),preload=src('electron/preload.cjs');
+ const view=src('src/assistant-view.ts'),html=src('index.html');
+ const pkg=require('../package.json');
+ assert.match(main,/tempora:assistant:dryrun/);
+ assert.match(preload,/assistantDryRun/);
+ assert.match(view,/batch_accepted/);
+ assert.match(html,/assistant-normalization-preview/);
+ assert.ok(pkg.build.extraResources.some(r=>r.to==='assistant/framework/assist-preview.js'));
+ assert.ok(pkg.build.extraResources.some(r=>r.to==='assistant/framework/assist-normalization.js'));
+ assert.doesNotMatch(view,/writeFileSync|innerHTML/);
+});
