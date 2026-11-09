@@ -2,7 +2,7 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs'),os=require('node:os'),path=require('node:path');
-const {createTransaction,inspectTransactions}=require('../transaction-store.cjs');
+const {createTransaction,inspectTransactions,inspectWriterReservation}=require('../transaction-store.cjs');
 const sdk = require('tempora-framework');
 const H='a'.repeat(64);
 const canonical={validateCorpus:corpus=>({valid:corpus && corpus.schema_version==='3.0.0'}),digest:()=>H};
@@ -211,4 +211,18 @@ test('failing validation does not create or touch the cross-process reservation'
  assert.throws(()=>createTransaction(f.root,f,canonical),
   {code:'TRANSACTION_JOURNAL_MISMATCH'});
  assert.deepEqual(fs.readdirSync(f.root),[]);
+});
+
+test('read-only reservation inspection distinguishes absent, reserved and unsafe',t=>{
+ const f=fixture(t),lock=path.join(f.root,'.writer-lock');
+ assert.deepEqual(inspectWriterReservation(f.root),{status:'absent'});
+ assert.deepEqual(fs.readdirSync(f.root),[]);
+ fs.mkdirSync(lock);
+ fs.writeFileSync(path.join(lock,'owner.json'),JSON.stringify({
+  schema_version:'1.0.0',nonce:'e'.repeat(32)})+'\n');
+ assert.deepEqual(inspectWriterReservation(f.root),{status:'reserved'});
+ assert.equal(fs.existsSync(lock),true);
+ fs.writeFileSync(path.join(lock,'extra.txt'),'unexpected');
+ assert.deepEqual(inspectWriterReservation(f.root),{status:'unsafe'});
+ assert.equal(fs.existsSync(path.join(lock,'extra.txt')),true);
 });
