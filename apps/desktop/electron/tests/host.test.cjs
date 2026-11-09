@@ -265,7 +265,7 @@ test('Assistant dry-run is host-owned, read-only and bundled in Electron',()=>{
  const pkg=require('../package.json');
  assert.match(main,/tempora:assistant:dryrun/);
  assert.match(preload,/assistantDryRun/);
- assert.match(view,/batch_accepted/);
+ assert.match(src('../../src/framework/assist-preview.js'),/batch_accepted:false/);
  assert.match(html,/assistant-normalization-preview/);
  assert.ok(pkg.build.extraResources.some(r=>r.to==='assistant/framework/assist-preview.js'));
  assert.ok(pkg.build.extraResources.some(r=>r.to==='assistant/framework/assist-normalization.js'));
