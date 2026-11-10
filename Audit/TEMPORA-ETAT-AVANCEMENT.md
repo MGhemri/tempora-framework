@@ -24,10 +24,10 @@
 | Dépôt | `MGhemri/tempora-framework` | https://github.com/MGhemri/tempora-framework |
 | PR de développement | **#114, brouillon** | https://github.com/MGhemri/tempora-framework/pull/114 |
 | Branche | `docs/assist-m1-5-transactional-persistence` | Branche expérimentale |
-| HEAD de référence précédent | `5aa3970a246817c3256d679d3ddbb5e42b3108d7` | Dernière base entièrement qualifiée au début du rapport |
-| Framework sur ce SHA | **TESTÉ-CI : succès** | https://github.com/MGhemri/tempora-framework/actions/runs/42755173090 |
-| Documentation UI sur ce SHA | **TESTÉ-CI : succès** | https://github.com/MGhemri/tempora-framework/actions/runs/42755172936 |
-| Desktop Foundation sur ce SHA | **TESTÉ-CI : succès** | https://github.com/MGhemri/tempora-framework/actions/runs/42755172931 |
+| HEAD de référence précédent | `6f1ce4a9e6e8e1899e0c758953df3f25ef14cd21` | Dernière base entièrement qualifiée vérifiée au début de cette itération |
+| Framework sur ce SHA | **TESTÉ-CI : succès** | https://github.com/MGhemri/tempora-framework/actions/runs/42756148546 |
+| Documentation UI sur ce SHA | **TESTÉ-CI : succès** | https://github.com/MGhemri/tempora-framework/actions/runs/42756148426 |
+| Desktop Foundation sur ce SHA | **TESTÉ-CI : succès** | https://github.com/MGhemri/tempora-framework/actions/runs/42756148401 |
 | Installateur Windows Chromium NSIS | Construction CI réussie sur le SHA de référence | Cela ne prouve pas une qualification NTFS / power-loss |
 | Enregistrement M1.5 dans le binaire distribué | **DÉSACTIVÉ** | Uniquement Electron non packagé et `TEMPORA_EXPERIMENTAL_M15_SAVE=1` |
 | Fusion dans `main` / nouvelle release / Store | **NON EFFECTUÉ** dans ce chantier | Conserver les protections de distribution |
@@ -49,7 +49,8 @@
 | M15-09 | Packaging Chromium NSIS, exemples synthétiques, SDK épinglé, CI Ubuntu/Windows | TESTÉ-CI pour HEAD de référence | `.github/workflows/desktop-foundation.yml` |
 | M15-10 | Dossier documentaire d'audit et runbook opérateur | IMPLÉMENTÉ | `Audit/ASSIST-M1.5-*.md` |
 | M15-11 | Registre durable de tâches et des gates à vérifier à chaque itération | **IMPLÉMENTÉ (présent fichier)** | `Audit/TEMPORA-ETAT-AVANCEMENT.md` |
-| M15-12 | Empreinte du verrou avant/après audit : détecte substitution même si le statut reste `reserved` | **IMPLÉMENTÉ, CI À QUALIFIER** | `recovery-assessment.cjs` et test de remplacement à nonce cloné |
+| M15-12 | Empreinte du verrou avant/après audit : détecte substitution même si le statut reste `reserved` | **IMPLÉMENTÉ ET TESTÉ-CI sur `6f1ce4a9`** | `recovery-assessment.cjs` et test de remplacement à nonce cloné |
+| M15-13 | Deux passes complètes d'inventaire read-only : détecter changement de journal d'une transaction finalisée ou candidate `.pending` sans changement d'ID | **IMPLÉMENTÉ, CI DU NOUVEAU HEAD À QUALIFIER** | `recovery-assessment.cjs`, deux tests d'altération concurrente |
 
 ## 3. Backlog de qualification — priorités et conditions de fermeture
 
@@ -63,14 +64,14 @@
 | GUI-01 | **P1** | EXPÉRIMENTAL | Qualification UX/IPC des deux décisions, annulation, sessions expirées, reprise et états d'échec | Tests sur build Windows installé ; aucune mutation sans double consentement |
 | PACK-01 | **P1** | BLOQUÉ | Installation propre, démarrage hors ligne, exemples, permissions Windows, mise à jour Store compatible | Tests manuels/automatisés sur installateurs signés et chemins Windows pris en charge |
 | CI-01 | **P1** | EN COURS D'AMÉLIORATION | Réduire l'exécution redondante et éviter le redémarrage des workflows par micro-commits | Couverture maintenue, durée mesurée sur lots comparables ; zéro gate supprimée |
-| PERF-01 | P2 | À FAIRE | Benchmarks reproductibles corpus synthétiques, mémoire, temps d'inventaire, volume élevé, p95 | Budget fixé, données et méthode de mesure versionnées |
+| PERF-01 | P2 | À FAIRE | Benchmarks reproductibles corpus synthétiques, mémoire, temps d'inventaire **avec deux passes**, volume élevé, p95 | Budget fixé, données et méthode de mesure versionnées |
 | DOC-01 | P1 | **RÉCURRENT** | Mettre à jour ce rapport et le runbook à chaque itération | HEAD, statut des trois CI, tâches modifiées et risques résiduels consignés |
 
 **Interdits tant que P0 ouverts :** activation du write IPC en package de production, nettoyage automatique de `.writer-lock`, promotion automatique de `.pending`, récupération par heuristique PID, écrasement du corpus original, publication scientifique implicite, fusion de la PR expérimentale.
 
 ## 4. Découpage des lots recommandés
 
-**Lot A — EN COURS (sécurité diagnostique, sans écriture) :** contrôle du verrou même si son état apparent est inchangé : **implémenté, CI à vérifier**. Puis vérifier la gestion des mutations concurrentes de l'inventaire et la protection des rapports sans divulgation de chemins ; actualiser les preuves.
+**Lot A — EN COURS (sécurité diagnostique, sans écriture) :** contrôle du verrou à identité inchangée **testé CI** ; deux passes complètes d'inventaire finalisé et `.pending` **implémentées, qualification du nouveau HEAD à confirmer**. Les limites de snapshot atomique/TOCTOU demeurent ; vérifier le coût de la double lecture et les contrats de confidentialité IPC.
 
 **Lot B — fondation native Windows :** concevoir et qualifier une couche privilégiée Rust/Windows avec contrôle des handles, reparse points, volumes et ACL ; maintenir un fallback JS **en refus d'écriture** pour environnements non qualifiés.
 
@@ -84,9 +85,10 @@
 | --- | --- | --- | --- |
 | 2026-11-10 | `5aa3970a` | Six scénarios de perte de processus, déduplication des suites Ubuntu et mise à jour audit | **3 workflows verts**, M1.5 toujours expérimental |
 | 2026-11-10 | `a447ecdf` | Création du registre central ; liste P0/P1/P2, critères de sortie et protocole de suivi | Rapport versionné dans la PR #114 |
-| 2026-11-10 | `302e57a7` | Diagnostic de verrou renforcé par empreinte physique et métadonnées de son fichier propriétaire ; test d'échange par un verrou au même nonce | **Code intégré, nouvelle CI à vérifier**. Ne pas revendiquer une photographie atomique ou des handles Windows natifs |
+| 2026-11-10 | `302e57a7` → `6f1ce4a9` | Diagnostic de verrou renforcé par empreinte physique et métadonnées de son fichier propriétaire ; test d'échange par un verrou au même nonce | **Trois workflows CI réussis sur `6f1ce4a9`**, dont packaging NSIS. Pas de garantie atomique ni handles Windows natifs |
+| 2026-11-10 | Lot diagnostic M15-13 | Deux inspections complètes et tests d'altération concurrente de journaux (transaction finalisée / `.pending`) ; mise à jour du CDC | **IMPLÉMENTÉ ; qualification du HEAD final de cette itération à vérifier**. Pas de certification de durabilité |
 
-**Politique CI du présent lot :** la dernière campagne intégralement verte reste celle du HEAD `5aa3970a`. Les nouveaux correctifs n'ont pas automatiquement acquis ce statut par héritage : vérifier impérativement la CI attachée au **HEAD final de cette itération**.
+**Politique CI du présent lot :** la dernière campagne intégralement verte vérifiée au début de l'itération est celle de `6f1ce4a9` (Framework `42756148546`, Documentation `42756148426`, Desktop `42756148401`). La nouvelle double inspection ne devient **TESTÉ-CI** que lorsque les trois workflows du HEAD final de cette itération réussissent. Aucun héritage implicite d'une CI verte.
 
 ### Modèle de compte rendu d'itération (à compléter et conserver)
 
