@@ -63,6 +63,7 @@ jobs:
       - run: npm run test:persistence-authority
       - run: npm run test:local-save-gate
       - run: npm run test:native-guard
+      - run: npm run test:scientific-native-transport
       - run: npm run test:recovery
       - run: npm run test:visualization
       # Individual suites above already ran; retain host and integrity
@@ -127,6 +128,7 @@ jobs:
           cargo build --release --manifest-path native-windows-guard/Cargo.toml
           if ($LASTEXITCODE -ne 0) { throw 'NATIVE_GUARD_WINDOWS_BUILD_FAILED' }
           node --test electron/tests/windows-native-destination.test.cjs
+          node --test electron/tests/scientific-native-transport.test.cjs
           if ($LASTEXITCODE -ne 0) { throw 'NATIVE_GUARD_INTEGRATION_FAILED' }
       - name: Build shared Desktop GUI and contract tests
         run: |
