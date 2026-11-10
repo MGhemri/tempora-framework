@@ -1,5 +1,7 @@
 # TEMPORA — DOSSIER DE REPRISE AUTONOME (à lire en premier)
 
+> **ETAT COURANT (2026-11-10) : lire d'abord [POINT-DE-REPRISE.md](POINT-DE-REPRISE.md).** Les PR #114, #115, #116 et #117 sont fusionnées ; les anciennes mentions « brouillon/en cours » ci-dessous sont historiques, pas des instructions opérationnelles.
+
 > **Objectif :** permettre à une nouvelle conversation / un nouveau développeur de reprendre immédiatement **sans redemander l'historique**. Ce fichier est versionné dans le dépôt et **fait autorité pour les consignes de reprise**, mais **pas** pour un SHA ou un résultat CI devenu périmé : ceux-ci sont à vérifier sur GitHub. À mettre à jour au cours de chaque itération.
 >
 > Date de création : **2026-11-10**. Périmètre : TEMPORA Desktop / Assistant M1.5 (persistance expérimentale).
@@ -7,7 +9,7 @@
 ## 1. Contrat de travail non négociable
 
 - Dépôt : **https://github.com/MGhemri/tempora-framework**.
-- Branche unique du chantier en cours : `docs/assist-m1-5-transactional-persistence`.
+- **Branche active : `main` (après fusion PR #117).** Toute nouvelle implémentation se fait en branche éphémère issue du HEAD de `main`, jamais sur une ancienne branche fusionnée.
 - **PR #114 FUSIONNÉE** le 2026-11-10 : https://github.com/MGhemri/tempora-framework/pull/114 ; merge `3c2b7bb752538a8990dad88b1527b0a422c56ca5`. **Branche active post-fusion : `main`** ; la PR documentaire de suivi est `docs/store-0-2-0-merge-audit`. Ne pas développer de nouveaux P0 directement dans `main`.
 - Le propriétaire demande d'agir directement sur le dépôt, de **développer, vérifier, corriger et continuer**, sans lui faire répéter les priorités ni solliciter des confirmations de routine.
 - Avancer par **lots cohérents suffisamment importants**, pas par micro-correctifs ou simples rapports. Limiter les commits / relances de CI, puis qualifier **le HEAD final exact**.
@@ -20,7 +22,7 @@
 ## 2. Reprise en moins de cinq contrôles
 
 1. Lire **ce dossier**, puis `Audit/TEMPORA-ETAT-AVANCEMENT.md`, `Audit/ASSIST-M1.5-PERSISTENCE.md` et `Audit/ASSIST-M1.5-RECOVERY-RUNBOOK.md`.
-2. Sur GitHub, obtenir le **HEAD actuel** de la branche, vérifier PR #114 **DRAFT** et non fusionnée, vérifier Framework, Documentation UI et Desktop Foundation (Windows Rust/Node/Chromium NSIS, et Ubuntu) **attachés au HEAD**.
+2. Sur GitHub, obtenir le **HEAD actuel** de la branche, vérifier la fusion des PR #116/#117 et le nouveau HEAD `main`, puis vérifier Framework, Documentation UI et Desktop Foundation (Windows Rust/Node/Chromium NSIS, et Ubuntu) **attachés au HEAD**.
 3. Lire les fichiers correspondant au jalon P0 choisi, vérifier que les références de fichiers/tests/CI existent réellement au **même HEAD**. La branche a déjà eu un incident de double implémentation forensic et des références orphelines.
 4. Implémenter **plusieurs tâches liées** dans le même lot (fonctionnalité + tests de falsification/crash + documentation), qualifier le dernier SHA, corriger tout échec réellement observé. Éviter de surveiller en boucle sans produire de nouveau travail.
 5. Mettre à jour **avant de conclure** ce fichier (si l'architecture, les chemins ou les décisions changent), le registre et, au besoin, le runbook, avec **SHA / IDs de runs / résultats exacts / risques P0 / prochaines actions**. Le rapport permanent ne peut pas prétendre à une CI verte avant sa fin.
@@ -140,13 +142,10 @@ aussi une seconde lecture du manifeste correspondant.
   `recovery-assessment.cjs`, `transaction-store.cjs`.
 - Régressions : tests de mutation conservant des transactions valides,
   d'identité changée et de refus des symlinks sans traverser leur cible.
-- **L'état du lot dépend de la CI de la PR** : ne pas compter ce jalon comme
-  qualifié tant que la CI du HEAD exact n'est pas verte.
+- **PR #116 fusionnée** : HEAD `3f6166dd2ee5adad10fe51bb309ef4adc144e6d0` ; Framework `42864910071`, Docs `42864909686`, Desktop `42864910230` : tous `success`. Merge `57cde355965324ed104559ff767c1c925dcee97f`.
 - Ce contrôle **n'est pas** un snapshot atomique, un contrôle cryptographique
   de toute la donnée, une garantie anti-TOCTOU Win32, une preuve de durabilité,
   un mécanisme de signature ou un droit de supprimer/promouvoir un candidat.
   Les gates `REC-01`, `SEC-WIN-01/02`, `SCI-01` et `DUR-01` restent ouverts.
 
-**Reprise efficace :** continuer le prochain lot fonctionnel sur cette PR ou
-sur une branche issue de son merge après tests, sans reprendre le travail déjà
-fusionné. Ne pas activer l'écriture M1.5 dans les applications packagées.
+**Reprise efficace :** les PR #116 et #117 sont déjà fusionnées ; créer une nouvelle branche issue du dernier `main` et traiter un P0 restant sans redévelopper les deux lots validés. Ne pas activer l'écriture M1.5 dans les applications packagées.

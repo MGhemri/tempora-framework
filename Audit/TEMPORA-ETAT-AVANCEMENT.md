@@ -1,5 +1,6 @@
 # TEMPORA — Registre de pilotage et audit d'avancement (vivant)
 
+> **ETAT COURANT :** [POINT-DE-REPRISE.md](POINT-DE-REPRISE.md) (PR #116/#117 fusionnées, SHA/CI et P0 restants). Les sections antérieures contiennent des états historiques remplacés par ce point de reprise.
 > **DOCUMENTS À LIRE DANS CET ORDRE POUR REPRENDRE :** [REPRISE-TRAVAUX.md](REPRISE-TRAVAUX.md) → ce registre → [ASSIST-M1.5-PERSISTENCE.md](ASSIST-M1.5-PERSISTENCE.md) → [ASSIST-M1.5-RECOVERY-RUNBOOK.md](ASSIST-M1.5-RECOVERY-RUNBOOK.md).
 > Dossier : `Audit/` · Chantier principal : Assistant M1.5 / TEMPORA Desktop Chromium.
 > État initial vérifié : **2026-11-10** · Responsable de suivi : équipe TEMPORA / développeur principal.
@@ -11,7 +12,7 @@
 
 **Au début de chaque itération :**
 1. Lire **`REPRISE-TRAVAUX.md` d'abord**, puis **ce fichier**, `ASSIST-M1.5-PERSISTENCE.md` et le runbook de récupération.
-2. Contrôler le HEAD, le statut brouillon de la PR #114 et les trois workflows du **HEAD exact** ; ne pas utiliser la réussite d'un ancien commit comme preuve du nouveau.
+2. Contrôler le HEAD actuel (ne plus chercher la PR #114 en brouillon) et les trois workflows du **HEAD exact** ; ne pas utiliser la réussite d'un ancien commit comme preuve du nouveau.
 3. Retenir les tâches prioritaires non closes, distinguer les preuves vérifiées des hypothèses, puis produire un lot cohérent.
 4. **Exception autorisée le 2026-11-10 : fusionner PR #114 après tests Store verts**, sans publier npm/GitHub Release ni soumettre/publier sur Microsoft Store sans décision distincte.
 5. Avant la clôture : mettre à jour **ce registre**, les preuves (SHA/CI), les changements réellement livrés, les risques résiduels, les critères de sortie et les prochaines actions. Ne jamais marquer une tâche « terminée » si sa CI est en cours.
@@ -242,8 +243,7 @@ Le contrôle CI du HEAD `72ccf9b7` a révélé un second problème de branche : 
   et relit les manifestes des transactions correspondantes.
 - Couverture de tests étendue aux modifications cohérentes de journal et
   manifeste et aux liens symboliques externes.
-- Statut initial : **code proposé en PR, CI à vérifier au HEAD**, non
-  homologué. Aucun nouveau workflow, release ni write packagé.
+- **Fusion confirmée** : PR #116, HEAD `3f6166dd2ee5adad10fe51bb309ef4adc144e6d0`, Framework/Docs/Desktop `success`; merge `57cde355965324ed104559ff767c1c925dcee97f`. Non homologué comme persistance de production.
 - **Toujours P0 ouverts :** autorité scientifique et autorisations hôte/Rust,
   anti-TOCTOU handle-relative, actions de récupération humaine et qualification
   après panne Windows OS/power-loss.
@@ -256,8 +256,7 @@ Le contrôle CI du HEAD `72ccf9b7` a révélé un second problème de branche : 
 - **TVRW J9 :** auto-ajustement géographique sur points déclarés, gestion de
   l'antiméridien, regroupements visuels, zoom/panoramique, tests déterministes,
   sans réseau ni données historiques inférées.
-- **Qualification J9 :** code proposé sur branche dédiée ; vérifier les CI
-  Framework, Documentation UI et Desktop Foundation au HEAD final avant fusion.
+- **Qualification J9 :** PR #117 fusionnée, HEAD `e63db25273239018bbb0f170972399c41631d457`, Framework `42866739173`, Docs `42866739167`, Desktop `42866738978` : tous `success`, merge `ed709c4e4ff291fc66bca57437a12172b6a5ac9e`.
 - **Suites :** carte vectorielle fondée sur jeux de données licites versionnés,
   hiérarchie des couches géographiques, ergonomie clavier/lecteur d'écran et
   essais Windows Sandbox ; l'API canonique v3 reste inchangée.

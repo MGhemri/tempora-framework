@@ -4,6 +4,8 @@
 
 ## Navigation
 
+**Point de reprise obligatoire : [POINT-DE-REPRISE.md](POINT-DE-REPRISE.md)** — état et preuves de fusion les plus récents, P0 ouverts, version Store et prochaine priorité. Les listes 2026-11-08 ci-dessous sont conservées comme historique.
+
 | Document | Finalité |
 |---|---|
 | [REGISTRE.md](REGISTRE.md) | Constat, preuve, priorité, état, correction retenue, test exigé et lien de PR |

@@ -1,6 +1,6 @@
 # TEMPORA Desktop — Dossier de préparation Microsoft Store, version 0.2.0
 
-> **Statut : PR #114 FUSIONNÉE ; AppX 0.2.0 CANDIDAT non soumis et non publié.** Fusion du 2026-11-10 après succès des trois workflows du HEAD final. Les P0 M1.5 demeurent non résolus : cette livraison **n'active pas le writer scientifique expérimental**.
+> **Statut actuel : voir [POINT-DE-REPRISE.md](POINT-DE-REPRISE.md) ; PR #114, #116 et #117 fusionnées ; AppX 0.2.0 candidat non soumis et non publié.** Fusion du 2026-11-10 après succès des trois workflows du HEAD final. Les P0 M1.5 demeurent non résolus : cette livraison **n'active pas le writer scientifique expérimental**.
 
 ## 1. Motif, périmètre et identité officielle
 
@@ -81,3 +81,11 @@ Commencer par `Audit/REPRISE-TRAVAUX.md` puis ce dossier et `Audit/TEMPORA-ETAT-
 **Retour après fusion :** règles du dépôt imposent une PR pour toute modification de `main`. Ce compte rendu post-fusion a donc été soumis dans la PR documentaire `docs/store-0-2-0-merge-audit`, sans contourner la protection. Ne pas prétendre que ces dernières notes sont intégrées à `main` avant fusion effective de cette PR documentaire.
 
 **Risques conservés :** `SEC-WIN-01/02`, `SCI-01`, `REC-01`, `DUR-01` bloquent la persistance scientifique native distribuée, même si la base est fusionnée. `local-save-access.cjs` empêche toujours l'écriture packagée.
+
+## 8. Après intégration PR #116/#117 — règle de provenance (2026-11-10)
+
+Le code actuel de `main` est au moins le merge `ed709c4e4ff291fc66bca57437a12172b6a5ac9e` (TVRW J9). Les artefacts précédents liés au HEAD `5aca622` ou au merge `3c2b7bb` **ne contiennent pas la dernière interface GeoLab**. Ne pas confondre « version déclarée 0.2.0 » et identité octet pour octet d'un candidat qualifié.
+
+La PR #117 a produit un nouveau package candidat AppX **sans publication** sur le SHA de développement `e63db25273239018bbb0f170972399c41631d457` : run Windows `42866738978`, artefact `13788106637`, expiration 24/11/2026. Les trois workflows de cette PR ont réussi, mais la construction `main` résultant de la fusion dispose de ses **propres** exécutions à vérifier ; un binaire de PR n'est pas une preuve de qualification du merge. Faire une nouvelle vérification SHA-256 **du fichier AppX lui-même** avant l'éventuelle préparation Partner Center.
+
+**Toujours aucun upload ni clic de soumission/publication Store.**
