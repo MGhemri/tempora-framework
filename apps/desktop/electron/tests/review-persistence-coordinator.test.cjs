@@ -5,7 +5,7 @@ const sdk=require('tempora-framework');
 const {createReviewPersistenceCoordinator}=require('../review-persistence-coordinator.cjs');
 const {createTransaction,inspectTransactions}=require('../transaction-store.cjs');
 const HANDLE='a'.repeat(48);
-function fixture(t){
+function fixture(t,{canonicalSdk}={}){
  const corpus=JSON.parse(fs.readFileSync(path.join(__dirname,'../../examples/synthetic-canonical-v3.json'),'utf8'));
  const mapping={mapping_schema_version:'1.0.0',id:'synthetic-coordinator',
   version:'1.0.0',profile_id:corpus.profile.id,profile_version:corpus.profile.version,
@@ -27,7 +27,7 @@ function fixture(t){
  const root=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-coordinate-'));
  t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
  let writes=0;
- const coordinator=createReviewPersistenceCoordinator({persist:verified=>{
+ const coordinator=createReviewPersistenceCoordinator({sdk:canonicalSdk,persist:verified=>{
   writes++;return createTransaction(root,verified,sdk.canonical);
  }});
  const reread=async()=>({bytes,corpus,mapping,sourceName});
@@ -172,4 +172,24 @@ test('clearing host sessions cancels an outstanding reread',async t=>{
  release();
  await assert.rejects(work,{code:'PERSIST_COORDINATOR_CANCELLED'});
  assert.equal(f.writes,0);
+});
+
+test('coordinator executes canonical replay using the explicitly injected host SDK',async t=>{
+ let previewCalls=0,acceptCalls=0;
+ const injected={
+  canonical:sdk.canonical,
+  ingestion:{
+   preview(input){previewCalls++;return sdk.ingestion.preview(input);},
+   accept(input){acceptCalls++;return sdk.ingestion.accept(input);}
+  }
+ };
+ const f=fixture(t,{canonicalSdk:injected});
+ const intent=f.coordinator.offer({handle:HANDLE,stage:f.stage,reread:f.reread});
+ const receipt=await f.coordinator.commit({
+  handle:HANDLE,token:intent.token,confirmed:true
+ });
+ assert.equal(receipt.saved_to_disk,true);
+ assert.equal(previewCalls,1);
+ assert.equal(acceptCalls,1);
+ assert.equal(f.writes,1);
 });
