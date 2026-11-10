@@ -9,8 +9,8 @@ function root(t){
  t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));
  return dir;
 }
-const run=(...args)=>spawnSync(binary,args,{encoding:'utf8',windowsHide:true,
- timeout:15000,env:{...process.env,TEMPORA_NATIVE_SYNTHETIC_TEST:'1'}});
+const run=(args,env={})=>spawnSync(binary,args,{encoding:'utf8',windowsHide:true,
+ timeout:15000,env:{...process.env,TEMPORA_NATIVE_SYNTHETIC_TEST:'1',...env}});
 function inventory(dir){
  const result=run(['--inspect-probe',dir]);
  assert.equal(result.status,0,result.stderr);
