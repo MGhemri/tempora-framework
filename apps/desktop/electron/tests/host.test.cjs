@@ -351,3 +351,13 @@ test('M1.5 authorization modules are packaged but save IPC remains unavailable',
  assert.match(adapter,/sdk=require\('tempora-framework'\)/);
  assert.match(coordinator,/preparePersistence\([^;]*sdk\)/s);
 });
+
+test('native M1.5 workflow ships in Chromium but no renderer can invoke a write',()=>{
+ const pkg=require('../package.json');
+ const host=src('electron/main.cjs'),preload=src('electron/preload.cjs');
+ assert.ok(pkg.build.files.includes('native-persistence-workflow.cjs'));
+ assert.match(src('electron/native-persistence-workflow.cjs'),/confirmNative/);
+ assert.match(src('electron/native-persistence-workflow.cjs'),/chooseDestination/);
+ assert.doesNotMatch(host,/ipcMain\.handle\('tempora:assistant:(?:save|persist|commit)/);
+ assert.doesNotMatch(preload,/assistantSave|assistantPersist|assistantCommit/);
+});
