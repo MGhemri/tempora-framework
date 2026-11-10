@@ -584,3 +584,35 @@ Aucune suppression, promotion, récupération, réémission de reçu officiel
 ou nouvelle écriture n'est déclenchée. En cas de verrou orphelin, de
 transaction invalide ou de preuve en attente, l'opérateur doit conserver
 les données et suivre le runbook ; il ne faut pas relancer automatiquement.
+
+
+## 19. Inventaire conservateur et contrôle de concurrence durant le diagnostic
+
+Une inspection des transactions ne doit pas être déclarée cohérente
+si le verrou d'écriture change d'état au cours de l'inventaire.
+`assessRecovery` recontrôle maintenant `.writer-lock` après les
+inspections canoniques et refuse toute transition observable avec
+`RECOVERY_SNAPSHOT_CHANGED`. Une limite de **100 entrées par catégorie
+d'inventaire** refuse les rapports excessifs par `RECOVERY_REPORT_LIMIT`,
+avant leur communication à la CLI ou à l'interface Electron.
+
+Deux tests déterministes injectent (1) la création du verrou pendant
+la lecture de `.pending`, et (2) 101 dossiers orphelins synthétiques.
+Ils vérifient le refus sans mutation ni effacement des preuves.
+
+Ces protections réduisent les rapports trompeurs et les consommations
+accidentelles de ressources. Elles **ne garantissent pas un snapshot
+atomique** : un verrou peut toujours changer après la seconde lecture,
+et des contenus peuvent changer entre des validations de chemins.
+L'activation de la sauvegarde distribuée reste interdite tant que les
+primitives natives Windows et les essais de durabilité ne sont pas qualifiés.
+
+## 20. Optimisation de cadence GitHub
+
+Les workflows de la PR utilisent `cancel-in-progress` ; un commit
+supplémentaire pendant une campagne CI peut annuler son exécution.
+Les lots suivants doivent donc être **préparés intégralement et regroupés
+avant une campagne finale**, et non publiés sous forme de petites
+modifications pendant les tests. Le dossier `Audit/` distingue
+dorénavant la présence d'un correctif dans la branche de sa
+qualification CI, sans considérer un statut en cours comme une validation.
