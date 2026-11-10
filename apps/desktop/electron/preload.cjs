@@ -5,6 +5,7 @@ contextBridge.exposeInMainWorld('temporaElectron', Object.freeze({
   desktopVersion: '0.1.2-beta.3',
   selectDocument: () => ipcRenderer.invoke('tempora:select_document'),
   assistantOpen: () => ipcRenderer.invoke('tempora:assistant:open'),
+  assistantAssessRecovery: () => ipcRenderer.invoke('tempora:assistant:assess-recovery'),
   assistantInspect: handleId => ipcRenderer.invoke('tempora:assistant:inspect',handleId),
   assistantSelectSheet: (handleId,sheetName) => ipcRenderer.invoke('tempora:assistant:sheet',handleId,sheetName),
   assistantClose: handleId => ipcRenderer.invoke('tempora:assistant:close',handleId),
