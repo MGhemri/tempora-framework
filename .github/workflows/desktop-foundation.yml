@@ -53,6 +53,7 @@ jobs:
       - run: npm install --ignore-scripts --no-audit --no-fund
       - run: npm run build
       - run: npm run test:bridge
+      - run: npm run test:stable-release
       - run: node --test electron/tests/assistant-session.test.cjs
       - run: npm run test:transaction
       - run: npm run test:persistence-gate
@@ -134,6 +135,7 @@ jobs:
           npm install --ignore-scripts --no-audit --no-fund
           npm run build
           npm run test:bridge
+          npm run test:stable-release
           npm run test:visualization
           node --test electron/tests/host.test.cjs
           node --test electron/tests/assistant-session.test.cjs
@@ -226,14 +228,77 @@ jobs:
             $identity = $manifest.Package.Identity
             if ($identity.Name -ne 'GhemriM.TEMPORADesktop') { throw 'TEMPORA_STORE_IDENTITY_MISMATCH' }
             if ($identity.Publisher -ne 'CN=C5BC3837-BBC8-425E-916B-4B6F77BD7455') { throw 'TEMPORA_STORE_PUBLISHER_MISMATCH' }
-            if ($identity.Version -notmatch '^0[.]2[.]0[.][0-9]+') { throw 'TEMPORA_STORE_VERSION_MISMATCH' }
+            $package = Get-Content electron/package.json -Raw | ConvertFrom-Json
+          if ($package.version -cne '1.0.0') { throw 'TEMPORA_STABLE_VERSION_MISMATCH' }
+          $expectedVersion = [Version]::Parse(($package.version + '.0'))
+          if ([Version]::Parse([string]$identity.Version) -ne $expectedVersion) {
+            throw 'TEMPORA_STORE_VERSION_MISMATCH'
+          }
+          if ([string]$manifest.Package.Applications.Application.Id -cne 'TEMPORADesktop') {
+            throw 'TEMPORA_STORE_APPLICATION_ID_MISMATCH'
+          }
             if ($identity.ProcessorArchitecture -ne 'x64') { throw 'TEMPORA_STORE_ARCH_MISMATCH' }
             Write-Host ('Validated candidate, not submitted: '+$packages[0].Name)
           } finally { $zip.Dispose() }
+      - name: Record separate NSIS and AppX SHA-256 release evidence
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          $setup = @(Get-ChildItem electron/release -File -Filter '*SETUP.exe')
+          $appx = @(Get-ChildItem electron/release -File -Filter '*-STORE.appx')
+          if ($setup.Count -ne 1 -or $appx.Count -ne 1) {
+            throw 'TEMPORA_STABLE_ARTIFACTS_MISSING_OR_AMBIGUOUS'
+          }
+          $pkg = Get-Content electron/package.json -Raw | ConvertFrom-Json
+          if ($pkg.version -cne '1.0.0') { throw 'TEMPORA_STABLE_VERSION_MISMATCH' }
+          $setupHash = (Get-FileHash -LiteralPath $setup[0].FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+          $appxHash = (Get-FileHash -LiteralPath $appx[0].FullName -Algorithm SHA256).Hash.ToLowerInvariant()
+          @(
+            "$setupHash  $($setup[0].Name)"
+            "$appxHash  $($appx[0].Name)"
+          ) | Set-Content -LiteralPath 'electron/release/SHA256SUMS.txt' -Encoding ascii
+          $evidence = [ordered]@{
+            schema_version = 'tempora-desktop-release-candidate-v1'
+            desktop_version = $pkg.version
+            source_commit_sha = $env:GITHUB_SHA
+            github_run_id = $env:GITHUB_RUN_ID
+            scientific_engine = 'tempora-framework@3.0.0'
+            desktop_runtime = 'Electron/Chromium'
+            architecture = 'x64'
+            store_package_identity = 'GhemriM.TEMPORADesktop'
+            store_publisher = 'CN=C5BC3837-BBC8-425E-916B-4B6F77BD7455'
+            store_application_id = 'TEMPORADesktop'
+            nsis_name = $setup[0].Name
+            nsis_sha256 = $setupHash
+            appx_name = $appx[0].Name
+            appx_sha256 = $appxHash
+            signing_status = 'unsigned_ci_candidate'
+            windows_clean_vm_acceptance = 'manual_not_verified'
+            microsoft_store_submission = 'not_submitted_by_ci'
+            packaged_scientific_persistence = 'disabled'
+          }
+          $evidence | ConvertTo-Json -Depth 4 |
+            Set-Content -LiteralPath 'electron/release/RELEASE-PROVENANCE.json' -Encoding utf8
+          Write-Host ('Stable source candidate, not a signed/public release: '+ $pkg.version)
+          Write-Host ('NSIS SHA-256: '+ $setupHash)
+          Write-Host ('AppX SHA-256: '+ $appxHash)
+      - name: Preserve unsigned NSIS 1.0.0 TEST candidate
+        uses: actions/upload-artifact@v4
+        with:
+          name: TEMPORA-Desktop-1.0.0-x64-NSIS-UNSIGNED-TEST-CANDIDATE
+          path: |
+            apps/desktop/electron/release/*SETUP.exe
+            apps/desktop/electron/release/SHA256SUMS.txt
+            apps/desktop/electron/release/RELEASE-PROVENANCE.json
+          if-no-files-found: error
+          retention-days: 30
       - name: Preserve Store candidate for MANUAL Partner Center submission
         uses: actions/upload-artifact@v4
         with:
-          name: TEMPORA-Desktop-0.2.0-x64-STORE-CANDIDATE-NOT-PUBLISHED
-          path: apps/desktop/electron/release/*-STORE.appx
+          name: TEMPORA-Desktop-1.0.0-x64-STORE-CANDIDATE-UNSIGNED-NOT-SUBMITTED
+          path: |
+            apps/desktop/electron/release/*-STORE.appx
+            apps/desktop/electron/release/SHA256SUMS.txt
+            apps/desktop/electron/release/RELEASE-PROVENANCE.json
           if-no-files-found: error
-          retention-days: 14
+          retention-days: 30

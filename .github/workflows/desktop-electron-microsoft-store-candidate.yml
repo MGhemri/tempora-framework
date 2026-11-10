@@ -13,6 +13,7 @@ concurrency:
 
 jobs:
   store-candidate:
+    if: github.ref == 'refs/heads/main'
     name: Build verified Windows x64 AppX for Partner Center
     runs-on: windows-latest
     timeout-minutes: 70
@@ -49,6 +50,7 @@ jobs:
           npm install --ignore-scripts --no-audit --no-fund
           npm run build
           npm run test:bridge
+          npm run test:stable-release
           npm run test:windows-engine
           node --test electron/tests/host.test.cjs
           node --test electron/tests/assistant-session.test.cjs
@@ -106,6 +108,15 @@ jobs:
             if (-not $manifestEntry) { throw 'STORE_MANIFEST_MISSING' }
             $reader = [System.IO.StreamReader]::new($manifestEntry.Open())
             try { $xml = [xml]$reader.ReadToEnd() } finally { $reader.Dispose() }
+            $pkg = Get-Content electron/package.json -Raw | ConvertFrom-Json
+            if ($pkg.version -cne '1.0.0' -or
+                [Version]::Parse([string]$xml.Package.Identity.Version) -ne
+                  [Version]::Parse(($pkg.version + '.0'))) {
+              throw 'STORE_STABLE_VERSION_MISMATCH'
+            }
+            if ([string]$xml.Package.Applications.Application.Id -cne 'TEMPORADesktop') {
+              throw 'STORE_APPLICATION_ID_MISMATCH'
+            }
             if ($xml.Package.Identity.Name -cne $env:TEMPORA_STORE_IDENTITY_NAME -or
                 $xml.Package.Identity.Publisher -cne $env:TEMPORA_STORE_PUBLISHER) {
               throw 'STORE_MANIFEST_PARTNER_CENTER_IDENTITY_MISMATCH'

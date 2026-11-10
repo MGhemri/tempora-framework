@@ -1,3 +1,5 @@
+> **Current stable preparation:** TEMPORA Desktop **1.0.0** is a release candidate in development, not signed, Microsoft-certified or published. The 0.2.0 Microsoft Store publication was reported by the maintainer. Stable qualification requires clean Windows 10/11, upgrade and signing/channel tests. See [release GO/NO-GO](../../Audit/RELEASE-DESKTOP-STABLE-1.0.0.md). Historical Tauri/Beta instructions below are NOT supported release paths.
+
 # TEMPORA Desktop — Chromium/Electron (official Windows runtime)
 
 The **only supported Windows Desktop runtime is bundled Chromium/Electron**. It does not depend on Microsoft Edge WebView2 or its Evergreen distribution. Windows NSIS and Microsoft Store AppX/MSIX candidates use the same Electron host and the pinned TEMPORA 3.0.0 worker.

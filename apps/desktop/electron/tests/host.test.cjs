@@ -87,11 +87,11 @@ test('About is bilingual and authorship attribution is confined to About view',(
  assert.match(main,/about-desktop-version/);
  assert.match(src('electron/main.cjs'),/UNAPPROVED_EXTERNAL_URL/);
 });
-test('Electron Beta version in the GUI matches the shipped package',()=>{
+test('Electron stable candidate version in the GUI matches the shipped package',()=>{
  const pkg=require('../package.json');
  const preload=src('electron/preload.cjs');
  const view=src('src/main.ts');
- assert.equal(pkg.version,'0.2.0');
+ assert.equal(pkg.version,'1.0.0');
  assert.ok(preload.includes("desktopVersion: '"+pkg.version+"'"),
   'Preload diagnostic version must match Electron package version');
  assert.match(view,/window\.temporaElectron\.desktopVersion/);
@@ -122,6 +122,7 @@ test('Microsoft Store distribution uses actual Partner Center identity and never
  assert.equal(appxConfig.appx.publisherDisplayName,'Ghemri M');
  assert.equal(appxConfig.appx.displayName,'TEMPORA Desktop');
  assert.deepEqual(appxConfig.appx.capabilities,['runFullTrust']);
+ assert.equal(appxConfig.appx.applicationId,require('../package.json').build.appx.applicationId);
  assert.match(appxConfig.appx.artifactName,/^TEMPORA-Desktop-/);
  assert.match(nsisConfig.artifactName,/SETUP\.exe$/);
  assert.deepEqual(appxConfig.win.target,['appx']);

@@ -730,7 +730,7 @@ if (window.temporaElectron) {
   const version = window.temporaElectron.desktopVersion;
   const edition = document.querySelector(".edition");
   const sidebarVersion = document.querySelector(".sidebar-bottom p b");
-  if (edition) edition.textContent = `${version} / BETA`;
+  if (edition) edition.textContent = `${version} / STABLE`;
   if (sidebarVersion) sidebarVersion.textContent = `Desktop ${version}`;
   const aboutVersion = document.getElementById("about-desktop-version");
   if (aboutVersion) aboutVersion.textContent = version;

@@ -1,3 +1,5 @@
+> **Current desktop status, 10 November 2026:** The maintainer reports TEMPORA Desktop **0.2.0 published** in Microsoft Store, while exact Partner Center package provenance remains independently unverified here. TEMPORA Desktop **1.0.0** is a new unsigned **release candidate**, NOT a certified or published stable release. Only Electron/Chromium is supported; **manual** clean-Windows upgrade qualification, Authenticode (NSIS channel), vulnerability/license review, and Partner Center approval remain mandatory before release. See [Audit release gate](../../Audit/RELEASE-DESKTOP-STABLE-1.0.0.md). Earlier paragraphs describing a held 0.1.1 submission are historical.
+
 # TEMPORA — CI and release policy
 
 ## Pull-request checks

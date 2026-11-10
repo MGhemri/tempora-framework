@@ -1,7 +1,7 @@
 {
   "name": "tempora-desktop-chromium-fallback",
   "productName": "TEMPORA Desktop",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "private": true,
   "description": "TEMPORA Desktop — official offline Chromium/Electron scientific research client",
   "main": "main.cjs",
