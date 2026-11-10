@@ -101,3 +101,33 @@ test('reparse substitution and extraneous names are never marked clean',t=>{
  assert.equal(report.requires_manual_attention,true);
  assert.equal(report.files_modified,false);
 });
+
+test('committed synthetic probe with tampered manifest is reported unsafe, never recovered',t=>{
+ if(process.platform!=='win32')return;
+ const root=dir(t,'tempora-probe-tamper-');
+ const commit=run(['--synthetic-commit',root],{TEMPORA_NATIVE_SYNTHETIC_TEST:'1'});
+ assert.equal(commit.status,0,commit.stderr);
+ const completed=path.join(root,'native-probe-complete');
+ const [id]=fs.readdirSync(completed);
+ assert.equal(inspect(root).committed_verified,1);
+ const manifest=path.join(completed,id,'manifest.json');
+ fs.writeFileSync(manifest,'{"synthetic":true,"published":true}');
+ const result=inspect(root);
+ assert.equal(result.committed_verified,0);
+ assert.equal(result.unsafe_entries,1);
+ assert.equal(result.requires_manual_attention,true);
+ assert.equal(result.production_recovery_authorized,false);
+ assert.equal(fs.readFileSync(manifest,'utf8'),'{"synthetic":true,"published":true}');
+});
+test('native inventory rejects more than 100 candidate folders without cleanup',t=>{
+ if(process.platform!=='win32')return;
+ const root=dir(t,'tempora-probe-limit-');
+ const pending=path.join(root,'.native-probe-pending');
+ fs.mkdirSync(pending);
+ for(let i=0;i<101;i++)
+  fs.mkdirSync(path.join(pending,i.toString(16).padStart(32,'0')));
+ const result=run(['--inspect-probe',root]);
+ assert.equal(result.status,3,result.stdout);
+ assert.match(result.stderr,/NATIVE_PROBE_INSPECTION_REJECTED/);
+ assert.equal(fs.readdirSync(pending).length,101);
+});
