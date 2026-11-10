@@ -34,7 +34,10 @@
         ]
       },
       "recovery-assessment.cjs",
-      "transaction-store.cjs"
+      "transaction-store.cjs",
+      "review-persistence-gate.cjs",
+      "review-persistence-adapter.cjs",
+      "review-persistence-coordinator.cjs"
     ],
     "extraResources": [
       {
