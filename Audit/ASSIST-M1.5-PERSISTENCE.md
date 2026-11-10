@@ -972,3 +972,51 @@ transactionnel atomique, le contenu peut changer entre des étapes,
 La procédure humaine de récupération n'est pas autorisée par
 l'inventaire de sonde, et aucun writer scientifique de production
 n'est activé.
+
+
+## 30. M15-20 — Vérification des octets réellement stagés avant visibilité, et reprise autonome
+
+### Changement natif
+
+`native-windows-guard/src/native_commit.rs` possède maintenant
+`verify_staged_bytes` : après `create_new`, `write_all` et
+`sync_all` des documents du **transport synthétique uniquement**,
+le writer réouvre chaque fichier de staging via la primitive native
+`scientific_envelope::open_pinned` (handle Win32,
+`OPEN_REPARSE_POINT`, pas de partage de modification ou suppression),
+effectue une lecture **bornée** avec `bounded_json` et exige une
+**égalité binaire** avec les buffers que `load_verified` a validés
+au départ. Le contrôle couvre `corpus.json`, `journal.json`,
+`envelope.json` et le manifeste de sonde.
+
+**Test d'attaque reproductible :** le hook de test
+`TEMPORA_NATIVE_TEST_CORRUPT_STAGED=1`, accessible uniquement
+dans `--synthetic-transport-commit` et avec
+`TEMPORA_NATIVE_SYNTHETIC_TEST=1`, altère volontairement le journal
+stagé. L'opération doit refuser le renommage avec
+`NATIVE_COMMIT_STAGED_MISMATCH`, **laisser** le dossier incomplet
+et le verrou de sonde pour examen, refuser un rejeu aveugle,
+et ne créer aucun `transactions/` ou `.pending/` scientifiques.
+
+**Limite P0 importante :** la validation des fichiers stagés a lieu
+avant le renommage et ses handles de lecture se ferment. Un adversaire
+pouvant modifier la cible pendant ce petit intervalle n'est **pas**
+écarté par cette seule étape. La variante Win32 de renommage reste
+à **chemin absolu** ; la durabilité post-coupure n'est pas qualifiée.
+Ce contrôle améliore le respect des octets écrits et le diagnostic
+d'échec, sans autoriser la persistance scientifique de production.
+
+### Capitalisation obligatoire pour les futures conversations
+
+Création de **`Audit/REPRISE-TRAVAUX.md`**. Ce document est
+l'**entrée prioritaire** de reprise, avant même le registre :
+il centralise les URLs/branche/PR, preuves CI par SHA, architecture
+réellement codée, commandes de test sur Windows, frontières de
+sécurité, incidents déjà résolus, priorités P0/P1 et obligations
+d'actualisation. Chaque nouvelle conversation doit d'abord le lire
+et vérifier l'état réel du HEAD. Si des interfaces, contrats ou
+priorités évoluent, mettre ce fichier à jour dans le même lot.
+
+**Qualification de ce jalon :** `IMPLÉMENTÉ` tant que la CI du
+HEAD final n'a pas réussi ; n'hérite pas des tests de
+`9a9a73835396f7471e5c112193aa3839acf49a9a`.
