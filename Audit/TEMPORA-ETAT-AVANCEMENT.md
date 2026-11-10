@@ -55,6 +55,7 @@
 | M15-15 | Premier commit synthétique Win32 avec handles parents conservés et renommage à chemin absolu | **TESTÉ-CI sur `4f4ca37f`**, sonde uniquement | `native-windows-guard/src/native_commit.rs` et tests Win32 |
 | M15-16 | Contrat de transport scientifique SDK → Rust : cinq empreintes canoniques, deux SHA des fichiers, journal et non-publication | **TESTÉ-CI sur `4b46ee81`**, lecture seule | `electron/scientific-native-transport.cjs`, `native-windows-guard/src/scientific_envelope.rs`, tests Node/Win32 |
 | M15-17 | Writer natif de sonde consomme les buffers vérifiés par Rust et copie les octets exacts dans `native-probe-complete/` | **TESTÉ-CI sur `8d2936f2`**, non scientifique | `native_commit.rs`, `scientific_envelope.rs`, tests Windows |
+| M15-19 | Inspecteur forensic natif read-only des sondes NTFS, verrous orphelins, candidats et commits corrompus | **IMPLÉMENTÉ, CI À QUALIFIER** | `native-windows-guard/src/probe_forensic.rs`, tests Windows et `Audit/ASSIST-M1.5-PERSISTENCE.md` |
 | M15-18 | **Handles Win32 épinglés** pendant toute la sonde : dossier et 3 sources, partage en lecture seule, vérification reparse, trois points de crash réels et refus de reprise | **IMPLÉMENTÉ — CI DU NOUVEAU HEAD À QUALIFIER** | `native-windows-guard/src/scientific_envelope.rs`, `native_commit.rs`, tests Windows |
 
 ## 3. Backlog de qualification — priorités et conditions de fermeture
@@ -154,3 +155,13 @@
 - **Statut :** `IMPLÉMENTÉ`, **CI finale du lot à vérifier**, pas encore homologué en sécurité.
 - **Risques :** les composants ancêtres peuvent changer entre inspection et ouverture ; consentement humain et marqueur `sdk_validated` sans signature ; cible finale Win32 absolue, power-loss et reprise opérateur non qualifiés. **P0 non levés**.
 - **Décision :** PR #114 brouillon, aucun merge sur `main`, aucune release, aucun Store. Sauvegarde de production toujours désactivée.
+
+
+### Lot M15-19 — 2026-11-10 — Analyse native forensic des commits de sonde
+
+- **Nouveau module Rust réel :** `native-windows-guard/src/probe_forensic.rs`, commande read-only `--inspect-probe`, rapport JSON borné (100 noms par catégorie), classification des dossiers en attente/vérifiés/corrompus, statut du verrou et refus des dossiers/jonctions suspects.
+- **Réutilisation des handles natifs :** relecture du transport par `scientific_envelope::load_verified`, validation du manifeste par `open_pinned` et `bounded_json`, sans charger une cible reparse.
+- **Quatre tests Windows ajoutés :** racine vide sans mutation ; commit confirmé puis manifeste falsifié ; trois crashs réels avec verrou orphelin ; jonction refusée. Intégration dans le workflow Desktop existant, aucun workflow ajouté.
+- **Statut initial :** `IMPLÉMENTÉ — CI DU HEAD FINAL À QUALIFIER`. Ne pas transférer la CI verte de M15-18 à M15-19 ; confirmer Framework, Documentation et Desktop Chromium Windows.
+- **Risque résiduel :** forensic non atomique ; sortie non utilisable pour éliminer le verrou, promouvoir un candidat ou relancer automatiquement. Aucune garantie power-loss et aucune certification scientifique du marqueur `sdk_validated`.
+- **Prochaine décision :** P0 `REC-01` reste bloqué jusqu'à un workflow de récupération opérateur indépendant et testé ; `SEC-WIN-01` exige un writer scientifique résistant aux races. PR #114 **DRAFT**, aucune fusion ni publication Store.
