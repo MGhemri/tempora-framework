@@ -5,6 +5,8 @@
 #[cfg(windows)]
 mod native_commit;
 #[cfg(windows)]
+mod scientific_envelope;
+#[cfg(windows)]
 mod native {
     use std::ffi::{c_void, OsStr};
     use std::os::windows::ffi::OsStrExt;
@@ -191,6 +193,14 @@ fn main() {
                 return;
             }
             eprintln!("NATIVE_DESTINATION_REJECTED");
+            std::process::exit(3);
+        }
+        if args[1] == "--verify-envelope" {
+            if scientific_envelope::verify(root).is_ok() {
+                println!("NATIVE_ENVELOPE_VERIFIED");
+                return;
+            }
+            eprintln!("NATIVE_ENVELOPE_REJECTED");
             std::process::exit(3);
         }
         if args[1] == "--synthetic-commit" {
