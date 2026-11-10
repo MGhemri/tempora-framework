@@ -76,4 +76,10 @@ test('packaged scientific writes and automated publication remain forbidden',()=
  assert.match(unsigned,/Get-FileHash/);
  assert.match(unsigned,/RELEASE-PROVENANCE\.json/);
  assert.match(unsigned,/SHA256SUMS\.txt/);
+ assert.match(unsigned,/verify-release-evidence\.cjs electron\/release --both --source-sha/);
+ const preflight=load('apps/desktop/electron/scripts/stable-windows-preflight.ps1');
+ assert.match(preflight,/Get-AppxPackage/);
+ assert.match(preflight,/Get-AuthenticodeSignature/);
+ assert.match(preflight,/Get-FileHash/);
+ assert.doesNotMatch(preflight,/Add-AppxPackage|Remove-AppxPackage|Start-Process|Invoke-WebRequest/);
 });
