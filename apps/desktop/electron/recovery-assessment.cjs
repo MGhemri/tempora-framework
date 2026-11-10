@@ -8,9 +8,16 @@ function assessRecovery(root,canonical){
  const lock=inspectWriterReservation(root);
  const inventory=inspectTransactions(root,canonical);
  const evidence=inspectPendingEvidence(root,canonical);
+ const lockAfter=inspectWriterReservation(root);
+ if(lockAfter.status!==lock.status)throw ERROR('RECOVERY_SNAPSHOT_CHANGED');
  const classified=[...evidence.verified_for_review,...evidence.incomplete,...evidence.unsafe];
  // Compare sorted IDs: a race or inconsistent snapshot is not a safe report.
  const ids=new Set(classified);
+ // Fail early before creating potentially huge IPC and CLI responses.
+ const MAX_REPORT_ITEMS=100;
+ if(classified.length>MAX_REPORT_ITEMS||inventory.complete.length>MAX_REPORT_ITEMS||
+    inventory.invalid.length>MAX_REPORT_ITEMS)
+   throw ERROR('RECOVERY_REPORT_LIMIT');
  if(ids.size!==classified.length||inventory.pending.length!==ids.size||
    inventory.pending.some(id=>!ids.has(id)))
    throw ERROR('RECOVERY_SNAPSHOT_CHANGED');
