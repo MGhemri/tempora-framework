@@ -160,6 +160,13 @@ fn rename_with_pinned_destination(
     }
     Ok(())
 }
+// Only reached by explicit synthetic CLI mode. Simulates a killed native
+// process at auditable points. Never used by the distributed application.
+fn crash_probe(phase: &str, code: i32) {
+    if std::env::var("TEMPORA_NATIVE_TEST_CRASH_POINT").ok().as_deref() == Some(phase) {
+        std::process::exit(code);
+    }
+}
 fn commit_probe(
     root: &Path,
     verified: Option<&crate::scientific_envelope::VerifiedTransport>,
@@ -183,6 +190,7 @@ fn commit_probe(
     let _ = (&root_handle, &pending_root_handle);
     let id = random_id()?;
     exclusive_sync(&lock, "owner.txt", id.as_bytes())?;
+    crash_probe("after_lock", 81);
     // Deterministic test-only pause: permits a second Windows process to try
     // replacing the already-pinned source while this transaction is active.
     // Hard-capped; cannot be enabled without the synthetic-test gate above.
@@ -201,6 +209,7 @@ fn commit_probe(
         // nonproduction probe namespace; never to scientific transactions/.
         // Bytes are the SAME snapshot independently checked by Rust.
         exclusive_sync(&pending, "corpus.json", &documents.corpus)?;
+        crash_probe("after_corpus", 82);
         exclusive_sync(&pending, "journal.json", &documents.journal)?;
         exclusive_sync(&pending, "envelope.json", &documents.envelope)?;
         exclusive_sync(&pending, "manifest.json",
@@ -213,6 +222,7 @@ fn commit_probe(
     // File handles were closed after sync_all; the directory handles remain
     // held without FILE_SHARE_DELETE during the relative rename.
     rename_with_pinned_destination(pending_handle.0, &completed_root.join(&id))?;
+    crash_probe("after_rename", 83);
     // Do not claim NTFS power-failure durability. Remove only our own
     // successful synthetic test lock, never a scientific writer reservation.
     drop(pending_handle);
