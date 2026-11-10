@@ -3,6 +3,8 @@
 //! local fixed NTFS using a HANDLE. It never creates or changes a file.
 //! This does not eliminate a race between this process and the Node writer.
 #[cfg(windows)]
+mod native_commit;
+#[cfg(windows)]
 mod native {
     use std::ffi::{c_void, OsStr};
     use std::os::windows::ffi::OsStrExt;
@@ -176,17 +178,34 @@ mod native {
 }
 fn main() {
     let args: Vec<_> = std::env::args_os().collect();
-    if args.len() != 3 || args[1] != "--inspect" {
+    if args.len() != 3 {
         eprintln!("NATIVE_GUARD_USAGE");
         std::process::exit(3);
     }
     #[cfg(windows)]
     {
-        if native::inspect(std::path::Path::new(&args[2])).is_ok() {
-            println!("NATIVE_DESTINATION_OK");
-            return;
+        let root = std::path::Path::new(&args[2]);
+        if args[1] == "--inspect" {
+            if native::inspect(root).is_ok() {
+                println!("NATIVE_DESTINATION_OK");
+                return;
+            }
+            eprintln!("NATIVE_DESTINATION_REJECTED");
+            std::process::exit(3);
         }
-        eprintln!("NATIVE_DESTINATION_REJECTED");
+        if args[1] == "--synthetic-commit" {
+            match native_commit::synthetic_commit(root) {
+                Ok(id) => {
+                    println!("NATIVE_SYNTHETIC_COMMITTED:{id}");
+                    return;
+                }
+                Err(_) => {
+                    eprintln!("NATIVE_SYNTHETIC_COMMIT_REJECTED");
+                    std::process::exit(3);
+                }
+            }
+        }
+        eprintln!("NATIVE_GUARD_USAGE");
         std::process::exit(3);
     }
     #[cfg(not(windows))]
