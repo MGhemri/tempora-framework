@@ -92,3 +92,23 @@ for(const [phase,exitCode] of [['before',77],['after',78]]){
   assert.throws(()=>createTransaction(f.root,f,canonical),{code:'TRANSACTION_WRITER_BUSY'});
  });
 }
+
+test('offline recovery CLI reports clean folder without writing any files',t=>{
+ const f=fixture(t),script=path.resolve(__dirname,'../scripts/assess-recovery.cjs');
+ const child=spawnSync(process.execPath,[script,f.root],{encoding:'utf8',timeout:10000});
+ assert.equal(child.status,0,child.stderr);
+ const report=JSON.parse(child.stdout);
+ assert.equal(report.mode,'read_only_assessment');
+ assert.equal(report.safe_to_start_new_write,true);
+ assert.deepEqual(fs.readdirSync(f.root),[]);
+});
+test('offline recovery CLI returns nonzero attention status and leaves orphan intact',t=>{
+ const f=fixture(t),script=path.resolve(__dirname,'../scripts/assess-recovery.cjs');
+ const dir=path.join(f.root,'.pending','c'.repeat(32));
+ fs.mkdirSync(path.dirname(dir));fs.mkdirSync(dir);
+ fs.writeFileSync(path.join(dir,'corpus.json'),'partial');
+ const child=spawnSync(process.execPath,[script,f.root],{encoding:'utf8',timeout:10000});
+ assert.equal(child.status,2,child.stderr);
+ assert.deepEqual(JSON.parse(child.stdout).pending_incomplete,['c'.repeat(32)]);
+ assert.equal(fs.readFileSync(path.join(dir,'corpus.json'),'utf8'),'partial');
+});
