@@ -3,8 +3,7 @@
 //! Uses directory HANDLEs held through SetFileInformationByHandle(FileRenameInfo).
 //! No claim of post-power-loss durability or formal resistance to every race.
 use std::ffi::{c_void, OsStr};
-use std::fs::{self, OpenOptions};
-use std::io::Write;
+use std::fs;
 use std::os::windows::ffi::OsStrExt;
 use std::path::Path;
 use std::ptr::null_mut;
@@ -13,6 +12,7 @@ type Handle = isize;
 const INVALID_HANDLE_VALUE: Handle = -1isize;
 const FILE_READ_ATTRIBUTES: u32 = 0x0080;
 const FILE_ADD_SUBDIRECTORY: u32 = 0x0004;
+const FILE_ADD_FILE: u32 = 0x0002;
 const DELETE: u32 = 0x0001_0000;
 const FILE_SHARE_READ: u32 = 1;
 const FILE_SHARE_WRITE: u32 = 2;
@@ -66,7 +66,8 @@ impl Drop for Owned {
 fn wide(value: &OsStr) -> Vec<u16> {
     value.encode_wide().chain(std::iter::once(0)).collect()
 }
-fn open_directory(path: &Path, delete: bool, add_subdir: bool) -> Result<Owned, &'static str> {
+fn open_directory(path: &Path, delete: bool, add_subdir: bool, add_file: bool)
+    -> Result<Owned, &'static str> {
     let encoded = wide(path.as_os_str());
     // Intentionally exclude FILE_SHARE_DELETE: other processes cannot
     // rename these specific directory objects while we retain the handles.
@@ -74,7 +75,8 @@ fn open_directory(path: &Path, delete: bool, add_subdir: bool) -> Result<Owned, 
         CreateFileW(
             encoded.as_ptr(),
             FILE_READ_ATTRIBUTES | if delete { DELETE } else { 0 }
-                | if add_subdir { FILE_ADD_SUBDIRECTORY } else { 0 },
+                | if add_subdir { FILE_ADD_SUBDIRECTORY } else { 0 }
+                | if add_file { FILE_ADD_FILE } else { 0 },
             FILE_SHARE_READ | FILE_SHARE_WRITE,
             null_mut(), OPEN_EXISTING,
             FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT, 0,
@@ -105,7 +107,7 @@ fn create_or_open(directory: &Path, add_subdir: bool) -> Result<Owned, &'static 
         Err(e) if e.kind() == std::io::ErrorKind::AlreadyExists => (),
         Err(_) => return Err("NATIVE_COMMIT_DIRECTORY_CREATION_FAILED"),
     }
-    open_directory(directory, false, add_subdir)
+    open_directory(directory, false, add_subdir, false)
 }
 fn random_id() -> Result<String, &'static str> {
     let mut bytes = [0u8; 16];
@@ -114,14 +116,6 @@ fn random_id() -> Result<String, &'static str> {
     };
     if status < 0 { return Err("NATIVE_COMMIT_RANDOM_FAILED"); }
     Ok(bytes.iter().map(|v| format!("{v:02x}")).collect())
-}
-fn exclusive_sync(directory: &Path, name: &str, contents: &[u8]) -> Result<(), &'static str> {
-    let mut file = OpenOptions::new().write(true).create_new(true)
-        .open(directory.join(name))
-        .map_err(|_| "NATIVE_COMMIT_EXCLUSIVE_WRITE_FAILED")?;
-    file.write_all(contents).map_err(|_| "NATIVE_COMMIT_WRITE_FAILED")?;
-    file.sync_all().map_err(|_| "NATIVE_COMMIT_FILE_FLUSH_FAILED")?;
-    Ok(())
 }
 fn rename_with_pinned_destination(
     source: Handle, target_path: &Path,
@@ -192,11 +186,11 @@ fn commit_probe(
     }
     // Keep every destination ancestor pinned through sync and native rename.
     let _destination_ancestors = crate::native::inspect_pinned(root)?;
-    let root_handle = open_directory(root, false, false)?;
+    let root_handle = open_directory(root, false, false, false)?;
     let lock = root.join(".native-probe-lock");
     fs::create_dir(&lock).map_err(|_| "NATIVE_COMMIT_WRITER_BUSY")?;
     // On every failure retain the lock and the pending data for forensic review.
-    let lock_handle = open_directory(&lock, false, false)?;
+    let lock_handle = open_directory(&lock, false, false, true)?;
     let _ = &lock_handle;
     let pending_root = root.join(".native-probe-pending");
     let completed_root = root.join("native-probe-complete");
@@ -204,7 +198,7 @@ fn commit_probe(
     let completed_root_handle = create_or_open(&completed_root, true)?;
     let _ = (&root_handle, &pending_root_handle);
     let id = random_id()?;
-    exclusive_sync(&lock, "owner.txt", id.as_bytes())?;
+    crate::relative_io::exclusive_sync_at(lock_handle.0, "owner.txt", id.as_bytes())?;
     crash_probe("after_lock", 81);
     // Deterministic test-only pause: permits a second Windows process to try
     // replacing the already-pinned source while this transaction is active.
@@ -218,16 +212,16 @@ fn commit_probe(
     }
     let pending = pending_root.join(&id);
     fs::create_dir(&pending).map_err(|_| "NATIVE_COMMIT_COLLISION")?;
-    let pending_handle = open_directory(&pending, true, false)?;
+    let pending_handle = open_directory(&pending, true, false, true)?;
     if let Some(documents) = verified {
         // The real SDK-approved transport is copied only to an explicitly
         // nonproduction probe namespace; never to scientific transactions/.
         // Bytes are the SAME snapshot independently checked by Rust.
-        exclusive_sync(&pending, "corpus.json", &documents.corpus)?;
+        crate::relative_io::exclusive_sync_at(pending_handle.0, "corpus.json", &documents.corpus)?;
         crash_probe("after_corpus", 82);
-        exclusive_sync(&pending, "journal.json", &documents.journal)?;
-        exclusive_sync(&pending, "envelope.json", &documents.envelope)?;
-        exclusive_sync(&pending, "manifest.json",
+        crate::relative_io::exclusive_sync_at(pending_handle.0, "journal.json", &documents.journal)?;
+        crate::relative_io::exclusive_sync_at(pending_handle.0, "envelope.json", &documents.envelope)?;
+        crate::relative_io::exclusive_sync_at(pending_handle.0, "manifest.json",
             br#"{"synthetic":true,"published":false,"kind":"NTFS_SCIENTIFIC_TRANSPORT_PROBE"}"#)?;
         // Adversarial fixture only. Always behind the synthetic test gate:
         // simulate tampering after writes, before native visibility.
@@ -242,9 +236,9 @@ fn commit_probe(
         verify_staged_bytes(&pending, "manifest.json",
             br#"{"synthetic":true,"published":false,"kind":"NTFS_SCIENTIFIC_TRANSPORT_PROBE"}"#)?;
     } else {
-        exclusive_sync(&pending, "corpus.json", br#"{"synthetic":true,"schema_version":"probe-only"}"#)?;
-        exclusive_sync(&pending, "journal.json", br#"{"synthetic":true,"approval":false}"#)?;
-        exclusive_sync(&pending, "manifest.json", br#"{"synthetic":true,"published":false,"kind":"NTFS_HANDLE_RENAME_PROBE"}"#)?;
+        crate::relative_io::exclusive_sync_at(pending_handle.0, "corpus.json", br#"{"synthetic":true,"schema_version":"probe-only"}"#)?;
+        crate::relative_io::exclusive_sync_at(pending_handle.0, "journal.json", br#"{"synthetic":true,"approval":false}"#)?;
+        crate::relative_io::exclusive_sync_at(pending_handle.0, "manifest.json", br#"{"synthetic":true,"published":false,"kind":"NTFS_HANDLE_RENAME_PROBE"}"#)?;
     }
     // File handles were closed after sync_all; the directory handles remain
     // held without FILE_SHARE_DELETE during the relative rename.

@@ -65,3 +65,7 @@ Après J10 (PR #119 fusionnée, commit `6f12ed91f0b79a27debac9f268ed4c75877ad301
 ## Point de reprise après publication déclarée et deux lots fusionnés
 
 Voir [REPRISE-POST-PUBLICATION-2026-11-10.md](REPRISE-POST-PUBLICATION-2026-11-10.md) pour les décisions détaillées, CI exactes et le prochain gros lot de sécurité. Les anciennes indications historiques dans les sections précédentes ne priment pas sur ce point.
+
+## SEC-WIN (nouvelle PR) — création handle-relative expérimentale
+
+La sonde Rust NTFS utilise maintenant une création exclusive de fichiers relative à un **handle de répertoire**, au lieu de rouvrir les fichiers par chemin. Voir [M15-HANDLE-RELATIVE-FILE-CREATE.md](M15-HANDLE-RELATIVE-FILE-CREATE.md). Le renommage final reste absolu, les P0 ne sont pas fermés, l'activation de persistance dans les paquets est interdite. Vérifier les trois CI du HEAD de cette PR avant fusion.

@@ -5,6 +5,8 @@
 #[cfg(windows)]
 mod native_commit;
 #[cfg(windows)]
+mod relative_io;
+#[cfg(windows)]
 mod scientific_envelope;
 #[cfg(windows)]
 mod probe_inventory;
