@@ -26,7 +26,7 @@ test('native destination guard invokes an executable without shell or arbitrary 
  const destination='C:\\fictitious folder';
  assert.equal(assertNativeDestination(destination,{platform:'win32',
   executable:'C:\\trusted\\guard.exe',
-  run:(...params)=>{args=params;return {status:0,stdout:'NATIVE_DESTINATION_OK\\n'};}
+  run:(...params)=>{args=params;return {status:0,stdout:'NATIVE_DESTINATION_OK\n'};}
  }),destination);
  assert.deepEqual(args[1],['--inspect',destination]);
  assert.equal(args[2].shell,false);
