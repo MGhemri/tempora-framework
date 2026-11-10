@@ -474,3 +474,33 @@ manuelle. Le mode expérimental ne doit être utilisé qu'avec des
 jamais pour une recherche réelle ou un dépôt de production.
 Ne pas publier ou fusionner cette fonctionnalité tant que le
 durcissement Windows et les essais sur machine réelle ne sont pas passés.
+
+
+## 16. Détection des substitutions de répertoires ordinaires
+
+Les contrôles `realpath` et `lstat` précédents refusaient un lien
+symbolique ou une jonction déjà présente au moment de la vérification.
+Ils ne permettaient pas, en revanche, de différencier deux répertoires
+ordinaires successivement placés sous le **même chemin**.
+
+Avant de rendre une transaction visible par `renameSync`, le store
+compare désormais l'identité `(dev, ino)` observée après acquisition du
+verrou pour quatre répertoires : racine, `.pending`, `transactions`
+et dossier temporaire de transaction. Il refuse toute identité
+différente avec `TRANSACTION_DIRECTORY_IDENTITY_CHANGED`. Si Node ne
+fournit pas un identifiant d'objet de système de fichiers exploitable
+(`ino === 0`), l'écriture échoue de manière conservatrice au lieu de
+prétendre protéger le renommage. Cela peut rendre certains volumes Windows
+inutilisables tant qu'une implémentation native ne les prend pas en charge.
+
+Deux tests injectent un remplacement de `transactions` et de
+`.pending` par des **répertoires ordinaires**, entre les opérations
+`fsync` et le renommage final ; ils vérifient le refus du commit
+et la conservation des preuves de l'écriture interrompue.
+
+Ce mécanisme réduit un risque mais n'est **pas une preuve de sécurité
+contre les attaques TOCTOU** : un adversaire peut intervenir après la
+dernière vérification. Seule une stratégie Windows fondée sur les handles
+et les primitives natives d'ouverture / renommage sous des ACL contrôlées
+peut faire progresser ce gate avant diffusion. L'identifiant `ino`
+ne prouve pas à lui seul la durabilité post-coupure électrique.
