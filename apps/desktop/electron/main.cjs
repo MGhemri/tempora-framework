@@ -16,6 +16,7 @@ const {createAssistantSessions}=require('./assistant-session.cjs');
 const {createNativePersistenceWorkflow}=require('./native-persistence-workflow.cjs');
 const {createAssistantPersistenceAuthority}=require('./assistant-persistence-authority.cjs');
 const {localSaveEnabled}=require('./local-save-access.cjs');
+const {assertNativeDestination}=require('./windows-native-destination.cjs');
 const assistantSessions=createAssistantSessions({
   sourceRoot:app.isPackaged?join(process.resourcesPath,'assistant'):resolve(__dirname,'../../..','src'),
   profileRoot:app.isPackaged?join(process.resourcesPath,'assistant','profiles'):resolve(__dirname,'../../..','profiles')
@@ -55,7 +56,14 @@ function getPersistenceAuthority(){
         title:'TEMPORA — choose dedicated local transaction folder',
         properties:['openDirectory']
       });
-      return selected.canceled?null:selected.filePaths[0]??null;
+      const destination=selected.canceled?null:selected.filePaths[0]??null;
+      // Do not hand a Windows path to the JS transaction writer unless a
+      // separate native handle-based preflight accepted every ancestor.
+      // This remains developer-only: native preflight is not an atomic
+      // handle-relative commit and must not unlock packaged releases.
+      if(destination&&process.platform==='win32')
+        return assertNativeDestination(destination);
+      return destination;
     }
   });
   persistenceAuthority=createAssistantPersistenceAuthority({
