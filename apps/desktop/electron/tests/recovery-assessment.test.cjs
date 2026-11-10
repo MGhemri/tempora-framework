@@ -240,3 +240,78 @@ test('recovery report refuses 101 pending candidates instead of returning unboun
  assert.throws(()=>assessRecovery(f.root,canonical),{code:'RECOVERY_REPORT_LIMIT'});
  assert.equal(fs.readdirSync(pending).length,101);
 });
+
+
+// One reproducible subprocess fault-injection matrix instead of a separate
+// CI workflow for every crash point. process.exit() simulates Node process
+// loss only, NOT Windows shutdown, NTFS durability or power failure.
+function crashAtDurabilityBoundary(root,phase){
+ const script=[
+  "'use strict';",
+  "const fs=require('node:fs');",
+  "const store=require(process.argv[1]);",
+  "const root=process.argv[2],phase=process.argv[3],H='a'.repeat(64);",
+  "const input={corpus:{schema_version:'3.0.0',events:[]},",
+  "identity:{batch_id:H,source_sha256:H,base_sha256:H,mapping_sha256:H,output_sha256:H},",
+  "journal:{decision:'accepted_for_local_staging',batch_id:H,base_sha256:H,output_sha256:H,scientific_approval:false}};",
+  "const canonical={validateCorpus:c=>({valid:c.schema_version==='3.0.0'}),digest:()=>H};",
+  "const originalSync=fs.fsyncSync;let syncCount=0;",
+  "fs.fsyncSync=function(...args){const result=originalSync.apply(fs,args);",
+  " syncCount++;",
+  " const names={owner:1,corpus:2,journal:3,manifest:4};",
+  " if(names[phase]===syncCount)process.exit(70+syncCount);",
+  " return result;};",
+  "const originalRename=fs.renameSync;",
+  "fs.renameSync=function(from,to){",
+  " if(String(from).includes('.pending')&&String(to).includes('transactions')){",
+  "  if(phase==='before_commit')process.exit(75);",
+  "  const result=originalRename.call(fs,from,to);",
+  "  if(phase==='after_commit')process.exit(76);",
+  "  return result;",
+  " }",
+  " return originalRename.call(fs,from,to);",
+  "};",
+  "store.createTransaction(root,input,canonical);",
+  "process.exit(99);"
+ ].join('\n');
+ return spawnSync(process.execPath,['-e',script,
+  path.resolve(__dirname,'../transaction-store.cjs'),root,phase],
+  {encoding:'utf8',timeout:15000});
+}
+const interruptionMatrix=[
+ {phase:'owner',exit:71,verified:0,incomplete:0,committed:0},
+ {phase:'corpus',exit:72,verified:0,incomplete:1,committed:0},
+ {phase:'journal',exit:73,verified:0,incomplete:1,committed:0},
+ {phase:'manifest',exit:74,verified:1,incomplete:0,committed:0},
+ {phase:'before_commit',exit:75,verified:1,incomplete:0,committed:0},
+ {phase:'after_commit',exit:76,verified:0,incomplete:0,committed:1}
+];
+for(const boundary of interruptionMatrix){
+ test('crash matrix '+boundary.phase+' leaves only inspectable evidence and blocks replay',t=>{
+  const f=fixture(t);
+  const child=crashAtDurabilityBoundary(f.root,boundary.phase);
+  assert.equal(child.error,undefined);
+  assert.equal(child.status,boundary.exit,child.stderr);
+  const rootEntriesBefore=fs.readdirSync(f.root).sort();
+  const report=assessRecovery(f.root,canonical);
+  assert.equal(report.lock_status,'reserved');
+  assert.equal(report.safe_to_start_new_write,false);
+  assert.equal(report.requires_manual_attention,true);
+  assert.equal(report.committed_count,boundary.committed);
+  assert.equal(report.pending_verified_for_review.length,boundary.verified);
+  assert.equal(report.pending_incomplete.length,boundary.incomplete);
+  assert.deepEqual(report.pending_unsafe,[]);
+  assert.equal(report.files_modified,false);
+  assert.equal(report.recovery_performed,false);
+  assert.equal(report.published,false);
+  assert.deepEqual(fs.readdirSync(f.root).sort(),rootEntriesBefore);
+  assert.throws(()=>createTransaction(f.root,f,canonical),
+   {code:'TRANSACTION_WRITER_BUSY'});
+  assert.deepEqual(fs.readdirSync(f.root).sort(),rootEntriesBefore);
+  if(boundary.phase==='after_commit'){
+   const reconciled=inspectCommittedIdentity(f.root,canonical,f.identity);
+   assert.equal(reconciled.matching_transaction_ids.length,1);
+   assert.equal(reconciled.files_modified,false);
+  }
+ });
+}
