@@ -661,3 +661,26 @@ d'origine. Aucun workflow GitHub supplémentaire n'a été créé.
 La préparation de lots importants avant le lancement de la CI demeure
 la stratégie retenue. Une optimisation d'exécution ne lève aucune
 exigence de qualification native Windows.
+
+
+## 23. Deux passes indépendantes des inventaires forensic
+
+Le diagnostic `assessRecovery` revalide maintenant à deux reprises les
+deux vues du stockage : `inspectTransactions` (transactions finalisées et
+répertoires en attente) et `inspectPendingEvidence` (classement canonique
+des candidats). Les résultats sont comparés *intégralement* avant
+l'émission du rapport ; une transaction dont le journal est altéré entre
+les deux passes, même si son identifiant reste inchangé, provoque
+`RECOVERY_SNAPSHOT_CHANGED`.
+
+Des tests adversariaux simulent :
+- l'altération d'un journal de transaction finalisée après sa première validation ;
+- l'altération d'un journal dans `.pending` après sa première classification
+  comme candidat cohérent.
+
+Le rapport échoue de manière conservatrice et ne corrige ou supprime
+aucun fichier. La double inspection peut augmenter le temps du diagnostic
+sur un dossier volumineux : mesurer cet impact dans `PERF-01`.
+**Ce mécanisme n'est pas un snapshot atomique**, ne garantit pas la
+sécurité des accès natifs Windows et ne modifie pas les gates P0 de
+durabilité et récupération humaine.
