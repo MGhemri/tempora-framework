@@ -37,7 +37,8 @@ function safeSubdir(parent, name, create=true) {
 // same path, not just symlink/junction redirection. It is a best-effort
 // filesystem identity guard, NOT a Windows handle-based security primitive.
 function directoryIdentity(dir) {
-  const stat=fs.lstatSync(dir);
+  // bigint avoids precision loss for 64-bit Windows file IDs.
+  const stat=fs.lstatSync(dir,{bigint:true});
   if(!stat.isDirectory()||stat.isSymbolicLink()||
      fs.realpathSync(dir)!==path.resolve(dir))
     throw ERR('TRANSACTION_DIRECTORY_UNSAFE');
@@ -47,8 +48,8 @@ function assertDirectoryIdentity(dir,identity) {
   const now=directoryIdentity(dir);
   // On a filesystem where Node exposes no stable file ID, refuse to claim
   // that a renamed/replaced directory is still the originally chosen one.
-  if(typeof now.ino!=='number'||now.ino===0||
-     typeof identity?.ino!=='number'||identity.ino===0||
+  if(typeof now.ino!=='bigint'||now.ino===0n||
+     typeof identity?.ino!=='bigint'||identity.ino===0n||
      now.ino!==identity.ino||now.dev!==identity.dev)
     throw ERR('TRANSACTION_DIRECTORY_IDENTITY_CHANGED');
 }
