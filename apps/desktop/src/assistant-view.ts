@@ -166,6 +166,7 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
  let canonical:AssistantCanonicalPreview|null=null;
  let receipt:AssistantReviewReceipt|null=null;
  let localSaveReceipt:AssistantLocalSaveReceipt|null=null;
+ let localSaveAttempted=false;
  const reviewIds=new Set<string>();
  const selections=new Set<string>();
  let uiError:string|null=null;
@@ -180,7 +181,7 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
    const t=dictionary[lang()];
    recoveryButton.textContent=lang()==='fr'?'Examiner des transactions interrompues (lecture seule)':'Inspect interrupted transactions (read-only)';
    localSaveButton.hidden=!receipt?.experimental_local_save_ready||!host?.assistantLocalSave;
-   localSaveButton.disabled=busy||!!localSaveReceipt?.saved_to_disk;
+   localSaveButton.disabled=busy||localSaveAttempted;
    localSaveButton.textContent=lang()==='fr'
      ?'Enregistrer localement (bêta de développement — confirmation native)'
      :'Save locally (development beta — native confirmation)';
@@ -439,7 +440,7 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
    const active=source,token=canonical.review_token,ticket=++serial;
    const review={ids:Array.from(reviewIds),reviewer:reviewerInput.value,
      reason:reasonInput.value,reviewed_at:reviewedAtInput.value};
-   busy=true;uiError=null;localSaveReceipt=null;render();
+   busy=true;uiError=null;localSaveReceipt=null;localSaveAttempted=false;render();
    try{
      const response=await host.assistantReviewStage(active.handle_id,token,review);
      if(ticket===serial&&response.source_sha256===active.source_sha256&&
@@ -452,8 +453,9 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
  });
  localSaveButton.addEventListener('click',async()=>{
    if(!host?.assistantLocalSave||!source||!receipt?.experimental_local_save_ready||
-      busy||localSaveReceipt?.saved_to_disk)return;
+      busy||localSaveAttempted)return;
    const active=source,ticket=++serial;
+   localSaveAttempted=true;
    busy=true;uiError=null;render();
    try{
      const result=await host.assistantLocalSave(active.handle_id);
