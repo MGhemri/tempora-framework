@@ -5,7 +5,7 @@ const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const path=require('node:path');
-const root=path.resolve(__dirname,'../../..');
+const root=path.resolve(__dirname,'../../../..');
 const load=relative=>fs.readFileSync(path.join(root,relative),'utf8');
 const desktop=JSON.parse(load('apps/desktop/electron/package.json'));
 const frontend=JSON.parse(load('apps/desktop/package.json'));
