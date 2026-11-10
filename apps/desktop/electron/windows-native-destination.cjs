@@ -11,7 +11,7 @@ function assertNativeDestination(destination,{
  run=spawnSync
 }={}){
  if(platform!=='win32')fail('NATIVE_GUARD_WINDOWS_REQUIRED');
- if(typeof destination!=='string'||!path.isAbsolute(destination))
+ if(typeof destination!=='string'||!path.win32.isAbsolute(destination))
    fail('NATIVE_GUARD_DESTINATION_INVALID');
  let result;
  try{
