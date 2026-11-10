@@ -90,9 +90,9 @@ pub fn verify(dir: &Path) -> Result<(), &'static str> {
         .map_err(|_| "NATIVE_ENVELOPE_JOURNAL_INVALID")?;
     if journal.get("decision").and_then(Value::as_str) != Some("accepted_for_local_staging") ||
        journal.get("scientific_approval").and_then(Value::as_bool) != Some(false) ||
-       journal.get("batch_id").and_then(Value::as_str) != Some(&envelope.identity.batch_id) ||
-       journal.get("base_sha256").and_then(Value::as_str) != Some(&envelope.identity.base_sha256) ||
-       journal.get("output_sha256").and_then(Value::as_str) != Some(&envelope.identity.output_sha256) {
+       journal.get("batch_id").and_then(Value::as_str) != Some(envelope.identity.batch_id.as_str()) ||
+       journal.get("base_sha256").and_then(Value::as_str) != Some(envelope.identity.base_sha256.as_str()) ||
+       journal.get("output_sha256").and_then(Value::as_str) != Some(envelope.identity.output_sha256.as_str()) {
         return Err("NATIVE_ENVELOPE_JOURNAL_MISMATCH");
     }
     // Intentionally do not claim to recompute the SDK canonical v3 digest.
