@@ -84,3 +84,7 @@ Se référer à [REPRISE-M15-NTFS-TVRW-J11.md](REPRISE-M15-NTFS-TVRW-J11.md) pou
 ## Candidats 1.0.0 disponibles depuis main — NON publiés
 
 Run [42902639887](https://github.com/MGhemri/tempora-framework/actions/runs/42902639887) : NSIS test **non signé** (artefact #13803013793), AppX Store **non soumis** (artefact #13803004531), expiration prévue le 10 décembre 2026. Le rapport [RELEASE-DESKTOP-STABLE-1.0.0.md](RELEASE-DESKTOP-STABLE-1.0.0.md) liste les preuves et les gates manuels bloquants. Le firmware/SDK n'est pas mis à jour ; les P0 M1.5 restent ouverts, writer packagé désactivé. **Ne pas décrire ce candidat comme une publication officielle stable.**
+
+## Stable 1.0.0 — vérification indépendante, prévol et recette
+
+Le lot en cours ajoute le contrôle indépendant SHA-256 des binaires NSIS/AppX contre deux preuves, plus la procédure [RECETTE-WINDOWS-STABLE-1.0.0.md](RECETTE-WINDOWS-STABLE-1.0.0.md) et la sonde Windows non destructive pour l'upgrade 0.2.0→1.0.0. La CI HEAD final doit réussir. Les essais VM et Store restent manuels et non attestés ; aucune release ni écriture M1.5 packagée.
