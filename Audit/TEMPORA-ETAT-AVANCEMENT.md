@@ -24,10 +24,10 @@
 | Dépôt | `MGhemri/tempora-framework` | https://github.com/MGhemri/tempora-framework |
 | PR de développement | **#114, brouillon** | https://github.com/MGhemri/tempora-framework/pull/114 |
 | Branche | `docs/assist-m1-5-transactional-persistence` | Branche expérimentale |
-| HEAD de référence précédent | `4f4ca37fb7c96811e99b2cbe40ac35cb39418fea` | Dernière base entièrement qualifiée vérifiée au début de cette itération |
-| Framework sur ce SHA | **TESTÉ-CI : succès** | https://github.com/MGhemri/tempora-framework/actions/runs/42760005561 |
-| Documentation UI sur ce SHA | **TESTÉ-CI : succès** | https://github.com/MGhemri/tempora-framework/actions/runs/42760005640 |
-| Desktop Foundation sur ce SHA | **TESTÉ-CI : succès** | https://github.com/MGhemri/tempora-framework/actions/runs/42760005524 |
+| HEAD de référence précédent | `4b46ee81419e1adcfa3018bed85c73fcb0b4f3b6` | Dernière base entièrement qualifiée vérifiée au début de cette itération |
+| Framework sur ce SHA | **TESTÉ-CI : succès** | https://github.com/MGhemri/tempora-framework/actions/runs/42762689352 |
+| Documentation UI sur ce SHA | **TESTÉ-CI : succès** | https://github.com/MGhemri/tempora-framework/actions/runs/42762689375 |
+| Desktop Foundation sur ce SHA | **TESTÉ-CI : succès** | https://github.com/MGhemri/tempora-framework/actions/runs/42762689715 |
 | Installateur Windows Chromium NSIS | Construction CI réussie sur le SHA de référence | Cela ne prouve pas une qualification NTFS / power-loss |
 | Enregistrement M1.5 dans le binaire distribué | **DÉSACTIVÉ** | Uniquement Electron non packagé et `TEMPORA_EXPERIMENTAL_M15_SAVE=1` |
 | Fusion dans `main` / nouvelle release / Store | **NON EFFECTUÉ** dans ce chantier | Conserver les protections de distribution |
@@ -53,7 +53,8 @@
 | M15-13 | Deux passes complètes d'inventaire read-only : détecter changement de journal d'une transaction finalisée ou candidate `.pending` sans changement d'ID | **IMPLÉMENTÉ ET TESTÉ-CI sur `5f9b5a2d`** | `recovery-assessment.cjs`, deux tests d'altération concurrente |
 | M15-14 | Couche Rust Win32 de contrôle de destination NTFS locale par handles, refus des UNC/reparse/jonctions | **IMPLÉMENTÉ ET TESTÉ-CI sur `9ccab348`** | `apps/desktop/native-windows-guard/`, `electron/windows-native-destination.cjs` |
 | M15-15 | Premier commit synthétique Win32 avec handles parents conservés et renommage à chemin absolu | **TESTÉ-CI sur `4f4ca37f`**, sonde uniquement | `native-windows-guard/src/native_commit.rs` et tests Win32 |
-| M15-16 | **Contrat de transport scientifique SDK → Rust** : cinq empreintes canoniques, deux empreintes des fichiers, validation croisée du journal et de la non-publication | **IMPLÉMENTÉ ; CI DU NOUVEAU HEAD À QUALIFIER**, lecture seule | `electron/scientific-native-transport.cjs`, `native-windows-guard/src/scientific_envelope.rs`, tests Node/Win32 |
+| M15-16 | Contrat de transport scientifique SDK → Rust : cinq empreintes canoniques, deux SHA des fichiers, journal et non-publication | **TESTÉ-CI sur `4b46ee81`**, lecture seule | `electron/scientific-native-transport.cjs`, `native-windows-guard/src/scientific_envelope.rs`, tests Node/Win32 |
+| M15-17 | **Writer natif de sonde consomme les buffers vérifiés par Rust**, sans relecture source après validation ; copie exacte dans `native-probe-complete/` sous opt-in de test | **IMPLÉMENTÉ, CI DU HEAD À QUALIFIER**, non scientifique | `native_commit.rs`, `scientific_envelope.rs`, tests d'intégration Windows |
 
 ## 3. Backlog de qualification — priorités et conditions de fermeture
 
@@ -76,7 +77,7 @@
 
 **Lot A — EN COURS (sécurité diagnostique, sans écriture) :** contrôle du verrou à identité inchangée **testé CI** ; deux passes complètes d'inventaire finalisé et `.pending` **implémentées, qualification du nouveau HEAD à confirmer**. Les limites de snapshot atomique/TOCTOU demeurent ; vérifier le coût de la double lecture et les contrats de confidentialité IPC.
 
-**Lot B — FONDATION NATIVE EN COURS :** précontrôle et commit de sonde Win32 qualifiés sur le précédent HEAD ; **M15-16** ajoute un contrat scientifique canonique SDK→Rust et sa vérification read-only, sans accorder le droit d'écrire. **À FAIRE P0** : consommation sécurisée de ce contrat par le writer natif avec relecture via handles, authenticité de la décision humaine, contrôle concurrent de toute la chaîne de dossiers, ACL/NTFS/power-loss et récupération.
+**Lot B — FONDATION NATIVE EN COURS :** précontrôle et commit de sonde Win32 qualifiés ; M15-16 (SDK→Rust) qualifié CI. **M15-17 implémente la copie des buffers vérifiés par Rust vers une transaction de sonde**, sans accès aux dossiers scientifiques et sans activation dans l'application. **À FAIRE P0** : preuve d'authenticité de l'approbation humaine, source ouverte par handles et immuable pendant le contrôle, contrôle NTFS anti-TOCTOU, ACL, panne électrique, recovery.
 
 **Lot C — durabilité et recovery humain :** injecter des pertes d'énergie et crash OS sur NTFS instrumenté, définir une transaction recoverable manuellement, consigner consentement et provenance ; ne pas déduire les garanties d'une seule CI.
 
@@ -132,3 +133,13 @@
 - **Risques P0 :** pas de vérification canonique SDK à l'intérieur de Rust, pas de lecture fichier handle-based intégrale, pas de writer scientifique natif, pas de signature de consentement humain, pas de qualification de durabilité électrique ni récupération opérateur.
 - **Prochaine action majeure :** transporter le corpus validé par SDK vers une transaction native sous handles sans confondre SHA des fichiers et digest canonique ; construire des tests NTFS adversariaux avant activation.
 - **Décision :** PR #114 brouillon, aucun changement dans `main`, releases ou Microsoft Store.
+
+
+### Itération M15-17 — 2026-11-10 — Première consommation de buffers vérifiés par le writer natif
+
+- **Baseline CI vérifiée :** `4b46ee81419e1adcfa3018bed85c73fcb0b4f3b6` : Framework run `42762689352`, Documentation run `42762689375`, Desktop Windows Chromium NSIS run `42762689715`, trois **success**.
+- **Fonctionnalité implémentée :** `scientific_envelope::load_verified` retourne les trois buffers déjà vérifiés et `native_commit::synthetic_transport_commit` les écrit sans rouvrir la source, dans le seul répertoire de sonde Windows. Commande `--synthetic-transport-commit` exigeant l'opt-in existant.
+- **Test ajouté :** véritable processus Rust Windows, refus sans opt-in et d'un journal altéré avant toute écriture, copie binaire exacte de l'enveloppe et de ses deux fichiers, aucune écriture dans `transactions/` ou `.pending/`.
+- **Qualification :** code `IMPLÉMENTÉ`; la CI du nouveau HEAD doit encore réussir avant `TESTÉ-CI`.
+- **Risques P0 inchangés :** un faux indicateur `sdk_validated` ne prouve pas le consentement ; les lectures d'entrée par chemins restent sujettes à des races ; la cible du renommage est absolue et non handle-relative ; pas de vraie transaction scientifique, récupération humaine ou durabilité power-loss.
+- **Décision :** PR #114 en brouillon. Aucun changement dans `main`, releases ou Microsoft Store ; writer scientifique distribué toujours désactivé.
