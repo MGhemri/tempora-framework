@@ -5,13 +5,15 @@
 > État initial vérifié : **2026-11-10** · Responsable de suivi : équipe TEMPORA / développeur principal.
 > **Ne constitue ni une homologation de sécurité, ni une certification de durabilité.**
 
+**NOUVELLE DÉCISION 2026-11-10 :** fusion de PR #114 autorisée une fois le candidat AppX 0.2.0 qualifié. Lire [STORE-MISE-A-JOUR-0.2.0.md](STORE-MISE-A-JOUR-0.2.0.md). Préparation Store ≠ soumission ou publication. Les P0 d'écriture scientifique restent ouverts.
+
 ## 0. Convention d'actualisation obligatoire
 
 **Au début de chaque itération :**
 1. Lire **`REPRISE-TRAVAUX.md` d'abord**, puis **ce fichier**, `ASSIST-M1.5-PERSISTENCE.md` et le runbook de récupération.
 2. Contrôler le HEAD, le statut brouillon de la PR #114 et les trois workflows du **HEAD exact** ; ne pas utiliser la réussite d'un ancien commit comme preuve du nouveau.
 3. Retenir les tâches prioritaires non closes, distinguer les preuves vérifiées des hypothèses, puis produire un lot cohérent.
-4. Ne pas fusionner sur `main`, publier npm/GitHub Release ou soumettre sur Microsoft Store sans décision explicite.
+4. **Exception autorisée le 2026-11-10 : fusionner PR #114 après tests Store verts**, sans publier npm/GitHub Release ni soumettre/publier sur Microsoft Store sans décision distincte.
 5. Avant la clôture : mettre à jour **ce registre**, les preuves (SHA/CI), les changements réellement livrés, les risques résiduels, les critères de sortie et les prochaines actions. Ne jamais marquer une tâche « terminée » si sa CI est en cours.
 6. Éviter les commits pendant une CI déjà lancée : les workflows PR ont `cancel-in-progress`. Préférer un lot consolidé, puis la qualification du dernier commit.
 
@@ -209,3 +211,13 @@ Le contrôle CI du HEAD `72ccf9b7` a révélé un second problème de branche : 
 - **Statut du nouveau lot** : **IMPLÉMENTÉ ; TESTÉ-CI seulement après succès des trois workflows du SHA final**. La base verte citée ci-dessus ne qualifie pas ce lot.
 - **P0 TOUJOURS NON CLOS** : SEC-WIN-01 (fenêtre de changement après la relecture / renommage absolu), SEC-WIN-02 (ACL et volumes), SCI-01 (consentement non authentifié), REC-01 (reprise humaine autorisée), DUR-01 (power-loss). Aucune activation de sauvegarde native scientifique ou Store.
 - **Suite** : opération Windows réellement sécurisée contre les modifications après vérification jusqu'au commit ; authentification de l'intention de l'opérateur liée aux SHA et au SDK ; writer scientifique natif distinct de la sonde ; tests de panne OS/NTFS.
+
+
+### Itération de préparation à la fusion et au Store 0.2.0 — 2026-11-10
+
+- **Autorisation utilisateur :** fusionner le lot qualifié et préparer la mise à jour du Store, en gardant la soumission et la publication à **validation manuelle ultérieure**.
+- **Base précédente vérifiée :** `6f5ca82029e8b01717d5c38b9734251095a7c9a7` (Framework `42846503555`, Documentation UI `42846503519`, Desktop Foundation `42846503497`, trois réussis).
+- **Travaux :** candidat version `0.2.0` dans `apps/desktop/electron/package.json`, cible AppX x64 distincte de NSIS et identité officielle Microsoft ; `desktop-foundation.yml` construit le package Store sans publication, inspecte le manifeste et conserve l'artefact ; dossier [STORE-MISE-A-JOUR-0.2.0.md](STORE-MISE-A-JOUR-0.2.0.md) + [REPRISE-TRAVAUX.md](REPRISE-TRAVAUX.md) mis à jour.
+- **Qualification du nouveau HEAD** : attendre la fin des trois workflows, notamment la construction AppX. Une CI verte sur le HEAD ancien ne suffit pas. N'attribuer la mention `STORE-CANDIDATE-READY` qu'après avoir effectivement vérifié le manifeste de l'artefact.
+- **Fusion autorisée sous condition CI**, puis consigner le SHA final et le statut de `main`. **Aucune publication Store ni release GitHub**, aucun changement de sécurité des écritures packagées.
+- **P0 non levés** : `SEC-WIN-01/02`, `SCI-01`, `REC-01`, `DUR-01`. Toute nouvelle fonctionnalité expérimentale après fusion doit être développée dans une nouvelle branche de PR.
