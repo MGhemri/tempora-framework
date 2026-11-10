@@ -123,7 +123,7 @@ fn exclusive_sync(directory: &Path, name: &str, contents: &[u8]) -> Result<(), &
 fn rename_relative(
     source: Handle, destination: Handle, filename: &str,
 ) -> Result<(), &'static str> {
-    if filename.is_empty() || filename.contains(['/', '\\', ':']) {
+    if filename.is_empty() || filename.chars().any(|c| matches!(c, '/' | '\\' | ':')) {
         return Err("NATIVE_COMMIT_FILENAME_UNSAFE");
     }
     let chars: Vec<u16> = OsStr::new(filename).encode_wide().collect();
