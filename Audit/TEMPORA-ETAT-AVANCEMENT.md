@@ -188,3 +188,12 @@
 - **Gain sécurité effectif :** `probe_inventory.rs` lit maintenant le manifeste avec `open_pinned` et `bounded_json` plutôt qu'avec `symlink_metadata` suivi de `File::open` ; refus du suivi de liens, handles Windows conservés et lecture bornée.
 - **Tests complémentaires conservés :** manifeste finalisé falsifié → `unsafe_entries` ; 101 dossiers candidats → refus sans nettoyage. Les tests existants de crash et de preuves restent exécutés une seule fois.
 - **Qualification :** changement implémenté ; attendre trois workflows **SUCCESS** sur le HEAD final pour passer à TESTÉ-CI. Aucun gate P0 ne peut être clôturé sur ce seul résultat.
+
+
+#### M15-19 — État final de consolidation après contrôle de cohérence GitHub
+
+Le contrôle CI du HEAD `72ccf9b7` a révélé un second problème de branche : la commande du workflow faisait référence à `native-probe-inventory.test.cjs` alors que le fichier et le module Rust associé n'étaient plus présents dans cet arbre Git. Les autres tests Windows natifs et les suites Framework/Documentation étaient réussis ; l'échec est lié à la référence orpheline, pas à un échec de persistance scientifique.
+
+**Correction finale :** restauration d'**un seul** `probe_inventory.rs` et de **sa seule suite** `native-probe-inventory.test.cjs`, avec branchement CLI unique, contrat JSON numérique stable, handles natifs pour les manifestes et le propriétaire du verrou, volume limité à 100 éléments, et essais de corruption/manifeste, commit synthétique, crash après renommage et dépassement de capacité. Le fichier concurrent `probe_forensic.rs` et les tests doublons restent supprimés. Le workflow existant appelle désormais un chemin présent.
+
+**Statut : IMPLÉMENTÉ, CI DU HEAD DE CONSOLIDATION À VALIDER.** Pour toute conclusion, vérifier les trois workflows du SHA exact, en particulier la compilation Rust et les 5 tests Windows. Ne pas marquer SEC-WIN-01 / REC-01 / DUR-01 comme clôturés : le diagnostic reste consultatif et non atomique, sans pouvoir de reprise.
