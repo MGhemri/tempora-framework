@@ -277,3 +277,11 @@ Le contrôle CI du HEAD `72ccf9b7` a révélé un second problème de branche : 
 - TVRW J11 (PR #123, merge `8303f14de625453de9fa83f7de7b6635efe3bf20`) : affichage déterministe de relations déclarées, multiarêtes, boucles, sélection accessible via références typées ; CI PR #42896763955 / #42896764282 / #42896764243 toutes vertes. Voir [TVRW-J11-GRAPH.md](TVRW-J11-GRAPH.md).
 - P0 toujours ouverts : SEC-WIN-01/02 (sous-dossiers et renommage encore par chemins), SCI-01 (signature réelle du consentement), REC-01 (récupération humaine autorisée), DUR-01 (coupures électriques instrumentées).
 - Store 0.2.0 : publication déclarée par l'utilisateur d'un artefact de commit `3c2b7bb`, sans les changements de PR #122/#123 ; aucune nouvelle mise à jour automatique.
+
+
+### 10 novembre 2026 — candidat stable TEMPORA Desktop 1.0.0 fusionné, pas publié
+
+- PR #125 fusionnée au SHA `7efbc9f0a0d548db735d63a938e7890ee8134d44`, version Electron/GUI/preload/lock `1.0.0`, identité Store conservée et AppId synchronisé.
+- CI PR Framework `42901764418`, Docs `42901763870`, Desktop Windows `42901763858` : succès ; CI main Framework `42902639642`, Docs `42902639864`, Pages `42902639849`, Desktop Windows `42902639887` : succès.
+- Candidats officiels de main **non signés et non soumis** : NSIS x64 artefact `13803013793`, AppX x64 artefact `13803004531` ; chacun avec SHA256SUMS et RELEASE-PROVENANCE, expiration prévue 10/12/2026.
+- NO-GO de publication tant que recette Win10/11 propre, migration Store 0.2.0→1.0.0, signature Authenticode EXE, licences/sécurité, certification et décision manuelle ne sont pas clos. Tous les P0 de persistance native restent ouverts. Détails : [RELEASE-DESKTOP-STABLE-1.0.0.md](RELEASE-DESKTOP-STABLE-1.0.0.md).

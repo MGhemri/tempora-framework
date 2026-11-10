@@ -1,3 +1,5 @@
+> **Mise à jour historique (10 novembre 2026) :** le propriétaire a déclaré avoir **publié Desktop 0.2.0** via Partner Center. Les anciennes sections « non soumis/non publié » ci-dessous sont des instantanés d'audit **avant cette déclaration**, pas l'état courant. Une future stable Desktop **1.0.0** est désormais construite depuis main (`7efbc9f0`, workflow #42902639887) en candidats **non signés, non soumis** ; voir [dossier stable 1.0.0](RELEASE-DESKTOP-STABLE-1.0.0.md). Aucune nouvelle publication Store n'est effectuée.
+
 # TEMPORA Desktop — Dossier de préparation Microsoft Store, version 0.2.0
 
 > **Statut actuel : voir [POINT-DE-REPRISE.md](POINT-DE-REPRISE.md) ; PR #114, #116 et #117 fusionnées ; AppX 0.2.0 candidat non soumis et non publié.** Fusion du 2026-11-10 après succès des trois workflows du HEAD final. Les P0 M1.5 demeurent non résolus : cette livraison **n'active pas le writer scientifique expérimental**.
