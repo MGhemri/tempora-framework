@@ -449,3 +449,18 @@ test('a junction or symlink replacing the committed directory is refused without
  assert.deepEqual(fs.readdirSync(target),[]);
  assert.equal(fs.lstatSync(entry).isSymbolicLink(),true);
 });
+
+test('filesystem and volume roots are never valid transaction write destinations',t=>{
+ const f=fixture(t),root=path.parse(f.root).root;
+ assert.throws(()=>createTransaction(root,f,canonical),
+  {code:'TRANSACTION_ROOT_UNSAFE'});
+});
+test('Windows UNC and device destinations fail closed without probing remote paths',t=>{
+ if(process.platform!=='win32')return;
+ const f=fixture(t);
+ for(const root of ['\\\\untrusted-server\\share\\TEMPORA',
+                     '\\\\?\\C:\\TEMPORA']) {
+   assert.throws(()=>createTransaction(root,f,canonical),
+    {code:'TRANSACTION_ROOT_UNSAFE'});
+ }
+});
