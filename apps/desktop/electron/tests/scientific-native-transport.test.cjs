@@ -174,3 +174,49 @@ test('Win32 source file handles resist a concurrent writer during the native pro
  assert.equal(outcome,0,err);
  assert.match(out,/^NATIVE_SYNTHETIC_TRANSPORT_COMMITTED:[a-f0-9]{32}/);
 });
+
+test('real Rust crash matrix preserves forensic evidence without replaying a native write',t=>{
+ if(process.platform!=='win32')return;
+ const binary=path.resolve(__dirname,
+  '../../native-windows-guard/target/release/tempora-windows-guard.exe');
+ const src=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-native-crash-input-'));
+ t.after(()=>fs.rmSync(src,{recursive:true,force:true}));
+ const transport=buildScientificTransport(sample());
+ for(const [name,bytes] of Object.entries(transport))
+  fs.writeFileSync(path.join(src,name),bytes,{flag:'wx'});
+ const matrix=[
+  {point:'after_lock',code:81,pending:0,complete:0},
+  {point:'after_corpus',code:82,pending:1,complete:0},
+  {point:'after_rename',code:83,pending:0,complete:1}
+ ];
+ for(const stage of matrix){
+  const root=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-native-crash-target-'));
+  t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
+  const env={...process.env,TEMPORA_NATIVE_SYNTHETIC_TEST:'1',
+   TEMPORA_NATIVE_TEST_CRASH_POINT:stage.point};
+  const result=spawnSync(binary,['--synthetic-transport-commit',root,src],
+   {encoding:'utf8',timeout:15000,windowsHide:true,env});
+  assert.equal(result.status,stage.code,result.stderr);
+  const lock=path.join(root,'.native-probe-lock');
+  assert.equal(fs.existsSync(path.join(lock,'owner.txt')),true);
+  const pending=fs.readdirSync(path.join(root,'.native-probe-pending'));
+  const completed=fs.readdirSync(path.join(root,'native-probe-complete'));
+  assert.equal(pending.length,stage.pending,stage.point);
+  assert.equal(completed.length,stage.complete,stage.point);
+  if(stage.point==='after_corpus'){
+   assert.deepEqual(fs.readdirSync(path.join(root,'.native-probe-pending',
+    pending[0])),['corpus.json']);
+  }
+  if(stage.point==='after_rename'){
+   const final=path.join(root,'native-probe-complete',completed[0]);
+   assert.deepEqual(fs.readFileSync(path.join(final,'journal.json')),
+    transport['journal.json']);
+  }
+  const replay=spawnSync(binary,['--synthetic-transport-commit',root,src],
+   {encoding:'utf8',timeout:15000,windowsHide:true,
+    env:{...env,TEMPORA_NATIVE_TEST_CRASH_POINT:''}});
+  assert.equal(replay.status,3,'orphan lock must block blind replay');
+  assert.equal(fs.existsSync(lock),true);
+  assert.equal(fs.existsSync(path.join(root,'transactions')),false);
+ }
+});
