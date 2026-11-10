@@ -163,7 +163,8 @@ function assistantStage(payload){
   if(!validation.valid)throw Object.assign(Error('REVIEW_STAGING_INVALID'),{code:'REVIEW_STAGING_INVALID'});
   return {review_schema_version:'1.0.0',scope:'in_memory_staging_only',
     source_sha256:payload.source_sha256,base_sha256:expected_base_sha256,
-    batch_id:expected_batch_id,snapshot_sha256:outcome.journal.output_sha256,
+    batch_id:expected_batch_id,mapping_sha256:bundle.report.mapping.sha256,
+    snapshot_sha256:outcome.journal.output_sha256,
     journal:outcome.journal,canonical_validated:true,scientific_approval:false,
     saved_to_disk:false,published:false,import_performed:false,
     persistence_required:true};
