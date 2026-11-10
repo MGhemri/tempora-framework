@@ -320,3 +320,40 @@ raccordement de la **seconde décision humaine de sauvegarde** restent des
 gates bloquants pour l'activation de M1.5. Le rapport est une photographie
 potentiellement concurrente : la validation finale de toute écriture devra
 toujours être répétée sous réservation exclusive.
+
+
+## 12. Jalonnement accéléré — parcours de sauvegarde hôte isolé
+
+Le lot contient désormais `native-persistence-workflow.cjs`, une composition
+**strictement interne au processus hôte** du coordinateur de seconde décision,
+du sélecteur natif de destination et du stockage canonique. Aucune opération
+d'écriture n'est ajoutée au contrat `preload.cjs` ou aux canaux IPC :
+
+- `offer` reçoit uniquement un staging d'origine worker et une fonction de
+  relecture de source/corpus fournie par le processus de confiance.
+- `confirmAndCommit` ne prend que le handle de session et le jeton. Il ouvre
+  la **confirmation native**, puis le sélecteur de dossier **natif**. Une
+  destination inventée par le renderer est ignorée.
+- Après autorisation, le recalcul du SDK 3.0.0 est exécuté avec l'instance
+  explicitement fournie par l'hôte ; les empreintes sont comparées et seule
+  l'issue conforme est transmise au stockage.
+- La révocation de session ou l'annulation d'une boîte de dialogue empêche
+  toute écriture ; le jeton est consommé. Un seul parcours peut être actif.
+- Le service et les modules d'autorisation sont inclus dans le packaging
+  Electron, avec tests synthétiques en CI Windows et Linux.
+
+**Qualification complémentaire Windows :** des tests adversariaux essaient
+de remplacer les dossiers `.pending` et `transactions` par des jonctions
+NTFS (ou liens symboliques Unix) et exigent un refus sans écriture dans le
+répertoire cible. Les racines de volume et les destinations UNC/device Windows
+sont désormais interdites pour l'écriture locale par le prototype. Ces
+contrôles ne démontrent pas encore l'absence de race TOCTOU lors d'un
+remplacement *pendant* l'écriture, ni l'impossibilité d'utiliser un lecteur
+réseau mappé, ni la durabilité après coupure électrique.
+
+**Critère restant pour la mise à disposition GUI :** raccorder le processus
+principal aux callbacks de sélection, relecture et confirmation depuis des
+sessions Electron vérifiées ; qualifier la résistance aux substitutions de
+chemins et à la perte de puissance Windows ; tester les installations et la
+récupération humaine. Jusqu'à cette qualification, le renderer n'a **aucune
+méthode de sauvegarde M1.5** ; seule l'inspection reste disponible.
