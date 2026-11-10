@@ -540,3 +540,12 @@ la transaction est déjà visible. Ce cas doit être traité comme un
 d'écriture ou comme une autorisation de réessayer. Ces protections ne
 suppriment pas les races TOCTOU et ne remplacent pas un verrou natif fondé
 sur des handles sous Windows.
+
+
+**Compatibilité Windows (lecture de fichiers) :** la CI a montré que
+`lstat` et `fstat` peuvent exposer des identifiants `dev` différents
+sur un même fichier sous Windows. Le contrôle du lecteur compare donc
+l'inode `bigint` lorsqu'il est non nul, mais n'exige plus l'égalité de
+`dev` entre chemin et descripteur. Cela ne doit pas être interprété comme
+une garantie native contre les substitutions après l'ouverture. La lecture
+reste strictement limitée à 16 Mio + 1 octet.
