@@ -91,7 +91,7 @@ test('Electron Beta version in the GUI matches the shipped package',()=>{
  const pkg=require('../package.json');
  const preload=src('electron/preload.cjs');
  const view=src('src/main.ts');
- assert.equal(pkg.version,'0.1.2-beta.3');
+ assert.equal(pkg.version,'0.2.0');
  assert.ok(preload.includes("desktopVersion: '"+pkg.version+"'"),
   'Preload diagnostic version must match Electron package version');
  assert.match(view,/window\.temporaElectron\.desktopVersion/);
@@ -322,4 +322,87 @@ test('Official Windows Desktop packaging is Chromium/Electron only, no WebView2 
  assert.equal(pkg.build.productName,'TEMPORA Desktop');
  assert.match(store,/GhemriM\.TEMPORADesktop/);
  assert.match(policy,/Chromium\/Electron is the only supported Windows distribution host/);
+});
+
+test('M1.5 recovery UI is a native-picker read-only action with packaged verifier',()=>{
+ const host=src('electron/main.cjs'),preload=src('electron/preload.cjs');
+ const ui=src('src/assistant-view.ts'),pkg=require('../package.json');
+ assert.match(host,/tempora:assistant:assess-recovery/);
+ assert.match(host,/properties:\s*\['openDirectory'\]/);
+ assert.match(host,/validSender\(event\)/);
+ assert.match(host,/createRequire\(runtime\.worker\)\('tempora-framework'\)/);
+ assert.match(host,/ASSIST_RECOVERY_REPORT_LIMIT/);
+ assert.match(preload,/assistantAssessRecovery:\s*\(\)\s*=>\s*ipcRenderer\.invoke\('tempora:assistant:assess-recovery'\)/);
+ assert.match(ui,/Examiner des transactions interrompues/);
+ assert.match(ui,/Aucun fichier modifié ni publié/);
+ assert.ok(pkg.build.files.includes('recovery-assessment.cjs'));
+ assert.ok(pkg.build.files.includes('transaction-store.cjs'));
+ assert.doesNotMatch(preload,/assistantCommit|assistantSaveTransaction|createTransaction/);
+});
+
+test('M1.5 authorization modules are packaged but save IPC remains unavailable',()=>{
+ const pkg=require('../package.json'),preload=src('electron/preload.cjs');
+ for(const filename of ['review-persistence-gate.cjs',
+  'review-persistence-adapter.cjs','review-persistence-coordinator.cjs'])
+   assert.ok(pkg.build.files.includes(filename),filename+' must ship in Windows');
+ assert.doesNotMatch(preload,/assistantSave|assistantCommit|assistantPersist/);
+ const adapter=src('electron/review-persistence-adapter.cjs');
+ const coordinator=src('electron/review-persistence-coordinator.cjs');
+ assert.match(adapter,/sdk=require\('tempora-framework'\)/);
+ assert.match(coordinator,/preparePersistence\([^;]*sdk\)/s);
+});
+
+test('native M1.5 save requires unpackaged explicit opt-in and host confirmation',()=>{
+ const pkg=require('../package.json');
+ const host=src('electron/main.cjs'),preload=src('electron/preload.cjs');
+ assert.ok(pkg.build.files.includes('native-persistence-workflow.cjs'));
+ assert.match(src('electron/native-persistence-workflow.cjs'),/confirmNative/);
+ assert.match(src('electron/native-persistence-workflow.cjs'),/chooseDestination/);
+ assert.match(host,/if\(!experimentalLocalSave\)throw Error\('ASSIST_EXPERIMENTAL_SAVE_DISABLED'\)/);
+ assert.doesNotMatch(preload,/assistantSave|assistantPersist|assistantCommit/);
+});
+
+test('session-bound canonical reread is shipped only in the trusted Electron host',()=>{
+ const pkg=require('../package.json');
+ const preload=src('electron/preload.cjs');
+ const bridge=src('electron/assistant-persistence-binding.cjs');
+ assert.ok(pkg.build.files.includes('assistant-persistence-binding.cjs'));
+ assert.match(bridge,/sessions\.canonicalInput\(handle\)/);
+ assert.match(bridge,/ASSIST_BINDING_CORPUS_CHANGED/);
+ assert.match(bridge,/ASSIST_BINDING_SOURCE_CHANGED/);
+ assert.doesNotMatch(preload,/assistantPersistenceBinding|makeTrustedSessionReread|canonicalInput/);
+});
+
+test('worker staging is bound to a host-private revocable intent without enabling a save IPC',()=>{
+ const host=src('electron/main.cjs'),preload=src('electron/preload.cjs');
+ const pkg=require('../package.json');
+ assert.ok(pkg.build.files.includes('assistant-persistence-authority.cjs'));
+ assert.match(host,/getPersistenceAuthority\(\)\.recordStaging\(/);
+ assert.match(host,/persistenceAuthority\?\.revoke\(handle_id\)/);
+ assert.match(host,/persistenceAuthority\?\.clear\(\)/);
+ assert.match(host,/createRequire\(runtime\.worker\)\('tempora-framework'\)/);
+ assert.doesNotMatch(host,/ipcMain\.handle\('tempora:assistant:(?:save|persist|commit)/);
+ assert.doesNotMatch(preload,/assistantSave|assistantPersist|assistantCommit/);
+});
+
+test('gated development-only save channel accepts a handle, never corpus, path or token',()=>{
+ const host=src('electron/main.cjs'),preload=src('electron/preload.cjs');
+ const pkg=require('../package.json');
+ assert.ok(pkg.build.files.includes('local-save-access.cjs'));
+ assert.match(host,/localSaveEnabled\(\{isPackaged:app\.isPackaged,env:process\.env\}\)/);
+ assert.match(host,/if\(!experimentalLocalSave\)throw Error\('ASSIST_EXPERIMENTAL_SAVE_DISABLED'\)/);
+ assert.match(host,/persistenceAuthority\.commitTrusted\(handle_id\)/);
+ assert.match(host,/validSender\(event\)/);
+ assert.match(preload,/assistantLocalSave: handleId=>ipcRenderer\.invoke\('tempora:assistant:local-save',handleId\)/);
+ assert.doesNotMatch(preload,/assistantLocalSave:\s*\([^)]*,/);
+ assert.match(src('src/assistant-view.ts'),/experimental_local_save_ready/);
+ assert.match(src('src/assistant-view.ts'),/localSaveReceipt\?\.saved_to_disk/);
+});
+
+test('an uncertain writer-lock ownership failure is visible without allowing silent retries',()=>{
+ const host=src('electron/main.cjs'),view=src('src/assistant-view.ts');
+ assert.match(host,/TRANSACTION_WRITER_OWNERSHIP_LOST/);
+ assert.match(view,/Ne réessayez pas/);
+ assert.match(view,/Do not retry/);
+ assert.match(view,/localSaveAttempted=true/);
 });

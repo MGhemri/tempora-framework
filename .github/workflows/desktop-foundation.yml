@@ -54,8 +54,21 @@ jobs:
       - run: npm run build
       - run: npm run test:bridge
       - run: node --test electron/tests/assistant-session.test.cjs
+      - run: npm run test:transaction
+      - run: npm run test:persistence-gate
+      - run: npm run test:persistence-adapter
+      - run: npm run test:persistence-coordinator
+      - run: npm run test:native-persistence
+      - run: npm run test:persistence-binding
+      - run: npm run test:persistence-authority
+      - run: npm run test:local-save-gate
+      - run: npm run test:native-guard
+      - run: npm run test:scientific-native-transport
+      - run: npm run test:recovery
       - run: npm run test:visualization
-      - run: npm run test:windows-engine
+      # Individual suites above already ran; retain host and integrity
+      # contract coverage without running every Desktop suite twice.
+      - run: node --test electron/tests/host.test.cjs electron/tests/review-integrity.test.cjs
 
   synthetic-benchmark:
     # Opt-in only, never a required PR status; no new workflow files.
@@ -106,6 +119,16 @@ jobs:
           node-version: '22.16.0'
           cache: npm
           cache-dependency-path: apps/desktop/electron/package-lock.json
+      - name: Build and test Windows native handle guard
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          cargo test --manifest-path native-windows-guard/Cargo.toml
+          if ($LASTEXITCODE -ne 0) { throw 'NATIVE_GUARD_RUST_TEST_FAILED' }
+          cargo build --release --manifest-path native-windows-guard/Cargo.toml
+          if ($LASTEXITCODE -ne 0) { throw 'NATIVE_GUARD_WINDOWS_BUILD_FAILED' }
+          node --test electron/tests/windows-native-destination.test.cjs
+          if ($LASTEXITCODE -ne 0) { throw 'NATIVE_GUARD_INTEGRATION_FAILED' }
       - name: Build shared Desktop GUI and contract tests
         run: |
           npm install --ignore-scripts --no-audit --no-fund
@@ -115,6 +138,17 @@ jobs:
           node --test electron/tests/host.test.cjs
           node --test electron/tests/assistant-session.test.cjs
           node --test electron/tests/review-integrity.test.cjs
+          npm run test:transaction
+          npm run test:persistence-gate
+          npm run test:persistence-adapter
+          npm run test:persistence-coordinator
+          npm run test:native-persistence
+          npm run test:persistence-binding
+          npm run test:persistence-authority
+          npm run test:local-save-gate
+          npm run test:recovery
+          npm run test:scientific-native-transport
+          node --test electron/tests/native-probe-inventory.test.cjs
       - name: Stage pinned scientific runtime
         run: npm run stage:windows-engine
       - name: Test pinned Node worker and human staging before Electron packaging
@@ -170,3 +204,36 @@ jobs:
           if ($setups.Count -ne 1) { throw 'ELECTRON_NSIS_INSTALLER_MISSING_OR_AMBIGUOUS' }
           Write-Host ('Unsigned experimental Electron NSIS: ' + $setups[0].Name)
           ./electron/scripts/verify-installed-examples.ps1 -Installer $setups[0].FullName -InstallDirectory "$env:RUNNER_TEMP/tempora-electron-j8-examples"
+      - name: Build unsigned Microsoft Store AppX candidate (never publish)
+        shell: pwsh
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+        run: |
+          $ErrorActionPreference = 'Stop'
+          Push-Location electron
+          npm run dist:store
+          if ($LASTEXITCODE -ne 0) { throw 'TEMPORA_STORE_APPX_BUILD_FAILED' }
+          Pop-Location
+          $packages = @(Get-ChildItem electron/release -File -Filter '*-STORE.appx')
+          if ($packages.Count -ne 1) { throw 'TEMPORA_STORE_APPX_MISSING_OR_AMBIGUOUS' }
+          Add-Type -AssemblyName System.IO.Compression
+          $zip = [System.IO.Compression.ZipFile]::OpenRead($packages[0].FullName)
+          try {
+            $entry = $zip.GetEntry('AppxManifest.xml')
+            if ($null -eq $entry) { throw 'TEMPORA_STORE_MANIFEST_MISSING' }
+            $reader = [System.IO.StreamReader]::new($entry.Open())
+            try { [xml]$manifest = $reader.ReadToEnd() } finally { $reader.Dispose() }
+            $identity = $manifest.Package.Identity
+            if ($identity.Name -ne 'GhemriM.TEMPORADesktop') { throw 'TEMPORA_STORE_IDENTITY_MISMATCH' }
+            if ($identity.Publisher -ne 'CN=C5BC3837-BBC8-425E-916B-4B6F77BD7455') { throw 'TEMPORA_STORE_PUBLISHER_MISMATCH' }
+            if ($identity.Version -notmatch '^0[.]2[.]0[.][0-9]+') { throw 'TEMPORA_STORE_VERSION_MISMATCH' }
+            if ($identity.ProcessorArchitecture -ne 'x64') { throw 'TEMPORA_STORE_ARCH_MISMATCH' }
+            Write-Host ('Validated candidate, not submitted: '+$packages[0].Name)
+          } finally { $zip.Dispose() }
+      - name: Preserve Store candidate for MANUAL Partner Center submission
+        uses: actions/upload-artifact@v4
+        with:
+          name: TEMPORA-Desktop-0.2.0-x64-STORE-CANDIDATE-NOT-PUBLISHED
+          path: apps/desktop/electron/release/*-STORE.appx
+          if-no-files-found: error
+          retention-days: 14

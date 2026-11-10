@@ -1,13 +1,14 @@
 {
   "name": "tempora-desktop-chromium-fallback",
   "productName": "TEMPORA Desktop",
-  "version": "0.1.2-beta.3",
+  "version": "0.2.0",
   "private": true,
   "description": "TEMPORA Desktop — official offline Chromium/Electron scientific research client",
   "main": "main.cjs",
   "license": "MIT",
   "scripts": {
-    "dist:win": "electron-builder --win nsis --x64"
+    "dist:win": "electron-builder --win nsis --x64",
+    "dist:store": "electron-builder --win appx --x64 --publish never"
   },
   "devDependencies": {
     "electron": "45.2.3",
@@ -32,7 +33,17 @@
         "filter": [
           "**/*"
         ]
-      }
+      },
+      "recovery-assessment.cjs",
+      "transaction-store.cjs",
+      "review-persistence-gate.cjs",
+      "review-persistence-adapter.cjs",
+      "review-persistence-coordinator.cjs",
+      "native-persistence-workflow.cjs",
+      "assistant-persistence-binding.cjs",
+      "assistant-persistence-authority.cjs",
+      "local-save-access.cjs",
+      "windows-native-destination.cjs"
     ],
     "extraResources": [
       {
@@ -92,6 +103,18 @@
       "allowToChangeInstallationDirectory": true,
       "createDesktopShortcut": true
     },
-    "afterPack": "./after-pack.cjs"
+    "afterPack": "./after-pack.cjs",
+    "appx": {
+      "identityName": "GhemriM.TEMPORADesktop",
+      "applicationId": "TEMPORADesktop",
+      "publisher": "CN=C5BC3837-BBC8-425E-916B-4B6F77BD7455",
+      "publisherDisplayName": "Ghemri M",
+      "displayName": "TEMPORA Desktop",
+      "artifactName": "TEMPORA-Desktop-${version}-${arch}-STORE.appx",
+      "languages": [
+        "en-US",
+        "fr-FR"
+      ]
+    }
   }
 }

@@ -1,5 +1,14 @@
 // TEMPORA Assistant initial read-only Desktop view; no mapping approval or import.
+export type AssistantRecoveryReport={
+ schema_version:'1.0.0';mode:'read_only_assessment';safe_to_start_new_write:boolean;
+ requires_manual_attention:boolean;lock_status:string;committed_count:number;
+ invalid_transactions:string[];pending_verified_for_review:string[];
+ pending_incomplete:string[];pending_unsafe:string[];
+ recovery_performed:false;files_modified:false;scientific_approval:false;published:false;
+};
 export type AssistantHost={
+ assistantAssessRecovery?:()=>Promise<AssistantRecoveryReport|null>;
+ assistantLocalSave?:(id:string)=>Promise<AssistantLocalSaveReceipt>;
  assistantOpen:()=>Promise<AssistantOpen|null>;
  assistantSelectSheet:(id:string,name:string)=>Promise<{source_sha256:string;table:AssistantTable}>;
  assistantClose:(id:string)=>Promise<boolean>;
@@ -14,7 +23,12 @@ export type AssistantOpen={
  inspection:{sheets?:Array<{name:string;state:string}>;candidates?:Array<{header_values:string[]}>;
  suggested_delimiter?:string|null};
 };
+export type AssistantLocalSaveReceipt={
+ saved_to_disk:boolean;cancelled?:boolean;transaction_id?:string;
+ output_sha256?:string;published?:false;scientific_approval?:false;
+};
 export type AssistantReviewReceipt={
+  experimental_local_save_ready?:boolean;
   scope:'in_memory_staging_only';batch_id:string;source_sha256:string;
   snapshot_sha256:string;canonical_validated:true;scientific_approval:false;
   saved_to_disk:false;published:false;import_performed:false;persistence_required:true;
@@ -101,12 +115,58 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
  const reviewedAtInput=el('assistant-reviewed-at') as HTMLInputElement;
  const reviewStageButton=el('assistant-review-stage') as HTMLButtonElement;
  const reviewReceiptOutput=el('assistant-review-receipt');
+ const localSaveButton=document.createElement('button');
+ localSaveButton.type='button';
+ const localSaveOutput=document.createElement('pre');
+ localSaveOutput.setAttribute('aria-live','polite');
+ localSaveOutput.style.whiteSpace='pre-wrap';
+ localSaveOutput.style.overflowWrap='anywhere';
+ localSaveButton.hidden=true;
+ reviewReceiptOutput.parentElement?.append(localSaveButton,localSaveOutput);
+ // Diagnostic view is intentionally separate from the import approval flow:
+ // it cannot arm a save operation or accept a renderer-controlled path.
+ const recoveryButton=document.createElement('button');
+ recoveryButton.type='button';
+ recoveryButton.textContent='Examiner des transactions interrompues (lecture seule)';
+ const recoveryReport=document.createElement('pre');
+ recoveryReport.setAttribute('aria-live','polite');
+ recoveryReport.style.whiteSpace='pre-wrap';
+ recoveryReport.style.overflowWrap='anywhere';
+ reviewReceiptOutput.parentElement?.append(recoveryButton,recoveryReport);
+ recoveryButton.addEventListener('click',async()=>{
+   if(!host?.assistantAssessRecovery||recoveryButton.disabled)return;
+   recoveryButton.disabled=true;
+   recoveryReport.textContent=lang()==='fr'?'Diagnostic en lecture seule…':'Read-only assessment…';
+   try {
+     const report=await host.assistantAssessRecovery();
+     if(!report){recoveryReport.textContent=lang()==='fr'?'Diagnostic annulé.':'Assessment cancelled.';return;}
+     const lines=[
+       'TEMPORA M1.5 — rapport en lecture seule',
+       'Verrou : '+report.lock_status,
+       'Transactions terminées : '+report.committed_count,
+       'Transactions invalides : '+report.invalid_transactions.join(', '),
+       'Dossiers à examiner : '+report.pending_verified_for_review.join(', '),
+       'Dossiers incomplets : '+report.pending_incomplete.join(', '),
+       'Dossiers suspects : '+report.pending_unsafe.join(', '),
+       report.requires_manual_attention?
+         'EXAMEN MANUEL REQUIS — aucune récupération automatique.':
+         'Aucun blocage structurel détecté. Aucune validation scientifique.',
+       'Aucun fichier modifié ni publié.'
+     ];
+     recoveryReport.textContent=lines.join('\n');
+   }catch(e){
+     recoveryReport.textContent=(lang()==='fr'?'Diagnostic refusé : ':'Assessment rejected: ')+String((e as Error)?.message??e);
+   }finally{recoveryButton.disabled=!host?.assistantAssessRecovery;}
+ });
+ recoveryButton.disabled=!host?.assistantAssessRecovery;
  let source:AssistantOpen|null=null,table:AssistantTable|null=null,busy=false,serial=0;
  let suggestion:AssistantSuggestionResult|null=null;
  let compiled:AssistantConfirmed|null=null;
  let dryRun:AssistantDryRun|null=null;
  let canonical:AssistantCanonicalPreview|null=null;
  let receipt:AssistantReviewReceipt|null=null;
+ let localSaveReceipt:AssistantLocalSaveReceipt|null=null;
+ let localSaveAttempted=false;
  const reviewIds=new Set<string>();
  const selections=new Set<string>();
  let uiError:string|null=null;
@@ -119,6 +179,20 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
  };
  const render=()=>{
    const t=dictionary[lang()];
+   recoveryButton.textContent=lang()==='fr'?'Examiner des transactions interrompues (lecture seule)':'Inspect interrupted transactions (read-only)';
+   localSaveButton.hidden=!receipt?.experimental_local_save_ready||!host?.assistantLocalSave;
+   localSaveButton.disabled=busy||localSaveAttempted;
+   localSaveButton.textContent=lang()==='fr'
+     ?'Enregistrer localement (bêta de développement — confirmation native)'
+     :'Save locally (development beta — native confirmation)';
+   localSaveOutput.textContent=receipt&&localSaveReceipt
+     ?localSaveReceipt.saved_to_disk
+       ?(lang()==='fr'?'Transaction enregistrée : ':'Saved transaction: ')+
+        (localSaveReceipt.transaction_id??'')+
+        ' · SHA-256: '+(localSaveReceipt.output_sha256??'')+
+        ' · Non publié / Not published'
+       :lang()==='fr'?'Enregistrement annulé.':'Save cancelled.'
+     :'';
    openBtn.textContent=t.open;openBtn.disabled=!host||busy;
    closeBtn.textContent=t.close;closeBtn.disabled=!source||busy;
    sheetSelect.disabled=!source||source.format!=='xlsx'||busy;
@@ -139,8 +213,11 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
      Boolean(receipt)||reviewIds.size===0||!reviewerInput.value.trim()||
      !reasonInput.value.trim()||!reviewedAtInput.value.trim();
    reviewReceiptOutput.textContent=receipt
-     ?'SIMULATION SEULEMENT · '+receipt.scope+' · '+receipt.snapshot_sha256+
-       ' · '+receipt.journal.selected_ids.join(', ')+' · NON ENREGISTRÉ':'';
+     ?'SIMULATION INITIALE · '+receipt.scope+' · '+receipt.snapshot_sha256+
+       ' · '+receipt.journal.selected_ids.join(', ')+
+       (localSaveReceipt?.saved_to_disk
+         ?' · COPIE LOCALE ENREGISTRÉE SÉPARÉMENT'
+         :' · NON ENREGISTRÉ') :'';
    reviewSelections.replaceChildren();
    if(canonical?.staging_review_enabled&&!receipt){
      for(const row of canonical.rows.filter(r=>r.status==='create'&&r.id)){
@@ -363,7 +440,7 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
    const active=source,token=canonical.review_token,ticket=++serial;
    const review={ids:Array.from(reviewIds),reviewer:reviewerInput.value,
      reason:reasonInput.value,reviewed_at:reviewedAtInput.value};
-   busy=true;uiError=null;render();
+   busy=true;uiError=null;localSaveReceipt=null;localSaveAttempted=false;render();
    try{
      const response=await host.assistantReviewStage(active.handle_id,token,review);
      if(ticket===serial&&response.source_sha256===active.source_sha256&&
@@ -372,6 +449,30 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
        receipt=response;
    }catch(error){
      if(ticket===serial)uiError=dictionary[lang()].invalid+': '+String((error as Error)?.message??error);
+   }finally{busy=false;render();}
+ });
+ localSaveButton.addEventListener('click',async()=>{
+   if(!host?.assistantLocalSave||!source||!receipt?.experimental_local_save_ready||
+      busy||localSaveAttempted)return;
+   const active=source,ticket=++serial;
+   localSaveAttempted=true;
+   busy=true;uiError=null;render();
+   try{
+     const result=await host.assistantLocalSave(active.handle_id);
+     if(ticket===serial&&source?.handle_id===active.handle_id){
+       localSaveReceipt=result;
+       // The original scientific simulation is not silently reclassified
+       // as an approval or publication, even after a local transaction.
+     }
+   }catch(error){
+     if(ticket===serial){
+       const reason=String((error as Error)?.message??error);
+       uiError=reason.includes('TRANSACTION_WRITER_OWNERSHIP_LOST')
+         ?(lang()==='fr'
+           ?'Résultat de sauvegarde incertain : le verrou a changé. Ne réessayez pas ; examinez le dossier via le diagnostic de récupération.'
+           :'Save outcome uncertain: the writer lock changed. Do not retry; inspect the folder using recovery assessment.')
+         :dictionary[lang()].invalid+': '+reason;
+     }
    }finally{busy=false;render();}
  });
  closeBtn.addEventListener('click',()=>{if(!busy)void release();});
