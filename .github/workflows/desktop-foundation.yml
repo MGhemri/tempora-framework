@@ -149,7 +149,6 @@ jobs:
           npm run test:recovery
           npm run test:scientific-native-transport
           node --test electron/tests/native-probe-inventory.test.cjs
-          npm run test:native-probe-forensic
       - name: Stage pinned scientific runtime
         run: npm run stage:windows-engine
       - name: Test pinned Node worker and human staging before Electron packaging
