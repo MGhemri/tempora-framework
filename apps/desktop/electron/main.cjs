@@ -8,6 +8,8 @@ const {readFileSync, statSync, existsSync, writeFileSync, copyFileSync, constant
 const {randomBytes,createHash}=require('node:crypto');
 const {join, basename, extname, resolve} = require('node:path');
 const {spawn} = require('node:child_process');
+const {createRequire}=require('node:module');
+const {assessRecovery}=require('./recovery-assessment.cjs');
 const {VisualService}=require('./visualization-service.cjs');
 const {preview}=require('./preview-core.cjs');
 const {createAssistantSessions}=require('./assistant-session.cjs');
@@ -228,6 +230,26 @@ app.whenReady().then(async () => {
       properties:['openFile'],filters:[{name:'Source tabulaire',extensions:['csv','tsv','xlsx']}]
     });
     return selection.canceled?null:assistantSessions.open(selection.filePaths[0]);
+  });
+  // Explicit operator-selected folder, read-only. No path, archive data or
+  // arbitrary canonical adapter may be provided by renderer IPC.
+  ipcMain.handle('tempora:assistant:assess-recovery',async event=>{
+    validSender(event);
+    const chosen=await dialog.showOpenDialog(mainWindow,{
+      title:'TEMPORA — inspect transaction folder (read-only)',
+      properties:['openDirectory']
+    });
+    if(chosen.canceled||!chosen.filePaths[0])return null;
+    // Resolve from the embedded engine location on packaged Windows.
+    const runtime=getRuntime();
+    const canonical=createRequire(runtime.worker)('tempora-framework').canonical;
+    const report=assessRecovery(chosen.filePaths[0],canonical);
+    // Preserve IPC budgets: no unbounded lists of attacker-controlled names.
+    if(Object.values(report).some(v=>Array.isArray(v)&&v.length>100))
+      throw Error('ASSIST_RECOVERY_REPORT_LIMIT');
+    if(Buffer.byteLength(JSON.stringify(report),'utf8')>32*1024)
+      throw Error('ASSIST_RECOVERY_REPORT_LIMIT');
+    return report;
   });
   ipcMain.handle('tempora:assistant:inspect',(event,handle_id)=>{
     validSender(event);return assistantSessions.inspect(handle_id);
