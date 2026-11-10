@@ -8,6 +8,7 @@ export type AssistantRecoveryReport={
 };
 export type AssistantHost={
  assistantAssessRecovery?:()=>Promise<AssistantRecoveryReport|null>;
+ assistantLocalSave?:(id:string)=>Promise<AssistantLocalSaveReceipt>;
  assistantOpen:()=>Promise<AssistantOpen|null>;
  assistantSelectSheet:(id:string,name:string)=>Promise<{source_sha256:string;table:AssistantTable}>;
  assistantClose:(id:string)=>Promise<boolean>;
@@ -22,7 +23,12 @@ export type AssistantOpen={
  inspection:{sheets?:Array<{name:string;state:string}>;candidates?:Array<{header_values:string[]}>;
  suggested_delimiter?:string|null};
 };
+export type AssistantLocalSaveReceipt={
+ saved_to_disk:boolean;cancelled?:boolean;transaction_id?:string;
+ output_sha256?:string;published?:false;scientific_approval?:false;
+};
 export type AssistantReviewReceipt={
+  experimental_local_save_ready?:boolean;
   scope:'in_memory_staging_only';batch_id:string;source_sha256:string;
   snapshot_sha256:string;canonical_validated:true;scientific_approval:false;
   saved_to_disk:false;published:false;import_performed:false;persistence_required:true;
@@ -109,6 +115,14 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
  const reviewedAtInput=el('assistant-reviewed-at') as HTMLInputElement;
  const reviewStageButton=el('assistant-review-stage') as HTMLButtonElement;
  const reviewReceiptOutput=el('assistant-review-receipt');
+ const localSaveButton=document.createElement('button');
+ localSaveButton.type='button';
+ const localSaveOutput=document.createElement('pre');
+ localSaveOutput.setAttribute('aria-live','polite');
+ localSaveOutput.style.whiteSpace='pre-wrap';
+ localSaveOutput.style.overflowWrap='anywhere';
+ localSaveButton.hidden=true;
+ reviewReceiptOutput.parentElement?.append(localSaveButton,localSaveOutput);
  // Diagnostic view is intentionally separate from the import approval flow:
  // it cannot arm a save operation or accept a renderer-controlled path.
  const recoveryButton=document.createElement('button');
@@ -151,6 +165,7 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
  let dryRun:AssistantDryRun|null=null;
  let canonical:AssistantCanonicalPreview|null=null;
  let receipt:AssistantReviewReceipt|null=null;
+ let localSaveReceipt:AssistantLocalSaveReceipt|null=null;
  const reviewIds=new Set<string>();
  const selections=new Set<string>();
  let uiError:string|null=null;
@@ -164,6 +179,19 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
  const render=()=>{
    const t=dictionary[lang()];
    recoveryButton.textContent=lang()==='fr'?'Examiner des transactions interrompues (lecture seule)':'Inspect interrupted transactions (read-only)';
+   localSaveButton.hidden=!receipt?.experimental_local_save_ready||!host?.assistantLocalSave;
+   localSaveButton.disabled=busy||!!localSaveReceipt?.saved_to_disk;
+   localSaveButton.textContent=lang()==='fr'
+     ?'Enregistrer localement (bêta de développement — confirmation native)'
+     :'Save locally (development beta — native confirmation)';
+   localSaveOutput.textContent=receipt&&localSaveReceipt
+     ?localSaveReceipt.saved_to_disk
+       ?(lang()==='fr'?'Transaction enregistrée : ':'Saved transaction: ')+
+        (localSaveReceipt.transaction_id??'')+
+        ' · SHA-256: '+(localSaveReceipt.output_sha256??'')+
+        ' · Non publié / Not published'
+       :lang()==='fr'?'Enregistrement annulé.':'Save cancelled.'
+     :'';
    openBtn.textContent=t.open;openBtn.disabled=!host||busy;
    closeBtn.textContent=t.close;closeBtn.disabled=!source||busy;
    sheetSelect.disabled=!source||source.format!=='xlsx'||busy;
@@ -417,6 +445,23 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
        receipt=response;
    }catch(error){
      if(ticket===serial)uiError=dictionary[lang()].invalid+': '+String((error as Error)?.message??error);
+   }finally{busy=false;render();}
+ });
+ localSaveButton.addEventListener('click',async()=>{
+   if(!host?.assistantLocalSave||!source||!receipt?.experimental_local_save_ready||
+      busy||localSaveReceipt?.saved_to_disk)return;
+   const active=source,ticket=++serial;
+   busy=true;uiError=null;render();
+   try{
+     const result=await host.assistantLocalSave(active.handle_id);
+     if(ticket===serial&&source?.handle_id===active.handle_id){
+       localSaveReceipt=result;
+       // The original scientific simulation is not silently reclassified
+       // as an approval or publication, even after a local transaction.
+     }
+   }catch(error){
+     if(ticket===serial)
+       uiError=dictionary[lang()].invalid+': '+String((error as Error)?.message??error);
    }finally{busy=false;render();}
  });
  closeBtn.addEventListener('click',()=>{if(!busy)void release();});
