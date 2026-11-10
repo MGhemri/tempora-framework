@@ -5,7 +5,7 @@
 ## Base de développement livrée
 
 - Dépôt : https://github.com/MGhemri/tempora-framework
-- Branche stable : `main` ; HEAD **vérifié après PR #120** : `d052bc9685c5174af7c8a7bb505fb30177753357`. Après fusion, les trois CI `main` #42889909219 / #42889909414 / #42889909535 sont distinctes des CI de PR et doivent être consultées avant de revendiquer leur succès.
+- Branche stable : `main` ; HEAD **vérifié après PR #123** : `8303f14de625453de9fa83f7de7b6635efe3bf20`. Après fusion, les trois CI `main` #42889909219 / #42889909414 / #42889909535 sont distinctes des CI de PR et doivent être consultées avant de revendiquer leur succès.
 - PR #114 (M15-20 + candidat Store 0.2.0) : **fusionnée** le 10/11, merge `3c2b7bb752538a8990dad88b1527b0a422c56ca5`.
 - PR #115 (clôture audit Store) : **fusionnée**, merge `e0eb3ca44fe6ee7e14ce5f78166d566d574b3848`.
 - PR #116 (M1.5 REC-01, contrôle de cohérence des preuves) : **fusionnée**, merge `57cde355965324ed104559ff767c1c925dcee97f`, HEAD testé `3f6166dd2ee5adad10fe51bb309ef4adc144e6d0`.
@@ -13,6 +13,9 @@
 - PR #118 (checkpoint Audit) : fusionnée, merge `fba6e0e018ef57ca78e6af03b3cc1e33e766ed5a`.
 - PR #119 (TVRW J10 Chronos sans dates de fin inventées) : **fusionnée**, merge `6f12ed91f0b79a27debac9f268ed4c75877ad301`, CI PR Framework #42886970506, Docs #42886970501, Desktop #42886970403 : **success**. CI main après merge Framework #42887873193, Docs #42887873294, Desktop #42887873374 : **success**.
 - PR #120 (ASSIST M1.5 cinq SHA) : **fusionnée**, merge `d052bc9685c5174af7c8a7bb505fb30177753357`, CI PR Framework #42889142432, Docs #42889142439, Desktop #42889142667 : **success**. CI main postmerge à contrôler séparément.
+- PR #121 (audit) : fusionnée au SHA `1d74a5c804984e84ddac94c40246c2c898abc352`.
+- PR #122 (création NTFS handle-relative, **sonde synthétique**) : fusionnée au SHA `515cd84ce6c5df99325b09c6054d4e64ba4866b7`. CI PR Framework `42894941041`, Docs `42894941018`, Desktop `42894941063` vertes ; CI main `42895938001` / `42895937903` / `42895937799` vertes.
+- PR #123 (GraphLab J11 : graphe déclaré et navigation accessible) : fusionnée au SHA `8303f14de625453de9fa83f7de7b6635efe3bf20`. CI PR après rebase Framework `42896763955`, Docs `42896764282`, Desktop `42896764243` vertes. CI main `42897587821` / `42897587594` / `42897587702` déclenchées, conclusions à vérifier.
 - Ancien incident CI #111 : **clos**, car NSIS Electron officiel est de nouveau opérationnel ; la voie Tauri/WebView2 est archivée.
 
 ## Preuves de CI attachées aux HEAD de PR
@@ -66,6 +69,10 @@ Après J10 (PR #119 fusionnée, commit `6f12ed91f0b79a27debac9f268ed4c75877ad301
 
 Voir [REPRISE-POST-PUBLICATION-2026-11-10.md](REPRISE-POST-PUBLICATION-2026-11-10.md) pour les décisions détaillées, CI exactes et le prochain gros lot de sécurité. Les anciennes indications historiques dans les sections précédentes ne priment pas sur ce point.
 
-## SEC-WIN (nouvelle PR) — création handle-relative expérimentale
+## SEC-WIN — PR #122 fusionnée (P0 ouverts)
 
 La sonde Rust NTFS utilise maintenant une création exclusive de fichiers relative à un **handle de répertoire**, au lieu de rouvrir les fichiers par chemin. Voir [M15-HANDLE-RELATIVE-FILE-CREATE.md](M15-HANDLE-RELATIVE-FILE-CREATE.md). Le renommage final reste absolu, les P0 ne sont pas fermés, l'activation de persistance dans les paquets est interdite. Vérifier les trois CI du HEAD de cette PR avant fusion.
+
+## Checkpoint M1.5 NTFS et TVRW J11
+
+Se référer à [REPRISE-M15-NTFS-TVRW-J11.md](REPRISE-M15-NTFS-TVRW-J11.md) pour les SHA vérifiés, les CI, les limites de sécurité et les prochaines étapes. La version Store 0.2.0 déclarée publiée ne contient pas les nouvelles fonctionnalités.
