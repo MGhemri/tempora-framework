@@ -753,9 +753,7 @@ Le prototype :
   toute l'écriture et le changement de visibilité ;
 - écrit trois fichiers d'essai en mode création exclusive et demande
   `sync_all()` pour chacun ;
-- utilise `SetFileInformationByHandle(FileRenameInfo)` avec le
-  `RootDirectory` du répertoire de destination, `ReplaceIfExists=FALSE`,
-  pour le renommage relatif d'un dossier ;
+- utilise `SetFileInformationByHandle(FileRenameInfo)` avec une **cible absolue** et `RootDirectory=NULL`, tout en conservant les handles des répertoires durant le renommage ; le remplacement de la cible est interdit ;
 - ne supprime le verrou de sonde qu'après retour du commit natif.
 
 Le test Windows appelle **réellement** l'exécutable, exige le refus
@@ -775,3 +773,13 @@ n'active aucune nouvelle fonction d'enregistrement.
 
 Référence de contrat :
 https://learn.microsoft.com/en-us/windows/win32/api/winbase/ns-winbase-file_rename_info
+
+
+**Retour qualification Windows du writer M15-15 :** la variante Win32
+`FileRenameInfo` avec `RootDirectory` non nul et nom relatif a retourné
+`ERROR_INVALID_PARAMETER (87)` sur le runner Windows ; elle n'a pas passé
+la CI. Un essai de la variante à chemin **absolu** et `RootDirectory=NULL`
+est implémenté, avec handles parents maintenus jusqu'au changement de
+visibilité. **Ne pas appeler ce chemin « handle-relative »** ; la cible
+est encore une chaîne de chemin, et la sécurité P0 reste bloquée. Ne pas
+considérer l'essai qualifié avant passage complet de la CI attachée au SHA.
