@@ -33,7 +33,7 @@ module.exports = {
   },
   appx: {
     ...STORE_IDENTITY,
-    applicationId: 'TEMPORA',
+    applicationId: 'TEMPORADesktop',
     artifactName: 'TEMPORA-Desktop-${version}-${arch}.${ext}',
     displayName: 'TEMPORA Desktop',
     backgroundColor: '#ffffff',
