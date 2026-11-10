@@ -732,3 +732,46 @@ durabilité électrique n'est revendiquée.
 Références API Microsoft :
 - https://learn.microsoft.com/en-us/windows/win32/fileio/obtaining-a-handle-to-a-directory
 - https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getvolumeinformationbyhandlew
+
+
+## 25. Prototype de renommage natif sous handles conservés (M15-15)
+
+Le programme `apps/desktop/native-windows-guard` comporte désormais un
+**second mode de test indépendant** : `--synthetic-commit`, inaccessible
+sans `TEMPORA_NATIVE_SYNTHETIC_TEST=1`. Il ne charge ni ne sauvegarde
+aucun corpus de recherche. Il écrit uniquement des valeurs **fictives et
+marquées comme sondes**, dans les dossiers séparés
+`.native-probe-pending/` et `native-probe-complete/` d'un répertoire
+temporaire local NTFS. Les dossiers réels `.pending/` et `transactions/`
+du moteur scientifique ne sont pas utilisés.
+
+Le prototype :
+- qualifie le chemin et le volume par inspection native Win32 ;
+- crée un verrou de sonde à usage exclusif et le conserve en cas d'échec ;
+- ouvre les répertoires avec `CreateFileW` et refuse les reparse points ;
+- conserve les handles du dossier source et de la destination pendant
+  toute l'écriture et le changement de visibilité ;
+- écrit trois fichiers d'essai en mode création exclusive et demande
+  `sync_all()` pour chacun ;
+- utilise `SetFileInformationByHandle(FileRenameInfo)` avec le
+  `RootDirectory` du répertoire de destination, `ReplaceIfExists=FALSE`,
+  pour le renommage relatif d'un dossier ;
+- ne supprime le verrou de sonde qu'après retour du commit natif.
+
+Le test Windows appelle **réellement** l'exécutable, exige le refus
+de la commande sans activation, puis vérifie l'unique dossier visible,
+les trois fichiers fictifs, le manifeste `NTFS_HANDLE_RENAME_PROBE`,
+l'absence de dossiers scientifiques et le retrait du verrou après succès.
+
+**Ce qui reste :** le writer ne prend pas encore de données canoniques,
+n'a pas de protocole de transfert source hôte sécurisé, ne valide pas les
+cinq empreintes du SDK et n'implémente pas les règles complètes du verrou
+scientifique. Le répertoire de destination est qualifié puis réouvert :
+l'inspection initiale n'est pas un acte atomique. Il faut encore qualifier
+sur NTFS les substitutions concurrentes et les ACL, les coupures OS ou
+électriques, la reprise humaine et les garanties de publication logique.
+**SEC-WIN-01 / DUR-01 / REC-01 restent P0** et l'application distribuée
+n'active aucune nouvelle fonction d'enregistrement.
+
+Référence de contrat :
+https://learn.microsoft.com/en-us/windows/win32/api/winbase/ns-winbase-file_rename_info
