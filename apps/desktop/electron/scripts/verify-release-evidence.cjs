@@ -4,7 +4,6 @@
 const {createHash}=require('node:crypto');
 const {createReadStream,existsSync,readFileSync,statSync}=require('node:fs');
 const {resolve,join}=require('node:path');
-const {finished}=require('node:stream/promises');
 const pkg=require('../package.json');
 const VERSION='1.0.0';
 const NSIS='TEMPORA-Desktop-1.0.0-x64-SETUP.exe';
