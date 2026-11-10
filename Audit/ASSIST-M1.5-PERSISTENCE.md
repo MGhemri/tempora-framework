@@ -245,3 +245,25 @@ manuelle encore à implémenter et qualifier. Les deux tests ajoutés contrôlen
 la présence d'un orphelin partiel et la protection d'une transaction déjà
 validée. Le comportement sous crash complet et redémarrage Windows reste à
 tester avec des processus réels et des essais sur le volume cible.
+
+
+### Inventaire forensique sans mutation — récupération M1.5
+
+`inspectPendingEvidence(root, canonical)` classe chaque dossier orphelin
+`.pending/<id>` en trois ensembles : `verified_for_review` lorsque le
+corpus, le journal, le manifeste et leurs relations cryptographiques satisfont
+aux contrôles ; `incomplete` lorsque des fichiers attendus manquent ;
+`unsafe` lorsque le nom, le type, les fichiers présents, le contenu JSON,
+les empreintes ou le schéma canonique sont suspects.
+
+Les résultats sont **en lecture seule** : l'inspection ne crée aucun dossier,
+ne déplace jamais un candidat et n'efface aucun élément. La catégorie
+`verified_for_review` **n'autorise ni promotion automatique ni publication
+scientifique**, car la décision humaine, l'historique d'exécution et la
+durabilité ne peuvent pas être inférés de ces seules empreintes.
+
+Trois tests couvrent la racine vide, un dossier entièrement écrit mais dont
+le `rename` final a échoué, et la séparation entre dossier incomplet et
+dossier contenant un fichier inattendu. Les prochains gates comprennent les
+essais de crash réels, une procédure de récupération manuelle explicite,
+et la qualification Windows NTFS/reparse points.
