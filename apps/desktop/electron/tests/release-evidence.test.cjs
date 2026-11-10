@@ -30,7 +30,7 @@ async function fixture(fn){
   };
   const save=()=>{writeFileSync(join(dir,'RELEASE-PROVENANCE.json'),JSON.stringify(obj));
    writeFileSync(join(dir,'SHA256SUMS.txt'),nsis+'  '+NSIS+'\n'+appx+'  '+APPX+'\n');};
-  save();return fn({dir,obj,save});
+  save();return await fn({dir,obj,save});
  }finally{rmSync(dir,{recursive:true,force:true});}
 }
 test('two full candidates verify against bytes and their original commit',async()=>{
