@@ -160,7 +160,10 @@ fn rename_with_pinned_destination(
     }
     Ok(())
 }
-pub fn synthetic_commit(root: &Path) -> Result<String, &'static str> {
+fn commit_probe(
+    root: &Path,
+    verified: Option<&crate::scientific_envelope::VerifiedTransport>,
+) -> Result<String, &'static str> {
     if std::env::var_os("TEMPORA_NATIVE_SYNTHETIC_TEST").as_deref()
         != Some(OsStr::new("1"))
     {
@@ -183,9 +186,20 @@ pub fn synthetic_commit(root: &Path) -> Result<String, &'static str> {
     let pending = pending_root.join(&id);
     fs::create_dir(&pending).map_err(|_| "NATIVE_COMMIT_COLLISION")?;
     let pending_handle = open_directory(&pending, true, false)?;
-    exclusive_sync(&pending, "corpus.json", br#"{"synthetic":true,"schema_version":"probe-only"}"#)?;
-    exclusive_sync(&pending, "journal.json", br#"{"synthetic":true,"approval":false}"#)?;
-    exclusive_sync(&pending, "manifest.json", br#"{"synthetic":true,"published":false,"kind":"NTFS_HANDLE_RENAME_PROBE"}"#)?;
+    if let Some(documents) = verified {
+        // The real SDK-approved transport is copied only to an explicitly
+        // nonproduction probe namespace; never to scientific transactions/.
+        // Bytes are the SAME snapshot independently checked by Rust.
+        exclusive_sync(&pending, "corpus.json", &documents.corpus)?;
+        exclusive_sync(&pending, "journal.json", &documents.journal)?;
+        exclusive_sync(&pending, "envelope.json", &documents.envelope)?;
+        exclusive_sync(&pending, "manifest.json",
+            br#"{"synthetic":true,"published":false,"kind":"NTFS_SCIENTIFIC_TRANSPORT_PROBE"}"#)?;
+    } else {
+        exclusive_sync(&pending, "corpus.json", br#"{"synthetic":true,"schema_version":"probe-only"}"#)?;
+        exclusive_sync(&pending, "journal.json", br#"{"synthetic":true,"approval":false}"#)?;
+        exclusive_sync(&pending, "manifest.json", br#"{"synthetic":true,"published":false,"kind":"NTFS_HANDLE_RENAME_PROBE"}"#)?;
+    }
     // File handles were closed after sync_all; the directory handles remain
     // held without FILE_SHARE_DELETE during the relative rename.
     rename_with_pinned_destination(pending_handle.0, &completed_root.join(&id))?;
@@ -197,4 +211,23 @@ pub fn synthetic_commit(root: &Path) -> Result<String, &'static str> {
         .map_err(|_| "NATIVE_COMMIT_LOCK_RELEASE_FAILED")?;
     fs::remove_dir(&lock).map_err(|_| "NATIVE_COMMIT_LOCK_RELEASE_FAILED")?;
     Ok(id)
+}
+
+pub fn synthetic_commit(root: &Path) -> Result<String, &'static str> {
+    commit_probe(root, None)
+}
+pub fn synthetic_transport_commit(
+    root: &Path, source: &Path,
+) -> Result<String, &'static str> {
+    // The gate is checked before even opening a scientific envelope.
+    if std::env::var_os("TEMPORA_NATIVE_SYNTHETIC_TEST").as_deref()
+        != Some(OsStr::new("1"))
+    {
+        return Err("NATIVE_COMMIT_SYNTHETIC_GATE_CLOSED");
+    }
+    // Independent read-only verification, NO Node-provided "validated"
+    // boolean can bypass byte digests. This is not cryptographic proof of
+    // who originally authorized a corpus: production writer remains absent.
+    let documents = crate::scientific_envelope::load_verified(source)?;
+    commit_probe(root, Some(&documents))
 }
