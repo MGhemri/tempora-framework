@@ -291,3 +291,32 @@ et la qualification Windows NTFS/reparse points.
 arrêt brutal, symlink et reparse points avec concurrence malveillante,
 reprise manuelle autorisée, seconde confirmation dans l'interface et
 raccordement Electron/worker. La PR reste expérimentale.
+
+
+## 11. Intégration Desktop limitée au diagnostic (lot Chromium)
+
+L'interface Assistant Electron dispose désormais d'un bouton
+**« Examiner des transactions interrompues (lecture seule) »**.
+L'utilisateur sélectionne explicitement une racine de transactions avec la
+boîte de dialogue **native** Windows ; le renderer ne peut passer aucun chemin
+en argument. Le processus principal exécute `assessRecovery` avec le SDK
+canonique chargé à partir des **ressources du worker embarqué** par
+`createRequire(runtime.worker)`. En développement, le chemin du worker
+local est utilisé. L'action retourne seulement un rapport borné (100 entrées
+maximales par liste ; 32 Kio max) et supprime les chemins absolus des erreurs
+IPC. Le rendu utilise `textContent` et ne transforme aucune donnée de
+corpus en HTML.
+
+Les deux modules nécessaires (`recovery-assessment.cjs` et
+`transaction-store.cjs`) font désormais partie de l'archive Electron.
+Un test de contrat `host.test.cjs` vérifie le canal allowlisté, le sélecteur
+natif, l'absence de fonction de sauvegarde dans `preload.cjs` et les
+ressources packagées.
+
+**Limites** : le bouton ne fournit aucune récupération, suppression ou
+publication. Il ne donne aucune autorisation d'écriture et ne représente pas
+une validation scientifique. La protection filesystem Windows et le
+raccordement de la **seconde décision humaine de sauvegarde** restent des
+gates bloquants pour l'activation de M1.5. Le rapport est une photographie
+potentiellement concurrente : la validation finale de toute écriture devra
+toujours être répétée sous réservation exclusive.
