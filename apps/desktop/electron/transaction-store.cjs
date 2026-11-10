@@ -201,6 +201,16 @@ function createTransaction(root, {corpus,journal,identity}, canonical) {
     readVerified(pending,'corpus.json',manifest.corpus_file_sha256);
     readVerified(pending,'journal.json',manifest.journal_sha256);
     readVerified(pending,'manifest.json',sha(manifestBytes));
+    // Re-check every path component immediately before the visible rename.
+    // These checks narrow the substitution window but do not eliminate
+    // Windows reparse-point TOCTOU without native handle-based APIs.
+    safeRoot(root);
+    safeSubdir(root,'.pending',false);
+    safeSubdir(root,'transactions',false);
+    const pendingStat=fs.lstatSync(pending);
+    if(!pendingStat.isDirectory()||pendingStat.isSymbolicLink()||
+       fs.realpathSync(pending)!==path.resolve(pending))
+      throw ERR('TRANSACTION_PENDING_DIRECTORY_UNSAFE');
     // A non-existing directory is the single logical commit marker.
     const destination=path.join(transactions,transaction_id);
     if(fs.existsSync(destination))throw ERR('TRANSACTION_COLLISION');
