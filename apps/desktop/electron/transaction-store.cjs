@@ -252,4 +252,61 @@ function inspectTransactions(root, canonical) {
   for(const id of (pendingRoot?fs.readdirSync(pendingRoot):[]).sort())pending.push(id);
   return Object.freeze({complete,invalid,pending});
 }
-module.exports={createTransaction,inspectTransactions,inspectWriterReservation};
+// Read-only forensic classification of orphaned commits. A structurally
+// complete pending directory is NOT automatically recoverable or approved.
+function inspectPendingEvidence(root,canonical) {
+  if(!canonical||typeof canonical.validateCorpus!=='function'||
+     typeof canonical.digest!=='function')
+    throw ERR('TRANSACTION_CANONICAL_ADAPTER_REQUIRED');
+  safeRoot(root);
+  const location=path.join(root,'.pending');
+  try {fs.lstatSync(location);}
+  catch(e) {
+    if(e.code==='ENOENT')
+      return Object.freeze({verified_for_review:[],incomplete:[],unsafe:[]});
+    throw e;
+  }
+  const pending=safeSubdir(root,'.pending',false);
+  const verified_for_review=[],incomplete=[],unsafe=[];
+  const expected=['corpus.json','journal.json','manifest.json'];
+  for(const id of fs.readdirSync(pending).sort()) {
+    try {
+      if(!ID.test(id))throw ERR('TRANSACTION_DIRECTORY_UNSAFE');
+      const dir=path.join(pending,id),stat=fs.lstatSync(dir);
+      if(!stat.isDirectory()||stat.isSymbolicLink()||
+         fs.realpathSync(dir)!==path.resolve(dir))
+        throw ERR('TRANSACTION_DIRECTORY_UNSAFE');
+      const names=fs.readdirSync(dir).sort();
+      if(names.some(n=>!expected.includes(n)))
+        throw ERR('TRANSACTION_UNEXPECTED_CONTENTS');
+      if(names.length!==expected.length||
+         expected.some(n=>!names.includes(n))) {
+        incomplete.push(id);
+        continue;
+      }
+      const manifest=JSON.parse(readBounded(path.join(dir,'manifest.json')).toString('utf8'));
+      if(!plain(manifest)||manifest.transaction_id!==id||
+         !HASH.test(manifest.corpus_file_sha256)||
+         !HASH.test(manifest.journal_sha256)||
+         manifest.published!==false||manifest.scientific_approval!==false||
+         !REQUIRED.every(k=>typeof manifest[k]==='string'&&HASH.test(manifest[k])))
+        throw ERR('TRANSACTION_MANIFEST_INVALID');
+      const corpus=readVerified(dir,'corpus.json',manifest.corpus_file_sha256);
+      const journal=readVerified(dir,'journal.json',manifest.journal_sha256);
+      if(!plain(corpus)||!plain(journal)||
+         journal.batch_id!==manifest.batch_id||
+         journal.base_sha256!==manifest.base_sha256||
+         journal.output_sha256!==manifest.output_sha256||
+         journal.decision!=='accepted_for_local_staging'||
+         journal.scientific_approval!==false)
+        throw ERR('TRANSACTION_JOURNAL_MISMATCH');
+      if(canonical.validateCorpus(corpus)?.valid!==true||
+         canonical.digest(corpus)!==manifest.output_sha256)
+        throw ERR('TRANSACTION_CANONICAL_DIGEST_MISMATCH');
+      verified_for_review.push(id);
+    }catch{unsafe.push(id);}
+  }
+  return Object.freeze({verified_for_review,incomplete,unsafe});
+}
+
+module.exports={createTransaction,inspectTransactions,inspectWriterReservation,inspectPendingEvidence};
