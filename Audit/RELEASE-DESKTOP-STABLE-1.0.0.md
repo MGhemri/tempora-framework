@@ -90,3 +90,53 @@ en lecture seule. Aucune publication automatique, aucune IA active.
 
 **Décision : NO-GO pour diffusion publique tant que les gates de canal
 et les essais manuels applicables n'ont pas été attestés.**
+
+
+## Qualification CI vérifiée après fusion — 10 novembre 2026
+
+**PR #125 fusionnée.** HEAD de PR testé :
+d09a92d98b835d5952f938bdf07ed6742b9779d9.
+Merge main vérifié :
+7efbc9f0a0d548db735d63a938e7890ee8134d44.
+
+Trois workflows sur la PR, terminés avec succès :
+- Framework #42901764418 — success
+- Documentation UI #42901763870 — success
+- Desktop Foundation Windows #42901763858 — success
+  (NSIS, installation/exemples/moteur, AppX 1.0.0.0, identité/architecture,
+   test de refus de la persistance packagée et preuves SHA-256)
+
+Quatre workflows **après fusion sur le SHA exact de main**, tous success :
+- Framework #42902639642
+- Documentation UI #42902639864
+- Publish GitHub Pages #42902639849
+- Desktop Foundation Windows #42902639887
+
+**Artefacts issus de main** (run Windows #42902639887) :
+- NSIS unsigned test candidate
+  TEMPORA-Desktop-1.0.0-x64-NSIS-UNSIGNED-TEST-CANDIDATE
+  ID GitHub 13803013793 ; archive 144141043 octets
+  expiration déclarée 10/12/2026 21:17:39 UTC.
+- AppX Store unsigned candidate
+  TEMPORA-Desktop-1.0.0-x64-STORE-CANDIDATE-UNSIGNED-NOT-SUBMITTED
+  ID GitHub 13803004531 ; archive 196474806 octets
+  expiration déclarée 10/12/2026 21:17:44 UTC.
+
+CI : https://github.com/MGhemri/tempora-framework/actions/runs/42902639887
+
+Chaque archive doit contenir SHA256SUMS.txt et
+RELEASE-PROVENANCE.json, produits par la CI à partir des fichiers EXE
+et AppX. **Leurs valeurs exactes ne sont pas recopiées ici** : elles
+doivent être vérifiées sur les fichiers téléchargés, puis archivées.
+La taille ci-dessus est celle du ZIP Actions, pas celle du binaire interne.
+
+Résultat : ST-01 à ST-05 disposent désormais de preuves automatisées
+sur main ; ce n'est **pas** un certificat Microsoft, une vérification
+sur Windows vierge ni une signature Authenticode.
+
+**NO-GO public conservé** : ST-06/07/08 (Win10, Win11, upgrade Store),
+ST-09 (signature NSIS hors Store), ST-10 (revue sécurité/licences)
+et ST-11 (certification, choix de soumission et publication).
+Aucun tag desktop-v1.0.0, aucune GitHub Release ni aucun upload Store
+n'ont été créés par ce lot. Une nouvelle release ne doit pas être
+annoncée avant sa propre décision humaine de publication.
