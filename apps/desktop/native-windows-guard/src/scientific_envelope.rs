@@ -54,7 +54,12 @@ fn bounded_json(dir: &Path, name: &str) -> Result<Vec<u8>, &'static str> {
     }
     Ok(bytes)
 }
-pub fn verify(dir: &Path) -> Result<(), &'static str> {
+pub struct VerifiedTransport {
+    pub corpus: Vec<u8>,
+    pub journal: Vec<u8>,
+    pub envelope: Vec<u8>,
+}
+pub fn load_verified(dir: &Path) -> Result<VerifiedTransport, &'static str> {
     // Check every parent and the directory itself with existing Win32 handle
     // inspection. It does not make file opens or subsequent writes atomic.
     crate::native::inspect(dir)?;
@@ -95,6 +100,15 @@ pub fn verify(dir: &Path) -> Result<(), &'static str> {
        journal.get("output_sha256").and_then(Value::as_str) != Some(envelope.identity.output_sha256.as_str()) {
         return Err("NATIVE_ENVELOPE_JOURNAL_MISMATCH");
     }
-    // Intentionally do not claim to recompute the SDK canonical v3 digest.
-    Ok(())
+    // Return precisely the bytes checked above. Never reopen the source
+    // after validation: an attacker could replace files between the two
+    // reads even in an explicitly synthetic experiment.
+    Ok(VerifiedTransport {
+        corpus: corpus_bytes,
+        journal: journal_bytes,
+        envelope: metadata,
+    })
+}
+pub fn verify(dir: &Path) -> Result<(), &'static str> {
+    load_verified(dir).map(|_| ())
 }
