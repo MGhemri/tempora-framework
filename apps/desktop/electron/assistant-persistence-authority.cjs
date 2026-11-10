@@ -4,6 +4,7 @@
 // Only the native Electron main process supplies the preview and worker
 // receipt; incoming renderer values cannot create a persistence consent.
 const {makeTrustedSessionReread}=require('./assistant-persistence-binding.cjs');
+const {isDeepStrictEqual}=require('node:util');
 const HEX48=/^[a-f0-9]{48}$/;
 const HEX64=/^[a-f0-9]{64}$/;
 const fail=code=>{throw Object.assign(new Error(code),{code});};
@@ -52,6 +53,13 @@ function createAssistantPersistenceAuthority({sessions,workflow}={}){
      !Array.isArray(stage.journal?.selected_ids)||
      stage.journal.selected_ids.length===0)
    fail('ASSIST_PERSIST_AUTHORITY_STAGE_INVALID');
+  // Verify the session still exists *when* the worker's async staging
+  // result returns, not only if a later commit is attempted.
+  const current=sessions.canonicalInput(handle);
+  if(current.sourceSha256!==input.sourceSha256||
+     current.profile_id!==input.profile_id||
+     !isDeepStrictEqual(current.mapping,input.mapping))
+    fail('ASSIST_PERSIST_AUTHORITY_SESSION_CHANGED');
   const reread=makeTrustedSessionReread({
    sessions,handle,corpusPath:preview.corpus_path,
    corpusRawSha256:preview.corpus_raw_sha256,
