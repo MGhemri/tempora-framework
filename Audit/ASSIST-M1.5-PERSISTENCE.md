@@ -510,3 +510,33 @@ ne prouve pas à lui seul la durabilité post-coupure électrique.
 `lstatSync(..., {bigint:true})`, car un ID de fichier Windows sur 64 bits
 peut être arrondi avec les nombres JavaScript ordinaires. Cette amélioration
 ne constitue toujours pas un verrou atomique ni une garantie Windows native.
+
+
+## 17. Propriété du verrou et lectures bornées même sous mutation concurrente
+
+Un verrou `.writer-lock` ne doit pas pouvoir être libéré sur la seule
+présentation d'un `owner.json` à nonce identique. Le propriétaire du
+verrou prend désormais une photographie de l'identité physique `(dev, ino)`
+de la racine et du **dossier de verrou lui-même**, immédiatement après sa
+création exclusive. Avant de retirer `owner.json` et le dossier, les deux
+identités sont comparées à celles actuellement accessibles. Si un autre
+dossier ordinaire reproduit le contenu de `owner.json`, le nettoyage
+échoue avec `TRANSACTION_WRITER_OWNERSHIP_LOST` et conserve les traces.
+Les tests substituent un dossier ordinaire contenant le **même nonce** ou
+un lien/jonction, puis vérifient qu'aucun verrou étranger n'est effacé.
+
+Le lecteur `readBounded` utilise désormais `lstatSync` et `fstatSync`
+en mode `bigint` pour préserver les identifiants 64 bits et lit par blocs
+de 64 Kio avec un plafond effectif de **16 Mio + 1 octet de détection**.
+Ainsi, une modification de taille après `fstat` ne peut plus provoquer
+une allocation non bornée via `readFileSync(fd)` avant le contrôle du
+plafond. Un test augmente un manifeste après la vérification initiale
+et exige une transaction déclarée invalide sans excéder ce plafond de lecture.
+
+**Interprétation des résultats :** si le verrou est substitué après le
+renommage final, le processus peut refuser de rendre un reçu, alors que
+la transaction est déjà visible. Ce cas doit être traité comme un
+**résultat à vérifier manuellement**, jamais comme une preuve d'absence
+d'écriture ou comme une autorisation de réessayer. Ces protections ne
+suppriment pas les races TOCTOU et ne remplacent pas un verrou natif fondé
+sur des handles sous Windows.
