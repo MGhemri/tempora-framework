@@ -298,16 +298,24 @@ app.whenReady().then(async () => {
     validSender(event);return assistantSessions.inspect(handle_id);
   });
   ipcMain.handle('tempora:assistant:sheet',(event,handle_id,sheet_name)=>{
-    validSender(event);return assistantSessions.selectSheet(handle_id,sheet_name);
+    validSender(event);
+    persistenceAuthority?.revoke(handle_id);
+    return assistantSessions.selectSheet(handle_id,sheet_name);
   });
   ipcMain.handle('tempora:assistant:suggest',(event,handle_id,profile_id,choice)=>{
-    validSender(event);return assistantSessions.suggest(handle_id,profile_id,choice);
+    validSender(event);
+    persistenceAuthority?.revoke(handle_id);
+    return assistantSessions.suggest(handle_id,profile_id,choice);
   });
   ipcMain.handle('tempora:assistant:confirm',(event,handle_id,proposal_token,bindings)=>{
-    validSender(event);return assistantSessions.confirm(handle_id,proposal_token,bindings);
+    validSender(event);
+    persistenceAuthority?.revoke(handle_id);
+    return assistantSessions.confirm(handle_id,proposal_token,bindings);
   });
   ipcMain.handle('tempora:assistant:dryrun',(event,handle_id,rules)=>{
-    validSender(event);return assistantSessions.normalizePreview(handle_id,rules);
+    validSender(event);
+    persistenceAuthority?.revoke(handle_id);
+    return assistantSessions.normalizePreview(handle_id,rules);
   });
   ipcMain.handle('tempora:assistant:canonical-preview',async(event,handle_id)=>{
     validSender(event);
