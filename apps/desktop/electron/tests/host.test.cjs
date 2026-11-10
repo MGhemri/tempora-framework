@@ -87,11 +87,11 @@ test('About is bilingual and authorship attribution is confined to About view',(
  assert.match(main,/about-desktop-version/);
  assert.match(src('electron/main.cjs'),/UNAPPROVED_EXTERNAL_URL/);
 });
-test('Electron Beta version in the GUI matches the shipped package',()=>{
+test('Electron stable candidate version in the GUI matches the shipped package',()=>{
  const pkg=require('../package.json');
  const preload=src('electron/preload.cjs');
  const view=src('src/main.ts');
- assert.equal(pkg.version,'0.2.0');
+ assert.equal(pkg.version,'1.0.0');
  assert.ok(preload.includes("desktopVersion: '"+pkg.version+"'"),
   'Preload diagnostic version must match Electron package version');
  assert.match(view,/window\.temporaElectron\.desktopVersion/);

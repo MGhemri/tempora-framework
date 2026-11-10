@@ -2,7 +2,7 @@
 // Minimal IPC API: two named methods; never expose ipcRenderer or filesystem.
 const {contextBridge, ipcRenderer} = require('electron');
 contextBridge.exposeInMainWorld('temporaElectron', Object.freeze({
-  desktopVersion: '0.2.0',
+  desktopVersion: '1.0.0',
   selectDocument: () => ipcRenderer.invoke('tempora:select_document'),
   assistantOpen: () => ipcRenderer.invoke('tempora:assistant:open'),
   assistantAssessRecovery: () => ipcRenderer.invoke('tempora:assistant:assess-recovery'),
