@@ -1,5 +1,13 @@
 // TEMPORA Assistant initial read-only Desktop view; no mapping approval or import.
+export type AssistantRecoveryReport={
+ schema_version:'1.0.0';mode:'read_only_assessment';safe_to_start_new_write:boolean;
+ requires_manual_attention:boolean;lock_status:string;committed_count:number;
+ invalid_transactions:string[];pending_verified_for_review:string[];
+ pending_incomplete:string[];pending_unsafe:string[];
+ recovery_performed:false;files_modified:false;scientific_approval:false;published:false;
+};
 export type AssistantHost={
+ assistantAssessRecovery?:()=>Promise<AssistantRecoveryReport|null>;
  assistantOpen:()=>Promise<AssistantOpen|null>;
  assistantSelectSheet:(id:string,name:string)=>Promise<{source_sha256:string;table:AssistantTable}>;
  assistantClose:(id:string)=>Promise<boolean>;
@@ -101,6 +109,42 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
  const reviewedAtInput=el('assistant-reviewed-at') as HTMLInputElement;
  const reviewStageButton=el('assistant-review-stage') as HTMLButtonElement;
  const reviewReceiptOutput=el('assistant-review-receipt');
+ // Diagnostic view is intentionally separate from the import approval flow:
+ // it cannot arm a save operation or accept a renderer-controlled path.
+ const recoveryButton=document.createElement('button');
+ recoveryButton.type='button';
+ recoveryButton.textContent='Examiner des transactions interrompues (lecture seule)';
+ const recoveryReport=document.createElement('pre');
+ recoveryReport.setAttribute('aria-live','polite');
+ recoveryReport.style.whiteSpace='pre-wrap';
+ recoveryReport.style.overflowWrap='anywhere';
+ reviewReceiptOutput.parentElement?.append(recoveryButton,recoveryReport);
+ recoveryButton.addEventListener('click',async()=>{
+   if(!host?.assistantAssessRecovery||recoveryButton.disabled)return;
+   recoveryButton.disabled=true;
+   recoveryReport.textContent='Diagnostic en lecture seule…';
+   try {
+     const report=await host.assistantAssessRecovery();
+     if(!report){recoveryReport.textContent='Diagnostic annulé.';return;}
+     const lines=[
+       'TEMPORA M1.5 — rapport en lecture seule',
+       'Verrou : '+report.lock_status,
+       'Transactions terminées : '+report.committed_count,
+       'Transactions invalides : '+report.invalid_transactions.join(', '),
+       'Dossiers à examiner : '+report.pending_verified_for_review.join(', '),
+       'Dossiers incomplets : '+report.pending_incomplete.join(', '),
+       'Dossiers suspects : '+report.pending_unsafe.join(', '),
+       report.requires_manual_attention?
+         'EXAMEN MANUEL REQUIS — aucune récupération automatique.':
+         'Aucun blocage structurel détecté. Aucune validation scientifique.',
+       'Aucun fichier modifié ni publié.'
+     ];
+     recoveryReport.textContent=lines.join('\\n');
+   }catch(e){
+     recoveryReport.textContent='Diagnostic refusé : '+String((e as Error)?.message??e);
+   }finally{recoveryButton.disabled=!host?.assistantAssessRecovery;}
+ });
+ recoveryButton.disabled=!host?.assistantAssessRecovery;
  let source:AssistantOpen|null=null,table:AssistantTable|null=null,busy=false,serial=0;
  let suggestion:AssistantSuggestionResult|null=null;
  let compiled:AssistantConfirmed|null=null;
