@@ -55,7 +55,7 @@
 | M15-15 | Premier commit synthétique Win32 avec handles parents conservés et renommage à chemin absolu | **TESTÉ-CI sur `4f4ca37f`**, sonde uniquement | `native-windows-guard/src/native_commit.rs` et tests Win32 |
 | M15-16 | Contrat de transport scientifique SDK → Rust : cinq empreintes canoniques, deux SHA des fichiers, journal et non-publication | **TESTÉ-CI sur `4b46ee81`**, lecture seule | `electron/scientific-native-transport.cjs`, `native-windows-guard/src/scientific_envelope.rs`, tests Node/Win32 |
 | M15-17 | Writer natif de sonde consomme les buffers vérifiés par Rust et copie les octets exacts dans `native-probe-complete/` | **TESTÉ-CI sur `8d2936f2`**, non scientifique | `native_commit.rs`, `scientific_envelope.rs`, tests Windows |
-| M15-19 | Inspecteur forensic natif read-only des sondes NTFS, verrous orphelins, candidats et commits corrompus | **IMPLÉMENTÉ, CI À QUALIFIER** | `native-windows-guard/src/probe_forensic.rs`, tests Windows et `Audit/ASSIST-M1.5-PERSISTENCE.md` |
+| M15-19 | Consolidation d'un **unique** inspecteur natif de sonde, manifeste lu par handles épinglés, classification des preuves, limite d'inventaire | **IMPLÉMENTÉ, CI À QUALIFIER** | `native-windows-guard/src/probe_inventory.rs`, `tests/native-probe-inventory.test.cjs` |
 | M15-18 | **Handles Win32 épinglés** pendant toute la sonde : dossier et 3 sources, partage en lecture seule, vérification reparse, trois points de crash réels et refus de reprise | **IMPLÉMENTÉ — CI DU NOUVEAU HEAD À QUALIFIER** | `native-windows-guard/src/scientific_envelope.rs`, `native_commit.rs`, tests Windows |
 
 ## 3. Backlog de qualification — priorités et conditions de fermeture
@@ -179,3 +179,12 @@
 **Gate de clôture :** dernière PR HEAD en brouillon, les trois workflows Framework / Documentation UI / Desktop Foundation tous `success` sur **le même SHA**. Le test forensic et les tests Windows de source/destination doivent être inclus. Les tâches `SEC-WIN-01`, `SCI-01`, `DUR-01` et `REC-01` demeurent **BLOQUÉES** pour production, notamment par le manque d'attestation du consentement humain, le renommage absolu, l'absence de preuve power-loss et de procédure de récupération opérateur.
 
 **Travaux prioritaires restants pour le prochain gros lot :** (1) sécurisation du protocole d'intention/consentement dans le hôte de confiance ; (2) vrai writer scientifique natif sans dérogation aux garanties de journal/empreintes/double consentement ; (3) tests NTFS adversariaux et interruptions OS ; (4) workflow de récupération humaine sans promotion automatique ; (5) qualification de distribution Windows réelle. Aucun `main`, release ou Store modifié.
+
+
+#### M15-19 — Rectification de qualification et déduplication (2026-11-10)
+
+- L'itération a révélé une modification concurrente de la branche : `probe_inventory.rs` exposait déjà `--inspect-probe`. La nouvelle implémentation `probe_forensic.rs` faisait doublon et son JSON incompatible a provoqué **4 échecs de tests Windows** (première CI du lot). Cette duplication n'était pas une nouvelle fonction à conserver.
+- **Correction :** suppression de `probe_forensic.rs`, de la suite redondante `native-probe-forensic.test.cjs` et de son exécution CI ; restauration d'un seul branchement CLI vers l'inspecteur `probe_inventory.rs` et de son contrat `tempora-native-probe-inventory-v1`.
+- **Gain sécurité effectif :** `probe_inventory.rs` lit maintenant le manifeste avec `open_pinned` et `bounded_json` plutôt qu'avec `symlink_metadata` suivi de `File::open` ; refus du suivi de liens, handles Windows conservés et lecture bornée.
+- **Tests complémentaires conservés :** manifeste finalisé falsifié → `unsafe_entries` ; 101 dossiers candidats → refus sans nettoyage. Les tests existants de crash et de preuves restent exécutés une seule fois.
+- **Qualification :** changement implémenté ; attendre trois workflows **SUCCESS** sur le HEAD final pour passer à TESTÉ-CI. Aucun gate P0 ne peut être clôturé sur ce seul résultat.
