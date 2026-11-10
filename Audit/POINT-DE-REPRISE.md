@@ -5,11 +5,14 @@
 ## Base de développement livrée
 
 - Dépôt : https://github.com/MGhemri/tempora-framework
-- Branche stable : `main` ; HEAD observé après PR #117 : `ed709c4e4ff291fc66bca57437a12172b6a5ac9e`.
+- Branche stable : `main` ; HEAD **vérifié après PR #120** : `d052bc9685c5174af7c8a7bb505fb30177753357`. Après fusion, les trois CI `main` #42889909219 / #42889909414 / #42889909535 sont distinctes des CI de PR et doivent être consultées avant de revendiquer leur succès.
 - PR #114 (M15-20 + candidat Store 0.2.0) : **fusionnée** le 10/11, merge `3c2b7bb752538a8990dad88b1527b0a422c56ca5`.
 - PR #115 (clôture audit Store) : **fusionnée**, merge `e0eb3ca44fe6ee7e14ce5f78166d566d574b3848`.
 - PR #116 (M1.5 REC-01, contrôle de cohérence des preuves) : **fusionnée**, merge `57cde355965324ed104559ff767c1c925dcee97f`, HEAD testé `3f6166dd2ee5adad10fe51bb309ef4adc144e6d0`.
 - PR #117 (TVRW J9 GeoLab interactif) : **fusionnée**, merge `ed709c4e4ff291fc66bca57437a12172b6a5ac9e`, HEAD testé `e63db25273239018bbb0f170972399c41631d457`.
+- PR #118 (checkpoint Audit) : fusionnée, merge `fba6e0e018ef57ca78e6af03b3cc1e33e766ed5a`.
+- PR #119 (TVRW J10 Chronos sans dates de fin inventées) : **fusionnée**, merge `6f12ed91f0b79a27debac9f268ed4c75877ad301`, CI PR Framework #42886970506, Docs #42886970501, Desktop #42886970403 : **success**. CI main après merge Framework #42887873193, Docs #42887873294, Desktop #42887873374 : **success**.
+- PR #120 (ASSIST M1.5 cinq SHA) : **fusionnée**, merge `d052bc9685c5174af7c8a7bb505fb30177753357`, CI PR Framework #42889142432, Docs #42889142439, Desktop #42889142667 : **success**. CI main postmerge à contrôler séparément.
 - Ancien incident CI #111 : **clos**, car NSIS Electron officiel est de nouveau opérationnel ; la voie Tauri/WebView2 est archivée.
 
 ## Preuves de CI attachées aux HEAD de PR
@@ -55,6 +58,10 @@ Le build Windows de la PR #117 contient un artefact temporaire
 
 Le rendu distingue les bornes temporelles incertaines et les fins inconnues sans inventer de durée. Code, tests et limites : [TVRW-J10-CHRONOS.md](TVRW-J10-CHRONOS.md). Qualification du HEAD de PR indispensable ; ne change pas le binaire déjà déclaré publié.
 
-## Lot ASSIST M1.5 SCI-01 — cinquième empreinte en cours de qualification
+## Lot ASSIST M1.5 SCI-01 — cinquième empreinte fusionnée, P0 non clos
 
 Après J10 (PR #119 fusionnée, commit `6f12ed91f0b79a27debac9f268ed4c75877ad301`, CI Framework 42886970506, Documentation 42886970501, Desktop 42886970403 toutes success), le lot P0 partiel lie explicitement le mapping SHA-256 à la seconde décision hôte et au replay SDK. Voir [ASSIST-M15-SCI-FIVE-SHA.md](ASSIST-M15-SCI-FIVE-SHA.md). CI de la nouvelle PR requise, aucun P0 SCI-01/SEC-WIN/REC/DUR clos.
+
+## Point de reprise après publication déclarée et deux lots fusionnés
+
+Voir [REPRISE-POST-PUBLICATION-2026-11-10.md](REPRISE-POST-PUBLICATION-2026-11-10.md) pour les décisions détaillées, CI exactes et le prochain gros lot de sécurité. Les anciennes indications historiques dans les sections précédentes ne priment pas sur ce point.
