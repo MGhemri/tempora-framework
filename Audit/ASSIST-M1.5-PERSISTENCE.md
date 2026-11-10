@@ -921,3 +921,55 @@ restent strictement interdits à cette sonde.
 **Tests :** une seule campagne Framework/Documentation/Desktop est
 lancée sur le dernier SHA après consolidation du lot ; le statut
 `TESTÉ-CI` doit être confirmé explicitement avant clôture.
+
+
+## 29. M15-19 — Inventaire forensic natif de la sonde après crash
+
+Nouveau module Rust `native-windows-guard/src/probe_forensic.rs`,
+exposé par `tempora-windows-guard.exe --inspect-probe <racine-NTFS>`.
+Cette commande **n'écrit rien** : aucune suppression de verrou,
+promotion de `.native-probe-pending`, récupération, réparation, reprise,
+signature ou déclaration de durabilité.
+
+Elle refuse les chemins non locaux/non NTFS avec l'inspection Win32 et
+borne à **100 dossiers** chaque collection (en attente et finalisée).
+Chaque identifiant doit être un nom hexadécimal de 32 caractères.
+Tout dossier ambigu, nom incorrect, reparse point ou jonction utilisé
+à la place d'un dossier de transaction entraîne un refus, sans suivre
+la cible suspecte.
+
+Les transactions de sonde finalisées sont examinées en relisant
+le transport exact via `scientific_envelope::load_verified`
+(les trois fichiers source sont ouverts par handles Win32 sans
+partage d'écriture/suppression), puis le manifeste `manifest.json`
+est ouvert par la **même primitive native anti-reparse point**.
+Une sonde finalisée n'est classée vérifiée que si le manifeste est
+`NTFS_SCIENTIFIC_TRANSPORT_PROBE`, `synthetic:true` et
+`published:false` et que le triplet scientifique de transport passe
+l'intégrité des octets et du journal.
+
+La commande retourne un objet JSON borné comportant :
+`writer_lock_status`, `pending_verified_for_review`,
+`pending_incomplete`, `committed_verified`,
+`committed_invalid`, `requires_manual_attention`,
+`files_modified:false`, `recovery_performed:false`,
+`durability_certified:false`, `scientific_approval:false` et
+`published:false`. Les listes de noms sont vérifiées deux fois
+pour refuser une mutation observable durant le scan. Un statut
+`committed_verified` ne prouve **ni** l'authenticité du consentement
+`sdk_validated` **ni** une validation historique canonique par Rust.
+
+**Tests Windows natifs de bout en bout :** inspection d'une racine vide
+sans mutation ; transaction de sonde valide puis falsification du
+manifeste ; classements après crashs réels `after_lock`,
+`after_corpus` et `after_rename` avec verrou orphelin conservé ;
+refus d'une jonction dans le dossier des candidats. La CI Desktop
+existante exécute cette nouvelle suite sans nouveau workflow.
+
+**Sécurité non démontrée / P0 inchangés :** l'inventaire n'est pas
+atomique, la racine et ses ancêtres ne sont pas retenus sous handles
+pendant toute l'inspection, et un adversaire peut faire varier
+les fichiers entre deux lectures. Il ne faut pas utiliser ce diagnostic
+pour autoriser une reprise scientifique ou nettoyer les verrous.
+SEC-WIN-01, SCI-01, REC-01 et DUR-01 restent BLOQUANTS avant la
+distribution d'un writer scientifique.
