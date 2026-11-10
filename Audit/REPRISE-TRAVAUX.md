@@ -8,10 +8,10 @@
 
 - Dépôt : **https://github.com/MGhemri/tempora-framework**.
 - Branche unique du chantier en cours : `docs/assist-m1-5-transactional-persistence`.
-- PR **#114** : https://github.com/MGhemri/tempora-framework/pull/114 — **en cours de finalisation pour fusion autorisée le 2026-11-10**. Vérifier son statut réel ; le passage à merge est désormais autorisé **seulement après CI verte du package Store**.
+- **PR #114 FUSIONNÉE** le 2026-11-10 : https://github.com/MGhemri/tempora-framework/pull/114 ; merge `3c2b7bb752538a8990dad88b1527b0a422c56ca5`. **Branche active post-fusion : `main`** ; la PR documentaire de suivi est `docs/store-0-2-0-merge-audit`. Ne pas développer de nouveaux P0 directement dans `main`.
 - Le propriétaire demande d'agir directement sur le dépôt, de **développer, vérifier, corriger et continuer**, sans lui faire répéter les priorités ni solliciter des confirmations de routine.
 - Avancer par **lots cohérents suffisamment importants**, pas par micro-correctifs ou simples rapports. Limiter les commits / relances de CI, puis qualifier **le HEAD final exact**.
-- **Mise à jour de décision utilisateur (2026-11-10) :** fusion de la PR #114 **explicitement autorisée**, seulement après CI complète du candidat Store. Les interdictions de release GitHub/npm et de **soumission ou publication Microsoft Store automatique** restent. Ne pas confondre préparation Store et publication. Une certification Store antérieure ne qualifie pas M1.5.
+- **Décision exécutée le 2026-11-10 :** fusion de la PR #114 après réussite des trois CI et génération AppX Store `0.2.0`. Le merge est effectif (SHA ci-dessus). **Release GitHub/npm, upload et publication Microsoft Store non exécutés et nécessitant une décision distincte**. Ne pas confondre préparation Store et publication. Une certification Store antérieure ne qualifie pas M1.5.
 - Aucun write M1.5 dans les applications packagées : `electron/local-save-access.cjs` impose `isPackaged===false && TEMPORA_EXPERIMENTAL_M15_SAVE==='1'`. Le mode non packagé et opt-in reste **uniquement expérimental**. La sonde Rust `TEMPORA_NATIVE_SYNTHETIC_TEST=1` est **test-only** ; ne jamais l'exposer via IPC ou l'installateur.
 - Ne pas confondre **acceptation humaine pour staging local**, **approbation scientifique**, **publication**, **validation de l'intégrité** et **consentement authentifié**.
 - Ne jamais effacer automatiquement un verrou, renommer un candidat `.pending` en résultat final par heuristique, ni réessayer une transaction après erreur de résultat incertain.
@@ -115,3 +115,13 @@ Un court résumé en français comprenant : **fonctionnalité effectivement livr
 - CI candidate : `npm run dist:store` sur Windows, `--publish never`, inspection `AppxManifest.xml`, sauvegarde de l'AppX en artefact Actions. N'autoriser la fusion qu'après confirmation du job complet et des trois workflows du SHA précis.
 - Après fusion, inscrire le SHA de merge et les nouvelles CI `main` dans le rapport Store et le registre. Commencer le travail scientifique restant sur **une nouvelle branche**, avec restrictions M1.5 toujours actives.
 - **AUCUNE soumission, validation Partner Center ni publication Store** sans une décision distincte. L'ancien package certifié n'est pas modifié depuis GitHub.
+
+
+## 10. Résultat définitif du jalon de fusion 0.2.0 — 2026-11-10
+
+- **PR #114 fusionnée dans `main`** : `3c2b7bb752538a8990dad88b1527b0a422c56ca5`. La PR est **close/merged**, non draft.
+- **Tests du code exact fusionné (avant merge) :** HEAD `5aca622e5a9346eccbca4d435e109704c8d09005` ; Workflow Framework `42853241876`, Docs `42853242221`, Desktop Windows Chromium/NSIS/AppX `42853241862`, **tous success**.
+- **Store AppX x64 0.2.0** : construit et manifeste validé avec identité `GhemriM.TEMPORADesktop` et Publisher officiel. [Artefact de la CI](https://github.com/MGhemri/tempora-framework/actions/runs/42853241862) `TEMPORA-Desktop-0.2.0-x64-STORE-CANDIDATE-NOT-PUBLISHED` (artefact `13781238941`). **Soumission et publication non faites**.
+- **Rapport détaillé / checklist Store :** [STORE-MISE-A-JOUR-0.2.0.md](STORE-MISE-A-JOUR-0.2.0.md).
+- **Pour la suite du projet :** reprendre les P0 `SEC-WIN-01/02`, `SCI-01`, `DUR-01`, `REC-01` sur **nouvelle branche depuis `main`**, ne pas réactiver le writer M1.5 packagé par inadvertance. La version 0.2.0 du client Chromium est une **base de diffusion possible**, pas une qualification des expérimentations NTFS.
+- **Protection GitHub** : toutes les modifications de `main` doivent passer par PR ; ce compte rendu de fusion est réalisé sur `docs/store-0-2-0-merge-audit` et sera visible dans `main` après intégration de cette PR. Ne pas contourner cette règle.
