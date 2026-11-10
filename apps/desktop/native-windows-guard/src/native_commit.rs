@@ -160,6 +160,20 @@ fn rename_with_pinned_destination(
     }
     Ok(())
 }
+// Reopen each staged file using the Win32 no-reparse, no-share-write/delete
+// primitive; compare EXACT bytes against the verified source buffers.
+// This tests the data actually written, not merely its pre-write hash.
+// The handles close before directory rename: TOCTOU/power-loss P0 remain.
+fn verify_staged_bytes(directory: &Path, name: &str, expected: &[u8])
+    -> Result<(), &'static str>
+{
+    let mut file=crate::scientific_envelope::open_pinned(&directory.join(name), false)
+        .map_err(|_| "NATIVE_COMMIT_STAGED_UNSAFE")?;
+    let bytes=crate::scientific_envelope::bounded_json(&mut file)
+        .map_err(|_| "NATIVE_COMMIT_STAGED_UNSAFE")?;
+    if bytes != expected { return Err("NATIVE_COMMIT_STAGED_MISMATCH"); }
+    Ok(())
+}
 // Only reached by explicit synthetic CLI mode. Simulates a killed native
 // process at auditable points. Never used by the distributed application.
 fn crash_probe(phase: &str, code: i32) {
@@ -214,6 +228,18 @@ fn commit_probe(
         exclusive_sync(&pending, "journal.json", &documents.journal)?;
         exclusive_sync(&pending, "envelope.json", &documents.envelope)?;
         exclusive_sync(&pending, "manifest.json",
+            br#"{"synthetic":true,"published":false,"kind":"NTFS_SCIENTIFIC_TRANSPORT_PROBE"}"#)?;
+        // Adversarial fixture only. Always behind the synthetic test gate:
+        // simulate tampering after writes, before native visibility.
+        if std::env::var_os("TEMPORA_NATIVE_TEST_CORRUPT_STAGED")
+            .as_deref() == Some(OsStr::new("1")) {
+            fs::write(pending.join("journal.json"), b"{}")
+                .map_err(|_| "NATIVE_COMMIT_TEST_CORRUPTION_FAILED")?;
+        }
+        verify_staged_bytes(&pending, "corpus.json", &documents.corpus)?;
+        verify_staged_bytes(&pending, "journal.json", &documents.journal)?;
+        verify_staged_bytes(&pending, "envelope.json", &documents.envelope)?;
+        verify_staged_bytes(&pending, "manifest.json",
             br#"{"synthetic":true,"published":false,"kind":"NTFS_SCIENTIFIC_TRANSPORT_PROBE"}"#)?;
     } else {
         exclusive_sync(&pending, "corpus.json", br#"{"synthetic":true,"schema_version":"probe-only"}"#)?;
