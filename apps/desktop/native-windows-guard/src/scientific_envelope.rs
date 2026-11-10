@@ -5,8 +5,63 @@
 use serde::Deserialize;
 use serde_json::Value;
 use sha2::{Digest, Sha256};
-use std::fs;
+use std::fs::{self, File};
+use std::io::Read;
+use std::os::windows::ffi::OsStrExt;
+use std::os::windows::io::FromRawHandle;
 use std::path::Path;
+use std::ptr::null_mut;
+use std::ffi::c_void;
+
+// All source objects remain open without FILE_SHARE_WRITE or
+// FILE_SHARE_DELETE until the verified buffers have been committed to the
+// synthetic destination. This is NOT a production write authorization.
+type Handle = isize;
+const INVALID_HANDLE_VALUE: Handle = -1;
+const GENERIC_READ: u32 = 0x8000_0000;
+const FILE_READ_ATTRIBUTES: u32 = 0x80;
+const FILE_SHARE_READ: u32 = 0x1;
+const OPEN_EXISTING: u32 = 3;
+const FILE_FLAG_BACKUP_SEMANTICS: u32 = 0x0200_0000;
+const FILE_FLAG_OPEN_REPARSE_POINT: u32 = 0x0020_0000;
+const FILE_ATTRIBUTE_DIRECTORY: u32 = 0x10;
+const FILE_ATTRIBUTE_REPARSE_POINT: u32 = 0x400;
+const FILE_ATTRIBUTE_TAG_INFO_CLASS: i32 = 9;
+#[repr(C)]
+#[derive(Default)]
+struct FileAttributeTagInfo { attributes: u32, tag: u32 }
+#[link(name = "kernel32")]
+extern "system" {
+    fn CreateFileW(name: *const u16, access: u32, share: u32,
+        security: *mut c_void, creation: u32, flags: u32,
+        template: Handle) -> Handle;
+    fn CloseHandle(handle: Handle) -> i32;
+    fn GetFileInformationByHandleEx(handle: Handle, kind: i32,
+        info: *mut c_void, size: u32) -> i32;
+}
+fn open_pinned(path: &Path, directory: bool) -> Result<File, &'static str> {
+    let encoded: Vec<u16> = path.as_os_str().encode_wide()
+        .chain(std::iter::once(0)).collect();
+    let raw = unsafe {
+        CreateFileW(encoded.as_ptr(),
+            if directory { FILE_READ_ATTRIBUTES } else { GENERIC_READ },
+            FILE_SHARE_READ, null_mut(), OPEN_EXISTING,
+            FILE_FLAG_OPEN_REPARSE_POINT | if directory {FILE_FLAG_BACKUP_SEMANTICS} else {0}, 0)
+    };
+    if raw == INVALID_HANDLE_VALUE { return Err("NATIVE_ENVELOPE_HANDLE_OPEN_FAILED"); }
+    let mut tag = FileAttributeTagInfo::default();
+    let ok = unsafe { GetFileInformationByHandleEx(raw,
+        FILE_ATTRIBUTE_TAG_INFO_CLASS, (&mut tag as *mut FileAttributeTagInfo).cast(),
+        std::mem::size_of::<FileAttributeTagInfo>() as u32) };
+    if ok == 0 || (tag.attributes & FILE_ATTRIBUTE_REPARSE_POINT) != 0 ||
+       tag.tag != 0 || ((tag.attributes & FILE_ATTRIBUTE_DIRECTORY) != 0) != directory {
+        unsafe { CloseHandle(raw); }
+        return Err("NATIVE_ENVELOPE_REPARSE_OR_UNSAFE");
+    }
+    // Each kernel HANDLE is owned exactly once by File from this point on.
+    Ok(unsafe { File::from_raw_handle(raw as *mut c_void) })
+}
+
 
 const LIMIT: u64 = 16 * 1024 * 1024;
 #[derive(Deserialize)]
@@ -35,19 +90,11 @@ fn sha256(bytes: &[u8]) -> String {
 fn is_sha(value: &str) -> bool {
     value.len() == 64 && value.bytes().all(|b| b.is_ascii_hexdigit() && !b.is_ascii_uppercase())
 }
-fn bounded_json(dir: &Path, name: &str) -> Result<Vec<u8>, &'static str> {
-    let target = dir.join(name);
-    let metadata = fs::symlink_metadata(&target).map_err(|_| "NATIVE_ENVELOPE_FILE_MISSING")?;
-    if !metadata.file_type().is_file() || metadata.len() == 0 || metadata.len() > LIMIT {
-        return Err("NATIVE_ENVELOPE_FILE_UNSAFE");
-    }
-    // File may grow after metadata: read at most LIMIT+1 bytes, never read_to_end.
-    let mut reader = std::io::BufReader::new(
-        fs::File::open(&target).map_err(|_| "NATIVE_ENVELOPE_FILE_UNSAFE")?
-    );
-    let mut bytes = Vec::new();
-    use std::io::Read;
-    reader.take(LIMIT + 1).read_to_end(&mut bytes)
+fn bounded_json(pinned: &mut File) -> Result<Vec<u8>, &'static str> {
+    let length = pinned.metadata().map_err(|_| "NATIVE_ENVELOPE_FILE_UNSAFE")?.len();
+    if length == 0 || length > LIMIT { return Err("NATIVE_ENVELOPE_FILE_UNSAFE"); }
+    let mut bytes=Vec::new();
+    pinned.take(LIMIT + 1).read_to_end(&mut bytes)
         .map_err(|_| "NATIVE_ENVELOPE_READ_FAILED")?;
     if bytes.is_empty() || bytes.len() as u64 > LIMIT {
         return Err("NATIVE_ENVELOPE_FILE_LIMIT");
@@ -58,12 +105,19 @@ pub struct VerifiedTransport {
     pub corpus: Vec<u8>,
     pub journal: Vec<u8>,
     pub envelope: Vec<u8>,
+    // Private ownership deliberately keeps source directory and file handles
+    // open until the caller drops VerifiedTransport AFTER its commit attempt.
+    _pinned_sources: [File; 4],
 }
 pub fn load_verified(dir: &Path) -> Result<VerifiedTransport, &'static str> {
     // Check every parent and the directory itself with existing Win32 handle
     // inspection. It does not make file opens or subsequent writes atomic.
     crate::native::inspect(dir)?;
-    let metadata = bounded_json(dir, "envelope.json")?;
+    let pinned_directory = open_pinned(dir, true)?;
+    let mut pinned_envelope = open_pinned(&dir.join("envelope.json"), false)?;
+    let mut pinned_corpus = open_pinned(&dir.join("corpus.json"), false)?;
+    let mut pinned_journal = open_pinned(&dir.join("journal.json"), false)?;
+    let metadata = bounded_json(&mut pinned_envelope)?;
     let envelope: Envelope = serde_json::from_slice(&metadata)
         .map_err(|_| "NATIVE_ENVELOPE_SCHEMA_INVALID")?;
     if envelope.schema_version != "tempora-scientific-transport-v1" ||
@@ -79,8 +133,8 @@ pub fn load_verified(dir: &Path) -> Result<VerifiedTransport, &'static str> {
     if ids.iter().any(|v| !is_sha(v)) {
         return Err("NATIVE_ENVELOPE_DIGEST_INVALID");
     }
-    let corpus_bytes = bounded_json(dir, "corpus.json")?;
-    let journal_bytes = bounded_json(dir, "journal.json")?;
+    let corpus_bytes = bounded_json(&mut pinned_corpus)?;
+    let journal_bytes = bounded_json(&mut pinned_journal)?;
     if sha256(&corpus_bytes) != envelope.corpus_file_sha256 ||
        sha256(&journal_bytes) != envelope.journal_file_sha256 {
         return Err("NATIVE_ENVELOPE_BYTES_CHANGED");
@@ -107,6 +161,7 @@ pub fn load_verified(dir: &Path) -> Result<VerifiedTransport, &'static str> {
         corpus: corpus_bytes,
         journal: journal_bytes,
         envelope: metadata,
+        _pinned_sources: [pinned_directory, pinned_envelope, pinned_corpus, pinned_journal],
     })
 }
 pub fn verify(dir: &Path) -> Result<(), &'static str> {
