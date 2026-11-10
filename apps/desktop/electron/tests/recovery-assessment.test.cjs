@@ -315,3 +315,30 @@ for(const boundary of interruptionMatrix){
   }
  });
 }
+
+test('lock replacement with identical reserved status invalidates recovery snapshot',t=>{
+ const f=fixture(t),pending=path.join(f.root,'.pending'),
+       lock=path.join(f.root,'.writer-lock'),retired=path.join(f.root,'.writer-lock-original');
+ fs.mkdirSync(pending);fs.mkdirSync(lock);
+ const owner=JSON.stringify({schema_version:'1.0.0',nonce:'a'.repeat(32)})+'\n';
+ fs.writeFileSync(path.join(lock,'owner.json'),owner);
+ assert.deepEqual(inspectWriterReservation(f.root),{status:'reserved'});
+ const readdir=fs.readdirSync;let swapped=false;
+ fs.readdirSync=function(location,...args){
+  if(!swapped&&String(location)===pending){
+   swapped=true;
+   fs.renameSync(lock,retired);
+   fs.mkdirSync(lock);
+   fs.writeFileSync(path.join(lock,'owner.json'),owner);
+  }
+  return readdir.call(fs,location,...args);
+ };
+ try{
+  assert.throws(()=>assessRecovery(f.root,canonical),
+   {code:'RECOVERY_SNAPSHOT_CHANGED'});
+ }finally{fs.readdirSync=readdir;}
+ assert.equal(swapped,true);
+ assert.deepEqual(inspectWriterReservation(f.root),{status:'reserved'});
+ assert.equal(fs.readFileSync(path.join(retired,'owner.json'),'utf8'),owner);
+ assert.equal(fs.readFileSync(path.join(lock,'owner.json'),'utf8'),owner);
+});
