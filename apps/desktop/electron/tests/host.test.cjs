@@ -398,3 +398,11 @@ test('gated development-only save channel accepts a handle, never corpus, path o
  assert.match(src('src/assistant-view.ts'),/experimental_local_save_ready/);
  assert.match(src('src/assistant-view.ts'),/localSaveReceipt\?\.saved_to_disk/);
 });
+
+test('an uncertain writer-lock ownership failure is visible without allowing silent retries',()=>{
+ const host=src('electron/main.cjs'),view=src('src/assistant-view.ts');
+ assert.match(host,/TRANSACTION_WRITER_OWNERSHIP_LOST/);
+ assert.match(view,/Ne réessayez pas/);
+ assert.match(view,/Do not retry/);
+ assert.match(view,/localSaveAttempted=true/);
+});
