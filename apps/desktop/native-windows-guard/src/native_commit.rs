@@ -176,6 +176,13 @@ fn commit_probe(
     // On every failure retain the lock and the pending data for forensic review.
     let lock_handle = open_directory(&lock, false, false)?;
     let _ = &lock_handle;
+    let pending_root = root.join(".native-probe-pending");
+    let completed_root = root.join("native-probe-complete");
+    let pending_root_handle = create_or_open(&pending_root, true)?;
+    let completed_root_handle = create_or_open(&completed_root, true)?;
+    let _ = (&root_handle, &pending_root_handle);
+    let id = random_id()?;
+    exclusive_sync(&lock, "owner.txt", id.as_bytes())?;
     // Deterministic test-only pause: permits a second Windows process to try
     // replacing the already-pinned source while this transaction is active.
     // Hard-capped; cannot be enabled without the synthetic-test gate above.
@@ -186,13 +193,6 @@ fn commit_probe(
             std::thread::sleep(std::time::Duration::from_millis(pause));
         }
     }
-    let pending_root = root.join(".native-probe-pending");
-    let completed_root = root.join("native-probe-complete");
-    let pending_root_handle = create_or_open(&pending_root, true)?;
-    let completed_root_handle = create_or_open(&completed_root, true)?;
-    let _ = (&root_handle, &pending_root_handle);
-    let id = random_id()?;
-    exclusive_sync(&lock, "owner.txt", id.as_bytes())?;
     let pending = pending_root.join(&id);
     fs::create_dir(&pending).map_err(|_| "NATIVE_COMMIT_COLLISION")?;
     let pending_handle = open_directory(&pending, true, false)?;
