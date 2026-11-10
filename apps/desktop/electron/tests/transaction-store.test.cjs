@@ -464,3 +464,43 @@ test('Windows UNC and device destinations fail closed without probing remote pat
     {code:'TRANSACTION_ROOT_UNSAFE'});
  }
 });
+
+test('replacement of transaction directory during file writes is detected before commit',t=>{
+ const f=fixture(t),outside=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-swap-target-'));
+ t.after(()=>fs.rmSync(outside,{recursive:true,force:true}));
+ const prior=fs.fsyncSync;let count=0,swapped=false;
+ fs.fsyncSync=function(fd){
+   const result=prior.call(fs,fd);
+   count++;
+   if(count===3&&!swapped){
+     const dir=path.join(f.root,'transactions');
+     fs.renameSync(dir,path.join(f.root,'transactions-retained'));
+     try{fs.symlinkSync(outside,dir,process.platform==='win32'?'junction':'dir');}
+     catch(e){
+       // Refuse a test that cannot create a junction; the other security
+       // tests still cover the static redirection.
+       fs.renameSync(path.join(f.root,'transactions-retained'),dir);
+       if(process.platform==='win32'&&['EPERM','EACCES','ENOTSUP'].includes(e.code))
+         return result;
+       throw e;
+     }
+     swapped=true;
+   }
+   return result;
+ };
+ try{
+   if(process.platform==='win32'){
+     // Windows runtime may lack junction permissions on some runners.
+     try{createTransaction(f.root,f,canonical);}
+     catch(e){if(swapped)assert.equal(e.code,'TRANSACTION_DIRECTORY_UNSAFE');else throw e;}
+   }else{
+     assert.throws(()=>createTransaction(f.root,f,canonical),
+       {code:'TRANSACTION_DIRECTORY_UNSAFE'});
+   }
+ }finally{fs.fsyncSync=prior;}
+ if(swapped){
+   assert.deepEqual(fs.readdirSync(outside),[]);
+   assert.equal(inspectTransactions(f.root,canonical).complete.length,0);
+   assert.equal(inspectTransactions(f.root,canonical).pending.length,1);
+ }
+});
