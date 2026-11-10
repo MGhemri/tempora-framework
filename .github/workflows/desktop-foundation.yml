@@ -58,6 +58,7 @@ jobs:
       - run: npm run test:persistence-gate
       - run: npm run test:persistence-adapter
       - run: npm run test:persistence-coordinator
+      - run: npm run test:recovery
       - run: npm run test:visualization
       - run: npm run test:windows-engine
 
@@ -123,6 +124,7 @@ jobs:
           npm run test:persistence-gate
           npm run test:persistence-adapter
           npm run test:persistence-coordinator
+          npm run test:recovery
       - name: Stage pinned scientific runtime
         run: npm run stage:windows-engine
       - name: Test pinned Node worker and human staging before Electron packaging
