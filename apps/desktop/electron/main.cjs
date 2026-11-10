@@ -241,15 +241,20 @@ app.whenReady().then(async () => {
     });
     if(chosen.canceled||!chosen.filePaths[0])return null;
     // Resolve from the embedded engine location on packaged Windows.
-    const runtime=getRuntime();
-    const canonical=createRequire(runtime.worker)('tempora-framework').canonical;
-    const report=assessRecovery(chosen.filePaths[0],canonical);
-    // Preserve IPC budgets: no unbounded lists of attacker-controlled names.
-    if(Object.values(report).some(v=>Array.isArray(v)&&v.length>100))
-      throw Error('ASSIST_RECOVERY_REPORT_LIMIT');
-    if(Buffer.byteLength(JSON.stringify(report),'utf8')>32*1024)
-      throw Error('ASSIST_RECOVERY_REPORT_LIMIT');
-    return report;
+    try {
+      const runtime=getRuntime();
+      const canonical=createRequire(runtime.worker)('tempora-framework').canonical;
+      const report=assessRecovery(chosen.filePaths[0],canonical);
+      // Preserve IPC budgets: no unbounded lists of attacker-controlled names.
+      if(Object.values(report).some(v=>Array.isArray(v)&&v.length>100)||
+         Buffer.byteLength(JSON.stringify(report),'utf8')>32*1024)
+        throw Error('ASSIST_RECOVERY_REPORT_LIMIT');
+      return report;
+    } catch {
+      // Native filesystem exceptions may contain absolute private paths.
+      // Never propagate raw stack traces or selected paths to renderer IPC.
+      throw Error('ASSIST_RECOVERY_ASSESSMENT_FAILED');
+    }
   });
   ipcMain.handle('tempora:assistant:inspect',(event,handle_id)=>{
     validSender(event);return assistantSessions.inspect(handle_id);
