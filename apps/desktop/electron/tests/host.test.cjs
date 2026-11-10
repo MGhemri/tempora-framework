@@ -323,3 +323,19 @@ test('Official Windows Desktop packaging is Chromium/Electron only, no WebView2 
  assert.match(store,/GhemriM\.TEMPORADesktop/);
  assert.match(policy,/Chromium\/Electron is the only supported Windows distribution host/);
 });
+
+test('M1.5 recovery UI is a native-picker read-only action with packaged verifier',()=>{
+ const host=src('electron/main.cjs'),preload=src('electron/preload.cjs');
+ const ui=src('src/assistant-view.ts'),pkg=require('../package.json');
+ assert.match(host,/tempora:assistant:assess-recovery/);
+ assert.match(host,/properties:\s*\['openDirectory'\]/);
+ assert.match(host,/validSender\(event\)/);
+ assert.match(host,/createRequire\(runtime\.worker\)\('tempora-framework'\)/);
+ assert.match(host,/ASSIST_RECOVERY_REPORT_LIMIT/);
+ assert.match(preload,/assistantAssessRecovery:\s*\(\)\s*=>\s*ipcRenderer\.invoke\('tempora:assistant:assess-recovery'\)/);
+ assert.match(ui,/Examiner des transactions interrompues/);
+ assert.match(ui,/Aucun fichier modifié ni publié/);
+ assert.ok(pkg.build.files.includes('recovery-assessment.cjs'));
+ assert.ok(pkg.build.files.includes('transaction-store.cjs'));
+ assert.doesNotMatch(preload,/assistantCommit|assistantSaveTransaction|createTransaction/);
+});
