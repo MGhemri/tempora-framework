@@ -61,6 +61,7 @@ jobs:
       - run: npm run test:native-persistence
       - run: npm run test:persistence-binding
       - run: npm run test:persistence-authority
+      - run: npm run test:local-save-gate
       - run: npm run test:recovery
       - run: npm run test:visualization
       - run: npm run test:windows-engine
@@ -130,6 +131,7 @@ jobs:
           npm run test:native-persistence
           npm run test:persistence-binding
           npm run test:persistence-authority
+          npm run test:local-save-gate
           npm run test:recovery
       - name: Stage pinned scientific runtime
         run: npm run stage:windows-engine
