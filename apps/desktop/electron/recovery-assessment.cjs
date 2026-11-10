@@ -3,13 +3,33 @@
 // This module cannot promote, delete, rename or approve any transaction.
 const {inspectTransactions,inspectWriterReservation,inspectPendingEvidence}=
   require('./transaction-store.cjs');
+const fs=require('node:fs'),path=require('node:path');
 const ERROR=code=>Object.assign(new Error(code),{code});
+// Read-only identity snapshot for a lock, not an ownership claim.
+// Comparing only status ("reserved"/"reserved") misses a replaced directory.
+function lockFingerprint(root){
+ const lock=path.join(root,'.writer-lock');
+ const info=filename=>{
+  try{
+   const stat=fs.lstatSync(filename,{bigint:true});
+   return [stat.dev,stat.ino,stat.size,stat.ctimeNs,stat.mtimeNs,
+     stat.isSymbolicLink()?1n:0n].map(String).join(':');
+  }catch(error){
+   if(error?.code==='ENOENT')return 'absent';
+   throw error;
+  }
+ };
+ return info(lock)+'|'+info(path.join(lock,'owner.json'));
+}
 function assessRecovery(root,canonical){
  const lock=inspectWriterReservation(root);
+ const fingerprintBefore=lockFingerprint(root);
  const inventory=inspectTransactions(root,canonical);
  const evidence=inspectPendingEvidence(root,canonical);
  const lockAfter=inspectWriterReservation(root);
- if(lockAfter.status!==lock.status)throw ERROR('RECOVERY_SNAPSHOT_CHANGED');
+ const fingerprintAfter=lockFingerprint(root);
+ if(lockAfter.status!==lock.status||fingerprintAfter!==fingerprintBefore)
+   throw ERROR('RECOVERY_SNAPSHOT_CHANGED');
  const classified=[...evidence.verified_for_review,...evidence.incomplete,...evidence.unsafe];
  // Compare sorted IDs: a race or inconsistent snapshot is not a safe report.
  const ids=new Set(classified);
