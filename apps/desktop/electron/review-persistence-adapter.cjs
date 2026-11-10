@@ -5,11 +5,12 @@
 // corpus in the host, then recompute preview+accept with the pinned SDK.
 // Storage is a separate, host-authorized operation.
 const crypto=require('node:crypto');
-const sdk=require('tempora-framework');
+// The packaged host must inject the SDK resolved from its bundled worker.
+// The local fallback is kept for unit tests and non-packaged development.
 const HASH=/^[0-9a-f]{64}$/;
 const eq=(a,b)=>typeof a==='string'&&typeof b==='string'&&a===b;
 const fail=code=>{throw Object.assign(new Error(code),{code});};
-function preparePersistence({bytes,corpus,mapping,sourceName,review,authorization}){
+function preparePersistence({bytes,corpus,mapping,sourceName,review,authorization}, sdk=require('tempora-framework')){
  if(sdk.ingestion?.preview===undefined||sdk.ingestion?.accept===undefined||
     !sdk.canonical?.validateCorpus||!sdk.canonical?.digest)
    fail('PERSIST_ENGINE_UNAVAILABLE');
