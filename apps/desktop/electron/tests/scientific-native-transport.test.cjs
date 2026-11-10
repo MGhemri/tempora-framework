@@ -220,3 +220,52 @@ test('real Rust crash matrix preserves forensic evidence without replaying a nat
   assert.equal(fs.existsSync(path.join(root,'transactions')),false);
  }
 });
+
+test('Windows native probe pins source and destination ancestor directories against replacement',async t=>{
+ if(process.platform!=='win32')return;
+ const {spawn}=require('node:child_process');
+ const binary=path.resolve(__dirname,
+  '../../native-windows-guard/target/release/tempora-windows-guard.exe');
+ const base=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-native-pinned-parents-'));
+ t.after(()=>fs.rmSync(base,{recursive:true,force:true}));
+ const sourceParent=path.join(base,'source-parent'),
+       destinationParent=path.join(base,'destination-parent');
+ const source=path.join(sourceParent,'transport'),
+       destination=path.join(destinationParent,'target');
+ fs.mkdirSync(source,{recursive:true});
+ fs.mkdirSync(destination,{recursive:true});
+ const transport=buildScientificTransport(sample());
+ for(const [name,bytes] of Object.entries(transport))
+  fs.writeFileSync(path.join(source,name),bytes,{flag:'wx'});
+ const env={...process.env,TEMPORA_NATIVE_SYNTHETIC_TEST:'1',
+  TEMPORA_NATIVE_TEST_HOLD_MS:'2500'};
+ const child=spawn(binary,['--synthetic-transport-commit',destination,source],
+  {env,windowsHide:true,stdio:['ignore','pipe','pipe']});
+ let stdout='',stderr='';
+ child.stdout.on('data',chunk=>{stdout+=chunk;});
+ child.stderr.on('data',chunk=>{stderr+=chunk;});
+ const exit=new Promise(resolve=>child.once('close',resolve));
+ const lock=path.join(destination,'.native-probe-lock','owner.txt');
+ let acquired=false;
+ for(let n=0;n<120;n++){
+  if(fs.existsSync(lock)){acquired=true;break;}
+  if(child.exitCode!==null)break;
+  await new Promise(resolve=>setTimeout(resolve,20));
+ }
+ if(!acquired){
+  child.kill();
+  assert.fail('native parent handles were not pinned before probe lock');
+ }
+ // Windows must reject ordinary rename of either protected ancestor while
+ // the writer retains non-FILE_SHARE_DELETE handles.
+ for(const parent of [sourceParent,destinationParent]){
+  assert.throws(()=>fs.renameSync(parent,parent+'-replaced'),
+   {code:/^(EPERM|EACCES|EBUSY)$/});
+ }
+ const status=await exit;
+ assert.equal(status,0,stderr);
+ assert.match(stdout,/NATIVE_SYNTHETIC_TRANSPORT_COMMITTED:[0-9a-f]{32}/);
+ assert.equal(fs.existsSync(sourceParent),true);
+ assert.equal(fs.existsSync(destinationParent),true);
+ assert.equal(fs.existsSync(path.join(destination,'transactions')),false);
+});
