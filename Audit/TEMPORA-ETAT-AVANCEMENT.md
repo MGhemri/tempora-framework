@@ -165,3 +165,17 @@
 - **Statut initial :** `IMPLÉMENTÉ — CI DU HEAD FINAL À QUALIFIER`. Ne pas transférer la CI verte de M15-18 à M15-19 ; confirmer Framework, Documentation et Desktop Chromium Windows.
 - **Risque résiduel :** forensic non atomique ; sortie non utilisable pour éliminer le verrou, promouvoir un candidat ou relancer automatiquement. Aucune garantie power-loss et aucune certification scientifique du marqueur `sdk_validated`.
 - **Prochaine décision :** P0 `REC-01` reste bloqué jusqu'à un workflow de récupération opérateur indépendant et testé ; `SEC-WIN-01` exige un writer scientifique résistant aux races. PR #114 **DRAFT**, aucune fusion ni publication Store.
+
+
+### Lot consolidé M15-18/M15-19 — sécurisation NTFS, confinement synthétique et forensic
+
+**Vérifications et réalisations concrètes de cette itération :**
+
+- **Protection native des ancêtres :** `native::inspect_pinned()` conserve désormais les handles de **tous les répertoires du chemin**, de la racine du volume jusqu'au dossier ciblé, au lieu de les relâcher après le précontrôle. `VerifiedTransport` détient cette chaîne côté source jusqu'à la fin du writer, et `native_commit` détient celle de la destination pendant l'écriture/renommage de sonde.
+- **Test de concurrence NTFS réel :** un processus Windows tente de renommer à la fois un parent de la source et un parent de la destination pendant l'opération ; les deux substitutions sont refusées. Ce test a été **vert dans le job Windows** du lot, avant l'étape forensic.
+- **Confinement accidentel de la sonde :** `synthetic_transport_commit` refuse désormais les corpus hors du profil `synthetic-history` / namespace `SYNTHETIC_HISTORY`, y compris lorsqu'une enveloppe a été recomposée avec un SHA des octets cohérent. Test Windows **vert**. Cette vérification par profil **n'est pas** une signature cryptographique et n'autorise aucun corpus réel.
+- **Forensic natif M15-19 :** nouveau diagnostic read-only Windows après interruption, avec inventaire des dossiers et du verrou de sonde, classification des transactions incomplètes, finales et invalides, sans récupérer ni supprimer. Le premier run du lot a échoué sur une **divergence entre le schéma de sortie du CLI et les assertions des tests** ; les corrections doivent être validées sur le HEAD final, sans confondre cet échec avec les tests de handles déjà verts.
+
+**Gate de clôture :** dernière PR HEAD en brouillon, les trois workflows Framework / Documentation UI / Desktop Foundation tous `success` sur **le même SHA**. Le test forensic et les tests Windows de source/destination doivent être inclus. Les tâches `SEC-WIN-01`, `SCI-01`, `DUR-01` et `REC-01` demeurent **BLOQUÉES** pour production, notamment par le manque d'attestation du consentement humain, le renommage absolu, l'absence de preuve power-loss et de procédure de récupération opérateur.
+
+**Travaux prioritaires restants pour le prochain gros lot :** (1) sécurisation du protocole d'intention/consentement dans le hôte de confiance ; (2) vrai writer scientifique natif sans dérogation aux garanties de journal/empreintes/double consentement ; (3) tests NTFS adversariaux et interruptions OS ; (4) workflow de récupération humaine sans promotion automatique ; (5) qualification de distribution Windows réelle. Aucun `main`, release ou Store modifié.
