@@ -58,3 +58,36 @@ test('real Windows guard accepts local NTFS temp and refuses junction, missing a
  assert.equal(script.status,0);
  assert.equal(script.stdout.trim(),'NATIVE_DESTINATION_OK');
 });
+
+test('native synthetic writer performs one handle-relative directory commit and leaves no active lock',t=>{
+ if(process.platform!=='win32')return;
+ const binary=path.resolve(__dirname,'../../native-windows-guard/target/release/tempora-windows-guard.exe');
+ const dir=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-handle-commit-'));
+ t.after(()=>fs.rmSync(dir,{recursive:true,force:true}));
+ // A production environment cannot turn on the synthetic writer accidentally.
+ const disabledEnv={...process.env};
+ delete disabledEnv.TEMPORA_NATIVE_SYNTHETIC_TEST;
+ const denied=spawnSync(binary,['--synthetic-commit',dir],
+  {encoding:'utf8',windowsHide:true,env:disabledEnv,timeout:10000});
+ assert.equal(denied.status,3,denied.stderr);
+ assert.deepEqual(fs.readdirSync(dir),[]);
+ const enabled=spawnSync(binary,['--synthetic-commit',dir],{
+  encoding:'utf8',windowsHide:true,timeout:15000,
+  env:{...disabledEnv,TEMPORA_NATIVE_SYNTHETIC_TEST:'1'}
+ });
+ assert.equal(enabled.status,0,enabled.stderr);
+ const match=/^NATIVE_SYNTHETIC_COMMITTED:([a-f0-9]{32})$/.exec(enabled.stdout.trim());
+ assert.ok(match,enabled.stdout);
+ const id=match[1];
+ const committed=path.join(dir,'native-probe-complete',id);
+ assert.deepEqual(fs.readdirSync(committed).sort(),
+  ['corpus.json','journal.json','manifest.json']);
+ assert.deepEqual(fs.readdirSync(path.join(dir,'.native-probe-pending')),[]);
+ assert.equal(fs.existsSync(path.join(dir,'.native-probe-lock')),false);
+ const manifest=JSON.parse(fs.readFileSync(path.join(committed,'manifest.json'),'utf8'));
+ assert.equal(manifest.kind,'NTFS_HANDLE_RENAME_PROBE');
+ assert.equal(manifest.published,false);
+ // A synthetic marker must never enter the scientific transactions tree.
+ assert.equal(fs.existsSync(path.join(dir,'transactions')),false);
+ assert.equal(fs.existsSync(path.join(dir,'.pending')),false);
+});
