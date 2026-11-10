@@ -95,3 +95,36 @@ copie locale. Les deux indiquent **aucune publication scientifique**.
 Ne jamais désactiver les garde-fous pour contourner les essais Windows :
 reparse points, chemins substituables, lecteurs réseau, ACL et durabilité
 électrique restent des gates de qualification de production.
+
+
+## Rapprochement des transactions après un résultat de sauvegarde incertain
+
+Si la confirmation a été interrompue ou que le verrou a été remplacé,
+**ne jamais répéter l'écriture**. Conserver le dossier et effectuer d'abord
+l'inventaire read-only ci-dessus.
+
+Quand l'opérateur possède les **cinq SHA-256 exacts** de l'intention
+d'enregistrement (lot, source, base, mapping, sortie), l'outil peut
+rechercher dans les transactions finalisées et intégralement vérifiées
+une identité correspondante. Les empreintes sont passées en arguments
+**dans cet ordre** :
+
+```powershell
+node electron/scripts/assess-recovery.cjs "C:\\Dossier\\TEMPORA-imports" --match <SHA_BATCH> <SHA_SOURCE> <SHA_BASE> <SHA_MAPPING> <SHA_SORTIE>
+```
+
+La commande n'écrit rien : elle expose `identity_matching.matching_transaction_ids`
+et `operator_review_required`. Le code **0** signifie qu'une seule
+transaction finalisée et structurellement vérifiée correspond aux cinq
+empreintes, sans anomalie constatée dans l'inventaire courant ; **2**
+signifie une correspondance absente, multiple ou un autre élément demandant
+un examen humain ; **3** signifie un refus du diagnostic.
+Un code 0 **ne certifie pas** la durabilité après coupure de courant,
+l'authenticité scientifique, une preuve de publication ni la levée d'un
+risque TOCTOU. Aucune réception officielle n'est réémise.
+
+Les empreintes doivent être récupérées des informations de confiance
+existantes, sans modifier ni reconstituer artificiellement un journal.
+En particulier, un `.writer-lock` encore présent impose toujours
+`operator_review_required: true`, même si une transaction correspond.
+Ne pas enlever le verrou à la main sans procédure de reprise qualifiée.
