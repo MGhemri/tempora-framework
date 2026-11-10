@@ -111,3 +111,14 @@
 .visual-chronos-note{margin:7px 0 0;font-size:11px;line-height:1.6;color:#a7babc}
 .visual-graphic:has(.visual-chronos-note){max-height:700px;overflow:auto}
 .visual-graphic:has(.visual-chronos-note) svg{min-width:660px}
+
+/* TVRW J11: accessible, keyboard-operable navigation of declared GraphLab references. */
+.visual-graph-note{margin:7px 0;font-size:11px;line-height:1.6;color:#a7babc}
+.visual-graphic:has(.visual-graph-note){max-height:740px;overflow:auto}
+.visual-graphic:has(.visual-graph-note) svg{min-width:620px}
+.visual-graph-node-list{display:flex;flex-wrap:wrap;gap:7px;padding:9px 0;max-height:240px;overflow:auto}
+.visual-graph-node{max-width:100%;overflow-wrap:anywhere;text-align:left;
+ border:1px solid #50656b;border-radius:6px;background:#1a2c33;
+ color:#dae6e7;padding:8px 10px;font-size:11px}
+.visual-graph-node[aria-pressed="true"]{border-color:#e8bb78;background:#3f4035;color:#fff}
+.visual-graph-node:focus-visible{outline:3px solid #e6c38d;outline-offset:2px}

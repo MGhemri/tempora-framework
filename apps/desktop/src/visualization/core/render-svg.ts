@@ -1,5 +1,6 @@
 import {layoutGeographicPoints} from "./geo-layout.mjs";
 import {layoutDeclaredChronology} from "./chronos-layout.mjs";
+import {layoutDeclaredGraph} from "./graph-layout.mjs";
 // Presentation-only, read-only offline SVG renderers for TEMPORA TVRW.
 // Canonical interpretation and algorithms are exclusively in the Node worker.
 // The original record table remains the accessible fallback for every view.
@@ -125,26 +126,66 @@ function interactiveGeo(target:HTMLElement,svg:SVGElement):void{
     "Local coordinate view, not a verified map.";
   target.append(bar,svg,note);
 }
-function graph(svg:SVGElement,rows:Row[]):void{
-  const nodes=[...new Set(rows.flatMap(row=>[ref(row.source),ref(row.target)])
-    .filter(id=>id!=="unknown"))].sort();
-  const points=new Map<string,[number,number]>();
-  nodes.forEach((id,i)=>{
-    const a=2*Math.PI*i/Math.max(nodes.length,1)-Math.PI/2;
-    points.set(id,[400+260*Math.cos(a),170+122*Math.sin(a)]);
-  });
-  for(const row of rows){
-    const src=points.get(ref(row.source)),dst=points.get(ref(row.target));
-    if(!src||!dst)continue;
-    svg.append(elem("line",{x1:src[0],y1:src[1],x2:dst[0],y2:dst[1],
-      stroke:"currentColor","stroke-opacity":0.5,"stroke-width":1.5}));
+type SelectedGraphRef={kind:string;namespace:string;id:string};
+function graph(target:HTMLElement,rows:Row[],
+    onSelect?:((reference:SelectedGraphRef)=>void),selectedKey:string|null=null):void{
+  const layout=layoutDeclaredGraph(rows);
+  const svg=canvas("GraphLab — explicitly declared relations, visual groups only",layout.height);
+  const byKey=new Map(layout.nodes.map(node=>[node.key,node]));
+  for(const edge of layout.edges){
+    const a=byKey.get(edge.source),b=byKey.get(edge.target);
+    if(!a||!b)continue;
+    if(edge.self_loop){
+      svg.append(elem("circle",{cx:a.x,cy:a.y-14,r:11,fill:"none",
+        stroke:"currentColor","stroke-opacity":0.75,"stroke-width":1.4}));
+    }else{
+      svg.append(elem("line",{x1:a.x,y1:a.y,x2:b.x,y2:b.y,
+        stroke:"currentColor","stroke-opacity":0.46,"stroke-width":1.6}));
+    }
   }
-  for(const [id,[x,y]] of points){
-    svg.append(elem("circle",{cx:x,cy:y,r:6,fill:"currentColor"}));
-    text(svg,Math.min(x+10,705),y-8,id.split(":").pop()??id);
+  for(const node of layout.nodes){
+    const selected=node.key===selectedKey;
+    const circle=elem("circle",{cx:node.x,cy:node.y,r:selected?9:6,
+      fill:selected?"#e8bb78":"currentColor",
+      stroke:"currentColor","stroke-width":selected?2:1});
+    const tooltip=elem("title");tooltip.textContent=node.key;
+    circle.append(tooltip);svg.append(circle);
+    text(svg,Math.min(node.x+11,690),node.y-10,node.ref.id.slice(0,28));
   }
-  if(!nodes.length)text(svg,45,50,"No declared relation / Aucune relation déclarée");
-  text(svg,40,340,"Layout is illustrative; no historical ranking / Placement illustratif uniquement");
+  if(layout.nodes.length===0)
+    text(svg,45,50,"No displayable declared relations / Aucune relation affichable");
+  const note=document.createElement("p");
+  note.className="visual-graph-note";
+  note.textContent="GraphLab · "+layout.displayed_edges+" declared edges / relations déclarées · "+
+    layout.nodes.length+" typed nodes / références · "+
+    layout.components+" visual groups / groupes visuels · "+
+    layout.omitted+" invalid (table only) / non affichées. "+
+    "Only this page; no inferred connections, rankings or historical conclusions. "+
+    "Navigation below uses exact kind + namespace + id.";
+  const list=document.createElement("div");
+  list.className="visual-graph-node-list";
+  list.setAttribute("role","group");
+  list.setAttribute("aria-label","GraphLab reference navigation / Navigation des références");
+  if(layout.nodes.length&&onSelect){
+    for(const node of layout.nodes){
+      const button=document.createElement("button");
+      button.type="button";button.className="visual-graph-node";
+      button.dataset.visualNodeKey=node.key;
+      button.textContent=[node.ref.kind,node.ref.namespace,node.ref.id].join(" : ");
+      button.setAttribute("aria-pressed",String(node.key===selectedKey));
+      button.setAttribute("aria-label","Select declared reference / Sélectionner la référence "+node.key);
+      button.addEventListener("click",()=>{
+        onSelect(node.ref);
+        // Global selection rebuilds the view. Preserve keyboard focus on the
+        // same exact reference after the accessible button list is regenerated.
+        const next=[...target.querySelectorAll<HTMLButtonElement>(".visual-graph-node")]
+          .find(candidate=>candidate.dataset.visualNodeKey===node.key);
+        next?.focus();
+      });
+      list.append(button);
+    }
+  }
+  target.append(svg,note,list);
 }
 function chronos(target:HTMLElement,rows:Row[]):void{
   const layout=layoutDeclaredChronology(rows);
@@ -208,16 +249,17 @@ function chronos(target:HTMLElement,rows:Row[]):void{
   target.append(svg,note);
 }
 /** Render only geometries explicitly represented by returned rows. */
-export function renderScientificGraphic(target:HTMLElement,module:string,rows:Row[]):void{
+export function renderScientificGraphic(target:HTMLElement,module:string,rows:Row[],
+  onSelect?:((reference:SelectedGraphRef)=>void),selectedKey:string|null=null):void{
   target.replaceChildren();
   if(!["geo","graph","chronos"].includes(module))return;
   if(module==="chronos"){chronos(target,rows);return;}
+  if(module==="graph"){graph(target,rows,onSelect,selectedKey);return;}
   const svg=canvas(module+" — declared data preview");
   if(module==="geo"){
     geo(svg,rows);
     interactiveGeo(target,svg);
   }else{
-    if(module==="graph")graph(svg,rows);
     target.append(svg);
   }
 }

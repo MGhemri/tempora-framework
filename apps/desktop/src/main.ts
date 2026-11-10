@@ -465,7 +465,9 @@ function renderVisual():void {
     b.setAttribute("aria-pressed",String(active));
     b.disabled=visualBusy||!info;
   });
-  renderScientificGraphic(byId("visual-graphic"),visualModule,visualProjection?.result??[]);
+  renderScientificGraphic(byId("visual-graphic"),visualModule,visualProjection?.result??[],
+    value=>selectVisualRef(value),
+    selectedVisualRef?visualRefKey(selectedVisualRef):null);
   const snapshotPanel=byId("visual-snapshot-panel");
   snapshotPanel.classList.toggle("hidden",visualModule!=="observatory");
   const snapshotRows=byId("visual-snapshot-rows");snapshotRows.replaceChildren();
