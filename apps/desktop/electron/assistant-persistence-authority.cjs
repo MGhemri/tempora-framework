@@ -63,7 +63,8 @@ function createAssistantPersistenceAuthority({sessions,workflow}={}){
   const reread=makeTrustedSessionReread({
    sessions,handle,corpusPath:preview.corpus_path,
    corpusRawSha256:preview.corpus_raw_sha256,
-   profileId:input.profile_id,sourceSha256:input.sourceSha256
+   profileId:input.profile_id,sourceSha256:input.sourceSha256,
+   expectedMapping:input.mapping
   });
   const intent=workflow.offer({handle,stage,reread});
   if(typeof intent?.token!=='string'||!HEX48.test(intent.token))
