@@ -76,3 +76,7 @@ La sonde Rust NTFS utilise maintenant une création exclusive de fichiers relati
 ## Checkpoint M1.5 NTFS et TVRW J11
 
 Se référer à [REPRISE-M15-NTFS-TVRW-J11.md](REPRISE-M15-NTFS-TVRW-J11.md) pour les SHA vérifiés, les CI, les limites de sécurité et les prochaines étapes. La version Store 0.2.0 déclarée publiée ne contient pas les nouvelles fonctionnalités.
+
+## Préparation de TEMPORA Desktop 1.0.0 stable (branche release, à qualifier)
+
+Nouvelle branche de travail : release/desktop-1-0-0-stable-candidate. Versionnement aligné 1.0.0 et préparation des deux canaux NSIS (test non signé) et Store AppX (non soumis), métadonnées et SHA-256 des deux fichiers, identité Store conservée, tests fail-closed des writers packagés. Les contrôles CI, VM Windows 10/11, mise à niveau 0.2.0 → 1.0.0, signature NSIS et certification Microsoft restent distincts. **NE PAS déclarer cette version publiée**. Source de vérité : [RELEASE-DESKTOP-STABLE-1.0.0.md](RELEASE-DESKTOP-STABLE-1.0.0.md). Les P0 d'écriture canonique demeurent ouverts.
