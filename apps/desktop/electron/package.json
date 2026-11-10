@@ -41,7 +41,8 @@
       "native-persistence-workflow.cjs",
       "assistant-persistence-binding.cjs",
       "assistant-persistence-authority.cjs",
-      "local-save-access.cjs"
+      "local-save-access.cjs",
+      "windows-native-destination.cjs"
     ],
     "extraResources": [
       {
