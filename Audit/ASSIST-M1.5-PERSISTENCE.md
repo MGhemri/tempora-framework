@@ -427,3 +427,50 @@ n'est pas activée ; la sécurité native Windows des handles/répertoires,
 la durabilité post-crash, la politique de résolution humaine et les tests
 d'installation hors ligne restent à qualifier. La présence d'un parcours
 hôte de tests n'est pas une habilitation à publier les données.
+
+
+## 15. Parcours UI expérimental, explicitement verrouillé hors distribution
+
+**Objet du lot :** permettre de tester la chaîne complète depuis l'interface
+Assistant **uniquement dans une exécution Electron non packagée**, avec
+consentement explicite de l'opérateur. Ceci ne représente PAS une
+qualification des écritures Windows de production.
+
+La fonction `localSaveEnabled({isPackaged, env})` ne retourne `true` que si
+`isPackaged === false` et si
+`TEMPORA_EXPERIMENTAL_M15_SAVE === '1'` (égalité exacte). Toute
+application packagée, y compris MSIX/NSIS avec variable d'environnement
+modifiée, refuse le canal
+`tempora:assistant:local-save` avec
+`ASSIST_EXPERIMENTAL_SAVE_DISABLED`. Des tests explicites couvrent ces
+cas et sont exécutés dans la CI Desktop Windows et Ubuntu.
+
+Pour une simulation réelle qui a produit une intention interne valide,
+le processus principal ajoute uniquement le booléen
+`experimental_local_save_ready` au reçu de staging. Celui-ci conserve
+`scope: in_memory_staging_only`, `saved_to_disk: false`,
+`scientific_approval: false` et `published: false`.
+Le renderer peut alors demander une **seule** action de sauvegarde, en
+passant seulement le handle de la session. Aucun chemin de destination,
+contenu de corpus, journal ni jeton d'autorisation n'est accepté en IPC.
+Le processus principal vérifie l'expéditeur, impose la porte
+d'activation, puis utilise `commitTrusted(handle)` : nouvelle
+confirmation native, sélection native du dossier, relecture de la
+source et du corpus, recalcul SDK, création de transaction locale
+immuable. L'UI présente séparément le reçu de simulation et, si
+l'écriture réussit, le reçu de **copie locale non publiée**.
+
+La demande de sauvegarde est à usage unique même après annulation ou
+échec : une nouvelle simulation est nécessaire pour recommencer.
+Les exceptions natives sont réduites à une liste de codes sans chemin
+ou au message `ASSIST_LOCAL_SAVE_REJECTED`, afin de limiter
+l'exfiltration d'informations système depuis le renderer.
+
+**Risques bloquants inchangés :** course TOCTOU/reparse points entre
+contrôle et renommage Windows, volume réseau mappé, ACL, fiabilité de
+`fsync`/durabilité électrique, et procédure complète de récupération
+manuelle. Le mode expérimental ne doit être utilisé qu'avec des
+**corpus synthétiques temporaires et des destinations locales dédiées**,
+jamais pour une recherche réelle ou un dépôt de production.
+Ne pas publier ou fusionner cette fonctionnalité tant que le
+durcissement Windows et les essais sur machine réelle ne sont pas passés.
