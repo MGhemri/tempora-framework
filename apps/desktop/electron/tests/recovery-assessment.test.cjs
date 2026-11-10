@@ -210,3 +210,33 @@ test('offline matching refuses invalid digests without changing the root',t=>{
  assert.match(outcome.stderr,/TRANSACTION_IDENTITY_INVALID/);
  assert.deepEqual(fs.readdirSync(f.root),[]);
 });
+
+test('recovery assessment refuses a lock acquired during inventory',t=>{
+ const f=fixture(t),pending=path.join(f.root,'.pending');
+ fs.mkdirSync(pending);
+ const original=fs.readdirSync;let injected=false;
+ fs.readdirSync=function(location,...args){
+  if(!injected&&String(location)===pending){
+   injected=true;
+   const lock=path.join(f.root,'.writer-lock');
+   fs.mkdirSync(lock);
+   fs.writeFileSync(path.join(lock,'owner.json'),JSON.stringify({
+    schema_version:'1.0.0',nonce:'a'.repeat(32)
+   })+'\n');
+  }
+  return original.call(fs,location,...args);
+ };
+ try{
+  assert.throws(()=>assessRecovery(f.root,canonical),{code:'RECOVERY_SNAPSHOT_CHANGED'});
+ }finally{fs.readdirSync=original;}
+ assert.equal(injected,true);
+ assert.deepEqual(inspectWriterReservation(f.root),{status:'reserved'});
+});
+test('recovery report refuses 101 pending candidates instead of returning unbounded metadata',t=>{
+ const f=fixture(t),pending=path.join(f.root,'.pending');
+ fs.mkdirSync(pending);
+ for(let n=0;n<101;n++)
+   fs.mkdirSync(path.join(pending,n.toString(16).padStart(32,'0')));
+ assert.throws(()=>assessRecovery(f.root,canonical),{code:'RECOVERY_REPORT_LIMIT'});
+ assert.equal(fs.readdirSync(pending).length,101);
+});
