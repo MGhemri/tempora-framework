@@ -90,7 +90,13 @@ mod native {
         }
         Ok(handle)
     }
-    pub fn inspect(root: &Path) -> Result<(), &'static str> {
+    // Own every non-delete-sharing directory HANDLE for the entire native
+    // operation, not just preflight. This prevents ordinary rename/replacement
+    // of any ancestor while this guard is alive.
+    pub struct PinnedPath {
+        _handles: Vec<OwnedHandle>,
+    }
+    pub fn inspect_pinned(root: &Path) -> Result<PinnedPath, &'static str> {
         if !root.is_absolute() {
             return Err("NATIVE_PATH_NOT_ABSOLUTE");
         }
@@ -146,7 +152,10 @@ mod native {
         if String::from_utf16_lossy(&filesystem[..len]).to_uppercase() != "NTFS" {
             return Err("NATIVE_VOLUME_NOT_NTFS");
         }
-        Ok(())
+        Ok(PinnedPath { _handles: handles })
+    }
+    pub fn inspect(root: &Path) -> Result<(), &'static str> {
+        inspect_pinned(root).map(|_| ())
     }
 
     #[cfg(test)]
