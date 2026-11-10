@@ -108,3 +108,20 @@ test('changed source corpus blocks native save after consent',async t=>{
   {code:'ASSIST_BINDING_CORPUS_CHANGED'});
  assert.deepEqual(fs.readdirSync(f.root),['original-corpus.json']);
 });
+
+test('expired source session cannot acquire consent after an async worker result',t=>{
+ const f=fixture(t);
+ f.expire();
+ assert.throws(()=>f.authority.recordStaging({
+  handle:HANDLE,preview:f.preview,input:f.input,stage:f.stage
+ }),{code:'ASSIST_SESSION_MISSING_OR_EXPIRED'});
+ assert.deepEqual(fs.readdirSync(f.root),['original-corpus.json']);
+});
+test('mapping mutation after staging invalidates native save before disk writes',async t=>{
+ const f=fixture(t);
+ f.authority.recordStaging({handle:HANDLE,preview:f.preview,input:f.input,stage:f.stage});
+ f.input.mapping={mapping_schema_version:'1.0.0',id:'forged'};
+ await assert.rejects(()=>f.authority.commitTrusted(HANDLE),
+  {code:'ASSIST_BINDING_MAPPING_CHANGED'});
+ assert.deepEqual(fs.readdirSync(f.root),['original-corpus.json']);
+});
