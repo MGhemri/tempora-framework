@@ -10,7 +10,7 @@ const {preparePersistence}=require('./review-persistence-adapter.cjs');
 function fail(code){throw Object.assign(new Error(code),{code});}
 const HANDLE=/^[a-f0-9]{48}$/;
 const TOKEN=/^[a-f0-9]{48}$/;
-const FIELDS=['batch_id','source_sha256','base_sha256','snapshot_sha256'];
+const FIELDS=['batch_id','source_sha256','base_sha256','mapping_sha256','snapshot_sha256'];
 function createReviewPersistenceCoordinator({persist,now,sdk}={}){
  if(typeof persist!=='function')fail('PERSIST_COORDINATOR_CONFIGURATION');
  const gate=createPersistenceGate({now});
