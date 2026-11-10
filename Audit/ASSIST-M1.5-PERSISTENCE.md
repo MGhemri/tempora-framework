@@ -684,3 +684,51 @@ sur un dossier volumineux : mesurer cet impact dans `PERF-01`.
 **Ce mécanisme n'est pas un snapshot atomique**, ne garantit pas la
 sécurité des accès natifs Windows et ne modifie pas les gates P0 de
 durabilité et récupération humaine.
+
+
+## 24. Premier composant Windows natif (M15-14) — inspection par handles
+
+Un exécutable Rust indépendant a été ajouté sous
+`apps/desktop/native-windows-guard/` (sans dépendances tierces).
+Il utilise les API Win32 documentées `CreateFileW` avec
+`FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT`,
+`GetFileInformationByHandleEx(FileAttributeTagInfo)`,
+`GetDriveTypeW` et `GetVolumeInformationByHandleW`.
+Le helper ouvre **chaque répertoire de la chaîne**, conserve les
+handles jusqu'à la fin du pré-contrôle, refuse les répertoires
+reparse/jonctions, les chemins device/UNC, les volumes non fixes,
+les systèmes de fichiers autres que NTFS et les chemins non existants.
+Il renvoie uniquement `NATIVE_DESTINATION_OK` ou un refus sans contenu
+scientifique ni chemin dans la sortie.
+
+`electron/windows-native-destination.cjs` lance ce binaire avec
+`shell:false`, délai borné et un argument de destination native.
+Le sélecteur de destination Electron l'impose désormais en
+**développement non packagé Windows uniquement** : sans binaire compilé,
+le garde-fou refuse la sauvegarde expérimentale. L'activation en package
+reste interdite par `local-save-access.cjs`. Pour les essais locaux,
+construire d'abord :
+
+```powershell
+cd apps/desktop
+cargo test --manifest-path native-windows-guard/Cargo.toml
+cargo build --release --manifest-path native-windows-guard/Cargo.toml
+npm run test:native-guard
+```
+
+Le workflow Windows construit et teste le programme natif avant la
+compilation Chromium/NSIS et exécute un test Node du protocole strict.
+Cela constitue une **fondation technique réelle pour SEC-WIN-01/02**,
+mais le verrou P0 n'est **pas levé** : à l'issue du pré-contrôle, les
+handles se ferment et la sauvegarde est encore effectuée par Node.
+Une substitution entre la validation Rust et le commit JS reste
+possible. Le prochain travail requis est un writer Rust/Windows
+**handle-relative** réalisant création, fsync et renommage dans une seule
+opération native, sans relâcher les handles autorisés avant le commit.
+Les ACL, lecteurs mappés, volume flags et tests d'attaques/récupération
+sur machines Windows réelles restent à qualifier. Aucune garantie de
+durabilité électrique n'est revendiquée.
+
+Références API Microsoft :
+- https://learn.microsoft.com/en-us/windows/win32/fileio/obtaining-a-handle-to-a-directory
+- https://learn.microsoft.com/en-us/windows/win32/api/fileapi/nf-fileapi-getvolumeinformationbyhandlew
