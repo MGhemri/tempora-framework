@@ -24,7 +24,7 @@ function setup(t){
  }};
  const reread=makeTrustedSessionReread({
   sessions,handle:HANDLE,corpusPath,corpusRawSha256:rawHash,
-  sourceSha256:sourceHash,profileId:'test-profile'
+  sourceSha256:sourceHash,profileId:'test-profile',expectedMapping:input.mapping
  });
  return {root,corpusPath,corpus,rawHash,sourceHash,sourceBytes,input,
   sessions,reread,expire:()=>{expired=true;}};
@@ -45,6 +45,11 @@ test('a modified original canonical file cannot be committed after a preview',as
 test('expired native session invalidates any former persistence decision',async t=>{
  const f=setup(t);f.expire();
  await assert.rejects(f.reread(),{code:'ASSIST_SESSION_MISSING_OR_EXPIRED'});
+});
+test('changed confirmed mapping is rejected before corpus reread',async t=>{
+ const f=setup(t);
+ f.input.mapping={mapping_schema_version:'1.0.0',changed:true};
+ await assert.rejects(f.reread(),{code:'ASSIST_BINDING_MAPPING_CHANGED'});
 });
 test('changed native source or profile invalidates prior consent',async t=>{
  const f=setup(t);
