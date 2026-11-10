@@ -13,6 +13,8 @@ const {assessRecovery}=require('./recovery-assessment.cjs');
 const {VisualService}=require('./visualization-service.cjs');
 const {preview}=require('./preview-core.cjs');
 const {createAssistantSessions}=require('./assistant-session.cjs');
+const {createNativePersistenceWorkflow}=require('./native-persistence-workflow.cjs');
+const {createAssistantPersistenceAuthority}=require('./assistant-persistence-authority.cjs');
 const assistantSessions=createAssistantSessions({
   sourceRoot:app.isPackaged?join(process.resourcesPath,'assistant'):resolve(__dirname,'../../..','src'),
   profileRoot:app.isPackaged?join(process.resourcesPath,'assistant','profiles'):resolve(__dirname,'../../..','profiles')
@@ -25,6 +27,40 @@ const MAX_RESPONSE_BYTES = 3 * 256 * 1024 + 4096;
 const ENGINE_TIMEOUT_MS = 12_000;
 let mainWindow;
 const visualService=new VisualService(getRuntime);
+let persistenceAuthority=null;
+// This trusted host authority is prepared after a real worker stage. Neither
+// its token nor its commit method is exposed through IPC or preload until
+// the unresolved native Windows filesystem safety gates are qualified.
+function getPersistenceAuthority(){
+  if(persistenceAuthority)return persistenceAuthority;
+  const runtime=getRuntime();
+  const sdk=createRequire(runtime.worker)('tempora-framework');
+  const workflow=createNativePersistenceWorkflow({
+    sdk,
+    confirmNative:async intent=>{
+      const outcome=await dialog.showMessageBox(mainWindow,{
+        type:'warning',title:'TEMPORA — second local save decision',
+        buttons:['Cancel / Annuler','Confirm local save / Confirmer'],
+        defaultId:0,cancelId:0,noLink:true,
+        message:'Save a new immutable local scientific transaction?',
+        detail:'Batch '+intent.batch_id+'\\nSnapshot '+intent.snapshot_sha256+
+          '\\nNo scientific approval or publication. The original corpus is not modified.'
+      });
+      return outcome.response===1;
+    },
+    chooseDestination:async()=>{
+      const selected=await dialog.showOpenDialog(mainWindow,{
+        title:'TEMPORA — choose dedicated local transaction folder',
+        properties:['openDirectory']
+      });
+      return selected.canceled?null:selected.filePaths[0]??null;
+    }
+  });
+  persistenceAuthority=createAssistantPersistenceAuthority({
+    sessions:assistantSessions,workflow
+  });
+  return persistenceAuthority;
+}
 
 function getRuntime() {
   if (app.isPackaged) {
@@ -273,6 +309,7 @@ app.whenReady().then(async () => {
   });
   ipcMain.handle('tempora:assistant:canonical-preview',async(event,handle_id)=>{
     validSender(event);
+    persistenceAuthority?.revoke(handle_id);
     // Source paths and bytes, corpus paths, mapping and worker payload never cross renderer IPC.
     const input=assistantSessions.canonicalInput(handle_id);
     const selected=await dialog.showOpenDialog(mainWindow,{
@@ -314,6 +351,7 @@ app.whenReady().then(async () => {
   });
   ipcMain.handle('tempora:assistant:review-stage',async(event,handle_id,review_token,review)=>{
     validSender(event);
+    persistenceAuthority?.revoke(handle_id);
     const claimed=assistantSessions.claimCanonicalReview(handle_id,review_token,review);
     const {input,preview}=claimed;
     // Reopen the SAME corpus selected for the preview. A changed corpus,
@@ -337,12 +375,24 @@ app.whenReady().then(async () => {
        result.batch_id!==preview.batch_id||
        result.source_sha256!==input.sourceSha256)
       throw Error('ASSIST_REVIEW_RESULT_INVALID');
-    // The full corpus is not returned and is not written. This receipt
-    // documents a *simulation of local staging*, NOT an imported corpus.
+    // Keep a second-decision intent exclusively in the trusted host,
+    // bound to the source session, selected corpus and worker receipt.
+    // Errors in this optional preparation NEVER convert staging to a save.
+    try{
+      getPersistenceAuthority().recordStaging({
+        handle:handle_id,preview,input,stage:result
+      });
+    }catch{
+      persistenceAuthority?.revoke(handle_id);
+    }
+    // The renderer receives only the historic in-memory staging receipt.
+    // No consent token, path or save capability crosses this IPC boundary.
     return result;
   });
   ipcMain.handle('tempora:assistant:close',(event,handle_id)=>{
-    validSender(event);return assistantSessions.close(handle_id);
+    validSender(event);
+    persistenceAuthority?.revoke(handle_id);
+    return assistantSessions.close(handle_id);
   });
   ipcMain.handle('tempora:select_document', selectDocument);
   ipcMain.handle('tempora:validate_corpus_native', validateCorpus);
@@ -450,4 +500,4 @@ app.whenReady().then(async () => {
   mainWindow.once('ready-to-show', () => mainWindow.show());
   await mainWindow.loadFile(join(__dirname, app.isPackaged ? 'dist' : '../dist', 'index.html'));
 });
-app.on('window-all-closed', () => {assistantSessions.clear();visualService.stop();app.quit();});
+app.on('window-all-closed', () => {persistenceAuthority?.clear();assistantSessions.clear();visualService.stop();app.quit();});
