@@ -5,6 +5,7 @@
 const {createHash,timingSafeEqual}=require('node:crypto');
 const fs=require('node:fs');
 const path=require('node:path');
+const {isDeepStrictEqual}=require('node:util');
 const HASH=/^[a-f0-9]{64}$/;
 const fail=code=>{throw Object.assign(new Error(code),{code});};
 const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
@@ -44,7 +45,7 @@ function nativeReadCorpus(selectedPath){
  return Object.freeze({corpus,rawSha256:sha(bytes)});
 }
 function makeTrustedSessionReread({sessions,handle,corpusPath,corpusRawSha256,
- profileId,sourceSha256,readCorpus=nativeReadCorpus}={}){
+ profileId,sourceSha256,expectedMapping,readCorpus=nativeReadCorpus}={}){
  if(typeof sessions?.canonicalInput!=='function'||
     typeof handle!=='string'||!/^[0-9a-f]{48}$/.test(handle)||
     typeof corpusPath!=='string'||!path.isAbsolute(corpusPath)||
@@ -56,6 +57,7 @@ function makeTrustedSessionReread({sessions,handle,corpusPath,corpusRawSha256,
  // can substitute the source or canonical document at commit time.
  const selected=corpusPath;
  const baseHash=corpusRawSha256;
+ const mappingSnapshot=expectedMapping===undefined?null:structuredClone(expectedMapping);
  return async function reread(){
   const source=sessions.canonicalInput(handle); // validates TTL and source hash
   if(!same(source.sourceSha256,sourceSha256)||
@@ -63,6 +65,8 @@ function makeTrustedSessionReread({sessions,handle,corpusPath,corpusRawSha256,
     fail('ASSIST_BINDING_SOURCE_CHANGED');
   if(source.profile_id!==profileId)
     fail('ASSIST_BINDING_PROFILE_CHANGED');
+  if(mappingSnapshot!==null&&!isDeepStrictEqual(source.mapping,mappingSnapshot))
+    fail('ASSIST_BINDING_MAPPING_CHANGED');
   const raw=await readCorpus(selected);
   if(!raw||!same(raw.rawSha256,baseHash))
     fail('ASSIST_BINDING_CORPUS_CHANGED');
