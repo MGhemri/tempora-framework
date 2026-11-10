@@ -4,6 +4,7 @@
 use serde_json::{json, Value};
 use std::fs;
 use std::path::Path;
+use std::os::windows::fs::MetadataExt;
 
 const LIMIT: usize = 100;
 fn name_ok(name: &str) -> bool {
@@ -26,8 +27,12 @@ fn listing(dir: &Path) -> Result<Vec<String>, &'static str> {
         if names.len()>=LIMIT {return Err("NATIVE_PROBE_REPORT_LIMIT");}
         let name=entry.file_name().into_string()
             .map_err(|_| "NATIVE_PROBE_NAME_UNSAFE")?;
-        if !name_ok(&name) || !entry.file_type()
-            .map_err(|_| "NATIVE_PROBE_DIRECTORY_UNREADABLE")?.is_dir() {
+        let kind=entry.file_type()
+            .map_err(|_| "NATIVE_PROBE_DIRECTORY_UNREADABLE")?;
+        let metadata=fs::symlink_metadata(entry.path())
+            .map_err(|_| "NATIVE_PROBE_DIRECTORY_UNREADABLE")?;
+        if !name_ok(&name) || !kind.is_dir() || !metadata.file_type().is_dir()
+            || metadata.file_attributes() & 0x400 != 0 {
             return Err("NATIVE_PROBE_NAME_UNSAFE");
         }
         names.push(name);
