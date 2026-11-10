@@ -8,6 +8,7 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "test:bridge": "node --test tests/engine-bridge.test.mjs",
+    "test:stable-release": "node --test electron/tests/stable-release-contract.test.cjs",
     "stage:windows-engine": "node scripts/stage-windows-engine.mjs",
     "test:windows-engine": "node --test electron/tests/host.test.cjs electron/tests/assistant-session.test.cjs electron/tests/review-integrity.test.cjs electron/tests/transaction-store.test.cjs electron/tests/review-persistence-gate.test.cjs electron/tests/review-persistence-adapter.test.cjs electron/tests/review-persistence-coordinator.test.cjs electron/tests/recovery-assessment.test.cjs electron/tests/native-persistence-workflow.test.cjs electron/tests/assistant-persistence-binding.test.cjs electron/tests/assistant-persistence-authority.test.cjs electron/tests/local-save-access.test.cjs electron/tests/windows-native-destination.test.cjs electron/tests/scientific-native-transport.test.cjs",
     "test:visualization": "node --test tests/visualization/*.test.mjs",
