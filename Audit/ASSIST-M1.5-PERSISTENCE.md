@@ -392,3 +392,38 @@ n'active aucun flux d'écriture depuis l'interface. Les travaux nécessaires
 restent le raccordement du processus principal aux sessions de staging,
 la seconde confirmation visible, la politique de récupération humaine et
 les essais NTFS/power-loss.
+
+
+## 14. Raccordement contrôlé du staging Electron à l'autorité hôte
+
+Le lot `assistant-persistence-authority.cjs` introduit la première liaison
+effective entre le résultat **réel du worker** `ingestion.stage-review`
+et le parcours interne `native-persistence-workflow.cjs`.
+
+- Dans le processus principal, la réponse du worker est d'abord contrôlée
+  comme simulation sans écriture, puis fournie à `recordStaging` avec
+  l'identité de prévisualisation privée de la session et le profil choisi
+  par l'utilisateur.
+- Le pont refuse toute différence sur les SHA-256 source/base, l'identité
+  du lot, l'empreinte de sortie et les informations de journal scientifique.
+  Il crée le callback de relecture lié à la session et au corpus **initial**
+  sélectionné avec la boîte de dialogue native.
+- L'intention et le jeton à usage unique sont conservés uniquement dans
+  la mémoire du processus principal, sans retour vers le renderer.
+  Une nouvelle prévisualisation ou revue invalide l'intention précédente.
+  La fermeture de session et la fermeture de la fenêtre invalident aussi
+  les autorisations en attente.
+- Les exceptions de préparation d'une future sauvegarde n'altèrent pas la
+  réponse scientifique de simulation existante : il n'y a ni tentative de
+  disque ni promesse de persistance dans le reçu.
+- `commitTrusted` est testé uniquement côté hôte, avec le SDK 3.0.0,
+  une seconde décision native simulée, un dossier synthétique, une
+  transaction immuable, l'invalidation de session et les modifications
+  de source/corpus. Il **n'existe aucun** canal `ipcMain` ni méthode
+  `preload.cjs` pour déclencher `commitTrusted`.
+
+**Gate de sécurité toujours bloquant :** l'écriture depuis l'interface
+n'est pas activée ; la sécurité native Windows des handles/répertoires,
+la durabilité post-crash, la politique de résolution humaine et les tests
+d'installation hors ligne restent à qualifier. La présence d'un parcours
+hôte de tests n'est pas une habilitation à publier les données.
