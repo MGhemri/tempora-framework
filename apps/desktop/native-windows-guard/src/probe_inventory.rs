@@ -38,23 +38,18 @@ fn directory_state(path: &Path) -> Result<bool, &'static str> {
     }
 }
 fn read_manifest(dir: &Path) -> Result<Value, &'static str> {
-    let file = dir.join("manifest.json");
-    let info = fs::symlink_metadata(&file).map_err(|_| "NATIVE_PROBE_MANIFEST_MISSING")?;
-    if !info.file_type().is_file() || info.file_type().is_symlink() ||
-        info.len() == 0 || info.len() > MANIFEST_LIMIT {
-        return Err("NATIVE_PROBE_MANIFEST_UNSAFE");
-    }
-    // This read is bounded by the stat size; all paths remain advisory,
-    // not a forensic atomic snapshot or sufficient evidence for a replay.
-    use std::io::Read;
-    let mut contents = Vec::new();
-    fs::File::open(file).map_err(|_| "NATIVE_PROBE_MANIFEST_UNSAFE")?
-        .take(MANIFEST_LIMIT+1).read_to_end(&mut contents)
+    // Use the same handle-based, no-reparse, no-share-write/delete reader as
+    // the verified corpus. Do not stat then reopen by an attacker-controlled
+    // pathname: the old implementation had a file-swap window.
+    let mut manifest=crate::scientific_envelope::open_pinned(
+        &dir.join("manifest.json"),false,
+    ).map_err(|_| "NATIVE_PROBE_MANIFEST_MISSING")?;
+    let bytes=crate::scientific_envelope::bounded_json(&mut manifest)
         .map_err(|_| "NATIVE_PROBE_MANIFEST_UNSAFE")?;
-    if contents.len() as u64 > MANIFEST_LIMIT {
+    if bytes.len() as u64 > MANIFEST_LIMIT {
         return Err("NATIVE_PROBE_MANIFEST_UNSAFE");
     }
-    serde_json::from_slice(&contents).map_err(|_| "NATIVE_PROBE_MANIFEST_UNSAFE")
+    serde_json::from_slice(&bytes).map_err(|_| "NATIVE_PROBE_MANIFEST_UNSAFE")
 }
 fn check_candidate(dir: &Path) -> Result<bool, &'static str> {
     if !directory_state(dir)? {
