@@ -37,7 +37,8 @@
       "transaction-store.cjs",
       "review-persistence-gate.cjs",
       "review-persistence-adapter.cjs",
-      "review-persistence-coordinator.cjs"
+      "review-persistence-coordinator.cjs",
+      "native-persistence-workflow.cjs"
     ],
     "extraResources": [
       {
