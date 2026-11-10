@@ -59,3 +59,39 @@ commande de sauvegarde IPC du renderer, fusion dans `main` ou publication
 du package Store.
 
 Référence : [ASSIST-M1.5-PERSISTENCE.md](ASSIST-M1.5-PERSISTENCE.md).
+
+
+## Validation de la sauvegarde expérimentale depuis l'Assistant
+
+Cette option est **exclusivement réservée aux développeurs** utilisant des
+corpus fictifs et des dossiers temporaires sur un disque local. Elle n'est
+pas activable dans le package Windows NSIS/MSIX, même en fournissant la
+variable d'environnement. Ce n'est pas une instruction de reprise après
+incident ni une recommandation de l'utiliser pour des données historiques.
+
+Dans PowerShell, depuis une copie de travail du dépôt et après installation
+des dépendances :
+
+```powershell
+cd apps/desktop
+npm run build
+cd electron
+$env:TEMPORA_EXPERIMENTAL_M15_SAVE = "1"
+npx electron .
+```
+
+Dans l'interface Electron, ouvrir un fichier fictif, confirmer son mapping,
+prévisualiser un corpus canonique fictif et sélectionner les entrées à
+accepter. Le bouton de sauvegarde de développement apparaît seulement
+lorsqu'un staging réel a préparé une intention côté hôte. Après activation,
+une seconde boîte native demande confirmation puis un sélecteur natif permet
+de choisir **un répertoire dédié, déjà existant et local**. La sauvegarde
+ne modifie pas le corpus d'origine ; elle crée une transaction dans un dossier
+distinct. Annulation, erreur ou succès consomment la décision à usage unique.
+
+Le reçu de simulation ne doit pas être confondu avec celui de la nouvelle
+copie locale. Les deux indiquent **aucune publication scientifique**.
+
+Ne jamais désactiver les garde-fous pour contourner les essais Windows :
+reparse points, chemins substituables, lecteurs réseau, ACL et durabilité
+électrique restent des gates de qualification de production.
