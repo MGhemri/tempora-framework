@@ -552,3 +552,68 @@ test('ordinary pending directory replacement during staging is blocked',t=>{
  assert.equal(fs.readdirSync(path.join(f.root,'.pending')).length,0);
  assert.equal(fs.readdirSync(path.join(f.root,'pending-before-swap')).length,1);
 });
+
+test('copied owner nonce in replacement lock directory cannot authorize cleanup',t=>{
+ const f=fixture(t),originalFsync=fs.fsyncSync;
+ const lock=path.join(f.root,'.writer-lock');
+ const retired=path.join(f.root,'.writer-lock-retained');
+ let syncs=0,swapped=false;
+ fs.fsyncSync=function(fd){
+  const result=originalFsync.call(fs,fd);
+  // The owner.json fsync is first; swap while corpus data is being written.
+  if(++syncs===2&&!swapped){
+   const ownerBytes=fs.readFileSync(path.join(lock,'owner.json'));
+   fs.renameSync(lock,retired);
+   fs.mkdirSync(lock);
+   fs.writeFileSync(path.join(lock,'owner.json'),ownerBytes);
+   swapped=true;
+  }
+  return result;
+ };
+ try{
+  assert.throws(()=>createTransaction(f.root,f,canonical),
+   {code:'TRANSACTION_WRITER_OWNERSHIP_LOST'});
+ }finally{fs.fsyncSync=originalFsync;}
+ assert.equal(swapped,true);
+ const copied=fs.readFileSync(path.join(lock,'owner.json'));
+ assert.deepEqual(copied,fs.readFileSync(path.join(retired,'owner.json')));
+ assert.deepEqual(inspectWriterReservation(f.root),{status:'reserved'});
+ assert.equal(fs.existsSync(path.join(retired,'owner.json')),true);
+ // A lock ownership failure means outcome is uncertain; evidence is preserved.
+ assert.equal(fs.readdirSync(path.join(f.root,'transactions')).length,1);
+});
+test('replacement writer-lock symlink is never followed or deleted on release',t=>{
+ const f=fixture(t),originalFsync=fs.fsyncSync;
+ const lock=path.join(f.root,'.writer-lock');
+ const retired=path.join(f.root,'.writer-lock-retained');
+ const outsider=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-lock-outsider-'));
+ t.after(()=>fs.rmSync(outsider,{recursive:true,force:true}));
+ let syncs=0,swapped=false,unsupported=false;
+ fs.fsyncSync=function(fd){
+  const result=originalFsync.call(fs,fd);
+  if(++syncs===2&&!swapped){
+   fs.renameSync(lock,retired);
+   try{fs.symlinkSync(outsider,lock,process.platform==='win32'?'junction':'dir');swapped=true;}
+   catch(e){
+    fs.renameSync(retired,lock);
+    if(process.platform==='win32'&&['EPERM','EACCES','ENOTSUP'].includes(e.code))
+      unsupported=true;
+    else throw e;
+   }
+  }
+  return result;
+ };
+ try{
+  if(unsupported)return;
+  try{createTransaction(f.root,f,canonical);}
+  catch(e){
+   if(swapped)assert.equal(e.code,'TRANSACTION_WRITER_OWNERSHIP_LOST');
+   else throw e;
+  }
+ }finally{fs.fsyncSync=originalFsync;}
+ if(swapped){
+  assert.equal(fs.lstatSync(lock).isSymbolicLink(),true);
+  assert.deepEqual(fs.readdirSync(outsider),[]);
+  assert.equal(fs.existsSync(path.join(retired,'owner.json')),true);
+ }
+});
