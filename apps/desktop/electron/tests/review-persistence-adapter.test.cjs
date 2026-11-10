@@ -69,3 +69,22 @@ test('verified adapter output is accepted by isolated transaction store',t=>{
  assert.deepEqual(inspectTransactions(root,sdk.canonical),
   {complete:[receipt.transaction_id],invalid:[],pending:[]});
 });
+
+test('the canonical replay uses the injected packaged SDK instead of a global import',()=>{
+ const f=fixture(),calls={preview:0,accept:0};
+ const packaged={
+  canonical:sdk.canonical,
+  ingestion:{
+   preview(...args){calls.preview++;return sdk.ingestion.preview(...args);},
+   accept(...args){calls.accept++;return sdk.ingestion.accept(...args);}
+  }
+ };
+ const out=preparePersistence(f,packaged);
+ assert.equal(out.journal.decision,'accepted_for_local_staging');
+ assert.deepEqual(calls,{preview:1,accept:1});
+});
+test('an incomplete packaged SDK is rejected before any transaction',()=>{
+ const f=fixture();
+ assert.throws(()=>preparePersistence(f,{ingestion:{},canonical:{}}),
+  {code:'PERSIST_ENGINE_UNAVAILABLE'});
+});
