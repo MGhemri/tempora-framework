@@ -97,3 +97,12 @@
 #assistant-preview table{width:100%;border-collapse:collapse}
 #assistant-preview td,#assistant-preview th{padding:8px;border-bottom:1px solid var(--border, #444);white-space:pre-wrap;overflow-wrap:anywhere}
 @media(max-width:780px){.assistant-columns{grid-template-columns:1fr}}
+
+/* TVRW J9 — read-only map coordinate explorer, no network map tiles. */
+.visual-geo-controls{display:flex;justify-content:flex-end;gap:8px;margin-bottom:6px}
+.visual-geo-button{min-width:38px;min-height:34px;border:1px solid #5d7177;
+  background:#1a3239;color:#faf7e9;border-radius:7px;cursor:pointer;font-size:19px}
+.visual-geo-button:hover{border-color:#d3ad6e;background:#29414a}
+.visual-geo-button:focus-visible{outline:3px solid #e6c38d;outline-offset:2px}
+.visual-geo-note{margin:5px 0 0;font-size:11px;color:#a7babc;line-height:1.5}
+.visual-graphic svg{user-select:none}
