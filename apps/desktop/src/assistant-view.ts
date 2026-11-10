@@ -465,8 +465,14 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
        // as an approval or publication, even after a local transaction.
      }
    }catch(error){
-     if(ticket===serial)
-       uiError=dictionary[lang()].invalid+': '+String((error as Error)?.message??error);
+     if(ticket===serial){
+       const reason=String((error as Error)?.message??error);
+       uiError=reason.includes('TRANSACTION_WRITER_OWNERSHIP_LOST')
+         ?(lang()==='fr'
+           ?'Résultat de sauvegarde incertain : le verrou a changé. Ne réessayez pas ; examinez le dossier via le diagnostic de récupération.'
+           :'Save outcome uncertain: the writer lock changed. Do not retry; inspect the folder using recovery assessment.')
+         :dictionary[lang()].invalid+': '+reason;
+     }
    }finally{busy=false;render();}
  });
  closeBtn.addEventListener('click',()=>{if(!busy)void release();});
