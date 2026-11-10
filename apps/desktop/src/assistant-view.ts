@@ -212,8 +212,11 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
      Boolean(receipt)||reviewIds.size===0||!reviewerInput.value.trim()||
      !reasonInput.value.trim()||!reviewedAtInput.value.trim();
    reviewReceiptOutput.textContent=receipt
-     ?'SIMULATION SEULEMENT · '+receipt.scope+' · '+receipt.snapshot_sha256+
-       ' · '+receipt.journal.selected_ids.join(', ')+' · NON ENREGISTRÉ':'';
+     ?'SIMULATION INITIALE · '+receipt.scope+' · '+receipt.snapshot_sha256+
+       ' · '+receipt.journal.selected_ids.join(', ')+
+       (localSaveReceipt?.saved_to_disk
+         ?' · COPIE LOCALE ENREGISTRÉE SÉPARÉMENT'
+         :' · NON ENREGISTRÉ') :'';
    reviewSelections.replaceChildren();
    if(canonical?.staging_review_enabled&&!receipt){
      for(const row of canonical.rows.filter(r=>r.status==='create'&&r.id)){
@@ -436,7 +439,7 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
    const active=source,token=canonical.review_token,ticket=++serial;
    const review={ids:Array.from(reviewIds),reviewer:reviewerInput.value,
      reason:reasonInput.value,reviewed_at:reviewedAtInput.value};
-   busy=true;uiError=null;render();
+   busy=true;uiError=null;localSaveReceipt=null;render();
    try{
      const response=await host.assistantReviewStage(active.handle_id,token,review);
      if(ticket===serial&&response.source_sha256===active.source_sha256&&
