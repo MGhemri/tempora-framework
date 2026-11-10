@@ -108,11 +108,13 @@ pub struct VerifiedTransport {
     // Private ownership deliberately keeps source directory and file handles
     // open until the caller drops VerifiedTransport AFTER its commit attempt.
     _pinned_sources: [File; 4],
+    // Pin each ancestor, including the drive root, through native commit.
+    _pinned_ancestors: crate::native::PinnedPath,
 }
 pub fn load_verified(dir: &Path) -> Result<VerifiedTransport, &'static str> {
     // Check every parent and the directory itself with existing Win32 handle
     // inspection. It does not make file opens or subsequent writes atomic.
-    crate::native::inspect(dir)?;
+    let pinned_ancestors = crate::native::inspect_pinned(dir)?;
     let pinned_directory = open_pinned(dir, true)?;
     let mut pinned_envelope = open_pinned(&dir.join("envelope.json"), false)?;
     let mut pinned_corpus = open_pinned(&dir.join("corpus.json"), false)?;
@@ -162,6 +164,7 @@ pub fn load_verified(dir: &Path) -> Result<VerifiedTransport, &'static str> {
         journal: journal_bytes,
         envelope: metadata,
         _pinned_sources: [pinned_directory, pinned_envelope, pinned_corpus, pinned_journal],
+        _pinned_ancestors: pinned_ancestors,
     })
 }
 pub fn verify(dir: &Path) -> Result<(), &'static str> {
