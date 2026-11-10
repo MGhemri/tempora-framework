@@ -128,7 +128,6 @@ jobs:
           cargo build --release --manifest-path native-windows-guard/Cargo.toml
           if ($LASTEXITCODE -ne 0) { throw 'NATIVE_GUARD_WINDOWS_BUILD_FAILED' }
           node --test electron/tests/windows-native-destination.test.cjs
-          node --test electron/tests/scientific-native-transport.test.cjs
           if ($LASTEXITCODE -ne 0) { throw 'NATIVE_GUARD_INTEGRATION_FAILED' }
       - name: Build shared Desktop GUI and contract tests
         run: |
@@ -148,6 +147,7 @@ jobs:
           npm run test:persistence-authority
           npm run test:local-save-gate
           npm run test:recovery
+          npm run test:scientific-native-transport
       - name: Stage pinned scientific runtime
         run: npm run stage:windows-engine
       - name: Test pinned Node worker and human staging before Electron packaging
