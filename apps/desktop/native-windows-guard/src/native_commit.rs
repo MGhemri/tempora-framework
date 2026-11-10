@@ -45,6 +45,7 @@ extern "system" {
         creation: u32, flags: u32, template: Handle,
     ) -> Handle;
     fn CloseHandle(handle: Handle) -> i32;
+    fn GetLastError() -> u32;
     fn GetFileInformationByHandleEx(
         handle: Handle, info_class: i32, info: *mut c_void, size: u32,
     ) -> i32;
@@ -142,7 +143,14 @@ fn rename_relative(
         (*record).filename_length = (chars.len() * 2) as u32;
         std::ptr::copy_nonoverlapping(chars.as_ptr(), (*record).filename.as_mut_ptr(), chars.len());
         if SetFileInformationByHandle(source, FILE_RENAME_INFO_CLASS, record.cast(), size) == 0 {
-            return Err("NATIVE_COMMIT_RENAME_FAILED");
+            // Only expose the categorical Win32 error; no source/target path.
+            return Err(match GetLastError() {
+                5 => "NATIVE_COMMIT_RENAME_ACCESS_DENIED",
+                32 => "NATIVE_COMMIT_RENAME_SHARING_VIOLATION",
+                87 => "NATIVE_COMMIT_RENAME_INVALID_PARAMETER",
+                183 => "NATIVE_COMMIT_RENAME_ALREADY_EXISTS",
+                _ => "NATIVE_COMMIT_RENAME_FAILED",
+            });
         }
     }
     Ok(())
