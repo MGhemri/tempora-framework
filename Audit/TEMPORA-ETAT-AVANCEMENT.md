@@ -231,3 +231,19 @@ Le contrôle CI du HEAD `72ccf9b7` a révélé un second problème de branche : 
 - **Aucune mise en production Store** : pas de soumission ni publication Partner Center ; test de migration depuis l'AppX `0.1.1-beta.2` et qualification d'installation propre restent requis. Liste complète dans [STORE-MISE-A-JOUR-0.2.0.md](STORE-MISE-A-JOUR-0.2.0.md).
 - **Les P0 restent ouverts** : NTFS anti-TOCTOU, ACL/volumes, consentement authentifié, protocole de récupération humain, crash/power-loss. Writer natif/JS scientifique **toujours désactivé** dans tout package distribué.
 - **Suivi après clôture :** les nouveaux développements M1.5 se font sur une **nouvelle branche issue de `main`**, en PR ; ne plus empiler les commits sur la branche fusionnée #114. Lire [REPRISE-TRAVAUX.md](REPRISE-TRAVAUX.md) avant toute reprise dans une autre fenêtre.
+
+## Lot post-fusion 2026-11-10 — REC-01 observation de preuves cohérentes
+
+- Nouveau garde `forensic-snapshot.cjs` : inventaire borné, sans suivi de
+  lien symbolique, comparant identités de fichiers et timestamps entre les
+  lectures d'un dossier de récupération. Son but est de détecter une
+  substitution **même si les deux inventaires sont jugés valides**.
+- `inspectCommittedIdentity` compare également les métadonnées avant/après
+  et relit les manifestes des transactions correspondantes.
+- Couverture de tests étendue aux modifications cohérentes de journal et
+  manifeste et aux liens symboliques externes.
+- Statut initial : **code proposé en PR, CI à vérifier au HEAD**, non
+  homologué. Aucun nouveau workflow, release ni write packagé.
+- **Toujours P0 ouverts :** autorité scientifique et autorisations hôte/Rust,
+  anti-TOCTOU handle-relative, actions de récupération humaine et qualification
+  après panne Windows OS/power-loss.

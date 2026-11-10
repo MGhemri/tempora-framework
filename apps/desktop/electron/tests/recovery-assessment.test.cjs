@@ -396,3 +396,80 @@ test('pending evidence changed between two classifications invalidates forensic 
  assert.ok(observed>=2);
  assert.deepEqual(inspectPendingEvidence(f.root,canonical).unsafe,[id]);
 });
+
+test('same valid committed identity is rejected if evidence bytes change mid-inspection',t=>{
+ const {createHash}=require('node:crypto');
+ const f=fixture(t),receipt=createTransaction(f.root,f,canonical);
+ const pendingRoot=path.join(f.root,'.pending');
+ const dir=path.join(f.root,'transactions',receipt.transaction_id);
+ const manifestFile=path.join(dir,'manifest.json');
+ const journalFile=path.join(dir,'journal.json');
+ const readdir=fs.readdirSync;let mutated=false;
+ fs.readdirSync=function(location,...args){
+  if(!mutated&&String(location)===pendingRoot){
+   mutated=true;
+   // Mutate the journal but keep both SDK validation and the manifest's
+   // SHA-256 valid. The transaction remains in the "complete" category.
+   const bytes=Buffer.from(JSON.stringify(f.journal)+'  \n');
+   const manifest=JSON.parse(fs.readFileSync(manifestFile,'utf8'));
+   manifest.journal_sha256=createHash('sha256').update(bytes).digest('hex');
+   fs.writeFileSync(journalFile,bytes);
+   fs.writeFileSync(manifestFile,JSON.stringify(manifest)+'\n');
+  }
+  return readdir.call(fs,location,...args);
+ };
+ try{
+  assert.throws(()=>assessRecovery(f.root,canonical),{code:'RECOVERY_SNAPSHOT_CHANGED'});
+ } finally {fs.readdirSync=readdir;}
+ assert.equal(mutated,true);
+ assert.deepEqual(inspectTransactions(f.root,canonical).complete,[receipt.transaction_id]);
+ assert.equal(fs.existsSync(journalFile),true);
+});
+test('matching refuses a valid manifest swap that keeps the same transaction IDs',t=>{
+ const {createHash}=require('node:crypto');
+ const f=fixture(t),receipt=createTransaction(f.root,f,canonical);
+ const pendingRoot=path.join(f.root,'.pending');
+ const dir=path.join(f.root,'transactions',receipt.transaction_id);
+ const manifestFile=path.join(dir,'manifest.json');
+ const journalFile=path.join(dir,'journal.json');
+ const readdir=fs.readdirSync;let mutated=false;
+ fs.readdirSync=function(location,...args){
+  if(!mutated&&String(location)===pendingRoot){
+   mutated=true;
+   const otherBatch='b'.repeat(64);
+   const journal={...f.journal,batch_id:otherBatch};
+   const bytes=Buffer.from(JSON.stringify(journal)+'\n');
+   const manifest=JSON.parse(fs.readFileSync(manifestFile,'utf8'));
+   manifest.batch_id=otherBatch;
+   manifest.journal_sha256=createHash('sha256').update(bytes).digest('hex');
+   fs.writeFileSync(journalFile,bytes);
+   fs.writeFileSync(manifestFile,JSON.stringify(manifest)+'\n');
+  }
+  return readdir.call(fs,location,...args);
+ };
+ try{
+  assert.throws(()=>inspectCommittedIdentity(f.root,canonical,f.identity),
+   {code:'TRANSACTION_SNAPSHOT_CHANGED'});
+ } finally {fs.readdirSync=readdir;}
+ assert.equal(mutated,true);
+ assert.deepEqual(inspectTransactions(f.root,canonical).complete,[receipt.transaction_id]);
+});
+test('forensic fingerprint never follows unsafe symlinks or mutates contents',t=>{
+ const {fingerprint}=require('../forensic-snapshot.cjs');
+ const f=fixture(t);
+ const outside=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-forensic-outside-'));
+ t.after(()=>fs.rmSync(outside,{recursive:true,force:true}));
+ const marker=path.join(outside,'secret.txt');
+ fs.writeFileSync(marker,'unread');
+ const invalid=path.join(f.root,'.pending');
+ try{fs.symlinkSync(outside,invalid,process.platform==='win32'?'junction':'dir');}
+ catch(error){
+  if(process.platform==='win32'&&['EPERM','EACCES','ENOTSUP'].includes(error.code))return;
+  throw error;
+ }
+ const before=fs.readFileSync(marker);
+ const a=fingerprint(f.root),b=fingerprint(f.root);
+ assert.equal(a,b);
+ assert.deepEqual(fs.readFileSync(marker),before);
+ assert.equal(fs.lstatSync(invalid).isSymbolicLink(),true);
+});

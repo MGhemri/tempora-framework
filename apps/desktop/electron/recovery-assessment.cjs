@@ -4,6 +4,7 @@
 const {inspectTransactions,inspectWriterReservation,inspectPendingEvidence}=
   require('./transaction-store.cjs');
 const fs=require('node:fs'),path=require('node:path');
+const {fingerprint}=require('./forensic-snapshot.cjs');
 const ERROR=code=>Object.assign(new Error(code),{code});
 // Read-only identity snapshot for a lock, not an ownership claim.
 // Comparing only status ("reserved"/"reserved") misses a replaced directory.
@@ -22,6 +23,7 @@ function lockFingerprint(root){
  return info(lock)+'|'+info(path.join(lock,'owner.json'));
 }
 function assessRecovery(root,canonical){
+ const filesystemBefore=fingerprint(root);
  const lock=inspectWriterReservation(root);
  const fingerprintBefore=lockFingerprint(root);
  const inventory=inspectTransactions(root,canonical);
@@ -33,8 +35,10 @@ function assessRecovery(root,canonical){
  const evidenceAfter=inspectPendingEvidence(root,canonical);
  const lockAfter=inspectWriterReservation(root);
  const fingerprintAfter=lockFingerprint(root);
+ const filesystemAfter=fingerprint(root);
  const unchanged=(first,second)=>JSON.stringify(first)===JSON.stringify(second);
- if(lockAfter.status!==lock.status||fingerprintAfter!==fingerprintBefore||
+ if(filesystemBefore!==filesystemAfter||
+    lockAfter.status!==lock.status||fingerprintAfter!==fingerprintBefore||
     !unchanged(inventory,inventoryAfter)||!unchanged(evidence,evidenceAfter))
    throw ERROR('RECOVERY_SNAPSHOT_CHANGED');
  const classified=[...evidence.verified_for_review,...evidence.incomplete,...evidence.unsafe];

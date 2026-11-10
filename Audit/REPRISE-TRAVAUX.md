@@ -125,3 +125,28 @@ Un court résumé en français comprenant : **fonctionnalité effectivement livr
 - **Rapport détaillé / checklist Store :** [STORE-MISE-A-JOUR-0.2.0.md](STORE-MISE-A-JOUR-0.2.0.md).
 - **Pour la suite du projet :** reprendre les P0 `SEC-WIN-01/02`, `SCI-01`, `DUR-01`, `REC-01` sur **nouvelle branche depuis `main`**, ne pas réactiver le writer M1.5 packagé par inadvertance. La version 0.2.0 du client Chromium est une **base de diffusion possible**, pas une qualification des expérimentations NTFS.
 - **Protection GitHub** : toutes les modifications de `main` doivent passer par PR ; ce compte rendu de fusion est réalisé sur `docs/store-0-2-0-merge-audit` et sera visible dans `main` après intégration de cette PR. Ne pas contourner cette règle.
+
+## 11. REC-01 — Cohérence de l'inventaire médico-légal (lot du 2026-11-10)
+
+La reprise progresse avec une comparaison **interne et en lecture seule** des
+empreintes de métadonnées NTFS/FS de la racine, des dossiers `transactions/`,
+`.pending/` et de leur contenu immédiat. Cette protection détecte notamment
+une permutation de manifestes/journaux entre deux passages même lorsque
+les transactions restent structurellement valides et que la liste des IDs
+est inchangée. Le rapprochement d'une transaction par les cinq SHA effectue
+aussi une seconde lecture du manifeste correspondant.
+
+- Code : `apps/desktop/electron/forensic-snapshot.cjs`,
+  `recovery-assessment.cjs`, `transaction-store.cjs`.
+- Régressions : tests de mutation conservant des transactions valides,
+  d'identité changée et de refus des symlinks sans traverser leur cible.
+- **L'état du lot dépend de la CI de la PR** : ne pas compter ce jalon comme
+  qualifié tant que la CI du HEAD exact n'est pas verte.
+- Ce contrôle **n'est pas** un snapshot atomique, un contrôle cryptographique
+  de toute la donnée, une garantie anti-TOCTOU Win32, une preuve de durabilité,
+  un mécanisme de signature ou un droit de supprimer/promouvoir un candidat.
+  Les gates `REC-01`, `SEC-WIN-01/02`, `SCI-01` et `DUR-01` restent ouverts.
+
+**Reprise efficace :** continuer le prochain lot fonctionnel sur cette PR ou
+sur une branche issue de son merge après tests, sans reprendre le travail déjà
+fusionné. Ne pas activer l'écriture M1.5 dans les applications packagées.

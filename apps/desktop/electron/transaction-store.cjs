@@ -6,6 +6,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const {createHash, randomBytes} = require('node:crypto');
+const {fingerprint:forensicFingerprint}=require('./forensic-snapshot.cjs');
 
 const HASH = /^[a-f0-9]{64}$/;
 const ID = /^[a-f0-9]{32}$/;
@@ -386,6 +387,7 @@ function inspectCommittedIdentity(root,canonical,identity) {
   if(!plain(identity)||Object.keys(identity).length!==REQUIRED.length||
      !REQUIRED.every(k=>typeof identity[k]==='string'&&HASH.test(identity[k])))
     throw ERR('TRANSACTION_IDENTITY_INVALID');
+  const evidenceBefore=forensicFingerprint(root);
   const before=inspectTransactions(root,canonical);
   const matching=[];
   for(const id of before.complete){
@@ -396,8 +398,18 @@ function inspectCommittedIdentity(root,canonical,identity) {
     if(REQUIRED.every(k=>manifest[k]===identity[k]))matching.push(id);
   }
   const after=inspectTransactions(root,canonical);
-  if(JSON.stringify(before)!==JSON.stringify(after))
+  const evidenceAfter=forensicFingerprint(root);
+  if(JSON.stringify(before)!==JSON.stringify(after)||evidenceBefore!==evidenceAfter)
     throw ERR('TRANSACTION_SNAPSHOT_CHANGED');
+  // A re-read of each matched manifest guards against an identity switched
+  // after its first read while the transaction list remains unchanged.
+  for(const id of matching){
+    const manifest=JSON.parse(readBounded(
+      path.join(root,'transactions',id,'manifest.json')).toString('utf8'));
+    if(manifest.transaction_id!==id||
+       !REQUIRED.every(k=>manifest[k]===identity[k]))
+      throw ERR('TRANSACTION_SNAPSHOT_CHANGED');
+  }
   return Object.freeze({
     matching_transaction_ids:Object.freeze(matching),
     unverified_transactions:Object.freeze([...after.invalid]),
