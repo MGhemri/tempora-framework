@@ -267,3 +267,27 @@ le `rename` final a échoué, et la séparation entre dossier incomplet et
 dossier contenant un fichier inattendu. Les prochains gates comprennent les
 essais de crash réels, une procédure de récupération manuelle explicite,
 et la qualification Windows NTFS/reparse points.
+
+ 
+## 10. Lot de qualification consolidé — diagnostic opérationnel et arrêt de processus
+
+- `recovery-assessment.cjs` rassemble l'inventaire canonique des transactions,
+  le statut du verrou exclusif et les candidats de `.pending`. Il refuse une
+  photographie incohérente si les ensembles de candidats divergent.
+- `electron/scripts/assess-recovery.cjs` expose un **diagnostic CLI hors ligne
+  strictement en lecture seule**, avec codes de sortie 0 (sans blocage),
+  2 (intervention nécessaire) et 3 (erreur). Aucun chemin ni document
+  n'est envoyé au renderer, au réseau ou à un outil de publication.
+- Des tests créent un véritable processus enfant, qui se termine
+  volontairement immédiatement **avant** ou **après** `renameSync`.
+  L'instance parente vérifie ensuite le verrou orphelin, le nombre de
+  transactions visibles et les pièces conservées en `.pending`.
+- Le manuel `ASSIST-M1.5-RECOVERY-RUNBOOK.md` documente la lecture des
+  rapports et les interdictions de suppression/promotion automatique.
+- Ces scénarios sont intégrés dans la CI Desktop existante sur Ubuntu et
+  Windows, sans ajout de workflow GitHub.
+
+**Gates non levés :** tests de panne électrique/OS, sémantique NTFS sur
+arrêt brutal, symlink et reparse points avec concurrence malveillante,
+reprise manuelle autorisée, seconde confirmation dans l'interface et
+raccordement Electron/worker. La PR reste expérimentale.
