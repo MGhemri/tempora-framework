@@ -418,3 +418,34 @@ test('forensic inspection separates incomplete from tampered pending folders',t=
  assert.equal(fs.existsSync(path.join(base,partial,'corpus.json')),true);
  assert.equal(fs.existsSync(path.join(base,malformed,'unexpected.exe')),true);
 });
+
+test('a junction or symlink replacing the pending directory is refused without writing to its target',t=>{
+ const f=fixture(t);
+ const target=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-junction-target-'));
+ t.after(()=>fs.rmSync(target,{recursive:true,force:true}));
+ const entry=path.join(f.root,'.pending');
+ try {fs.symlinkSync(target,entry,process.platform==='win32'?'junction':'dir');}
+ catch(e) {
+  if(process.platform==='win32'&&['EPERM','EACCES','ENOTSUP'].includes(e.code))return;
+  throw e;
+ }
+ assert.throws(()=>createTransaction(f.root,f,canonical),
+  {code:'TRANSACTION_DIRECTORY_UNSAFE'});
+ assert.deepEqual(fs.readdirSync(target),[]);
+ assert.equal(fs.lstatSync(entry).isSymbolicLink(),true);
+});
+test('a junction or symlink replacing the committed directory is refused without writing to its target',t=>{
+ const f=fixture(t);
+ const target=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-committed-target-'));
+ t.after(()=>fs.rmSync(target,{recursive:true,force:true}));
+ const entry=path.join(f.root,'transactions');
+ try {fs.symlinkSync(target,entry,process.platform==='win32'?'junction':'dir');}
+ catch(e) {
+  if(process.platform==='win32'&&['EPERM','EACCES','ENOTSUP'].includes(e.code))return;
+  throw e;
+ }
+ assert.throws(()=>createTransaction(f.root,f,canonical),
+  {code:'TRANSACTION_DIRECTORY_UNSAFE'});
+ assert.deepEqual(fs.readdirSync(target),[]);
+ assert.equal(fs.lstatSync(entry).isSymbolicLink(),true);
+});
