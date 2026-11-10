@@ -361,3 +361,14 @@ test('native M1.5 workflow ships in Chromium but no renderer can invoke a write'
  assert.doesNotMatch(host,/ipcMain\.handle\('tempora:assistant:(?:save|persist|commit)/);
  assert.doesNotMatch(preload,/assistantSave|assistantPersist|assistantCommit/);
 });
+
+test('session-bound canonical reread is shipped only in the trusted Electron host',()=>{
+ const pkg=require('../package.json');
+ const preload=src('electron/preload.cjs');
+ const bridge=src('electron/assistant-persistence-binding.cjs');
+ assert.ok(pkg.build.files.includes('assistant-persistence-binding.cjs'));
+ assert.match(bridge,/sessions\.canonicalInput\(handle\)/);
+ assert.match(bridge,/ASSIST_BINDING_CORPUS_CHANGED/);
+ assert.match(bridge,/ASSIST_BINDING_SOURCE_CHANGED/);
+ assert.doesNotMatch(preload,/assistantPersistenceBinding|makeTrustedSessionReread|canonicalInput/);
+});
