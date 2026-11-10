@@ -303,3 +303,39 @@ test('test-only native writer refuses a forged non-synthetic profile even with v
  assert.match(commit.stderr,/NATIVE_PROBE_ONLY_SYNTHETIC_PROFILE/);
  assert.deepEqual(fs.readdirSync(target),[]);
 });
+
+test('staged NTFS byte corruption blocks native visibility and preserves forensic lock',t=>{
+ if(process.platform!=='win32')return;
+ const binary=path.resolve(__dirname,
+  '../../native-windows-guard/target/release/tempora-windows-guard.exe');
+ const source=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-staged-verify-in-'));
+ const target=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-staged-verify-out-'));
+ t.after(()=>fs.rmSync(source,{recursive:true,force:true}));
+ t.after(()=>fs.rmSync(target,{recursive:true,force:true}));
+ const documents=buildScientificTransport(sample());
+ for(const [name,bytes] of Object.entries(documents))
+  fs.writeFileSync(path.join(source,name),bytes,{flag:'wx'});
+ const result=spawnSync(binary,['--synthetic-transport-commit',target,source],{
+  encoding:'utf8',windowsHide:true,timeout:15000,
+  env:{...process.env,TEMPORA_NATIVE_SYNTHETIC_TEST:'1',
+    TEMPORA_NATIVE_TEST_CORRUPT_STAGED:'1'}
+ });
+ assert.equal(result.status,3,result.stdout);
+ assert.match(result.stderr,/NATIVE_COMMIT_STAGED_MISMATCH/);
+ const pending=path.join(target,'.native-probe-pending');
+ const [id]=fs.readdirSync(pending);
+ assert.match(id,/^[a-f0-9]{32}$/);
+ assert.equal(fs.existsSync(path.join(target,'.native-probe-lock','owner.txt')),true);
+ assert.deepEqual(fs.readdirSync(path.join(target,'native-probe-complete')),[]);
+ assert.equal(fs.readFileSync(path.join(pending,id,'journal.json'),'utf8'),'{}');
+ assert.deepEqual(fs.readFileSync(path.join(pending,id,'corpus.json')),
+  documents['corpus.json']);
+ assert.equal(fs.existsSync(path.join(target,'transactions')),false);
+ assert.equal(fs.existsSync(path.join(target,'.pending')),false);
+ const again=spawnSync(binary,['--synthetic-transport-commit',target,source],{
+  encoding:'utf8',windowsHide:true,timeout:15000,
+  env:{...process.env,TEMPORA_NATIVE_SYNTHETIC_TEST:'1'}
+ });
+ assert.equal(again.status,3,'a reserved lock forbids blind retry');
+ assert.equal(fs.existsSync(path.join(target,'.native-probe-lock')),true);
+});
