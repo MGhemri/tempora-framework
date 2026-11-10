@@ -204,3 +204,37 @@ jobs:
           if ($setups.Count -ne 1) { throw 'ELECTRON_NSIS_INSTALLER_MISSING_OR_AMBIGUOUS' }
           Write-Host ('Unsigned experimental Electron NSIS: ' + $setups[0].Name)
           ./electron/scripts/verify-installed-examples.ps1 -Installer $setups[0].FullName -InstallDirectory "$env:RUNNER_TEMP/tempora-electron-j8-examples"
+      - name: Build unsigned Microsoft Store AppX candidate (never publish)
+        shell: pwsh
+        env:
+          CSC_IDENTITY_AUTO_DISCOVERY: 'false'
+        run: |
+          $ErrorActionPreference = 'Stop'
+          Push-Location electron
+          npm run dist:store
+          if ($LASTEXITCODE -ne 0) { throw 'TEMPORA_STORE_APPX_BUILD_FAILED' }
+          Pop-Location
+          $packages = @(Get-ChildItem electron/release -File -Filter '*-STORE.appx')
+          if ($packages.Count -ne 1) { throw 'TEMPORA_STORE_APPX_MISSING_OR_AMBIGUOUS' }
+          Add-Type -AssemblyName System.IO.Compression
+          $zip = [System.IO.Compression.ZipFile]::OpenRead($packages[0].FullName)
+          try {
+            $entry = $zip.GetEntry('AppxManifest.xml')
+            if ($null -eq $entry) { throw 'TEMPORA_STORE_MANIFEST_MISSING' }
+            $reader = [System.IO.StreamReader]::new($entry.Open())
+            try { [xml]$manifest = $reader.ReadToEnd() } finally { $reader.Dispose() }
+            $identity = $manifest.Package.Identity
+            if ($identity.Name -ne 'GhemriM.TEMPORADesktop') { throw 'TEMPORA_STORE_IDENTITY_MISMATCH' }
+            if ($identity.Publisher -ne 'CN=C5BC3837-BBC8-425E-916B-4B6F77BD7455') { throw 'TEMPORA_STORE_PUBLISHER_MISMATCH' }
+            if ($identity.Version -notmatch '^0\.2\.0\.[0-9]+
+) { throw 'TEMPORA_STORE_VERSION_MISMATCH' }
+            if ($identity.ProcessorArchitecture -ne 'x64') { throw 'TEMPORA_STORE_ARCH_MISMATCH' }
+            Write-Host ('Validated candidate, not submitted: '+$packages[0].Name)
+          } finally { $zip.Dispose() }
+      - name: Preserve Store candidate for MANUAL Partner Center submission
+        uses: actions/upload-artifact@v4
+        with:
+          name: TEMPORA-Desktop-0.2.0-x64-STORE-CANDIDATE-NOT-PUBLISHED
+          path: apps/desktop/electron/release/*-STORE.appx
+          if-no-files-found: error
+          retention-days: 14
