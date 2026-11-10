@@ -9,8 +9,6 @@ mod scientific_envelope;
 #[cfg(windows)]
 mod probe_inventory;
 #[cfg(windows)]
-mod probe_forensic;
-#[cfg(windows)]
 mod native {
     use std::ffi::{c_void, OsStr};
     use std::os::windows::ffi::OsStrExt;
@@ -237,18 +235,6 @@ fn main() {
             }
             eprintln!("NATIVE_DESTINATION_REJECTED");
             std::process::exit(3);
-        }
-        if args[1] == "--inspect-probe" {
-            match probe_forensic::inspect(root) {
-                Ok(report) => {
-                    println!("{}", report);
-                    return;
-                }
-                Err(code) => {
-                    eprintln!("NATIVE_PROBE_INSPECTION_REJECTED:{code}");
-                    std::process::exit(3);
-                }
-            }
         }
         if args[1] == "--verify-envelope" {
             if scientific_envelope::verify(root).is_ok() {
