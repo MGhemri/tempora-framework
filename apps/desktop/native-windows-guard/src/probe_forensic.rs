@@ -42,7 +42,13 @@ fn verified_probe(path: &Path) -> bool {
         Ok(value) => value,
         Err(_) => return false,
     };
-    let manifest = match fs::read(path.join("manifest.json")) {
+    let mut pinned = match crate::scientific_envelope::open_pinned(
+        &path.join("manifest.json"), false,
+    ) {
+        Ok(file) => file,
+        Err(_) => return false,
+    };
+    let manifest = match crate::scientific_envelope::bounded_json(&mut pinned) {
         Ok(v) if v.len()<4096 => v,
         _ => return false,
     };
