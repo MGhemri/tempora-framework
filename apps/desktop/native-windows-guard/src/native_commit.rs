@@ -250,5 +250,20 @@ pub fn synthetic_transport_commit(
     // boolean can bypass byte digests. This is not cryptographic proof of
     // who originally authorized a corpus: production writer remains absent.
     let documents = crate::scientific_envelope::load_verified(source)?;
+    // Prevent accidental use of real research data in this test-only probe.
+    // This marker is NOT an authentication mechanism; a forged unsigned
+    // corpus can still imitate the demonstration profile.
+    let corpus: serde_json::Value = serde_json::from_slice(&documents.corpus)
+        .map_err(|_| "NATIVE_PROBE_CORPUS_INVALID")?;
+    if corpus.pointer("/profile/id").and_then(serde_json::Value::as_str)
+        != Some("synthetic-history") ||
+       corpus.pointer("/profile/namespace").and_then(serde_json::Value::as_str)
+        != Some("SYNTHETIC_HISTORY") ||
+       corpus.get("events").and_then(serde_json::Value::as_array)
+        .is_none_or(|events| events.iter().any(|event|
+            event.get("namespace").and_then(serde_json::Value::as_str)
+                != Some("SYNTHETIC_HISTORY"))) {
+        return Err("NATIVE_PROBE_ONLY_SYNTHETIC_PROFILE");
+    }
     commit_probe(root, Some(&documents))
 }
