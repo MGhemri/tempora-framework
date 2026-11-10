@@ -825,3 +825,54 @@ il faut implémenter une **relecture native sûre suivie de la transaction
 et du renommage dans le même processus**, puis qualifier les comportements
 NTFS et de reprise après panne. Ne jamais traiter la seule réussite de
 `--verify-envelope` comme une autorisation d'écriture.
+
+
+## 27. M15-17 — Consommation native expérimentale du contrat vérifié
+
+Le parcours SDK → Rust → NTFS est maintenant relié **de bout en bout
+dans une zone de sonde non scientifique**, sans activation de persistance
+dans l'application distribuée :
+
+1. Le SDK TEMPORA valide le corpus canonique v3, le journal de revue et
+   le digest scientifique avant la construction en mémoire de
+   `corpus.json`, `journal.json` et `envelope.json`.
+2. Le lecteur Rust `scientific_envelope::load_verified` vérifie
+   indépendamment les SHA-256 **des fichiers exacts**, les cinq empreintes
+   déclaratives, les indicateurs de non-publication et la cohérence
+   du journal, puis **retourne les mêmes buffers vérifiés**. Le writer
+   ne rouvre pas les sources après cette validation.
+3. La commande Windows `--synthetic-transport-commit <root> <input>`,
+   inaccessible sans `TEMPORA_NATIVE_SYNTHETIC_TEST=1`, consomme ces
+   buffers et les écrit en mode création exclusive, avec `sync_all`,
+   dans `.native-probe-pending/` avant leur renommage Win32 dans
+   `native-probe-complete/`. Les noms des fichiers sont fixes.
+4. Le manifeste de sonde porte le marqueur explicite
+   `NTFS_SCIENTIFIC_TRANSPORT_PROBE`, `published:false`.
+   Le verrou de sonde `.native-probe-lock` est séparé de
+   `.writer-lock` et reste conservé en cas d'incident.
+5. Le test Windows refuse la commande sans opt-in, puis refuse
+   un journal modifié **sans créer de verrou ni aucun fichier** ;
+   il vérifie ensuite l'identité exacte des trois buffers sur la
+   transaction de sonde finalisée, ainsi que l'absence de
+   `transactions/` et `.pending/` scientifiques.
+
+**Ce qui est prouvé seulement après CI du HEAD :** le passage des
+octets validés par le SDK à une sonde native NTFS, sans substitution
+accidentelle par une seconde lecture *après* le contrôle Rust.
+
+**Ce qui n'est PAS prouvé :** l'authenticité de `sdk_validated:true`,
+la présence vérifiable d'un véritable consentement humain,
+la relecture sûre contre les liens/reparse points et changements de
+source pendant le contrôle, l'atomicité du renommage à chemin absolu
+face à un adversaire, la durabilité post-panne ni l'idempotence
+scientifique. La commande accepte potentiellement un corpus non
+synthétique si son enveloppe est valide et si quelqu'un l'active :
+**elle doit rester hors de toute application distribuée, être réservée
+aux tests avec des fichiers fictifs et ne jamais être raccordée à
+l'IPC de sauvegarde.** Le véritable writer de corpus reste BLOQUÉ
+par SEC-WIN-01, SCI-01, DUR-01 et REC-01.
+
+Prochain jalon : lecture des entrées via handles natifs avec refus des
+reparse points, gestion d'un instantané d'entrée stable, fixation
+cryptographique de l'intention après double consentement, vérification
+de la cible avant publication et protocole de récupération opérateur.
