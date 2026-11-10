@@ -106,3 +106,8 @@
 .visual-geo-button:focus-visible{outline:3px solid #e6c38d;outline-offset:2px}
 .visual-geo-note{margin:5px 0 0;font-size:11px;color:#a7babc;line-height:1.5}
 .visual-graphic svg{user-select:none}
+
+/* TVRW J10: explicit temporal uncertainty and unknown ends. */
+.visual-chronos-note{margin:7px 0 0;font-size:11px;line-height:1.6;color:#a7babc}
+.visual-graphic:has(.visual-chronos-note){max-height:700px;overflow:auto}
+.visual-graphic:has(.visual-chronos-note) svg{min-width:660px}
