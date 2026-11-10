@@ -1,0 +1,8 @@
+[package]
+name = "tempora-windows-guard"
+version = "0.1.0"
+edition = "2021"
+publish = false
+
+# No dependencies: the prototype calls documented Win32 primitives directly.
+# This is a destination preflight, NOT a replacement for handle-relative commits.
