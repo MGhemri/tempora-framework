@@ -154,6 +154,16 @@ function inspectWriterReservation(root) {
 }
 
 function createTransaction(root, {corpus,journal,identity}, canonical) {
+  // A write destination must be a dedicated local directory, never the
+  // filesystem root or a Windows UNC/device path. Network/mapped drives
+  // remain a separate qualification gate, not a trust guarantee here.
+  if(typeof root!=='string'||!path.isAbsolute(root))
+    throw ERR('TRANSACTION_ROOT_INVALID');
+  const normalized=path.resolve(root);
+  if(normalized===path.parse(normalized).root||
+     (process.platform==='win32'&&
+      (root.startsWith('\\\\')||root.startsWith('\\\\?\\'))))
+    throw ERR('TRANSACTION_ROOT_UNSAFE');
   safeRoot(root);
   const {corpusBytes,journalBytes}=validateInput({corpus,journal,identity}, canonical);
   return withWriterReservation(root,()=>{
