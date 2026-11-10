@@ -180,6 +180,22 @@ mod native {
 }
 fn main() {
     let args: Vec<_> = std::env::args_os().collect();
+    #[cfg(windows)]
+    if args.len() == 4 && args[1] == "--synthetic-transport-commit" {
+        let target = std::path::Path::new(&args[2]);
+        let source = std::path::Path::new(&args[3]);
+        match native_commit::synthetic_transport_commit(target, source) {
+            Ok(id) => {
+                println!("NATIVE_SYNTHETIC_TRANSPORT_COMMITTED:{id}");
+                return;
+            }
+            Err(code) => {
+                // Only the enum is logged; no source bytes or paths.
+                eprintln!("NATIVE_SYNTHETIC_TRANSPORT_REJECTED:{code}");
+                std::process::exit(3);
+            }
+        }
+    }
     if args.len() != 3 {
         eprintln!("NATIVE_GUARD_USAGE");
         std::process::exit(3);
