@@ -98,8 +98,7 @@ function readBounded(file) {
   try {
     const opened=fs.fstatSync(fd,{bigint:true});
     if(!opened.isFile()||opened.size>BigInt(MAX_DOCUMENT_BYTES)||
-       (before.ino!==0n&&opened.ino!==0n&&
-        (before.ino!==opened.ino||before.dev!==opened.dev)))
+       (before.ino!==0n&&opened.ino!==0n&&before.ino!==opened.ino))
       throw ERR('TRANSACTION_FILE_UNSAFE');
     // Never use readFileSync(fd): another process could append after fstat,
     // causing unbounded memory allocation before the size check.
