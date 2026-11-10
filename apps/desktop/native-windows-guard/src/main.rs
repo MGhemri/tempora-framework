@@ -199,8 +199,9 @@ fn main() {
                     println!("NATIVE_SYNTHETIC_COMMITTED:{id}");
                     return;
                 }
-                Err(_) => {
-                    eprintln!("NATIVE_SYNTHETIC_COMMIT_REJECTED");
+                Err(code) => {
+                    // Static error enum only; never log a filesystem path.
+                    eprintln!("NATIVE_SYNTHETIC_COMMIT_REJECTED:{code}");
                     std::process::exit(3);
                 }
             }
