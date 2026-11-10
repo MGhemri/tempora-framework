@@ -1,4 +1,5 @@
 import {layoutGeographicPoints} from "./geo-layout.mjs";
+import {layoutDeclaredChronology} from "./chronos-layout.mjs";
 // Presentation-only, read-only offline SVG renderers for TEMPORA TVRW.
 // Canonical interpretation and algorithms are exclusively in the Node worker.
 // The original record table remains the accessible fallback for every view.
@@ -145,40 +146,78 @@ function graph(svg:SVGElement,rows:Row[]):void{
   if(!nodes.length)text(svg,45,50,"No declared relation / Aucune relation déclarée");
   text(svg,40,340,"Layout is illustrative; no historical ranking / Placement illustratif uniquement");
 }
-function chronos(svg:SVGElement,rows:Row[]):void{
-  const entries=rows.slice(0,12).map(row=>{
-    const start=row.start_date as {earliest?:string|null;latest?:string|null}|null;
-    const end=row.end_date as {earliest?:string|null;latest?:string|null}|null;
-    const left=start?.earliest?Number(start.earliest.slice(0,4)):null;
-    const right=end?.latest?Number(end.latest.slice(0,4)):start?.latest?Number(start.latest.slice(0,4)):null;
-    return {label:ref(row.ref).split(":").pop()??"",left,right};
-  }).filter(x=>x.left!==null&&x.right!==null&&x.left<=x.right);
-  if(!entries.length){text(svg,45,50,"No bounded temporal interval / Pas de bornes temporelles");return;}
-  const min=Math.min(...entries.map(x=>x.left!));
-  const max=Math.max(...entries.map(x=>x.right!));
-  const span=Math.max(max-min,1);
-  text(svg,180,22,String(min));text(svg,735,22,String(max));
-  svg.append(elem("line",{x1:180,y1:30,x2:745,y2:30,stroke:"currentColor","stroke-opacity":0.5}));
-  entries.forEach((entry,i)=>{
-    const y=48+i*24; text(svg,8,y+4,entry.label);
-    const x=180+(entry.left!-min)/span*560;
-    const end=180+(entry.right!-min)/span*560;
-    svg.append(elem("rect",{x,y,width:Math.max(end-x,3),height:10,
-      fill:"currentColor","fill-opacity":0.65}));
-  });
-  text(svg,180,347,"Declared civil-year spans; not inferred event dates");
+function chronos(target:HTMLElement,rows:Row[]):void{
+  const layout=layoutDeclaredChronology(rows);
+  const svg=canvas("Chronos — declared civil dates, uncertainty and unknown ends",layout.height);
+  if(!layout.axis){
+    text(svg,45,52,"No displayable declared dates / Aucune date affichable");
+  }else{
+    const axis=layout.axis;
+    text(svg,axis.x0,27,axis.earliest);
+    text(svg,axis.x1-92,27,axis.latest);
+    svg.append(elem("line",{x1:axis.x0,y1:38,x2:axis.x1,y2:38,
+      stroke:"currentColor","stroke-opacity":0.5}));
+    for(const entry of layout.entries){
+      const group=elem("g",{"data-visual-ref":entry.reference});
+      const title=elem("title");
+      title.textContent=entry.reference+" — "+entry.start_earliest+" … "+entry.start_latest+
+        " / "+(entry.unknown_end?"end unknown / fin inconnue":
+          entry.end_earliest+" … "+entry.end_latest);
+      group.append(title);
+      text(group,7,entry.y+4,entry.label.length>26?entry.label.slice(0,25)+"…":entry.label);
+      group.append(elem("line",{x1:axis.x0,y1:entry.y,x2:axis.x1,y2:entry.y,
+        stroke:"currentColor","stroke-opacity":0.09}));
+      if(entry.start_x1>entry.start_x0){
+        group.append(elem("rect",{x:entry.start_x0,y:entry.y-6,
+          width:Math.max(2,entry.start_x1-entry.start_x0),height:12,
+          fill:"none",stroke:"currentColor","stroke-dasharray":"3 3",
+          "stroke-opacity":0.85}));
+      }
+      group.append(elem("circle",{cx:entry.start_x0,cy:entry.y,r:3,
+        fill:"currentColor"}));
+      if(entry.end_x0!==null&&entry.end_x1!==null){
+        if(entry.certain_duration&&entry.end_x0>entry.start_x1){
+          group.append(elem("line",{x1:entry.start_x1,y1:entry.y,
+            x2:entry.end_x0,y2:entry.y,stroke:"currentColor",
+            "stroke-width":4,"stroke-opacity":0.72}));
+        }
+        if(entry.end_x1>entry.end_x0){
+          group.append(elem("rect",{x:entry.end_x0,y:entry.y-6,
+            width:Math.max(2,entry.end_x1-entry.end_x0),height:12,
+            fill:"none",stroke:"currentColor","stroke-dasharray":"3 3",
+            "stroke-opacity":0.85}));
+        }
+        group.append(elem("circle",{cx:entry.end_x1,cy:entry.y,r:3,
+          fill:"currentColor"}));
+      }else{
+        // This marker denotes an unknown end, never an ongoing event or an inferred date.
+        text(group,Math.min(entry.start_x1+8,axis.x1+2),entry.y+4,"? fin / end");
+      }
+      svg.append(group);
+    }
+  }
+  const note=document.createElement("p");
+  note.className="visual-chronos-note";
+  note.textContent="Chronos · "+layout.entries.length+" plotted / tracées · "+
+    layout.omitted+" without plot / sans tracé · "+
+    layout.unknown_end_count+" unknown ends / fins inconnues · "+
+    layout.uncertain_count+" uncertain / incertaines. "+
+    "Dotted = declared uncertainty; solid = guaranteed interval. "+
+    "Only the current page / page actuelle uniquement. "+
+    "The source data table below remains authoritative / le tableau fait foi.";
+  target.append(svg,note);
 }
 /** Render only geometries explicitly represented by returned rows. */
 export function renderScientificGraphic(target:HTMLElement,module:string,rows:Row[]):void{
   target.replaceChildren();
   if(!["geo","graph","chronos"].includes(module))return;
+  if(module==="chronos"){chronos(target,rows);return;}
   const svg=canvas(module+" — declared data preview");
   if(module==="geo"){
     geo(svg,rows);
     interactiveGeo(target,svg);
   }else{
     if(module==="graph")graph(svg,rows);
-    else chronos(svg,rows);
     target.append(svg);
   }
 }

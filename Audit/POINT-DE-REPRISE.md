@@ -29,7 +29,11 @@
 - M1.5 REC-01 : vérification de cohérence temporelle d'un inventaire de fichiers, en lecture seule, y compris substitutions « toujours valides ». Ce n'est **ni** un snapshot atomique NTFS **ni** une autorisation de récupération.
 - TVRW J9 : coordonnées Point auto-ajustées, gestion de l'antiméridien, regroupement visuel, zoom/panoramique et tests immuables. **Sans carte de fond, sans requête réseau, sans vérité historique inférée.**
 
-## Distribution Store : étape volontairement non franchie
+## Déclaration de publication Microsoft Store — 10 novembre 2026
+
+Le propriétaire confirme avoir **publié la mise à jour TEMPORA Desktop 0.2.0** via Partner Center. L'état est **déclaré**, non indépendamment vérifié dans Partner Center. Le binaire signalé en soumission est celui de CI main 42854145980, SHA 3c2b7bb, artefact 13781418953 ; il est **antérieur** à J9 et J10. Ne pas prétendre que les développements ultérieurs figurent déjà sur le Store.
+
+## Historique de préparation Store (état antérieur à la déclaration)
 
 La version `0.2.0` est candidate AppX x64 **non soumise, non publiée, non certifiée pour ce nouveau SHA**.
 
@@ -46,3 +50,7 @@ Le build Windows de la PR #117 contient un artefact temporaire
 6. **TensorFlow** ensuite : contrats et provenance d'inférence, jeu d'évaluation, supervision humaine. Pas d'activation IA à ce stade.
 
 **Rythme d'exécution demandé :** lots suffisamment substantiels (code + tests + audit), branches éphémères et PR, qualifications au HEAD final uniquement. N'effectuer **aucune** soumission/passage en production Store, release npm/GitHub ou activation de writer packagé sans décision distincte. Ne jamais compter le nombre de commits comme preuve d'avancement.
+
+## Lot J10 Chronos — en développement, qualification requise
+
+Le rendu distingue les bornes temporelles incertaines et les fins inconnues sans inventer de durée. Code, tests et limites : [TVRW-J10-CHRONOS.md](TVRW-J10-CHRONOS.md). Qualification du HEAD de PR indispensable ; ne change pas le binaire déjà déclaré publié.
