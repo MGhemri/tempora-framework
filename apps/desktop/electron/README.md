@@ -1,3 +1,5 @@
+> **Release preparation (November 10, 2026):** TEMPORA Desktop **1.0.0** is being prepared as a *stable source candidate*, NOT as an already signed/certified/published release. Versioned Chromium/Electron, pinned TEMPORA Framework 3.0.0, read-only workbench and human-gated staging are supported; packaged M1.5 scientific writes and TensorFlow remain disabled. See [stable qualification and GO/NO-GO](../../../Audit/RELEASE-DESKTOP-STABLE-1.0.0.md) and [draft release notes](RELEASE-NOTES-1.0.0.md). Previous Beta/Partner Center notes below are historical and do not override this status.
+
 # TEMPORA Desktop — Official Chromium/Electron runtime
 
 **Windows x64 distribution target: bundled Chromium/Electron only.** No WebView2 runtime or Evergreen installation is required to launch TEMPORA Desktop. A bare Windows VM must be validated before publication.
