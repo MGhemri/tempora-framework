@@ -876,3 +876,48 @@ Prochain jalon : lecture des entrées via handles natifs avec refus des
 reparse points, gestion d'un instantané d'entrée stable, fixation
 cryptographique de l'intention après double consentement, vérification
 de la cible avant publication et protocole de récupération opérateur.
+
+
+## 28. M15-18 — lecture native épinglée, concurrence et crashs réels Rust
+
+**Implémentation (en attente de qualification du HEAD de ce lot) :**
+
+1. `scientific_envelope.rs` ouvre maintenant le dossier source et
+   **les trois fichiers** avec `CreateFileW`, en activant
+   `FILE_FLAG_OPEN_REPARSE_POINT` et en vérifiant les attributs
+   par `GetFileInformationByHandleEx(FileAttributeTagInfo)`. Les liens
+   symboliques/jonctions/reparse points sont refusés.
+2. Les handles sont ouverts avec `FILE_SHARE_READ` **seul** :
+   ni partage de l'écriture, ni partage de la suppression. Les tailles
+   et les octets sont lus directement à travers **ces mêmes handles**,
+   toujours avec le plafond de 16 Mio + 1 octet.
+3. Le `VerifiedTransport` conserve ses handles privés pendant toute la
+   transaction native de sonde. Il remet au writer les buffers qui ont
+   réellement été validés, **sans ouvrir une seconde fois** les sources.
+4. Un test Windows introduit un lien symbolique sur `corpus.json` :
+   `--verify-envelope` et `--synthetic-transport-commit` doivent refuser
+   la lecture avant toute écriture de sonde. Un second test ouvre la
+   transaction dans un processus Rust, maintient ses handles pendant une
+   pause de test bornée, et tente une écriture concurrente depuis Node.
+   L'accès doit échouer pendant que les handles Rust sont détenus.
+5. Un autre test exécute trois **terminaisons réelles du processus Rust**,
+   avec codes distincts : après synchronisation du verrou, après
+   synchronisation du premier document, et après renommage de la sonde.
+   Les résultats attendus sont respectivement (verrou seul), (candidat
+   partiel en attente) et (dossier finalisé visible + verrou réservé).
+   Dans tous les cas, le verrou orphelin bloque un second écrivain et
+   aucune donnée scientifique n'est modifiée.
+
+**Portée exacte :** la source peut encore être substituée pendant
+l'intervalle entre l'inspection des répertoires ancêtres et l'ouverture
+des handles. La vérification de provenance `sdk_validated` n'est pas
+une attestation de décision humaine, la cible finale reste absolue,
+et le protocole n'a pas été qualifié face à une panne électrique.
+Les nouvelles primitives renforcent **la sonde de développement** ;
+elles ne lèvent pas `SEC-WIN-01`, `SCI-01`, `DUR-01` ou `REC-01`.
+Le chemin `transactions/` scientifique et la sauvegarde distribuée
+restent strictement interdits à cette sonde.
+
+**Tests :** une seule campagne Framework/Documentation/Desktop est
+lancée sur le dernier SHA après consolidation du lot ; le statut
+`TESTÉ-CI` doit être confirmé explicitement avant clôture.
