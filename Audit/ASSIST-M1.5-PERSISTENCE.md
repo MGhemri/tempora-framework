@@ -549,3 +549,38 @@ l'inode `bigint` lorsqu'il est non nul, mais n'exige plus l'égalité de
 `dev` entre chemin et descripteur. Cela ne doit pas être interprété comme
 une garantie native contre les substitutions après l'ouverture. La lecture
 reste strictement limitée à 16 Mio + 1 octet.
+
+
+## 18. Diagnostic conservateur du résultat incertain et des chemins cassés
+
+Deux défauts de qualification ont été fermés sans autoriser de reprise
+automatique :
+
+1. `inspectTransactions` utilise désormais `lstatSync` pour détecter
+   l'existence de `transactions/` et `.pending/`. `existsSync`
+   ignorait les liens symboliques **cassés**, potentiellement déclarés
+   comme des dossiers absents. Une entrée suspecte est maintenant
+   refusée avec `TRANSACTION_DIRECTORY_UNSAFE`. Deux tests Linux/Windows
+   injectent ces liens cassés en lecture seule.
+2. `inspectCommittedIdentity(root, canonical, identity)` cherche dans
+   les **transactions déjà vérifiées** celles qui correspondent exactement
+   aux cinq SHA-256 attendus (lot, source, base, mapping, sortie). La
+   fonction fournit seulement les identifiants correspondants, la liste
+   de transactions non vérifiées, le nombre de dossiers en attente et
+   les marqueurs `inspected_only`, `files_modified:false`,
+   `scientific_approval:false`, `published:false`.
+   Elle compare les inventaires avant et après lecture pour détecter
+   certaines mutations concurrentes, puis refuse un inventaire changé.
+
+Des tests prouvent qu'un crash simulé par un **processus enfant réel**
+juste après le `rename` produit une transaction finalisée détectable,
+mais laisse `.writer-lock` réservé. Une transaction étrangère ou altérée
+n'est jamais présentée comme correspondante.
+
+**Limitation impérative :** cette inspection confirme une cohérence logique
+à l'instant des contrôles, **pas** une durabilité après coupure électrique
+ni l'authenticité historique, et **pas** une absence de race TOCTOU.
+Aucune suppression, promotion, récupération, réémission de reçu officiel
+ou nouvelle écriture n'est déclenchée. En cas de verrou orphelin, de
+transaction invalide ou de preuve en attente, l'opérateur doit conserver
+les données et suivre le runbook ; il ne faut pas relancer automatiquement.
