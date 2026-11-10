@@ -783,3 +783,45 @@ est implémenté, avec handles parents maintenus jusqu'au changement de
 visibilité. **Ne pas appeler ce chemin « handle-relative »** ; la cible
 est encore une chaîne de chemin, et la sécurité P0 reste bloquée. Ne pas
 considérer l'essai qualifié avant passage complet de la CI attachée au SHA.
+
+
+## 26. Contrat scientifique v1 Node SDK → Rust, strictement sans écriture (M15-16)
+
+Une interface d'échange est maintenant implémentée entre le validateur
+canonique TEMPORA et la couche Windows native :
+
+- `electron/scientific-native-transport.cjs` construit, **sans écrire
+  de fichiers**, un triplet `corpus.json`, `journal.json`,
+  `envelope.json`. Le SDK officiel doit valider le corpus et retrouver
+  son empreinte canonique v3. Le journal doit être
+  `accepted_for_local_staging` et comporter le même lot, la même
+  base et la même sortie que l'identité à **cinq SHA-256**.
+- L'enveloppe `tempora-scientific-transport-v1` fige cette identité,
+  les SHA-256 **des octets transportés** (distincts du digest canonique
+  SDK), `sdk_validated: true`, `scientific_approval: false`,
+  `published: false`. Les trois fichiers sont bornés et le contrat
+  refuse toute propriété étrangère dans l'identité.
+- Le nouveau module Rust `scientific_envelope.rs`, appelé par
+  `--verify-envelope <dossier>`, contrôle en **lecture seule**
+  le format de l'enveloppe, les indicateurs de non-publication, la
+  présence des cinq empreintes, la taille des documents, les SHA-256
+  des **fichiers exacts**, le modèle v3 du corpus et les liens
+  lot/base/sortie du journal. La destination est précontrôlée par les
+  handles Win32 existants.
+- Un test Windows génère le contrat depuis un **vrai corpus synthétique
+  validé par le SDK**, puis vérifie le succès du lecteur Rust et le refus
+  d'un journal altéré ou d'une publication frauduleuse. Un test Node
+  refuse les mutations du corpus après digest et l'altération du journal.
+
+**Sécurité et limites :** aucun appel de l'interface Electron ne permet
+de fournir ces fichiers au writer, la vérification Rust n'écrit rien,
+et le writer de sonde reste limité aux données fictives. Le lecteur Rust
+**ne recalcule pas le digest scientifique canonique v3** : celui-ci reste
+à la charge du SDK de confiance. La vérification de fichiers par chemins
+n'est pas encore une lecture sûre par handles contre des modifications
+concurrentes. Aucune enveloppe n'est une décision de publication, de
+sauvegarde réelle ou une signature scientifique. Pour lever SEC-WIN-01,
+il faut implémenter une **relecture native sûre suivie de la transaction
+et du renommage dans le même processus**, puis qualifier les comportements
+NTFS et de reprise après panne. Ne jamais traiter la seule réussite de
+`--verify-envelope` comme une autorisation d'écriture.
