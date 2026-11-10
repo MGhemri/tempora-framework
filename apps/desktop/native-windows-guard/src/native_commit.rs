@@ -123,13 +123,18 @@ fn exclusive_sync(directory: &Path, name: &str, contents: &[u8]) -> Result<(), &
     file.sync_all().map_err(|_| "NATIVE_COMMIT_FILE_FLUSH_FAILED")?;
     Ok(())
 }
-fn rename_relative(
-    source: Handle, destination: Handle, filename: &str,
+fn rename_with_pinned_destination(
+    source: Handle, target_path: &Path,
 ) -> Result<(), &'static str> {
-    if filename.is_empty() || filename.chars().any(|c| matches!(c, '/' | '\\' | ':')) {
+    if !target_path.is_absolute() {
         return Err("NATIVE_COMMIT_FILENAME_UNSAFE");
     }
-    let chars: Vec<u16> = OsStr::new(filename).encode_wide().collect();
+    // Win32 FileRenameInfo with RootDirectory has rejected the relative
+    // variant with ERROR_INVALID_PARAMETER on the actual Windows runner.
+    // Use its documented absolute-path variant with RootDirectory=NULL,
+    // while still holding both parent directory handles against renames.
+    // This is a native visibility proof, NOT yet handle-relative security.
+    let chars: Vec<u16> = target_path.as_os_str().encode_wide().collect();
     // Allocate aligned storage for FILE_RENAME_INFO's trailing flexible WCHAR array.
     let count_bytes = std::mem::size_of::<RenameInfo>()
         .checked_add(chars.len() * 2)
@@ -139,7 +144,7 @@ fn rename_relative(
     let record = storage.as_mut_ptr().cast::<RenameInfo>();
     unsafe {
         (*record).flags = 0; // ReplaceIfExists = FALSE
-        (*record).root_directory = destination;
+        (*record).root_directory = 0;
         (*record).filename_length = (chars.len() * 2) as u32;
         std::ptr::copy_nonoverlapping(chars.as_ptr(), (*record).filename.as_mut_ptr(), chars.len());
         if SetFileInformationByHandle(source, FILE_RENAME_INFO_CLASS, record.cast(), size) == 0 {
@@ -183,7 +188,7 @@ pub fn synthetic_commit(root: &Path) -> Result<String, &'static str> {
     exclusive_sync(&pending, "manifest.json", br#"{"synthetic":true,"published":false,"kind":"NTFS_HANDLE_RENAME_PROBE"}"#)?;
     // File handles were closed after sync_all; the directory handles remain
     // held without FILE_SHARE_DELETE during the relative rename.
-    rename_relative(pending_handle.0, completed_root_handle.0, &id)?;
+    rename_with_pinned_destination(pending_handle.0, &completed_root.join(&id))?;
     // Do not claim NTFS power-failure durability. Remove only our own
     // successful synthetic test lock, never a scientific writer reservation.
     drop(pending_handle);
