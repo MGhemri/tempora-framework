@@ -1,0 +1,185 @@
+//! Synthetic-only native commit proof on Windows NTFS.
+//! Never handles scientific source data or a TEMPORA canonical transaction.
+//! Uses directory HANDLEs held through SetFileInformationByHandle(FileRenameInfo).
+//! No claim of post-power-loss durability or formal resistance to every race.
+use std::ffi::{c_void, OsStr};
+use std::fs::{self, OpenOptions};
+use std::io::Write;
+use std::os::windows::ffi::OsStrExt;
+use std::path::{Path, PathBuf};
+use std::ptr::null_mut;
+
+type Handle = isize;
+const INVALID_HANDLE_VALUE: Handle = -1isize;
+const FILE_READ_ATTRIBUTES: u32 = 0x0080;
+const DELETE: u32 = 0x0001_0000;
+const FILE_SHARE_READ: u32 = 1;
+const FILE_SHARE_WRITE: u32 = 2;
+const OPEN_EXISTING: u32 = 3;
+const FILE_FLAG_BACKUP_SEMANTICS: u32 = 0x0200_0000;
+const FILE_FLAG_OPEN_REPARSE_POINT: u32 = 0x0020_0000;
+const FILE_ATTRIBUTE_DIRECTORY: u32 = 0x0010;
+const FILE_ATTRIBUTE_REPARSE_POINT: u32 = 0x0400;
+const FILE_ATTRIBUTE_TAG_INFO_CLASS: i32 = 9;
+const FILE_RENAME_INFO_CLASS: i32 = 3;
+const BCRYPT_USE_SYSTEM_PREFERRED_RNG: u32 = 2;
+
+#[repr(C)]
+#[derive(Default)]
+struct FileAttributeTagInfo {
+    attributes: u32,
+    tag: u32,
+}
+#[repr(C)]
+struct RenameInfo {
+    flags: u32,
+    root_directory: Handle,
+    filename_length: u32,
+    filename: [u16; 1],
+}
+#[link(name = "kernel32")]
+extern "system" {
+    fn CreateFileW(
+        name: *const u16, access: u32, share: u32, security: *mut c_void,
+        creation: u32, flags: u32, template: Handle,
+    ) -> Handle;
+    fn CloseHandle(handle: Handle) -> i32;
+    fn GetFileInformationByHandleEx(
+        handle: Handle, info_class: i32, info: *mut c_void, size: u32,
+    ) -> i32;
+    fn SetFileInformationByHandle(
+        handle: Handle, info_class: i32, info: *const c_void, size: u32,
+    ) -> i32;
+}
+#[link(name = "bcrypt")]
+extern "system" {
+    fn BCryptGenRandom(algorithm: Handle, buffer: *mut u8, count: u32, flags: u32) -> i32;
+}
+struct Owned(Handle);
+impl Drop for Owned {
+    fn drop(&mut self) {
+        unsafe { CloseHandle(self.0); }
+    }
+}
+fn wide(value: &OsStr) -> Vec<u16> {
+    value.encode_wide().chain(std::iter::once(0)).collect()
+}
+fn open_directory(path: &Path, delete: bool) -> Result<Owned, &'static str> {
+    let encoded = wide(path.as_os_str());
+    // Intentionally exclude FILE_SHARE_DELETE: other processes cannot
+    // rename these specific directory objects while we retain the handles.
+    let raw = unsafe {
+        CreateFileW(
+            encoded.as_ptr(),
+            FILE_READ_ATTRIBUTES | if delete { DELETE } else { 0 },
+            FILE_SHARE_READ | FILE_SHARE_WRITE,
+            null_mut(), OPEN_EXISTING,
+            FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT, 0,
+        )
+    };
+    if raw == INVALID_HANDLE_VALUE {
+        return Err("NATIVE_COMMIT_HANDLE_OPEN_FAILED");
+    }
+    let handle = Owned(raw);
+    let mut info = FileAttributeTagInfo::default();
+    let success = unsafe {
+        GetFileInformationByHandleEx(
+            handle.0, FILE_ATTRIBUTE_TAG_INFO_CLASS,
+            (&mut info as *mut FileAttributeTagInfo).cast(),
+            std::mem::size_of::<FileAttributeTagInfo>() as u32,
+        )
+    };
+    if success == 0 || info.attributes & FILE_ATTRIBUTE_DIRECTORY == 0
+        || info.attributes & FILE_ATTRIBUTE_REPARSE_POINT != 0 || info.tag != 0
+    {
+        return Err("NATIVE_COMMIT_REPARSE_OR_UNSAFE");
+    }
+    Ok(handle)
+}
+fn create_or_open(directory: &Path) -> Result<Owned, &'static str> {
+    match fs::create_dir(directory) {
+        Ok(()) => (),
+        Err(e) if e.kind() == std::io::ErrorKind::AlreadyExists => (),
+        Err(_) => return Err("NATIVE_COMMIT_DIRECTORY_CREATION_FAILED"),
+    }
+    open_directory(directory, false)
+}
+fn random_id() -> Result<String, &'static str> {
+    let mut bytes = [0u8; 16];
+    let status = unsafe {
+        BCryptGenRandom(0, bytes.as_mut_ptr(), bytes.len() as u32, BCRYPT_USE_SYSTEM_PREFERRED_RNG)
+    };
+    if status < 0 { return Err("NATIVE_COMMIT_RANDOM_FAILED"); }
+    Ok(bytes.iter().map(|v| format!("{v:02x}")).collect())
+}
+fn exclusive_sync(directory: &Path, name: &str, contents: &[u8]) -> Result<(), &'static str> {
+    let mut file = OpenOptions::new().write(true).create_new(true)
+        .open(directory.join(name))
+        .map_err(|_| "NATIVE_COMMIT_EXCLUSIVE_WRITE_FAILED")?;
+    file.write_all(contents).map_err(|_| "NATIVE_COMMIT_WRITE_FAILED")?;
+    file.sync_all().map_err(|_| "NATIVE_COMMIT_FILE_FLUSH_FAILED")?;
+    Ok(())
+}
+fn rename_relative(
+    source: Handle, destination: Handle, filename: &str,
+) -> Result<(), &'static str> {
+    if filename.is_empty() || filename.contains(['/', '\\', ':']) {
+        return Err("NATIVE_COMMIT_FILENAME_UNSAFE");
+    }
+    let chars: Vec<u16> = OsStr::new(filename).encode_wide().collect();
+    // Allocate aligned storage for FILE_RENAME_INFO's trailing flexible WCHAR array.
+    let count_bytes = std::mem::size_of::<RenameInfo>()
+        .checked_add(chars.len() * 2)
+        .ok_or("NATIVE_COMMIT_BUFFER_LIMIT")?;
+    let mut storage = vec![0u64; count_bytes.div_ceil(8)];
+    let size = count_bytes.try_into().map_err(|_| "NATIVE_COMMIT_BUFFER_LIMIT")?;
+    let record = storage.as_mut_ptr().cast::<RenameInfo>();
+    unsafe {
+        (*record).flags = 0; // ReplaceIfExists = FALSE
+        (*record).root_directory = destination;
+        (*record).filename_length = (chars.len() * 2) as u32;
+        std::ptr::copy_nonoverlapping(chars.as_ptr(), (*record).filename.as_mut_ptr(), chars.len());
+        if SetFileInformationByHandle(source, FILE_RENAME_INFO_CLASS, record.cast(), size) == 0 {
+            return Err("NATIVE_COMMIT_RENAME_FAILED");
+        }
+    }
+    Ok(())
+}
+pub fn synthetic_commit(root: &Path) -> Result<String, &'static str> {
+    if std::env::var_os("TEMPORA_NATIVE_SYNTHETIC_TEST").as_deref()
+        != Some(OsStr::new("1"))
+    {
+        return Err("NATIVE_COMMIT_SYNTHETIC_GATE_CLOSED");
+    }
+    crate::native::inspect(root)?;
+    let root_handle = open_directory(root, false)?;
+    let lock = root.join(".native-probe-lock");
+    fs::create_dir(&lock).map_err(|_| "NATIVE_COMMIT_WRITER_BUSY")?;
+    // On every failure retain the lock and the pending data for forensic review.
+    let lock_handle = open_directory(&lock, false)?;
+    let _ = &lock_handle;
+    let pending_root = root.join(".native-probe-pending");
+    let completed_root = root.join("native-probe-complete");
+    let pending_root_handle = create_or_open(&pending_root)?;
+    let completed_root_handle = create_or_open(&completed_root)?;
+    let _ = (&root_handle, &pending_root_handle);
+    let id = random_id()?;
+    exclusive_sync(&lock, "owner.txt", id.as_bytes())?;
+    let pending = pending_root.join(&id);
+    fs::create_dir(&pending).map_err(|_| "NATIVE_COMMIT_COLLISION")?;
+    let pending_handle = open_directory(&pending, true)?;
+    exclusive_sync(&pending, "corpus.json", br#"{"synthetic":true,"schema_version":"probe-only"}"#)?;
+    exclusive_sync(&pending, "journal.json", br#"{"synthetic":true,"approval":false}"#)?;
+    exclusive_sync(&pending, "manifest.json", br#"{"synthetic":true,"published":false,"kind":"NTFS_HANDLE_RENAME_PROBE"}"#)?;
+    // File handles were closed after sync_all; the directory handles remain
+    // held without FILE_SHARE_DELETE during the relative rename.
+    rename_relative(pending_handle.0, completed_root_handle.0, &id)?;
+    // Do not claim NTFS power-failure durability. Remove only our own
+    // successful synthetic test lock, never a scientific writer reservation.
+    drop(pending_handle);
+    drop(lock_handle);
+    fs::remove_file(lock.join("owner.txt"))
+        .map_err(|_| "NATIVE_COMMIT_LOCK_RELEASE_FAILED")?;
+    fs::remove_dir(&lock).map_err(|_| "NATIVE_COMMIT_LOCK_RELEASE_FAILED")?;
+    Ok(id)
+}
