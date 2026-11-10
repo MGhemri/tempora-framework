@@ -489,7 +489,7 @@ verrou pour quatre répertoires : racine, `.pending`, `transactions`
 et dossier temporaire de transaction. Il refuse toute identité
 différente avec `TRANSACTION_DIRECTORY_IDENTITY_CHANGED`. Si Node ne
 fournit pas un identifiant d'objet de système de fichiers exploitable
-(`ino === 0`), l'écriture échoue de manière conservatrice au lieu de
+(`ino === 0n`), l'écriture échoue de manière conservatrice au lieu de
 prétendre protéger le renommage. Cela peut rendre certains volumes Windows
 inutilisables tant qu'une implémentation native ne les prend pas en charge.
 
@@ -504,3 +504,9 @@ dernière vérification. Seule une stratégie Windows fondée sur les handles
 et les primitives natives d'ouverture / renommage sous des ACL contrôlées
 peut faire progresser ce gate avant diffusion. L'identifiant `ino`
 ne prouve pas à lui seul la durabilité post-coupure électrique.
+
+
+**Précision des identifiants :** la lecture d'identité de répertoire emploie
+`lstatSync(..., {bigint:true})`, car un ID de fichier Windows sur 64 bits
+peut être arrondi avec les nombres JavaScript ordinaires. Cette amélioration
+ne constitue toujours pas un verrou atomique ni une garantie Windows native.
