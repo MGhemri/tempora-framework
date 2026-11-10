@@ -4,7 +4,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs'),os=require('node:os'),path=require('node:path');
 const {spawnSync}=require('node:child_process');
 const {assessRecovery}=require('../recovery-assessment.cjs');
-const {createTransaction,inspectTransactions,inspectWriterReservation,inspectCommittedIdentity}=
+const {createTransaction,inspectTransactions,inspectWriterReservation,inspectPendingEvidence,inspectCommittedIdentity}=
  require('../transaction-store.cjs');
 const H='a'.repeat(64);
 const canonical={validateCorpus:c=>({valid:c?.schema_version==='3.0.0'}),digest:()=>H};
@@ -341,4 +341,58 @@ test('lock replacement with identical reserved status invalidates recovery snaps
  assert.deepEqual(inspectWriterReservation(f.root),{status:'reserved'});
  assert.equal(fs.readFileSync(path.join(retired,'owner.json'),'utf8'),owner);
  assert.equal(fs.readFileSync(path.join(lock,'owner.json'),'utf8'),owner);
+});
+
+test('concurrent modification of a finalized journal invalidates a previously clean inspection',t=>{
+ const f=fixture(t),receipt=createTransaction(f.root,f,canonical),
+  pendingRoot=path.join(f.root,'.pending'),
+  journal=path.join(f.root,'transactions',receipt.transaction_id,'journal.json');
+ const readdir=fs.readdirSync;let mutated=false;
+ fs.readdirSync=function(location,...args){
+  if(!mutated&&String(location)===pendingRoot){
+   mutated=true;
+   fs.writeFileSync(journal,'{}');
+  }
+  return readdir.call(fs,location,...args);
+ };
+ try{
+  assert.throws(()=>assessRecovery(f.root,canonical),{code:'RECOVERY_SNAPSHOT_CHANGED'});
+ }finally{fs.readdirSync=readdir;}
+ assert.equal(mutated,true);
+ assert.equal(fs.readFileSync(journal,'utf8'),'{}');
+ assert.deepEqual(inspectTransactions(f.root,canonical).invalid,[receipt.transaction_id]);
+});
+test('pending evidence changed between two classifications invalidates forensic snapshot',t=>{
+ const f=fixture(t),pendingRoot=path.join(f.root,'.pending');
+ fs.mkdirSync(pendingRoot);
+ const id='e'.repeat(32),dir=path.join(pendingRoot,id);
+ fs.mkdirSync(dir);
+ const manifest={schema_version:'1.0.0',transaction_id:id,...f.identity,
+  engine_version:'3.0.0',published:false,scientific_approval:false,
+  corpus_file_sha256:'',journal_sha256:''};
+ const crypto=require('node:crypto');
+ const hash=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
+ const corpusBytes=Buffer.from(JSON.stringify(f.corpus)+'\n');
+ const journalBytes=Buffer.from(JSON.stringify(f.journal)+'\n');
+ manifest.corpus_file_sha256=hash(corpusBytes);
+ manifest.journal_sha256=hash(journalBytes);
+ fs.writeFileSync(path.join(dir,'corpus.json'),corpusBytes);
+ fs.writeFileSync(path.join(dir,'journal.json'),journalBytes);
+ fs.writeFileSync(path.join(dir,'manifest.json'),JSON.stringify(manifest)+'\n');
+ const transactions=path.join(f.root,'transactions');
+ fs.mkdirSync(transactions);
+ const readdir=fs.readdirSync;let observed=0;
+ fs.readdirSync=function(location,...args){
+  if(String(location)===transactions&&++observed===2){
+    // First pending classification has already finished; the second one
+    // must detect this tampering rather than returning the first answer.
+    fs.writeFileSync(path.join(dir,'journal.json'),'{}');
+  }
+  return readdir.call(fs,location,...args);
+ };
+ try{
+  assert.throws(()=>assessRecovery(f.root,canonical),{code:'RECOVERY_SNAPSHOT_CHANGED'});
+ }finally{fs.readdirSync=readdir;}
+ assert.ok(observed>=2);
+ assert.deepEqual(inspectPendingEvidence(f.root,canonical).unsafe,[id]);
 });
