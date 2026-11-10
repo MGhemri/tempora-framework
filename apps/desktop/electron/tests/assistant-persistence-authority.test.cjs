@@ -41,6 +41,7 @@ function fixture(t){
   import_performed:false,persistence_required:true,
   batch_id:bundle.report.batch_id,source_sha256:bundle.report.source.sha256,
   base_sha256:bundle.report.base_sha256,
+  mapping_sha256:bundle.report.mapping.sha256,
   snapshot_sha256:accepted.journal.output_sha256,journal:accepted.journal};
  const workflow=createNativePersistenceWorkflow({sdk,
   confirmNative:async()=>true,chooseDestination:async()=>root});
@@ -123,5 +124,14 @@ test('mapping mutation after staging invalidates native save before disk writes'
  f.input.mapping={mapping_schema_version:'1.0.0',id:'forged'};
  await assert.rejects(()=>f.authority.commitTrusted(HANDLE),
   {code:'ASSIST_BINDING_MAPPING_CHANGED'});
+ assert.deepEqual(fs.readdirSync(f.root),['original-corpus.json']);
+});
+
+test('host refuses an altered mapping identity before offering consent',t=>{
+ const f=fixture(t);
+ assert.throws(()=>f.authority.recordStaging({
+  handle:HANDLE,preview:f.preview,input:f.input,
+  stage:{...f.stage,mapping_sha256:'a'.repeat(64)}
+ }),{code:'ASSIST_PERSIST_AUTHORITY_STAGE_INVALID'});
  assert.deepEqual(fs.readdirSync(f.root),['original-corpus.json']);
 });

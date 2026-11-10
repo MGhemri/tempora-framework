@@ -12,7 +12,7 @@ function stringEq(a,b){
  if(typeof a!=='string'||typeof b!=='string'||a.length!==b.length)return false;
  return timingSafeEqual(Buffer.from(a,'utf8'),Buffer.from(b,'utf8'));
 }
-const FIELDS=['batch_id','source_sha256','base_sha256','snapshot_sha256'];
+const FIELDS=['batch_id','source_sha256','base_sha256','mapping_sha256','snapshot_sha256'];
 function validStage(receipt){
  return receipt && typeof receipt==='object' && !Array.isArray(receipt) &&
   receipt.scope==='in_memory_staging_only' &&

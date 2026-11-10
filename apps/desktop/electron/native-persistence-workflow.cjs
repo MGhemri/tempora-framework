@@ -29,7 +29,8 @@ function createNativePersistenceWorkflow({sdk,confirmNative,chooseDestination}={
   const intent=coordinator.offer({handle,stage,reread});
   intents.set(handle,{token:intent.token,
    batch_id:intent.batch_id,source_sha256:intent.source_sha256,
-   base_sha256:intent.base_sha256,snapshot_sha256:intent.snapshot_sha256});
+   base_sha256:intent.base_sha256,mapping_sha256:intent.mapping_sha256,
+   snapshot_sha256:intent.snapshot_sha256});
   return intent;
  }
  async function confirmAndCommit({handle,token}={}){

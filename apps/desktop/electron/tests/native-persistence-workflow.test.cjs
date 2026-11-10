@@ -23,7 +23,8 @@ function fixture(t,{confirmNative=async()=>true,chooseDestination}={}){
   scientific_approval:false,saved_to_disk:false,published:false,
   import_performed:false,persistence_required:true,
   batch_id:bundle.report.batch_id,source_sha256:bundle.report.source.sha256,
-  base_sha256:bundle.report.base_sha256,snapshot_sha256:accepted.journal.output_sha256,
+  base_sha256:bundle.report.base_sha256,mapping_sha256:bundle.report.mapping.sha256,
+  snapshot_sha256:accepted.journal.output_sha256,
   journal:accepted.journal};
  const root=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-native-save-'));
  t.after(()=>fs.rmSync(root,{recursive:true,force:true}));

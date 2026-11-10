@@ -110,6 +110,7 @@ test('native session-bound reread completes a genuine reviewed SDK transaction',
   import_performed:false,persistence_required:true,batch_id:bundle.report.batch_id,
   source_sha256:bundle.report.source.sha256,
   base_sha256:bundle.report.base_sha256,
+  mapping_sha256:bundle.report.mapping.sha256,
   snapshot_sha256:accepted.journal.output_sha256,journal:accepted.journal};
  const workflow=createNativePersistenceWorkflow({sdk,
   confirmNative:async()=>true,chooseDestination:async()=>root});

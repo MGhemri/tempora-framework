@@ -23,11 +23,13 @@ function fixture(){
   scientific_approval:false,saved_to_disk:false,published:false,
   import_performed:false,persistence_required:true,batch_id:report.batch_id,
   source_sha256:report.source.sha256,base_sha256:report.base_sha256,
+  mapping_sha256:report.mapping.sha256,
   snapshot_sha256:accepted.journal.output_sha256,journal:accepted.journal};
  const gate=createPersistenceGate(),intent=gate.issue(H,stage);
  const authorization=gate.claim(H,intent.token,true,{
   batch_id:stage.batch_id,source_sha256:stage.source_sha256,
-  base_sha256:stage.base_sha256,snapshot_sha256:stage.snapshot_sha256});
+  base_sha256:stage.base_sha256,mapping_sha256:stage.mapping_sha256,
+  snapshot_sha256:stage.snapshot_sha256});
  return {corpus,mapping,bytes,sourceName,review,authorization};
 }
 test('trusted SDK recomputation matches a separately authorized stage',()=>{
@@ -87,4 +89,10 @@ test('an incomplete packaged SDK is rejected before any transaction',()=>{
  const f=fixture();
  assert.throws(()=>preparePersistence(f,{ingestion:{},canonical:{}}),
   {code:'PERSIST_ENGINE_UNAVAILABLE'});
+});
+
+test('a different mapping digest cannot reuse the second human authorization',()=>{
+ const f=fixture();
+ f.authorization={...f.authorization,mapping_sha256:'a'.repeat(64)};
+ assert.throws(()=>preparePersistence(f),{code:'PERSIST_MAPPING_CHANGED'});
 });

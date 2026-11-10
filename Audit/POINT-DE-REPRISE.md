@@ -51,6 +51,10 @@ Le build Windows de la PR #117 contient un artefact temporaire
 
 **Rythme d'exécution demandé :** lots suffisamment substantiels (code + tests + audit), branches éphémères et PR, qualifications au HEAD final uniquement. N'effectuer **aucune** soumission/passage en production Store, release npm/GitHub ou activation de writer packagé sans décision distincte. Ne jamais compter le nombre de commits comme preuve d'avancement.
 
-## Lot J10 Chronos — en développement, qualification requise
+## TVRW J10 — fusionné et qualifié par CI PR le 10 novembre 2026
 
 Le rendu distingue les bornes temporelles incertaines et les fins inconnues sans inventer de durée. Code, tests et limites : [TVRW-J10-CHRONOS.md](TVRW-J10-CHRONOS.md). Qualification du HEAD de PR indispensable ; ne change pas le binaire déjà déclaré publié.
+
+## Lot ASSIST M1.5 SCI-01 — cinquième empreinte en cours de qualification
+
+Après J10 (PR #119 fusionnée, commit `6f12ed91f0b79a27debac9f268ed4c75877ad301`, CI Framework 42886970506, Documentation 42886970501, Desktop 42886970403 toutes success), le lot P0 partiel lie explicitement le mapping SHA-256 à la seconde décision hôte et au replay SDK. Voir [ASSIST-M15-SCI-FIVE-SHA.md](ASSIST-M15-SCI-FIVE-SHA.md). CI de la nouvelle PR requise, aucun P0 SCI-01/SEC-WIN/REC/DUR clos.

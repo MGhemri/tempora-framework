@@ -46,6 +46,8 @@ function createAssistantPersistenceAuthority({sessions,workflow}={}){
      stage.batch_id!==preview.batch_id||
      stage.base_sha256!==preview.base_sha256||
      !HEX64.test(stage.snapshot_sha256)||
+     !HEX64.test(stage.mapping_sha256)||
+     stage.mapping_sha256!==preview.mapping_sha256||
      stage.journal?.batch_id!==preview.batch_id||
      stage.journal?.base_sha256!==preview.base_sha256||
      stage.journal?.output_sha256!==stage.snapshot_sha256||

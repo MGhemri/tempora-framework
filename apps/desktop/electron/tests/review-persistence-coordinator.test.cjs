@@ -22,7 +22,8 @@ function fixture(t,{canonicalSdk}={}){
   scientific_approval:false,saved_to_disk:false,published:false,
   import_performed:false,persistence_required:true,
   batch_id:bundle.report.batch_id,source_sha256:bundle.report.source.sha256,
-  base_sha256:bundle.report.base_sha256,snapshot_sha256:outcome.journal.output_sha256,
+  base_sha256:bundle.report.base_sha256,mapping_sha256:bundle.report.mapping.sha256,
+  snapshot_sha256:outcome.journal.output_sha256,
   journal:outcome.journal};
  const root=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-coordinate-'));
  t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
@@ -192,4 +193,13 @@ test('coordinator executes canonical replay using the explicitly injected host S
  assert.equal(previewCalls,1);
  assert.equal(acceptCalls,1);
  assert.equal(f.writes,1);
+});
+
+test('a forged mapping identity is rejected on SDK replay without any write',async t=>{
+ const f=fixture(t),stage={...f.stage,mapping_sha256:'a'.repeat(64)};
+ const intent=f.coordinator.offer({handle:HANDLE,stage,reread:f.reread});
+ await assert.rejects(()=>f.coordinator.commit({handle:HANDLE,token:intent.token,
+  confirmed:true}),{code:'PERSIST_MAPPING_CHANGED'});
+ assert.equal(f.writes,0);
+ assert.deepEqual(fs.readdirSync(f.root),[]);
 });

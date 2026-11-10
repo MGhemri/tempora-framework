@@ -391,7 +391,8 @@ app.whenReady().then(async () => {
     if(result.scope!=='in_memory_staging_only'||result.saved_to_disk!==false||
        result.published!==false||result.scientific_approval!==false||
        result.batch_id!==preview.batch_id||
-       result.source_sha256!==input.sourceSha256)
+       result.source_sha256!==input.sourceSha256||
+       result.mapping_sha256!==preview.mapping_sha256)
       throw Error('ASSIST_REVIEW_RESULT_INVALID');
     // Keep a second-decision intent exclusively in the trusted host,
     // bound to the source session, selected corpus and worker receipt.

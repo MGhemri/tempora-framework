@@ -6,12 +6,13 @@ function staged(){
  return {scope:'in_memory_staging_only',canonical_validated:true,
   scientific_approval:false,saved_to_disk:false,published:false,
   import_performed:false,persistence_required:true,
-  batch_id:A,source_sha256:B,base_sha256:A,snapshot_sha256:B,
+  batch_id:A,source_sha256:B,base_sha256:A,mapping_sha256:A,snapshot_sha256:B,
   journal:{decision:'accepted_for_local_staging',batch_id:A,
     base_sha256:A,output_sha256:B,scientific_approval:false}};
 }
 const expected=s=>({batch_id:s.batch_id,source_sha256:s.source_sha256,
- base_sha256:s.base_sha256,snapshot_sha256:s.snapshot_sha256});
+ base_sha256:s.base_sha256,mapping_sha256:s.mapping_sha256,
+ snapshot_sha256:s.snapshot_sha256});
 test('an explicit independent confirmation is required; preview is not consent',()=>{
  const gate=createPersistenceGate(),s=staged();
  const token=gate.issue(HANDLE,s);
@@ -69,4 +70,15 @@ test('a new preview supersedes old pending confirmation for one session',()=>{
  assert.throws(()=>gate.claim(HANDLE,old.token,true,expected(s)),
   {code:'PERSIST_GATE_EXPIRED'});
  assert.equal(gate.claim(HANDLE,newer.token,true,expected(s)).persistence_confirmed,true);
+});
+
+test('missing or tampered fifth mapping fingerprint cannot arm a save',()=>{
+ const gate=createPersistenceGate(),s=staged();
+ assert.throws(()=>gate.issue(HANDLE,{...s,mapping_sha256:undefined}),
+  {code:'PERSIST_GATE_STAGE_INVALID'});
+ const intent=gate.issue(HANDLE,s);
+ assert.throws(()=>gate.claim(HANDLE,intent.token,true,
+  {...expected(s),mapping_sha256:B}),{code:'PERSIST_GATE_STALE'});
+ assert.throws(()=>gate.claim(HANDLE,intent.token,true,expected(s)),
+  {code:'PERSIST_GATE_EXPIRED'});
 });

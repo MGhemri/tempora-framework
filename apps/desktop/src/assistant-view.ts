@@ -30,7 +30,7 @@ export type AssistantLocalSaveReceipt={
 export type AssistantReviewReceipt={
   experimental_local_save_ready?:boolean;
   scope:'in_memory_staging_only';batch_id:string;source_sha256:string;
-  snapshot_sha256:string;canonical_validated:true;scientific_approval:false;
+  snapshot_sha256:string;mapping_sha256:string;canonical_validated:true;scientific_approval:false;
   saved_to_disk:false;published:false;import_performed:false;persistence_required:true;
   journal:{selected_ids:string[];reviewer:string;reason:string;reviewed_at:string};
 };
