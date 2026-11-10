@@ -24,10 +24,10 @@
 | Dépôt | `MGhemri/tempora-framework` | https://github.com/MGhemri/tempora-framework |
 | PR de développement | **#114, brouillon** | https://github.com/MGhemri/tempora-framework/pull/114 |
 | Branche | `docs/assist-m1-5-transactional-persistence` | Branche expérimentale |
-| HEAD de référence précédent | `4b46ee81419e1adcfa3018bed85c73fcb0b4f3b6` | Dernière base entièrement qualifiée vérifiée au début de cette itération |
-| Framework sur ce SHA | **TESTÉ-CI : succès** | https://github.com/MGhemri/tempora-framework/actions/runs/42762689352 |
-| Documentation UI sur ce SHA | **TESTÉ-CI : succès** | https://github.com/MGhemri/tempora-framework/actions/runs/42762689375 |
-| Desktop Foundation sur ce SHA | **TESTÉ-CI : succès** | https://github.com/MGhemri/tempora-framework/actions/runs/42762689715 |
+| HEAD de référence précédent | `8d2936f2263c8811743f936e4d4f5743af2807af` | Dernière base entièrement qualifiée vérifiée au début de cette itération |
+| Framework sur ce SHA | **TESTÉ-CI : succès** | https://github.com/MGhemri/tempora-framework/actions/runs/42832156582 |
+| Documentation UI sur ce SHA | **TESTÉ-CI : succès** | https://github.com/MGhemri/tempora-framework/actions/runs/42832156447 |
+| Desktop Foundation sur ce SHA | **TESTÉ-CI : succès** | https://github.com/MGhemri/tempora-framework/actions/runs/42832156535 |
 | Installateur Windows Chromium NSIS | Construction CI réussie sur le SHA de référence | Cela ne prouve pas une qualification NTFS / power-loss |
 | Enregistrement M1.5 dans le binaire distribué | **DÉSACTIVÉ** | Uniquement Electron non packagé et `TEMPORA_EXPERIMENTAL_M15_SAVE=1` |
 | Fusion dans `main` / nouvelle release / Store | **NON EFFECTUÉ** dans ce chantier | Conserver les protections de distribution |
@@ -54,7 +54,8 @@
 | M15-14 | Couche Rust Win32 de contrôle de destination NTFS locale par handles, refus des UNC/reparse/jonctions | **IMPLÉMENTÉ ET TESTÉ-CI sur `9ccab348`** | `apps/desktop/native-windows-guard/`, `electron/windows-native-destination.cjs` |
 | M15-15 | Premier commit synthétique Win32 avec handles parents conservés et renommage à chemin absolu | **TESTÉ-CI sur `4f4ca37f`**, sonde uniquement | `native-windows-guard/src/native_commit.rs` et tests Win32 |
 | M15-16 | Contrat de transport scientifique SDK → Rust : cinq empreintes canoniques, deux SHA des fichiers, journal et non-publication | **TESTÉ-CI sur `4b46ee81`**, lecture seule | `electron/scientific-native-transport.cjs`, `native-windows-guard/src/scientific_envelope.rs`, tests Node/Win32 |
-| M15-17 | **Writer natif de sonde consomme les buffers vérifiés par Rust**, sans relecture source après validation ; copie exacte dans `native-probe-complete/` sous opt-in de test | **IMPLÉMENTÉ, CI DU HEAD À QUALIFIER**, non scientifique | `native_commit.rs`, `scientific_envelope.rs`, tests d'intégration Windows |
+| M15-17 | Writer natif de sonde consomme les buffers vérifiés par Rust et copie les octets exacts dans `native-probe-complete/` | **TESTÉ-CI sur `8d2936f2`**, non scientifique | `native_commit.rs`, `scientific_envelope.rs`, tests Windows |
+| M15-18 | **Handles Win32 épinglés** pendant toute la sonde : dossier et 3 sources, partage en lecture seule, vérification reparse, trois points de crash réels et refus de reprise | **IMPLÉMENTÉ — CI DU NOUVEAU HEAD À QUALIFIER** | `native-windows-guard/src/scientific_envelope.rs`, `native_commit.rs`, tests Windows |
 
 ## 3. Backlog de qualification — priorités et conditions de fermeture
 
@@ -77,7 +78,7 @@
 
 **Lot A — EN COURS (sécurité diagnostique, sans écriture) :** contrôle du verrou à identité inchangée **testé CI** ; deux passes complètes d'inventaire finalisé et `.pending` **implémentées, qualification du nouveau HEAD à confirmer**. Les limites de snapshot atomique/TOCTOU demeurent ; vérifier le coût de la double lecture et les contrats de confidentialité IPC.
 
-**Lot B — FONDATION NATIVE EN COURS :** précontrôle et commit de sonde Win32 qualifiés ; M15-16 (SDK→Rust) qualifié CI. **M15-17 implémente la copie des buffers vérifiés par Rust vers une transaction de sonde**, sans accès aux dossiers scientifiques et sans activation dans l'application. **À FAIRE P0** : preuve d'authenticité de l'approbation humaine, source ouverte par handles et immuable pendant le contrôle, contrôle NTFS anti-TOCTOU, ACL, panne électrique, recovery.
+**Lot B — FONDATION NATIVE EN COURS :** M15-16/17 SDK→Rust→sonde NTFS qualifiés CI. **M15-18 conserve maintenant quatre handles sources pendant lecture, contrôle et commit de sonde**, ajoute tests concurrents et crashs Rust. **À FAIRE P0** : authenticité de l'approbation humaine, sécurité intégrale des ancêtres et cible du renommage, ACL, NTFS adversarial, panne électrique et récupération.
 
 **Lot C — durabilité et recovery humain :** injecter des pertes d'énergie et crash OS sur NTFS instrumenté, définir une transaction recoverable manuellement, consigner consentement et provenance ; ne pas déduire les garanties d'une seule CI.
 
@@ -143,3 +144,13 @@
 - **Qualification :** code `IMPLÉMENTÉ`; la CI du nouveau HEAD doit encore réussir avant `TESTÉ-CI`.
 - **Risques P0 inchangés :** un faux indicateur `sdk_validated` ne prouve pas le consentement ; les lectures d'entrée par chemins restent sujettes à des races ; la cible du renommage est absolue et non handle-relative ; pas de vraie transaction scientifique, récupération humaine ou durabilité power-loss.
 - **Décision :** PR #114 en brouillon. Aucun changement dans `main`, releases ou Microsoft Store ; writer scientifique distribué toujours désactivé.
+
+
+### Itération M15-18 — 2026-11-10 — Lot consolidé : handles, concurrence, crashs Rust
+
+- **Base CI exacte entièrement verte :** `8d2936f2263c8811743f936e4d4f5743af2807af`, Framework `42832156582`, Documentation `42832156447`, Desktop Windows/Linux/NSIS `42832156535`.
+- **Implémentation :** le lecteur Rust utilise `CreateFileW` + `OPEN_REPARSE_POINT` sur la source et ses fichiers, refuse les liens et conserve **les handles du dossier et des trois fichiers** jusqu'à la fin du commit de sonde. Ouverture sans `FILE_SHARE_WRITE` ou `FILE_SHARE_DELETE` ; lecture bornée directement depuis les handles.
+- **Preuves tests ajoutées :** (i) lien symbolique d'un document refusé, (ii) modification concurrente refusée pendant qu'un autre processus détient les handles, (iii) trois interruptions réelles de Rust au verrou, au premier fichier et après renommage, (iv) verrou orphelin empêchant le rejeu.
+- **Statut :** `IMPLÉMENTÉ`, **CI finale du lot à vérifier**, pas encore homologué en sécurité.
+- **Risques :** les composants ancêtres peuvent changer entre inspection et ouverture ; consentement humain et marqueur `sdk_validated` sans signature ; cible finale Win32 absolue, power-loss et reprise opérateur non qualifiés. **P0 non levés**.
+- **Décision :** PR #114 brouillon, aucun merge sur `main`, aucune release, aucun Store. Sauvegarde de production toujours désactivée.
