@@ -269,3 +269,11 @@ Le contrôle CI du HEAD `72ccf9b7` a révélé un second problème de branche : 
 - **SCI-01 sous-lot SHA :** PR #120 fusionnée au SHA `d052bc9685c5174af7c8a7bb505fb30177753357`, CI PR Framework #42889142432, Docs #42889142439, Desktop #42889142667 réussies. Le staging/autorisation/replay lient cinq SHA ; **SCI-01 reste P0 ouvert** (authentification humaine et chaîne Win32).
 - **Reste P0 :** `SEC-WIN-01/02`, `SCI-01`, `REC-01`, `DUR-01`; jamais d'activation writer packagé avant tests NTFS/autorisation/récupération/power-loss.
 - **Reprise :** lire [POINT-DE-REPRISE.md](POINT-DE-REPRISE.md) et [REPRISE-POST-PUBLICATION-2026-11-10.md](REPRISE-POST-PUBLICATION-2026-11-10.md) ; comparer HEAD GitHub et CI main à l'état du jour.
+
+
+### Checkpoint post-PR #122 et #123 — 10 novembre 2026
+
+- M1.5 SEC-WIN (PR #122, merge `515cd84ce6c5df99325b09c6054d4e64ba4866b7`) : création de fichiers de staging synthétique par `NtCreateFile` relatif à un HANDLE, exclusivité, tests Rust Windows, trois CI PR et trois CI main vertes. Aucun write réel dans une application empaquetée. Voir [M15-HANDLE-RELATIVE-FILE-CREATE.md](M15-HANDLE-RELATIVE-FILE-CREATE.md).
+- TVRW J11 (PR #123, merge `8303f14de625453de9fa83f7de7b6635efe3bf20`) : affichage déterministe de relations déclarées, multiarêtes, boucles, sélection accessible via références typées ; CI PR #42896763955 / #42896764282 / #42896764243 toutes vertes. Voir [TVRW-J11-GRAPH.md](TVRW-J11-GRAPH.md).
+- P0 toujours ouverts : SEC-WIN-01/02 (sous-dossiers et renommage encore par chemins), SCI-01 (signature réelle du consentement), REC-01 (récupération humaine autorisée), DUR-01 (coupures électriques instrumentées).
+- Store 0.2.0 : publication déclarée par l'utilisateur d'un artefact de commit `3c2b7bb`, sans les changements de PR #122/#123 ; aucune nouvelle mise à jour automatique.
