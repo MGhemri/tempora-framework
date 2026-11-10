@@ -506,3 +506,49 @@ test('replacement of transaction directory during file writes is detected before
      {code:'TRANSACTION_DIRECTORY_UNSAFE'});
  }
 });
+
+test('ordinary directory replacement during staging is blocked before commit',t=>{
+ const f=fixture(t),originalFsync=fs.fsyncSync;
+ let calls=0,replaced=false;
+ fs.fsyncSync=function(fd){
+  const value=originalFsync.call(fs,fd);
+  if(++calls===3&&!replaced){
+   const directory=path.join(f.root,'transactions');
+   fs.renameSync(directory,path.join(f.root,'transactions-before-swap'));
+   fs.mkdirSync(directory);
+   replaced=true;
+  }
+  return value;
+ };
+ try{
+  assert.throws(()=>createTransaction(f.root,f,canonical),
+   {code:'TRANSACTION_DIRECTORY_IDENTITY_CHANGED'});
+ }finally{fs.fsyncSync=originalFsync;}
+ assert.equal(replaced,true);
+ assert.deepEqual(fs.readdirSync(path.join(f.root,'transactions')),[]);
+ assert.deepEqual(fs.readdirSync(path.join(f.root,'transactions-before-swap')),[]);
+ assert.equal(fs.readdirSync(path.join(f.root,'.pending')).length,1);
+ assert.deepEqual(inspectWriterReservation(f.root),{status:'absent'});
+});
+test('ordinary pending directory replacement during staging is blocked',t=>{
+ const f=fixture(t),originalFsync=fs.fsyncSync;
+ let calls=0,replaced=false;
+ fs.fsyncSync=function(fd){
+  const value=originalFsync.call(fs,fd);
+  if(++calls===3&&!replaced){
+   const pendingRoot=path.join(f.root,'.pending');
+   fs.renameSync(pendingRoot,path.join(f.root,'pending-before-swap'));
+   fs.mkdirSync(pendingRoot);
+   replaced=true;
+  }
+  return value;
+ };
+ try{
+  assert.throws(()=>createTransaction(f.root,f,canonical),
+   {code:'TRANSACTION_DIRECTORY_IDENTITY_CHANGED'});
+ }finally{fs.fsyncSync=originalFsync;}
+ assert.equal(replaced,true);
+ assert.deepEqual(fs.readdirSync(path.join(f.root,'transactions')),[]);
+ assert.equal(fs.readdirSync(path.join(f.root,'.pending')).length,0);
+ assert.equal(fs.readdirSync(path.join(f.root,'pending-before-swap')).length,1);
+});
