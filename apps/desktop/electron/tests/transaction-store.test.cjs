@@ -500,7 +500,9 @@ test('replacement of transaction directory during file writes is detected before
  }finally{fs.fsyncSync=prior;}
  if(swapped){
    assert.deepEqual(fs.readdirSync(outside),[]);
-   assert.equal(inspectTransactions(f.root,canonical).complete.length,0);
-   assert.equal(inspectTransactions(f.root,canonical).pending.length,1);
+   assert.deepEqual(fs.readdirSync(path.join(f.root,'transactions-retained')),[]);
+   assert.equal(fs.readdirSync(path.join(f.root,'.pending')).length,1);
+   assert.throws(()=>inspectTransactions(f.root,canonical),
+     {code:'TRANSACTION_DIRECTORY_UNSAFE'});
  }
 });
