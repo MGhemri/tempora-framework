@@ -173,3 +173,40 @@ test('after real child process exit after rename, matching detects a visible com
  assert.deepEqual(inspectWriterReservation(f.root),{status:'reserved'});
  assert.throws(()=>createTransaction(f.root,f,canonical),{code:'TRANSACTION_WRITER_BUSY'});
 });
+
+test('offline operator can match a real SDK transaction using exactly five digests',t=>{
+ const sdk=require('tempora-framework');
+ const root=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-real-match-'));
+ t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
+ const corpus=JSON.parse(fs.readFileSync(path.join(__dirname,
+  '../../examples/synthetic-canonical-v3.json'),'utf8'));
+ const hash=sdk.canonical.digest(corpus);
+ const identity={batch_id:H,source_sha256:H,base_sha256:H,
+  mapping_sha256:H,output_sha256:hash};
+ const journal={decision:'accepted_for_local_staging',batch_id:H,
+  base_sha256:H,output_sha256:hash,scientific_approval:false};
+ const receipt=createTransaction(root,{corpus,journal,identity},sdk.canonical);
+ const script=path.resolve(__dirname,'../scripts/assess-recovery.cjs');
+ const args=[script,root,'--match',identity.batch_id,identity.source_sha256,
+  identity.base_sha256,identity.mapping_sha256,identity.output_sha256];
+ const result=spawnSync(process.execPath,args,{encoding:'utf8',timeout:10000});
+ assert.equal(result.status,0,result.stderr);
+ const report=JSON.parse(result.stdout);
+ assert.deepEqual(report.identity_matching.matching_transaction_ids,[receipt.transaction_id]);
+ assert.equal(report.identity_matching.files_modified,false);
+ assert.equal(report.durability_certified,false);
+ assert.equal(report.receipt_reissued,false);
+ assert.equal(report.operator_review_required,false);
+ const wrong=[...args];wrong[3]='b'.repeat(64);
+ const mismatch=spawnSync(process.execPath,wrong,{encoding:'utf8',timeout:10000});
+ assert.equal(mismatch.status,2,mismatch.stderr);
+ assert.deepEqual(JSON.parse(mismatch.stdout).identity_matching.matching_transaction_ids,[]);
+});
+test('offline matching refuses invalid digests without changing the root',t=>{
+ const f=fixture(t),script=path.resolve(__dirname,'../scripts/assess-recovery.cjs');
+ const args=[script,f.root,'--match','not-a-hash',H,H,H,H];
+ const outcome=spawnSync(process.execPath,args,{encoding:'utf8',timeout:10000});
+ assert.equal(outcome.status,3);
+ assert.match(outcome.stderr,/TRANSACTION_IDENTITY_INVALID/);
+ assert.deepEqual(fs.readdirSync(f.root),[]);
+});
