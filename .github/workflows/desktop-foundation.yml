@@ -226,8 +226,7 @@ jobs:
             $identity = $manifest.Package.Identity
             if ($identity.Name -ne 'GhemriM.TEMPORADesktop') { throw 'TEMPORA_STORE_IDENTITY_MISMATCH' }
             if ($identity.Publisher -ne 'CN=C5BC3837-BBC8-425E-916B-4B6F77BD7455') { throw 'TEMPORA_STORE_PUBLISHER_MISMATCH' }
-            if ($identity.Version -notmatch '^0\.2\.0\.[0-9]+
-) { throw 'TEMPORA_STORE_VERSION_MISMATCH' }
+            if ($identity.Version -notmatch '^0[.]2[.]0[.][0-9]+') { throw 'TEMPORA_STORE_VERSION_MISMATCH' }
             if ($identity.ProcessorArchitecture -ne 'x64') { throw 'TEMPORA_STORE_ARCH_MISMATCH' }
             Write-Host ('Validated candidate, not submitted: '+$packages[0].Name)
           } finally { $zip.Dispose() }
