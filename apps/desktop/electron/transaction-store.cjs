@@ -33,6 +33,25 @@ function safeSubdir(parent, name, create=true) {
     throw ERR('TRANSACTION_DIRECTORY_UNSAFE');
   return dir;
 }
+// Detect directory replacement with another *ordinary* directory at the
+// same path, not just symlink/junction redirection. It is a best-effort
+// filesystem identity guard, NOT a Windows handle-based security primitive.
+function directoryIdentity(dir) {
+  const stat=fs.lstatSync(dir);
+  if(!stat.isDirectory()||stat.isSymbolicLink()||
+     fs.realpathSync(dir)!==path.resolve(dir))
+    throw ERR('TRANSACTION_DIRECTORY_UNSAFE');
+  return Object.freeze({dev:stat.dev,ino:stat.ino});
+}
+function assertDirectoryIdentity(dir,identity) {
+  const now=directoryIdentity(dir);
+  // On a filesystem where Node exposes no stable file ID, refuse to claim
+  // that a renamed/replaced directory is still the originally chosen one.
+  if(typeof now.ino!=='number'||now.ino===0||
+     typeof identity?.ino!=='number'||identity.ino===0||
+     now.ino!==identity.ino||now.dev!==identity.dev)
+    throw ERR('TRANSACTION_DIRECTORY_IDENTITY_CHANGED');
+}
 function jsonBytes(value) {
   if (!plain(value)) throw ERR('TRANSACTION_DOCUMENT_INVALID');
   const bytes = Buffer.from(JSON.stringify(value)+'\n','utf8');
@@ -186,6 +205,11 @@ function createTransaction(root, {corpus,journal,identity}, canonical) {
   const transaction_id=randomBytes(16).toString('hex');
   const pending=path.join(pendingRoot,transaction_id);
   fs.mkdirSync(pending,{mode:0o700});
+  // Snapshot the actual directories after the writer reservation is held.
+  const rootIdentity=directoryIdentity(root);
+  const pendingRootIdentity=directoryIdentity(pendingRoot);
+  const transactionRootIdentity=directoryIdentity(transactions);
+  const pendingIdentity=directoryIdentity(pending);
   let committed=false;
   try {
     const manifest={
@@ -207,10 +231,10 @@ function createTransaction(root, {corpus,journal,identity}, canonical) {
     safeRoot(root);
     safeSubdir(root,'.pending',false);
     safeSubdir(root,'transactions',false);
-    const pendingStat=fs.lstatSync(pending);
-    if(!pendingStat.isDirectory()||pendingStat.isSymbolicLink()||
-       fs.realpathSync(pending)!==path.resolve(pending))
-      throw ERR('TRANSACTION_PENDING_DIRECTORY_UNSAFE');
+    assertDirectoryIdentity(root,rootIdentity);
+    assertDirectoryIdentity(pendingRoot,pendingRootIdentity);
+    assertDirectoryIdentity(transactions,transactionRootIdentity);
+    assertDirectoryIdentity(pending,pendingIdentity);
     // A non-existing directory is the single logical commit marker.
     const destination=path.join(transactions,transaction_id);
     if(fs.existsSync(destination))throw ERR('TRANSACTION_COLLISION');
