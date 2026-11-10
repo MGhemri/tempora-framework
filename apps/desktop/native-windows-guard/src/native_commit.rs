@@ -176,7 +176,8 @@ fn commit_probe(
     {
         return Err("NATIVE_COMMIT_SYNTHETIC_GATE_CLOSED");
     }
-    crate::native::inspect(root)?;
+    // Keep every destination ancestor pinned through sync and native rename.
+    let _destination_ancestors = crate::native::inspect_pinned(root)?;
     let root_handle = open_directory(root, false, false)?;
     let lock = root.join(".native-probe-lock");
     fs::create_dir(&lock).map_err(|_| "NATIVE_COMMIT_WRITER_BUSY")?;
