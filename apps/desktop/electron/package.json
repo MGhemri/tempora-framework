@@ -39,7 +39,8 @@
       "review-persistence-adapter.cjs",
       "review-persistence-coordinator.cjs",
       "native-persistence-workflow.cjs",
-      "assistant-persistence-binding.cjs"
+      "assistant-persistence-binding.cjs",
+      "assistant-persistence-authority.cjs"
     ],
     "extraResources": [
       {
