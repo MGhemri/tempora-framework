@@ -2,7 +2,7 @@
 const {test}=require('node:test');
 const assert=require('node:assert/strict');
 const fs=require('node:fs'),os=require('node:os'),path=require('node:path');
-const {createTransaction,inspectTransactions,inspectWriterReservation}=require('../transaction-store.cjs');
+const {createTransaction,inspectTransactions,inspectWriterReservation,inspectPendingEvidence}=require('../transaction-store.cjs');
 const sdk = require('tempora-framework');
 const H='a'.repeat(64);
 const canonical={validateCorpus:corpus=>({valid:corpus && corpus.schema_version==='3.0.0'}),digest:()=>H};
@@ -382,4 +382,39 @@ test('pending recovery gate also protects previously committed corpus',t=>{
   {code:'TRANSACTION_PENDING_RECOVERY_REQUIRED'});
  assert.deepEqual(fs.readFileSync(original),before);
  assert.equal(fs.existsSync(pending),true);
+});
+
+test('forensic pending inventory is read only and empty roots stay untouched',t=>{
+ const f=fixture(t);
+ assert.deepEqual(inspectPendingEvidence(f.root,canonical),
+  {verified_for_review:[],incomplete:[],unsafe:[]});
+ assert.deepEqual(fs.readdirSync(f.root),[]);
+});
+test('an interrupted complete directory is verified only for manual review',t=>{
+ const f=fixture(t),originalRename=fs.renameSync;
+ fs.renameSync=function(from,to) {
+  if(String(from).includes(path.sep+'.pending'+path.sep))
+   throw Object.assign(new Error('simulated interruption'),{code:'EIO'});
+  return originalRename.call(fs,from,to);
+ };
+ try {assert.throws(()=>createTransaction(f.root,f,canonical),{code:'EIO'});}
+ finally {fs.renameSync=originalRename;}
+ const before=inspectTransactions(f.root,canonical).pending;
+ assert.equal(before.length,1);
+ assert.deepEqual(inspectPendingEvidence(f.root,canonical),
+  {verified_for_review:before,incomplete:[],unsafe:[]});
+ assert.deepEqual(inspectTransactions(f.root,canonical).pending,before);
+ assert.deepEqual(inspectWriterReservation(f.root),{status:'absent'});
+});
+test('forensic inspection separates incomplete from tampered pending folders',t=>{
+ const f=fixture(t),base=path.join(f.root,'.pending'),partial='b'.repeat(32),
+  malformed='c'.repeat(32);
+ fs.mkdirSync(base);fs.mkdirSync(path.join(base,partial));
+ fs.writeFileSync(path.join(base,partial,'corpus.json'),'partial');
+ fs.mkdirSync(path.join(base,malformed));
+ fs.writeFileSync(path.join(base,malformed,'unexpected.exe'),'invalid');
+ assert.deepEqual(inspectPendingEvidence(f.root,canonical),
+  {verified_for_review:[],incomplete:[partial],unsafe:[malformed]});
+ assert.equal(fs.existsSync(path.join(base,partial,'corpus.json')),true);
+ assert.equal(fs.existsSync(path.join(base,malformed,'unexpected.exe')),true);
 });
