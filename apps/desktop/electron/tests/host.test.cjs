@@ -352,13 +352,13 @@ test('M1.5 authorization modules are packaged but save IPC remains unavailable',
  assert.match(coordinator,/preparePersistence\([^;]*sdk\)/s);
 });
 
-test('native M1.5 workflow ships in Chromium but no renderer can invoke a write',()=>{
+test('native M1.5 save requires unpackaged explicit opt-in and host confirmation',()=>{
  const pkg=require('../package.json');
  const host=src('electron/main.cjs'),preload=src('electron/preload.cjs');
  assert.ok(pkg.build.files.includes('native-persistence-workflow.cjs'));
  assert.match(src('electron/native-persistence-workflow.cjs'),/confirmNative/);
  assert.match(src('electron/native-persistence-workflow.cjs'),/chooseDestination/);
- assert.doesNotMatch(host,/ipcMain\.handle\('tempora:assistant:(?:save|persist|commit)/);
+ assert.match(host,/if\(!experimentalLocalSave\)throw Error\('ASSIST_EXPERIMENTAL_SAVE_DISABLED'\)/);
  assert.doesNotMatch(preload,/assistantSave|assistantPersist|assistantCommit/);
 });
 
@@ -383,4 +383,18 @@ test('worker staging is bound to a host-private revocable intent without enablin
  assert.match(host,/createRequire\(runtime\.worker\)\('tempora-framework'\)/);
  assert.doesNotMatch(host,/ipcMain\.handle\('tempora:assistant:(?:save|persist|commit)/);
  assert.doesNotMatch(preload,/assistantSave|assistantPersist|assistantCommit/);
+});
+
+test('gated development-only save channel accepts a handle, never corpus, path or token',()=>{
+ const host=src('electron/main.cjs'),preload=src('electron/preload.cjs');
+ const pkg=require('../package.json');
+ assert.ok(pkg.build.files.includes('local-save-access.cjs'));
+ assert.match(host,/localSaveEnabled\(\{isPackaged:app\.isPackaged,env:process\.env\}\)/);
+ assert.match(host,/if\(!experimentalLocalSave\)throw Error\('ASSIST_EXPERIMENTAL_SAVE_DISABLED'\)/);
+ assert.match(host,/persistenceAuthority\.commitTrusted\(handle_id\)/);
+ assert.match(host,/validSender\(event\)/);
+ assert.match(preload,/assistantLocalSave: handleId=>ipcRenderer\.invoke\('tempora:assistant:local-save',handleId\)/);
+ assert.doesNotMatch(preload,/assistantLocalSave:\s*\([^)]*,/);
+ assert.match(src('src/assistant-view.ts'),/experimental_local_save_ready/);
+ assert.match(src('src/assistant-view.ts'),/localSaveReceipt\?\.saved_to_disk/);
 });
