@@ -277,7 +277,13 @@ function inspectTransactions(root, canonical) {
       typeof canonical.digest !== 'function') throw ERR('TRANSACTION_CANONICAL_ADAPTER_REQUIRED');
   safeRoot(root);
   const transactionsPath=path.join(root,'transactions'),pendingPath=path.join(root,'.pending');
-  const hasTransactions=fs.existsSync(transactionsPath),hasPending=fs.existsSync(pendingPath);
+  // existsSync is false for dangling symlinks, which must NOT be mistaken
+  // for an absent, safe transaction directory during forensic inspection.
+  const present=location=>{
+    try{fs.lstatSync(location);return true;}
+    catch(error){if(error.code==='ENOENT')return false;throw error;}
+  };
+  const hasTransactions=present(transactionsPath),hasPending=present(pendingPath);
   if(!hasTransactions && !hasPending)return Object.freeze({complete:[],invalid:[],pending:[]});
   const transactions=hasTransactions?safeSubdir(root,'transactions',false):null;
   const pendingRoot=hasPending?safeSubdir(root,'.pending',false):null;
