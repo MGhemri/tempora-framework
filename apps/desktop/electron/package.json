@@ -32,7 +32,9 @@
         "filter": [
           "**/*"
         ]
-      }
+      },
+      "recovery-assessment.cjs",
+      "transaction-store.cjs"
     ],
     "extraResources": [
       {
