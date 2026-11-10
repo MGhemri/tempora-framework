@@ -26,9 +26,16 @@ function assessRecovery(root,canonical){
  const fingerprintBefore=lockFingerprint(root);
  const inventory=inspectTransactions(root,canonical);
  const evidence=inspectPendingEvidence(root,canonical);
+ // Independently revalidate both inventories: the same list of directory IDs
+ // can conceal a file that changed from verified to unsafe during the scan.
+ // This is best-effort consistency checking, not an atomic filesystem snapshot.
+ const inventoryAfter=inspectTransactions(root,canonical);
+ const evidenceAfter=inspectPendingEvidence(root,canonical);
  const lockAfter=inspectWriterReservation(root);
  const fingerprintAfter=lockFingerprint(root);
- if(lockAfter.status!==lock.status||fingerprintAfter!==fingerprintBefore)
+ const unchanged=(first,second)=>JSON.stringify(first)===JSON.stringify(second);
+ if(lockAfter.status!==lock.status||fingerprintAfter!==fingerprintBefore||
+    !unchanged(inventory,inventoryAfter)||!unchanged(evidence,evidenceAfter))
    throw ERROR('RECOVERY_SNAPSHOT_CHANGED');
  const classified=[...evidence.verified_for_review,...evidence.incomplete,...evidence.unsafe];
  // Compare sorted IDs: a race or inconsistent snapshot is not a safe report.
