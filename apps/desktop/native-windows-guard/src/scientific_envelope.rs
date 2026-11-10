@@ -39,7 +39,7 @@ extern "system" {
     fn GetFileInformationByHandleEx(handle: Handle, kind: i32,
         info: *mut c_void, size: u32) -> i32;
 }
-fn open_pinned(path: &Path, directory: bool) -> Result<File, &'static str> {
+pub(crate) fn open_pinned(path: &Path, directory: bool) -> Result<File, &'static str> {
     let encoded: Vec<u16> = path.as_os_str().encode_wide()
         .chain(std::iter::once(0)).collect();
     let raw = unsafe {
@@ -90,7 +90,7 @@ fn sha256(bytes: &[u8]) -> String {
 fn is_sha(value: &str) -> bool {
     value.len() == 64 && value.bytes().all(|b| b.is_ascii_hexdigit() && !b.is_ascii_uppercase())
 }
-fn bounded_json(pinned: &mut File) -> Result<Vec<u8>, &'static str> {
+pub(crate) fn bounded_json(pinned: &mut File) -> Result<Vec<u8>, &'static str> {
     let length = pinned.metadata().map_err(|_| "NATIVE_ENVELOPE_FILE_UNSAFE")?.len();
     if length == 0 || length > LIMIT { return Err("NATIVE_ENVELOPE_FILE_UNSAFE"); }
     let mut bytes=Vec::new();
