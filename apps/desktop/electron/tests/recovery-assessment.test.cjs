@@ -112,3 +112,19 @@ test('offline recovery CLI returns nonzero attention status and leaves orphan in
  assert.deepEqual(JSON.parse(child.stdout).pending_incomplete,['c'.repeat(32)]);
  assert.equal(fs.readFileSync(path.join(dir,'corpus.json'),'utf8'),'partial');
 });
+
+for(const name of ['transactions','.pending']){
+ test('dangling symlink as '+name+' is never reported as a clean absent folder',t=>{
+  const f=fixture(t),link=path.join(f.root,name),missing=path.join(f.root,'non-existent-destination');
+  try{fs.symlinkSync(missing,link,process.platform==='win32'?'junction':'dir');}
+  catch(error){
+   if(process.platform==='win32'&&['EPERM','EACCES','ENOTSUP'].includes(error.code))
+    return;
+   throw error;
+  }
+  assert.equal(fs.existsSync(link),false);
+  assert.throws(()=>assessRecovery(f.root,canonical),
+   {code:'TRANSACTION_DIRECTORY_UNSAFE'});
+  assert.equal(fs.lstatSync(link).isSymbolicLink(),true);
+ });
+}
