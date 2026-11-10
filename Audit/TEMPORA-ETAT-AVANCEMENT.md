@@ -247,3 +247,17 @@ Le contrôle CI du HEAD `72ccf9b7` a révélé un second problème de branche : 
 - **Toujours P0 ouverts :** autorité scientifique et autorisations hôte/Rust,
   anti-TOCTOU handle-relative, actions de récupération humaine et qualification
   après panne Windows OS/power-loss.
+
+## TVRW J9 — carte de coordonnées interactive (lot 2026-11-10)
+
+- **REC-01 :** PR #116 fusionnée sur `main` (merge `57cde355965324ed104559ff767c1c925dcee97f`),
+  après Framework/Documentation/Desktop CI verts au HEAD `3f6166dd2ee5adad10fe51bb309ef4adc144e6d0`.
+  Les P0 scientifiques/Windows restent ouverts.
+- **TVRW J9 :** auto-ajustement géographique sur points déclarés, gestion de
+  l'antiméridien, regroupements visuels, zoom/panoramique, tests déterministes,
+  sans réseau ni données historiques inférées.
+- **Qualification J9 :** code proposé sur branche dédiée ; vérifier les CI
+  Framework, Documentation UI et Desktop Foundation au HEAD final avant fusion.
+- **Suites :** carte vectorielle fondée sur jeux de données licites versionnés,
+  hiérarchie des couches géographiques, ergonomie clavier/lecteur d'écran et
+  essais Windows Sandbox ; l'API canonique v3 reste inchangée.
