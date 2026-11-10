@@ -54,6 +54,7 @@ jobs:
       - run: npm run build
       - run: npm run test:bridge
       - run: npm run test:stable-release
+      - run: node --test electron/tests/release-evidence.test.cjs
       - run: node --test electron/tests/assistant-session.test.cjs
       - run: npm run test:transaction
       - run: npm run test:persistence-gate
@@ -130,12 +131,21 @@ jobs:
           if ($LASTEXITCODE -ne 0) { throw 'NATIVE_GUARD_WINDOWS_BUILD_FAILED' }
           node --test electron/tests/windows-native-destination.test.cjs
           if ($LASTEXITCODE -ne 0) { throw 'NATIVE_GUARD_INTEGRATION_FAILED' }
+      - name: Capture non-destructive Windows runner inventory (NOT clean VM acceptance)
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          ./electron/scripts/stable-windows-preflight.ps1 -Phase Inventory -ReportPath "$env:RUNNER_TEMP/tempora-ci-inventory.json"
+          if (-not (Test-Path -LiteralPath "$env:RUNNER_TEMP/tempora-ci-inventory.json")) {
+            throw 'TEMPORA_CI_PREFLIGHT_REPORT_MISSING'
+          }
       - name: Build shared Desktop GUI and contract tests
         run: |
           npm install --ignore-scripts --no-audit --no-fund
           npm run build
           npm run test:bridge
           npm run test:stable-release
+          node --test electron/tests/release-evidence.test.cjs
           npm run test:visualization
           node --test electron/tests/host.test.cjs
           node --test electron/tests/assistant-session.test.cjs
@@ -282,6 +292,12 @@ jobs:
           Write-Host ('Stable source candidate, not a signed/public release: '+ $pkg.version)
           Write-Host ('NSIS SHA-256: '+ $setupHash)
           Write-Host ('AppX SHA-256: '+ $appxHash)
+      - name: Independently verify both candidate files and evidence before upload
+        shell: pwsh
+        run: |
+          $ErrorActionPreference = 'Stop'
+          node electron/scripts/verify-release-evidence.cjs electron/release --both --source-sha $env:GITHUB_SHA
+          if ($LASTEXITCODE -ne 0) { throw 'TEMPORA_RELEASE_EVIDENCE_RECHECK_FAILED' }
       - name: Preserve unsigned NSIS 1.0.0 TEST candidate
         uses: actions/upload-artifact@v4
         with:
