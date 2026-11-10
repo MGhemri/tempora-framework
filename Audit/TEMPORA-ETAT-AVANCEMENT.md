@@ -5,7 +5,7 @@
 > État initial vérifié : **2026-11-10** · Responsable de suivi : équipe TEMPORA / développeur principal.
 > **Ne constitue ni une homologation de sécurité, ni une certification de durabilité.**
 
-**NOUVELLE DÉCISION 2026-11-10 :** fusion de PR #114 autorisée une fois le candidat AppX 0.2.0 qualifié. Lire [STORE-MISE-A-JOUR-0.2.0.md](STORE-MISE-A-JOUR-0.2.0.md). Préparation Store ≠ soumission ou publication. Les P0 d'écriture scientifique restent ouverts.
+**FUSION CONFIRMÉE 2026-11-10 :** PR #114 intégrée dans `main` (`3c2b7bb752538a8990dad88b1527b0a422c56ca5`) après qualification AppX 0.2.0. Lire [STORE-MISE-A-JOUR-0.2.0.md](STORE-MISE-A-JOUR-0.2.0.md). Préparation Store ≠ soumission ou publication. Les P0 d'écriture scientifique restent ouverts.
 
 ## 0. Convention d'actualisation obligatoire
 
@@ -221,3 +221,13 @@ Le contrôle CI du HEAD `72ccf9b7` a révélé un second problème de branche : 
 - **Qualification du nouveau HEAD** : attendre la fin des trois workflows, notamment la construction AppX. Une CI verte sur le HEAD ancien ne suffit pas. N'attribuer la mention `STORE-CANDIDATE-READY` qu'après avoir effectivement vérifié le manifeste de l'artefact.
 - **Fusion autorisée sous condition CI**, puis consigner le SHA final et le statut de `main`. **Aucune publication Store ni release GitHub**, aucun changement de sécurité des écritures packagées.
 - **P0 non levés** : `SEC-WIN-01/02`, `SCI-01`, `REC-01`, `DUR-01`. Toute nouvelle fonctionnalité expérimentale après fusion doit être développée dans une nouvelle branche de PR.
+
+
+### Clôture du lot Store et fusion — 2026-11-10 (audit post-fusion)
+
+- **Statut GitHub :** PR #114 **MERGED** à 2026-11-10T16:23:57Z, merge SHA `3c2b7bb752538a8990dad88b1527b0a422c56ca5`. La protection de `main` impose désormais d'utiliser une PR pour modifier même un rapport ; notes post-fusion dans `docs/store-0-2-0-merge-audit`.
+- **Qualification de la source de fusion :** SHA `5aca622e5a9346eccbca4d435e109704c8d09005`, **3 workflows success** : Framework `42853241876`, Documentation UI `42853242221`, Desktop Foundation `42853241862`.
+- **Package Store Chromium 0.2.0 prêt comme candidat non publié :** AppX x64 archivé dans la CI ; Microsoft Identity/Publisher vérifiés par inspection de `AppxManifest.xml`. Artefact ID `13781238941`, nom `TEMPORA-Desktop-0.2.0-x64-STORE-CANDIDATE-NOT-PUBLISHED`, [run](https://github.com/MGhemri/tempora-framework/actions/runs/42853241862). La version GUI/preload et le lockfile sont synchronisés.
+- **Aucune mise en production Store** : pas de soumission ni publication Partner Center ; test de migration depuis l'AppX `0.1.1-beta.2` et qualification d'installation propre restent requis. Liste complète dans [STORE-MISE-A-JOUR-0.2.0.md](STORE-MISE-A-JOUR-0.2.0.md).
+- **Les P0 restent ouverts** : NTFS anti-TOCTOU, ACL/volumes, consentement authentifié, protocole de récupération humain, crash/power-loss. Writer natif/JS scientifique **toujours désactivé** dans tout package distribué.
+- **Suivi après clôture :** les nouveaux développements M1.5 se font sur une **nouvelle branche issue de `main`**, en PR ; ne plus empiler les commits sur la branche fusionnée #114. Lire [REPRISE-TRAVAUX.md](REPRISE-TRAVAUX.md) avant toute reprise dans une autre fenêtre.
