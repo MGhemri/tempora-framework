@@ -372,3 +372,15 @@ test('session-bound canonical reread is shipped only in the trusted Electron hos
  assert.match(bridge,/ASSIST_BINDING_SOURCE_CHANGED/);
  assert.doesNotMatch(preload,/assistantPersistenceBinding|makeTrustedSessionReread|canonicalInput/);
 });
+
+test('worker staging is bound to a host-private revocable intent without enabling a save IPC',()=>{
+ const host=src('electron/main.cjs'),preload=src('electron/preload.cjs');
+ const pkg=require('../package.json');
+ assert.ok(pkg.build.files.includes('assistant-persistence-authority.cjs'));
+ assert.match(host,/getPersistenceAuthority\(\)\.recordStaging\(/);
+ assert.match(host,/persistenceAuthority\?\.revoke\(handle_id\)/);
+ assert.match(host,/persistenceAuthority\?\.clear\(\)/);
+ assert.match(host,/createRequire\(runtime\.worker\)\('tempora-framework'\)/);
+ assert.doesNotMatch(host,/ipcMain\.handle\('tempora:assistant:(?:save|persist|commit)/);
+ assert.doesNotMatch(preload,/assistantSave|assistantPersist|assistantCommit/);
+});
