@@ -339,3 +339,15 @@ test('M1.5 recovery UI is a native-picker read-only action with packaged verifie
  assert.ok(pkg.build.files.includes('transaction-store.cjs'));
  assert.doesNotMatch(preload,/assistantCommit|assistantSaveTransaction|createTransaction/);
 });
+
+test('M1.5 authorization modules are packaged but save IPC remains unavailable',()=>{
+ const pkg=require('../package.json'),preload=src('electron/preload.cjs');
+ for(const filename of ['review-persistence-gate.cjs',
+  'review-persistence-adapter.cjs','review-persistence-coordinator.cjs'])
+   assert.ok(pkg.build.files.includes(filename),filename+' must ship in Windows');
+ assert.doesNotMatch(preload,/assistantSave|assistantCommit|assistantPersist/);
+ const adapter=src('electron/review-persistence-adapter.cjs');
+ const coordinator=src('electron/review-persistence-coordinator.cjs');
+ assert.match(adapter,/sdk=require\('tempora-framework'\)/);
+ assert.match(coordinator,/preparePersistence\([^;]*sdk\)/s);
+});
