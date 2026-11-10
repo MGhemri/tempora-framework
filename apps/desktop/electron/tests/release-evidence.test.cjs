@@ -10,7 +10,7 @@ const NSIS='TEMPORA-Desktop-1.0.0-x64-SETUP.exe';
 const APPX='TEMPORA-Desktop-1.0.0-x64-STORE.appx';
 const sha=b=>createHash('sha256').update(b).digest('hex');
 const COMMIT='abc123d'.repeat(5)+'abc12';
-function fixture(fn){
+async function fixture(fn){
  const dir=mkdtempSync(join(tmpdir(),'tempora-release-'));
  try{
   const bytes=Buffer.from('SYNTHETIC_NOT_AN_EXECUTABLE');
