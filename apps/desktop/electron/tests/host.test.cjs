@@ -122,6 +122,7 @@ test('Microsoft Store distribution uses actual Partner Center identity and never
  assert.equal(appxConfig.appx.publisherDisplayName,'Ghemri M');
  assert.equal(appxConfig.appx.displayName,'TEMPORA Desktop');
  assert.deepEqual(appxConfig.appx.capabilities,['runFullTrust']);
+ assert.equal(appxConfig.appx.applicationId,require('../package.json').build.appx.applicationId);
  assert.match(appxConfig.appx.artifactName,/^TEMPORA-Desktop-/);
  assert.match(nsisConfig.artifactName,/SETUP\.exe$/);
  assert.deepEqual(appxConfig.win.target,['appx']);
