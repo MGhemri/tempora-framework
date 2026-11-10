@@ -111,3 +111,66 @@ test('Windows native writer copies only independently verified SDK bytes to an i
  // This is NOT scientific idempotency; production writer remains blocked.
  assert.equal(fs.readdirSync(path.join(root,'native-probe-complete')).length,1);
 });
+
+test('Windows source transport symlinks are refused before any probe transaction',t=>{
+ if(process.platform!=='win32')return;
+ const binary=path.resolve(__dirname,
+  '../../native-windows-guard/target/release/tempora-windows-guard.exe');
+ const src=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-input-link-'));
+ const dest=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-output-link-'));
+ t.after(()=>fs.rmSync(src,{recursive:true,force:true}));
+ t.after(()=>fs.rmSync(dest,{recursive:true,force:true}));
+ const transport=buildScientificTransport(sample());
+ for(const [name,bytes] of Object.entries(transport))
+  fs.writeFileSync(path.join(src,name),bytes,{flag:'wx'});
+ const corpus=path.join(src,'corpus.json');
+ fs.renameSync(corpus,path.join(src,'corpus-original.json'));
+ try{fs.symlinkSync(path.join(src,'corpus-original.json'),corpus,'file');}
+ catch(error){
+  if(['EPERM','EACCES','ENOTSUP'].includes(error.code))return;
+  throw error;
+ }
+ const env={...process.env,TEMPORA_NATIVE_SYNTHETIC_TEST:'1'};
+ const verified=spawnSync(binary,['--verify-envelope',src],
+  {encoding:'utf8',env,timeout:8000,windowsHide:true});
+ assert.equal(verified.status,3);
+ const committed=spawnSync(binary,['--synthetic-transport-commit',dest,src],
+  {encoding:'utf8',env,timeout:8000,windowsHide:true});
+ assert.equal(committed.status,3,committed.stdout);
+ assert.deepEqual(fs.readdirSync(dest),[]);
+});
+test('Win32 source file handles resist a concurrent writer during the native probe',async t=>{
+ if(process.platform!=='win32')return;
+ const {spawn}=require('node:child_process');
+ const binary=path.resolve(__dirname,
+  '../../native-windows-guard/target/release/tempora-windows-guard.exe');
+ const src=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-input-pinned-'));
+ const dest=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-output-pinned-'));
+ t.after(()=>fs.rmSync(src,{recursive:true,force:true}));
+ t.after(()=>fs.rmSync(dest,{recursive:true,force:true}));
+ const transport=buildScientificTransport(sample());
+ for(const [name,bytes] of Object.entries(transport))
+  fs.writeFileSync(path.join(src,name),bytes,{flag:'wx'});
+ const env={...process.env,TEMPORA_NATIVE_SYNTHETIC_TEST:'1',
+  TEMPORA_NATIVE_TEST_HOLD_MS:'3000'};
+ const child=spawn(binary,['--synthetic-transport-commit',dest,src],
+  {env,windowsHide:true,stdio:['ignore','pipe','pipe']});
+ let out='',err='';
+ child.stdout.on('data',d=>{out+=d;});
+ child.stderr.on('data',d=>{err+=d;});
+ const lock=path.join(dest,'.native-probe-lock');
+ let acquired=false;
+ for(let attempt=0;attempt<100;attempt++){
+  if(fs.existsSync(path.join(lock,'owner.txt'))){acquired=true;break;}
+  if(child.exitCode!==null)break;
+  await new Promise(resolve=>setTimeout(resolve,25));
+ }
+ assert.equal(acquired,true,'native probe must expose test lock during pin');
+ assert.throws(()=>fs.appendFileSync(path.join(src,'journal.json'),'UNAUTHORIZED'),
+  {code:/^(EPERM|EACCES|EBUSY)$/});
+ assert.deepEqual(fs.readFileSync(path.join(src,'journal.json')),
+  transport['journal.json']);
+ const outcome=await new Promise(resolve=>child.once('close',resolve));
+ assert.equal(outcome,0,err);
+ assert.match(out,/^NATIVE_SYNTHETIC_TRANSPORT_COMMITTED:[a-f0-9]{32}/);
+});
