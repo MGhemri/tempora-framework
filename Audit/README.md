@@ -43,3 +43,5 @@ Le rapport externe portant sur le commit `a07f2ec` est intégré sous forme d'un
 - [Reprise après PR #122 et #123 : SHA, CI et priorités](REPRISE-M15-NTFS-TVRW-J11.md).
 
 - [TEMPORA Desktop 1.0.0 — plan de stable, critères GO/NO-GO et preuves](RELEASE-DESKTOP-STABLE-1.0.0.md) (candidat, pas une publication).
+
+- [Recette Windows 10/11 et migration Store 0.2.0 → 1.0.0](RECETTE-WINDOWS-STABLE-1.0.0.md) — vérification des binaires et collecte de preuves non intrusive.

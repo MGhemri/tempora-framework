@@ -140,3 +140,33 @@ et ST-11 (certification, choix de soumission et publication).
 Aucun tag desktop-v1.0.0, aucune GitHub Release ni aucun upload Store
 n'ont été créés par ce lot. Une nouvelle release ne doit pas être
 annoncée avant sa propre décision humaine de publication.
+
+
+## Contrôle indépendant des binaires (lot de durcissement)
+
+Après la construction des binaires, un vérificateur Node autonome
+recalcule le SHA-256 des **fichiers EXE/AppX eux-mêmes**, en lecture
+séquentielle. Le hash doit correspondre à la fois à SHA256SUMS.txt et
+au manifeste RELEASE-PROVENANCE.json, avec version 1.0.0, identité
+Microsoft, commit Git exact, moteur 3.0.0 et statut non signé.
+
+La CI utilise ce vérificateur comme nouveau gate après packaging et
+avant l'upload. Sept tests adversariaux synthétiques couvrent :
+corruption des octets, falsification du Publisher/commit/signature,
+liste de hashes incohérente, références invalides/dupliquées et
+vérification indépendante d'une archive NSIS ou AppX. Le script ne
+lance jamais les binaires ni un canal Store.
+
+La sonde Windows stable-windows-preflight.ps1 recueille en lecture seule
+le build Windows, la Package Family Name, la version Store installée,
+et éventuellement le SHA/signature d'un NSIS. Un rapport préalable
+0.2.0 est comparé après migration vers 1.0.0 avec refus d'une
+Package Family Name différente. Elle ne lit jamais les corpus ni
+ne prouve l'absence de perte de données.
+
+**Protocole exploitable :** [RECETTE-WINDOWS-STABLE-1.0.0.md](RECETTE-WINDOWS-STABLE-1.0.0.md).
+
+Les gates manuels ST-06, ST-07, ST-08, ST-09, ST-10, ST-11
+restent **NON EFFECTUÉS**. La CI Linux/Windows du HEAD de ce lot
+doit être contrôlée avant fusion. Aucun nouveau candidat n'est
+certifié ou soumis à Microsoft par ce changement.
