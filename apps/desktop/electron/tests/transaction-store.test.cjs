@@ -617,3 +617,27 @@ test('replacement writer-lock symlink is never followed or deleted on release',t
   assert.equal(fs.existsSync(path.join(retired,'owner.json')),true);
  }
 });
+
+test('file growth after fstat is bounded before allocating more than 16 MiB',t=>{
+ const f=fixture(t),receipt=createTransaction(f.root,f,canonical);
+ const manifest=path.join(f.root,'transactions',receipt.transaction_id,'manifest.json');
+ const originalRead=fs.readSync;
+ let appended=false,readBytes=0;
+ fs.readSync=function(fd,...args){
+  if(!appended){
+   appended=true;
+   // Grow after lstat/fstat, before the first actual data read.
+   fs.appendFileSync(manifest,Buffer.alloc(16*1024*1024,0x20));
+  }
+  const count=originalRead.call(fs,fd,...args);
+  readBytes+=count;
+  return count;
+ };
+ try{
+  assert.deepEqual(inspectTransactions(f.root,canonical),
+    {complete:[],invalid:[receipt.transaction_id],pending:[]});
+ }finally{fs.readSync=originalRead;}
+ assert.equal(appended,true);
+ assert.ok(readBytes<=16*1024*1024+1);
+ assert.equal(fs.existsSync(manifest),true);
+});
