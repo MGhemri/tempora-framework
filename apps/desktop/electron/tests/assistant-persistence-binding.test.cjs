@@ -69,3 +69,51 @@ test('a native-selected corpus is required; a renderer-provided nonabsolute path
   corpusRawSha256:f.rawHash,sourceSha256:f.sourceHash,profileId:'test-profile'
  }),{code:'ASSIST_BINDING_CONFIGURATION'});
 });
+
+test('native session-bound reread completes a genuine reviewed SDK transaction',async t=>{
+ const sdk=require('tempora-framework');
+ const {createNativePersistenceWorkflow}=require('../native-persistence-workflow.cjs');
+ const {inspectTransactions}=require('../transaction-store.cjs');
+ const root=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-binding-integration-'));
+ t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
+ const corpus=JSON.parse(fs.readFileSync(
+  path.join(__dirname,'../../examples/synthetic-canonical-v3.json'),'utf8'));
+ const file=path.join(root,'canonical.json');
+ fs.writeFileSync(file,JSON.stringify(corpus));
+ const mapping={mapping_schema_version:'1.0.0',id:'binding-native-integration',
+  version:'1.0.0',profile_id:corpus.profile.id,profile_version:corpus.profile.version,
+  format:'json',fields:{id:'/id',title:{en:'/name'},start_date:'/date',event_type:'/type'}};
+ const bytes=Buffer.from(JSON.stringify([{id:'BIND_01',name:'Fictional event',
+  date:'1701',type:'fictional assembly'}]));
+ const input={bytes,sourceSha256:sha(bytes),sourceName:'fictional.json',
+  profile_id:corpus.profile.id,mapping};
+ const sessions={canonicalInput(id){
+  if(id!==HANDLE)throw Error('unknown session');
+  return input;
+ }};
+ const reread=makeTrustedSessionReread({sessions,handle:HANDLE,
+  corpusPath:file,corpusRawSha256:sha(fs.readFileSync(file)),
+  profileId:corpus.profile.id,sourceSha256:sha(bytes)});
+ const bundle=sdk.ingestion.preview({corpus,mapping,bytes,
+  sourceName:'fictional.json',observedAt:null});
+ const review={batch_id:bundle.report.batch_id,ids:['BIND_01'],
+  reviewer:'Synthetic researcher',reason:'Session-bound second decision',
+  reviewed_at:'2026-11-09T00:00:00Z'};
+ const accepted=sdk.ingestion.accept({corpus,bundle,review});
+ const stage={scope:'in_memory_staging_only',canonical_validated:true,
+  scientific_approval:false,saved_to_disk:false,published:false,
+  import_performed:false,persistence_required:true,batch_id:bundle.report.batch_id,
+  source_sha256:bundle.report.source.sha256,
+  base_sha256:bundle.report.base_sha256,
+  snapshot_sha256:accepted.journal.output_sha256,journal:accepted.journal};
+ const workflow=createNativePersistenceWorkflow({sdk,
+  confirmNative:async()=>true,chooseDestination:async()=>root});
+ const intent=workflow.offer({handle:HANDLE,stage,reread});
+ const receipt=await workflow.confirmAndCommit({handle:HANDLE,token:intent.token});
+ assert.equal(receipt.saved_to_disk,true);
+ assert.equal(receipt.scientific_approval,false);
+ assert.deepEqual(inspectTransactions(root,sdk.canonical),
+  {complete:[receipt.transaction_id],invalid:[],pending:[]});
+ // The user's original canonical document remains unchanged.
+ assert.deepEqual(JSON.parse(fs.readFileSync(file,'utf8')),corpus);
+});
