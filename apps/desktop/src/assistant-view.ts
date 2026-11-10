@@ -122,10 +122,10 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
  recoveryButton.addEventListener('click',async()=>{
    if(!host?.assistantAssessRecovery||recoveryButton.disabled)return;
    recoveryButton.disabled=true;
-   recoveryReport.textContent='Diagnostic en lecture seule…';
+   recoveryReport.textContent=lang()==='fr'?'Diagnostic en lecture seule…':'Read-only assessment…';
    try {
      const report=await host.assistantAssessRecovery();
-     if(!report){recoveryReport.textContent='Diagnostic annulé.';return;}
+     if(!report){recoveryReport.textContent=lang()==='fr'?'Diagnostic annulé.':'Assessment cancelled.';return;}
      const lines=[
        'TEMPORA M1.5 — rapport en lecture seule',
        'Verrou : '+report.lock_status,
@@ -141,7 +141,7 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
      ];
      recoveryReport.textContent=lines.join('\n');
    }catch(e){
-     recoveryReport.textContent='Diagnostic refusé : '+String((e as Error)?.message??e);
+     recoveryReport.textContent=(lang()==='fr'?'Diagnostic refusé : ':'Assessment rejected: ')+String((e as Error)?.message??e);
    }finally{recoveryButton.disabled=!host?.assistantAssessRecovery;}
  });
  recoveryButton.disabled=!host?.assistantAssessRecovery;
@@ -163,6 +163,7 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
  };
  const render=()=>{
    const t=dictionary[lang()];
+   recoveryButton.textContent=lang()==='fr'?'Examiner des transactions interrompues (lecture seule)':'Inspect interrupted transactions (read-only)';
    openBtn.textContent=t.open;openBtn.disabled=!host||busy;
    closeBtn.textContent=t.close;closeBtn.disabled=!source||busy;
    sheetSelect.disabled=!source||source.format!=='xlsx'||busy;
