@@ -12,6 +12,7 @@ concurrency:
 
 jobs:
   signed-candidate:
+    if: github.ref == 'refs/heads/main'
     name: Build and verify signed TEMPORA Desktop x64 NSIS
     runs-on: windows-latest
     timeout-minutes: 75
@@ -41,6 +42,7 @@ jobs:
           npm install --ignore-scripts --no-audit --no-fund
           npm run build
           npm run test:bridge
+          npm run test:stable-release
           npm run test:windows-engine
           node --test electron/tests/host.test.cjs
           node --test electron/tests/review-integrity.test.cjs
@@ -49,6 +51,11 @@ jobs:
       - name: Restore exact electron-builder toolchain
         working-directory: apps/desktop/electron
         run: npm ci --no-audit --no-fund
+      - name: Require stable Desktop 1.0.0 manifest
+        shell: pwsh
+        run: |
+          $pkg = Get-Content electron/package.json -Raw | ConvertFrom-Json
+          if ($pkg.version -cne '1.0.0') { throw 'SIGNED_STABLE_VERSION_MISMATCH' }
       - name: Require Authenticode signing of application and installer
         working-directory: apps/desktop/electron
         env:
