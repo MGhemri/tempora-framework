@@ -6,12 +6,13 @@ use std::ffi::{c_void, OsStr};
 use std::fs::{self, OpenOptions};
 use std::io::Write;
 use std::os::windows::ffi::OsStrExt;
-use std::path::{Path, PathBuf};
+use std::path::Path;
 use std::ptr::null_mut;
 
 type Handle = isize;
 const INVALID_HANDLE_VALUE: Handle = -1isize;
 const FILE_READ_ATTRIBUTES: u32 = 0x0080;
+const FILE_ADD_SUBDIRECTORY: u32 = 0x0004;
 const DELETE: u32 = 0x0001_0000;
 const FILE_SHARE_READ: u32 = 1;
 const FILE_SHARE_WRITE: u32 = 2;
@@ -64,14 +65,15 @@ impl Drop for Owned {
 fn wide(value: &OsStr) -> Vec<u16> {
     value.encode_wide().chain(std::iter::once(0)).collect()
 }
-fn open_directory(path: &Path, delete: bool) -> Result<Owned, &'static str> {
+fn open_directory(path: &Path, delete: bool, add_subdir: bool) -> Result<Owned, &'static str> {
     let encoded = wide(path.as_os_str());
     // Intentionally exclude FILE_SHARE_DELETE: other processes cannot
     // rename these specific directory objects while we retain the handles.
     let raw = unsafe {
         CreateFileW(
             encoded.as_ptr(),
-            FILE_READ_ATTRIBUTES | if delete { DELETE } else { 0 },
+            FILE_READ_ATTRIBUTES | if delete { DELETE } else { 0 }
+                | if add_subdir { FILE_ADD_SUBDIRECTORY } else { 0 },
             FILE_SHARE_READ | FILE_SHARE_WRITE,
             null_mut(), OPEN_EXISTING,
             FILE_FLAG_BACKUP_SEMANTICS | FILE_FLAG_OPEN_REPARSE_POINT, 0,
@@ -96,13 +98,13 @@ fn open_directory(path: &Path, delete: bool) -> Result<Owned, &'static str> {
     }
     Ok(handle)
 }
-fn create_or_open(directory: &Path) -> Result<Owned, &'static str> {
+fn create_or_open(directory: &Path, add_subdir: bool) -> Result<Owned, &'static str> {
     match fs::create_dir(directory) {
         Ok(()) => (),
         Err(e) if e.kind() == std::io::ErrorKind::AlreadyExists => (),
         Err(_) => return Err("NATIVE_COMMIT_DIRECTORY_CREATION_FAILED"),
     }
-    open_directory(directory, false)
+    open_directory(directory, false, add_subdir)
 }
 fn random_id() -> Result<String, &'static str> {
     let mut bytes = [0u8; 16];
@@ -152,22 +154,22 @@ pub fn synthetic_commit(root: &Path) -> Result<String, &'static str> {
         return Err("NATIVE_COMMIT_SYNTHETIC_GATE_CLOSED");
     }
     crate::native::inspect(root)?;
-    let root_handle = open_directory(root, false)?;
+    let root_handle = open_directory(root, false, false)?;
     let lock = root.join(".native-probe-lock");
     fs::create_dir(&lock).map_err(|_| "NATIVE_COMMIT_WRITER_BUSY")?;
     // On every failure retain the lock and the pending data for forensic review.
-    let lock_handle = open_directory(&lock, false)?;
+    let lock_handle = open_directory(&lock, false, false)?;
     let _ = &lock_handle;
     let pending_root = root.join(".native-probe-pending");
     let completed_root = root.join("native-probe-complete");
-    let pending_root_handle = create_or_open(&pending_root)?;
-    let completed_root_handle = create_or_open(&completed_root)?;
+    let pending_root_handle = create_or_open(&pending_root, true)?;
+    let completed_root_handle = create_or_open(&completed_root, true)?;
     let _ = (&root_handle, &pending_root_handle);
     let id = random_id()?;
     exclusive_sync(&lock, "owner.txt", id.as_bytes())?;
     let pending = pending_root.join(&id);
     fs::create_dir(&pending).map_err(|_| "NATIVE_COMMIT_COLLISION")?;
-    let pending_handle = open_directory(&pending, true)?;
+    let pending_handle = open_directory(&pending, true, false)?;
     exclusive_sync(&pending, "corpus.json", br#"{"synthetic":true,"schema_version":"probe-only"}"#)?;
     exclusive_sync(&pending, "journal.json", br#"{"synthetic":true,"approval":false}"#)?;
     exclusive_sync(&pending, "manifest.json", br#"{"synthetic":true,"published":false,"kind":"NTFS_HANDLE_RENAME_PROBE"}"#)?;
