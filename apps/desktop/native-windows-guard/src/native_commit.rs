@@ -176,6 +176,16 @@ fn commit_probe(
     // On every failure retain the lock and the pending data for forensic review.
     let lock_handle = open_directory(&lock, false, false)?;
     let _ = &lock_handle;
+    // Deterministic test-only pause: permits a second Windows process to try
+    // replacing the already-pinned source while this transaction is active.
+    // Hard-capped; cannot be enabled without the synthetic-test gate above.
+    if let Some(pause) = std::env::var("TEMPORA_NATIVE_TEST_HOLD_MS").ok()
+        .and_then(|v| v.parse::<u64>().ok())
+    {
+        if pause > 0 && pause <= 4_000 {
+            std::thread::sleep(std::time::Duration::from_millis(pause));
+        }
+    }
     let pending_root = root.join(".native-probe-pending");
     let completed_root = root.join("native-probe-complete");
     let pending_root_handle = create_or_open(&pending_root, true)?;
