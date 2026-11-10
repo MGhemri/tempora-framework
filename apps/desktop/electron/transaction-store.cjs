@@ -120,6 +120,11 @@ function withWriterReservation(root,work) {
     if(e.code==='EEXIST')throw ERR('TRANSACTION_WRITER_BUSY');
     throw e;
   }
+  // Bind cleanup to the original lock DIRECTORY, not only its JSON nonce.
+  // A copied owner.json in a replacement directory must never authorize
+  // unlinking a lock that this process did not create.
+  const lockIdentity=directoryIdentity(lock);
+  const rootIdentity=directoryIdentity(root);
   const ownerFile=path.join(lock,'owner.json');
   const owner=Buffer.from(JSON.stringify({schema_version:'1.0.0',nonce})+'\n');
   let owned=false;
@@ -131,10 +136,12 @@ function withWriterReservation(root,work) {
     // If an adversary replaced the lock or changed ownership, leave it as
     // evidence and fail closed. No blind recursive removal.
     if(owned) {
-      const lockStat=fs.lstatSync(lock);
-      if(!lockStat.isDirectory()||lockStat.isSymbolicLink()||
-         fs.realpathSync(lock)!==path.resolve(lock))
+      try{
+        assertDirectoryIdentity(root,rootIdentity);
+        assertDirectoryIdentity(lock,lockIdentity);
+      }catch{
         throw ERR('TRANSACTION_WRITER_OWNERSHIP_LOST');
+      }
       const files=fs.readdirSync(lock);
       if(files.length!==1||files[0]!=='owner.json'||
          !readBounded(ownerFile).equals(owner))
