@@ -139,7 +139,7 @@ export function initAssistantView(host:AssistantHost|undefined,lang:()=>Language
          'Aucun blocage structurel détecté. Aucune validation scientifique.',
        'Aucun fichier modifié ni publié.'
      ];
-     recoveryReport.textContent=lines.join('\\n');
+     recoveryReport.textContent=lines.join('\n');
    }catch(e){
      recoveryReport.textContent='Diagnostic refusé : '+String((e as Error)?.message??e);
    }finally{recoveryButton.disabled=!host?.assistantAssessRecovery;}
