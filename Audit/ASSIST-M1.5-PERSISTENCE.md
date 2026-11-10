@@ -616,3 +616,48 @@ avant une campagne finale**, et non publiés sous forme de petites
 modifications pendant les tests. Le dossier `Audit/` distingue
 dorénavant la présence d'un correctif dans la branche de sa
 qualification CI, sans considérer un statut en cours comme une validation.
+
+ 
+## 21. Qualification synthétique — six frontières d'interruption d'un processus
+
+Le test `electron/tests/recovery-assessment.test.cjs` comporte désormais
+une matrice d'arrêt **réel de processus enfant Node** sur six frontières
+du stockage : `fsync` du propriétaire de verrou, `fsync` du corpus,
+du journal, du manifeste, puis immédiatement **avant** ou **après** le
+renommage final. Ces essais emploient uniquement des corpus fictifs dans
+des répertoires temporaires.
+
+| Arrêt injecté | Données attendues à l'inspection | Gate obligatoire |
+| --- | --- | --- |
+| Propriétaire du verrou | Verrou réservé, pas de transaction publiée | Pas de nouvelle écriture |
+| Corpus | Transaction incomplète en attente | Pas de nouvelle écriture |
+| Journal | Transaction incomplète en attente | Pas de nouvelle écriture |
+| Manifeste | Candidate complète à examiner, non promue | Pas de nouvelle écriture |
+| Avant renommage | Candidate complète à examiner, non promue | Pas de nouvelle écriture |
+| Après renommage | Transaction finalisée visible, verrou encore réservé | Pas de nouvelle écriture |
+
+À chaque phase, le test vérifie que `assessRecovery` conserve l'état
+de la racine, refuse `safe_to_start_new_write`, n'émet aucune approbation
+scientifique, et ne permet pas un second écrivain. Pour le dernier cas,
+`inspectCommittedIdentity` retrouve une transaction déjà visible par ses
+empreintes, sans supprimer le verrou orphelin.
+
+**Précision de la preuve :** ces essais reproduisent une terminaison
+brutale d'un processus Node, **pas** une coupure électrique, un BSOD,
+une suppression de cache disque ni un test de durabilité NTFS. Le succès
+CI Windows ne doit pas être présenté comme une certification du protocole
+de stockage sur machine réelle.
+
+## 22. Réduction de la durée de qualification sans perte de couverture
+
+Dans `desktop-foundation.yml`, le job Ubuntu exécutait déjà chacune
+des suites scientifiques/Desktop, puis relançait l'ensemble des mêmes
+tests avec `test:windows-engine`. La dernière étape a été remplacée
+par les **deux suites non couvertes ailleurs** : `host.test.cjs`
+et `review-integrity.test.cjs`. Les autres suites restent exécutées
+une fois par le job, et les contrôles Windows conservent leurs étapes
+d'origine. Aucun workflow GitHub supplémentaire n'a été créé.
+
+La préparation de lots importants avant le lancement de la CI demeure
+la stratégie retenue. Une optimisation d'exécution ne lève aucune
+exigence de qualification native Windows.
