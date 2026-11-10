@@ -35,6 +35,9 @@ function preparePersistence({bytes,corpus,mapping,sourceName,review,authorizatio
     !eq(report.base_sha256,authorization.base_sha256)||
     !eq(report.source.sha256,source_sha256))
    fail('PERSIST_PREVIEW_CHANGED');
+ // Verify the fifth human-authorized identity on the SDK replay.
+ if(!eq(report.mapping.sha256,authorization.mapping_sha256))
+   fail('PERSIST_MAPPING_CHANGED');
  if(!Array.isArray(review.ids)||review.ids.length<1||review.ids.length>50||
     typeof review.reviewer!=='string'||typeof review.reason!=='string'||
     typeof review.reviewed_at!=='string')
