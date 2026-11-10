@@ -49,6 +49,7 @@
 | M15-09 | Packaging Chromium NSIS, exemples synthétiques, SDK épinglé, CI Ubuntu/Windows | TESTÉ-CI pour HEAD de référence | `.github/workflows/desktop-foundation.yml` |
 | M15-10 | Dossier documentaire d'audit et runbook opérateur | IMPLÉMENTÉ | `Audit/ASSIST-M1.5-*.md` |
 | M15-11 | Registre durable de tâches et des gates à vérifier à chaque itération | **IMPLÉMENTÉ (présent fichier)** | `Audit/TEMPORA-ETAT-AVANCEMENT.md` |
+| M15-12 | Empreinte du verrou avant/après audit : détecte substitution même si le statut reste `reserved` | **IMPLÉMENTÉ, CI À QUALIFIER** | `recovery-assessment.cjs` et test de remplacement à nonce cloné |
 
 ## 3. Backlog de qualification — priorités et conditions de fermeture
 
@@ -69,7 +70,7 @@
 
 ## 4. Découpage des lots recommandés
 
-**Lot A — prochain (sécurité diagnostique, sans écriture) :** vérifier le comportement fail-closed des inventaires en cas d'écriture concurrente, améliorer les rapports d'erreur sans divulguer de chemins, et ajouter les tests Windows/Linux ; actualiser les preuves.
+**Lot A — EN COURS (sécurité diagnostique, sans écriture) :** contrôle du verrou même si son état apparent est inchangé : **implémenté, CI à vérifier**. Puis vérifier la gestion des mutations concurrentes de l'inventaire et la protection des rapports sans divulgation de chemins ; actualiser les preuves.
 
 **Lot B — fondation native Windows :** concevoir et qualifier une couche privilégiée Rust/Windows avec contrôle des handles, reparse points, volumes et ACL ; maintenir un fallback JS **en refus d'écriture** pour environnements non qualifiés.
 
@@ -82,7 +83,10 @@
 | Date | Référence | Travaux et constat | Qualification / décision |
 | --- | --- | --- | --- |
 | 2026-11-10 | `5aa3970a` | Six scénarios de perte de processus, déduplication des suites Ubuntu et mise à jour audit | **3 workflows verts**, M1.5 toujours expérimental |
-| 2026-11-10 | Mise en place de `TEMPORA-ETAT-AVANCEMENT.md` | Création du registre central ; liste P0/P1/P2, critères de sortie et protocole de suivi | Dépend de la CI du nouveau HEAD (à remplir à chaque passage) |
+| 2026-11-10 | `a447ecdf` | Création du registre central ; liste P0/P1/P2, critères de sortie et protocole de suivi | Rapport versionné dans la PR #114 |
+| 2026-11-10 | `302e57a7` | Diagnostic de verrou renforcé par empreinte physique et métadonnées de son fichier propriétaire ; test d'échange par un verrou au même nonce | **Code intégré, nouvelle CI à vérifier**. Ne pas revendiquer une photographie atomique ou des handles Windows natifs |
+
+**Politique CI du présent lot :** la dernière campagne intégralement verte reste celle du HEAD `5aa3970a`. Les nouveaux correctifs n'ont pas automatiquement acquis ce statut par héritage : vérifier impérativement la CI attachée au **HEAD final de cette itération**.
 
 ### Modèle de compte rendu d'itération (à compléter et conserver)
 
