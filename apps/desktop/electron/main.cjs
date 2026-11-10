@@ -15,6 +15,7 @@ const {preview}=require('./preview-core.cjs');
 const {createAssistantSessions}=require('./assistant-session.cjs');
 const {createNativePersistenceWorkflow}=require('./native-persistence-workflow.cjs');
 const {createAssistantPersistenceAuthority}=require('./assistant-persistence-authority.cjs');
+const {localSaveEnabled}=require('./local-save-access.cjs');
 const assistantSessions=createAssistantSessions({
   sourceRoot:app.isPackaged?join(process.resourcesPath,'assistant'):resolve(__dirname,'../../..','src'),
   profileRoot:app.isPackaged?join(process.resourcesPath,'assistant','profiles'):resolve(__dirname,'../../..','profiles')
@@ -28,6 +29,7 @@ const ENGINE_TIMEOUT_MS = 12_000;
 let mainWindow;
 const visualService=new VisualService(getRuntime);
 let persistenceAuthority=null;
+const experimentalLocalSave=localSaveEnabled({isPackaged:app.isPackaged,env:process.env});
 // This trusted host authority is prepared after a real worker stage. Neither
 // its token nor its commit method is exposed through IPC or preload until
 // the unresolved native Windows filesystem safety gates are qualified.
@@ -378,16 +380,44 @@ app.whenReady().then(async () => {
     // Keep a second-decision intent exclusively in the trusted host,
     // bound to the source session, selected corpus and worker receipt.
     // Errors in this optional preparation NEVER convert staging to a save.
-    try{
-      getPersistenceAuthority().recordStaging({
-        handle:handle_id,preview,input,stage:result
-      });
-    }catch{
-      persistenceAuthority?.revoke(handle_id);
+    let prepared=false;
+    if(experimentalLocalSave){
+      try{
+        getPersistenceAuthority().recordStaging({
+          handle:handle_id,preview,input,stage:result
+        });
+        prepared=true;
+      }catch{
+        persistenceAuthority?.revoke(handle_id);
+      }
     }
-    // The renderer receives only the historic in-memory staging receipt.
-    // No consent token, path or save capability crosses this IPC boundary.
-    return result;
+    // A development-only flag advertises the ability to REQUEST a native
+    // second confirmation. The staging receipt remains explicitly unsaved.
+    return {...result,experimental_local_save_ready:prepared};
+  });
+  // Packaged releases are unconditionally refused, even if an environment
+  // variable is set. No token, destination path or scientific data is
+  // accepted from the renderer. The host alone displays both native dialogs.
+  ipcMain.handle('tempora:assistant:local-save',async(event,handle_id)=>{
+    validSender(event);
+    if(!experimentalLocalSave)throw Error('ASSIST_EXPERIMENTAL_SAVE_DISABLED');
+    if(typeof handle_id!=='string'||!/^[a-f0-9]{48}$/.test(handle_id))
+      throw Error('ASSIST_HANDLE_INVALID');
+    if(!persistenceAuthority)throw Error('ASSIST_PERSIST_NOT_PREPARED');
+    try{
+      return await persistenceAuthority.commitTrusted(handle_id);
+    }catch(error){
+      // Electron exceptions can carry absolute filesystem paths.
+      // Always discard underlying error details at the renderer boundary.
+      const allowed=new Set([
+        'ASSIST_PERSIST_AUTHORITY_NOT_PREPARED',
+        'NATIVE_PERSIST_BUSY','NATIVE_PERSIST_CANCELLED',
+        'TRANSACTION_WRITER_BUSY','TRANSACTION_ALREADY_COMMITTED',
+        'TRANSACTION_PREEXISTING_INVALID',
+        'TRANSACTION_PENDING_RECOVERY_REQUIRED'
+      ]);
+      throw Error(allowed.has(error?.code)?error.code:'ASSIST_LOCAL_SAVE_REJECTED');
+    }
   });
   ipcMain.handle('tempora:assistant:close',(event,handle_id)=>{
     validSender(event);
