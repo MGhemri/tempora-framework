@@ -8,10 +8,10 @@
 
 - Dépôt : **https://github.com/MGhemri/tempora-framework**.
 - Branche unique du chantier en cours : `docs/assist-m1-5-transactional-persistence`.
-- PR **#114** : https://github.com/MGhemri/tempora-framework/pull/114 — **doit rester DRAFT**.
+- PR **#114** : https://github.com/MGhemri/tempora-framework/pull/114 — **en cours de finalisation pour fusion autorisée le 2026-11-10**. Vérifier son statut réel ; le passage à merge est désormais autorisé **seulement après CI verte du package Store**.
 - Le propriétaire demande d'agir directement sur le dépôt, de **développer, vérifier, corriger et continuer**, sans lui faire répéter les priorités ni solliciter des confirmations de routine.
 - Avancer par **lots cohérents suffisamment importants**, pas par micro-correctifs ou simples rapports. Limiter les commits / relances de CI, puis qualifier **le HEAD final exact**.
-- Ne jamais fusionner dans `main`, publier sur npm, créer une release GitHub, soumettre ou publier dans Microsoft Store sans autorisation explicite. Une certification Store antérieure ne qualifie pas M1.5.
+- **Mise à jour de décision utilisateur (2026-11-10) :** fusion de la PR #114 **explicitement autorisée**, seulement après CI complète du candidat Store. Les interdictions de release GitHub/npm et de **soumission ou publication Microsoft Store automatique** restent. Ne pas confondre préparation Store et publication. Une certification Store antérieure ne qualifie pas M1.5.
 - Aucun write M1.5 dans les applications packagées : `electron/local-save-access.cjs` impose `isPackaged===false && TEMPORA_EXPERIMENTAL_M15_SAVE==='1'`. Le mode non packagé et opt-in reste **uniquement expérimental**. La sonde Rust `TEMPORA_NATIVE_SYNTHETIC_TEST=1` est **test-only** ; ne jamais l'exposer via IPC ou l'installateur.
 - Ne pas confondre **acceptation humaine pour staging local**, **approbation scientifique**, **publication**, **validation de l'intégrité** et **consentement authentifié**.
 - Ne jamais effacer automatiquement un verrou, renommer un candidat `.pending` en résultat final par heuristique, ni réessayer une transaction après erreur de résultat incertain.
@@ -104,3 +104,14 @@ Pendant M15-19, un double inspecteur `probe_forensic.rs` et `probe_inventory.rs`
 Un court résumé en français comprenant : **fonctionnalité effectivement livrée, tests qui ont réussi/échoué sur le SHA, lien PR #114, état de diffusion**, plus les **P0 non clos**. La valeur principale doit venir du code, pas du volume de narration. Garder l'historique technique et les instructions complètes ici et dans `Audit/TEMPORA-ETAT-AVANCEMENT.md`, pour que toute reprise de ChatGPT puisse commencer immédiatement.
 
 **Dernière règle :** une nouvelle conversation doit commencer par lire `Audit/REPRISE-TRAVAUX.md` et contrôler le HEAD GitHub, puis reprendre le premier jalon P0 non clôturé, sans demander à l'utilisateur de reformuler les étapes déjà consignées.
+
+
+## 9. Changement de stratégie : fusion et préparation Store 0.2.0 (2026-11-10)
+
+**Le propriétaire demande de FINALISER puis FUSIONNER le lot qualifié**, et de préparer la mise à jour Microsoft Store. Ne pas traiter les anciennes consignes « PR draft pour toujours » comme prioritaires après cette autorisation ; elles valaient avant celle-ci.
+
+- **Lire obligatoirement** [STORE-MISE-A-JOUR-0.2.0.md](STORE-MISE-A-JOUR-0.2.0.md).
+- Candidat Chromium/Electron **AppX x64 0.2.0**, identité `GhemriM.TEMPORADesktop`, éditeur `CN=C5BC3837-BBC8-425E-916B-4B6F77BD7455`, nom affiché `Ghemri M`. Packaging **NSIS ≠ Store AppX**.
+- CI candidate : `npm run dist:store` sur Windows, `--publish never`, inspection `AppxManifest.xml`, sauvegarde de l'AppX en artefact Actions. N'autoriser la fusion qu'après confirmation du job complet et des trois workflows du SHA précis.
+- Après fusion, inscrire le SHA de merge et les nouvelles CI `main` dans le rapport Store et le registre. Commencer le travail scientifique restant sur **une nouvelle branche**, avec restrictions M1.5 toujours actives.
+- **AUCUNE soumission, validation Partner Center ni publication Store** sans une décision distincte. L'ancien package certifié n'est pas modifié depuis GitHub.
