@@ -4,7 +4,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs'),os=require('node:os'),path=require('node:path');
 const {spawnSync}=require('node:child_process');
 const {assessRecovery}=require('../recovery-assessment.cjs');
-const {createTransaction,inspectTransactions,inspectWriterReservation}=
+const {createTransaction,inspectTransactions,inspectWriterReservation,inspectCommittedIdentity}=
  require('../transaction-store.cjs');
 const H='a'.repeat(64);
 const canonical={validateCorpus:c=>({valid:c?.schema_version==='3.0.0'}),digest:()=>H};
@@ -128,3 +128,48 @@ for(const name of ['transactions','.pending']){
   assert.equal(fs.lstatSync(link).isSymbolicLink(),true);
  });
 }
+
+test('uncertain commit can be matched read-only to a verified visible transaction',t=>{
+ const f=fixture(t),receipt=createTransaction(f.root,f,canonical);
+ const original=fs.readFileSync(path.join(f.root,'transactions',
+  receipt.transaction_id,'corpus.json'));
+ const report=inspectCommittedIdentity(f.root,canonical,f.identity);
+ assert.deepEqual(report.matching_transaction_ids,[receipt.transaction_id]);
+ assert.deepEqual(report.unverified_transactions,[]);
+ assert.equal(report.pending_transaction_count,0);
+ assert.equal(report.inspected_only,true);
+ assert.equal(report.files_modified,false);
+ assert.equal(report.scientific_approval,false);
+ assert.equal(report.published,false);
+ assert.deepEqual(fs.readFileSync(path.join(f.root,'transactions',
+  receipt.transaction_id,'corpus.json')),original);
+});
+test('inspection never confuses another batch with the expected transaction',t=>{
+ const f=fixture(t);
+ createTransaction(f.root,f,canonical);
+ const other={...f.identity,batch_id:'b'.repeat(64)};
+ assert.deepEqual(inspectCommittedIdentity(f.root,canonical,other).matching_transaction_ids,[]);
+});
+test('tampered committed transaction is never presented as a verified match',t=>{
+ const f=fixture(t),receipt=createTransaction(f.root,f,canonical);
+ fs.writeFileSync(path.join(f.root,'transactions',receipt.transaction_id,
+  'journal.json'),'{}');
+ const report=inspectCommittedIdentity(f.root,canonical,f.identity);
+ assert.deepEqual(report.matching_transaction_ids,[]);
+ assert.deepEqual(report.unverified_transactions,[receipt.transaction_id]);
+});
+test('read-only transaction matching cannot be called with incomplete digests',t=>{
+ const f=fixture(t);
+ assert.throws(()=>inspectCommittedIdentity(f.root,canonical,
+  {batch_id:H}),{code:'TRANSACTION_IDENTITY_INVALID'});
+ assert.deepEqual(fs.readdirSync(f.root),[]);
+});
+test('after real child process exit after rename, matching detects a visible commit but lock stays reserved',t=>{
+ const f=fixture(t),child=killDuringCommit(f.root,'after');
+ assert.equal(child.status,78,child.stderr);
+ const match=inspectCommittedIdentity(f.root,canonical,f.identity);
+ assert.equal(match.matching_transaction_ids.length,1);
+ assert.equal(match.inspected_only,true);
+ assert.deepEqual(inspectWriterReservation(f.root),{status:'reserved'});
+ assert.throws(()=>createTransaction(f.root,f,canonical),{code:'TRANSACTION_WRITER_BUSY'});
+});
