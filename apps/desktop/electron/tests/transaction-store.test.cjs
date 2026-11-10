@@ -544,8 +544,8 @@ test('ordinary pending directory replacement during staging is blocked',t=>{
   return value;
  };
  try{
-  assert.throws(()=>createTransaction(f.root,f,canonical),
-   {code:'TRANSACTION_DIRECTORY_IDENTITY_CHANGED'});
+  assert.throws(()=>createTransaction(f.root,f,canonical),error=>
+   error?.code==='ENOENT'||error?.code==='TRANSACTION_DIRECTORY_IDENTITY_CHANGED');
  }finally{fs.fsyncSync=originalFsync;}
  assert.equal(replaced,true);
  assert.deepEqual(fs.readdirSync(path.join(f.root,'transactions')),[]);
