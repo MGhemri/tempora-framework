@@ -379,4 +379,32 @@ function inspectPendingEvidence(root,canonical) {
   return Object.freeze({verified_for_review,incomplete,unsafe});
 }
 
-module.exports={createTransaction,inspectTransactions,inspectWriterReservation,inspectPendingEvidence};
+// For a missing/uncertain write receipt, identify an already-visible
+// *verified* transaction by its exact five canonical digests. This is NOT
+// a recovery, durability proof, new receipt or permission to retry.
+function inspectCommittedIdentity(root,canonical,identity) {
+  if(!plain(identity)||Object.keys(identity).length!==REQUIRED.length||
+     !REQUIRED.every(k=>typeof identity[k]==='string'&&HASH.test(identity[k])))
+    throw ERR('TRANSACTION_IDENTITY_INVALID');
+  const before=inspectTransactions(root,canonical);
+  const matching=[];
+  for(const id of before.complete){
+    const manifest=JSON.parse(readBounded(
+      path.join(root,'transactions',id,'manifest.json')).toString('utf8'));
+    if(manifest.transaction_id!==id)
+      throw ERR('TRANSACTION_SNAPSHOT_CHANGED');
+    if(REQUIRED.every(k=>manifest[k]===identity[k]))matching.push(id);
+  }
+  const after=inspectTransactions(root,canonical);
+  if(JSON.stringify(before)!==JSON.stringify(after))
+    throw ERR('TRANSACTION_SNAPSHOT_CHANGED');
+  return Object.freeze({
+    matching_transaction_ids:Object.freeze(matching),
+    unverified_transactions:Object.freeze([...after.invalid]),
+    pending_transaction_count:after.pending.length,
+    inspected_only:true,files_modified:false,
+    scientific_approval:false,published:false
+  });
+}
+
+module.exports={createTransaction,inspectTransactions,inspectWriterReservation,inspectPendingEvidence,inspectCommittedIdentity};
