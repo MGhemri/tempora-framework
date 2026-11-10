@@ -11,7 +11,7 @@ function fail(code){throw Object.assign(new Error(code),{code});}
 const HANDLE=/^[a-f0-9]{48}$/;
 const TOKEN=/^[a-f0-9]{48}$/;
 const FIELDS=['batch_id','source_sha256','base_sha256','snapshot_sha256'];
-function createReviewPersistenceCoordinator({persist,now}={}){
+function createReviewPersistenceCoordinator({persist,now,sdk}={}){
  if(typeof persist!=='function')fail('PERSIST_COORDINATOR_CONFIGURATION');
  const gate=createPersistenceGate({now});
  const pending=new Map();
@@ -64,7 +64,9 @@ function createReviewPersistenceCoordinator({persist,now}={}){
     const input=await saved.reread();
     if(!input||typeof input!=='object')fail('PERSIST_COORDINATOR_REREAD_INVALID');
     if(operation.cancelled)fail('PERSIST_COORDINATOR_CANCELLED');
-    const verified=preparePersistence({...input,review:saved.review,authorization});
+    const verified=sdk===undefined
+      ?preparePersistence({...input,review:saved.review,authorization})
+      :preparePersistence({...input,review:saved.review,authorization},sdk);
     // Cancellation is honored until handoff to the atomic commit callback.
     // Once persist() starts, the host must report its actual outcome.
     if(operation.cancelled)fail('PERSIST_COORDINATOR_CANCELLED');
