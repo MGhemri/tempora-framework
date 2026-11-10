@@ -64,7 +64,9 @@ jobs:
       - run: npm run test:local-save-gate
       - run: npm run test:recovery
       - run: npm run test:visualization
-      - run: npm run test:windows-engine
+      # Individual suites above already ran; retain host and integrity
+      # contract coverage without running every Desktop suite twice.
+      - run: node --test electron/tests/host.test.cjs electron/tests/review-integrity.test.cjs
 
   synthetic-benchmark:
     # Opt-in only, never a required PR status; no new workflow files.
