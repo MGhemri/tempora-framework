@@ -269,3 +269,37 @@ test('Windows native probe pins source and destination ancestor directories agai
  assert.equal(fs.existsSync(destinationParent),true);
  assert.equal(fs.existsSync(path.join(destination,'transactions')),false);
 });
+
+test('test-only native writer refuses a forged non-synthetic profile even with valid file checksums',t=>{
+ if(process.platform!=='win32')return;
+ const crypto=require('node:crypto');
+ const hash=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
+ const binary=path.resolve(__dirname,'../../native-windows-guard/target/release/tempora-windows-guard.exe');
+ const source=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-foreign-profile-'));
+ const target=fs.mkdtempSync(path.join(os.tmpdir(),'tempora-foreign-dest-'));
+ t.after(()=>fs.rmSync(source,{recursive:true,force:true}));
+ t.after(()=>fs.rmSync(target,{recursive:true,force:true}));
+ const transport=buildScientificTransport(sample());
+ const corpus=JSON.parse(transport['corpus.json']);
+ corpus.profile.id='research-profile-not-a-demo';
+ const altered=Buffer.from(JSON.stringify(corpus)+'\n');
+ const envelope=JSON.parse(transport['envelope.json']);
+ envelope.corpus_file_sha256=hash(altered);
+ // The Rust envelope reader checks bytes, but cannot re-run the SDK's
+ // canonical digest. This tampered envelope intentionally passes that
+ // byte-level gate and must still be refused by the TEST writer.
+ for(const [name,bytes] of Object.entries({
+   ...transport,
+   'corpus.json':altered,
+   'envelope.json':Buffer.from(JSON.stringify(envelope)+'\n')
+ }))fs.writeFileSync(path.join(source,name),bytes,{flag:'wx'});
+ const env={...process.env,TEMPORA_NATIVE_SYNTHETIC_TEST:'1'};
+ const verify=spawnSync(binary,['--verify-envelope',source],
+  {encoding:'utf8',windowsHide:true,timeout:8000});
+ assert.equal(verify.status,0,verify.stderr);
+ const commit=spawnSync(binary,['--synthetic-transport-commit',target,source],
+  {encoding:'utf8',windowsHide:true,timeout:8000,env});
+ assert.equal(commit.status,3,commit.stdout);
+ assert.match(commit.stderr,/NATIVE_PROBE_ONLY_SYNTHETIC_PROFILE/);
+ assert.deepEqual(fs.readdirSync(target),[]);
+});
