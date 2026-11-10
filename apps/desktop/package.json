@@ -9,13 +9,14 @@
     "preview": "vite preview",
     "test:bridge": "node --test tests/engine-bridge.test.mjs",
     "stage:windows-engine": "node scripts/stage-windows-engine.mjs",
-    "test:windows-engine": "node --test electron/tests/host.test.cjs electron/tests/assistant-session.test.cjs electron/tests/review-integrity.test.cjs electron/tests/transaction-store.test.cjs electron/tests/review-persistence-gate.test.cjs electron/tests/review-persistence-adapter.test.cjs electron/tests/review-persistence-coordinator.test.cjs electron/tests/recovery-assessment.test.cjs",
+    "test:windows-engine": "node --test electron/tests/host.test.cjs electron/tests/assistant-session.test.cjs electron/tests/review-integrity.test.cjs electron/tests/transaction-store.test.cjs electron/tests/review-persistence-gate.test.cjs electron/tests/review-persistence-adapter.test.cjs electron/tests/review-persistence-coordinator.test.cjs electron/tests/recovery-assessment.test.cjs electron/tests/native-persistence-workflow.test.cjs",
     "test:visualization": "node --test tests/visualization/*.test.mjs",
     "test:transaction": "node --test electron/tests/transaction-store.test.cjs",
     "test:persistence-gate": "node --test electron/tests/review-persistence-gate.test.cjs",
     "test:persistence-adapter": "node --test electron/tests/review-persistence-adapter.test.cjs",
     "test:persistence-coordinator": "node --test electron/tests/review-persistence-coordinator.test.cjs",
-    "test:recovery": "node --test electron/tests/recovery-assessment.test.cjs"
+    "test:recovery": "node --test electron/tests/recovery-assessment.test.cjs",
+    "test:native-persistence": "node --test electron/tests/native-persistence-workflow.test.cjs"
   },
   "dependencies": {
     "@tauri-apps/api": "^2.0.0",
