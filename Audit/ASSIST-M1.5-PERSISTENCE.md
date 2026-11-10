@@ -357,3 +357,38 @@ sessions Electron vérifiées ; qualifier la résistance aux substitutions de
 chemins et à la perte de puissance Windows ; tester les installations et la
 récupération humaine. Jusqu'à cette qualification, le renderer n'a **aucune
 méthode de sauvegarde M1.5** ; seule l'inspection reste disponible.
+
+
+## 13. Lien de confiance session/corpus et défense contre substitution pendant l'écriture
+
+**Nouveau composant interne :** `assistant-persistence-binding.cjs`
+construit un callback de relecture lié au handle de session natif,
+au SHA-256 source, au profil canonique et au **hash brut du corpus**
+sélectionné dans la boîte de dialogue native. À chaque tentative :
+`assistantSessions.canonicalInput(handle)` vérifie la validité temporelle
+de la session et les octets de la source, puis `nativeReadCorpus` rouvre le
+même document JSON avec vérification de type, taille, SHA-256 et profil.
+Les erreurs utilisent des codes stables ; aucune lecture arbitraire depuis
+un chemin transmis par le renderer. Le module et ses tests sont inclus
+dans la CI Linux/Windows et dans le packaging Chromium.
+
+Les tests couvrent la source modifiée, le corpus modifié, la session expirée,
+un profil différent, la substitution par symlink et un **parcours réel
+d'ingestion SDK, de double confirmation native et de stockage** sans modifier
+le corpus de base.
+
+**Durcissement de la transaction :** le store revérifie la racine,
+`.pending`, `transactions` et le dossier temporaire immédiatement
+avant le `rename` final. Un test substitue le répertoire de destination
+pendant les écritures puis exige un refus avant publication ; les preuves
+demeurent en attente. Ce contrôle réduit les races ordinaires mais ne
+démontre **pas** l'immunité Windows aux TOCTOU et reparse points entre la
+vérification et le renommage. Une solution fondée sur les handles Windows,
+les privilèges et les volumes autorisés reste à qualifier avant activation
+de la sauvegarde par IPC.
+
+Le composant de liaison est **host-only** : son existence dans l'installateur
+n'active aucun flux d'écriture depuis l'interface. Les travaux nécessaires
+restent le raccordement du processus principal aux sessions de staging,
+la seconde confirmation visible, la politique de récupération humaine et
+les essais NTFS/power-loss.
