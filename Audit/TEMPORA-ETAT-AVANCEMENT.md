@@ -1,6 +1,6 @@
 # TEMPORA — Registre de pilotage et audit d'avancement (vivant)
 
-> **Document de référence à relire et actualiser à chaque itération.**
+> **DOCUMENTS À LIRE DANS CET ORDRE POUR REPRENDRE :** [REPRISE-TRAVAUX.md](REPRISE-TRAVAUX.md) → ce registre → [ASSIST-M1.5-PERSISTENCE.md](ASSIST-M1.5-PERSISTENCE.md) → [ASSIST-M1.5-RECOVERY-RUNBOOK.md](ASSIST-M1.5-RECOVERY-RUNBOOK.md).
 > Dossier : `Audit/` · Chantier principal : Assistant M1.5 / TEMPORA Desktop Chromium.
 > État initial vérifié : **2026-11-10** · Responsable de suivi : équipe TEMPORA / développeur principal.
 > **Ne constitue ni une homologation de sécurité, ni une certification de durabilité.**
@@ -8,7 +8,7 @@
 ## 0. Convention d'actualisation obligatoire
 
 **Au début de chaque itération :**
-1. Lire **ce fichier**, `ASSIST-M1.5-PERSISTENCE.md` et le runbook de récupération.
+1. Lire **`REPRISE-TRAVAUX.md` d'abord**, puis **ce fichier**, `ASSIST-M1.5-PERSISTENCE.md` et le runbook de récupération.
 2. Contrôler le HEAD, le statut brouillon de la PR #114 et les trois workflows du **HEAD exact** ; ne pas utiliser la réussite d'un ancien commit comme preuve du nouveau.
 3. Retenir les tâches prioritaires non closes, distinguer les preuves vérifiées des hypothèses, puis produire un lot cohérent.
 4. Ne pas fusionner sur `main`, publier npm/GitHub Release ou soumettre sur Microsoft Store sans décision explicite.
@@ -24,10 +24,10 @@
 | Dépôt | `MGhemri/tempora-framework` | https://github.com/MGhemri/tempora-framework |
 | PR de développement | **#114, brouillon** | https://github.com/MGhemri/tempora-framework/pull/114 |
 | Branche | `docs/assist-m1-5-transactional-persistence` | Branche expérimentale |
-| HEAD de référence précédent | `8d2936f2263c8811743f936e4d4f5743af2807af` | Dernière base entièrement qualifiée vérifiée au début de cette itération |
-| Framework sur ce SHA | **TESTÉ-CI : succès** | https://github.com/MGhemri/tempora-framework/actions/runs/42832156582 |
-| Documentation UI sur ce SHA | **TESTÉ-CI : succès** | https://github.com/MGhemri/tempora-framework/actions/runs/42832156447 |
-| Desktop Foundation sur ce SHA | **TESTÉ-CI : succès** | https://github.com/MGhemri/tempora-framework/actions/runs/42832156535 |
+| HEAD de référence précédent | `9a9a73835396f7471e5c112193aa3839acf49a9a` | Dernière base entièrement qualifiée vérifiée au début de M15-20 |
+| Framework sur ce SHA | **TESTÉ-CI : succès** | https://github.com/MGhemri/tempora-framework/actions/runs/42839244384 |
+| Documentation UI sur ce SHA | **TESTÉ-CI : succès** | https://github.com/MGhemri/tempora-framework/actions/runs/42839244084 |
+| Desktop Foundation sur ce SHA | **TESTÉ-CI : succès** | https://github.com/MGhemri/tempora-framework/actions/runs/42839244460 |
 | Installateur Windows Chromium NSIS | Construction CI réussie sur le SHA de référence | Cela ne prouve pas une qualification NTFS / power-loss |
 | Enregistrement M1.5 dans le binaire distribué | **DÉSACTIVÉ** | Uniquement Electron non packagé et `TEMPORA_EXPERIMENTAL_M15_SAVE=1` |
 | Fusion dans `main` / nouvelle release / Store | **NON EFFECTUÉ** dans ce chantier | Conserver les protections de distribution |
@@ -57,6 +57,7 @@
 | M15-17 | Writer natif de sonde consomme les buffers vérifiés par Rust et copie les octets exacts dans `native-probe-complete/` | **TESTÉ-CI sur `8d2936f2`**, non scientifique | `native_commit.rs`, `scientific_envelope.rs`, tests Windows |
 | M15-19 | Consolidation d'un **unique** inspecteur natif de sonde, manifeste lu par handles épinglés, classification des preuves, limite d'inventaire | **IMPLÉMENTÉ, CI À QUALIFIER** | `native-windows-guard/src/probe_inventory.rs`, `tests/native-probe-inventory.test.cjs` |
 | M15-18 | **Handles Win32 épinglés** pendant toute la sonde : dossier et 3 sources, partage en lecture seule, vérification reparse, trois points de crash réels et refus de reprise | **IMPLÉMENTÉ — CI DU NOUVEAU HEAD À QUALIFIER** | `native-windows-guard/src/scientific_envelope.rs`, `native_commit.rs`, tests Windows |
+| M15-20 | Relecture par handles Win32 des 4 fichiers réellement stagés et comparaison bit-à-bit avant commit de sonde ; test de corruption post-écriture + **handoff permanent** | **IMPLÉMENTÉ, CI DU HEAD FINAL À QUALIFIER** | `native_commit.rs`, `scientific-native-transport.test.cjs`, `Audit/REPRISE-TRAVAUX.md` |
 
 ## 3. Backlog de qualification — priorités et conditions de fermeture
 
@@ -197,3 +198,14 @@ Le contrôle CI du HEAD `72ccf9b7` a révélé un second problème de branche : 
 **Correction finale :** restauration d'**un seul** `probe_inventory.rs` et de **sa seule suite** `native-probe-inventory.test.cjs`, avec branchement CLI unique, contrat JSON numérique stable, handles natifs pour les manifestes et le propriétaire du verrou, volume limité à 100 éléments, et essais de corruption/manifeste, commit synthétique, crash après renommage et dépassement de capacité. Le fichier concurrent `probe_forensic.rs` et les tests doublons restent supprimés. Le workflow existant appelle désormais un chemin présent.
 
 **Statut : IMPLÉMENTÉ, CI DU HEAD DE CONSOLIDATION À VALIDER.** Pour toute conclusion, vérifier les trois workflows du SHA exact, en particulier la compilation Rust et les 5 tests Windows. Ne pas marquer SEC-WIN-01 / REC-01 / DUR-01 comme clôturés : le diagnostic reste consultatif et non atomique, sans pouvoir de reprise.
+
+
+### M15-20 — 2026-11-10 — Sécurité pré-commit de la sonde + dossier de reprise autonome
+
+- **BASE CI 100 % VERTE vérifiée avant développement** : `9a9a73835396f7471e5c112193aa3839acf49a9a`, runs Framework `42839244384`, Documentation UI `42839244084`, Desktop Foundation Windows Chromium NSIS `42839244460`.
+- **Développement effectif** : `verify_staged_bytes` réouvre avec Win32 handles épinglés les 4 fichiers du **staging natif de sonde**, borne leurs lectures et les compare **bit à bit** aux données source validées avant leur visibilité par renommage. L'injection contrôlée `TEMPORA_NATIVE_TEST_CORRUPT_STAGED=1` simule une altération du journal *après* écriture ; le commit refuse le passage à `native-probe-complete/`.
+- **Test d'intégration Windows ajouté** : vérifie le code `NATIVE_COMMIT_STAGED_MISMATCH`, préservation du verrou et du dossier de preuve partielle, absence de transaction scientifique et refus du rejeu automatique.
+- **Capitalisation** : nouveau `Audit/REPRISE-TRAVAUX.md` à lire **en premier à chaque nouvelle fenêtre de chat**. Il contient l'inventaire exact du code, chemins, sécurité, consignes, commandes CI, IDs de runs validés, jalons et P0. Le registre et le CDC y renvoient. **Actualiser ces fichiers à chaque reprise.**
+- **Statut du nouveau lot** : **IMPLÉMENTÉ ; TESTÉ-CI seulement après succès des trois workflows du SHA final**. La base verte citée ci-dessus ne qualifie pas ce lot.
+- **P0 TOUJOURS NON CLOS** : SEC-WIN-01 (fenêtre de changement après la relecture / renommage absolu), SEC-WIN-02 (ACL et volumes), SCI-01 (consentement non authentifié), REC-01 (reprise humaine autorisée), DUR-01 (power-loss). Aucune activation de sauvegarde native scientifique ou Store.
+- **Suite** : opération Windows réellement sécurisée contre les modifications après vérification jusqu'au commit ; authentification de l'intention de l'opérateur liée aux SHA et au SDK ; writer scientifique natif distinct de la sonde ; tests de panne OS/NTFS.
